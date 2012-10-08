@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>XPath 2.0 parse tests</title>
+		<script type="text/javascript" src="../xpath2.js"></script>
+	</head>
+	<body>
+		<script>
+			// *** 3.1 Primary Expressions 		-> misc (sequence)
+			// 3.2 Path Expressions 		-> sequence
+			// +++ 3.3 Sequence Expressions 	-> sequence
+			// +++ 3.4 Arithmetic Expressions 	-> number
+			// *** 3.5 Comparison Expressions 	-> boolean
+			// +++ 3.6 Logical Expressions		-> boolean
+			// +++ 3.7 For Expressions			-> misc (sequence)
+			// +++ 3.8 Conditional Expressions	-> misc (sequence)
+			// +++ 3.9 Quantified Expressions	-> boolean
+			// xxx 3.10 Expressions on SequenceTypes	->
+
+			var fNSResolver	= function(sPrefix) {
+				switch (sPrefix) {
+					case "ns":
+						return "myns";
+					default:
+						return null;
+				}
+			}
+
+			var aParseTests	= [
+				["", false],
+				[" 0 ", true],
+				// Comments
+				[" 1 (:comment:)", true],
+				[" 2 (:com (:comment:) ment:)", true],
+				[" 3 (:com (:comment ment:)", false],
+				[" 4 :) com (:comment:) ment(:", false],
+				// Sequences
+				["1", true],
+				["1 , 2", true],
+				["1 , 2, ", false],
+				//
+				["//*",	true],
+				["//",	false],
+				["/*/",	false],
+				["*//",	false],
+				// element name test
+				["*",		true],
+				["div",		true],
+				["ns:*",	true],
+				["*:div",	true],
+				["*:*",		true],
+				["*:?",		false],
+				// attribute name test
+				["@div",	true],
+				["@ns:*",	true],
+				["@*:div",	true],
+				["@*:*",	true],
+				["@*:?",	false],
+				// Axises
+				[".", true],
+				["..", true],
+				["...", false],
+				["self::*", true],
+				["parent::*[@test]", true],
+				["parents::*[@test]", false],
+				// Combi
+				["descendant-or-self::*[@test]//child", true],
+				["descendant-or-self::*[@test]//", false],
+				["//descendant-or-self::*[@test]", true],
+				["/descendant-or-self::[@test]", false],
+				["descendant-or-self::div//*", true],
+				// Numbers
+				["10",	true],
+				[".10",	true],
+				["10.",	true],
+				["10.x",false],
+				["1+2",	true],
+				["1+",	false],
+				["+1",	true],	// ?
+				["-1",	true],
+				["1-",	false],
+				[".",	true],
+				["(1 + 2) * 3",	true],
+				["1 + 2) * 3",	false],
+				["(1 + 2 * 3",	false],
+				["(1 + (2 + 3)) * 4",	true],
+				["(1 + 2) * (3 + 4)",	true],
+				["()",	true],		// legal in XPath 2 ?
+				["(1, 2)",	true],	// legal in XPath 2 ?
+				["1, 2",	true],	// legal in XPath 2 ?
+				// Strings
+				["'string'", true],
+				['"string"', true],
+				["'str\'\'ing'", true],
+				['"str\"\"ing"', true],
+				["'str''ing'", false],
+				['"str""ing"', false],
+				["'string", false],
+				['"string', false],
+				// variables
+				["$var",	true],
+				["$ns:var",	true],
+				["$ var",	false],
+				["va$r",	false],
+				["var$",	false],
+				// function calls
+				["test()", true],
+				["ns:test()", true],
+				["test(1)", true],
+				["test(1, 2, 3)", true],
+				["test(", false],
+				["test(1,)", false],
+				["test(1,2,)", false],
+				// or
+				["1 or 2", true],
+				["1 or 2 or", false],
+				["1 or or 2", false],
+				// and
+				["1 and 2", true],
+				["1 and 2 and", false],
+				["1 and and 2", false],
+				//
+				["1 or (2 and 3)", true],
+				["1 or 2 and 3)", false],
+				["1 (2 and 3)", false],
+				// union
+				[". union .", true],
+				[". | .", true],
+				[". union . union .", true],
+				[". | .", true],
+				[". | . | .", true],
+				[". union ", false],
+				[". | ", false],
+				// intersect | except
+				[". intersect .", true],
+				[". except .", true],
+				[". intersect . intersect .", true],
+				[". except . except .", true],
+				[". intersect ", false],
+				[". except ", false],
+				// for
+				["for $a in * return .",	true],
+				["for $a in * returns .",	false],
+				["for $a in *, $b in div return .",	true],
+				["for $a in .",	false],
+				["for $a in . return",	false],
+				["for a in * return .",	false],	// ?
+				// let expression
+				["let $a := * return .",	true],
+				["let $a := * returns .",	false],
+				["let $a := *, $b := div return .",	true],
+				["let $a := .",	false],
+				["let $a := . return",	false],
+				["let a := * return .",	false],	// ?
+				// quantified: some / every
+				["every $a in * satisfies .",	true],
+				["every $a in * satisfie .",	false],
+				["some $a in * satisfies .",	true],
+				["some $a in *, $b in div satisfies .",	true],
+				["some $a in .",	false],
+				["some $a in . satisfies",	false],
+				["some a in * satisfies .",	false],	// ?
+				// if
+				["if (div) then a else b",	true],
+				["if ($div) then $a else $b",	true],
+				// range
+				["1 to 5",		true],
+				["$a to $b",	true],
+				["1 to )",		false]
+			];
+			var aHtml	= [];
+			for (var n = 0, r1, r2, s1, s2, b1, b2; n < aParseTests.length; n++) {
+				aHtml.push('<tr>');
+				aHtml.push(	'<td>' + aParseTests[n][0] + '</td>');
+				aHtml.push(	'<td>' + (aParseTests[n][1] ? '&nbsp' : 'illegal') + '</td>');
+				// XPath2.js
+				b1	= true;
+				s1	= '&nbsp;';
+				try {
+					r1	= cXPathEvaluator.prototype.createExpression.call(document, aParseTests[n][0], fNSResolver);
+				}
+				catch (e) {
+					b1	= false;
+					s1	= e.message || e;
+				}
+				aHtml.push(	'<td style="color:' + (aParseTests[n][1] == b1 ? 'green' : 'red') + '">' + (aParseTests[n][1] == b1 ? 'pass' : 'fail') + '</td>');
+				aHtml.push(	'<td style="color:' + (aParseTests[n][1] == b1 ? 'silver' : 'black')+ '">' + s1 + '</td>');
+				// Native
+				b2	= true;
+				s2	= '&nbsp;';
+				try {
+					r2	= document.createExpression(aParseTests[n][0], fNSResolver);
+				}
+				catch (e) {
+					b2	= false;
+					s2	= e.message || e;
+				}
+				aHtml.push(	'<td style="color:' + (aParseTests[n][1] == b2 ? 'green' : 'red') + '">' + (aParseTests[n][1] == b2 ? 'pass' : 'fail') + '</td>');
+				aHtml.push(	'<td style="color:' + (aParseTests[n][1] == b2 ? 'silver' : 'black')+ '">' + s2 + '</td>');
+				aHtml.push('</tr>');
+			}
+			document.write(	'<table border="1" bordercolor="silver">' +
+								'<thead>' +
+									'<tr>' +
+										'<th>Expression</th>' +
+										'<th>Throws</th>' +
+										'<th>XPath2.js</th>' +
+										'<th>Exception</th>' +
+										'<th>Native</th>' +
+										'<th>Exception</th>' +
+									'</tr>' +
+								'</thead>' +
+								'<tbody>' +
+									aHtml.join('') +
+								'</tbody>' +
+							'</table>');
+		</script>
+	</body>
+</html>
