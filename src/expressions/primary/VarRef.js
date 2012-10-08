@@ -21,7 +21,7 @@ cVarRef.prototype.localName	= null;
 cVarRef.parse	= function (oLexer) {
 	var oVarRef;
 	if (oLexer.peek().match(cVarRef.QNAME)) {
-		oVarRef	= new cVarRef(RegExp.$1, RegExp.$2);
+		oVarRef	= new cVarRef(cRegExp.$1, cRegExp.$2);
 		oLexer.next();
 	}
 	else {

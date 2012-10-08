@@ -75,8 +75,8 @@ cSimpleQuantifiedBinding.QNAME	= /^\$(?:([\w-]+):)?([\w-]+)$/i;
 
 cSimpleQuantifiedBinding.parse	= function(oLexer) {
 	if (oLexer.peek().match(cSimpleQuantifiedBinding.QNAME) && oLexer.peek(1) == "in") {
-		var sPrefix		= RegExp.$1,
-			sLocalName	= RegExp.$2;
+		var sPrefix		= cRegExp.$1,
+			sLocalName	= cRegExp.$2;
 
 		oLexer.next();
 		oLexer.next();

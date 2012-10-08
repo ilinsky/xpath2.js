@@ -26,7 +26,7 @@ cFunctionCall.functions	= {};
 // Static members
 cFunctionCall.parse	= function (oLexer) {
 	if (oLexer.peek().match(cFunctionCall.QNAME) && oLexer.peek(1) == '(') {
-		var oExpr	= new cFunctionCall(RegExp.$1 || null, RegExp.$2);
+		var oExpr	= new cFunctionCall(cRegExp.$1 || null, cRegExp.$2);
 		oLexer.next();
 		oLexer.next();
 		//

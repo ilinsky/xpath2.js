@@ -59,7 +59,7 @@ cStepExpr.prototype.applyPredicates	= function(oContext) {
 			oContext1.position	= nIndex;
 			oSequence2	= this.predicates[nPredicateIndex].evaluate(oContext1);
 			//
-			if (oSequence2.isSingleton() && !isNaN(oSequence2.toNumber())) {
+			if (oSequence2.isSingleton() && !fIsNaN(oSequence2.toNumber())) {
 				if (oSequence2.toNumber() == nIndex)
 					oSequence.add(oSequence1.items[nIndex - 1]);
 			}

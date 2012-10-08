@@ -92,14 +92,14 @@ cXPathSequence.prototype.toBoolean	= function() {
 			return !!this.items[0].length;
 		else
 		if (typeof this.items[0] == "number")
-			return !(isNaN(this.items[0]) || this.items[0] == 0);
+			return !(fIsNaN(this.items[0]) || this.items[0] == 0);
 	}
 
 	throw "TypeError in XPathSequence.prototype.toBoolean";
 };
 
 cXPathSequence.prototype.toNumber	= function() {
-	return this.items.length && typeof this.items[0] == "number" ? this.items[0] : NaN;
+	return this.items.length && typeof this.items[0] == "number" ? this.items[0] : nNaN;
 };
 
 // Orders items in sequence in document order

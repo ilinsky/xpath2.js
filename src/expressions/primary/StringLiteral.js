@@ -20,7 +20,7 @@ cStringLiteral.parse	= function(oLexer) {
 		var aValue	= [];
 		// Do..while cycle required to account for XPath quote escaping
 		do {
-			aValue.push(RegExp.$1 || RegExp.$2);
+			aValue.push(cRegExp.$1 || cRegExp.$2);
 			oLexer.next();
 		} while (!oLexer.eof()
 			&& oLexer.peek().match(cStringLiteral.RegExp)

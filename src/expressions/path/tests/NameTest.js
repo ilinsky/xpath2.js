@@ -23,7 +23,7 @@ cNameTest.prototype.localName	= null;
 cNameTest.parse	= function (oLexer) {
 	if (oLexer.peek().match(cNameTest.QNAME)) {
 		oLexer.next();
-		return new cNameTest(RegExp.$1 || null, RegExp.$2 || null);
+		return new cNameTest(cRegExp.$1 || null, cRegExp.$2 || null);
 	}
 	else
 		throw "Not a NameTest expression";

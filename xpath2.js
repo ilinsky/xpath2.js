@@ -9,6 +9,7 @@
 
 (function() {
 	var files	= [];
+	files.push("src/import.js");
 	// API classes
 	files.push("src/XPathEvaluator.js");
 	files.push("src/XPathException.js");

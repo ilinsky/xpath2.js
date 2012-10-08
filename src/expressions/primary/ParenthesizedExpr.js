@@ -13,6 +13,7 @@ function cParenthesizedExpr(oExpr) {
 
 // Static members
 cParenthesizedExpr.parse	= function (oLexer) {
+	var oExpr;
 	if (oLexer.peek() == '(') {
 		oLexer.next();
 		// Check if not empty (allowed)

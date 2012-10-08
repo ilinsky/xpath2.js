@@ -38,7 +38,7 @@ cXPathResult.prototype.iterateNext	= function() {
 cXPathResult.prototype.snapshotItem	= function(nIndex) {
 	// validate API
 //	ample.guard(arguments, [
-//		["index",	Number]
+//		["index",	cNumber]
 //	]);
 
 	// Invoke implementation

@@ -38,7 +38,7 @@ cXPathEvaluator.prototype.evaluate	= function(sExpression, oNode, oResolver, nTy
 //		["expression",	cString],
 //		["context",		cNode],
 //		["resolver",	cXPathNSResolver,	true,	true],
-//		["type",		cNumber,				true,	true],
+//		["type",		cNumber,			true,	true],
 //		["result",		cXPathResult,		true,	true]
 //	]);
 

@@ -70,8 +70,8 @@ cSimpleForBinding.QNAME	= /^\$(?:([\w-]+):)?([\w-]+)$/i;
 
 cSimpleForBinding.parse	= function(oLexer) {
 	if (oLexer.peek().match(cSimpleForBinding.QNAME) && oLexer.peek(1) == "in") {
-		var sPrefix		= RegExp.$1,
-			sLocalName	= RegExp.$2;
+		var sPrefix		= cRegExp.$1,
+			sLocalName	= cRegExp.$2;
 
 		oLexer.next();
 		oLexer.next();
