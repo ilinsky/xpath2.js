@@ -178,7 +178,7 @@
 				b1	= true;
 				s1	= '&nbsp;';
 				try {
-					r1	= cXPathEvaluator.prototype.createExpression.call(document, aParseTests[n][0], fNSResolver);
+					r1	= XPath2Evaluator.prototype.createExpression.call(document, aParseTests[n][0], fNSResolver);
 				}
 				catch (e) {
 					b1	= false;
