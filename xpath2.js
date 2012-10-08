@@ -9,6 +9,7 @@
 
 (function() {
 	var files	= [];
+	// Import objects from environemnt
 	files.push("src/import.js");
 	// API classes
 	files.push("src/XPathEvaluator.js");
@@ -77,6 +78,8 @@
 	files.push("src/functions/qname.js");
 	files.push("src/functions/sequence.js");
 	files.push("src/functions/string.js");
+	// Export objects to environemnt
+	files.push("src/export.js");
 
 	// load files
 	var source	= [],
@@ -90,6 +93,8 @@
 	}
 	var oScript	= document.getElementsByTagName("head")[0].appendChild(document.createElement("script"));
 	oScript.type	= "text/javascript";
-	oScript.text	= source.join("\n");
+	oScript.text	= "(function(){" +
+							source.join("\n") +
+						"})()";
 	oScript.parentNode.removeChild(oScript);
 })();
