@@ -52,12 +52,10 @@ cXPathSequence.atomizeItem		= function(oItem) {
 		return oItem;
 	else
 	if (oItem.nodeType)
-		return oItem.nodeValue ? oItem.nodeValue : get_text_content(oItem);
+		return oItem.nodeValue ? oItem.nodeValue : "aaa" /*get_text_content(oItem)*/;
 	else
 		return null;
 };
-
-
 
 // Public members
 cXPathSequence.prototype.add	= function(oItem) {

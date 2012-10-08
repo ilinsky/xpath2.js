@@ -15,7 +15,7 @@ cXPathEvaluator.prototype.createExpression	= function(sExpression, oResolver) {
 	// validate API
 //	ample.guard(arguments, [
 //		["expression",	cString],
-//		["resolver",	cXPathNSResolver,	true,	true]
+//		["resolver",	cObject,	true,	true]
 //	]);
 
 	// Invoke implementation
@@ -37,12 +37,11 @@ cXPathEvaluator.prototype.evaluate	= function(sExpression, oNode, oResolver, nTy
 //	ample.guard(arguments, [
 //		["expression",	cString],
 //		["context",		cNode],
-//		["resolver",	cXPathNSResolver,	true,	true],
-//		["type",		cNumber,			true,	true],
-//		["result",		cXPathResult,		true,	true]
+//		["resolver",	cObject,		true,	true],
+//		["type",		cNumber,		true,	true],
+//		["result",		cXPathResult,	true,	true]
 //	]);
 
 	// Invoke implementation
-	var oExpression	= new cXPathExpression(sExpression, oResolver);
-	return oExpression.evaluate(oNode, nType || cXPathResult.ANY_TYPE, oResult);
+	return fXPathExpression_evaluate(new cXPathExpression(sExpression, oResolver), oNode, nType, oResult);
 };
