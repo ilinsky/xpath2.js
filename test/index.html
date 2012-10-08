@@ -6,6 +6,7 @@
 	</head>
 	<body>
 		<script>
+		(function() {
 			// *** 3.1 Primary Expressions 		-> misc (sequence)
 			// 3.2 Path Expressions 		-> sequence
 			// +++ 3.3 Sequence Expressions 	-> sequence
@@ -146,12 +147,12 @@
 				["for $a in . return",	false],
 				["for a in * return .",	false],	// ?
 				// let expression
-				["let $a := * return .",	true],
+/*				["let $a := * return .",	true],
 				["let $a := * returns .",	false],
 				["let $a := *, $b := div return .",	true],
 				["let $a := .",	false],
 				["let $a := . return",	false],
-				["let a := * return .",	false],	// ?
+				["let a := * return .",	false],	*/
 				// quantified: some / every
 				["every $a in * satisfies .",	true],
 				["every $a in * satisfie .",	false],
@@ -214,6 +215,7 @@
 									aHtml.join('') +
 								'</tbody>' +
 							'</table>');
+		})();
 		</script>
 	</body>
 </html>
