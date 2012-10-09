@@ -77,7 +77,7 @@ cAxisStep.prototype.evaluate	= function (oContext) {
 		switch (this.axis) {
 			// Forward axis
 			case "attribute":
-
+				throw "Not implemented";
 				break;
 
 			case "child":
@@ -85,20 +85,26 @@ cAxisStep.prototype.evaluate	= function (oContext) {
 					oSequence.add(oNode);
 				break;
 
-			case "descendant":
-
-				break;
-
 			case "descendant-or-self":
-
+				oSequence.add(oItem);
+				// No break left intentionally
+			case "descendant":
+				(function(oItem) {
+					for (var oNode = oItem.firstChild; oNode; oNode = oNode.nextSibling) {
+						if (oNode.firstChild)
+							arguments.callee(oNode);
+						oSequence.add(oNode);
+					}
+				})(oItem);
 				break;
 
 			case "following":
-
+				throw "Not implemented";
 				break;
 
 			case "following-sibling":
-
+				for (var oNode = oItem.nextSibling; oNode; oNode = oNode.nextSibling)
+					oSequence.add(oNode);
 				break;
 
 			case "self":
@@ -106,13 +112,11 @@ cAxisStep.prototype.evaluate	= function (oContext) {
 				break;
 
 			// Reverse axis
+			case "ancestor-or-self":
+				oSequence.add(oItem);
+				// No break left intentionally
 			case "ancestor":
 				for (var oNode = oItem; oNode = oNode.parentNode;)
-					oSequence.add(oNode);
-				break;
-
-			case "ancestor-or-self":
-				for (var oNode = oItem; oNode; oNode = oNode.parentNode)
 					oSequence.add(oNode);
 				break;
 
@@ -122,11 +126,12 @@ cAxisStep.prototype.evaluate	= function (oContext) {
 				break;
 
 			case "preceding":
-
+				throw "Not implemented";
 				break;
 
 			case "preceding-sibling":
-
+				for (var oNode = oItem.previousSibling; oNode; oNode = oNode.previousSibling)
+					oSequence.add(oNode);
 				break;
 		}
 	}
