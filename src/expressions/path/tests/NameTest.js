@@ -25,8 +25,6 @@ cNameTest.parse	= function (oLexer) {
 		oLexer.next();
 		return new cNameTest(cRegExp.$1 || null, cRegExp.$2 || null);
 	}
-	else
-		throw "Not a NameTest expression";
 };
 
 // Public members

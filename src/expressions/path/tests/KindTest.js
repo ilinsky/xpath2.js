@@ -28,54 +28,59 @@ cKindTest.names["schema-attribute"]	= [];
 // Static members
 cKindTest.parse	= function (oLexer) {
 	var sName	= oLexer.peek();
-	if (sName in cKindTest.names && oLexer.peek(1) == '(') {
-		oLexer.next();
-		oLexer.next();
-		var oTest	= new cKindTest(sName);
-		if (oLexer.peek() != ')') {
-			if (sName == "document-node") {
-				// TODO: parse test further
+	if (oLexer.peek(1) == '(') {
+		//
+		if (sName in cKindTest.names) {
+			//
+			oLexer.next();
+			oLexer.next();
+			//
+			var oTest	= new cKindTest(sName);
+			if (oLexer.peek() != ')') {
+				if (sName == "document-node") {
+					// TODO: parse test further
+				}
+				else
+				if (sName == "element") {
+					// TODO: parse test further
+				}
+				else
+				if (sName == "attribute") {
+					// TODO: parse test further
+				}
+				else
+				if (sName == "processing-instruction") {
+					// TODO: parse test further
+				}
+				else
+				if (sName == "schema-attribute") {
+					// TODO: parse test further
+				}
+				else
+				if (sName == "schema-element") {
+					// TODO: parse test further
+				}
 			}
-			else
-			if (sName == "element") {
-				// TODO: parse test further
+			else {
+				if (sName == "schema-attribute") {
+					throw "KindTest.parse: AttributeDeclaration missing";
+				}
+				else
+				if (sName == "schema-element") {
+					throw "KindTest.parse: ElementDeclaration missing";
+				}
 			}
-			else
-			if (sName == "attribute") {
-				// TODO: parse test further
-			}
-			else
-			if (sName == "processing-instruction") {
-				// TODO: parse test further
-			}
-			else
-			if (sName == "schema-attribute") {
-				// TODO: parse test further
-			}
-			else
-			if (sName == "schema-element") {
-				// TODO: parse test further
-			}
+
+			if (oLexer.peek() != ')')
+				throw "KindTest.parse: Token ')' expected";
+
+			oLexer.next();
+
+			return oTest;
 		}
-		else {
-			if (sName == "schema-attribute") {
-				throw "KindTest.parse: AttributeDeclaration missing";
-			}
-			else
-			if (sName == "schema-element") {
-				throw "KindTest.parse: ElementDeclaration missing";
-			}
-		}
-
-		if (oLexer.peek() != ')')
-			throw "KindTest parsing error: ')' expected";
-
-		oLexer.next();
-
-		return oTest;
+		else
+			throw "KindTest.parse: Unknown kind test";
 	}
-	else
-		throw "Not a KindTest expression";
 };
 
 // Public members

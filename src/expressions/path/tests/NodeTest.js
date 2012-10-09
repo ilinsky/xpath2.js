@@ -13,12 +13,17 @@ function cNodeTest() {
 
 // Static members
 cNodeTest.parse	= function (oLexer) {
-	try {
-		return cKindTest.parse(oLexer);
-	}
-	catch (e) {
-		return cNameTest.parse(oLexer);
-	}
+	// Try as KindTest
+	var oExpr	= cKindTest.parse(oLexer);
+	if (oExpr)
+		return oExpr;
+
+	// Try as NameTest
+	oExpr	= cNameTest.parse(oLexer);
+	if (oExpr)
+		return oExpr;
+
+	throw "Not a NodeTest";
 };
 
 // Public members
