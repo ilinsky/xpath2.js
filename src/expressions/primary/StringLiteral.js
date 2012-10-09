@@ -17,15 +17,17 @@ cStringLiteral.prototype	= new cLiteral;
 
 cStringLiteral.parse	= function(oLexer) {
 	if (oLexer.peek().match(cStringLiteral.RegExp)) {
-		var aValue	= [];
+		var aValue	= [],
+			sValue;
 		// Do..while cycle required to account for XPath quote escaping
 		do {
 			aValue.push(cRegExp.$1 || cRegExp.$2);
+			sValue	= oLexer.peek().substr(-1, 1);
 			oLexer.next();
 		} while (!oLexer.eof()
 			&& oLexer.peek().match(cStringLiteral.RegExp)
-			&&(oLexer.peek(-1).substr(-1, 1) == oLexer.peek().substr(0, 1)));
+			&&(sValue == oLexer.peek().substr(0, 1)));
 
-		return new cStringLiteral(aValue.join(''));;
+		return new cStringLiteral(aValue.join(sValue));
 	}
 };
