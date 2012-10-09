@@ -12,6 +12,7 @@
 	// Import objects from environemnt
 	files.push("../src/import.js");
 	// Helper classes
+	files.push("../src/helpers/XPathError.js");
 	files.push("../src/helpers/XPathContext.js");
 	files.push("../src/helpers/XPathLexer.js");
 	files.push("../src/helpers/XPathSequence.js");
