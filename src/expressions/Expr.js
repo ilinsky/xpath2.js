@@ -16,6 +16,9 @@ cExpr.prototype.items	= null;
 // Static members
 cExpr.parse	= function(oLexer) {
 	var oExpr	= new cExpr;
+	//
+	if (oLexer.eof())
+		throw "Expr.parse: Expected ExprSingle expression";
 	do {
 		oExpr.items.push(cExprSingle.parse(oLexer));
 	}
