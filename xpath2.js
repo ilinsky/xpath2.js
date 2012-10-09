@@ -93,8 +93,10 @@
 	}
 	var oScript	= document.getElementsByTagName("head")[0].appendChild(document.createElement("script"));
 	oScript.type	= "text/javascript";
-	oScript.text	= "(function(){" +
+	oScript.text	= 	"" +
+						"(function(){" +
 							source.join("\n") +
-						"})()";
+						"})()" +
+						"";
 	oScript.parentNode.removeChild(oScript);
 })();
