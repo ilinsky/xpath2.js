@@ -13,7 +13,7 @@ function cXPathEvaluator() {
 
 cXPathEvaluator.prototype.createExpression	= function(sExpression, oResolver) {
 	// validate API
-//	ample.guard(arguments, [
+//	fGuard(arguments, [
 //		["expression",	cString],
 //		["resolver",	cObject,	true,	true]
 //	]);
@@ -24,7 +24,7 @@ cXPathEvaluator.prototype.createExpression	= function(sExpression, oResolver) {
 
 cXPathEvaluator.prototype.createNSResolver	= function(oNode) {
 	// validate API
-//	ample.guard(arguments, [
+//	fGuard(arguments, [
 //		["node",	cNode]
 //	]);
 
@@ -34,7 +34,7 @@ cXPathEvaluator.prototype.createNSResolver	= function(oNode) {
 
 cXPathEvaluator.prototype.evaluate	= function(sExpression, oNode, oResolver, nType, oResult) {
 	// validate API
-//	ample.guard(arguments, [
+//	fGuard(arguments, [
 //		["expression",	cString],
 //		["context",		cNode],
 //		["resolver",	cObject,		true,	true],

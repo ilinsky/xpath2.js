@@ -13,7 +13,7 @@ function cXPathNSResolver(oNode) {
 
 cXPathNSResolver.prototype.lookupNamespaceURI	= function(sPrefix) {
 	// validate API
-//	ample.guard(arguments, [
+//	fGuard(arguments, [
 //		["expression",	cString,	true,	true]
 //	]);
 

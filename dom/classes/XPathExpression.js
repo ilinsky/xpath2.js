@@ -25,7 +25,7 @@ function cXPathExpression(sExpression, oResolver) {
 
 cXPathExpression.prototype.evaluate	= function(oNode, nType, oResult) {
 	// validate API
-//	ample.guard(arguments, [
+//	fGuard(arguments, [
 //		["context",		cNode],
 //		["type",		cNumber,	true,	true],
 //		["result",		cObject,	true,	true]
