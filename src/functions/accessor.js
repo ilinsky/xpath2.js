@@ -6,3 +6,14 @@
  *
  *
  */
+
+/*
+	2 Accessors
+		node-name
+		nilled
+		string
+		data
+		base-uri
+		document-uri
+
+*/
