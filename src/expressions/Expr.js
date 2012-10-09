@@ -14,9 +14,15 @@ function cExpr() {
 cExpr.prototype.items	= null;
 
 // Static members
-cExpr.parse	= function(oLexer, oResolver) {
-	var oExpr	= new cExpr;
+cExpr.parse	= function(oLexer, fResolver) {
+	var oCache	= {},
+		oResolver	= function(sPrefix) {
+			if (!fResolver)
+				throw "Cannot resolve prefix";
+			return sPrefix in oCache ? oCache[sPrefix] : oCache[sPrefix] = fResolver(sPrefix);
+		};
 	//
+	var oExpr	= new cExpr;
 	if (oLexer.eof())
 		throw "Expr.parse: Expected ExprSingle expression";
 	do {

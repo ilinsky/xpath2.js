@@ -7,24 +7,24 @@
  *
  */
 
-function cNameTest(sPrefix, sLocalName) {
-	this.prefix		= sPrefix;
-	this.localName	= sLocalName;
+function cNameTest(sNameSpaceURI, sLocalName) {
+	this.namespaceURI	= sNameSpaceURI;
+	this.localName		= sLocalName;
 };
 
-cNameTest.RegExp	= /^(?:(?![0-9-])([\w-]+|\*)\:)?(?![0-9-])([\w-]+|\*)$/;
+cNameTest.RegExp	= /^(?:(?![0-9-])([\w-]+)\:)?(?![0-9-])([\w-]+|\*)$/;
 
 cNameTest.prototype	= new cNodeTest;
 
-cNameTest.prototype.prefix		= null;
-cNameTest.prototype.localName	= null;
+cNameTest.prototype.namespaceURI	= null;
+cNameTest.prototype.localName		= null;
 
 // Static members
 cNameTest.parse	= function (oLexer, oResolver) {
 	var aMatch	= oLexer.peek().match(cNameTest.RegExp);
 	if (aMatch) {
 		oLexer.next();
-		return new cNameTest(aMatch[1] || null, aMatch[2] || null);
+		return new cNameTest(aMatch[1] ? oResolver(aMatch[1]) : null, aMatch[2]);
 	}
 };
 

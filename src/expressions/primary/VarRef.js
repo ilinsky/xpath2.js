@@ -7,21 +7,19 @@
  *
  */
 
-function cVarRef(sPrefix, sLocalName) {
-	this.prefix	= sPrefix;
-	this.localName	= sLocalName;
+function cVarRef(sUri) {
+	this.uri	= sUri;
 };
 
-cVarRef.QNAME	= /^\$(?:(?![0-9-])([\w-]+|\*)\:)?(?![0-9-])([\w-]+|\*)$/;
+cVarRef.QNAME	= /^\$(?:(?![0-9-])([\w-]+)\:)?(?![0-9-])([\w-]+|\*)$/;
 
-cVarRef.prototype.prefix	= null;
-cVarRef.prototype.localName	= null;
+cVarRef.prototype.uri	= null;
 
 // Static members
 cVarRef.parse	= function (oLexer, oResolver) {
 	var aMatch	= oLexer.peek().match(cVarRef.QNAME);
 	if (aMatch) {
-		var oVarRef	= new cVarRef(aMatch[1] || null, aMatch[2]);
+		var oVarRef	= new cVarRef((aMatch[1] ? oResolver(aMatch[1]) + '#' : '') + aMatch[2]);
 		oLexer.next();
 		return oVarRef;
 	}
@@ -29,8 +27,8 @@ cVarRef.parse	= function (oLexer, oResolver) {
 
 // Public members
 cVarRef.prototype.evaluate	= function (oContext) {
-	if (oContext.scope.hasOwnProperty(this.localName))
-		return new cXPathSequence(oContext.scope[this.localName]);
+	if (oContext.scope.hasOwnProperty(this.uri))
+		return new cXPathSequence(oContext.scope[this.uri]);
 	else
 		return new cXPathSequence;
 };

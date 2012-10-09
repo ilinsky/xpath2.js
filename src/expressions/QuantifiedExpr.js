@@ -45,15 +45,14 @@ cQuantifiedExpr.prototype.evaluate	= function (oContext) {
 		bResult	= bEvery ? true : false;
 	(function(oSelf, nBinding) {
 		var oBinding	= oSelf.bindings[nBinding++],
-			sVariable	= oBinding.localName,
 			oInSequence	= oBinding.inExpr.evaluate(oContext);
 		for (var nIndex = 0, nLength = oInSequence.items.length; (nIndex < nLength) && (bEvery ? bResult :!bResult); nIndex++) {
-			oContext.pushVariable(sVariable, oInSequence.items[nIndex]);
+			oContext.pushVariable(oBinding.uri, oInSequence.items[nIndex]);
 			if (nBinding < oSelf.bindings.length)
 				arguments.callee(oSelf, nBinding);
 			else
 				bResult	= oSelf.satisfiesExpr.evaluate(oContext).toBoolean();
-			oContext.popVariable(sVariable);
+			oContext.popVariable(oBinding.uri);
 		}
 	})(this, 0);
 
@@ -63,24 +62,22 @@ cQuantifiedExpr.prototype.evaluate	= function (oContext) {
 
 
 //
-function cSimpleQuantifiedBinding(sPrefix, sLocalName, oInExpr) {
-	this.prefix		= sPrefix || null;
-	this.localName	= sLocalName;
-	this.inExpr		= oInExpr;
+function cSimpleQuantifiedBinding(sUri, oInExpr) {
+	this.uri	= sUri;
+	this.inExpr	= oInExpr;
 };
 
-cSimpleQuantifiedBinding.RegExp	= /^\$(?:(?![0-9-])([\w-]+|\*)\:)?(?![0-9-])([\w-]+|\*)$/;
+cSimpleQuantifiedBinding.prototype.uri		= null;
+cSimpleQuantifiedBinding.prototype.inExpr	= null;
+
+cSimpleQuantifiedBinding.RegExp	= /^\$(?:(?![0-9-])([\w-]+)\:)?(?![0-9-])([\w-]+|\*)$/;
 
 cSimpleQuantifiedBinding.parse	= function(oLexer, oResolver) {
 	var aMatch	= oLexer.peek().match(cSimpleQuantifiedBinding.RegExp);
 	if (aMatch && oLexer.peek(1) == "in") {
-		var sPrefix		= aMatch[1],
-			sLocalName	= aMatch[2];
-
 		oLexer.next();
 		oLexer.next();
-
-		return new cSimpleQuantifiedBinding(sPrefix, sLocalName, cExprSingle.parse(oLexer, oResolver));
+		return new cSimpleQuantifiedBinding((aMatch[1] ? oResolver(aMatch[1]) + '#' : '') +  aMatch[2], cExprSingle.parse(oLexer, oResolver));
 	}
 	else
 		throw "Not SimpleQuantifiedBinding expression";

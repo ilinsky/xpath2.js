@@ -42,15 +42,14 @@ cForExpr.prototype.evaluate	= function (oContext) {
 	var oSequence	= new cXPathSequence;
 	(function(oSelf, nBinding) {
 		var oBinding	= oSelf.bindings[nBinding++],
-			sVariable	= oBinding.localName,
 			oInSequence	= oBinding.inExpr.evaluate(oContext);
 		for (var nIndex = 0, nLength = oInSequence.items.length; nIndex < nLength; nIndex++) {
-			oContext.pushVariable(sVariable, oInSequence.items[nIndex]);
+			oContext.pushVariable(oBinding.uri, oInSequence.items[nIndex]);
 			if (nBinding < oSelf.bindings.length)
 				arguments.callee(oSelf, nBinding);
 			else
 				oSequence.add(oSelf.returnExpr.evaluate(oContext));
-			oContext.popVariable(sVariable);
+			oContext.popVariable(oBinding.uri);
 		}
 	})(this, 0);
 
@@ -58,24 +57,22 @@ cForExpr.prototype.evaluate	= function (oContext) {
 };
 
 //
-function cSimpleForBinding(sPrefix, sLocalName, oInExpr) {
-	this.prefix		= sPrefix || null;
-	this.localName	= sLocalName;
-	this.inExpr		= oInExpr;
+function cSimpleForBinding(sUri, oInExpr) {
+	this.uri	= sUri;
+	this.inExpr	= oInExpr;
 };
 
-cSimpleForBinding.RegExp	= /^\$(?:(?![0-9-])([\w-]+|\*)\:)?(?![0-9-])([\w-]+|\*)$/;
+cSimpleForBinding.prototype.uri		= null;
+cSimpleForBinding.prototype.inExpr	= null;
+
+cSimpleForBinding.RegExp	= /^\$(?:(?![0-9-])([\w-]+)\:)?(?![0-9-])([\w-]+|\*)$/;
 
 cSimpleForBinding.parse	= function(oLexer, oResolver) {
 	var aMatch	= oLexer.peek().match(cSimpleForBinding.RegExp);
 	if (aMatch && oLexer.peek(1) == "in") {
-		var sPrefix		= aMatch[1],
-			sLocalName	= aMatch[2];
-
 		oLexer.next();
 		oLexer.next();
-
-		return new cSimpleForBinding(sPrefix, sLocalName, cExprSingle.parse(oLexer, oResolver));
+		return new cSimpleForBinding((aMatch[1] ? oResolver(aMatch[1]) + '#' : '') + aMatch[2], cExprSingle.parse(oLexer, oResolver));
 	}
 	else
 		throw "Not SimpleForBinding expression";

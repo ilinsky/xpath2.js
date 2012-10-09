@@ -7,17 +7,15 @@
  *
  */
 
-function cFunctionCall(sPrefix, sLocalName) {
-	this.prefix		= sPrefix;
-	this.localName	= sLocalName;
-	this.args		= [];
+function cFunctionCall(sUri) {
+	this.uri	= sUri;
+	this.args	= [];
 };
 
-cFunctionCall.RegExp	= /^(?:(?![0-9-])([\w-]+)\:)?(?![0-9-])([\w-]+)$/;
+cFunctionCall.RegExp	= /^(?:(?![0-9-])([\w-]+)\:)?(?![0-9-])([\w-]+|\*)$/;
 
-cFunctionCall.prototype.prefix		= null;
-cFunctionCall.prototype.localName	= null;
-cFunctionCall.prototype.args		= null;
+cFunctionCall.prototype.uri		= null;
+cFunctionCall.prototype.args	= null;
 
 cFunctionCall.functions	= {};
 
@@ -27,7 +25,7 @@ cFunctionCall.functions	= {};
 cFunctionCall.parse	= function (oLexer, oResolver) {
 	var aMatch	= oLexer.peek().match(cFunctionCall.RegExp);
 	if (aMatch && oLexer.peek(1) == '(') {
-		var oExpr	= new cFunctionCall(aMatch[1] || null, aMatch[2]);
+		var oExpr	= new cFunctionCall((aMatch[1] ? oResolver(aMatch[1]) + '#' : '') + aMatch[2]);
 		oLexer.next();
 		oLexer.next();
 		//
@@ -50,8 +48,7 @@ cFunctionCall.parse	= function (oLexer, oResolver) {
 
 // Public members
 cFunctionCall.prototype.evaluate	= function (oContext) {
-	var sFunction	= this.localName,
-		aArguments	= [],
+	var aArguments	= [],
 		fFunction;
 
 	// Evaluate arguments
@@ -59,11 +56,11 @@ cFunctionCall.prototype.evaluate	= function (oContext) {
 		aArguments.push(this.args[nIndex].evaluate(oContext));
 
 	// Call function
-	if (fFunction = cFunctionCall.functions[sFunction])
+	if (fFunction = cFunctionCall.functions[this.uri])
 		return fFunction.apply(oContext, aArguments);
 	else
-	if ((fFunction = window[sFunction]) && typeof fFunction == "function")
+	if ((fFunction = window[this.uri]) && typeof fFunction == "function")
 		return fFunction.apply(window, aArguments);
 	else
-		throw "FunctionCall.prototype.evaluate: Could not find function: " + sFunction;
+		throw "FunctionCall.prototype.evaluate: Could not find function: " + this.uri;
 };
