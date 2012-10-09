@@ -9,12 +9,7 @@
 
 function cXPathExpression(sExpression, oResolver) {
 	try {
-		//
-		var oLexer	= new cXPathLexer(sExpression);
-		this.expression	= cExpr.parse(oLexer, oResolver);
-		//
-		if (!oLexer.eof())
-			throw "Junk at the end of expression";
+		this.expression	= new cXPathParser().parse(sExpression, oResolver);
 	} catch (e) {
 		throw new cXPathException(cXPathException.INVALID_EXPRESSION_ERR);
 	}

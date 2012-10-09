@@ -15,6 +15,7 @@
 	files.push("../src/helpers/XPathError.js");
 	files.push("../src/helpers/XPathContext.js");
 	files.push("../src/helpers/XPathLexer.js");
+	files.push("../src/helpers/XPathParser.js");
 	files.push("../src/helpers/XPathSequence.js");
 	//
 	files.push("../src/expressions/Expr.js");

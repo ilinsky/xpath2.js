@@ -42,5 +42,5 @@ cXPathContext.clone	= function(oContext) {
 	for (var sKey in oContext.scope)
 		if (oContext.scope.hasOwnProperty(sKey))
 			oScope[sKey]	= oContext.scope[sKey];
-	return new cXPathContext(oContext.node, oScope, oContext.position);
+	return new cXPathContext(oContext.node, oContext.position, oScope);
 };
