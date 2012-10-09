@@ -18,7 +18,7 @@ cIfExpr.prototype.thenExpr	= null;
 cIfExpr.prototype.elseExpr	= null;
 
 // Static members
-cIfExpr.parse	= function (oLexer) {
+cIfExpr.parse	= function (oLexer, oResolver) {
 	var oCondExpr,
 		oThenExpr,
 		oElseExpr;
@@ -26,16 +26,16 @@ cIfExpr.parse	= function (oLexer) {
 		oLexer.next();
 		oLexer.next();
 		//
-		oCondExpr	= cExpr.parse(oLexer);
+		oCondExpr	= cExpr.parse(oLexer, oResolver);
 		//
 		if (oLexer.peek() == ")") {
 			oLexer.next();
 			if (oLexer.peek() == "then") {
 				oLexer.next();
-				oThenExpr	= cExprSingle.parse(oLexer);
+				oThenExpr	= cExprSingle.parse(oLexer, oResolver);
 				if (oLexer.peek() == "else") {
 					oLexer.next();
-					oElseExpr	= cExprSingle.parse(oLexer);
+					oElseExpr	= cExprSingle.parse(oLexer, oResolver);
 					//
 					return new cIfExpr(oCondExpr, oThenExpr, oElseExpr);
 				}

@@ -37,14 +37,14 @@ cAxisStep.axises["preceding"]			= [];
 cAxisStep.axises["preceding-sibling"]	= [];
 
 // Static members
-cAxisStep.parse	= function (oLexer) {
+cAxisStep.parse	= function (oLexer, oResolver) {
 	var sAxis	= oLexer.peek(),
 		oStep;
 	if (oLexer.peek(1) == "::") {
 		if (sAxis in cAxisStep.axises) {
 			oLexer.next();
 			oLexer.next();
-			oStep	= new cAxisStep(sAxis, cNodeTest.parse(oLexer));
+			oStep	= new cAxisStep(sAxis, cNodeTest.parse(oLexer, oResolver));
 		}
 		else
 			throw "AxisStep.parse: Unknown axis";
@@ -57,13 +57,13 @@ cAxisStep.parse	= function (oLexer) {
 	else
 	if (sAxis == "@") {
 		oLexer.next();
-		oStep	= new cAxisStep("attribute", cNodeTest.parse(oLexer));
+		oStep	= new cAxisStep("attribute", cNodeTest.parse(oLexer, oResolver));
 	}
 	else {
-		oStep	= new cAxisStep("child", cNodeTest.parse(oLexer));
+		oStep	= new cAxisStep("child", cNodeTest.parse(oLexer, oResolver));
 	}
 	//
-	cStepExpr.parsePredicates(oLexer, oStep);
+	cStepExpr.parsePredicates(oLexer, oResolver, oStep);
 
 	return oStep;
 };

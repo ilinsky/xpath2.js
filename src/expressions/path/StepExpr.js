@@ -12,9 +12,9 @@ function cStepExpr() {
 };
 
 // Static members
-cStepExpr.parse	= function (oLexer) {
-	var oExpr	= cFilterExpr.parse(oLexer)
-					|| cAxisStep.parse(oLexer);
+cStepExpr.parse	= function (oLexer, oResolver) {
+	var oExpr	= cFilterExpr.parse(oLexer, oResolver)
+					|| cAxisStep.parse(oLexer, oResolver);
 
 	if (oExpr)
 		return oExpr;
@@ -22,7 +22,7 @@ cStepExpr.parse	= function (oLexer) {
 	throw "StepExpr.parse: Expected StepExpr expression";
 };
 
-cStepExpr.parsePredicates	= function (oLexer, oStep) {
+cStepExpr.parsePredicates	= function (oLexer, oResolver, oStep) {
 	// Parse predicates
 	while (oLexer.peek() == '[') {
 		oLexer.next();
@@ -30,7 +30,7 @@ cStepExpr.parsePredicates	= function (oLexer, oStep) {
 		if (oLexer.eof())
 			throw "StepExpr.parsePredicates: Expected Expr expression";
 
-		oStep.predicates.push(cExpr.parse(oLexer));
+		oStep.predicates.push(cExpr.parse(oLexer, oResolver));
 
 		if (oLexer.eof() || oLexer.peek() != ']')
 			throw "StepExpr.parsePredicates: Expected ']' token";

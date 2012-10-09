@@ -12,15 +12,16 @@ function cVarRef(sPrefix, sLocalName) {
 	this.localName	= sLocalName;
 };
 
-cVarRef.QNAME	= /^\$(?:([\w-]+):)?([\w-]+)$/i;
+cVarRef.QNAME	= /^\$(?:(?![0-9-])([\w-]+|\*)\:)?(?![0-9-])([\w-]+|\*)$/;
 
 cVarRef.prototype.prefix	= null;
 cVarRef.prototype.localName	= null;
 
 // Static members
-cVarRef.parse	= function (oLexer) {
-	if (oLexer.peek().match(cVarRef.QNAME)) {
-		var oVarRef	= new cVarRef(cRegExp.$1 || null, cRegExp.$2);
+cVarRef.parse	= function (oLexer, oResolver) {
+	var aMatch	= oLexer.peek().match(cVarRef.QNAME);
+	if (aMatch) {
+		var oVarRef	= new cVarRef(aMatch[1] || null, aMatch[2]);
 		oLexer.next();
 		return oVarRef;
 	}

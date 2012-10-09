@@ -26,7 +26,7 @@ cKindTest.names["schema-element"]	= [];
 cKindTest.names["schema-attribute"]	= [];
 
 // Static members
-cKindTest.parse	= function (oLexer) {
+cKindTest.parse	= function (oLexer, oResolver) {
 	var sName	= oLexer.peek();
 	if (oLexer.peek(1) == '(') {
 		//

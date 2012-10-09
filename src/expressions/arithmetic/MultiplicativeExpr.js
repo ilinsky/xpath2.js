@@ -24,8 +24,8 @@ cMultiplicativeExpr.operators['idiv']	= {};
 cMultiplicativeExpr.operators['mod']	= {};
 
 // Static members
-cMultiplicativeExpr.parse	= function (oLexer) {
-	var oExpr	= cUnionExpr.parse(oLexer);
+cMultiplicativeExpr.parse	= function (oLexer, oResolver) {
+	var oExpr	= cUnionExpr.parse(oLexer, oResolver);
 	if (oLexer.eof() ||!(oLexer.peek() in cMultiplicativeExpr.operators))
 		return oExpr;
 
@@ -34,7 +34,7 @@ cMultiplicativeExpr.parse	= function (oLexer) {
 		sOperator;
 	while ((sOperator = oLexer.peek()) in cMultiplicativeExpr.operators) {
 		oLexer.next();
-		oExpr	= cUnionExpr.parse(oLexer);
+		oExpr	= cUnionExpr.parse(oLexer, oResolver);
 		oMultiplicativeExpr.items.push([sOperator, oExpr]);
 	}
 	return oMultiplicativeExpr;

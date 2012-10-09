@@ -36,15 +36,15 @@ cComparisonExpr.comparators	= {
 };
 
 // Static members
-cComparisonExpr.parse	= function (oLexer) {
-	var oExpr	= cRangeExpr.parse(oLexer);
+cComparisonExpr.parse	= function (oLexer, oResolver) {
+	var oExpr	= cRangeExpr.parse(oLexer, oResolver);
 	if (oLexer.eof() ||!(oLexer.peek() in cComparisonExpr.comparators))
 		return oExpr;
 
 	// Comparison expression
 	var sComparator	= oLexer.peek();
 	oLexer.next();
-	return new cComparisonExpr(oExpr, cRangeExpr.parse(oLexer), sComparator);
+	return new cComparisonExpr(oExpr, cRangeExpr.parse(oLexer, oResolver), sComparator);
 };
 
 // Public members

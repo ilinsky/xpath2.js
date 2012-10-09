@@ -16,14 +16,14 @@ cRangeExpr.prototype.left	= null;
 cRangeExpr.prototype.right	= null;
 
 // Static members
-cRangeExpr.parse	= function (oLexer) {
-	var oExpr	= cAdditiveExpr.parse(oLexer);
+cRangeExpr.parse	= function (oLexer, oResolver) {
+	var oExpr	= cAdditiveExpr.parse(oLexer, oResolver);
 	if (oLexer.eof() || oLexer.peek() != "to")
 		return oExpr;
 
 	// Range expression
 	oLexer.next();
-	return new cRangeExpr(oExpr, cAdditiveExpr.parse(oLexer));
+	return new cRangeExpr(oExpr, cAdditiveExpr.parse(oLexer, oResolver));
 };
 
 // Public members

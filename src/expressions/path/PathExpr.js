@@ -14,7 +14,7 @@ function cPathExpr() {
 cPathExpr.prototype.items	= [];
 
 // Static members
-cPathExpr.parse	= function (oLexer) {
+cPathExpr.parse	= function (oLexer, oResolver) {
 	var sSingleSlash	= '/',
 		sDoubleSlash	= '/' + '/';
 
@@ -37,7 +37,7 @@ cPathExpr.parse	= function (oLexer) {
 	if (oLexer.eof())
 		throw "PathExpr.parse: Expected StepExpr expression";
 	//
-	oExpr.items.push(cStepExpr.parse(oLexer));
+	oExpr.items.push(cStepExpr.parse(oLexer, oResolver));
 
 	// Parse other steps
 	while (oLexer.peek() == sSingleSlash || oLexer.peek() == sDoubleSlash) {
@@ -52,7 +52,7 @@ cPathExpr.parse	= function (oLexer) {
 		if (oLexer.eof())
 			throw "PathExpr.parse: Expected StepExpr expression";
 		//
-		oExpr.items.push(cStepExpr.parse(oLexer));
+		oExpr.items.push(cStepExpr.parse(oLexer, oResolver));
 	}
 
 //	if (oExpr.items.length == 1)

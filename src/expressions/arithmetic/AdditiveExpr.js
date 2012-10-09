@@ -22,8 +22,8 @@ cAdditiveExpr.operators['+']	= {};
 cAdditiveExpr.operators['-']	= {};
 
 // Static members
-cAdditiveExpr.parse	= function (oLexer) {
-	var oExpr	= cMultiplicativeExpr.parse(oLexer);
+cAdditiveExpr.parse	= function (oLexer, oResolver) {
+	var oExpr	= cMultiplicativeExpr.parse(oLexer, oResolver);
 	if (oLexer.eof() ||!(oLexer.peek() in cAdditiveExpr.operators))
 		return oExpr;
 
@@ -32,7 +32,7 @@ cAdditiveExpr.parse	= function (oLexer) {
 		sOperator;
 	while ((sOperator = oLexer.peek()) in cAdditiveExpr.operators) {
 		oLexer.next();
-		oExpr	= cMultiplicativeExpr.parse(oLexer);
+		oExpr	= cMultiplicativeExpr.parse(oLexer, oResolver);
 		oAdditiveExpr.items.push([sOperator, oExpr]);
 	}
 	return oAdditiveExpr;

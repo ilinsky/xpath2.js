@@ -11,8 +11,7 @@ function cXPathExpression(sExpression, oResolver) {
 	try {
 		//
 		var oLexer	= new cXPathLexer(sExpression);
-		this.expression	= cExpr.parse(oLexer);
-		this.resolver	= oResolver;
+		this.expression	= cExpr.parse(oLexer, oResolver);
 		//
 		if (!oLexer.eof())
 			throw "Junk at the end of expression";

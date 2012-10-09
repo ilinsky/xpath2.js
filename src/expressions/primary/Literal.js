@@ -12,9 +12,9 @@ function cLiteral() {
 };
 
 // Static members
-cLiteral.parse	= function (oLexer) {
-	var oExpr	= cNumericLiteral.parse(oLexer)
-					|| cStringLiteral.parse(oLexer);
+cLiteral.parse	= function (oLexer, oResolver) {
+	var oExpr	= cNumericLiteral.parse(oLexer, oResolver)
+					|| cStringLiteral.parse(oLexer, oResolver);
 
 	return oExpr;
 };

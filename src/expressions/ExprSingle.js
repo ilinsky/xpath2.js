@@ -12,11 +12,11 @@ function cExprSingle() {
 };
 
 // Static members
-cExprSingle.parse	= function (oLexer) {
-	var oExpr	= cForExpr.parse(oLexer)
-					|| cQuantifiedExpr.parse(oLexer)
-					|| cIfExpr.parse(oLexer)
-					|| cOrExpr.parse(oLexer);
+cExprSingle.parse	= function (oLexer, oResolver) {
+	var oExpr	= cForExpr.parse(oLexer, oResolver)
+					|| cQuantifiedExpr.parse(oLexer, oResolver)
+					|| cIfExpr.parse(oLexer, oResolver)
+					|| cOrExpr.parse(oLexer, oResolver);
 
 	if (oExpr)
 		return oExpr;

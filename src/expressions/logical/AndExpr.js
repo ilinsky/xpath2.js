@@ -16,8 +16,8 @@ cAndExpr.prototype.left		= null;
 cAndExpr.prototype.items	= null;
 
 // Static members
-cAndExpr.parse	= function (oLexer) {
-	var oExpr	= cComparisonExpr.parse(oLexer);
+cAndExpr.parse	= function (oLexer, oResolver) {
+	var oExpr	= cComparisonExpr.parse(oLexer, oResolver);
 	if (oLexer.eof() || oLexer.peek() != "and")
 		return oExpr;
 
@@ -25,7 +25,7 @@ cAndExpr.parse	= function (oLexer) {
 	var oAndExpr	= new cAndExpr(oExpr);
 	while (oLexer.peek() == "and") {
 		oLexer.next();
-		oExpr	= cComparisonExpr.parse(oLexer);
+		oExpr	= cComparisonExpr.parse(oLexer, oResolver);
 		oAndExpr.items.push(oExpr);
 	}
 	return oAndExpr;

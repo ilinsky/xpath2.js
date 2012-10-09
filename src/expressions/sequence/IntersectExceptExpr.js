@@ -23,8 +23,8 @@ cIntersectExceptExpr.operators["except"]	= {};
 
 // Static members
 // TODO: Should parse as IntersectExceptExpr->InstanceofExpr->TreatExpr->CastableExpr->CastExpr->UnaryExpr
-cIntersectExceptExpr.parse	= function (oLexer) {
-	var oExpr	= cUnaryExpr.parse(oLexer);
+cIntersectExceptExpr.parse	= function (oLexer, oResolver) {
+	var oExpr	= cUnaryExpr.parse(oLexer, oResolver);
 	if (oLexer.eof() ||!(oLexer.peek() in cIntersectExceptExpr.operators))
 		return oExpr;
 
@@ -33,7 +33,7 @@ cIntersectExceptExpr.parse	= function (oLexer) {
 		sOperator;
 	while ((sOperator = oLexer.peek()) in cIntersectExceptExpr.operators) {
 		oLexer.next();
-		oExpr	= cUnaryExpr.parse(oLexer);
+		oExpr	= cUnaryExpr.parse(oLexer, oResolver);
 		oIntersectExceptExpr.items.push([sOperator, oExpr]);
 	}
 	return oIntersectExceptExpr;

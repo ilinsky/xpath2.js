@@ -16,8 +16,8 @@ cOrExpr.prototype.left	= null;
 cOrExpr.prototype.items	= null;
 
 // Static members
-cOrExpr.parse	= function (oLexer) {
-	var oExpr	= cAndExpr.parse(oLexer);
+cOrExpr.parse	= function (oLexer, oResolver) {
+	var oExpr	= cAndExpr.parse(oLexer, oResolver);
 	if (oLexer.eof() || oLexer.peek() != "or")
 		return oExpr;
 
@@ -25,7 +25,7 @@ cOrExpr.parse	= function (oLexer) {
 	var oOrExpr	= new cOrExpr(oExpr);
 	while (oLexer.peek() == "or") {
 		oLexer.next();
-		oExpr	= cAndExpr.parse(oLexer);
+		oExpr	= cAndExpr.parse(oLexer, oResolver);
 		oOrExpr.items.push(oExpr);
 	}
 	return oOrExpr;

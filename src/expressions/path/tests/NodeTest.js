@@ -12,9 +12,9 @@ function cNodeTest() {
 };
 
 // Static members
-cNodeTest.parse	= function (oLexer) {
-	var oExpr	= cKindTest.parse(oLexer)
-					|| cNameTest.parse(oLexer);
+cNodeTest.parse	= function (oLexer, oResolver) {
+	var oExpr	= cKindTest.parse(oLexer, oResolver)
+					|| cNameTest.parse(oLexer, oResolver);
 
 	if (oExpr)
 		return oExpr;

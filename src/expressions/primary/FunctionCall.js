@@ -13,7 +13,7 @@ function cFunctionCall(sPrefix, sLocalName) {
 	this.args		= [];
 };
 
-cFunctionCall.QNAME	= /^(?:([\w-]+):)?([\w-]+)$/i;
+cFunctionCall.RegExp	= /^(?:(?![0-9-])([\w-]+)\:)?(?![0-9-])([\w-]+)$/;
 
 cFunctionCall.prototype.prefix		= null;
 cFunctionCall.prototype.localName	= null;
@@ -24,9 +24,10 @@ cFunctionCall.functions	= {};
 // http://www.w3.org/2005/xpath-functions
 
 // Static members
-cFunctionCall.parse	= function (oLexer) {
-	if (oLexer.peek().match(cFunctionCall.QNAME) && oLexer.peek(1) == '(') {
-		var oExpr	= new cFunctionCall(cRegExp.$1 || null, cRegExp.$2);
+cFunctionCall.parse	= function (oLexer, oResolver) {
+	var aMatch	= oLexer.peek().match(cFunctionCall.RegExp);
+	if (aMatch && oLexer.peek(1) == '(') {
+		var oExpr	= new cFunctionCall(aMatch[1] || null, aMatch[2]);
 		oLexer.next();
 		oLexer.next();
 		//
@@ -35,7 +36,7 @@ cFunctionCall.parse	= function (oLexer) {
 		//
 		if (oLexer.peek() != ')') {
 			do {
-				oExpr.args.push(cExprSingle.parse(oLexer));
+				oExpr.args.push(cExprSingle.parse(oLexer, oResolver));
 			}
 			while (oLexer.peek() == ',' && oLexer.next());
 			//

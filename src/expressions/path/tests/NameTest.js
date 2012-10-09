@@ -12,7 +12,7 @@ function cNameTest(sPrefix, sLocalName) {
 	this.localName	= sLocalName;
 };
 
-cNameTest.QNAME	= /^(?:([\w-]+|\*):)?([\w-]+|\*)$/i;
+cNameTest.RegExp	= /^(?:(?![0-9-])([\w-]+|\*)\:)?(?![0-9-])([\w-]+|\*)$/;
 
 cNameTest.prototype	= new cNodeTest;
 
@@ -20,10 +20,11 @@ cNameTest.prototype.prefix		= null;
 cNameTest.prototype.localName	= null;
 
 // Static members
-cNameTest.parse	= function (oLexer) {
-	if (oLexer.peek().match(cNameTest.QNAME)) {
+cNameTest.parse	= function (oLexer, oResolver) {
+	var aMatch	= oLexer.peek().match(cNameTest.RegExp);
+	if (aMatch) {
 		oLexer.next();
-		return new cNameTest(cRegExp.$1 || null, cRegExp.$2 || null);
+		return new cNameTest(aMatch[1] || null, aMatch[2] || null);
 	}
 };
 

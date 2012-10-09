@@ -20,8 +20,8 @@ cUnionExpr.prototype.items	= null;
 //cUnionExpr.operators['union']	= {};
 
 // Static members
-cUnionExpr.parse	= function (oLexer) {
-	var oExpr	= cIntersectExceptExpr.parse(oLexer);
+cUnionExpr.parse	= function (oLexer, oResolver) {
+	var oExpr	= cIntersectExceptExpr.parse(oLexer, oResolver);
 	if (oLexer.eof() ||!(oLexer.peek() == '|' || oLexer.peek() == "union"))
 		return oExpr;
 
@@ -29,7 +29,7 @@ cUnionExpr.parse	= function (oLexer) {
 	var oUnionExpr	= new cUnionExpr(oExpr);
 	while (oLexer.peek() == '|' || oLexer.peek() == "union") {
 		oLexer.next();
-		oExpr	= cIntersectExceptExpr.parse(oLexer);
+		oExpr	= cIntersectExceptExpr.parse(oLexer, oResolver);
 		oUnionExpr.items.push(oExpr);
 	}
 	return oUnionExpr;

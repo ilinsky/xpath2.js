@@ -14,13 +14,13 @@ function cExpr() {
 cExpr.prototype.items	= null;
 
 // Static members
-cExpr.parse	= function(oLexer) {
+cExpr.parse	= function(oLexer, oResolver) {
 	var oExpr	= new cExpr;
 	//
 	if (oLexer.eof())
 		throw "Expr.parse: Expected ExprSingle expression";
 	do {
-		oExpr.items.push(cExprSingle.parse(oLexer));
+		oExpr.items.push(cExprSingle.parse(oLexer, oResolver));
 	}
 	while (oLexer.peek() == ',' && oLexer.next());
 	//

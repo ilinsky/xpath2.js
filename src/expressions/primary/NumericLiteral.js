@@ -14,7 +14,7 @@ function cNumericLiteral(nValue) {
 cNumericLiteral.prototype	= new cLiteral;
 
 // Integer | Decimal | Double
-cNumericLiteral.parse	= function(oLexer) {
+cNumericLiteral.parse	= function(oLexer, oResolver) {
 	var nValue	= +oLexer.peek();
 	if (!fIsNaN(nValue)) {
 		oLexer.next();
