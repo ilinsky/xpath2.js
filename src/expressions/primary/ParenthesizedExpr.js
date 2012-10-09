@@ -13,18 +13,16 @@ function cParenthesizedExpr(oExpr) {
 
 // Static members
 cParenthesizedExpr.parse	= function (oLexer) {
-	var oExpr;
 	if (oLexer.peek() == '(') {
 		oLexer.next();
 		// Check if not empty (allowed)
-		if (oLexer.peek() == ')')
-			oExpr	= null;
-		else
+		var oExpr	= null;
+		if (oLexer.peek() != ')')
 			oExpr	= cExpr.parse(oLexer);
+
 		//
-		if (oLexer.peek() == ')') {
+		if (oLexer.peek() == ')')
 			oLexer.next();
-		}
 		else
 			throw "ParenthesizedExpr.parse: Expected ')' token";
 		//
@@ -34,5 +32,5 @@ cParenthesizedExpr.parse	= function (oLexer) {
 
 // Public members
 cParenthesizedExpr.prototype.evaluate	= function (oContext) {
-	return this.expression.evaluate(oContext);
+	return this.expression ? this.expression.evaluate(oContext) : new cXPathSequence;
 };
