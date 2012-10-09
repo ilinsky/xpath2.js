@@ -1,0 +1,23 @@
+ ------------------------------------
+ XPath2.js - Pure JavaScript implementation of XPath 2.0 parser and evaluator
+ ------------------------------------
+ Copyright (c) 2012 Sergey Ilinsky
+ Dual licensed under the MIT and GPL
+ ------------------------------------
+
+ About:
+ ===============
+   XPath2.js is an open-source JavaScript library that implements XPath 2.0
+   It can run against any standard-complient DOM Core Level 3 model,
+   yet it can be easily adjusted for other implementations (check XPathDOMInterface.js)
+
+ Structure:
+ ===============
+   src/ - Contains implementation of XPath 2.0 parser and evaluator
+   dom/ - Contains API objects that mimic DOM Level 3 XPath 1
+   test/unit/ - Contains unit.js XPath 2.0 tests
+
+ Usage:
+ ===============
+   You can link library sources with DOM API to dom/xpath2.js
+   XPath2Evaluator, XPath2Exception and XPath2Result objects available
