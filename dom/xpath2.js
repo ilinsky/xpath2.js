@@ -19,16 +19,19 @@
 	//
 	files.push("../src/expressions/Expr.js");
 	files.push("../src/expressions/ExprSingle.js");
-	files.push("../src/expressions/ForExpr.js");
-	files.push("../src/expressions/IfExpr.js");
-	files.push("../src/expressions/QuantifiedExpr.js");
+	//
+	files.push("../src/expressions/for/ForExpr.js");
+	//
+	files.push("../src/expressions/if/IfExpr.js");
+	//
+	files.push("../src/expressions/quantified/QuantifiedExpr.js");
+	//
+	files.push("../src/expressions/comparison/ComparisonExpr.js");
 	//
 	files.push("../src/expressions/arithmetic/AdditiveExpr.js");
 	files.push("../src/expressions/arithmetic/MultiplicativeExpr.js");
 	files.push("../src/expressions/arithmetic/UnaryExpr.js");
 	files.push("../src/expressions/arithmetic/ValueExpr.js");
-	//
-	files.push("../src/expressions/comparison/ComparisonExpr.js");
 	//
 	files.push("../src/expressions/logical/OrExpr.js");
 	files.push("../src/expressions/logical/AndExpr.js");
