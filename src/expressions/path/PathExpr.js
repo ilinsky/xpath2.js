@@ -22,7 +22,11 @@ cPathExpr.parse	= function (oLexer) {
 	// Parse first step
 	if (oLexer.peek() == sSingleSlash) {
 		oLexer.next();
-		oExpr.items.push(new cFunctionCall("root"));
+		oExpr.items.push(new cFunctionCall(null, "root"));
+
+		// Special case: '/'
+		if (oLexer.eof())
+			return oExpr;
 	}
 	else
 	if (oLexer.peek() == sDoubleSlash) {
