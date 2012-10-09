@@ -11,24 +11,14 @@ function cStringLiteral(sValue) {
 	this.value	= sValue;
 };
 
-cStringLiteral.RegExp	= /^'([^']+)'|"([^"]+)"$/;
+cStringLiteral.RegExp	= /^'([^']*(?:''[^']*)*)'|"([^"]*(?:""[^"]*)*)"$/;
 
 cStringLiteral.prototype	= new cLiteral;
 
 cStringLiteral.parse	= function(oLexer, oResolver) {
 	var aMatch	= oLexer.peek().match(cStringLiteral.RegExp);
 	if (aMatch) {
-		var aValue	= [],
-			sValue;
-		// Do..while cycle required to account for XPath quote escaping
-		do {
-			aValue.push(aMatch[1] || aMatch[2]);
-			sValue	= oLexer.peek().substr(-1, 1);
-			oLexer.next();
-		} while (!oLexer.eof()
-			&&(aMatch = oLexer.peek().match(cStringLiteral.RegExp))
-			&&(sValue == oLexer.peek().substr(0, 1)));
-
-		return new cStringLiteral(aValue.join(sValue));
+		oLexer.next();
+		return new cStringLiteral(aMatch[1] || aMatch[2]);
 	}
 };
