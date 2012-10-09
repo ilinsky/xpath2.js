@@ -30,7 +30,7 @@ cXPathExpression.prototype.evaluate	= function(oNode, nType, oResult) {
 //	]);
 
 	// Invoke implementation
-	return fXPathExpression_evaluate(oExpression, oNode, nType, oResult);
+	return fXPathExpression_evaluate(this, oNode, nType, oResult);
 };
 
 function fXPathExpression_evaluate(oExpression, oNode, nType, oResult) {
