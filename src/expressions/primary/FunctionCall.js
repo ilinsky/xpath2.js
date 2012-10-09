@@ -62,7 +62,7 @@ cFunctionCall.prototype.evaluate	= function (oContext) {
 		return fFunction.apply(oContext, aArguments);
 	else
 	if ((fFunction = window[sFunction]) && typeof fFunction == "function")
-		return fFunction.apply(oContext, aArguments);
+		return fFunction.apply(window, aArguments);
 	else
-		throw "Could not find function: " + sFunction;
+		throw "FunctionCall.prototype.evaluate: Could not find function: " + sFunction;
 };
