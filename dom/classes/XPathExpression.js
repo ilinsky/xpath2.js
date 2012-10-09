@@ -8,9 +8,7 @@
  */
 
 function cXPathExpression(sExpression, oResolver) {
-//	try {
-		if (!sExpression.length)
-			throw new cXPathException(cXPathException.INVALID_EXPRESSION_ERR);
+	try {
 		//
 		var oLexer	= new cXPathLexer(sExpression);
 		this.expression	= cExpr.parse(oLexer);
@@ -18,9 +16,9 @@ function cXPathExpression(sExpression, oResolver) {
 		//
 		if (!oLexer.eof())
 			throw "Junk at the end of expression";
-/*	} catch (e) {
+	} catch (e) {
 		throw new cXPathException(cXPathException.INVALID_EXPRESSION_ERR);
-	}*/
+	}
 };
 
 cXPathExpression.prototype.evaluate	= function(oNode, nType, oResult) {
