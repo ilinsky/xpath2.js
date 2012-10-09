@@ -21,8 +21,3 @@ cPrimaryExpr.parse	= function (oLexer) {
 
 	return oExpr;
 };
-
-// Public members
-cPrimaryExpr.prototype.evaluate	= function (oContext) {
-
-};

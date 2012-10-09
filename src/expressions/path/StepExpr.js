@@ -40,10 +40,6 @@ cStepExpr.parsePredicates	= function (oLexer, oStep) {
 };
 
 // Public members
-cStepExpr.prototype.evaluate	= function (oContext) {
-
-};
-
 cStepExpr.prototype.applyPredicates	= function(oContext) {
 	var oSequence	= oContext.sequence,
 		oSequence1,

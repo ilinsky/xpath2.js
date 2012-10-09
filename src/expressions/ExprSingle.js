@@ -23,8 +23,3 @@ cExprSingle.parse	= function (oLexer) {
 
 	throw "ExprSingle.parse: Expected ExprSingle expression";
 };
-
-// Public members
-cExprSingle.prototype.evaluate	= function (oContext) {
-
-};

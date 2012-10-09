@@ -21,8 +21,3 @@ cNodeTest.parse	= function (oLexer) {
 
 	throw "NodeTest.parse: Expected NodeTest expression";
 };
-
-// Public members
-cNodeTest.prototype.test	= function (oNode) {
-
-};
