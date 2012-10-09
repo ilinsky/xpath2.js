@@ -30,7 +30,7 @@ cUnaryExpr.parse	= function (oLexer) {
 	var sOperation	= oLexer.peek();
 	oLexer.next();
 	if (oLexer.eof())
-		throw "UnaryExpr.parse: missing ValueExpr";
+		throw "UnaryExpr.parse: Expected ValueExpr expression";
 	var oUnaryExpr	= new cUnaryExpr(sOperation, cValueExpr.parse(oLexer));
 	return oUnaryExpr;
 };

@@ -17,9 +17,6 @@ cContextItemExpr.parse	= function (oLexer) {
 		oLexer.next();
 		return new cContextItemExpr;
 	}
-	else {
-		throw "Not ContextItemExpr";
-	}
 };
 
 // Public members

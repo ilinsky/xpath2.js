@@ -63,16 +63,16 @@ cKindTest.parse	= function (oLexer) {
 			}
 			else {
 				if (sName == "schema-attribute") {
-					throw "KindTest.parse: AttributeDeclaration missing";
+					throw "KindTest.parse: Expected AttributeDeclaration expression";
 				}
 				else
 				if (sName == "schema-element") {
-					throw "KindTest.parse: ElementDeclaration missing";
+					throw "KindTest.parse: Expected ElementDeclaration expression";
 				}
 			}
 
 			if (oLexer.peek() != ')')
-				throw "KindTest.parse: Token ')' expected";
+				throw "KindTest.parse: Expected ')' token";
 
 			oLexer.next();
 

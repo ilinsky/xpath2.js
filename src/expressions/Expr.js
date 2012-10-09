@@ -22,7 +22,7 @@ cExpr.parse	= function(oLexer) {
 	while (oLexer.peek() == ',' && oLexer.next());
 	//
 	if (oLexer.peek(-1) == ',')
-		throw "Expr.parse: ExprSingle expected";
+		throw "Expr.parse: Expected ExprSingle expression";
 	//
 	return oExpr;
 };

@@ -13,17 +13,13 @@ function cNodeTest() {
 
 // Static members
 cNodeTest.parse	= function (oLexer) {
-	// Try as KindTest
-	var oExpr	= cKindTest.parse(oLexer);
+	var oExpr	= cKindTest.parse(oLexer)
+					|| cNameTest.parse(oLexer);
+
 	if (oExpr)
 		return oExpr;
 
-	// Try as NameTest
-	oExpr	= cNameTest.parse(oLexer);
-	if (oExpr)
-		return oExpr;
-
-	throw "Not a NodeTest";
+	throw "NodeTest.parse: Expected NodeTest expression";
 };
 
 // Public members

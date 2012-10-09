@@ -40,13 +40,11 @@ cFunctionCall.parse	= function (oLexer) {
 			while (oLexer.peek() == ',' && oLexer.next());
 			//
 			if (oLexer.peek() != ')')
-				throw "FunctionCall.parse error: missing required ')' token";
+				throw "FunctionCall.parse: Expected ')' token";
 		}
 		oLexer.next();
 		return oExpr;
 	}
-	else
-		throw "Not FunctionCall";
 };
 
 // Public members

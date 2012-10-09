@@ -13,22 +13,15 @@ function cExprSingle() {
 
 // Static members
 cExprSingle.parse	= function (oLexer) {
-	try {
-		return cForExpr.parse(oLexer);
-	}
-	catch (e) {
-		try {
-			return cQuantifiedExpr.parse(oLexer);
-		}
-		catch (e) {
-			try {
-				return cIfExpr.parse(oLexer);
-			}
-			catch (e) {
-				return cOrExpr.parse(oLexer);
-			}
-		}
-	}
+	var oExpr	= cForExpr.parse(oLexer)
+					|| cQuantifiedExpr.parse(oLexer)
+					|| cIfExpr.parse(oLexer)
+					|| cOrExpr.parse(oLexer);
+
+	if (oExpr)
+		return oExpr;
+
+	throw "ExprSingle.parse: Expected ExprSingle expression";
 };
 
 // Public members

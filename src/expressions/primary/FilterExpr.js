@@ -17,15 +17,18 @@ cFilterExpr.prototype.predicates	= null;
 
 // Static members
 cFilterExpr.parse	= function (oLexer) {
-	var oFilterExpr	= new cFilterExpr(cPrimaryExpr.parse(oLexer));
-	// Parse predicates
-	cStepExpr.parsePredicates(oLexer, oFilterExpr);
+	var oExpr	= cPrimaryExpr.parse(oLexer);
+	if (oExpr) {
+		var oFilterExpr	= new cFilterExpr(oExpr);
+		// Parse predicates
+		cStepExpr.parsePredicates(oLexer, oFilterExpr);
 
-	// If no predicates found
-	if (oFilterExpr.predicates.length == 0)
-		return oFilterExpr.expression;
+		// If no predicates found
+		if (oFilterExpr.predicates.length == 0)
+			return oFilterExpr.expression;
 
-	return oFilterExpr;
+		return oFilterExpr;
+	}
 };
 
 // Public members

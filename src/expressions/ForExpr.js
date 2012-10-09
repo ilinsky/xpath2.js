@@ -27,14 +27,12 @@ cForExpr.parse	= function (oLexer) {
 		while (oLexer.peek() == ',' && oLexer.next());
 
 		if (oLexer.peek() != "return")
-			throw "ForExpr.parse: 'return' statement missing";
+			throw "ForExpr.parse: Expected 'return' token";
 
 		oLexer.next();
 		oForExpr.returnExpr	= cExprSingle.parse(oLexer);
 		return oForExpr;
 	}
-	else
-		throw "Not ForExpr expression";
 };
 
 // Public members

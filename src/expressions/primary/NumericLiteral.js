@@ -20,7 +20,4 @@ cNumericLiteral.parse	= function(oLexer) {
 		oLexer.next();
 		return new cNumericLiteral(nValue);
 	}
-	else {
-		throw "Not NumericLiteral";
-	}
 };

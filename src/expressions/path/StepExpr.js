@@ -13,12 +13,13 @@ function cStepExpr() {
 
 // Static members
 cStepExpr.parse	= function (oLexer) {
-	try {
-		return cFilterExpr.parse(oLexer);
-	}
-	catch (e) {
-		return cAxisStep.parse(oLexer);
-	}
+	var oExpr	= cFilterExpr.parse(oLexer)
+					|| cAxisStep.parse(oLexer);
+
+	if (oExpr)
+		return oExpr;
+
+	throw "StepExpr.parse: Expected StepExpr expression";
 };
 
 cStepExpr.parsePredicates	= function (oLexer, oStep) {
@@ -27,15 +28,12 @@ cStepExpr.parsePredicates	= function (oLexer, oStep) {
 		oLexer.next();
 
 		if (oLexer.eof())
-			throw "StepExpr.parsePredicates: Missing predicate expression";
+			throw "StepExpr.parsePredicates: Expected Expr expression";
 
 		oStep.predicates.push(cExpr.parse(oLexer));
 
-		if (oLexer.eof())
-			throw "StepExpr.parsePredicates: Predicate not closed";
-
-		if (oLexer.peek() != ']')
-			throw "StepExpr.parsePredicates: Bad input: " + oLexer.peek();
+		if (oLexer.eof() || oLexer.peek() != ']')
+			throw "StepExpr.parsePredicates: Expected ']' token";
 
 		oLexer.next();
 	}

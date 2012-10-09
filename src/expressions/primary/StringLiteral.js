@@ -28,7 +28,4 @@ cStringLiteral.parse	= function(oLexer) {
 
 		return new cStringLiteral(aValue.join(''));;
 	}
-	else {
-		throw "Not StringLiteral";
-	}
 };

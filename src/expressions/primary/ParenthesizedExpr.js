@@ -26,12 +26,10 @@ cParenthesizedExpr.parse	= function (oLexer) {
 			oLexer.next();
 		}
 		else
-			throw "ParenthesizedExpr.parse: expected ')' token not found";
+			throw "ParenthesizedExpr.parse: Expected ')' token";
 		//
 		return new cParenthesizedExpr(oExpr);
 	}
-	else
-		throw "Not ParenthesizedExpr";
 };
 
 // Public members

@@ -40,19 +40,17 @@ cIfExpr.parse	= function (oLexer) {
 					return new cIfExpr(oCondExpr, oThenExpr, oElseExpr);
 				}
 				else {
-					throw "IfExpr parsing error: 'else' expected";
+					throw "IfExpr.parse: Expected 'else' token";
 				}
 			}
 			else {
-				throw "IfExpr parsing error: 'then' expected";
+				throw "IfExpr.parse: Expected 'then' token";
 			}
 		}
 		else {
-			throw "IfExpr parsing error: ')' expected";
+			throw "IfExpr.parse: Expected ')' token";
 		}
 	}
-	else
-		throw "Not IfExpr expression";
 };
 
 // Public members

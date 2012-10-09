@@ -30,14 +30,12 @@ cQuantifiedExpr.parse	= function (oLexer) {
 		while (oLexer.peek() == ',' && oLexer.next());
 
 		if (oLexer.peek() != "satisfies")
-			throw "QuantifiedExpr.parse: 'satisfies' statement missing";
+			throw "QuantifiedExpr.parse: Expected 'satisfies' token";
 
 		oLexer.next();
 		oQuantifiedExpr.satisfiesExpr	= cExprSingle.parse(oLexer);
 		return oQuantifiedExpr;
 	}
-	else
-		throw "Not QuantifiedExpr expression";
 };
 
 // Public members

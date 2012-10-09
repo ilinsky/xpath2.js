@@ -24,9 +24,6 @@ cVarRef.parse	= function (oLexer) {
 		oVarRef	= new cVarRef(cRegExp.$1, cRegExp.$2);
 		oLexer.next();
 	}
-	else {
-		throw "Not VarRef";
-	}
 	return oVarRef;
 };
 

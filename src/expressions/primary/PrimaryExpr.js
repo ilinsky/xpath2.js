@@ -13,27 +13,13 @@ function cPrimaryExpr() {
 
 // Static members
 cPrimaryExpr.parse	= function (oLexer) {
-	try {
-		return cLiteral.parse(oLexer);
-	}
-	catch (e) {
-		try {
-			return cVarRef.parse(oLexer);
-		}
-		catch (e) {
-			try {
-				return cParenthesizedExpr.parse(oLexer);
-			}
-			catch (e) {
-				try {
-					return cContextItemExpr.parse(oLexer);
-				}
-				catch (e) {
-					return cFunctionCall.parse(oLexer);
-				}
-			}
-		}
-	}
+	var oExpr	= cLiteral.parse(oLexer)
+					|| cVarRef.parse(oLexer)
+					|| cParenthesizedExpr.parse(oLexer)
+					|| cContextItemExpr.parse(oLexer)
+					|| cFunctionCall.parse(oLexer);
+
+	return oExpr;
 };
 
 // Public members

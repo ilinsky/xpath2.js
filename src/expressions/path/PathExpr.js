@@ -31,7 +31,7 @@ cPathExpr.parse	= function (oLexer) {
 	}
 	//
 	if (oLexer.eof())
-		throw "PathExpr.parse: StepExpr expected";
+		throw "PathExpr.parse: Expected StepExpr expression";
 	//
 	oExpr.items.push(cStepExpr.parse(oLexer));
 
@@ -46,7 +46,7 @@ cPathExpr.parse	= function (oLexer) {
 			oLexer.next();
 		//
 		if (oLexer.eof())
-			throw "PathExpr.parse: StepExpr expected";
+			throw "PathExpr.parse: Expected StepExpr expression";
 		//
 		oExpr.items.push(cStepExpr.parse(oLexer));
 	}
