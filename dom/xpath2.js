@@ -76,7 +76,6 @@
 	files.push("classes/XPathEvaluator.js");
 	files.push("classes/XPathException.js");
 	files.push("classes/XPathExpression.js");
-	files.push("classes/XPathNamespace.js");
 	files.push("classes/XPathNSResolver.js");
 	files.push("classes/XPathResult.js");
 	// Export objects to environment
