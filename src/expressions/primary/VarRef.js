@@ -19,12 +19,11 @@ cVarRef.prototype.localName	= null;
 
 // Static members
 cVarRef.parse	= function (oLexer) {
-	var oVarRef;
 	if (oLexer.peek().match(cVarRef.QNAME)) {
-		oVarRef	= new cVarRef(cRegExp.$1, cRegExp.$2);
+		var oVarRef	= new cVarRef(cRegExp.$1 || null, cRegExp.$2);
 		oLexer.next();
+		return oVarRef;
 	}
-	return oVarRef;
 };
 
 // Public members
