@@ -9,7 +9,7 @@
 
 (function() {
 	var files	= [];
-	// Import objects from environemnt
+	// Import objects from environment
 	files.push("../src/import.js");
 	// Helper classes
 	files.push("../src/helpers/XPathError.js");
