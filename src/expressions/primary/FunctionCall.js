@@ -49,7 +49,7 @@ cFunctionCall.parse	= function (oLexer) {
 
 // Public members
 cFunctionCall.prototype.evaluate	= function (oContext) {
-	var sFunction	= this.prefix == null ? this.localName : this.$root.$resolver(this.prefix) + '#' + this.localName,
+	var sFunction	= this.localName,
 		aArguments	= [],
 		fFunction;
 
