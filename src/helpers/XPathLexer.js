@@ -8,19 +8,21 @@
  */
 
 function cXPathLexer(sValue) {
-	var aMatch	= sValue.match(/\$?(?:(?![0-9-])(?:[\w-]+|\*):)?(?![0-9-])(?:[\w-]+|\*)|\(:|:\)|\/\/|\.\.|::|\d+(?:\.\d*)?|\.\d+|"[^"]*"|'[^']*'|<<|>>|[!<>]=|(?![0-9-])[\w-]+:\*|\s+|./g),
-		nStack	= 0;
-	for (var nIndex = 0, nLength = aMatch.length; nIndex < nLength; nIndex++)
-		if (aMatch[nIndex] == '(:')
-			nStack++;
-		else
-		if (aMatch[nIndex] == ':)' && nStack)
-			nStack--;
-		else
-		if (!nStack && !/^\s/.test(aMatch[nIndex]))
-			this[this.length++]	= aMatch[nIndex];
-	if (nStack)
-		throw "XPathLexer: comments not closed";
+	var aMatch	= sValue.match(/\$?(?:(?![0-9-])(?:[\w-]+|\*):)?(?![0-9-])(?:[\w-]+|\*)|\(:|:\)|\/\/|\.\.|::|\d+(?:\.\d*)?|\.\d+|"[^"]*"|'[^']*'|<<|>>|[!<>]=|(?![0-9-])[\w-]+:\*|\s+|./g);
+	if (aMatch) {
+		var nStack	= 0;
+		for (var nIndex = 0, nLength = aMatch.length; nIndex < nLength; nIndex++)
+			if (aMatch[nIndex] == '(:')
+				nStack++;
+			else
+			if (aMatch[nIndex] == ':)' && nStack)
+				nStack--;
+			else
+			if (!nStack && !/^\s/.test(aMatch[nIndex]))
+				this[this.length++]	= aMatch[nIndex];
+		if (nStack)
+			throw "XPathLexer: comments not closed";
+	}
 };
 
 cXPathLexer.prototype.index		= 0;
