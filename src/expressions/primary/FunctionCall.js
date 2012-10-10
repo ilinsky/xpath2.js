@@ -12,7 +12,7 @@ function cFunctionCall(sUri) {
 	this.args	= [];
 };
 
-cFunctionCall.RegExp	= /^(?:(?![0-9-])([\w-]+)\:)?(?![0-9-])([\w-]+|\*)$/;
+cFunctionCall.RegExp	= /^(?:(?![0-9-])([\w-]+|\*)\:)?(?![0-9-])([\w-]+|\*)$/;
 
 cFunctionCall.prototype.uri		= null;
 cFunctionCall.prototype.args	= null;
@@ -25,6 +25,8 @@ cFunctionCall.functions	= {};
 cFunctionCall.parse	= function (oLexer, oResolver) {
 	var aMatch	= oLexer.peek().match(cFunctionCall.RegExp);
 	if (aMatch && oLexer.peek(1) == '(') {
+		if (aMatch[1] == '*' || aMatch[2] == '*')
+			throw "FunctionCall.parse: illegal use of wildcard in function name";
 		var oExpr	= new cFunctionCall((aMatch[1] ? oResolver(aMatch[1]) + '#' : '') + aMatch[2]);
 		oLexer.next();
 		oLexer.next();
