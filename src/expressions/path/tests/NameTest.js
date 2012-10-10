@@ -12,7 +12,7 @@ function cNameTest(sNameSpaceURI, sLocalName) {
 	this.localName		= sLocalName;
 };
 
-cNameTest.RegExp	= /^(?:(?![0-9-])([\w-]+)\:)?(?![0-9-])([\w-]+|\*)$/;
+cNameTest.RegExp	= /^(?:(?![0-9-])([\w-]+|\*)\:)?(?![0-9-])([\w-]+|\*)$/;
 
 cNameTest.prototype	= new cNodeTest;
 
