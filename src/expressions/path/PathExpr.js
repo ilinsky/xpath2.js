@@ -26,7 +26,7 @@ cPathExpr.parse	= function (oLexer, oResolver) {
 
 		// Special case: '/'
 		if (oLexer.eof())
-			return oExpr;
+			return oExpr.items[0];
 	}
 	else
 	if (oLexer.peek() == sDoubleSlash) {
@@ -55,8 +55,8 @@ cPathExpr.parse	= function (oLexer, oResolver) {
 		oExpr.items.push(cStepExpr.parse(oLexer, oResolver));
 	}
 
-//	if (oExpr.items.length == 1)
-//		return oExpr.items[0];
+	if (oExpr.items.length == 1)
+		return oExpr.items[0];
 
 	//
 	return oExpr;
