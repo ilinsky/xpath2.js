@@ -9,7 +9,7 @@
 
 function cXPathContext(oSequence, nPosition, oScope) {
 	this.sequence	= oSequence || new cXPathSequence;
-	this.position	= nPosition || 0;
+	this.position	= nPosition || 1;
 	this.scope	= oScope || {};
 	this.stack	= {};
 };
