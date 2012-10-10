@@ -11,13 +11,13 @@ function cVarRef(sUri) {
 	this.uri	= sUri;
 };
 
-cVarRef.QNAME	= /^\$(?:(?![0-9-])([\w-]+)\:)?(?![0-9-])([\w-]+|\*)$/;
+cVarRef.RegExp	= /^\$(?:(?![0-9-])([\w-]+)\:)?(?![0-9-])([\w-]+)$/;
 
 cVarRef.prototype.uri	= null;
 
 // Static members
 cVarRef.parse	= function (oLexer, oResolver) {
-	var aMatch	= oLexer.peek().match(cVarRef.QNAME);
+	var aMatch	= oLexer.peek().match(cVarRef.RegExp);
 	if (aMatch) {
 		var oVarRef	= new cVarRef((aMatch[1] ? oResolver(aMatch[1]) + '#' : '') + aMatch[2]);
 		oLexer.next();

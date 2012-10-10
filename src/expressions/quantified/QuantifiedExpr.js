@@ -70,7 +70,7 @@ function cSimpleQuantifiedBinding(sUri, oInExpr) {
 cSimpleQuantifiedBinding.prototype.uri		= null;
 cSimpleQuantifiedBinding.prototype.inExpr	= null;
 
-cSimpleQuantifiedBinding.RegExp	= /^\$(?:(?![0-9-])([\w-]+)\:)?(?![0-9-])([\w-]+|\*)$/;
+cSimpleQuantifiedBinding.RegExp	= /^\$(?:(?![0-9-])([\w-]+)\:)?(?![0-9-])([\w-]+)$/;
 
 cSimpleQuantifiedBinding.parse	= function(oLexer, oResolver) {
 	var aMatch	= oLexer.peek().match(cSimpleQuantifiedBinding.RegExp);

@@ -65,7 +65,7 @@ function cSimpleForBinding(sUri, oInExpr) {
 cSimpleForBinding.prototype.uri		= null;
 cSimpleForBinding.prototype.inExpr	= null;
 
-cSimpleForBinding.RegExp	= /^\$(?:(?![0-9-])([\w-]+)\:)?(?![0-9-])([\w-]+|\*)$/;
+cSimpleForBinding.RegExp	= /^\$(?:(?![0-9-])([\w-]+)\:)?(?![0-9-])([\w-]+)$/;
 
 cSimpleForBinding.parse	= function(oLexer, oResolver) {
 	var aMatch	= oLexer.peek().match(cSimpleForBinding.RegExp);
