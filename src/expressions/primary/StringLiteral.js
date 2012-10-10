@@ -19,6 +19,6 @@ cStringLiteral.parse	= function(oLexer, oResolver) {
 	var aMatch	= oLexer.peek().match(cStringLiteral.RegExp);
 	if (aMatch) {
 		oLexer.next();
-		return new cStringLiteral(aMatch[1] || aMatch[2]);
+		return new cStringLiteral(aMatch[1] ? aMatch[1].replace("''", "'") : aMatch[2].replace('""', '"'));
 	}
 };
