@@ -23,6 +23,8 @@ cNameTest.prototype.localName		= null;
 cNameTest.parse	= function (oLexer, oResolver) {
 	var aMatch	= oLexer.peek().match(cNameTest.RegExp);
 	if (aMatch) {
+		if (aMatch[1] == '*' && aMatch[2] == '*')
+			throw "NameTest.parse: illegal wildcard value";
 		oLexer.next();
 		return new cNameTest(aMatch[1] ? oResolver(aMatch[1]) : null, aMatch[2]);
 	}
