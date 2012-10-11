@@ -26,11 +26,11 @@ cNameTest.parse	= function (oLexer, oResolver) {
 		if (aMatch[1] == '*' && aMatch[2] == '*')
 			throw "NameTest.parse: illegal wildcard value";
 		oLexer.next();
-		return new cNameTest(aMatch[1] ? oResolver(aMatch[1]) : null, aMatch[2]);
+		return new cNameTest(aMatch[1] ? aMatch[1] == '*' ? '*' : oResolver(aMatch[1]) : null, aMatch[2]);
 	}
 };
 
 // Public members
 cNameTest.prototype.test	= function (oNode, fResolver) {
-	return oNode.nodeType == 1 && (this.localName == '*' || oNode.localName == this.localName)/* && oNode.lookupNamespaceUri(oNode.prefix) == fResolver(this.prefix)*/;
+	return oNode.nodeType == 1 && (this.localName == '*' || oNode.localName == this.localName) && (this.namespaceURI == '*' || oNode.namespaceURI == this.namespaceURI);
 };
