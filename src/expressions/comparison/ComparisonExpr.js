@@ -7,14 +7,18 @@
  *
  */
 
-function cComparisonExpr(oLeft, oRight, sComparator) {
+function cComparisonExpr(oLeft, oRight, sOperator) {
 	this.left	= oLeft;
 	this.right	= oRight;
-	this.comparator	= sComparator;
+	this.operator	= sOperator;
 };
 
-// Comparators
-cComparisonExpr.comparators	= {
+cComparisonExpr.prototype.left	= null;
+cComparisonExpr.prototype.right	= null;
+cComparisonExpr.prototype.operator	= null;
+
+// Operators
+cComparisonExpr.operators	= {
 	// GeneralComp
 	'=':	[],
 	'!=':	[],
@@ -38,19 +42,19 @@ cComparisonExpr.comparators	= {
 // Static members
 cComparisonExpr.parse	= function (oLexer, oResolver) {
 	var oExpr	= cRangeExpr.parse(oLexer, oResolver);
-	if (oLexer.eof() ||!(oLexer.peek() in cComparisonExpr.comparators))
+	if (oLexer.eof() ||!(oLexer.peek() in cComparisonExpr.operators))
 		return oExpr;
 
 	// Comparison expression
-	var sComparator	= oLexer.peek();
+	var sOperator	= oLexer.peek();
 	oLexer.next();
-	return new cComparisonExpr(oExpr, cRangeExpr.parse(oLexer, oResolver), sComparator);
+	return new cComparisonExpr(oExpr, cRangeExpr.parse(oLexer, oResolver), sOperator);
 };
 
 // Public members
 cComparisonExpr.prototype.evaluate	= function (oContext) {
 	var oLeft	= this.left.evaluate(oContext);
-	switch (this.comparator) {
+	switch (this.operator) {
 		// General Comp
 		case '=':
 		case '!=':
@@ -75,7 +79,7 @@ cComparisonExpr.prototype.evaluate	= function (oContext) {
 				oAtomizedRight	= cXPathSequence.atomizeItem(oRight.items[0]);
 
 			// Compare
-			switch (this.comparator) {
+			switch (this.operator) {
 				case '=':	return new cXPathSequence(oAtomizedLeft == oAtomizedRight);
 				case '!=':	return new cXPathSequence(oAtomizedLeft != oAtomizedRight);
 				case '<':	return new cXPathSequence(oAtomizedLeft < oAtomizedRight);
@@ -109,7 +113,7 @@ cComparisonExpr.prototype.evaluate	= function (oContext) {
 				oAtomizedRight	= cXPathSequence.atomizeItem(oRight.items[0]);
 
 			// Compare
-			switch (this.comparator) {
+			switch (this.operator) {
 				case 'eq':	return new cXPathSequence(oAtomizedLeft == oAtomizedRight);
 				case 'ne':	return new cXPathSequence(oAtomizedLeft != oAtomizedRight);
 				case 'lt':	return new cXPathSequence(oAtomizedLeft < oAtomizedRight);
