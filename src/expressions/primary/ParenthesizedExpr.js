@@ -26,6 +26,10 @@ cParenthesizedExpr.parse	= function (oLexer, oResolver) {
 		else
 			throw "ParenthesizedExpr.parse: Expected ')' token";
 		//
+//		if (oExpr && oExpr.items.length == 1)
+//			return oExpr.items[0];
+
+		//
 		return new cParenthesizedExpr(oExpr);
 	}
 };
