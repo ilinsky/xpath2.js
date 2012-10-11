@@ -13,7 +13,7 @@ function cIfExpr(oCondExpr, oThenExpr, oElseExpr) {
 	this.elseExpr		= oElseExpr;
 };
 
-cIfExpr.prototype.ifExpr	= null;
+cIfExpr.prototype.condExpr	= null;
 cIfExpr.prototype.thenExpr	= null;
 cIfExpr.prototype.elseExpr	= null;
 
