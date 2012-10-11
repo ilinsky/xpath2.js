@@ -62,14 +62,14 @@ cComparisonExpr.prototype.evaluate	= function (oContext) {
 				return new cXPathSequence;
 			else
 			if (!oLeft.isSingleton())		// Must be singleton
-				throw "TypeError: err:XPTY0004";
+				throw new cXPathError("XPTY0004");
 
 			var oRight	= this.right.evaluate(oContext);
 			if (oRight.isEmpty())
 				return new cXPathSequence;
 			else
 			if (!oRight.isSingleton())	// Must be singleton
-				throw "TypeError: err:XPTY0004";
+				throw new cXPathError("XPTY0004");
 
 			var oAtomizedLeft	= cXPathSequence.atomizeItem(oLeft.items[0]),
 				oAtomizedRight	= cXPathSequence.atomizeItem(oRight.items[0]);
@@ -96,14 +96,14 @@ cComparisonExpr.prototype.evaluate	= function (oContext) {
 				return new cXPathSequence;
 			else
 			if (!oLeft.isSingleton())		// Must be singleton
-				throw "TypeError: err:XPTY0004";
+				throw new cXPathError("XPTY0004");
 
 			var oRight	= this.right.evaluate(oContext);
 			if (oRight.isEmpty())
 				return new cXPathSequence;
 			else
 			if (!oRight.isSingleton())	// Must be singleton
-				throw "TypeError: err:XPTY0004";
+				throw new cXPathError("XPTY0004");
 
 			var oAtomizedLeft	= cXPathSequence.atomizeItem(oLeft.items[0]),
 				oAtomizedRight	= cXPathSequence.atomizeItem(oRight.items[0]);
@@ -127,20 +127,20 @@ cComparisonExpr.prototype.evaluate	= function (oContext) {
 				return new cXPathSequence;
 			else
 			if (!oLeft.isSingleton())		// Must be singleton
-				throw "TypeError: err:XPTY0004";
+				throw new cXPathError("XPTY0004");
 			else
 			if (!oLeft.items[0].nodeType)
-				throw "TypeError: err:XPTY0004";
+				throw new cXPathError("XPTY0004");
 
 			var oRight	= this.right.evaluate(oContext);
 			if (oRight.isEmpty())
 				return new cXPathSequence;
 			else
 			if (!oRight.isSingleton())	// Must be singleton
-				throw "TypeError: err:XPTY0004";
+				throw new cXPathError("XPTY0004");
 			else
 			if (!oRight.items[0].nodeType)
-				throw "TypeError: err:XPTY0004";
+				throw new cXPathError("XPTY0004");
 
 			switch (this.operator) {
 				case 'is':	return oLeft.items[0] == oRight.items[0];

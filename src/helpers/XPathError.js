@@ -16,6 +16,7 @@ function cXPathError(sCode) {
 
 var oXPathError_messages	= {};
 oXPathError_messages["XPST0003"]	= "Expression is not a valid instance of the grammar";
+oXPathError_messages["XPTY0004"]	= "Type is not appropriate for the context in which the expression occurs";
 oXPathError_messages["XPST0008"]	= "Expression refers to an element name, attribute name, schema type name, namespace prefix, or variable name that is not defined in the static context";
 oXPathError_messages["XPST0010"]	= "Axis not supported";
 oXPathError_messages["XPST0017"]	= "Expanded QName and number of arguments in a function call do not match the name and arity of a function signature";
