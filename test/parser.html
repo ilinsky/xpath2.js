@@ -13,8 +13,8 @@
 	<body>
 		<script>
 		(function() {
-			// *** 3.1 Primary Expressions 		-> misc (sequence)
-			// 3.2 Path Expressions 		-> sequence
+			// +++ 3.1 Primary Expressions 		-> misc (sequence)
+			// *** 3.2 Path Expressions 		-> sequence
 			// +++ 3.3 Sequence Expressions 	-> sequence
 			// +++ 3.4 Arithmetic Expressions 	-> number
 			// *** 3.5 Comparison Expressions 	-> boolean
@@ -31,19 +31,19 @@
 					default:
 						return null;
 				}
-			}
+			};
 
 			var aParseTests	= [
+				[".", true],
+				["1", true],
 			["Empty expression"],
 				["", false],
-				[" 0 ", true],
 			["Comments"],
 				[" 1 (:comment:)", true],
 				[" 2 (:com (:comment:) ment:)", true],
 				[" 3 (:com (:comment ment:)", false],
 				[" 4 :) com (:comment:) ment(:", false],
 			["Sequences"],
-				["1", true],
 				["1 , 2", true],
 				["()",	true],
 				["(",	false],
@@ -89,7 +89,6 @@
 				["@*:*",	false],
 				["@*:?",	false],
 			["Abbreviated reverse step"],
-				[".", true],
 				["..", true],
 				["...", false],
 			["Predicates"],
@@ -125,14 +124,76 @@
 				[".5E-3",	true],
 				[".5E-3",	true],
 				["10.x",false],
+			["Arithmetic: Additive expressions"],
 				["1+2",	true],
 				["1+",	false],
 				["1-",	false],
-			["Unary expressions"],
+			["Arithmetic: Multiplicative expressions"],
+				["1 * 2",	true],
+				["1 * ",	false],
+				["1 *-1",	true],
+				["5 div 3",		true],
+				["5 div",		false],
+				["-5 div -3",	true],
+				["5 idiv 3",	true],
+				["5 idiv",		false],
+				["-5 idiv -3",	true],
+				["5 mod 3",		true],
+				["5 mod",		false],
+				["-5 mod -3",	true],
+			["Arithmetic: Unary expressions"],
 				["+1",	true],	// ?
 				["-1",	true],
 				["+",	false],
 				["-",	false],
+			["Comparison Expressions: General Comparison"],
+				["1 = 1",	true],
+				["1 = ",	false],
+				[" = 1",	false],
+				["1 != 1",	true],
+				["1 != ",	false],
+				[" != 1",	false],
+				["1 < 1",	true],
+				["1 < ",	false],
+				[" < !",	false],
+				["1 <= 1",	true],
+				["1 <= ",	false],
+				[" <= 1",	false],
+				["1 > 1",	true],
+				["1 > ",	false],
+				[" > 1",	false],
+				["1 >= 1",	true],
+				["1 >= ",	false],
+				[" >= 1",	false],
+			["Comparison Expressions: Value Comparison"],
+				["1 eq 1",	true],
+				["1 eq ",	false],
+				[" eq 1",	false],
+				["1 ne 1",	true],
+				["1 ne ",	false],
+				[" ne 1",	false],
+				["1 lt 1",	true],
+				["1 lt ",	false],
+				[" lt !",	false],
+				["1 le 1",	true],
+				["1 le ",	false],
+				[" le 1",	false],
+				["1 gt 1",	true],
+				["1 gt ",	false],
+				[" gt 1",	false],
+				["1 ge 1",	true],
+				["1 ge ",	false],
+				[" ge 1",	false],
+			["Comparison Expressions: Node Comparison"],
+				[". is .",	true],
+				[". is ",	false],
+				[" is .",	false],
+				[". >> .",	true],
+				[". >> ",	false],
+				[" >> .",	false],
+				[". << .",	true],
+				[". << ",	false],
+				[" << .",	false],
 			["Parenthesized Expressions"],
 				["(1 + 2) * 3",	true],
 				["1 + 2) * 3",	false],
@@ -262,15 +323,24 @@
 			["Range expressions"],
 				["1 to 5",		true],
 				["$a to $b",	true],
-				["1 to )",		false]
+				["1 to )",		false],
+			["Some edge cases"],
+				["4 + (/) * 5",	true],
+				["4 + / * 5",	false],
+				["4 + /",	true],
+				["/*",		true],
+				["/*5",		false],
+				["/ * 5",	false],
+			[""]
 			];
 			var aHtml	= [];
-			for (var n = 0, r1, r2, s1, s2, b1, b2, n1 = 0, n2 = 0; n < aParseTests.length; n++) {
+			for (var n = 0, r1, r2, s1, s2, b1, b2, n1 = 0, n2 = 0, t = 0; n < aParseTests.length; n++) {
 				aHtml.push('<tr>');
 				if (aParseTests[n].length == 1) {
 					aHtml.push(	'<td style="background-color: #ddd; font-weight: bold" colspan="6">' + aParseTests[n][0] + '</td>');
 				}
 				else {
+					t++;
 					aHtml.push(	'<td>' + aParseTests[n][0] + '</td>');
 					aHtml.push(	'<td>' + (aParseTests[n][1] ? '&nbsp' : 'illegal') + '</td>');
 					// XPath2.js
@@ -320,7 +390,7 @@
 								'</tbody>' +
 								'<tfoot>' +
 									'<tr>' +
-										'<th>Errors:</th>' +
+										'<th>Errors (in ' + t + ' tests):</th>' +
 										'<th>&nbsp</th>' +
 										'<th>' + n1 + '</th>' +
 										'<th>&nbsp;</th>' +
