@@ -7,12 +7,12 @@
  *
  */
 
-function cUnaryExpr(sOperation, oExpr) {
-	this.operation	= sOperation;
+function cUnaryExpr(sOperator, oExpr) {
+	this.operator	= sOperator;
 	this.expression	= oExpr;
 };
 
-cUnaryExpr.prototype.operation	= null;
+cUnaryExpr.prototype.operator	= null;
 cUnaryExpr.prototype.expression	= null;
 
 //
@@ -27,14 +27,14 @@ cUnaryExpr.parse	= function (oLexer, oResolver) {
 		return cValueExpr.parse(oLexer, oResolver);
 
 	// Unary expression
-	var sOperation	= oLexer.peek();
+	var sOperator	= oLexer.peek();
 	oLexer.next();
 	if (oLexer.eof())
 		throw "UnaryExpr.parse: Expected ValueExpr expression";
-	var oUnaryExpr	= new cUnaryExpr(sOperation, cValueExpr.parse(oLexer, oResolver));
+	var oUnaryExpr	= new cUnaryExpr(sOperator, cValueExpr.parse(oLexer, oResolver));
 	return oUnaryExpr;
 };
 
 cUnaryExpr.prototype.evaluate	= function (oContext) {
-	return new cXPathSequence((this.operation == '-' ? -1 : 1) * this.expression.evaluate(oContext).toNumber());
+	return new cXPathSequence((this.operator == '-' ? -1 : 1) * this.expression.evaluate(oContext).toNumber());
 };
