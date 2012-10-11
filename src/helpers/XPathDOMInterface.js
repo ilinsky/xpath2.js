@@ -1,9 +1,13 @@
-function cXPathDOMInterface(oNode) {
-	this.node	= oNode;
+function cXPathDOMInterface() {
+	throw "Illegal constructor";
 };
 
 // Node interface
-cXPathDOMInterface.prototype.getProperty	= function(oNode, sName) {
+cXPathDOMInterface.isNode		= function(oNode) {
+	return oNode &&!!oNode.nodeType;
+};
+
+cXPathDOMInterface.getProperty	= function(oNode, sName) {
 	switch (sName) {
 		// Node
 		case "baseURI":
@@ -30,14 +34,14 @@ cXPathDOMInterface.prototype.getProperty	= function(oNode, sName) {
 	}
 };
 
-cXPathDOMInterface.prototype.compareDocumentPosition	= function(oNode) {
+cXPathDOMInterface.compareDocumentPosition	= function(oNode, oNode2) {
 
 };
 
-cXPathDOMInterface.prototype.lookupPrefix	= function(sNameSpaceURI) {
+cXPathDOMInterface.lookupPrefix	= function(oNode, sNameSpaceURI) {
 
 };
 
-cXPathDOMInterface.prototype.lookupNamespaceURI	= function(sPrefix) {
+cXPathDOMInterface.lookupNamespaceURI	= function(oNode, sPrefix) {
 
 };
