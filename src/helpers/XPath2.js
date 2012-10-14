@@ -17,5 +17,5 @@ cXPath2.Sequence	= cXPath2Sequence;
 cXPath2.DOMAdapter	= cDOMAdapter;
 //
 cXPath2.evaluate	= function(oNode, sExpression/*[[*/, oResolver/*],*/, oScope/*]*/) {
-
+	return new cXPath2Parser().parse(sExpression, oResolver).evaluate(new cXPath2Context(new cXPath2Sequence(oNode), oScope)).items;
 };
