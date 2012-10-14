@@ -34,6 +34,10 @@ cXPathDOMInterface.getProperty	= function(oNode, sName) {
 	}
 };
 
+cXPathDOMInterface.isNameNode	= function(oNode, oNode2) {
+
+};
+
 cXPathDOMInterface.compareDocumentPosition	= function(oNode, oNode2) {
 
 };
