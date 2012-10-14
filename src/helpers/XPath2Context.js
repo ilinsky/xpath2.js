@@ -7,16 +7,16 @@
  *
  */
 
-function cXPath2Context(oSequence, nPosition, oScope) {
+function cXPath2Context(oSequence, oScope, nPosition) {
 	this.sequence	= oSequence || new cXPath2Sequence;
+	this.scope		= oScope || {};
 	this.position	= nPosition || 1;
-	this.scope	= oScope || {};
-	this.stack	= {};
+	this.stack		= {};
 };
 
 cXPath2Context.prototype.sequence	= null;
-cXPath2Context.prototype.position	= null;
 cXPath2Context.prototype.scope		= null;
+cXPath2Context.prototype.position	= null;
 cXPath2Context.prototype.stack		= null;	// Variables stack
 
 cXPath2Context.prototype.pushVariable	= function(sName, vValue) {
@@ -42,5 +42,5 @@ cXPath2Context.clone	= function(oContext) {
 	for (var sKey in oContext.scope)
 		if (oContext.scope.hasOwnProperty(sKey))
 			oScope[sKey]	= oContext.scope[sKey];
-	return new cXPath2Context(oContext.node, oContext.position, oScope);
+	return new cXPath2Context(oContext.node, oScope, oContext.position);
 };

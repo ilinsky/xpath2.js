@@ -28,7 +28,7 @@ cXPathExpression.prototype.evaluate	= function(oNode, nType, oResult) {
 };
 
 function fXPathExpression_evaluate(oExpression, oNode, nType, oResult) {
-	var oContext	= new cXPath2Context(new cXPath2Sequence(oNode), 1, {}),
+	var oContext	= new cXPath2Context(new cXPath2Sequence(oNode)),
 		oSequence	= oExpression.expression.evaluate(oContext);
 	// Determine type if not specified
 	if (!nType) {
