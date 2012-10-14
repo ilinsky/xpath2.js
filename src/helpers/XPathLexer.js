@@ -33,15 +33,15 @@ cXPathLexer.prototype.reset	= function() {
 };
 
 cXPathLexer.prototype.peek	= function(nOffset) {
-	return this[this.index +(nOffset || 0)];
+	return this[this.index +(nOffset || 0)] || '';
 };
 
-cXPathLexer.prototype.next	= function() {
-	return ++this.index < this.length;
+cXPathLexer.prototype.next	= function(nOffset) {
+	return(this.index+= nOffset || 1) < this.length;
 };
 
-cXPathLexer.prototype.back	= function() {
-	return this.index--> 0;
+cXPathLexer.prototype.back	= function(nOffset) {
+	return(this.index-= nOffset || 1) > 0;
 };
 
 cXPathLexer.prototype.eof	= function() {
