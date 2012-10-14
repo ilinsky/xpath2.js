@@ -43,9 +43,9 @@ cStepExpr.prototype.applyPredicates	= function(oContext) {
 		oSequence2;
 	// TODO: Apply predicates
 	for (var nPredicateIndex = 0, nPredicateLength = this.predicates.length; nPredicateIndex < nPredicateLength; nPredicateIndex++) {
-		oSequence1	= new cXPathSequence(oSequence);
-		oContext1	= new cXPathContext(oSequence1, 1, oContext.scope);
-		oSequence	= new cXPathSequence;
+		oSequence1	= new cXPath2Sequence(oSequence);
+		oContext1	= new cXPath2Context(oSequence1, 1, oContext.scope);
+		oSequence	= new cXPath2Sequence;
 		for (var nIndex = 1, nLength = oSequence1.items.length + 1; nIndex < nLength; nIndex++) {
 			oContext1.position	= nIndex;
 			oSequence2	= this.predicates[nPredicateIndex].evaluate(oContext1);

@@ -9,7 +9,7 @@
  ===============
    XPath2.js is an open-source JavaScript library that implements XPath 2.0
    It can run against any standard-complient DOM Core Level 3 model,
-   yet it can be easily adjusted for other implementations (check XPathDOMInterface.js)
+   yet it can be easily adjusted for other implementations (check DOMAdapter.js)
 
  Structure:
  ===============

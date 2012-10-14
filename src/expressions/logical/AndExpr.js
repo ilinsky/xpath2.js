@@ -39,5 +39,5 @@ cAndExpr.prototype.evaluate	= function (oContext) {
 	var bValue	= this.left.evaluate(oContext).toBoolean();
 	for (var nIndex = 0, nLength = this.items.length; (nIndex < nLength) && bValue; nIndex++)
 		bValue	= this.items[nIndex].evaluate(oContext).toBoolean();
-	return new cXPathSequence(bValue);
+	return new cXPath2Sequence(bValue);
 };

@@ -80,7 +80,7 @@ cAxisStep.parse	= function (oLexer, oResolver) {
 
 // Public members
 cAxisStep.prototype.evaluate	= function (oContext) {
-	var oSequence	= new cXPathSequence,
+	var oSequence	= new cXPath2Sequence,
 		oItem;
 	for (var nIndex = 0, nLength = oContext.sequence.items.length; nIndex < nLength; nIndex++) {
 		oItem	= oContext.sequence.items[nIndex];
@@ -149,7 +149,7 @@ cAxisStep.prototype.evaluate	= function (oContext) {
 	// Apply test
 	if (this.test && oSequence.items.length) {
 		var oInSequence	= oSequence;
-		oSequence	= new cXPathSequence;
+		oSequence	= new cXPath2Sequence;
 		for (var nIndex = 0, nLength = oInSequence.items.length; nIndex < nLength; nIndex++) {
 			if (this.test.test(oInSequence.items[nIndex]))
 				oSequence.add(oInSequence.items[nIndex]);

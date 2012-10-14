@@ -64,5 +64,5 @@ cMultiplicativeExpr.prototype.evaluate	= function (oContext) {
 				break;
 		}
 	}
-	return new cXPathSequence(nValue);
+	return new cXPath2Sequence(nValue);
 };

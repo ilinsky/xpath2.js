@@ -7,7 +7,7 @@
  *
  */
 
-function cXPathError(sCode) {
+function cXPath2Error(sCode) {
 	this.code		= sCode;
 	this.message	= oXPathError_messages[sCode];
 };

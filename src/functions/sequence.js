@@ -51,5 +51,5 @@
 */
 
 cFunctionCall.functions["count"]	= function(oSequence) {
-	return new cXPathSequence(oSequence.items.length);
+	return new cXPath2Sequence(oSequence.items.length);
 };

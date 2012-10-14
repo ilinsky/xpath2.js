@@ -36,5 +36,5 @@ cParenthesizedExpr.parse	= function (oLexer, oResolver) {
 
 // Public members
 cParenthesizedExpr.prototype.evaluate	= function (oContext) {
-	return this.expression ? this.expression.evaluate(oContext) : new cXPathSequence;
+	return this.expression ? this.expression.evaluate(oContext) : new cXPath2Sequence;
 };

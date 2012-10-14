@@ -38,5 +38,5 @@ cUnaryExpr.parse	= function (oLexer, oResolver) {
 };
 
 cUnaryExpr.prototype.evaluate	= function (oContext) {
-	return new cXPathSequence((this.operator == '-' ? -1 : 1) * this.expression.evaluate(oContext).toNumber());
+	return new cXPath2Sequence((this.operator == '-' ? -1 : 1) * this.expression.evaluate(oContext).toNumber());
 };

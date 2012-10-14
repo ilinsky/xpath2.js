@@ -28,7 +28,7 @@ cVarRef.parse	= function (oLexer, oResolver) {
 // Public members
 cVarRef.prototype.evaluate	= function (oContext) {
 	if (oContext.scope.hasOwnProperty(this.uri))
-		return new cXPathSequence(oContext.scope[this.uri]);
+		return new cXPath2Sequence(oContext.scope[this.uri]);
 	else
-		return new cXPathSequence;
+		return new cXPath2Sequence;
 };

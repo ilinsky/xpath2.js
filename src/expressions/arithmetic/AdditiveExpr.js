@@ -46,5 +46,5 @@ cAdditiveExpr.prototype.evaluate	= function (oContext) {
 	var nValue	= this.left.evaluate(oContext).toNumber();
 	for (var nIndex = 0; nIndex < this.items.length; nIndex++)
 		nValue	+= (this.items[nIndex][0] == '-' ?-1 : 1) * this.items[nIndex][1].evaluate(oContext).toNumber();
-	return new cXPathSequence(nValue);
+	return new cXPath2Sequence(nValue);
 };

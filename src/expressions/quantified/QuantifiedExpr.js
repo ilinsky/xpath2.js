@@ -60,7 +60,7 @@ cQuantifiedExpr.prototype.evaluate	= function (oContext) {
 		}
 	})(this, 0);
 
-	return new cXPathSequence(bResult);
+	return new cXPath2Sequence(bResult);
 };
 
 

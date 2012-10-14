@@ -22,13 +22,13 @@
 */
 
 cFunctionCall.functions["true"]		= function() {
-	return new cXPathSequence(true);
+	return new cXPath2Sequence(true);
 };
 
 cFunctionCall.functions["false"]	= function() {
-	return new cXPathSequence(false);
+	return new cXPath2Sequence(false);
 };
 
 cFunctionCall.functions["not"]	= function(oSequence) {
-	return new cXPathSequence(!oSequence.toBoolean());
+	return new cXPath2Sequence(!oSequence.toBoolean());
 };

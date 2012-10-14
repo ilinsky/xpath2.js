@@ -7,7 +7,7 @@
  *
  */
 
-function cXPathLexer(sValue) {
+function cXPath2Lexer(sValue) {
 	var aMatch	= sValue.match(/\$(?:(?![0-9-])(?:[\w-]+):)?(?![0-9-])(?:[\w-]+)|(?:(?![0-9-])(?:[\w-]+|\*):)?(?![0-9-])(?:[\w-]+|\*)|\(:|:\)|\/\/|\.\.|::|\d+(?:\.\d*)?(?:[eE][+-]?\d+)?|\.\d+(?:[eE][+-]?\d+)?|"[^"]*(?:""[^"]*)*"|'[^']*(?:''[^']*)*'|<<|>>|[!<>]=|(?![0-9-])[\w-]+:\*|\s+|./g);
 	if (aMatch) {
 		var nStack	= 0;
@@ -25,25 +25,25 @@ function cXPathLexer(sValue) {
 	}
 };
 
-cXPathLexer.prototype.index		= 0;
-cXPathLexer.prototype.length	= 0;
+cXPath2Lexer.prototype.index		= 0;
+cXPath2Lexer.prototype.length	= 0;
 
-cXPathLexer.prototype.reset	= function() {
+cXPath2Lexer.prototype.reset	= function() {
 	this.index	= 0;
 };
 
-cXPathLexer.prototype.peek	= function(nOffset) {
+cXPath2Lexer.prototype.peek	= function(nOffset) {
 	return this[this.index +(nOffset || 0)] || '';
 };
 
-cXPathLexer.prototype.next	= function(nOffset) {
+cXPath2Lexer.prototype.next	= function(nOffset) {
 	return(this.index+= nOffset || 1) < this.length;
 };
 
-cXPathLexer.prototype.back	= function(nOffset) {
+cXPath2Lexer.prototype.back	= function(nOffset) {
 	return(this.index-= nOffset || 1) > 0;
 };
 
-cXPathLexer.prototype.eof	= function() {
+cXPath2Lexer.prototype.eof	= function() {
 	return this.index >= this.length;
 };

@@ -36,8 +36,8 @@ cFunctionCall.functions["namespace-uri"]	= function(oSequence) {
 // fn:number($arg as xs:anyAtomicType?) as xs:double
 cFunctionCall.functions["number"]	= function(/*[*/oSequence/*]*/) {
 	if (!arguments.length)
-		oSequence	= new cXPathSequence(this.sequence.items[this.position]);
-	return new cXPathSequence(oSequence.toNumber());
+		oSequence	= new cXPath2Sequence(this.sequence.items[this.position]);
+	return new cXPath2Sequence(oSequence.toNumber());
 };
 
 // fn:lang($testlang as xs:string?) as xs:boolean
@@ -47,5 +47,5 @@ cFunctionCall.functions["lang"]	= function(oSequence) {
 };
 
 cFunctionCall.functions["root"]	= function(oSequence) {
-	return new cXPathSequence(document);
+	return new cXPath2Sequence(document);
 };

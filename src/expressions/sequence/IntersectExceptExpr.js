@@ -49,10 +49,10 @@ cIntersectExceptExpr.prototype.evaluate	= function (oContext) {
 	for (var nIndex = 0, nLength = this.items.length, oItem; nIndex < nLength; nIndex++) {
 		oItem	= this.items[nIndex];
 		if (oItem[0] == "intersect")
-			oSequence	= cXPathSequence.intersect(oSequence, oItem[1].evaluate(oContext));
+			oSequence	= cXPath2Sequence.intersect(oSequence, oItem[1].evaluate(oContext));
 		else
 		if (oItem[0] == "except")
-			oSequence	= cXPathSequence.except(oSequence, oItem[1].evaluate(oContext));
+			oSequence	= cXPath2Sequence.except(oSequence, oItem[1].evaluate(oContext));
 	}
 	return oSequence;
 };

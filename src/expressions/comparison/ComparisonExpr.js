@@ -68,29 +68,29 @@ cComparisonExpr.prototype.evaluate	= function (oContext) {
 		case '>':
 		case '>=':
 			if (oLeft.isEmpty())
-				return new cXPathSequence;
+				return new cXPath2Sequence;
 			else
 			if (!oLeft.isSingleton())		// Must be singleton
-				throw new cXPathError("XPTY0004");
+				throw new cXPath2Error("XPTY0004");
 
 			var oRight	= this.right.evaluate(oContext);
 			if (oRight.isEmpty())
-				return new cXPathSequence;
+				return new cXPath2Sequence;
 			else
 			if (!oRight.isSingleton())	// Must be singleton
-				throw new cXPathError("XPTY0004");
+				throw new cXPath2Error("XPTY0004");
 
-			var oAtomizedLeft	= cXPathSequence.atomizeItem(oLeft.items[0]),
-				oAtomizedRight	= cXPathSequence.atomizeItem(oRight.items[0]);
+			var oAtomizedLeft	= cXPath2Sequence.atomizeItem(oLeft.items[0]),
+				oAtomizedRight	= cXPath2Sequence.atomizeItem(oRight.items[0]);
 
 			// Compare
 			switch (this.operator) {
-				case '=':	return new cXPathSequence(oAtomizedLeft == oAtomizedRight);
-				case '!=':	return new cXPathSequence(oAtomizedLeft != oAtomizedRight);
-				case '<':	return new cXPathSequence(oAtomizedLeft < oAtomizedRight);
-				case '<=':	return new cXPathSequence(oAtomizedLeft <= oAtomizedRight);
-				case '>':	return new cXPathSequence(oAtomizedLeft > oAtomizedRight);
-				case '>=':	return new cXPathSequence(oAtomizedLeft >= oAtomizedRight);
+				case '=':	return new cXPath2Sequence(oAtomizedLeft == oAtomizedRight);
+				case '!=':	return new cXPath2Sequence(oAtomizedLeft != oAtomizedRight);
+				case '<':	return new cXPath2Sequence(oAtomizedLeft < oAtomizedRight);
+				case '<=':	return new cXPath2Sequence(oAtomizedLeft <= oAtomizedRight);
+				case '>':	return new cXPath2Sequence(oAtomizedLeft > oAtomizedRight);
+				case '>=':	return new cXPath2Sequence(oAtomizedLeft >= oAtomizedRight);
 			}
 			break;
 
@@ -102,29 +102,29 @@ cComparisonExpr.prototype.evaluate	= function (oContext) {
 		case 'gt':
 		case 'ge':
 			if (oLeft.isEmpty())
-				return new cXPathSequence;
+				return new cXPath2Sequence;
 			else
 			if (!oLeft.isSingleton())		// Must be singleton
-				throw new cXPathError("XPTY0004");
+				throw new cXPath2Error("XPTY0004");
 
 			var oRight	= this.right.evaluate(oContext);
 			if (oRight.isEmpty())
-				return new cXPathSequence;
+				return new cXPath2Sequence;
 			else
 			if (!oRight.isSingleton())	// Must be singleton
-				throw new cXPathError("XPTY0004");
+				throw new cXPath2Error("XPTY0004");
 
-			var oAtomizedLeft	= cXPathSequence.atomizeItem(oLeft.items[0]),
-				oAtomizedRight	= cXPathSequence.atomizeItem(oRight.items[0]);
+			var oAtomizedLeft	= cXPath2Sequence.atomizeItem(oLeft.items[0]),
+				oAtomizedRight	= cXPath2Sequence.atomizeItem(oRight.items[0]);
 
 			// Compare
 			switch (this.operator) {
-				case 'eq':	return new cXPathSequence(oAtomizedLeft == oAtomizedRight);
-				case 'ne':	return new cXPathSequence(oAtomizedLeft != oAtomizedRight);
-				case 'lt':	return new cXPathSequence(oAtomizedLeft < oAtomizedRight);
-				case 'le':	return new cXPathSequence(oAtomizedLeft <= oAtomizedRight);
-				case 'gt':	return new cXPathSequence(oAtomizedLeft > oAtomizedRight);
-				case 'ge':	return new cXPathSequence(oAtomizedLeft >= oAtomizedRight);
+				case 'eq':	return new cXPath2Sequence(oAtomizedLeft == oAtomizedRight);
+				case 'ne':	return new cXPath2Sequence(oAtomizedLeft != oAtomizedRight);
+				case 'lt':	return new cXPath2Sequence(oAtomizedLeft < oAtomizedRight);
+				case 'le':	return new cXPath2Sequence(oAtomizedLeft <= oAtomizedRight);
+				case 'gt':	return new cXPath2Sequence(oAtomizedLeft > oAtomizedRight);
+				case 'ge':	return new cXPath2Sequence(oAtomizedLeft >= oAtomizedRight);
 			}
 			break;
 
@@ -133,23 +133,23 @@ cComparisonExpr.prototype.evaluate	= function (oContext) {
 		case '>>':
 		case '<<':
 			if (oLeft.isEmpty())
-				return new cXPathSequence;
+				return new cXPath2Sequence;
 			else
 			if (!oLeft.isSingleton())		// Must be singleton
-				throw new cXPathError("XPTY0004");
+				throw new cXPath2Error("XPTY0004");
 			else
 			if (!oLeft.items[0].nodeType)
-				throw new cXPathError("XPTY0004");
+				throw new cXPath2Error("XPTY0004");
 
 			var oRight	= this.right.evaluate(oContext);
 			if (oRight.isEmpty())
-				return new cXPathSequence;
+				return new cXPath2Sequence;
 			else
 			if (!oRight.isSingleton())	// Must be singleton
-				throw new cXPathError("XPTY0004");
+				throw new cXPath2Error("XPTY0004");
 			else
 			if (!oRight.items[0].nodeType)
-				throw new cXPathError("XPTY0004");
+				throw new cXPath2Error("XPTY0004");
 
 			switch (this.operator) {
 				case 'is':	return oLeft.items[0] == oRight.items[0];

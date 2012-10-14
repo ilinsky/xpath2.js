@@ -34,7 +34,7 @@ cRangeExpr.parse	= function (oLexer, oResolver) {
 
 // Public members
 cRangeExpr.prototype.evaluate	= function (oContext) {
-	var oSequence	= new cXPathSequence;
+	var oSequence	= new cXPath2Sequence;
 	for (var nIndex = this.left.evaluate(oContext).toNumber(), nLength = this.right.evaluate(oContext).toNumber(); nIndex <= nLength; nIndex++)
 		oSequence.add(nIndex);
 	return oSequence;

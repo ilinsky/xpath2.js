@@ -20,9 +20,9 @@
 
 */
 cFunctionCall.functions["position"]	= function() {
-	return new cXPathSequence(this.position);
+	return new cXPath2Sequence(this.position);
 };
 
 cFunctionCall.functions["last"]	= function() {
-	return new cXPathSequence(this.sequence.items.length);
+	return new cXPath2Sequence(this.sequence.items.length);
 };

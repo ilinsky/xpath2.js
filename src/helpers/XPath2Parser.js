@@ -7,12 +7,12 @@
  *
  */
 
-function cXPathParser() {
+function cXPath2Parser() {
 
 };
 
-cXPathParser.prototype.parse	= function(sExpression, fResolver) {
-	var oLexer		= new cXPathLexer(sExpression),
+cXPath2Parser.prototype.parse	= function(sExpression, fResolver) {
+	var oLexer		= new cXPath2Lexer(sExpression),
 		hPrefix		= {},
 		oResolver	= function(sPrefix) {
 			if (!fResolver)
