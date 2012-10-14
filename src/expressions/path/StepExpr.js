@@ -13,26 +13,23 @@ function cStepExpr() {
 
 // Static members
 cStepExpr.parse	= function (oLexer, oResolver) {
-	var oExpr	= cFilterExpr.parse(oLexer, oResolver)
-					|| cAxisStep.parse(oLexer, oResolver);
-
-	if (oExpr)
-		return oExpr;
-
-	throw "StepExpr.parse: Expected StepExpr expression";
+	return cFilterExpr.parse(oLexer, oResolver)
+			|| cAxisStep.parse(oLexer, oResolver);
 };
 
 cStepExpr.parsePredicates	= function (oLexer, oResolver, oStep) {
+	var oExpr;
 	// Parse predicates
 	while (oLexer.peek() == '[') {
 		oLexer.next();
 
-		if (oLexer.eof())
-			throw "StepExpr.parsePredicates: Expected Expr expression";
+		oExpr	= cExpr.parse(oLexer, oResolver);
+		if (!oExpr)
+			throw "StepExpr.parsePredicates: expected Expr expression";
 
-		oStep.predicates.push(cExpr.parse(oLexer, oResolver));
+		oStep.predicates.push(oExpr);
 
-		if (oLexer.eof() || oLexer.peek() != ']')
+		if (oLexer.peek() != ']')
 			throw "StepExpr.parsePredicates: Expected ']' token";
 
 		oLexer.next();

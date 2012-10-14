@@ -23,16 +23,18 @@ cUnaryExpr.prototype.expression	= null;
 // Static members
 // UnaryExpr	:= ("-" | "+")* ValueExpr
 cUnaryExpr.parse	= function (oLexer, oResolver) {
+	if (oLexer.eof())
+		return;
 	if (!(oLexer.peek() == '-' || oLexer.peek() == '+'))
 		return cValueExpr.parse(oLexer, oResolver);
 
 	// Unary expression
-	var sOperator	= oLexer.peek();
+	var sOperator	= oLexer.peek(),
+		oExpr;
 	oLexer.next();
-	if (oLexer.eof())
+	if (oLexer.eof() ||!(oExpr = cValueExpr.parse(oLexer, oResolver)))
 		throw "UnaryExpr.parse: Expected ValueExpr expression";
-	var oUnaryExpr	= new cUnaryExpr(sOperator, cValueExpr.parse(oLexer, oResolver));
-	return oUnaryExpr;
+	return new cUnaryExpr(sOperator, oExpr);
 };
 
 cUnaryExpr.prototype.evaluate	= function (oContext) {

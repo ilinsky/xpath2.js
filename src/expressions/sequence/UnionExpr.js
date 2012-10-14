@@ -21,8 +21,10 @@ cUnionExpr.prototype.items	= null;
 
 // Static members
 cUnionExpr.parse	= function (oLexer, oResolver) {
-	var oExpr	= cIntersectExceptExpr.parse(oLexer, oResolver);
-	if (oLexer.eof() ||!(oLexer.peek() == '|' || oLexer.peek() == "union"))
+	var oExpr;
+	if (oLexer.eof() ||!(oExpr = cIntersectExceptExpr.parse(oLexer, oResolver)))
+		return;
+	if (!(oLexer.peek() == '|' || oLexer.peek() == "union"))
 		return oExpr;
 
 	// Union expression
@@ -30,6 +32,8 @@ cUnionExpr.parse	= function (oLexer, oResolver) {
 	while (oLexer.peek() == '|' || oLexer.peek() == "union") {
 		oLexer.next();
 		oExpr	= cIntersectExceptExpr.parse(oLexer, oResolver);
+		if (!oExpr)
+			throw "UnionExpr.parse: right operand missing";
 		oUnionExpr.items.push(oExpr);
 	}
 	return oUnionExpr;

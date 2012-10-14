@@ -15,51 +15,52 @@ cPathExpr.prototype.items	= [];
 
 // Static members
 cPathExpr.parse	= function (oLexer, oResolver) {
+	if (oLexer.eof())
+		return;
 	var sSingleSlash	= '/',
 		sDoubleSlash	= '/' + '/';
 
-	var oExpr	= new cPathExpr();
+	var oPathExpr	= new cPathExpr(),
+		oExpr;
 	// Parse first step
 	if (oLexer.peek() == sSingleSlash) {
 		oLexer.next();
-		oExpr.items.push(new cFunctionCall(null, "root"));
-
-		// Special case: '/'
-		if (oLexer.eof())
-			return oExpr.items[0];
+		oPathExpr.items.push(new cFunctionCall("root"));
 	}
 	else
 	if (oLexer.peek() == sDoubleSlash) {
 		oLexer.next();
-		oExpr.items.push(new cAxisStep("descendant-or-self", new cKindTest("node")));
+		oPathExpr.items.push(new cAxisStep("descendant-or-self", new cKindTest("node")));
 	}
 	//
-	if (oLexer.eof())
-		throw "PathExpr.parse: Expected StepExpr expression";
-	//
-	oExpr.items.push(cStepExpr.parse(oLexer, oResolver));
+	if (oLexer.eof() ||!(oExpr = cStepExpr.parse(oLexer, oResolver))) {
+		if (oPathExpr.items.length && oPathExpr.items[0] instanceof cFunctionCall)
+			return oPathExpr.items[0];
+		return;
+	}
+	oPathExpr.items.push(oExpr);
 
 	// Parse other steps
 	while (oLexer.peek() == sSingleSlash || oLexer.peek() == sDoubleSlash) {
 		if (oLexer.peek() == sDoubleSlash) {
 			oLexer.next();
-			oExpr.items.push(new cAxisStep("descendant-or-self", new cKindTest("node")));
+			oPathExpr.items.push(new cAxisStep("descendant-or-self", new cKindTest("node")));
 		}
 		else
 		if (oLexer.peek() == sSingleSlash)
 			oLexer.next();
 		//
-		if (oLexer.eof())
+		if (oLexer.eof() ||!(oExpr = cStepExpr.parse(oLexer, oResolver)))
 			throw "PathExpr.parse: Expected StepExpr expression";
 		//
-		oExpr.items.push(cStepExpr.parse(oLexer, oResolver));
+		oPathExpr.items.push(oExpr);
 	}
 
-	if (oExpr.items.length == 1)
-		return oExpr.items[0];
+	if (oPathExpr.items.length == 1)
+		return oPathExpr.items[0];
 
 	//
-	return oExpr;
+	return oPathExpr;
 };
 
 // Public members

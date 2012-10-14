@@ -13,11 +13,6 @@ function cNodeTest() {
 
 // Static members
 cNodeTest.parse	= function (oLexer, oResolver) {
-	var oExpr	= cKindTest.parse(oLexer, oResolver)
-					|| cNameTest.parse(oLexer, oResolver);
-
-	if (oExpr)
-		return oExpr;
-
-	throw "NodeTest.parse: Expected NodeTest expression";
+	return cKindTest.parse(oLexer, oResolver)
+			|| cNameTest.parse(oLexer, oResolver);
 };

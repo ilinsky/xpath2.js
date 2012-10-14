@@ -23,8 +23,10 @@ cAdditiveExpr.operators['-']	= {};
 
 // Static members
 cAdditiveExpr.parse	= function (oLexer, oResolver) {
-	var oExpr	= cMultiplicativeExpr.parse(oLexer, oResolver);
-	if (oLexer.eof() ||!(oLexer.peek() in cAdditiveExpr.operators))
+	var oExpr;
+	if (oLexer.eof() ||!(oExpr = cMultiplicativeExpr.parse(oLexer, oResolver)))
+		return;
+	if (!(oLexer.peek() in cAdditiveExpr.operators))
 		return oExpr;
 
 	// Additive expression
@@ -32,7 +34,8 @@ cAdditiveExpr.parse	= function (oLexer, oResolver) {
 		sOperator;
 	while ((sOperator = oLexer.peek()) in cAdditiveExpr.operators) {
 		oLexer.next();
-		oExpr	= cMultiplicativeExpr.parse(oLexer, oResolver);
+		if (oLexer.eof() ||!(oExpr = cMultiplicativeExpr.parse(oLexer, oResolver)))
+			throw "AdditiveExpr.parse: right operand missing";
 		oAdditiveExpr.items.push([sOperator, oExpr]);
 	}
 	return oAdditiveExpr;

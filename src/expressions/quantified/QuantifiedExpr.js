@@ -33,7 +33,11 @@ cQuantifiedExpr.parse	= function (oLexer, oResolver) {
 			throw "QuantifiedExpr.parse: Expected 'satisfies' token";
 
 		oLexer.next();
-		oQuantifiedExpr.satisfiesExpr	= cExprSingle.parse(oLexer, oResolver);
+		var oExpr	= cExprSingle.parse(oLexer, oResolver);
+		if (!oExpr)
+			throw "QuantifiedExpr.parse: expected 'satisfies' statement operand";
+
+		oQuantifiedExpr.satisfiesExpr	= oExpr;
 		return oQuantifiedExpr;
 	}
 };
@@ -75,8 +79,7 @@ cSimpleQuantifiedBinding.RegExp	= /^\$(?:(?![0-9-])([\w-]+)\:)?(?![0-9-])([\w-]+
 cSimpleQuantifiedBinding.parse	= function(oLexer, oResolver) {
 	var aMatch	= oLexer.peek().match(cSimpleQuantifiedBinding.RegExp);
 	if (aMatch && oLexer.peek(1) == "in") {
-		oLexer.next();
-		oLexer.next();
+		oLexer.next(2);
 		return new cSimpleQuantifiedBinding((aMatch[1] ? oResolver(aMatch[1]) + '#' : '') +  aMatch[2], cExprSingle.parse(oLexer, oResolver));
 	}
 	else

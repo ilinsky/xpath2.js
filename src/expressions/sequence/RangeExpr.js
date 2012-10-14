@@ -17,13 +17,19 @@ cRangeExpr.prototype.right	= null;
 
 // Static members
 cRangeExpr.parse	= function (oLexer, oResolver) {
-	var oExpr	= cAdditiveExpr.parse(oLexer, oResolver);
-	if (oLexer.eof() || oLexer.peek() != "to")
+	var oExpr,
+		oRight;
+	if (oLexer.eof() ||!(oExpr = cAdditiveExpr.parse(oLexer, oResolver)))
+		return;
+	if (oLexer.peek() != "to")
 		return oExpr;
 
 	// Range expression
 	oLexer.next();
-	return new cRangeExpr(oExpr, cAdditiveExpr.parse(oLexer, oResolver));
+	oRight	= cAdditiveExpr.parse(oLexer, oResolver);
+	if (!oRight)
+		throw "RangeExpr.parse: expected right operand";
+	return new cRangeExpr(oExpr, oRight);
 };
 
 // Public members

@@ -23,19 +23,25 @@ cIfExpr.parse	= function (oLexer, oResolver) {
 		oThenExpr,
 		oElseExpr;
 	if (oLexer.peek() == "if" && oLexer.peek(1) == "(") {
-		oLexer.next();
-		oLexer.next();
+		oLexer.next(2);
 		//
 		oCondExpr	= cExpr.parse(oLexer, oResolver);
+		if (!oCondExpr)
+			throw "IfExpr.parse: expected Expr expression";
 		//
 		if (oLexer.peek() == ")") {
 			oLexer.next();
 			if (oLexer.peek() == "then") {
 				oLexer.next();
 				oThenExpr	= cExprSingle.parse(oLexer, oResolver);
+				if (!oThenExpr)
+					throw "IfExpr.parse: expected 'then' statement operand";
+
 				if (oLexer.peek() == "else") {
 					oLexer.next();
 					oElseExpr	= cExprSingle.parse(oLexer, oResolver);
+					if (!oElseExpr)
+						throw "IfExpr.parse: expected 'else' statement operand";
 					//
 					return new cIfExpr(oCondExpr, oThenExpr, oElseExpr);
 				}

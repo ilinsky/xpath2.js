@@ -25,8 +25,10 @@ cMultiplicativeExpr.operators['mod']	= {};
 
 // Static members
 cMultiplicativeExpr.parse	= function (oLexer, oResolver) {
-	var oExpr	= cUnionExpr.parse(oLexer, oResolver);
-	if (oLexer.eof() ||!(oLexer.peek() in cMultiplicativeExpr.operators))
+	var oExpr;
+	if (oLexer.eof() ||!(oExpr = cUnionExpr.parse(oLexer, oResolver)))
+		return;
+	if (!(oLexer.peek() in cMultiplicativeExpr.operators))
 		return oExpr;
 
 	// Additive expression
@@ -34,7 +36,8 @@ cMultiplicativeExpr.parse	= function (oLexer, oResolver) {
 		sOperator;
 	while ((sOperator = oLexer.peek()) in cMultiplicativeExpr.operators) {
 		oLexer.next();
-		oExpr	= cUnionExpr.parse(oLexer, oResolver);
+		if (oLexer.eof() ||!(oExpr = cUnionExpr.parse(oLexer, oResolver)))
+			throw "MultiplicativeExpr.parse: right operand missing";
 		oMultiplicativeExpr.items.push([sOperator, oExpr]);
 	}
 	return oMultiplicativeExpr;

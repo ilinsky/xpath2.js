@@ -17,15 +17,18 @@ cOrExpr.prototype.items	= null;
 
 // Static members
 cOrExpr.parse	= function (oLexer, oResolver) {
-	var oExpr	= cAndExpr.parse(oLexer, oResolver);
-	if (oLexer.eof() || oLexer.peek() != "or")
+	var oExpr;
+	if (oLexer.eof() ||!(oExpr = cAndExpr.parse(oLexer, oResolver)))
+		return;
+	if (oLexer.peek() != "or")
 		return oExpr;
 
 	// Or expression
 	var oOrExpr	= new cOrExpr(oExpr);
 	while (oLexer.peek() == "or") {
 		oLexer.next();
-		oExpr	= cAndExpr.parse(oLexer, oResolver);
+		if (oLexer.eof() ||!(oExpr = cAndExpr.parse(oLexer, oResolver)))
+			throw "OrExpr.parse: right operand missing"
 		oOrExpr.items.push(oExpr);
 	}
 	return oOrExpr;

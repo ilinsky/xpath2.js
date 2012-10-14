@@ -41,14 +41,19 @@ cComparisonExpr.operators	= {
 
 // Static members
 cComparisonExpr.parse	= function (oLexer, oResolver) {
-	var oExpr	= cRangeExpr.parse(oLexer, oResolver);
-	if (oLexer.eof() ||!(oLexer.peek() in cComparisonExpr.operators))
+	var oExpr;
+	if (oLexer.eof() ||!(oExpr = cRangeExpr.parse(oLexer, oResolver)))
+		return;
+	if (!(oLexer.peek() in cComparisonExpr.operators))
 		return oExpr;
 
 	// Comparison expression
 	var sOperator	= oLexer.peek();
 	oLexer.next();
-	return new cComparisonExpr(oExpr, cRangeExpr.parse(oLexer, oResolver), sOperator);
+	var oRight	= cRangeExpr.parse(oLexer, oResolver);
+	if (!oRight)
+		throw "ComparisonExpr.parse: right operand missing";
+	return new cComparisonExpr(oExpr, oRight, sOperator);
 };
 
 // Public members

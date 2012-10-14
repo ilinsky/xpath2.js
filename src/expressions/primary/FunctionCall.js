@@ -27,16 +27,16 @@ cFunctionCall.parse	= function (oLexer, oResolver) {
 	if (aMatch && oLexer.peek(1) == '(') {
 		if (aMatch[1] == '*' || aMatch[2] == '*')
 			throw "FunctionCall.parse: illegal use of wildcard in function name";
-		var oExpr	= new cFunctionCall((aMatch[1] ? oResolver(aMatch[1]) + '#' : '') + aMatch[2]);
-		oLexer.next();
-		oLexer.next();
-		//
-		if (oLexer.eof())
-			throw "FunctionCall.parse: expected ')' token";
+		var oFunctionCallExpr	= new cFunctionCall((aMatch[1] ? oResolver(aMatch[1]) + '#' : '') + aMatch[2]),
+			oExpr;
+		oLexer.next(2);
 		//
 		if (oLexer.peek() != ')') {
 			do {
-				oExpr.args.push(cExprSingle.parse(oLexer, oResolver));
+				oExpr	= cExprSingle.parse(oLexer, oResolver);
+				if (!oExpr)
+					throw "FunctionCall.parse: expected ExprSingle expression";
+				oFunctionCallExpr.args.push(oExpr);
 			}
 			while (oLexer.peek() == ',' && oLexer.next());
 			//
@@ -44,7 +44,7 @@ cFunctionCall.parse	= function (oLexer, oResolver) {
 				throw "FunctionCall.parse: Expected ')' token";
 		}
 		oLexer.next();
-		return oExpr;
+		return oFunctionCallExpr;
 	}
 };
 

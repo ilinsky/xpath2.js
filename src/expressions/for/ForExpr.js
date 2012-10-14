@@ -30,7 +30,11 @@ cForExpr.parse	= function (oLexer, oResolver) {
 			throw "ForExpr.parse: Expected 'return' token";
 
 		oLexer.next();
-		oForExpr.returnExpr	= cExprSingle.parse(oLexer, oResolver);
+		var oExpr	= cExprSingle.parse(oLexer, oResolver);
+		if (!oExpr)
+			throw "ForExpr.parse: expected 'return' statement operand";
+
+		oForExpr.returnExpr	= oExpr;
 		return oForExpr;
 	}
 };
@@ -70,8 +74,7 @@ cSimpleForBinding.RegExp	= /^\$(?:(?![0-9-])([\w-]+)\:)?(?![0-9-])([\w-]+)$/;
 cSimpleForBinding.parse	= function(oLexer, oResolver) {
 	var aMatch	= oLexer.peek().match(cSimpleForBinding.RegExp);
 	if (aMatch && oLexer.peek(1) == "in") {
-		oLexer.next();
-		oLexer.next();
+		oLexer.next(2);
 		return new cSimpleForBinding((aMatch[1] ? oResolver(aMatch[1]) + '#' : '') + aMatch[2], cExprSingle.parse(oLexer, oResolver));
 	}
 	else

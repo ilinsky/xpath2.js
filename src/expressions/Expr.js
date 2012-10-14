@@ -16,14 +16,19 @@ cExpr.prototype.items	= null;
 // Static members
 cExpr.parse	= function(oLexer, oResolver) {
 	//
-	var oExpr	= new cExpr;
+	var oExpr	= new cExpr,
+		oItem;
 	do {
-		oExpr.items.push(cExprSingle.parse(oLexer, oResolver));
+		oItem	= cExprSingle.parse(oLexer, oResolver);
+		if (!oItem)
+			throw "Expr.parse: expected ExprSingle expression";
+		oExpr.items.push(oItem);
 	}
 	while (oLexer.peek() == ',' && oLexer.next());
 	//
 	if (oLexer.peek(-1) == ',')
 		throw "Expr.parse: Expected ExprSingle expression";
+
 	//
 	return oExpr;
 };

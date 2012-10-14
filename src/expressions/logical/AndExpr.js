@@ -17,15 +17,18 @@ cAndExpr.prototype.items	= null;
 
 // Static members
 cAndExpr.parse	= function (oLexer, oResolver) {
-	var oExpr	= cComparisonExpr.parse(oLexer, oResolver);
-	if (oLexer.eof() || oLexer.peek() != "and")
+	var oExpr;
+	if (oLexer.eof() ||!(oExpr = cComparisonExpr.parse(oLexer, oResolver)))
+		return;
+	if (oLexer.peek() != "and")
 		return oExpr;
 
 	// And expression
 	var oAndExpr	= new cAndExpr(oExpr);
 	while (oLexer.peek() == "and") {
 		oLexer.next();
-		oExpr	= cComparisonExpr.parse(oLexer, oResolver);
+		if (oLexer.eof() ||!(oExpr = cComparisonExpr.parse(oLexer, oResolver)))
+			throw "AndExpr.parse: right operand missing";
 		oAndExpr.items.push(oExpr);
 	}
 	return oAndExpr;

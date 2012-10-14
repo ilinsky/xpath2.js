@@ -13,13 +13,8 @@ function cExprSingle() {
 
 // Static members
 cExprSingle.parse	= function (oLexer, oResolver) {
-	var oExpr	= cForExpr.parse(oLexer, oResolver)
-					|| cQuantifiedExpr.parse(oLexer, oResolver)
-					|| cIfExpr.parse(oLexer, oResolver)
-					|| cOrExpr.parse(oLexer, oResolver);
-
-	if (oExpr)
-		return oExpr;
-
-	throw "ExprSingle.parse: Expected ExprSingle expression";
+	return cForExpr.parse(oLexer, oResolver)
+			|| cQuantifiedExpr.parse(oLexer, oResolver)
+			|| cIfExpr.parse(oLexer, oResolver)
+			|| cOrExpr.parse(oLexer, oResolver);
 };
