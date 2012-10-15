@@ -32,8 +32,7 @@ cKindTest.parse	= function (oLexer, oResolver) {
 		//
 		if (sName in cKindTest.names) {
 			//
-			oLexer.next();
-			oLexer.next();
+			oLexer.next(2);
 			//
 			var oTest	= new cKindTest(sName);
 			if (oLexer.peek() != ')') {

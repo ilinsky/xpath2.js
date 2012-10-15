@@ -43,8 +43,7 @@ cAxisStep.parse	= function (oLexer, oResolver) {
 		oStep;
 	if (oLexer.peek(1) == "::") {
 		if (sAxis in cAxisStep.axises) {
-			oLexer.next();
-			oLexer.next();
+			oLexer.next(2);
 			oExpr	= cNodeTest.parse(oLexer, oResolver);
 			if (!oExpr)
 				throw "AxisStep.parse: expected NodeTest expression";
