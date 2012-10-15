@@ -45,16 +45,38 @@ cXPath2Sequence.atomize		= function(oSequence) {
 };
 
 cXPath2Sequence.atomizeItem		= function(oItem) {
+	// Untyped
 	if (oItem == null || typeof oItem == "undefined")
 		return null;
-	else
+
+	// Node type
+	if (oItem.nodeType) {
+		switch (oItem.nodeType) {
+			case 1:	// ELEMENT_NODE
+				return oItem.textContent;
+
+			case 2:	// ATTRIBUTE_NODE
+				return oItem.value;
+
+			case 3:	// TEXT_NODE
+			case 4:	// CDATA_SECTION_NODE
+			case 8:	// COMMENT_NODE
+				return oItem.data;
+
+			case 7:	// PROCESSING_INSTRUCTION_NODE
+				return oItem.data;
+
+			case 9:	// DOCUMENT_NODE
+				return oItem.documentElement ? oItem.documentElement.textContent : '';
+		}
+	}
+
+	// Base types
 	if (typeof oItem == "boolean" || typeof oItem == "number" || typeof oItem == "string")
 		return oItem;
-	else
-	if (oItem.nodeType)
-		return oItem.nodeValue ? oItem.nodeValue : "aaa" /*get_text_content(oItem)*/;
-	else
-		return null;
+
+	// Other types
+	return null;
 };
 
 // Public members
@@ -78,26 +100,39 @@ cXPath2Sequence.prototype.isSingleton	= function() {
 cXPath2Sequence.prototype.toBoolean	= function() {
 	if (!this.items.length)
 		return false;
-	else
-	if (this.items[0].nodeType)	// TODO: add proper check for node using instanceof
+
+	var oItem	= this.items[0];
+	if (oItem.nodeType)	// TODO: add proper check for node using instanceof
 		return true;
-	else
+
 	if (this.items.length == 1) {
-		if (typeof this.items[0] == "boolean")
-			return this.items[0];
+		if (typeof oItem == "boolean")
+			return oItem;
 		else
-		if (typeof this.items[0] == "string")
-			return !!this.items[0].length;
+		if (typeof oItem == "string")
+			return !!oItem.length;
 		else
-		if (typeof this.items[0] == "number")
-			return !(fIsNaN(this.items[0]) || this.items[0] == 0);
+		if (typeof oItem == "number")
+			return !(fIsNaN(oItem) || oItem == 0);
 	}
 
 	throw "TypeError in XPathSequence.prototype.toBoolean";
 };
 
+// fn:number()
 cXPath2Sequence.prototype.toNumber	= function() {
-	return this.items.length && typeof this.items[0] == "number" ? this.items[0] : nNaN;
+	if (!this.items.length)
+		return nNaN;
+
+	return +cXPath2Sequence.atomizeItem(this.items[0]);
+};
+
+// fn:string()
+cXPath2Sequence.prototype.toString	= function() {
+	if (!this.items.length)
+		return '';
+
+	return '' + cXPath2Sequence.atomizeItem(this.items[0]);
 };
 
 // Orders items in sequence in document order
