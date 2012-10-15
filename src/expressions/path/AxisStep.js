@@ -83,7 +83,8 @@ cAxisStep.prototype.evaluate	= function (oContext) {
 		switch (this.axis) {
 			// Forward axis
 			case "attribute":
-				throw "Not implemented";
+				for (var nIndex = 0, nLength = oItem.attributes.length; nIndex < nLength; nIndex++)
+					oSequence.add(oItem.attributes[nIndex]);
 				break;
 
 			case "child":
