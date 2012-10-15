@@ -50,6 +50,13 @@
 
 */
 
+// fn:boolean($arg as item()*) as xs:boolean
+cFunctionCall.functions["boolean"]	= function(oSequence) {
+	if (!arguments.length)
+		throw new cXPath2Error("XPST0017");
+	return new cXPath2Sequence(oSequence.toBoolean());
+};
+
 cFunctionCall.functions["count"]	= function(oSequence) {
 	return new cXPath2Sequence(oSequence.items.length);
 };
