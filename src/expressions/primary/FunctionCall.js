@@ -25,6 +25,10 @@ cFunctionCall.functions	= {};
 cFunctionCall.parse	= function (oLexer, oResolver) {
 	var aMatch	= oLexer.peek().match(cFunctionCall.RegExp);
 	if (aMatch && oLexer.peek(1) == '(') {
+		// Reserved "functions"
+		if (!aMatch[1] && (aMatch[2] in cKindTest.names))
+			return cAxisStep.parse(oLexer);
+		// Other functions
 		if (aMatch[1] == '*' || aMatch[2] == '*')
 			throw "FunctionCall.parse: illegal use of wildcard in function name";
 		var oFunctionCallExpr	= new cFunctionCall((aMatch[1] ? oResolver(aMatch[1]) + '#' : '') + aMatch[2]),
