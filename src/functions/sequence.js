@@ -57,6 +57,9 @@ cFunctionCall.functions["boolean"]	= function(oSequence) {
 	return new cXPath2Sequence(oSequence.toBoolean());
 };
 
+// fn:count($arg as item()*) as xs:integer
 cFunctionCall.functions["count"]	= function(oSequence) {
+	if (!arguments.length)
+		throw new cXPath2Error("XPST0017");
 	return new cXPath2Sequence(oSequence.items.length);
 };

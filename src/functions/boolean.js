@@ -29,6 +29,9 @@ cFunctionCall.functions["false"]	= function() {
 	return new cXPath2Sequence(false);
 };
 
+// fn:not($arg as item()*) as xs:boolean
 cFunctionCall.functions["not"]	= function(oSequence) {
+	if (!arguments.length)
+		throw new cXPath2Error("XPST0017");
 	return new cXPath2Sequence(!oSequence.toBoolean());
 };
