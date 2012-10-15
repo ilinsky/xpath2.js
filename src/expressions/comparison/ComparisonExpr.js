@@ -152,9 +152,9 @@ cComparisonExpr.prototype.evaluate	= function (oContext) {
 				throw new cXPath2Error("XPTY0004");
 
 			switch (this.operator) {
-				case 'is':	return oLeft.items[0] == oRight.items[0];
-				case '>>':	return oLeft.items[0].compareDocumentPosition(oRight.items[0]) & 2;
-				case '<<':	return oLeft.items[0].compareDocumentPosition(oRight.items[0]) & 4;
+				case 'is':	return new cXPath2Sequence(oLeft.items[0].isSameNode(oRight.items[0]));
+				case '>>':	return new cXPath2Sequence(!!(oLeft.items[0].compareDocumentPosition(oRight.items[0]) & 2));
+				case '<<':	return new cXPath2Sequence(!!(oLeft.items[0].compareDocumentPosition(oRight.items[0]) & 4));
 			}
 			break;
 	}
