@@ -39,6 +39,7 @@ cStepExpr.parsePredicates	= function (oLexer, oResolver, oStep) {
 cStepExpr.prototype.applyPredicates	= function(oContext) {
 	var oSequence	= oContext.sequence,
 		oSequence1,
+		oContext1,
 		oSequence2;
 	// TODO: Apply predicates
 	for (var nPredicateIndex = 0, nPredicateLength = this.predicates.length; nPredicateIndex < nPredicateLength; nPredicateIndex++) {
