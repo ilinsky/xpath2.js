@@ -76,9 +76,11 @@ cAxisStep.parse	= function (oLexer, oResolver) {
 
 // Public members
 cAxisStep.prototype.evaluate	= function (oContext) {
-	var oSequence	= new cXPath2Sequence,
-		oItem	= oContext.sequence.items[oContext.position - 1];
+	var oSequence	= new cXPath2Sequence;
+	if (!oContext.sequence.items.length)
+		return oSequence;
 
+	var oItem	= oContext.sequence.items[oContext.position - 1];
 	switch (this.axis) {
 		// Forward axis
 		case "attribute":
