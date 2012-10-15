@@ -35,9 +35,8 @@ cIntersectExceptExpr.parse	= function (oLexer, oResolver) {
 		sOperator;
 	while ((sOperator = oLexer.peek()) in cIntersectExceptExpr.operators) {
 		oLexer.next();
-		oExpr	= cUnaryExpr.parse(oLexer, oResolver);
-		if (!oExpr)
-			throw "UnionExpr.parse: right operand missing";
+		if (oLexer.eof() ||!(oExpr = cUnaryExpr.parse(oLexer, oResolver)))
+			throw "IntersectExceptExpr.parse: right operand missing";
 		oIntersectExceptExpr.items.push([sOperator, oExpr]);
 	}
 	return oIntersectExceptExpr;

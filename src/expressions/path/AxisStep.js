@@ -44,8 +44,7 @@ cAxisStep.parse	= function (oLexer, oResolver) {
 	if (oLexer.peek(1) == "::") {
 		if (sAxis in cAxisStep.axises) {
 			oLexer.next(2);
-			oExpr	= cNodeTest.parse(oLexer, oResolver);
-			if (!oExpr)
+			if (oLexer.eof() ||!(oExpr = cNodeTest.parse(oLexer, oResolver)))
 				throw "AxisStep.parse: expected NodeTest expression";
 			oStep	= new cAxisStep(sAxis, oExpr);
 		}
@@ -60,14 +59,12 @@ cAxisStep.parse	= function (oLexer, oResolver) {
 	else
 	if (sAxis == "@") {
 		oLexer.next();
-		oExpr	= cNodeTest.parse(oLexer, oResolver);
-		if (!oExpr)
+		if (oLexer.eof() ||!(oExpr = cNodeTest.parse(oLexer, oResolver)))
 			throw "AxisStep.parse: expected NodeTest expression";
 		oStep	= new cAxisStep("attribute", oExpr);
 	}
 	else {
-		oExpr	= cNodeTest.parse(oLexer, oResolver);
-		if (!oExpr)
+		if (oLexer.eof() ||!(oExpr = cNodeTest.parse(oLexer, oResolver)))
 			return;
 		oStep	= new cAxisStep("child", oExpr);
 	}

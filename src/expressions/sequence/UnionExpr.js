@@ -31,8 +31,7 @@ cUnionExpr.parse	= function (oLexer, oResolver) {
 	var oUnionExpr	= new cUnionExpr(oExpr);
 	while (oLexer.peek() == '|' || oLexer.peek() == "union") {
 		oLexer.next();
-		oExpr	= cIntersectExceptExpr.parse(oLexer, oResolver);
-		if (!oExpr)
+		if (oLexer.eof() ||!(oExpr = cIntersectExceptExpr.parse(oLexer, oResolver)))
 			throw "UnionExpr.parse: right operand missing";
 		oUnionExpr.items.push(oExpr);
 	}

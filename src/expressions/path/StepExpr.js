@@ -23,8 +23,7 @@ cStepExpr.parsePredicates	= function (oLexer, oResolver, oStep) {
 	while (oLexer.peek() == '[') {
 		oLexer.next();
 
-		oExpr	= cExpr.parse(oLexer, oResolver);
-		if (!oExpr)
+		if (oLexer.eof() ||!(oExpr = cExpr.parse(oLexer, oResolver)))
 			throw "StepExpr.parsePredicates: expected Expr expression";
 
 		oStep.predicates.push(oExpr);

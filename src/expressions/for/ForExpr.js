@@ -20,7 +20,8 @@ cForExpr.parse	= function (oLexer, oResolver) {
 	if (oLexer.peek() == "for" && oLexer.peek(1).substr(0, 1) == '$') {
 		oLexer.next();
 
-		var oForExpr	= new cForExpr;
+		var oForExpr	= new cForExpr,
+			oExpr;
 		do {
 			oForExpr.bindings.push(cSimpleForBinding.parse(oLexer, oResolver));
 		}
@@ -30,8 +31,7 @@ cForExpr.parse	= function (oLexer, oResolver) {
 			throw "ForExpr.parse: Expected 'return' token";
 
 		oLexer.next();
-		var oExpr	= cExprSingle.parse(oLexer, oResolver);
-		if (!oExpr)
+		if (oLexer.eof() ||!(oExpr = cExprSingle.parse(oLexer, oResolver)))
 			throw "ForExpr.parse: expected 'return' statement operand";
 
 		oForExpr.returnExpr	= oExpr;

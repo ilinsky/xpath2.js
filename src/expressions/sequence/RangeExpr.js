@@ -26,8 +26,7 @@ cRangeExpr.parse	= function (oLexer, oResolver) {
 
 	// Range expression
 	oLexer.next();
-	oRight	= cAdditiveExpr.parse(oLexer, oResolver);
-	if (!oRight)
+	if (oLexer.eof() ||!(oRight = cAdditiveExpr.parse(oLexer, oResolver)))
 		throw "RangeExpr.parse: expected right operand";
 	return new cRangeExpr(oExpr, oRight);
 };

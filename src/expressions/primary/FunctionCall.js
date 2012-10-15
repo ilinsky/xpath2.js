@@ -33,8 +33,7 @@ cFunctionCall.parse	= function (oLexer, oResolver) {
 		//
 		if (oLexer.peek() != ')') {
 			do {
-				oExpr	= cExprSingle.parse(oLexer, oResolver);
-				if (!oExpr)
+				if (oLexer.eof() ||!(oExpr = cExprSingle.parse(oLexer, oResolver)))
 					throw "FunctionCall.parse: expected ExprSingle expression";
 				oFunctionCallExpr.args.push(oExpr);
 			}

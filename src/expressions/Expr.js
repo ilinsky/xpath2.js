@@ -19,8 +19,7 @@ cExpr.parse	= function(oLexer, oResolver) {
 	var oExpr	= new cExpr,
 		oItem;
 	do {
-		oItem	= cExprSingle.parse(oLexer, oResolver);
-		if (!oItem)
+		if (oLexer.eof() ||!(oItem = cExprSingle.parse(oLexer, oResolver)))
 			throw "Expr.parse: expected ExprSingle expression";
 		oExpr.items.push(oItem);
 	}

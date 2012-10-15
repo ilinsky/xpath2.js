@@ -41,7 +41,8 @@ cComparisonExpr.operators	= {
 
 // Static members
 cComparisonExpr.parse	= function (oLexer, oResolver) {
-	var oExpr;
+	var oExpr,
+		oRight;
 	if (oLexer.eof() ||!(oExpr = cRangeExpr.parse(oLexer, oResolver)))
 		return;
 	if (!(oLexer.peek() in cComparisonExpr.operators))
@@ -50,8 +51,7 @@ cComparisonExpr.parse	= function (oLexer, oResolver) {
 	// Comparison expression
 	var sOperator	= oLexer.peek();
 	oLexer.next();
-	var oRight	= cRangeExpr.parse(oLexer, oResolver);
-	if (!oRight)
+	if (oLexer.eof() ||!(oRight = cRangeExpr.parse(oLexer, oResolver)))
 		throw "ComparisonExpr.parse: right operand missing";
 	return new cComparisonExpr(oExpr, oRight, sOperator);
 };

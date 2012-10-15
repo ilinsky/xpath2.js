@@ -23,7 +23,8 @@ cQuantifiedExpr.parse	= function (oLexer, oResolver) {
 	if ((sQuantifier == "some" || sQuantifier == "every") && oLexer.peek(1).substr(0, 1) == '$') {
 		oLexer.next();
 
-		var oQuantifiedExpr	= new cQuantifiedExpr(sQuantifier);
+		var oQuantifiedExpr	= new cQuantifiedExpr(sQuantifier),
+			oExpr;
 		do {
 			oQuantifiedExpr.bindings.push(cSimpleQuantifiedBinding.parse(oLexer, oResolver));
 		}
@@ -33,8 +34,7 @@ cQuantifiedExpr.parse	= function (oLexer, oResolver) {
 			throw "QuantifiedExpr.parse: Expected 'satisfies' token";
 
 		oLexer.next();
-		var oExpr	= cExprSingle.parse(oLexer, oResolver);
-		if (!oExpr)
+		if (oLexer.eof() ||!(oExpr = cExprSingle.parse(oLexer, oResolver)))
 			throw "QuantifiedExpr.parse: expected 'satisfies' statement operand";
 
 		oQuantifiedExpr.satisfiesExpr	= oExpr;
