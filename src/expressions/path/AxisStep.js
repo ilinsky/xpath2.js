@@ -155,9 +155,7 @@ cAxisStep.prototype.evaluate	= function (oContext) {
 
 	// Apply predicates
 	if (this.predicates.length && oSequence.items.length) {
-		oContext.sequence	= oSequence;
-		oContext.position	= 1;
-		oSequence	= cStepExpr.prototype.applyPredicates.call(this, oContext);
+		oSequence	= cStepExpr.prototype.applyPredicates.call(this, new cXPath2Context(oSequence));
 	}
 
 	return oSequence;
