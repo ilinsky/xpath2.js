@@ -42,15 +42,15 @@ cStepExpr.prototype.applyPredicates	= function(oContext) {
 		oSequence2;
 	// TODO: Apply predicates
 	for (var nPredicateIndex = 0, nPredicateLength = this.predicates.length; nPredicateIndex < nPredicateLength; nPredicateIndex++) {
-		oSequence1	= new cXPath2Sequence(oSequence);
-		oContext1	= new cXPath2Context(oSequence1, oContext.scope, 1);
+		oSequence1	= oSequence;
+		oContext1	= new cXPath2Context(oSequence1);
 		oSequence	= new cXPath2Sequence;
 		for (var nIndex = 1, nLength = oSequence1.items.length + 1; nIndex < nLength; nIndex++) {
 			oContext1.position	= nIndex;
 			oSequence2	= this.predicates[nPredicateIndex].evaluate(oContext1);
 			//
-			if (oSequence2.isSingleton() && !fIsNaN(oSequence2.toNumber())) {
-				if (oSequence2.toNumber() == nIndex)
+			if (oSequence2.isSingleton() && typeof oSequence2.items[0] == "number") {
+				if (oSequence2.items[0] == nIndex)
 					oSequence.add(oSequence1.items[nIndex - 1]);
 			}
 			else
