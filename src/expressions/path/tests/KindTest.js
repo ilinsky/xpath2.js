@@ -9,9 +9,13 @@
 
 function cKindTest(sName) {
 	this.name	= sName;
+	this.args	= [];
 };
 
 cKindTest.prototype	= new cNodeTest;
+
+cKindTest.prototype.name	= null;
+cKindTest.prototype.args	= null;
 
 cKindTest.names	= {};
 cKindTest.names["document-node"]	= [];
