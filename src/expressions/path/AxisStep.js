@@ -97,9 +97,9 @@ cAxisStep.prototype.evaluate	= function (oContext) {
 			case "descendant":
 				(function(oItem) {
 					for (var oNode = oItem.firstChild; oNode; oNode = oNode.nextSibling) {
+						oSequence.add(oNode);
 						if (oNode.firstChild)
 							arguments.callee(oNode);
-						oSequence.add(oNode);
 					}
 				})(oItem);
 				break;
