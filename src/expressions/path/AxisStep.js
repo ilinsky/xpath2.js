@@ -77,70 +77,68 @@ cAxisStep.parse	= function (oLexer, oResolver) {
 // Public members
 cAxisStep.prototype.evaluate	= function (oContext) {
 	var oSequence	= new cXPath2Sequence,
-		oItem;
-	for (var nIndex = 0, nLength = oContext.sequence.items.length; nIndex < nLength; nIndex++) {
-		oItem	= oContext.sequence.items[nIndex];
-		switch (this.axis) {
-			// Forward axis
-			case "attribute":
-				for (var nIndex = 0, nLength = oItem.attributes.length; nIndex < nLength; nIndex++)
-					oSequence.add(oItem.attributes[nIndex]);
-				break;
+		oItem	= oContext.sequence.items[oContext.position - 1];
 
-			case "child":
-				for (var oNode = oItem.firstChild; oNode; oNode = oNode.nextSibling)
+	switch (this.axis) {
+		// Forward axis
+		case "attribute":
+			for (var nIndex = 0, nLength = oItem.attributes.length; nIndex < nLength; nIndex++)
+				oSequence.add(oItem.attributes[nIndex]);
+			break;
+
+		case "child":
+			for (var oNode = oItem.firstChild; oNode; oNode = oNode.nextSibling)
+				oSequence.add(oNode);
+			break;
+
+		case "descendant-or-self":
+			oSequence.add(oItem);
+			// No break left intentionally
+		case "descendant":
+			(function(oItem) {
+				for (var oNode = oItem.firstChild; oNode; oNode = oNode.nextSibling) {
 					oSequence.add(oNode);
-				break;
+					if (oNode.firstChild)
+						arguments.callee(oNode);
+				}
+			})(oItem);
+			break;
 
-			case "descendant-or-self":
-				oSequence.add(oItem);
-				// No break left intentionally
-			case "descendant":
-				(function(oItem) {
-					for (var oNode = oItem.firstChild; oNode; oNode = oNode.nextSibling) {
-						oSequence.add(oNode);
-						if (oNode.firstChild)
-							arguments.callee(oNode);
-					}
-				})(oItem);
-				break;
+		case "following":
+			throw "Not implemented";
+			break;
 
-			case "following":
-				throw "Not implemented";
-				break;
+		case "following-sibling":
+			for (var oNode = oItem.nextSibling; oNode; oNode = oNode.nextSibling)
+				oSequence.add(oNode);
+			break;
 
-			case "following-sibling":
-				for (var oNode = oItem.nextSibling; oNode; oNode = oNode.nextSibling)
-					oSequence.add(oNode);
-				break;
+		case "self":
+			oSequence.add(oItem);
+			break;
 
-			case "self":
-				oSequence.add(oItem);
-				break;
+		// Reverse axis
+		case "ancestor-or-self":
+			oSequence.add(oItem);
+			// No break left intentionally
+		case "ancestor":
+			for (var oNode = oItem; oNode = oNode.parentNode;)
+				oSequence.add(oNode);
+			break;
 
-			// Reverse axis
-			case "ancestor-or-self":
-				oSequence.add(oItem);
-				// No break left intentionally
-			case "ancestor":
-				for (var oNode = oItem; oNode = oNode.parentNode;)
-					oSequence.add(oNode);
-				break;
+		case "parent":
+			if (oItem.parentNode)
+				oSequence.add(oItem.parentNode);
+			break;
 
-			case "parent":
-				if (oItem.parentNode)
-					oSequence.add(oItem.parentNode);
-				break;
+		case "preceding":
+			throw "Not implemented";
+			break;
 
-			case "preceding":
-				throw "Not implemented";
-				break;
-
-			case "preceding-sibling":
-				for (var oNode = oItem.previousSibling; oNode; oNode = oNode.previousSibling)
-					oSequence.add(oNode);
-				break;
-		}
+		case "preceding-sibling":
+			for (var oNode = oItem.previousSibling; oNode; oNode = oNode.previousSibling)
+				oSequence.add(oNode);
+			break;
 	}
 
 	// Apply test
