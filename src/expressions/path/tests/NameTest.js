@@ -32,5 +32,11 @@ cNameTest.parse	= function (oLexer, oResolver) {
 
 // Public members
 cNameTest.prototype.test	= function (oNode) {
-	return oNode.nodeType == 1 && (this.localName == '*' || oNode.localName == this.localName) && (this.namespaceURI == '*' || oNode.namespaceURI == this.namespaceURI);
+	return oNode.nodeType == 1 ?
+				(this.localName == '*' || oNode.localName == this.localName)
+					&& (this.namespaceURI == '*' ||(this.namespaceURI ? oNode.namespaceURI == this.namespaceURI : true))
+				: oNode.nodeType == 2 ?
+					(this.localName == '*' || oNode.localName == this.localName)
+						&& (this.namespaceURI == '*' ||(this.namespaceURI ? oNode.namespaceURI == this.namespaceURI : true))
+					: false;
 };
