@@ -42,14 +42,10 @@ cPathExpr.parse	= function (oLexer, oResolver) {
 
 	// Parse other steps
 	while (oLexer.peek() == sSingleSlash || oLexer.peek() == sDoubleSlash) {
-		if (oLexer.peek() == sDoubleSlash) {
-			oLexer.next();
+		if (oLexer.peek() == sDoubleSlash)
 			oPathExpr.items.push(new cAxisStep("descendant-or-self", new cKindTest("node")));
-		}
-		else
-		if (oLexer.peek() == sSingleSlash)
-			oLexer.next();
-		//
+
+		oLexer.next();
 		if (oLexer.eof() ||!(oExpr = cStepExpr.parse(oLexer, oResolver)))
 			throw "PathExpr.parse: Expected StepExpr expression";
 		//
