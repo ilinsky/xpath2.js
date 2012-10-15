@@ -21,30 +21,31 @@ cPathExpr.parse	= function (oLexer, oResolver) {
 		sDoubleSlash	= '/' + '/';
 
 	var oPathExpr	= new cPathExpr(),
+		sSlash	= oLexer.peek(),
 		oExpr;
 	// Parse first step
-	if (oLexer.peek() == sSingleSlash) {
+	if (sSlash == sDoubleSlash || sSlash == sSingleSlash) {
 		oLexer.next();
 		oPathExpr.items.push(new cFunctionCall("root"));
+		//
+		if (sSlash == sDoubleSlash)
+			oPathExpr.items.push(new cAxisStep("descendant-or-self", new cKindTest("node")));
 	}
-	else
-	if (oLexer.peek() == sDoubleSlash) {
-		oLexer.next();
-		oPathExpr.items.push(new cAxisStep("descendant-or-self", new cKindTest("node")));
-	}
+
 	//
 	if (oLexer.eof() ||!(oExpr = cStepExpr.parse(oLexer, oResolver))) {
-		if (oPathExpr.items.length && oPathExpr.items[0] instanceof cFunctionCall)
+		if (sSlash == sSingleSlash)
 			return oPathExpr.items[0];
-		return;
+		//
+		throw "PathExpr.parse: expected AxisStep expression";
 	}
 	oPathExpr.items.push(oExpr);
 
 	// Parse other steps
-	while (oLexer.peek() == sSingleSlash || oLexer.peek() == sDoubleSlash) {
-		if (oLexer.peek() == sDoubleSlash)
+	while ((sSlash = oLexer.peek()) == sSingleSlash || sSlash == sDoubleSlash) {
+		if (sSlash == sDoubleSlash)
 			oPathExpr.items.push(new cAxisStep("descendant-or-self", new cKindTest("node")));
-
+		//
 		oLexer.next();
 		if (oLexer.eof() ||!(oExpr = cStepExpr.parse(oLexer, oResolver)))
 			throw "PathExpr.parse: Expected StepExpr expression";
