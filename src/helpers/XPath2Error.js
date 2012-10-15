@@ -15,6 +15,7 @@ function cXPath2Error(sCode) {
 // "http://www.w3.org/2005/xqt-errors"
 
 var oXPathError_messages	= {};
+oXPathError_messages["XPDY0002"]	= "Evaluation of an expression relies on some part of the dynamic context that has not been assigned a value.";
 oXPathError_messages["XPST0003"]	= "Expression is not a valid instance of the grammar";
 oXPathError_messages["XPTY0004"]	= "Type is not appropriate for the context in which the expression occurs";
 oXPathError_messages["XPST0008"]	= "Expression refers to an element name, attribute name, schema type name, namespace prefix, or variable name that is not defined in the static context";
