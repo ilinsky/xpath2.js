@@ -79,6 +79,7 @@
 	files.push("src/functions/qname.js");
 	files.push("src/functions/sequence.js");
 	files.push("src/functions/string.js");
+	files.push("src/functions/trace.js");
 
 	// Export objects to environment
 	files.push("export.js");
