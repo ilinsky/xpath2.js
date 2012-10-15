@@ -62,11 +62,16 @@ cPathExpr.parse	= function (oLexer, oResolver) {
 
 // Public members
 cPathExpr.prototype.evaluate	= function (oContext) {
-	var oSequence	= oContext.sequence;
+	var oSequence	= oContext.sequence,
+		oStep;
 	for (var nIndex = 0, nLength = this.items.length; nIndex < nLength; nIndex++) {
-		oContext.sequence	= oSequence;
-		oContext.position	= 1;
-		oSequence	= this.items[nIndex].evaluate(oContext);
+		oStep	= new cXPath2Sequence;
+		for (var n = 0; n < oSequence.items.length; n++) {
+			oContext.position	= n + 1;
+			oContext.sequence	= oSequence;
+			oStep.add(this.items[nIndex].evaluate(oContext));
+		}
+		oSequence	= oStep;
 	};
 	return oSequence;
 };
