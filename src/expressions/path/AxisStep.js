@@ -77,10 +77,8 @@ cAxisStep.parse	= function (oLexer, oResolver) {
 // Public members
 cAxisStep.prototype.evaluate	= function (oContext) {
 	var oSequence	= new cXPath2Sequence;
-	if (!oContext.sequence.items.length)
-		return oSequence;
+	var oItem	= oContext.context;
 
-	var oItem	= oContext.sequence.items[oContext.position - 1];
 	switch (this.axis) {
 		// Forward axis
 		case "attribute":
@@ -179,9 +177,8 @@ cAxisStep.prototype.evaluate	= function (oContext) {
 	}
 
 	// Apply predicates
-	if (this.predicates.length && oSequence.items.length) {
-		oSequence	= cStepExpr.prototype.applyPredicates.call(this, new cXPath2Context(oSequence));
-	}
+	if (this.predicates.length && oSequence.items.length)
+		oSequence	= cStepExpr.prototype.applyPredicates.call(this, oContext, oSequence);
 
 	// Reverse results if reverse axis
 	switch (this.axis) {

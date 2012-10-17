@@ -22,6 +22,6 @@
 // fn:string($arg as item()?) as xs:string
 cFunctionCall.functions["string"]	= function(/*[*/oSequence/*]*/) {
 	if (!arguments.length)
-		oSequence	= new cXPath2Sequence(this.sequence.items[this.position - 1]);
+		oSequence	= new cXPath2Sequence(this.context);
 	return new cXPath2Sequence(oSequence.toString());
 };

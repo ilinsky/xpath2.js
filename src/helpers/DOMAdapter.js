@@ -11,50 +11,28 @@ function cDOMAdapter() {
 	throw "Illegal constructor";
 };
 
-// Node interface
+// Custom members
 cDOMAdapter.isNode		= function(oNode) {
 	return oNode &&!!oNode.nodeType;
 };
 
 cDOMAdapter.getProperty	= function(oNode, sName) {
-	switch (sName) {
-		// Node
-		case "baseURI":
-		case "textContent":
-		case "nodeType":
-		case "firstChild":
-		case "lastChild":
-		case "nextSibling":
-		case "previousSibling":
-		case "parentNode":
-		case "ownerDocument":
-			return oNode[sName];
-		// Text
-		case "wholeText":
-
-		// Attribute
-		case "ownerElement":
-
-		// Element
-		case "attributes":
-
-		// Document
-		case "documentElement":
-	}
+	return oNode[sName];
 };
 
+// Standard members
 cDOMAdapter.isNameNode	= function(oNode, oNode2) {
-
+	return oNode.isSameNode(oNode2);
 };
 
 cDOMAdapter.compareDocumentPosition	= function(oNode, oNode2) {
-
+	return oNode.compareDocumentPosition(oNode2);
 };
 
 cDOMAdapter.lookupPrefix	= function(oNode, sNameSpaceURI) {
-
+	return oNode.lookupPrefix(sNameSpaceURI);
 };
 
 cDOMAdapter.lookupNamespaceURI	= function(oNode, sPrefix) {
-
+	return oNode.lookupNamespaceURI(sPrefix);
 };

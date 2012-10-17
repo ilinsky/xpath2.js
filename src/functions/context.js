@@ -24,5 +24,5 @@ cFunctionCall.functions["position"]	= function() {
 };
 
 cFunctionCall.functions["last"]	= function() {
-	return new cXPath2Sequence(this.sequence.items.length);
+	return new cXPath2Sequence(this.last);
 };

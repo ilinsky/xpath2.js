@@ -7,16 +7,18 @@
  *
  */
 
-function cXPath2Context(oSequence, oScope, nPosition) {
-	this.sequence	= oSequence || new cXPath2Sequence;
+function cXPath2Context(oNode, oScope, nPosition, nLast) {
+	this.context	= oNode;
 	this.scope		= oScope || {};
 	this.position	= nPosition || 1;
+	this.last		= nLast || 1;
 	this.stack		= {};
 };
 
-cXPath2Context.prototype.sequence	= null;
+cXPath2Context.prototype.context	= null;
 cXPath2Context.prototype.scope		= null;
 cXPath2Context.prototype.position	= null;
+cXPath2Context.prototype.last		= null;
 cXPath2Context.prototype.stack		= null;	// Variables stack
 
 cXPath2Context.prototype.pushVariable	= function(sName, vValue) {
