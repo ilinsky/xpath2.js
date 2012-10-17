@@ -78,7 +78,20 @@ cAxisStep.parse	= function (oLexer, oResolver) {
 cAxisStep.prototype.evaluate	= function (oContext) {
 	var oSequence	= new cXPath2Sequence;
 	var oItem	= oContext.context;
-
+	var fGetChildrenForward	= function(oNode) {
+		for (; oNode; oNode = oNode.nextSibling) {
+			oSequence.add(oNode);
+			if (oNode.firstChild)
+				fGetChildrenForward(oNode.firstChild);
+		}
+	};
+	var fGetChildrenBackward	= function(oNode) {
+		for (; oNode; oNode = oNode.previousSibling) {
+			if (oNode.lastChild)
+				fGetChildrenBackward(oNode.lastChild);
+			oSequence.add(oNode);
+		}
+	};
 	switch (this.axis) {
 		// Forward axis
 		case "attribute":
@@ -95,23 +108,10 @@ cAxisStep.prototype.evaluate	= function (oContext) {
 			oSequence.add(oItem);
 			// No break left intentionally
 		case "descendant":
-			(function(oItem) {
-				for (var oNode = oItem.firstChild; oNode; oNode = oNode.nextSibling) {
-					oSequence.add(oNode);
-					if (oNode.firstChild)
-						arguments.callee(oNode);
-				}
-			})(oItem);
+			fGetChildrenForward(oItem.firstChild);
 			break;
 
 		case "following":
-			var fGetChildrenForward	= function(oNode) {
-					for (; oNode; oNode = oNode.nextSibling) {
-						oSequence.add(oNode);
-						if (oNode.firstChild)
-							fGetChildrenForward(oNode.firstChild);
-					}
-				};
 			for (var oParent = oItem; oParent; oParent = oParent.parentNode) {
 				if (oParent == oItem)
 					if (oParent.firstChild)
@@ -145,13 +145,6 @@ cAxisStep.prototype.evaluate	= function (oContext) {
 			break;
 
 		case "preceding":
-			var fGetChildrenBackward	= function(oNode) {
-				for (; oNode; oNode = oNode.previousSibling) {
-					if (oNode.lastChild)
-						fGetChildrenBackward(oNode.lastChild);
-					oSequence.add(oNode);
-				}
-			};
 			for (var oParent = oItem; oParent; oParent = oParent.parentNode) {
 				if (oParent != oItem)
 					oSequence.add(oParent);
