@@ -107,7 +107,20 @@ cAxisStep.prototype.evaluate	= function (oContext) {
 			break;
 
 		case "following":
-			throw "Not implemented";
+			var fGetChildrenForward	= function(oNode) {
+					for (; oNode; oNode = oNode.nextSibling) {
+						oSequence.add(oNode);
+						if (oNode.firstChild)
+							fGetChildrenForward(oNode.firstChild);
+					}
+				};
+			for (var oParent = oItem; oParent; oParent = oParent.parentNode) {
+				if (oParent == oItem)
+					if (oParent.firstChild)
+						fGetChildrenForward(oParent.firstChild);
+				if (oParent.nextSibling)
+					fGetChildrenForward(oParent.nextSibling);
+			}
 			break;
 
 		case "following-sibling":
@@ -134,7 +147,19 @@ cAxisStep.prototype.evaluate	= function (oContext) {
 			break;
 
 		case "preceding":
-			throw "Not implemented";
+			var fGetChildrenBackward	= function(oNode) {
+				for (; oNode; oNode = oNode.previousSibling) {
+					if (oNode.lastChild)
+						fGetChildrenBackward(oNode.lastChild);
+					oSequence.add(oNode);
+				}
+			};
+			for (var oParent = oItem; oParent; oParent = oParent.parentNode) {
+				if (oParent != oItem)
+					oSequence.add(oParent);
+				if (oParent.previousSibling)
+					fGetChildrenBackward(oParent.previousSibling);
+			}
 			break;
 
 		case "preceding-sibling":
