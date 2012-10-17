@@ -183,5 +183,15 @@ cAxisStep.prototype.evaluate	= function (oContext) {
 		oSequence	= cStepExpr.prototype.applyPredicates.call(this, new cXPath2Context(oSequence));
 	}
 
+	// Reverse results if reverse axis
+	switch (this.axis) {
+		case "ancestor":
+		case "ancestor-or-self":
+		case "parent":
+		case "preceding":
+		case "preceding-sibling":
+			oSequence	= cXPath2Sequence.reverse(oSequence);
+	}
+
 	return oSequence;
 };
