@@ -16,6 +16,12 @@ function cXPath2Sequence(oItem) {
 cXPath2Sequence.prototype.items	= null;
 
 // Static members
+cXPath2Sequence.reverse	= function(oSequence1) {
+	var oSequence	= new cXPath2Sequence();
+	oSequence.items	= oSequence1.items.reverse();
+	return oSequence;
+};
+
 cXPath2Sequence.union		= function(oSequence1, oSequence2) {
 	var oSequence	= new cXPath2Sequence(oSequence1);
 	for (var nIndex = 0, nLength = oSequence2.items.length; nIndex < nLength; nIndex++)
@@ -137,10 +143,5 @@ cXPath2Sequence.prototype.toString	= function() {
 
 // Orders items in sequence in document order
 cXPath2Sequence.prototype.order		= function() {
-
-};
-
-// Reverses items order in sequence
-cXPath2Sequence.prototype.reverse	= function() {
 
 };
