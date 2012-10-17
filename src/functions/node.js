@@ -36,7 +36,7 @@ cFunctionCall.functions["namespace-uri"]	= function(oSequence) {
 // fn:number($arg as xs:anyAtomicType?) as xs:double
 cFunctionCall.functions["number"]	= function(/*[*/oSequence/*]*/) {
 	if (!arguments.length)
-		oSequence	= new cXPath2Sequence(this.sequence.items[this.position - 1]);
+		oSequence	= new cXPath2Sequence(this.context);
 	return new cXPath2Sequence(oSequence.toNumber());
 };
 
