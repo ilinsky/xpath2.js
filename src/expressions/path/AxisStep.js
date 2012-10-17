@@ -168,11 +168,11 @@ cAxisStep.prototype.evaluate	= function (oContext) {
 
 	// Apply test
 	if (this.test && oSequence.items.length) {
-		var oInSequence	= oSequence;
+		var oSequence1	= oSequence;
 		oSequence	= new cXPath2Sequence;
-		for (var nIndex = 0, nLength = oInSequence.items.length; nIndex < nLength; nIndex++) {
-			if (this.test.test(oInSequence.items[nIndex]))
-				oSequence.add(oInSequence.items[nIndex]);
+		for (var nIndex = 0, nLength = oSequence1.items.length; nIndex < nLength; nIndex++) {
+			if (this.test.test(oSequence1.items[nIndex]))
+				oSequence.add(oSequence1.items[nIndex]);
 		}
 	}
 

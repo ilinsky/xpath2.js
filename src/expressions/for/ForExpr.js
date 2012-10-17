@@ -46,9 +46,9 @@ cForExpr.prototype.evaluate	= function (oContext) {
 	var oSequence	= new cXPath2Sequence;
 	(function(oSelf, nBinding) {
 		var oBinding	= oSelf.bindings[nBinding++],
-			oInSequence	= oBinding.inExpr.evaluate(oContext);
-		for (var nIndex = 0, nLength = oInSequence.items.length; nIndex < nLength; nIndex++) {
-			oContext.pushVariable(oBinding.uri, oInSequence.items[nIndex]);
+			oSequence1	= oBinding.inExpr.evaluate(oContext);
+		for (var nIndex = 0, nLength = oSequence1.items.length; nIndex < nLength; nIndex++) {
+			oContext.pushVariable(oBinding.uri, oSequence1.items[nIndex]);
 			if (nBinding < oSelf.bindings.length)
 				arguments.callee(oSelf, nBinding);
 			else
