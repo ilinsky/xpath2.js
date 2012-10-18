@@ -45,9 +45,8 @@ cMultiplicativeExpr.parse	= function (oLexer, oResolver) {
 
 // Public members
 cMultiplicativeExpr.prototype.evaluate	= function (oContext) {
-	var nValue	= this.left.evaluate(oContext).toNumber(),
-		nRight;
-	for (var nIndex = 0; nIndex < this.items.length; nIndex++) {
+	var nValue	= this.left.evaluate(oContext).toNumber();
+	for (var nIndex = 0, nIndex = this.items.length, nRight; nIndex < nLength; nIndex++) {
 		nRight	= this.items[nIndex][1].evaluate(oContext).toNumber();
 		switch (this.items[nIndex][0]) {
 			case '*':

@@ -92,7 +92,7 @@ cXPath2Sequence.atomizeItem		= function(oItem) {
 // Public members
 cXPath2Sequence.prototype.add	= function(oItem) {
 	if (oItem instanceof cXPath2Sequence)
-		for (var nIndex = 0; nIndex < oItem.items.length; nIndex++)
+		for (var nIndex = 0, nLength = oItem.items.length; nIndex < nLength; nIndex++)
 			this.items.push(oItem.items[nIndex]);
 	else
 		this.items.push(oItem);
