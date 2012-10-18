@@ -28,7 +28,7 @@ cOrExpr.parse	= function (oLexer, oResolver) {
 	while (oLexer.peek() == "or") {
 		oLexer.next();
 		if (oLexer.eof() ||!(oExpr = cAndExpr.parse(oLexer, oResolver)))
-			throw "OrExpr.parse: right operand missing"
+			throw "OrExpr.parse: right operand missing";
 		oOrExpr.items.push(oExpr);
 	}
 	return oOrExpr;
