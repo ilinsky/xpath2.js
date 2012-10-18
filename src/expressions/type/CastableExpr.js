@@ -30,3 +30,7 @@ cCastableExpr.parse	= function(oLexer, oResolver) {
 
 	return new cCastableExpr(oExpr, oType);
 };
+
+cCastableExpr.prototype.evaluate	= function(oContext) {
+	throw "CastableExpr.prototype.evaluate: Not implemented";
+};

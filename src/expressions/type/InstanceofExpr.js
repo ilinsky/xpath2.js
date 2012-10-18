@@ -30,3 +30,7 @@ cInstanceofExpr.parse	= function(oLexer, oResolver) {
 
 	return new cInstanceofExpr(oExpr, oType);
 };
+
+cInstanceofExpr.prototype.evaluate	= function(oContext) {
+	throw "InstanceofExpr.prototype.evaluate: Not implemented";
+};
