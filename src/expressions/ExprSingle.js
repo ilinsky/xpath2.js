@@ -13,7 +13,8 @@ function cExprSingle() {
 
 // Static members
 cExprSingle.parse	= function (oLexer, oResolver) {
-	return cForExpr.parse(oLexer, oResolver)
+	if (!oLexer.eof())
+		return cForExpr.parse(oLexer, oResolver)
 			|| cQuantifiedExpr.parse(oLexer, oResolver)
 			|| cIfExpr.parse(oLexer, oResolver)
 			|| cOrExpr.parse(oLexer, oResolver);

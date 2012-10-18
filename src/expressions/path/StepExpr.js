@@ -13,7 +13,8 @@ function cStepExpr() {
 
 // Static members
 cStepExpr.parse	= function (oLexer, oResolver) {
-	return cFilterExpr.parse(oLexer, oResolver)
+	if (!oLexer.eof())
+		return cFilterExpr.parse(oLexer, oResolver)
 			|| cAxisStep.parse(oLexer, oResolver);
 };
 

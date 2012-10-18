@@ -13,7 +13,8 @@ function cPrimaryExpr() {
 
 // Static members
 cPrimaryExpr.parse	= function (oLexer, oResolver) {
-	return cLiteral.parse(oLexer, oResolver)
+	if (!oLexer.eof())
+		return cLiteral.parse(oLexer, oResolver)
 			|| cVarRef.parse(oLexer, oResolver)
 			|| cParenthesizedExpr.parse(oLexer, oResolver)
 			|| cContextItemExpr.parse(oLexer, oResolver)

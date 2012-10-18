@@ -13,6 +13,7 @@ function cNodeTest() {
 
 // Static members
 cNodeTest.parse	= function (oLexer, oResolver) {
-	return cKindTest.parse(oLexer, oResolver)
+	if (!oLexer.eof())
+		return cKindTest.parse(oLexer, oResolver)
 			|| cNameTest.parse(oLexer, oResolver);
 };
