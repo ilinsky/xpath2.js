@@ -16,16 +16,16 @@ cUnaryExpr.prototype.operator	= null;
 cUnaryExpr.prototype.expression	= null;
 
 //
-//cUnaryExpr.operators	= {};
-//cUnaryExpr.operators['-']	= {};
-//cUnaryExpr.operators['+']	= {};
+cUnaryExpr.operators	= {};
+cUnaryExpr.operators['-']	= {};
+cUnaryExpr.operators['+']	= {};
 
 // Static members
 // UnaryExpr	:= ("-" | "+")* ValueExpr
 cUnaryExpr.parse	= function (oLexer, oResolver) {
 	if (oLexer.eof())
 		return;
-	if (!(oLexer.peek() == '-' || oLexer.peek() == '+'))
+	if (!(oLexer.peek() in cUnaryExpr.operators))
 		return cValueExpr.parse(oLexer, oResolver);
 
 	// Unary expression
