@@ -18,16 +18,16 @@ cKindTest.prototype.name	= null;
 cKindTest.prototype.args	= null;
 
 cKindTest.names	= {};
-cKindTest.names["document-node"]	= [];
-cKindTest.names["element"]			= [];
-cKindTest.names["attribute"]		= [];
-cKindTest.names["processing-instruction"]	= [];
-cKindTest.names["comment"]			= [];
-cKindTest.names["text"]				= [];
-cKindTest.names["node"]				= [];
+cKindTest.names["document-node"]	= {};
+cKindTest.names["element"]			= {};
+cKindTest.names["attribute"]		= {};
+cKindTest.names["processing-instruction"]	= {};
+cKindTest.names["comment"]			= {};
+cKindTest.names["text"]				= {};
+cKindTest.names["node"]				= {};
 //
-cKindTest.names["schema-element"]	= [];
-cKindTest.names["schema-attribute"]	= [];
+cKindTest.names["schema-element"]	= {};
+cKindTest.names["schema-attribute"]	= {};
 
 // Static members
 cKindTest.parse	= function (oLexer, oResolver) {

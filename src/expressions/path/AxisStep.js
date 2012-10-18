@@ -21,20 +21,20 @@ cAxisStep.prototype.predicates	= null;
 
 cAxisStep.axises	= {};
 // Forward axis
-cAxisStep.axises["attribute"]			= [];
-cAxisStep.axises["child"]				= [];
-cAxisStep.axises["descendant"]			= [];
-cAxisStep.axises["descendant-or-self"]	= [];
-cAxisStep.axises["following"]			= [];
-cAxisStep.axises["following-sibling"]	= [];
-cAxisStep.axises["self"]				= [];
-// cAxisStep.axises["namespace"]			= [];	// deprecated in 2.0
+cAxisStep.axises["attribute"]			= {};
+cAxisStep.axises["child"]				= {};
+cAxisStep.axises["descendant"]			= {};
+cAxisStep.axises["descendant-or-self"]	= {};
+cAxisStep.axises["following"]			= {};
+cAxisStep.axises["following-sibling"]	= {};
+cAxisStep.axises["self"]				= {};
+// cAxisStep.axises["namespace"]			= {};	// deprecated in 2.0
 // Reverse axis
-cAxisStep.axises["ancestor"]			= [];
-cAxisStep.axises["ancestor-or-self"]	= [];
-cAxisStep.axises["parent"]				= [];
-cAxisStep.axises["preceding"]			= [];
-cAxisStep.axises["preceding-sibling"]	= [];
+cAxisStep.axises["ancestor"]			= {};
+cAxisStep.axises["ancestor-or-self"]	= {};
+cAxisStep.axises["parent"]				= {};
+cAxisStep.axises["preceding"]			= {};
+cAxisStep.axises["preceding-sibling"]	= {};
 
 // Static members
 cAxisStep.parse	= function (oLexer, oResolver) {
