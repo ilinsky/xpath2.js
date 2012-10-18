@@ -34,8 +34,8 @@ cExpr.parse	= function(oLexer, oResolver) {
 
 // Public members
 cExpr.prototype.evaluate	= function(oContext) {
-	var aSequence	= new cXPath2Sequence;
+	var oSequence	= new cXPath2Sequence;
 	for (var nIndex = 0, nLength = this.items.length; nIndex < nLength; nIndex++)
-		aSequence.add(this.items[nIndex].evaluate(oContext));
-	return aSequence;
+		oSequence.add(this.items[nIndex].evaluate(oContext));
+	return oSequence;
 };
