@@ -64,8 +64,8 @@ cFunctionCall.prototype.evaluate	= function (oContext) {
 	if (fFunction = cFunctionCall.functions[this.uri])
 		return fFunction.apply(oContext, aArguments);
 	else
-	if ((fFunction = window[this.uri]) && typeof fFunction == "function")
-		return fFunction.apply(window, aArguments);
+	if ((fFunction = oContext.scope[this.uri]) && typeof fFunction == "function")
+		return fFunction.apply(oContext, aArguments);
 	else
 		throw "FunctionCall.prototype.evaluate: Could not find function: " + this.uri;
 };
