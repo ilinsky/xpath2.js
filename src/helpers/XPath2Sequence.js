@@ -51,7 +51,7 @@ cXPath2Sequence.atomize		= function(oSequence1) {
 	for (var nIndex = 0, nLength = oSequence1.items.length, vValue; nIndex < nLength; nIndex++)
 		if ((vValue = cXPath2Sequence.atomizeItem(oSequence1.items[nIndex])) !== null)
 			oSequence.add(vValue);
-	return new cXPath2Sequence(oSequence);
+	return oSequence;
 };
 
 cXPath2Sequence.atomizeItem		= function(oItem) {
@@ -113,7 +113,7 @@ cXPath2Sequence.prototype.toBoolean	= function() {
 		return false;
 
 	var oItem	= this.items[0];
-	if (cXPath2.DOMAdapter.isNode(oItem))	// TODO: add proper check for node using instanceof
+	if (cXPath2.DOMAdapter.isNode(oItem))
 		return true;
 
 	if (this.items.length == 1) {
@@ -132,18 +132,12 @@ cXPath2Sequence.prototype.toBoolean	= function() {
 
 // fn:number()
 cXPath2Sequence.prototype.toNumber	= function() {
-	if (!this.items.length)
-		return nNaN;
-
-	return +cXPath2Sequence.atomizeItem(this.items[0]);
+	return this.items.length ?+cXPath2Sequence.atomizeItem(this.items[0]) : nNaN;
 };
 
 // fn:string()
 cXPath2Sequence.prototype.toString	= function() {
-	if (!this.items.length)
-		return '';
-
-	return '' + cXPath2Sequence.atomizeItem(this.items[0]);
+	return this.items.length ? '' + cXPath2Sequence.atomizeItem(this.items[0]) : '';
 };
 
 // Orders items in sequence in document order
