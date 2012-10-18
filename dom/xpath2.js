@@ -59,10 +59,14 @@
 	files.push("../src/expressions/sequence/RangeExpr.js");
 	files.push("../src/expressions/sequence/UnionExpr.js");
 	//
-//	files.push("../src/expressions/InstanceofExpr.js");
-//	files.push("../src/expressions/TreatExpr.js");
-//	files.push("../src/expressions/CastableExpr.js");
-//	files.push("../src/expressions/CastExpr.js");
+	files.push("../src/expressions/type/InstanceofExpr.js");
+	files.push("../src/expressions/type/TreatExpr.js");
+	files.push("../src/expressions/type/CastableExpr.js");
+	files.push("../src/expressions/type/CastExpr.js");
+	files.push("../src/expressions/type/types/AtomicType.js");
+	files.push("../src/expressions/type/types/ItemType.js");
+	files.push("../src/expressions/type/types/SequenceType.js");
+	files.push("../src/expressions/type/types/SingleType.js");
 	// Functions
 	files.push("../src/functions/accessor.js");
 	files.push("../src/functions/anyuri.js");

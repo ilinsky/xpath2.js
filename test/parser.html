@@ -28,6 +28,8 @@
 				switch (sPrefix) {
 					case "ns":
 						return "myns";
+					case "xs":
+						return "somns";
 					default:
 						return null;
 				}
@@ -101,6 +103,7 @@
 				["descendant-or-self::*[@test]//child", true],
 				["descendant-or-self::*[@test]//", false],
 				["//descendant-or-self::*[@test]", true],
+				["/descendant-or-self::*[@test]", true],
 				["/descendant-or-self::[@test]", false],
 				["descendant-or-self::div//*", true],
 			["Number literal"],
@@ -338,6 +341,45 @@
 				["1 to",		false],
 				["1 to )",		false],
 				["to 5",		false],
+			["Instanceof expressions"],
+				["1 instance of empty-sequence()",	true],
+				["1 instance of empty-sequence(",	false],
+				["1 instance of element()",		true],
+				["1 instance of elements()",	false],
+				["1 instance of item()",	true],
+				["1 instance of item()?",	true],
+				["1 instance of item()*",	true],
+				["1 instance of item()+",	true],
+				["1 instance of item()-",	false],
+				["1 instance of item()^",	false],
+				["1 instance of item(",		false],
+				["1 instance of xs:integer",	true],
+				["1 instance of xs:integer?",	true],
+				["1 instance of xs:integer*",	true],
+				["1 instance of xs:integer+",	true],
+				["1 instance of xs:integer-",	true],
+				["1 instance of xs:*",			false],
+				["1 instance of *:integer",		false],
+				["1 instance of *",				false],
+				["1 instance of integer",		true],
+				["1 instance of",			false],
+			["Treat expressions"],
+				["1 treat as xs:double",	true],
+				["1 treat as",				false],
+			["Castable expressions"],
+				["1 castable as xs:double",		true],
+				["1 castable as xs:double?",	true],
+				["1 castable as xs:double+",	false],
+				["1 castable as xs:double*",	false],
+				["1 castable as xs:double-",	true],
+				["1 castable as double",		true],
+				["1 castable as xs:*",			false],
+				["1 castable as *:double",		false],
+				["1 castable as *",				false],
+				["1 castable as",			false],
+			["Cast expressions"],
+				["1 cast as xs:double",	true],
+				["1 cast as",			false],
 			["Some edge cases"],
 				["4 + (/) * 5",	true],
 				["4 + / * 5",	false],
@@ -345,6 +387,9 @@
 				["/*",		true],
 				["/*5",		false],
 				["/ * 5",	false],
+				["/ is /",	false],
+				["--5",		true],
+				["-+5",		true],
 			[""]
 			];
 			var aHtml	= [];

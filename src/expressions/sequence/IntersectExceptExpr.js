@@ -25,7 +25,7 @@ cIntersectExceptExpr.operators["except"]	= {};
 // TODO: Should parse as IntersectExceptExpr->InstanceofExpr->TreatExpr->CastableExpr->CastExpr->UnaryExpr
 cIntersectExceptExpr.parse	= function (oLexer, oResolver) {
 	var oExpr;
-	if (oLexer.eof() ||!(oExpr = cUnaryExpr.parse(oLexer, oResolver)))
+	if (oLexer.eof() ||!(oExpr = cInstanceofExpr.parse(oLexer, oResolver)))
 		return;
 	if (!(oLexer.peek() in cIntersectExceptExpr.operators))
 		return oExpr;
@@ -35,7 +35,7 @@ cIntersectExceptExpr.parse	= function (oLexer, oResolver) {
 		sOperator;
 	while ((sOperator = oLexer.peek()) in cIntersectExceptExpr.operators) {
 		oLexer.next();
-		if (oLexer.eof() ||!(oExpr = cUnaryExpr.parse(oLexer, oResolver)))
+		if (oLexer.eof() ||!(oExpr = cInstanceofExpr.parse(oLexer, oResolver)))
 			throw "IntersectExceptExpr.parse: right operand missing";
 		oIntersectExceptExpr.items.push([sOperator, oExpr]);
 	}
