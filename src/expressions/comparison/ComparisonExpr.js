@@ -17,28 +17,6 @@ cComparisonExpr.prototype.left	= null;
 cComparisonExpr.prototype.right	= null;
 cComparisonExpr.prototype.operator	= null;
 
-// Operators
-cComparisonExpr.operators	= {
-	// GeneralComp
-	'=':	[],
-	'!=':	[],
-	'<':	[],
-	'<=':	[],
-	'>':	[],
-	'>=':	[],
-	// ValueComp
-	'eq':	[],
-	'ne':	[],
-	'lt':	[],
-	'le':	[],
-	'gt':	[],
-	'ge':	[],
-	// NodeComp
-	'is':	[],
-	'>>':	[],
-	'<<':	[]
-};
-
 // Static members
 cComparisonExpr.parse	= function (oLexer, oResolver) {
 	var oExpr,
@@ -58,109 +36,117 @@ cComparisonExpr.parse	= function (oLexer, oResolver) {
 
 // Public members
 cComparisonExpr.prototype.evaluate	= function (oContext) {
-	var oLeft	= this.left.evaluate(oContext);
-	switch (this.operator) {
-		// General Comp
-		case '=':
-		case '!=':
-		case '<':
-		case '<=':
-		case '>':
-		case '>=':
-			oLeft	= cXPath2Sequence.atomize(oLeft);
-			if (oLeft.isEmpty())
-				return new cXPath2Sequence(false);
-
-			var oRight	= this.right.evaluate(oContext);
-
-			oRight	= cXPath2Sequence.atomize(oRight);
-			if (oRight.isEmpty())
-				return new cXPath2Sequence(false);
-
-			var bResult	= false;
-			for (var nLeftIndex = 0, nLeftLength = oLeft.items.length; (nLeftIndex < nLeftLength) &&!bResult; nLeftIndex++) {
-				for (var nRightIndex = 0, nRightLength = oRight.items.length; (nRightIndex < nRightLength) &&!bResult; nRightIndex++) {
-					// Compare
-					switch (this.operator) {
-						case '=':	bResult	= oLeft.items[nLeftIndex] == oRight.items[nRightIndex];	break;
-						case '!=':	bResult	= oLeft.items[nLeftIndex] != oRight.items[nRightIndex];	break;
-						case '<':	bResult	= oLeft.items[nLeftIndex] < oRight.items[nRightIndex];	break;
-						case '<=':	bResult	= oLeft.items[nLeftIndex] <= oRight.items[nRightIndex];	break;
-						case '>':	bResult	= oLeft.items[nLeftIndex] > oRight.items[nRightIndex];	break;
-						case '>=':	bResult	= oLeft.items[nLeftIndex] >= oRight.items[nRightIndex];	break;
-					}
-				}
-			}
-			return new cXPath2Sequence(bResult);
-
-		// Value Comp
-		case 'eq':
-		case 'ne':
-		case 'lt':
-		case 'le':
-		case 'gt':
-		case 'ge':
-			oLeft	= cXPath2Sequence.atomize(oLeft);
-			if (oLeft.isEmpty())
-				return new cXPath2Sequence;
-			else
-			if (!oLeft.isSingleton())		// Must be singleton
-				throw new cXPath2Error("XPTY0004");
-
-			var oRight	= this.right.evaluate(oContext);
-
-			oRight	= cXPath2Sequence.atomize(oRight);
-			if (oRight.isEmpty())
-				return new cXPath2Sequence;
-			else
-			if (!oRight.isSingleton())	// Must be singleton
-				throw new cXPath2Error("XPTY0004");
-
-			var oAtomizedLeft	= oLeft.items[0],
-				oAtomizedRight	= oRight.items[0];
-
-			// Compare
-			switch (this.operator) {
-				case 'eq':	return new cXPath2Sequence(oAtomizedLeft == oAtomizedRight);
-				case 'ne':	return new cXPath2Sequence(oAtomizedLeft != oAtomizedRight);
-				case 'lt':	return new cXPath2Sequence(oAtomizedLeft < oAtomizedRight);
-				case 'le':	return new cXPath2Sequence(oAtomizedLeft <= oAtomizedRight);
-				case 'gt':	return new cXPath2Sequence(oAtomizedLeft > oAtomizedRight);
-				case 'ge':	return new cXPath2Sequence(oAtomizedLeft >= oAtomizedRight);
-			}
-			break;
-
-		// Node Comp
-		case 'is':
-		case '>>':
-		case '<<':
-			if (oLeft.isEmpty())
-				return new cXPath2Sequence;
-			else
-			if (!oLeft.isSingleton())		// Must be singleton
-				throw new cXPath2Error("XPTY0004");
-			else
-			if (!oLeft.items[0].nodeType)
-				throw new cXPath2Error("XPTY0004");
-
-			var oRight	= this.right.evaluate(oContext);
-			if (oRight.isEmpty())
-				return new cXPath2Sequence;
-			else
-			if (!oRight.isSingleton())	// Must be singleton
-				throw new cXPath2Error("XPTY0004");
-			else
-			if (!oRight.items[0].nodeType)
-				throw new cXPath2Error("XPTY0004");
-
-			switch (this.operator) {
-				case 'is':	return new cXPath2Sequence(oLeft.items[0].isSameNode(oRight.items[0]));
-				case '>>':	return new cXPath2Sequence(!!(oLeft.items[0].compareDocumentPosition(oRight.items[0]) & 2));
-				case '<<':	return new cXPath2Sequence(!!(oLeft.items[0].compareDocumentPosition(oRight.items[0]) & 4));
-			}
-			break;
-	}
-
-	throw "InternalError: ComparisonExpr.evaluate unkown error";
+	var oSequence	= new cXPath2Sequence,
+		bResult	= cComparisonExpr.operators[this.operator](this, oContext);
+	if (bResult !== null)
+		oSequence.add(bResult);
+	return oSequence;
 };
 
+// Operators
+cComparisonExpr.GeneralComp	= function(oExpr, oContext) {
+	var oLeft	= cXPath2Sequence.atomize(oExpr.left.evaluate(oContext));
+	if (oLeft.isEmpty())
+		return false;
+
+	var oRight	= cXPath2Sequence.atomize(oExpr.right.evaluate(oContext));
+	if (oRight.isEmpty())
+		return false;
+
+	var bResult	= false;
+	for (var nLeftIndex = 0, nLeftLength = oLeft.items.length; (nLeftIndex < nLeftLength) &&!bResult; nLeftIndex++)
+		for (var nRightIndex = 0, nRightLength = oRight.items.length; (nRightIndex < nRightLength) &&!bResult; nRightIndex++)
+			bResult	= cComparisonExpr.ValueComp.compare(cComparisonExpr.GeneralComp.map[oExpr.operator], oLeft.items[nLeftIndex], oRight.items[nRightIndex]);
+	return bResult;
+};
+
+cComparisonExpr.GeneralComp.map	= {
+	'=':	'eq',
+	'!=':	'ne',
+	'>':	'gt',
+	'<':	'lt',
+	'>=':	'ge',
+	'<=':	'le'
+};
+
+cComparisonExpr.ValueComp	= function(oExpr, oContext) {
+	var oLeft	= cXPath2Sequence.atomize(oExpr.left.evaluate(oContext));
+	if (oLeft.isEmpty())
+		return null;
+
+	if (!oLeft.isSingleton())		// Must be singleton
+		throw new cXPath2Error("XPTY0004");
+
+	var oRight	= cXPath2Sequence.atomize(oExpr.right.evaluate(oContext));
+	if (oRight.isEmpty())
+		return null;
+
+	if (!oRight.isSingleton())	// Must be singleton
+		throw new cXPath2Error("XPTY0004");
+
+	//
+	return cComparisonExpr.ValueComp.compare(oExpr.operator, oLeft.items[0], oRight.items[0]);
+};
+
+cComparisonExpr.ValueComp.compare	= function(sOperator, oLeft, oRight) {
+	switch (sOperator) {
+		case 'eq':	return oLeft == oRight;
+		case 'ne':	return oLeft != oRight;
+		case 'lt':	return oLeft < oRight;
+		case 'le':	return oLeft <= oRight;
+		case 'gt':	return oLeft > oRight;
+		case 'ge':	return oLeft >= oRight;
+	}
+
+	throw "InternalError: ComparisonExpr.ValueComp.compare called for an inapropriate operator";
+};
+
+cComparisonExpr.NodeComp	= function(oExpr, oContext) {
+	var oLeft	= oExpr.left.evaluate(oContext);
+	if (oLeft.isEmpty())
+		return null;
+
+	if (!oLeft.isSingleton())		// Must be singleton
+		throw new cXPath2Error("XPTY0004");
+	if (!oLeft.items[0].nodeType)
+		throw new cXPath2Error("XPTY0004");
+
+	var oRight	= oExpr.right.evaluate(oContext);
+	if (oRight.isEmpty())
+		return null;
+
+	if (!oRight.isSingleton())	// Must be singleton
+		throw new cXPath2Error("XPTY0004");
+	if (!oRight.items[0].nodeType)
+		throw new cXPath2Error("XPTY0004");
+
+	switch (oExpr.operator) {
+		case 'is':	return oLeft.items[0].isSameNode(oRight.items[0]);
+		case '>>':	return !!(oLeft.items[0].compareDocumentPosition(oRight.items[0]) & 2);
+		case '<<':	return !!(oLeft.items[0].compareDocumentPosition(oRight.items[0]) & 4);
+	}
+
+	throw "InternalError: cComparisonExpr.NodeComp called for inappropriate operator";
+};
+
+// Operators
+cComparisonExpr.operators	= {
+	// GeneralComp
+	'=':	cComparisonExpr.GeneralComp,
+	'!=':	cComparisonExpr.GeneralComp,
+	'<':	cComparisonExpr.GeneralComp,
+	'<=':	cComparisonExpr.GeneralComp,
+	'>':	cComparisonExpr.GeneralComp,
+	'>=':	cComparisonExpr.GeneralComp,
+	// ValueComp
+	'eq':	cComparisonExpr.ValueComp,
+	'ne':	cComparisonExpr.ValueComp,
+	'lt':	cComparisonExpr.ValueComp,
+	'le':	cComparisonExpr.ValueComp,
+	'gt':	cComparisonExpr.ValueComp,
+	'ge':	cComparisonExpr.ValueComp,
+	// NodeComp
+	'is':	cComparisonExpr.NodeComp,
+	'>>':	cComparisonExpr.NodeComp,
+	'<<':	cComparisonExpr.NodeComp
+};
