@@ -88,32 +88,24 @@ cKindTest.parse	= function (oLexer, oResolver) {
 
 // Public members
 cKindTest.prototype.test	= function (oNode) {
-	if (this.name == "node")
-		return cXPath2.DOMAdapter.isNode(oNode);
-	else
-	if (this.name == "document-node")
-		return cXPath2.DOMAdapter.getProperty(oNode, "nodeType") == 9;
-	else
-	if (this.name == "element")
-		return cXPath2.DOMAdapter.getProperty(oNode, "nodeType") == 1;
-	else
-	if (this.name == "attribute")
-		return cXPath2.DOMAdapter.getProperty(oNode, "nodeType") == 2;
-	else
-	if (this.name == "processing-instruction")
-		return cXPath2.DOMAdapter.getProperty(oNode, "nodeType") == 7;
-	else
-	if (this.name == "comment")
-		return cXPath2.DOMAdapter.getProperty(oNode, "nodeType") == 8;
-	else
-	if (this.name == "text")
-		return cXPath2.DOMAdapter.getProperty(oNode, "nodeType") == 3;
-	else
-	if (this.name == "schema-attribute")
-		throw "KindTest 'schema-attribute' not implemented";
-	else
-	if (this.name == "schema-element")
-		throw "KindTest 'schema-element' not implemented";
-	else
-		throw "KindTest internal error: this.name is unknown";
+	var nType	= cXPath2.DOMAdapter.isNode(oNode) ? cXPath2.DOMAdapter.getProperty(oNode, "nodeType") : 0;
+	switch (this.name) {
+		// Node type test
+		case "node":			return !!nType;
+		case "document-node":	return nType == 9;
+		case "element":			return nType == 1;
+		case "attribute":		return nType == 2;
+		case "processing-instruction":	return nType == 7;
+		case "comment":			return nType == 8;
+		case "text":			return nType == 3;
+
+		// Schema tests
+		case "schema-attribute":
+			throw "KindTest 'schema-attribute' not implemented";
+
+		case "schema-element":
+			throw "KindTest 'schema-element' not implemented";
+	}
+
+	throw "InternalError: KindTest.prototype.test called for inappropriate name";
 };
