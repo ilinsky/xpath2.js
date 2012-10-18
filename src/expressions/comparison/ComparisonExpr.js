@@ -67,32 +67,31 @@ cComparisonExpr.prototype.evaluate	= function (oContext) {
 		case '<=':
 		case '>':
 		case '>=':
+			oLeft	= cXPath2Sequence.atomize(oLeft);
 			if (oLeft.isEmpty())
-				return new cXPath2Sequence;
-			else
-			if (!oLeft.isSingleton())		// Must be singleton
-				throw new cXPath2Error("XPTY0004");
+				return new cXPath2Sequence(false);
 
 			var oRight	= this.right.evaluate(oContext);
+
+			oRight	= cXPath2Sequence.atomize(oRight);
 			if (oRight.isEmpty())
-				return new cXPath2Sequence;
-			else
-			if (!oRight.isSingleton())	// Must be singleton
-				throw new cXPath2Error("XPTY0004");
+				return new cXPath2Sequence(false);
 
-			var oAtomizedLeft	= cXPath2Sequence.atomizeItem(oLeft.items[0]),
-				oAtomizedRight	= cXPath2Sequence.atomizeItem(oRight.items[0]);
-
-			// Compare
-			switch (this.operator) {
-				case '=':	return new cXPath2Sequence(oAtomizedLeft == oAtomizedRight);
-				case '!=':	return new cXPath2Sequence(oAtomizedLeft != oAtomizedRight);
-				case '<':	return new cXPath2Sequence(oAtomizedLeft < oAtomizedRight);
-				case '<=':	return new cXPath2Sequence(oAtomizedLeft <= oAtomizedRight);
-				case '>':	return new cXPath2Sequence(oAtomizedLeft > oAtomizedRight);
-				case '>=':	return new cXPath2Sequence(oAtomizedLeft >= oAtomizedRight);
+			var bResult	= false;
+			for (var nLeftIndex = 0, nLeftLength = oLeft.items.length; (nLeftIndex < nLeftLength) &&!bResult; nLeftIndex++) {
+				for (var nRightIndex = 0, nRightLength = oRight.items.length; (nRightIndex < nRightLength) &&!bResult; nRightIndex++) {
+					// Compare
+					switch (this.operator) {
+						case '=':	bResult	= oLeft.items[nLeftIndex] == oRight.items[nRightIndex];	break;
+						case '!=':	bResult	= oLeft.items[nLeftIndex] != oRight.items[nRightIndex];	break;
+						case '<':	bResult	= oLeft.items[nLeftIndex] < oRight.items[nRightIndex];	break;
+						case '<=':	bResult	= oLeft.items[nLeftIndex] <= oRight.items[nRightIndex];	break;
+						case '>':	bResult	= oLeft.items[nLeftIndex] > oRight.items[nRightIndex];	break;
+						case '>=':	bResult	= oLeft.items[nLeftIndex] >= oRight.items[nRightIndex];	break;
+					}
+				}
 			}
-			break;
+			return new cXPath2Sequence(bResult);
 
 		// Value Comp
 		case 'eq':
@@ -101,6 +100,7 @@ cComparisonExpr.prototype.evaluate	= function (oContext) {
 		case 'le':
 		case 'gt':
 		case 'ge':
+			oLeft	= cXPath2Sequence.atomize(oLeft);
 			if (oLeft.isEmpty())
 				return new cXPath2Sequence;
 			else
@@ -108,14 +108,16 @@ cComparisonExpr.prototype.evaluate	= function (oContext) {
 				throw new cXPath2Error("XPTY0004");
 
 			var oRight	= this.right.evaluate(oContext);
+
+			oRight	= cXPath2Sequence.atomize(oRight);
 			if (oRight.isEmpty())
 				return new cXPath2Sequence;
 			else
 			if (!oRight.isSingleton())	// Must be singleton
 				throw new cXPath2Error("XPTY0004");
 
-			var oAtomizedLeft	= cXPath2Sequence.atomizeItem(oLeft.items[0]),
-				oAtomizedRight	= cXPath2Sequence.atomizeItem(oRight.items[0]);
+			var oAtomizedLeft	= oLeft.items[0],
+				oAtomizedRight	= oRight.items[0];
 
 			// Compare
 			switch (this.operator) {
