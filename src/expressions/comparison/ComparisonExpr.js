@@ -108,7 +108,7 @@ cComparisonExpr.NodeComp	= function(oExpr, oContext) {
 
 	if (!oLeft.isSingleton())		// Must be singleton
 		throw new cXPath2Error("XPTY0004");
-	if (!oLeft.items[0].nodeType)
+	if (!cXPath2.DOMAdapter.isNode(oLeft.items[0]))
 		throw new cXPath2Error("XPTY0004");
 
 	var oRight	= oExpr.right.evaluate(oContext);
@@ -117,13 +117,13 @@ cComparisonExpr.NodeComp	= function(oExpr, oContext) {
 
 	if (!oRight.isSingleton())	// Must be singleton
 		throw new cXPath2Error("XPTY0004");
-	if (!oRight.items[0].nodeType)
+	if (!cXPath2.DOMAdapter.isNode(oRight.items[0]))
 		throw new cXPath2Error("XPTY0004");
 
 	switch (oExpr.operator) {
-		case 'is':	return oLeft.items[0].isSameNode(oRight.items[0]);
-		case '>>':	return !!(oLeft.items[0].compareDocumentPosition(oRight.items[0]) & 2);
-		case '<<':	return !!(oLeft.items[0].compareDocumentPosition(oRight.items[0]) & 4);
+		case 'is':	return cXPath2.DOMAdapter.isSameNode(oLeft.items[0], oRight.items[0]);
+		case '>>':	return !!(cXPath2.DOMAdapter.compareDocumentPosition(oLeft.items[0], oRight.items[0]) & 2);
+		case '<<':	return !!(cXPath2.DOMAdapter.compareDocumentPosition(oLeft.items[0], oRight.items[0]) & 4);
 	}
 
 	throw "InternalError: cComparisonExpr.NodeComp called for inappropriate operator";

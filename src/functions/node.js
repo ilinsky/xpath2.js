@@ -46,6 +46,10 @@ cFunctionCall.functions["lang"]	= function(oSequence) {
 	throw "Not implemented";
 };
 
-cFunctionCall.functions["root"]	= function(oSequence) {
-	return new cXPath2Sequence(document);
+cFunctionCall.functions["root"]	= function() {
+	var oParent	= this.context;
+	for (var oNode = oParent; oNode; oNode = cXPath2.DOMAdapter.getProperty(oParent, "parentNode"))
+		oParent	= oNode;
+
+	return new cXPath2Sequence(oParent);
 };

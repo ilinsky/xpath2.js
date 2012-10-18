@@ -32,11 +32,14 @@ cNameTest.parse	= function (oLexer, oResolver) {
 
 // Public members
 cNameTest.prototype.test	= function (oNode) {
-	return oNode.nodeType == 1 ?
-				(this.localName == '*' || oNode.localName == this.localName)
-					&& (this.namespaceURI == '*' ||(this.namespaceURI ? oNode.namespaceURI == this.namespaceURI : true))
-				: oNode.nodeType == 2 ?
-					(this.localName == '*' || oNode.localName == this.localName)
-						&& (this.namespaceURI == '*' ||(this.namespaceURI ? oNode.namespaceURI == this.namespaceURI : true))
+	var nType	= cXPath2.DOMAdapter.getProperty(oNode, "nodeType"),
+		sLocalName		= cXPath2.DOMAdapter.getProperty(oNode, "localName"),
+		sNameSpaceURI	= cXPath2.DOMAdapter.getProperty(oNode, "namespaceURI");
+	return nType == 1 ?
+				(this.localName == '*' || sLocalName == this.localName)
+					&& (this.namespaceURI == '*' ||(this.namespaceURI ? sNameSpaceURI == this.namespaceURI : true))
+				: nType == 2 ?
+					(this.localName == '*' || sLocalName == this.localName)
+						&& (this.namespaceURI == '*' ||(this.namespaceURI ? sNameSpaceURI == this.namespaceURI : true))
 					: false;
 };

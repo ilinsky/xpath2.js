@@ -60,24 +60,25 @@ cXPath2Sequence.atomizeItem		= function(oItem) {
 		return null;
 
 	// Node type
-	if (oItem.nodeType) {
-		switch (oItem.nodeType) {
+	if (cXPath2.DOMAdapter.isNode(oItem)) {
+		switch (cXPath2.DOMAdapter.getProperty(oItem, "nodeType")) {
 			case 1:	// ELEMENT_NODE
-				return oItem.textContent;
+				return cXPath2.DOMAdapter.getProperty(oItem, "textContent");
 
 			case 2:	// ATTRIBUTE_NODE
-				return oItem.value;
+				return cXPath2.DOMAdapter.getProperty(oItem, "value");
 
 			case 3:	// TEXT_NODE
 			case 4:	// CDATA_SECTION_NODE
 			case 8:	// COMMENT_NODE
-				return oItem.data;
+				return cXPath2.DOMAdapter.getProperty(oItem, "data");
 
 			case 7:	// PROCESSING_INSTRUCTION_NODE
-				return oItem.data;
+				return cXPath2.DOMAdapter.getProperty(oItem, "data");
 
 			case 9:	// DOCUMENT_NODE
-				return oItem.documentElement ? oItem.documentElement.textContent : '';
+				var oNode	= cXPath2.DOMAdapter.getProperty(oItem, "documentElement");
+				return oNode ? cXPath2.DOMAdapter.getProperty(oNode, "textContent") : '';
 		}
 	}
 
@@ -112,7 +113,7 @@ cXPath2Sequence.prototype.toBoolean	= function() {
 		return false;
 
 	var oItem	= this.items[0];
-	if (oItem.nodeType)	// TODO: add proper check for node using instanceof
+	if (cXPath2.DOMAdapter.isNode(oItem))	// TODO: add proper check for node using instanceof
 		return true;
 
 	if (this.items.length == 1) {

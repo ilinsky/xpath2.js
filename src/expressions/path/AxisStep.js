@@ -79,28 +79,28 @@ cAxisStep.prototype.evaluate	= function (oContext) {
 	var oSequence	= new cXPath2Sequence;
 	var oItem	= oContext.context;
 	var fGetChildrenForward	= function(oNode) {
-		for (; oNode; oNode = oNode.nextSibling) {
+		for (var oChild; oNode; oNode = cXPath2.DOMAdapter.getProperty(oNode, "nextSibling")) {
 			oSequence.add(oNode);
-			if (oNode.firstChild)
-				fGetChildrenForward(oNode.firstChild);
+			if (oChild = cXPath2.DOMAdapter.getProperty(oNode, "firstChild"))
+				fGetChildrenForward(oChild);
 		}
 	};
 	var fGetChildrenBackward	= function(oNode) {
-		for (; oNode; oNode = oNode.previousSibling) {
-			if (oNode.lastChild)
-				fGetChildrenBackward(oNode.lastChild);
+		for (var oChild; oNode; oNode = cXPath2.DOMAdapter.getProperty(oNode, "previousSibling")) {
+			if (oChild = cXPath2.DOMAdapter.getProperty(oNode, "lastChild"))
+				fGetChildrenBackward(oChild);
 			oSequence.add(oNode);
 		}
 	};
 	switch (this.axis) {
 		// Forward axis
 		case "attribute":
-			for (var nIndex = 0, nLength = oItem.attributes.length; nIndex < nLength; nIndex++)
-				oSequence.add(oItem.attributes[nIndex]);
+			for (var aAttributes = cXPath2.DOMAdapter.getProperty(oItem, "attributes"), nIndex = 0, nLength = aAttributes.length; nIndex < nLength; nIndex++)
+				oSequence.add(aAttributes[nIndex]);
 			break;
 
 		case "child":
-			for (var oNode = oItem.firstChild; oNode; oNode = oNode.nextSibling)
+			for (var oNode = cXPath2.DOMAdapter.getProperty(oItem, "firstChild"); oNode; oNode = cXPath2.DOMAdapter.getProperty(oNode, "nextSibling"))
 				oSequence.add(oNode);
 			break;
 
@@ -108,21 +108,21 @@ cAxisStep.prototype.evaluate	= function (oContext) {
 			oSequence.add(oItem);
 			// No break left intentionally
 		case "descendant":
-			fGetChildrenForward(oItem.firstChild);
+			fGetChildrenForward(cXPath2.DOMAdapter.getProperty(oItem, "firstChild"));
 			break;
 
 		case "following":
-			for (var oParent = oItem; oParent; oParent = oParent.parentNode) {
+			for (var oParent = oItem, oChild, oSibling; oParent; oParent = cXPath2.DOMAdapter.getProperty(oParent, "parentNode")) {
 				if (oParent == oItem)
-					if (oParent.firstChild)
-						fGetChildrenForward(oParent.firstChild);
-				if (oParent.nextSibling)
-					fGetChildrenForward(oParent.nextSibling);
+					if (oChild = cXPath2.DOMAdapter.getProperty(oParent, "firstChild"))
+						fGetChildrenForward(oChild);
+				if (oSibling = cXPath2.DOMAdapter.getProperty(oParent, "nextSibling"))
+					fGetChildrenForward(oSibling);
 			}
 			break;
 
 		case "following-sibling":
-			for (var oNode = oItem.nextSibling; oNode; oNode = oNode.nextSibling)
+			for (var oNode = oItem; oNode = cXPath2.DOMAdapter.getProperty(oNode, "nextSibling");)
 				oSequence.add(oNode);
 			break;
 
@@ -135,26 +135,27 @@ cAxisStep.prototype.evaluate	= function (oContext) {
 			oSequence.add(oItem);
 			// No break left intentionally
 		case "ancestor":
-			for (var oNode = oItem; oNode = oNode.parentNode;)
+			for (var oNode = oItem; oNode = cXPath2.DOMAdapter.getProperty(oNode, "parentNode");)
 				oSequence.add(oNode);
 			break;
 
 		case "parent":
-			if (oItem.parentNode)
-				oSequence.add(oItem.parentNode);
+			var oParent	= cXPath2.DOMAdapter.getProperty(oItem, "parentNode");
+			if (oParent)
+				oSequence.add(oParent);
 			break;
 
 		case "preceding":
-			for (var oParent = oItem; oParent; oParent = oParent.parentNode) {
+			for (var oParent = oItem, oSibling; oParent; oParent = cXPath2.DOMAdapter.getProperty(oParent, "parentNode")) {
 				if (oParent != oItem)
 					oSequence.add(oParent);
-				if (oParent.previousSibling)
-					fGetChildrenBackward(oParent.previousSibling);
+				if (oSibling = cXPath2.DOMAdapter.getProperty(oParent, "previousSibling"))
+					fGetChildrenBackward(oSibling);
 			}
 			break;
 
 		case "preceding-sibling":
-			for (var oNode = oItem.previousSibling; oNode; oNode = oNode.previousSibling)
+			for (var oNode = oItem; oNode = cXPath2.DOMAdapter.getProperty(oNode, "previousSibling");)
 				oSequence.add(oNode);
 			break;
 	}

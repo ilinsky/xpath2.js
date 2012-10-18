@@ -89,25 +89,25 @@ cKindTest.parse	= function (oLexer, oResolver) {
 // Public members
 cKindTest.prototype.test	= function (oNode) {
 	if (this.name == "node")
-		return !!oNode.nodeType;
+		return cXPath2.DOMAdapter.isNode(oNode);
 	else
 	if (this.name == "document-node")
-		return oNode.nodeType == 9;
+		return cXPath2.DOMAdapter.getProperty(oNode, "nodeType") == 9;
 	else
 	if (this.name == "element")
-		return oNode.nodeType == 1;
+		return cXPath2.DOMAdapter.getProperty(oNode, "nodeType") == 1;
 	else
 	if (this.name == "attribute")
-		return oNode.nodeType == 2;
+		return cXPath2.DOMAdapter.getProperty(oNode, "nodeType") == 2;
 	else
 	if (this.name == "processing-instruction")
-		return oNode.nodeType == 7;
+		return cXPath2.DOMAdapter.getProperty(oNode, "nodeType") == 7;
 	else
 	if (this.name == "comment")
-		return oNode.nodeType == 8;
+		return cXPath2.DOMAdapter.getProperty(oNode, "nodeType") == 8;
 	else
 	if (this.name == "text")
-		return oNode.nodeType == 3;
+		return cXPath2.DOMAdapter.getProperty(oNode, "nodeType") == 3;
 	else
 	if (this.name == "schema-attribute")
 		throw "KindTest 'schema-attribute' not implemented";
