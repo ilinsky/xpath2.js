@@ -46,7 +46,11 @@ cXPath2Sequence.intersect	= function(oSequence1, oSequence2) {
 	return oSequence;
 };
 
-cXPath2Sequence.atomize		= function(oSequence) {
+cXPath2Sequence.atomize		= function(oSequence1) {
+	var oSequence	= new cXPath2Sequence;
+	for (var nIndex = 0, nLength = oSequence1.items.length, vValue; nIndex < nLength; nIndex++)
+		if ((vValue = cXPath2Sequence.atomizeItem(oSequence1.items[nIndex])) !== null)
+			oSequence.add(vValue);
 	return new cXPath2Sequence(oSequence);
 };
 
