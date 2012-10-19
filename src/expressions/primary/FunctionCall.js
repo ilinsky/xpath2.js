@@ -18,6 +18,7 @@ cFunctionCall.prototype.uri		= null;
 cFunctionCall.prototype.args	= null;
 
 cFunctionCall.functions	= {};
+cFunctionCall.operators	= {};
 
 // http://www.w3.org/2005/xpath-functions
 
