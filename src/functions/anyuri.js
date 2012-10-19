@@ -11,3 +11,97 @@
 	8 Functions on anyURI
 		resolve-uri
 */
+
+// fn:resolve-uri($relative as xs:string?) as xs:anyURI?
+// fn:resolve-uri($relative as xs:string?, $base as xs:string) as xs:anyURI?
+cFunctionCall.functions["resolve-uri"]	= function(oSequence1, oSequence2) {
+	var oSequence	= new cXPath2Sequence,
+		sBaseUri;
+	// Validate arguments
+	if (!arguments.length)
+		throw new cXPath2Error("XPST0017");
+
+	if (arguments.length < 2) {
+		if (!cXPath2.DOMAdapter.isNode(this.context))
+			throw new cXPath2Error("XPTY0004");
+		sBaseUri	= cXPath2.DOMAdapter.getProperty(this.context, "baseURI");
+	}
+	else
+	if (oSequence2.items.length)
+		sBaseUri	= oSequence2.toString();
+	else
+		throw new cXPath2Error("XPTY0004");
+
+	if (!oSequence1.items.length)
+		return oSequence;
+	//
+	oSequence.add(fFunctionCall_resolveUri(oSequence1.toString(), sBaseUri));
+	//
+	return oSequence;
+};
+
+var hFunctionCall_uriCache	= {};
+/*
+ * Returns an array of uri components:
+ * [scheme, authority, path, query, fragment]
+ */
+function fFunctionCall_getUriComponents(sUri) {
+	var aResult	= hFunctionCall_uriCache[sUri] ||(hFunctionCall_uriCache[sUri] = sUri.match(/^(([^:\/?#]+):)?(\/\/([^\/?#]*))?([^?#]*)(\?([^#]*))?(#(.*))?/));
+	return [aResult[1], aResult[3], aResult[5], aResult[6], aResult[8]];
+};
+
+function fFunctionCall_resolveUri(sUri, sBaseUri) {
+	if (sUri == '' || sUri.charAt(0) == '#')
+		return sBaseUri;
+
+	var aUri	= fFunctionCall_getUriComponents(sUri);
+	if (aUri[0])	// scheme
+		return sUri;
+
+	var aBaseUri	= fFunctionCall_getUriComponents(sBaseUri);
+	aUri[0]	= aBaseUri[0];	// scheme
+
+	if (!aUri[1]) {
+		// authority
+		aUri[1]	= aBaseUri[1];
+
+		// path
+		if (aUri[2].charAt(0) != '/') {
+			var aUriSegments		= aUri[2].split('/'),
+				aBaseUriSegments	= aBaseUri[2].split('/');
+			aBaseUriSegments.pop();
+
+			var nBaseUriStart	= aBaseUriSegments[0] == '' ? 1 : 0;
+			for (var nIndex = 0, nLength = aUriSegments.length; nIndex < nLength; nIndex++) {
+				if (aUriSegments[nIndex] == '..') {
+					if (aBaseUriSegments.length > nBaseUriStart)
+						aBaseUriSegments.pop();
+					else {
+						aBaseUriSegments.push(aUriSegments[nIndex]);
+						nBaseUriStart++;
+					}
+				}
+				else
+				if (aUriSegments[nIndex] != '.')
+					aBaseUriSegments.push(aUriSegments[nIndex]);
+			}
+			if (aUriSegments[--nIndex] == '..' || aUriSegments[nIndex] == '.')
+				aBaseUriSegments.push('');
+			aUri[2]	= aBaseUriSegments.join('/');
+		}
+	}
+
+	var aResult	= [];
+	if (aUri[0])
+		aResult.push(aUri[0]);
+	if (aUri[1])	// '//'
+		aResult.push(aUri[1]);
+	if (aUri[2])
+		aResult.push(aUri[2]);
+	if (aUri[3])	// '?'
+		aResult.push(aUri[3]);
+	if (aUri[4])	// '#'
+		aResult.push(aUri[4]);
+
+	return aResult.join('');
+};
