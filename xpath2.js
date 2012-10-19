@@ -18,18 +18,15 @@
 
 	// get files list
 	var oRequest	= new cXMLHttpRequest;
-	oRequest.open("GET", path + ".files", false);
+	oRequest.open("GET", path + "src/" + ".files", false);
 	oRequest.send(null);
 	var files	= oRequest.responseText.split(/\n/g);
-
-	// Add export
-	files.push("export.js");
 
 	// load files
 	for (var n = 0, file; n < files.length; n++) {
 		if ((file = files[n].replace(/^\s+/, "").replace(/\s+$/, "")) != '' && file.substr(0, 1) != "#") {
 			var oRequest	= new cXMLHttpRequest;
-			oRequest.open("GET", path + file, false);
+			oRequest.open("GET", path + "src/" + file, false);
 			oRequest.send(null);
 			source[source.length]	= oRequest.responseText;
 		}

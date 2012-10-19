@@ -19,8 +19,6 @@
 	files.push("../src/helpers/XPath2Parser.js");
 	files.push("../src/helpers/XPath2Sequence.js");
 	//
-	files.push("../src/helpers/XPath2.js");
-	//
 	files.push("../src/expressions/Expr.js");
 	files.push("../src/expressions/ExprSingle.js");
 	//
@@ -83,8 +81,9 @@
 	files.push("../src/functions/qname.js");
 	files.push("../src/functions/sequence.js");
 	files.push("../src/functions/string.js");
-
-	// API classes
+	// Core API
+	files.push("../src/XPath2.js");
+	// DOM-XPath API
 	files.push("classes/XPathEvaluator.js");
 	files.push("classes/XPathException.js");
 	files.push("classes/XPathExpression.js");
