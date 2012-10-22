@@ -132,12 +132,12 @@ cXPath2Sequence.prototype.toBoolean	= function() {
 
 // fn:number()
 cXPath2Sequence.prototype.toNumber	= function() {
-	return this.items.length ?+cXPath2Sequence.atomizeItem(this.items[0]) : nNaN;
+	return this.items.length && this.items[0] !== '' ?+cXPath2Sequence.atomizeItem(this.items[0]) : nNaN;
 };
 
 // fn:string()
 cXPath2Sequence.prototype.toString	= function() {
-	return this.items.length ? '' + cXPath2Sequence.atomizeItem(this.items[0]) : '';
+	return this.items.length && this.items[0] !== null ? '' + cXPath2Sequence.atomizeItem(this.items[0]) : '';
 };
 
 // Orders items in sequence in document order
