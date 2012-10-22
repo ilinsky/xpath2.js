@@ -104,3 +104,21 @@ function fFunctionCall_date_getTimeComponent(oDate) {
 function fFunctionCall_date_getDateComponent(oDate) {
 	return fFunctionCall_date_pad(oDate.getFullYear(), 4) + '-' + fFunctionCall_date_pad(oDate.getMonth() + 1) + '-' + fFunctionCall_date_pad(oDate.getDate());
 };
+
+// nValue is in seconds
+function fFunctionCall_number_toDuration(nValue) {
+	if (nValue == 0)
+		return 'PT0S';
+	var nValueAbsolute	= cMath.abs(nValue),
+		/*nYear	= ~~(nValueAbsolute / (60 * 60 * 24 * 30.4375 * 12)),
+		nMonth	= ~~(nValueAbsolute / (60 * 60 * 24 * 30.4375)) % 12,*/
+		nDay 	= ~~(nValueAbsolute / (60 * 60 * 24))/* % 30.4375*/,
+		nHour	= ~~(nValueAbsolute / (60 * 60)) % 24,
+		nMinute	= ~~(nValueAbsolute / (60)) % 60,
+		nSecond	= nValueAbsolute % 60;
+	return (nValue < 0 ? '-' : '') + 'P' +
+				/*(nYear ? nYear + 'Y' : '') + (nMonth ? nMonth + 'M' : '') + */(nDay ? nDay + 'D' : '') +
+				(nHour || nMinute || nSecond
+					? 'T' + (nHour ? nHour + 'H' : '') + (nMinute ? nMinute + 'M' : '') + (nSecond ? nSecond + 'S' : '')
+					: '');
+};

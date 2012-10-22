@@ -53,11 +53,8 @@ cFunctionCall.functions["current-time"]	= function() {
 
 // fn:implicit-timezone
 cFunctionCall.functions["implicit-timezone"]	= function() {
-	var oDate	= new cDate,
-		nOffset	= -1 * oDate.getTimezoneOffset(),
-		nHour	= cMath.abs(~~(nOffset / 60)),
-		nMinute	= cMath.abs(nOffset % 60);
-	return (nOffset < 0 ? '-' : '') + 'P' + 'T' + (nOffset == 0 ? '0S' : (nHour ? nHour + 'H' : '') + (nMinute ? nMinute + 'M' : ''));
+	var oDate	= new cDate;
+	return fFunctionCall_number_toDuration(-1 * oDate.getTimezoneOffset() * 60);
 };
 
 // fn:default-collation() as xs:string
