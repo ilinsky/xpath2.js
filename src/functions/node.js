@@ -20,30 +20,77 @@
 		op:node-after
 */
 
-cFunctionCall.functions["name"]	= function(oSequence) {
-	throw "Not implemented";
+// fn:name() as xs:string
+// fn:name($arg as node()?) as xs:string
+cFunctionCall.functions["name"]	= function(oSequence1) {
+	var oSequence	= new cXPath2Sequence;
+	if (!arguments.length)
+		oSequence1	= new cXPath2Sequence(this.context);
+	else
+	if (!oSequence1.items.length) {
+		oSequence.add('');
+		return oSequence;
+	}
+	//
+	var oNode	= oSequence1.items[0];
+	if (!cXPath2.DOMAdapter.isNode(oNode))
+		throw new cXPath2Error("XPTY0004");
+	//
+	oSequence.add(cFunctionCall.functions["node-name"].call(this, oSequence1).toString());
+	//
+	return oSequence;
 };
 
-cFunctionCall.functions["local-name"]	= function(oSequence) {
-	throw "Not implemented";
+// fn:local-name() as xs:string
+// fn:local-name($arg as node()?) as xs:string
+cFunctionCall.functions["local-name"]	= function(oSequence1) {
+	var oSequence	= new cXPath2Sequence;
+	if (!arguments.length)
+		oSequence1	= new cXPath2Sequence(this.context);
+	else
+	if (!oSequence1.items.length) {
+		oSequence.add('');
+		return oSequence;
+	}
+	//
+	var oNode	= oSequence1.items[0];
+	if (!cXPath2.DOMAdapter.isNode(oNode))
+		throw new cXPath2Error("XPTY0004");
+	oSequence.add(new cXPath2Sequence(cXPath2.DOMAdapter.getProperty(oNode, "localName")).toString());
+	return oSequence;
 };
 
-cFunctionCall.functions["namespace-uri"]	= function(oSequence) {
-	throw "Not implemented";
+// fn:namespace-uri() as xs:anyURI
+// fn:namespace-uri($arg as node()?) as xs:anyURI
+cFunctionCall.functions["namespace-uri"]	= function(oSequence1) {
+	var oSequence	= new cXPath2Sequence;
+	if (!arguments.length)
+		oSequence1	= new cXPath2Sequence(this.context);
+	else
+	if (!oSequence1.items.length) {
+		oSequence.add('');
+		return oSequence;
+	}
+	//
+	var oNode	= oSequence1.items[0];
+	if (!cXPath2.DOMAdapter.isNode(oNode))
+		throw new cXPath2Error("XPTY0004");
+	oSequence.add(cXPath2.DOMAdapter.getProperty(oNode, "namespaceURI"));
+	return oSequence;
 };
 
 // fn:number() as xs:double
 // fn:number($arg as xs:anyAtomicType?) as xs:double
-cFunctionCall.functions["number"]	= function(/*[*/oSequence/*]*/) {
+cFunctionCall.functions["number"]	= function(/*[*/oSequence1/*]*/) {
 	if (!arguments.length)
-		oSequence	= new cXPath2Sequence(this.context);
-	return new cXPath2Sequence(oSequence.toNumber());
+		oSequence1	= new cXPath2Sequence(this.context);
+	return new cXPath2Sequence(oSequence1.toNumber());
 };
 
 // fn:lang($testlang as xs:string?) as xs:boolean
 // fn:lang($testlang as xs:string?, $node as node()) as xs:boolean
 cFunctionCall.functions["lang"]	= function(oSequence) {
-	throw "Not implemented";
+	throw "Funciton '" + "lang" + "' not implemented";
 };
 
 cFunctionCall.functions["root"]	= function() {
