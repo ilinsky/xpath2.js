@@ -84,3 +84,23 @@
 		op:add-dayTimeDuration-to-time
 		op:subtract-dayTimeDuration-from-time
 */
+
+// Library
+function fFunctionCall_date_pad(vValue) {
+	var sValue	= cString(vValue);
+	return new cArray(1 - sValue.length +(arguments[1] || 2)).join('0') + sValue;
+};
+
+function fFunctionCall_date_getTZComponent(oDate) {
+	var nOffset		= oDate.getTimezoneOffset();
+	return (nOffset > 0 ? '+' : '-') + fFunctionCall_date_pad(cMath.abs(~~(nOffset / 60))) + ':' + fFunctionCall_date_pad(cMath.abs(nOffset % 60));
+};
+
+function fFunctionCall_date_getTimeComponent(oDate) {
+	return fFunctionCall_date_pad(oDate.getHours()) + ':' + fFunctionCall_date_pad(oDate.getMinutes()) + ':' + fFunctionCall_date_pad(oDate.getSeconds()) +
+		'.' + fFunctionCall_date_pad(oDate.getMilliseconds(), 3);
+};
+
+function fFunctionCall_date_getDateComponent(oDate) {
+	return fFunctionCall_date_pad(oDate.getFullYear(), 4) + '-' + fFunctionCall_date_pad(oDate.getMonth() + 1) + '-' + fFunctionCall_date_pad(oDate.getDate());
+};
