@@ -122,3 +122,23 @@ function fFunctionCall_number_toDuration(nValue) {
 					? 'T' + (nHour ? nHour + 'H' : '') + (nMinute ? nMinute + 'M' : '') + (nSecond ? nSecond + 'S' : '')
 					: '');
 };
+
+var rFunctionCall_string_date	= /^-?([1-9]\d\d\d+|0\d\d\d)-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])(Z|[+\-](0\d|1[0-4]):[0-5]\d)?$/;
+function fFunctionCall_string_parseDate(sValue) {
+	var aValue	= sValue.match(rFunctionCall_string_date);
+};
+
+var rFunctionCall_string_time	= /^(([01]\d|2[0-3]):[0-5]\d:[0-5]\d(\.\d+)?|24:00:00(\.0+)?)(Z|[+\-](0\d|1[0-4]):[0-5]\d)?$/;
+function fFunctionCall_string_parseTime(sValue) {
+	var aValue	= sValue.match(rFunctionCall_string_time);
+};
+
+var rFunctionCall_string_dateTime	= /^-?([1-9]\d\d\d+|0\d\d\d)-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])T(([01]\d|2[0-3]):[0-5]\d:[0-5]\d(\.\d+)?|24:00:00(\.0+)?)(Z|[+\-](0\d|1[0-4]):[0-5]\d)?$/;
+function fFunctionCall_string_parseDateTime(sValue) {
+	var aValue	= sValue.match(rFunctionCall_string_dateTime);
+};
+
+var rFunctionCall_string_duration	= /^(-)?P(?:([0-9]+)Y)?(?:([0-9]+)M)?(?:([0-9]+)D)?(?:T(?:([0-9]+)H)?(?:([0-9]+)M)?(?:((?:(?:[0-9]+(?:.[0-9]*)?)|(?:.[0-9]+)))S)?)?$/;
+function fFunctionCall_string_parseDuration(sValue) {
+	var aValue	= sValue.match(rFunctionCall_string_duration);
+};
