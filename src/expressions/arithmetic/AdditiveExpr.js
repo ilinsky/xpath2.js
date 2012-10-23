@@ -50,7 +50,7 @@ cAdditiveExpr.prototype.evaluate	= function (oContext) {
 		if (this.items[nIndex][0] == '-')
 			nValue	= fFunctionCall_number_subtract(nValue, nRight);
 		else
-			nValue	= fFunctionCall_number_plus(nValue, nRight);
+			nValue	= fFunctionCall_number_add(nValue, nRight);
 	}
 	return new cXPath2Sequence(nValue);
 };

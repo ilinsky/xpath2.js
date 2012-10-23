@@ -91,13 +91,13 @@ cFunctionCall.functions["round-half-to-even"]	= function(oSequence1, oSequence2)
 		var nPower	= cMath.pow(10, fFunctionCall_number_subtract(0, nPrecision)),
 			nRounded= cMath.round(fFunctionCall_number_divide(nValue, nPower)),
 			nDecimal= cMath.abs(fFunctionCall_number_subtract(nRounded, fFunctionCall_number_divide(nValue, nPower)));
-		return new cXPath2Sequence(fFunctionCall_number_multiply(fFunctionCall_number_plus(nRounded, (nDecimal == 0.5 && nRounded % 2 ?-1 : 0)), nPower));
+		return new cXPath2Sequence(fFunctionCall_number_multiply(fFunctionCall_number_add(nRounded, (nDecimal == 0.5 && nRounded % 2 ?-1 : 0)), nPower));
 	}
 	else {
 		var nPower	= cMath.pow(10, nPrecision),
 			nRounded= cMath.round(fFunctionCall_number_multiply(nValue, nPower)),
 			nDecimal= cMath.abs(fFunctionCall_number_subtract(nRounded, fFunctionCall_number_multiply(nValue, nPower)));
-		return new cXPath2Sequence(fFunctionCall_number_divide(fFunctionCall_number_plus(nRounded, (nDecimal == 0.5 && nRounded % 2 ?-1 : 0)), nPower));
+		return new cXPath2Sequence(fFunctionCall_number_divide(fFunctionCall_number_add(nRounded, (nDecimal == 0.5 && nRounded % 2 ?-1 : 0)), nPower));
 	}
 };
 
@@ -113,7 +113,7 @@ function fFunctionCall_number_subtract(a, b) {
 	var c	= cMath.pow(10, fFunctionCall_number_common(a, b));
 	return ((a * c) - (b * c))/c;
 };
-function fFunctionCall_number_plus(a, b) {
+function fFunctionCall_number_add(a, b) {
 	var c	= cMath.pow(10, fFunctionCall_number_common(a, b));
 	return ((a * c) + (b * c))/c;
 };
