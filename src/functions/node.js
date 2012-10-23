@@ -93,6 +93,8 @@ cFunctionCall.functions["lang"]	= function(oSequence) {
 	throw "Funciton '" + "lang" + "' not implemented";
 };
 
+// fn:root() as node()
+// fn:root($arg as node()?) as node()?
 cFunctionCall.functions["root"]	= function() {
 	var oParent	= this.context;
 	for (var oNode = oParent; oNode; oNode = cXPath2.DOMAdapter.getProperty(oParent, "parentNode"))

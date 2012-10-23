@@ -21,10 +21,12 @@
 		not
 */
 
+// fn:true() as xs:boolean
 cFunctionCall.functions["true"]		= function() {
 	return new cXPath2Sequence(true);
 };
 
+// fn:false() as xs:boolean
 cFunctionCall.functions["false"]	= function() {
 	return new cXPath2Sequence(false);
 };
