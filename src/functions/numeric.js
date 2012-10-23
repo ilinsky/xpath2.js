@@ -102,8 +102,11 @@ cFunctionCall.functions["round-half-to-even"]	= function(oSequence1, oSequence2)
 };
 
 // Magic library
+var rFunctionCall_number_regExp	= /^-?\d+?(?:\.(\d*))?(?:[eE]([+-])?(\d+))?$/;
 function fFunctionCall_number_common(a, b) {
-	var d, e, c = cMath.max((d = (e = a.toString()).split('.')).length > 1 ? d[1].length : (d = e.split(/e-/)).length > 1 ? d[1] : 1, (d = (e = b.toString()).split('.')).length > 1 ? d[1].length : (d = e.split(/e-/)).length > 1 ? d[1] : 1);
+	var d	= String(a).match(rFunctionCall_number_regExp),
+		e	= String(b).match(rFunctionCall_number_regExp),
+		c	= Math.max(1, (d[1] || '').length + (d[3] || 0) * (d[2] == '+' ?-1 : 1), (e[1] || '').length + (e[3] || 0) * (e[2] == '+' ?-1 : 1));
 	return c + (c % 2 ? 0 : 1);
 };
 function fFunctionCall_number_subtract(a, b) {
