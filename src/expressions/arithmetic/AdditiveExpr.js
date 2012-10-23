@@ -43,8 +43,14 @@ cAdditiveExpr.parse	= function (oLexer, oResolver) {
 
 // Public members
 cAdditiveExpr.prototype.evaluate	= function (oContext) {
-	var nValue	= this.left.evaluate(oContext).toNumber();
-	for (var nIndex = 0, nLength = this.items.length; nIndex < nLength; nIndex++)
-		nValue	+= (this.items[nIndex][0] == '-' ?-1 : 1) * this.items[nIndex][1].evaluate(oContext).toNumber();
+	var nValue	= this.left.evaluate(oContext).toNumber(),
+		nRight;
+	for (var nIndex = 0, nLength = this.items.length; nIndex < nLength; nIndex++) {
+		nRight	= this.items[nIndex][1].evaluate(oContext).toNumber();
+		if (this.items[nIndex][0] == '-')
+			nValue	= fFunctionCall_number_minus(nValue, nRight);
+		else
+			nValue	= fFunctionCall_number_plus(nValue, nRight);
+	}
 	return new cXPath2Sequence(nValue);
 };

@@ -50,10 +50,10 @@ cMultiplicativeExpr.prototype.evaluate	= function (oContext) {
 		nRight	= this.items[nIndex][1].evaluate(oContext).toNumber();
 		switch (this.items[nIndex][0]) {
 			case '*':
-				nValue	*= nRight;
+				nValue	= fFunctionCall_number_multiply(nValue, nRight);
 				break;
 			case 'div':
-				nValue	/= nRight;
+				nValue	= fFunctionCall_number_divide(nValue, nRight);
 				break;
 			case 'idiv':
 				nValue	= ~~(nValue / nRight);
