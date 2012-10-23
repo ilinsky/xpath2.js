@@ -48,7 +48,7 @@ cAdditiveExpr.prototype.evaluate	= function (oContext) {
 	for (var nIndex = 0, nLength = this.items.length; nIndex < nLength; nIndex++) {
 		nRight	= this.items[nIndex][1].evaluate(oContext).toNumber();
 		if (this.items[nIndex][0] == '-')
-			nValue	= fFunctionCall_number_minus(nValue, nRight);
+			nValue	= fFunctionCall_number_subtract(nValue, nRight);
 		else
 			nValue	= fFunctionCall_number_plus(nValue, nRight);
 	}
