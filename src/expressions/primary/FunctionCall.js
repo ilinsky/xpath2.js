@@ -32,7 +32,7 @@ cFunctionCall.parse	= function (oLexer, oResolver) {
 		// Other functions
 		if (aMatch[1] == '*' || aMatch[2] == '*')
 			throw "FunctionCall.parse: illegal use of wildcard in function name";
-		var oFunctionCallExpr	= new cFunctionCall((aMatch[1] ? oResolver(aMatch[1]) + '#' : '') + aMatch[2]),
+		var oFunctionCallExpr	= new cFunctionCall((aMatch[1] && aMatch[1] != 'fn' ? oResolver(aMatch[1]) + '#' : '') + aMatch[2]),
 			oExpr;
 		oLexer.next(2);
 		//
