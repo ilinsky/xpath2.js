@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>JsUnit testing page</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+		<!-- JsUnitClient driver -->
+		<script type="text/javascript" src="../../jsUnitClient.js"></script>
+
+		<!-- Library -->
+		<script type="text/javascript" src="../../../../xpath2.js"></script>
+
+		<!-- Suite definition -->
+		<script type="text/javascript">
+			// Helper function
+			function evaluateXPath(sXPath) {
+				return XPath2.evaluate(sXPath);
+			}
+
+			function evaluateXPathSingle(sXPath) {
+				return evaluateXPath(sXPath)[0];
+			}
+
+			// Dummy test
+			function testPage() {
+				assertTrue(true);
+			}
+
+			// 7.2 Functions to Assemble and Disassemble Strings
+			function testCodepointsToString() {
+				assertEquals("अशॊक",
+						evaluateXPathSingle('fn:codepoints-to-string((2309, 2358, 2378, 2325))'));
+			}
+
+			function testStringToCodepoints() {
+				assertArrayEquals([84, 104, 233, 114, 232, 115, 101],
+						evaluateXPath('fn:string-to-codepoints("Thérèse")'));
+			}
+
+			// 7.3 Equality and Comparison of Strings
+			function testCompare() {
+				assertEquals(0,
+						evaluateXPathSingle("fn:compare('abc', 'abc')"));
+				// Not on W3C page
+				assertEquals(1,
+						evaluateXPathSingle("fn:compare('bbc', 'abc')"));
+				assertEquals(-1,
+						evaluateXPathSingle("fn:compare('abc', 'bbc')"));
+				assertEquals(0,
+						evaluateXPath("fn:compare((), 'test 1')").length);
+			};
+
+			function testCompare_Collation() {
+				assertEquals(0,
+						evaluateXPathSingle("fn:compare('Strasse', 'Straße', 'deutsch')"));
+			};
+
+			function testCompareCodepointEqual() {
+				// Not on W3C page
+				assertEquals(false,
+						evaluateXPathSingle("fn:codepoint-equal('test 1', 'test 2')"));
+				assertEquals(true,
+						evaluateXPathSingle("fn:codepoint-equal('test 1', 'test 1')"));
+				assertEquals(0,
+						evaluateXPath("fn:codepoint-equal((), 'test 1')").length);
+			};
+
+			// 7.4 Functions on String Values
+			function testConcat() {
+				assertEquals("ungrateful",
+						evaluateXPathSingle("fn:concat('un', 'grateful')"));
+				assertEquals("Ingratitude, thou marble-hearted fiend!",
+						evaluateXPathSingle("fn:concat('Ingratitude, ', 'thou ', 'marble-hearted', ' fiend!')"));
+				assertEquals("Thy old groans ring yet in my ancient ears.",
+						evaluateXPathSingle("fn:concat('Thy ', (), 'old ', \"groans\", \"\", ' ring', ' yet', ' in', ' my', ' ancient',' ears.')"));
+				assertEquals("Ciao!",
+						evaluateXPathSingle("fn:concat('Ciao!',())"));
+			}
+
+			function testStringJoin() {
+				assertEquals("Now is the time ...",
+						evaluateXPathSingle("fn:string-join(('Now', 'is', 'the', 'time', '...'), ' ')"));
+				assertEquals("Blow, blow, thou winter wind!",
+						evaluateXPathSingle("fn:string-join(('Blow, ', 'blow, ', 'thou ', 'winter ', 'wind!'), '')"));
+				assertEquals("",
+						evaluateXPathSingle("fn:string-join((), 'separator')"));
+			}
+
+			function testSubstring() {
+				assertEquals(" car",
+						evaluateXPathSingle('fn:substring("motor car", 6)'));
+				assertEquals("ada",
+						evaluateXPathSingle('fn:substring("metadata", 4, 3)'));
+				assertEquals("234",
+						evaluateXPathSingle('fn:substring("12345", 1.5, 2.6)'));
+				assertEquals("12",
+						evaluateXPathSingle('fn:substring("12345", 0, 3)'));
+				assertEquals("",
+						evaluateXPathSingle('fn:substring("12345", 5, -3)'));
+				assertEquals("1",
+						evaluateXPathSingle('fn:substring("12345", -3, 5)'));
+				assertEquals("",
+						evaluateXPathSingle('fn:substring("12345", 0 div 0E0, 3)'));
+				assertEquals("",
+						evaluateXPathSingle('fn:substring("12345", 1, 0 div 0E0)'));
+				assertEquals("",
+						evaluateXPathSingle('fn:substring((), 1, 3)'));
+				assertEquals("12345",
+						evaluateXPathSingle('fn:substring("12345", -42, 1 div 0E0)'));
+				assertEquals("",
+						evaluateXPathSingle('fn:substring("12345", -1 div 0E0, 1 div 0E0)'));
+			}
+
+			function testStringLength() {
+				assertEquals(45,
+						evaluateXPathSingle('fn:string-length("Harp not on that string, madam; that is past.")'));
+				assertEquals(0,
+						evaluateXPathSingle('fn:string-length(())'));
+			}
+
+			function testNormalizeSpace() {
+				assertEquals("The wealthy curled darlings of our nation.",
+						evaluateXPathSingle('fn:normalize-space(" The  wealthy curled darlings of   our  nation. ")'));
+				assertEquals("",
+						evaluateXPathSingle('fn:normalize-space(())'));
+			}
+/*
+			function testNormalizeUnicode() {
+				assertNull("Not implemented normalize-unicode");
+			}
+*/
+			function testUpperCase() {
+				assertEquals("ABCD0",
+						evaluateXPathSingle('fn:upper-case("abCd0")'));
+			}
+
+			function testLowerCase() {
+				assertEquals("abc!d",
+						evaluateXPathSingle('fn:lower-case("ABc!D")'));
+			}
+
+			function testTranslate() {
+				assertEquals("BAr",
+						evaluateXPathSingle('fn:translate("bar","abc","ABC")'));
+				assertEquals("AAA",
+						evaluateXPathSingle('fn:translate("--aaa--","abc-","ABC")'));
+				assertEquals("ABdAB",
+						evaluateXPathSingle('fn:translate("abcdabc", "abc", "AB")'));
+			}
+
+			function testEncodeForUri() {
+				assertEquals("http%3A%2F%2Fwww.example.com%2F00%2FWeather%2FCA%2FLos%2520Angeles%23ocean",
+						evaluateXPathSingle('fn:encode-for-uri("http://www.example.com/00/Weather/CA/Los%20Angeles#ocean")'));
+				assertEquals("http://www.example.com/~b%C3%A9b%C3%A9",
+						evaluateXPathSingle('concat("http://www.example.com/", encode-for-uri("~bébé"))'));
+				assertEquals("http://www.example.com/100%25%20organic",
+						evaluateXPathSingle('concat("http://www.example.com/", encode-for-uri("100% organic"))'));
+			}
+
+			function testIriToUri() {
+				assertEquals("http://www.example.com/00/Weather/CA/Los%20Angeles#ocean",
+						evaluateXPathSingle('fn:iri-to-uri ("http://www.example.com/00/Weather/CA/Los%20Angeles#ocean")'));
+				assertEquals("http://www.example.com/~b%C3%A9b%C3%A9",
+						evaluateXPathSingle('fn:iri-to-uri ("http://www.example.com/~bébé")'));
+			}
+
+			function testEscapeHtmlUri() {
+				assertEquals("http://www.example.com/00/Weather/CA/Los Angeles#ocean",
+						evaluateXPathSingle('fn:escape-html-uri ("http://www.example.com/00/Weather/CA/Los Angeles#ocean")'));
+				assertEquals("javascript:if (navigator.browserLanguage == 'fr') window.open('http://www.example.com/~b%C3%A9b%C3%A9');",
+						evaluateXPathSingle('fn:escape-html-uri ("javascript:if (navigator.browserLanguage == \'fr\') window.open(\'http://www.example.com/~bébé\');")'));
+			}
+
+			// 7.5 Functions Based on Substring Matching
+			function testContains() {
+				assertEquals(true,
+						evaluateXPathSingle('fn:contains ( "tattoo", "t")'));
+				assertEquals(false,
+						evaluateXPathSingle('fn:contains ( "tattoo", "ttt")'));
+				assertEquals(true,
+						evaluateXPathSingle('fn:contains ( "", ())'));
+			}
+
+			function testContains_Collation() {
+				assertEquals(true,
+						evaluateXPathSingle('fn:contains ( "abcdefghi", "-d-e-f-", "CollationA")'));
+				assertEquals(true,
+						evaluateXPathSingle('fn:contains ( "a*b*c*d*e*f*g*h*i*", "d-ef-", "CollationA")'));
+				assertEquals(true,
+						evaluateXPathSingle('fn:contains ( "abcd***e---f*--*ghi", "def", "CollationA")'));
+				assertEquals(true,
+						evaluateXPathSingle('fn:contains ( (), "--***-*---", "CollationA")'));
+			}
+
+			function testStartsWith() {
+				assertEquals(true,
+						evaluateXPathSingle('fn:starts-with("tattoo", "tat") '));
+				assertEquals(false,
+						evaluateXPathSingle('fn:starts-with ( "tattoo", "att")'));
+				assertEquals(true,
+						evaluateXPathSingle('fn:starts-with ((), ())'));
+			}
+
+			function testStartsWith_Collation() {
+				assertEquals(true,
+						evaluateXPathSingle('fn:starts-with ( "abcdefghi", "-a-b-c-", "CollationA")'));
+				assertEquals(true,
+						evaluateXPathSingle('fn:starts-with ( "a*b*c*d*e*f*g*h*i*", "a-bc-", "CollationA")'));
+				assertEquals(true,
+						evaluateXPathSingle('fn:starts-with ( "abcd***e---f*--*ghi", "abcdef", "CollationA")'));
+				assertEquals(true,
+						evaluateXPathSingle('fn:starts-with ( (), "--***-*---", "CollationA")'));
+				assertEquals(true,
+						evaluateXPathSingle('fn:starts-with ( "-abcdefghi", "-abc", "CollationA")'));
+			}
+
+			function testEndsWith() {
+				assertEquals(true,
+						evaluateXPathSingle('fn:ends-with ( "tattoo", "tattoo")'));
+				assertEquals(false,
+						evaluateXPathSingle('fn:ends-with ( "tattoo", "atto")'));
+				assertEquals(true,
+						evaluateXPathSingle('fn:ends-with ((), ())'));
+			}
+
+			function testEndsWith_Collation() {
+				assertEquals(true,
+						evaluateXPathSingle('fn:ends-with ( "abcdefghi", "-g-h-i-", "CollationA")'));
+				assertEquals(true,
+						evaluateXPathSingle('fn:ends-with ( "abcd***e---f*--*ghi", "defghi", "CollationA")'));
+				assertEquals(true,
+						evaluateXPathSingle('fn:ends-with ( "abcd***e---f*--*ghi", "defghi", "CollationA")'));
+				assertEquals(true,
+						evaluateXPathSingle('fn:ends-with ( (), "--***-*---", "CollationA")'));
+				assertEquals(true,
+						evaluateXPathSingle('fn:ends-with ( "abcdefghi", "ghi-", "CollationA")'));
+			}
+
+			function testSubstringBefore() {
+				assertEquals("t",
+						evaluateXPathSingle('fn:substring-before ( "tattoo", "attoo")'));
+				assertEquals("",
+						evaluateXPathSingle('fn:substring-before ( "tattoo", "tatto")'));
+				assertEquals("",
+						evaluateXPathSingle('fn:substring-before ((), ())'));
+			}
+
+			function testSubstringBefore_Collation() {
+				assertEquals("abc",
+						evaluateXPathSingle('fn:substring-before ( "abcdefghi", "--d-e-", "CollationA")'));
+				assertEquals("abc--",
+						evaluateXPathSingle('fn:substring-before ( "abc--d-e-fghi", "--d-e-", "CollationA")'));
+				assertEquals("a*b*",
+						evaluateXPathSingle('fn:substring-before ( "a*b*c*d*e*f*g*h*i*", "***cde", "CollationA")'));
+				assertEquals("",
+						evaluateXPathSingle('fn:substring-before ( "Eureka!", "--***-*---", "CollationA")'));
+			}
+
+			function testSubstringAfter() {
+				assertEquals("too",
+						evaluateXPathSingle('fn:substring-after("tattoo", "tat")'));
+				assertEquals("",
+						evaluateXPathSingle('fn:substring-after ( "tattoo", "tattoo")'));
+				assertEquals("",
+						evaluateXPathSingle('fn:substring-after ((), ())'));
+			}
+
+			function testSubstringAfter_Collation() {
+				assertEquals("fghi",
+						evaluateXPathSingle('fn:substring-after ( "abcdefghi", "--d-e-", "CollationA")'));
+				assertEquals("-fghi ",
+						evaluateXPathSingle('fn:substring-after ( "abc--d-e-fghi", "--d-e-", "CollationA")'));
+				assertEquals("*f*g*h*i*",
+						evaluateXPathSingle('fn:substring-after ( "a*b*c*d*e*f*g*h*i*", "***cde***", "CollationA")'));
+				assertEquals("Eureka!",
+						evaluateXPathSingle('fn:substring-after ( "Eureka!", "--***-*---", "CollationA")'));
+			}
+
+			function testMatches_FlagX() {
+				assertEquals(true,
+						evaluateXPathSingle('fn:matches("helloworld", "hello world", "x") '));
+				assertEquals(false,
+						evaluateXPathSingle('fn:matches("helloworld", "hello[ ]world", "x") '));
+				assertEquals(true,
+						evaluateXPathSingle('fn:matches("hello world", "hello\\ sworld", "x")'));	// Double back slash, not in original test!
+				assertEquals(false,
+						evaluateXPathSingle('fn:matches("hello world", "hello world", "x")'));
+			}
+
+			function testMatches_FlagS() {
+				assertEquals(false,
+						evaluateXPathSingle('fn:matches("Kaum hat dies der Hahn gesehen,\nFängt er auch schon an zu krähen", "Kaum.*krähen")'));
+				assertEquals(true,
+						evaluateXPathSingle('fn:matches("Kaum hat dies der Hahn gesehen,\nFängt er auch schon an zu krähen", "Kaum.*krähen", "s")'));
+			}
+
+			function testMatches_FlagM() {
+				assertEquals(false,
+						evaluateXPathSingle('fn:matches("Kaum hat dies der Hahn gesehen,\nFängt er auch schon an zu krähen", "^Kaum.*gesehen,$")'));
+				assertEquals(true,
+						evaluateXPathSingle('fn:matches("Kaum hat dies der Hahn gesehen,\nFängt er auch schon an zu krähen", "^Kaum.*gesehen,$", "m")'));
+			}
+
+			function testMatches_FlagI() {
+				assertEquals(false,
+						evaluateXPathSingle('fn:matches("Kikeriki! Kikikerikih!!", "kiki")'));
+				assertEquals(true,
+						evaluateXPathSingle('fn:matches("Kikeriki! Kikikerikih!!", "kiki", "i")'));
+			}
+
+			function testReplace() {
+				assertEquals("a*cada*",
+						evaluateXPathSingle('replace("abracadabra", "bra", "*")'));
+				assertEquals("*",
+						evaluateXPathSingle('replace("abracadabra", "a.*a", "*")'));
+				assertEquals("*c*bra",
+						evaluateXPathSingle('replace("abracadabra", "a.*?a", "*")'));
+				assertEquals("brcdbr",
+						evaluateXPathSingle('replace("abracadabra", "a", "")'));
+				assertEquals("abbraccaddabbra",
+						evaluateXPathSingle('replace("abracadabra", "a(.)", "a$1$1")'));
+//				assertEquals("",
+//						evaluateXPathSingle('replace("abracadabra", ".*?", "$1")'));	// must raise an error, because the pattern matches the zero-length string
+				assertEquals("b",
+						evaluateXPathSingle('replace("AAAA", "A+", "b")'));
+				assertEquals("bbbb",
+						evaluateXPathSingle('replace("AAAA", "A+?", "b")'));
+				assertEquals("carted",
+						evaluateXPathSingle('replace("darted", "^(.*?)d(.*)$", "$1c$2")'));
+			}
+
+			function testTokenize() {
+				assertArrayEquals(["The", "cat", "sat", "on", "the", "mat"],
+						evaluateXPath('fn:tokenize("The cat sat on the mat", "\\s+")'));	// forced double escape
+				assertArrayEquals(["1", "15", "24", "50"],
+						evaluateXPath('fn:tokenize("1, 15, 24, 50", ",\\s*")'));	// forced double escape
+				assertArrayEquals(["1", "15", "", "24", "50", ""],
+						evaluateXPath('fn:tokenize("1,15,,24,50,", ",")'));
+//				assertArrayEquals([],
+//						evaluateXPath('fn:tokenize("abba", ".?")'));	// must raise the error [err:FORX0003].
+				assertArrayEquals(["Some unparsed", "HTML", "text"],
+						evaluateXPath('fn:tokenize("Some unparsed <br> HTML <BR> text", "\\s*<br>\\s*", "i")'));
+			}
+
+/*
+				assertEquals(,
+							evaluateXPathSingle(''));
+*/
+
+		</script>
+	</head>
+	<body>
+		<p>XPath2.js JsUnit unit page</p>
+	</body>
+</html>
