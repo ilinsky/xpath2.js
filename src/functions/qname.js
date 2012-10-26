@@ -28,8 +28,15 @@ cFunctionCall.functions["resolve-QName"]	= function(oSequence1, oSequence2) {
 	if (arguments.length < 2)
 		throw new cXPath2Error("XPST0017");
 
-	// TODO: Implement QName type
-	return new cXPath2Sequence(oSequence1.toString());
+	var sQName	= oSequence1.toString(),
+		aQName	= sQName.split(':'),
+		sLocalName	= aQName.pop(),
+		sPrefix	= aQName.pop() || null;
+
+	if (oSequence2.isEmpty())
+		return new cXPath2Sequence;
+
+	return new cXPath2Sequence(new cQName(sPrefix, sLocalName, cXPath2.DOMAdapter.lookupNamespaceURI(oSequence2.items[0], sPrefix || "")));
 };
 
 // fn:QName($paramURI as xs:string?, $paramQName as xs:string) as xs:QName
@@ -37,8 +44,13 @@ cFunctionCall.functions["QName"]	= function(oSequence1, oSequence2) {
 	if (arguments.length < 2)
 		throw new cXPath2Error("XPST0017");
 
+	var sQName	= oSequence2.toString(),
+		aQName	= sQName.split(':'),
+		sLocalName	= aQName.pop(),
+		sPrefix	= aQName.pop() || null;
+
 	// TODO: Implement QName type
-	return new cXPath2Sequence(oSequence2.toString());
+	return new cXPath2Sequence(new cQName(sPrefix, sLocalName, oSequence1.toString()));
 };
 
 // 11.2 Functions and Operators Related to QNames
@@ -47,17 +59,15 @@ cFunctionCall.functions["prefix-from-QName"]	= function(oSequence1) {
 	if (arguments.length < 1)
 		throw new cXPath2Error("XPST0017");
 
-	// TODO: Implement QName type
-
 	var oSequence	= new cXPath2Sequence;
 	if (oSequence1.isEmpty())
 		return oSequence;
 
-	var sQName	= oSequence1.toString(),
-		aQName	= sQName.split(':');
+	if (!(oSequence1.items[0] instanceof cQName))
+		throw new cXPath2Error("XPST0017");
 
-	if (aQName.length > 1)
-		oSequence.add(aQName[0]);
+	if (oSequence1.items[0].prefix)
+		oSequence.add(oSequence1.items[0].prefix);
 
 	return oSequence;
 };
@@ -67,28 +77,37 @@ cFunctionCall.functions["local-name-from-QName"]	= function(oSequence1) {
 	if (arguments.length < 1)
 		throw new cXPath2Error("XPST0017");
 
-	// TODO: Implement QName type
+	if (!(oSequence1.items[0] instanceof cQName))
+		throw new cXPath2Error("XPST0017");
 
-	var oSequence	= new cXPath2Sequence;
-	if (oSequence1.isEmpty())
-		return oSequence;
-
-	var sQName	= oSequence1.toString(),
-		aQName	= sQName.split(':');
-
-	oSequence.add(aQName.pop());
-
-	return oSequence;
+	return new cXPath2Sequence(oSequence1.items[0].localName);
 };
 
 // fn:namespace-uri-from-QName($arg as xs:QName?) as xs:anyURI?
 cFunctionCall.functions["namespace-uri-from-QName"]	= function(oSequence1) {
-	throw "Function '" + "namespace-uri-from-QName" + "' not implemented";
+	if (arguments.length < 1)
+		throw new cXPath2Error("XPST0017");
+
+	if (!(oSequence1.items[0] instanceof cQName))
+		throw new cXPath2Error("XPST0017");
+
+	return new cXPath2Sequence(oSequence1.items[0].namespaceURI);
 };
 
 // fn:namespace-uri-for-prefix($prefix as xs:string?, $element as element()) as xs:anyURI?
 cFunctionCall.functions["namespace-uri-for-prefix"]	= function(oSequence1, oSequence2) {
-	throw "Function '" + "namespace-uri-for-prefix" + "' not implemented";
+	if (arguments.length < 2)
+		throw new cXPath2Error("XPST0017");
+
+	var sQName	= oSequence1.toString(),
+		aQName	= sQName.split(':'),
+		sLocalName	= aQName.pop(),
+		sPrefix	= aQName.pop() || null;
+
+	if (oSequence2.isEmpty())
+		return new cXPath2Sequence;
+
+	return new cXPath2Sequence(cXPath2.DOMAdapter.lookupNamespaceURI(oSequence2.items[0], sPrefix || ""));
 };
 
 // fn:in-scope-prefixes($element as element()) as xs:string*

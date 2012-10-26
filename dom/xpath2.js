@@ -12,6 +12,7 @@
 	// Import objects from environment
 	files.push("../src/import.js");
 	// Helper classes
+	files.push("../src/helpers/QName.js");
 	files.push("../src/helpers/DOMAdapter.js");
 	files.push("../src/helpers/XPath2Error.js");
 	files.push("../src/helpers/XPath2Context.js");
