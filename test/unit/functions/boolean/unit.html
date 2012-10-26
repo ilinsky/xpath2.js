@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>JsUnit testing page</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+		<!-- JsUnitClient driver -->
+		<script type="text/javascript" src="../../jsUnitClient.js"></script>
+
+		<!-- Library -->
+		<script type="text/javascript" src="../../../../xpath2.js"></script>
+
+		<!-- Suite definition -->
+		<script type="text/javascript">
+			// Helper function
+			function evaluateXPath(sXPath) {
+				return XPath2.evaluate(sXPath);
+			}
+
+			function evaluateXPathSingle(sXPath) {
+				return evaluateXPath(sXPath)[0];
+			}
+
+			// Dummy test
+			function testPage() {
+				assertTrue(true);
+			}
+
+			// Tests
+			function testTrue() {
+				// Not W3C tests
+				assertEquals(true,
+						evaluateXPathSingle('fn:true()'));
+			}
+
+			function testFalse() {
+				assertEquals(false,
+						evaluateXPathSingle('fn:false()'));
+			}
+
+			function testNot() {
+				assertEquals(false,
+						evaluateXPathSingle('fn:not(fn:true())'));
+				assertEquals(false,
+						evaluateXPathSingle('fn:not("false")'));
+				// Not W3C tests
+				assertEquals(true,
+						evaluateXPathSingle('fn:not(fn:false())'));
+			}
+		</script>
+	</head>
+	<body>
+		<p>XPath2.js JsUnit unit page</p>
+	</body>
+</html>
