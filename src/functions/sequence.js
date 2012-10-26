@@ -61,49 +61,151 @@ cFunctionCall.functions["boolean"]	= function(oSequence1) {
 // fn:index-of($seqParam as xs:anyAtomicType*, $srchParam as xs:anyAtomicType) as xs:integer*
 // fn:index-of($seqParam as xs:anyAtomicType*, $srchParam as xs:anyAtomicType, $collation as xs:string) as xs:integer*
 cFunctionCall.functions["index-of"]	= function(oSequence1, oSequence2, oSequence3) {
-	throw "Function '" + "index-of" + "' not implemented";
+	if (arguments.length < 2)
+		throw new cXPath2Error("XPST0017");
+
+	var oSequence	= new cXPath2Sequence;
+	if (oSequence1.isEmpty())
+		return oSequence;
+
+	if (oSequence2.isEmpty())
+		return oSequence;
+
+	// TODO: Implement collation
+
+	var oValue	= oSequence2.items[0];
+	for (var nIndex = 0, nLength = oSequence1.items.length; nIndex < nLength; nIndex++)
+		if (oSequence1.items[nIndex] == oValue)
+			oSequence.add(nIndex + 1);
+
+	return oSequence;
 };
 
 // fn:empty($arg as item()*) as xs:boolean
 cFunctionCall.functions["empty"]	= function(oSequence1) {
-	throw "Function '" + "empty" + "' not implemented";
+	if (arguments.length < 1)
+		throw new cXPath2Error("XPST0017");
+
+	return new cXPath2Sequence(oSequence1.isEmpty());
 };
 
 // fn:exists($arg as item()*) as xs:boolean
 cFunctionCall.functions["exists"]	= function(oSequence1) {
-	throw "Function '" + "exists" + "' not implemented";
+	if (arguments.length < 1)
+		throw new cXPath2Error("XPST0017");
+
+	return new cXPath2Sequence(!oSequence1.isEmpty());
 };
 
 // fn:distinct-values($arg as xs:anyAtomicType*) as xs:anyAtomicType*
 // fn:distinct-values($arg as xs:anyAtomicType*, $collation as xs:string) as xs:anyAtomicType*
 cFunctionCall.functions["distinct-values"]	= function(oSequence1, oSequence2) {
-	throw "Function '" + "distinct-values" + "' not implemented";
+	if (arguments.length < 1)
+		throw new cXPath2Error("XPST0017");
+
+	var oSequence	= new cXPath2Sequence;
+	if (oSequence1.isEmpty())
+		return oSequence;
+
+	// TODO: Change implementation to omit following items rather than previous ones
+	for (var nIndex = 0, nLength = oSequence1.items.length, oValue, bFound; nIndex < nLength; nIndex++) {
+		bFound	= false;
+		oValue	= oSequence1.items[nIndex];
+		for (var nRightIndex = nIndex + 1; (nRightIndex < nLength) &&!bFound; nRightIndex++)
+			if (oValue === oSequence1.items[nRightIndex])
+				bFound	= true;
+		if (!bFound)
+			oSequence.add(oValue);
+	}
+
+	return oSequence;
 };
 
 // fn:insert-before($target as item()*, $position as xs:integer, $inserts as item()*) as item()*
 cFunctionCall.functions["insert-before"]	= function(oSequence1, oSequence2, oSequence3) {
-	throw "Function '" + "insert-before" + "' not implemented";
+	if (arguments.length < 3)
+		throw new cXPath2Error("XPST0017");
+
+	if (oSequence1.isEmpty())
+		return oSequence3;
+	if (oSequence3.isEmpty())
+		return oSequence1;
+
+	var nLength 	= oSequence1.items.length,
+		nPosition	= oSequence2.toNumber();
+	if (nPosition < 1)
+		nPosition	= 1;
+	else
+	if (nPosition > nLength)
+		nPosition	= nLength + 1;
+
+	var oSequence	=  new cXPath2Sequence;
+	for (var nIndex = 0; nIndex < nLength; nIndex++) {
+		if (nPosition == nIndex + 1)
+			oSequence.add(oSequence3);
+		oSequence.add(oSequence1.items[nIndex]);
+	}
+	if (nPosition == nIndex + 1)
+		oSequence.add(oSequence3);
+
+	return oSequence;
 };
 
 // fn:remove($target as item()*, $position as xs:integer) as item()*
-cFunctionCall.functions["remove"]	= function(oSequence1, oSequence1) {
-	throw "Function '" + "remove" + "' not implemented";
+cFunctionCall.functions["remove"]	= function(oSequence1, oSequence2) {
+	if (arguments.length < 2)
+		throw new cXPath2Error("XPST0017");
+
+	var oSequence	= new cXPath2Sequence;
+	if (oSequence1.isEmpty())
+		return oSequence;
+
+	var nLength 	= oSequence1.items.length,
+		nPosition	= oSequence2.toNumber();
+
+	if (nPosition < 1 || nPosition > nLength)
+		return oSequence1;
+
+	var oSequence	=  new cXPath2Sequence;
+	for (var nIndex = 0; nIndex < nLength; nIndex++)
+		if (nPosition != nIndex + 1)
+			oSequence.add(oSequence1.items[nIndex]);
+
+	return oSequence;
 };
 
 // fn:reverse($arg as item()*) as item()*
 cFunctionCall.functions["reverse"]	= function(oSequence1) {
-	throw "Function '" + "reverse" + "' not implemented";
+	if (arguments.length < 1)
+		throw new cXPath2Error("XPST0017");
+
+	oSequence1.items.reverse();
+
+	return oSequence1;
 };
 
 // fn:subsequence($sourceSeq as item()*, $startingLoc as xs:double) as item()*
 // fn:subsequence($sourceSeq as item()*, $startingLoc as xs:double, $length as xs:double) as item()*
 cFunctionCall.functions["subsequence"]	= function(oSequence1, oSequence2, oSequence3) {
-	throw "Function '" + "subsequence" + "' not implemented";
+	if (arguments.length < 2)
+		throw new cXPath2Error("XPST0017");
+
+	var nPosition	= cMath.round(oSequence2.toNumber()),
+		nLength		= arguments.length > 2 ? cMath.round(oSequence3.toNumber()) : oSequence1.items.length - nPosition + 1;
+
+	// TODO: Handle out-of-range position and length values
+	var oSequence	= new cXPath2Sequence(oSequence1);
+	oSequence.items	= oSequence.items.slice(nPosition - 1, nPosition - 1 + nLength);
+
+	return oSequence;
 };
 
 // fn:unordered($sourceSeq as item()*) as item()*
 cFunctionCall.functions["unordered"]	= function(oSequence1) {
-	throw "Function '" + "unordered" + "' not implemented";
+	if (arguments.length < 1)
+		throw new cXPath2Error("XPST0017");
+
+	return oSequence1;
 };
 
 

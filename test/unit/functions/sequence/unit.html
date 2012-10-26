@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>JsUnit testing page</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+		<!-- JsUnitClient driver -->
+		<script type="text/javascript" src="../../jsUnitClient.js"></script>
+
+		<!-- Library -->
+		<script type="text/javascript" src="../../../../xpath2.js"></script>
+
+		<!-- Suite definition -->
+		<script type="text/javascript">
+			// Helper function
+			function evaluateXPath(sXPath) {
+				return XPath2.evaluate(sXPath);
+			}
+
+			function evaluateXPathSingle(sXPath) {
+				return evaluateXPath(sXPath)[0];
+			}
+
+			// Dummy test
+			function testPage() {
+				assertTrue(true);
+			}
+
+			// Tests
+			// 15.1 General Functions and Operators on Sequences
+			function testBoolean() {
+				// raises a type error
+				var bThrown	= false;
+				try {
+					evaluateXPathSingle('fn:boolean(("a", "b", "c"))');
+				}
+				catch (e) {
+					bThrown	= true;
+				}
+				assertEquals(true, bThrown);
+				assertEquals(true,
+						evaluateXPathSingle('fn:boolean(("a", "b", "c")[1])'));
+				assertEquals(false,
+						evaluateXPathSingle('fn:boolean(("a", "b", "c")[0])'));
+			}
+
+			function testIndexOf() {
+				assertArrayEquals([],
+						evaluateXPath('fn:index-of ((10, 20, 30, 40), 35)'));
+				assertArrayEquals([2, 5],
+						evaluateXPath('fn:index-of ((10, 20, 30, 30, 20, 10), 20)'));
+				assertArrayEquals([1, 4],
+						evaluateXPath('fn:index-of (("a", "sport", "and", "a", "pastime"), "a")'));
+			}
+
+			function testIndexOf_Collation() {
+				assertNotNull(null);
+			}
+
+			function testEmpty() {
+				// Not W3C tests
+				assertEquals(false,
+						evaluateXPathSingle('fn:empty((1, 2, 3))'));
+				assertEquals(true,
+						evaluateXPathSingle('fn:empty(())'));
+			}
+
+			function testExists() {
+				// Not W3C tests
+				assertEquals(true,
+						evaluateXPathSingle('fn:exists((1, 2, 3))'));
+				assertEquals(false,
+						evaluateXPathSingle('fn:exists(())'));
+			}
+
+			function testDistinctValues() {
+				// Not W3C tests
+				assertArrayEquals([4, 5, 3, 2, 1],			// [1, 2, 3, 4, 5],
+						evaluateXPath('fn:distinct-values((5, 4, 5, 3, 2, 3, 2, 1))'));
+				assertArrayEquals([true, 1, "", 0, false],	// ["", true, 1, 0, false]
+						evaluateXPath('fn:distinct-values(("", true(), 1, true(), 0, false(), 1, "", 0, false()))'));
+			}
+
+			function testDistinctValues_Collation() {
+				assertNotNull(null);
+			}
+
+			function testInsertBefore() {
+				assertArrayEquals(["z", "a", "b", "c"],
+						evaluateXPath('fn:insert-before(("a", "b", "c"), 0, "z")'));
+				assertArrayEquals(["z", "a", "b", "c"],
+						evaluateXPath('fn:insert-before(("a", "b", "c"), 1, "z")'));
+				assertArrayEquals(["a", "z", "b", "c"],
+						evaluateXPath('fn:insert-before(("a", "b", "c"), 2, "z")'));
+				assertArrayEquals(["a", "b", "z", "c"],
+						evaluateXPath('fn:insert-before(("a", "b", "c"), 3, "z")'));
+				assertArrayEquals(["a", "b", "c", "z"],
+						evaluateXPath('fn:insert-before(("a", "b", "c"), 4, "z")'));
+			}
+
+			function testRemove() {
+				assertArrayEquals(["a", "b", "c"],
+						evaluateXPath('fn:remove(("a", "b", "c"), 0)'));
+				assertArrayEquals(["b", "c"],
+						evaluateXPath('fn:remove(("a", "b", "c"), 1)'));
+				assertArrayEquals(["a", "b", "c"],
+						evaluateXPath('fn:remove(("a", "b", "c"), 6)'));
+				assertArrayEquals([],
+						evaluateXPath('fn:remove((), 3)'));
+			}
+
+			function testReverse() {
+				assertArrayEquals(["c", "b", "a"],
+						evaluateXPath('fn:reverse(("a", "b", "c"))'));
+				assertArrayEquals(["hello"],
+						evaluateXPath('reverse(("hello"))'));
+				assertArrayEquals([],
+						evaluateXPath('fn:reverse(())'));
+			}
+
+			function testSubsequence() {
+				assertArrayEquals(["d", "e"],
+						evaluateXPath('fn:subsequence(("a", "b", "c", "d", "e"), 4)'));
+				assertArrayEquals(["c", "d"],
+						evaluateXPath('fn:subsequence(("a", "b", "c", "d", "e"), 3, 2)'));
+			}
+		</script>
+	</head>
+	<body>
+		<p>XPath2.js JsUnit unit page</p>
+	</body>
+</html>
