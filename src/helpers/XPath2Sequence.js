@@ -82,6 +82,9 @@ cXPath2Sequence.atomizeItem		= function(oItem) {
 		}
 	}
 
+	if (oItem instanceof cQName)
+		return oItem.toString();
+
 	// Base types
 	if (typeof oItem == "boolean" || typeof oItem == "number" || typeof oItem == "string")
 		return oItem;

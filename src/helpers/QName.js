@@ -9,5 +9,5 @@ cQName.prototype.localName	= null;
 cQName.prototype.namespaceURI	= null;
 
 cQName.prototype.toString	= function() {
-	return (this.prefix ? this.prefix + ':' : '') + this.namespaceURI;
+	return (this.prefix ? this.prefix + ':' : '') + this.localName;
 };
