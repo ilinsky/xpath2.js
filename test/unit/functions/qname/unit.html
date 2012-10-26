@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>JsUnit testing page</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+		<!-- JsUnitClient driver -->
+		<script type="text/javascript" src="../../jsUnitClient.js"></script>
+
+		<!-- Library -->
+		<script type="text/javascript" src="../../../../xpath2.js"></script>
+
+		<!-- Suite definition -->
+		<script type="text/javascript">
+			// Helper function
+			function evaluateXPath(sXPath) {
+				return XPath2.evaluate(sXPath, document);
+			}
+
+			function evaluateXPathSingle(sXPath) {
+				return evaluateXPath(sXPath)[0];
+			}
+
+			// Dummy test
+			function testPage() {
+				assertTrue(true);
+			}
+
+			// Tests
+			// 11.1 Additional Constructor Functions for QNames
+			function testResolveQName() {
+				assertEquals("hello",
+						evaluateXPathSingle('fn:resolve-QName("hello", /child::element())'));
+				assertEquals("eg:myFunc",
+						evaluateXPathSingle('fn:resolve-QName("eg:myFunc", /child::element())'));
+			}
+
+			function testQName() {
+				assertEquals("person",
+						evaluateXPathSingle('fn:QName("http://www.example.com/example", "person")'));
+				assertEquals("ht:person",
+						evaluateXPathSingle('fn:QName("http://www.example.com/example", "ht:person")'));
+			}
+
+
+			// 11.2 Functions and Operators Related to QNames
+			function testPrefixFromQName() {
+				// Not W3c test
+				assertEquals("fn",
+						evaluateXPathSingle("fn:prefix-from-QName('fn:test')"));
+			}
+
+			function testLocalNameFromQName() {
+//				assertEquals("person",
+	//					evaluateXPathSingle('fn:local-name-from-QName(fn:QName("http://www.example.com/example", "person"))'));
+				// Not W3c test
+				assertEquals("test",
+						evaluateXPathSingle("fn:local-name-from-QName('fn:test')"));
+			}
+
+			function testNamespaceUriFromQName() {
+//				assertEquals("http://www.example.com/example",
+	//					evaluateXPathSingle('fn:namespace-uri-from-QName(fn:QName("http://www.example.com/example", "person"))'));
+				// Not W3c test
+				assertEquals("http://www.w3.org/2005/xpath-functions",
+						evaluateXPathSingle("fn:namespace-uri-from-QName('fn:test')"));
+			}
+
+			function testNamespaceUriForPrefix() {
+				// Not W3c test
+				assertEquals("http://www.w3.org/2005/xpath-functions",
+						evaluateXPathSingle("fn:namespace-uri-for-prefix('fn', /child::element())"));
+			}
+
+			function testInScopePrefixes() {
+				// Not W3c test
+//				assertEquals([],
+//						evaluateXPathSingle("fn:in-scope-prefixes(/child::element())"));
+			}
+		</script>
+	</head>
+	<body>
+		<p>XPath2.js JsUnit unit page</p>
+	</body>
+</html>

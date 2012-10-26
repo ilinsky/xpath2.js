@@ -25,23 +25,60 @@
 // 11.1 Additional Constructor Functions for QNames
 // fn:resolve-QName($qname as xs:string?, $element as element()) as xs:QName?
 cFunctionCall.functions["resolve-QName"]	= function(oSequence1, oSequence2) {
-	throw "Function '" + "resolve-QName" + "' not implemented";
+	if (arguments.length < 2)
+		throw new cXPath2Error("XPST0017");
+
+	// TODO: Implement QName type
+	return new cXPath2Sequence(oSequence1.toString());
 };
 
 // fn:QName($paramURI as xs:string?, $paramQName as xs:string) as xs:QName
 cFunctionCall.functions["QName"]	= function(oSequence1, oSequence2) {
-	throw "Function '" + "QName" + "' not implemented";
+	if (arguments.length < 2)
+		throw new cXPath2Error("XPST0017");
+
+	// TODO: Implement QName type
+	return new cXPath2Sequence(oSequence2.toString());
 };
 
 // 11.2 Functions and Operators Related to QNames
 // fn:prefix-from-QName($arg as xs:QName?) as xs:NCName?
 cFunctionCall.functions["prefix-from-QName"]	= function(oSequence1) {
-	throw "Function '" + "prefix-from-QName" + "' not implemented";
+	if (arguments.length < 1)
+		throw new cXPath2Error("XPST0017");
+
+	// TODO: Implement QName type
+
+	var oSequence	= new cXPath2Sequence;
+	if (oSequence1.isEmpty())
+		return oSequence;
+
+	var sQName	= oSequence1.toString(),
+		aQName	= sQName.split(':');
+
+	if (aQName.length > 1)
+		oSequence.add(aQName[0]);
+
+	return oSequence;
 };
 
 // fn:local-name-from-QName($arg as xs:QName?) as xs:NCName?
 cFunctionCall.functions["local-name-from-QName"]	= function(oSequence1) {
-	throw "Function '" + "local-name-from-QName" + "' not implemented";
+	if (arguments.length < 1)
+		throw new cXPath2Error("XPST0017");
+
+	// TODO: Implement QName type
+
+	var oSequence	= new cXPath2Sequence;
+	if (oSequence1.isEmpty())
+		return oSequence;
+
+	var sQName	= oSequence1.toString(),
+		aQName	= sQName.split(':');
+
+	oSequence.add(aQName.pop());
+
+	return oSequence;
 };
 
 // fn:namespace-uri-from-QName($arg as xs:QName?) as xs:anyURI?
