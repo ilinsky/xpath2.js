@@ -31,13 +31,16 @@
 		round-half-to-even
 */
 
+// 6.4 Functions on Numeric Values
 // fn:abs($arg as numeric?) as numeric?
 cFunctionCall.functions["abs"]	= function(oSequence1) {
 	if (!arguments.length)
 		throw new cXPath2Error("XPST0017");
+
 	var nValue	= oSequence1.toNumber();
 	if (fIsNaN(nValue))
 		throw new cXPath2Error("XPTY0004");
+
 	return new cXPath2Sequence(cMath.abs(nValue));
 };
 
@@ -45,19 +48,23 @@ cFunctionCall.functions["abs"]	= function(oSequence1) {
 cFunctionCall.functions["ceiling"]	= function(oSequence1) {
 	if (!arguments.length)
 		throw new cXPath2Error("XPST0017");
+
 	var nValue	= oSequence1.toNumber();
 	if (fIsNaN(nValue))
 		throw new cXPath2Error("XPTY0004");
-	return new cXPath2Sequence(cMath.ceiling(nValue));
+
+	return new cXPath2Sequence(cMath.ceil(nValue));
 };
 
 // fn:floor($arg as numeric?) as numeric?
 cFunctionCall.functions["floor"]	= function(oSequence1) {
 	if (!arguments.length)
 		throw new cXPath2Error("XPST0017");
+
 	var nValue	= oSequence1.toNumber();
 	if (fIsNaN(nValue))
 		throw new cXPath2Error("XPTY0004");
+
 	return new cXPath2Sequence(cMath.floor(nValue));
 };
 
@@ -65,9 +72,11 @@ cFunctionCall.functions["floor"]	= function(oSequence1) {
 cFunctionCall.functions["round"]	= function(oSequence1) {
 	if (!arguments.length)
 		throw new cXPath2Error("XPST0017");
+
 	var nValue	= oSequence1.toNumber();
 	if (fIsNaN(nValue))
 		throw new cXPath2Error("XPTY0004");
+
 	return new cXPath2Sequence(cMath.round(nValue));
 };
 
@@ -76,9 +85,11 @@ cFunctionCall.functions["round"]	= function(oSequence1) {
 cFunctionCall.functions["round-half-to-even"]	= function(oSequence1, oSequence2) {
 	if (!arguments.length)
 		throw new cXPath2Error("XPST0017");
+
 	var nValue	= oSequence1.toNumber();
 	if (fIsNaN(nValue))
 		throw new cXPath2Error("XPTY0004");
+
 	var nPrecision	= 0;
 	if (arguments.length > 1) {
 		nPrecision	= oSequence2.toNumber();
