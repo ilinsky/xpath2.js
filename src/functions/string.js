@@ -308,14 +308,37 @@ function fFunction_createRegExp(sValue, sFlags) {
 				.replace(/\\c/g, '[:' + c + ']')
 				.replace(/\\C/g, '[^:' + c + ']');
 
-	if (sFlags.indexOf('s') >= 0)
-		throw "Not supported flag 's' in regular expression";
-
-	if (sFlags.indexOf('x') >= 0) {
-		sFlags	= sFlags.replace(/x/g, '');
-		// TODO: Remove white spaces from anywhere in regular expression except for in []
-		sValue	= sValue.replace(/\s+/g, '');
+	var bFlagS	= sFlags.indexOf('s') >= 0,
+		bFlagX	= sFlags.indexOf('x') >= 0;
+	if (bFlagS || bFlagX) {
+		// Strip 's' and 'x' from flags
+		sFlags	= sFlags.replace(/[sx]/g, '');
+		var aValue	= [],
+			rValue	= /\s/;
+		for (var nIndex = 0, nLength = sValue.length, bValue = false, sCharCurr, sCharPrev = ''; nIndex < nLength; nIndex++) {
+			sCharCurr	= sValue.charAt(nIndex);
+			if (sCharCurr == '[') {
+				if (sCharPrev != '\\')
+					bValue	= true;
+			}
+			else
+			if (sCharCurr == ']') {
+				if (sCharPrev != '\\')
+					bValue	= false;
+			}
+			// Replace '\s' for flag 'x' if not in []
+			if (bValue || !(bFlagX && rValue.test(sCharCurr))) {
+				// Replace '.' for flag 's' if not in []
+				if (!bValue && (bFlagS && sCharCurr == '.' && sCharPrev != '\\'))
+					aValue[aValue.length]	= '(?:.|[\\s])';
+				else
+					aValue[aValue.length]	= sCharCurr;
+			}
+			sCharPrev	= sCharCurr;
+		}
+		sValue	= aValue.join('');
 	}
+
 	return new cRegExp(sValue, sFlags);
 };
 
