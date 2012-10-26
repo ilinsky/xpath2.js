@@ -56,7 +56,7 @@ cFunctionCall.functions["local-name"]	= function(oSequence1) {
 	var oNode	= oSequence1.items[0];
 	if (!cXPath2.DOMAdapter.isNode(oNode))
 		throw new cXPath2Error("XPTY0004");
-	oSequence.add(new cXPath2Sequence(cXPath2.DOMAdapter.getProperty(oNode, "localName")).toString());
+	oSequence.add(cXPath2.DOMAdapter.getProperty(oNode, "localName"));
 	return oSequence;
 };
 
@@ -89,14 +89,18 @@ cFunctionCall.functions["number"]	= function(/*[*/oSequence1/*]*/) {
 
 // fn:lang($testlang as xs:string?) as xs:boolean
 // fn:lang($testlang as xs:string?, $node as node()) as xs:boolean
-cFunctionCall.functions["lang"]	= function(oSequence) {
+cFunctionCall.functions["lang"]	= function(oSequence1) {
 	throw "Funciton '" + "lang" + "' not implemented";
 };
 
 // fn:root() as node()
 // fn:root($arg as node()?) as node()?
-cFunctionCall.functions["root"]	= function() {
-	var oParent	= this.context;
+cFunctionCall.functions["root"]	= function(oSequence1) {
+	var oParent	= arguments.length ? oSequence1.items[0] : this.context;
+
+	if (!cXPath2.DOMAdapter.isNode(oNode))
+		throw new cXPath2Error("XPTY0004");
+
 	for (var oNode = oParent; oNode; oNode = cXPath2.DOMAdapter.getProperty(oParent, "parentNode"))
 		oParent	= oNode;
 
