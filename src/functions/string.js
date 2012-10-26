@@ -317,20 +317,18 @@ function fFunction_createRegExp(sValue, sFlags) {
 			rValue	= /\s/;
 		for (var nIndex = 0, nLength = sValue.length, bValue = false, sCharCurr, sCharPrev = ''; nIndex < nLength; nIndex++) {
 			sCharCurr	= sValue.charAt(nIndex);
-			if (sCharCurr == '[') {
-				if (sCharPrev != '\\')
+			if (sCharPrev != '\\') {
+				if (sCharCurr == '[')
 					bValue	= true;
-			}
-			else
-			if (sCharCurr == ']') {
-				if (sCharPrev != '\\')
+				else
+				if (sCharCurr == ']')
 					bValue	= false;
 			}
 			// Replace '\s' for flag 'x' if not in []
 			if (bValue || !(bFlagX && rValue.test(sCharCurr))) {
 				// Replace '.' for flag 's' if not in []
 				if (!bValue && (bFlagS && sCharCurr == '.' && sCharPrev != '\\'))
-					aValue[aValue.length]	= '(?:.|[\\s])';
+					aValue[aValue.length]	= '(?:.|\\s)';
 				else
 					aValue[aValue.length]	= sCharCurr;
 			}
