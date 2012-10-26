@@ -46,24 +46,65 @@
 // 7.2 Functions to Assemble and Disassemble Strings
 // fn:codepoints-to-string($arg as xs:integer*) as xs:string
 cFunctionCall.functions["codepoints-to-string"]	= function(oSequence1) {
-	throw "Function '" + "codepoints-to-string" + "' not implemented";
+	if (arguments.length < 1)
+		throw new cXPath2Error("XPST0017");
+
+	var aValue	= [];
+	for (var nIndex = 0, nLength = oSequence1.items.length; nIndex < nLength; nIndex++)
+		aValue.push(cString.fromCharCode(new cXPath2Sequence(oSequence1.items[nIndex]).toNumber()));
+
+	return new cXPath2Sequence(aValue.join(''));
 };
 
 // fn:string-to-codepoints($arg as xs:string?) as xs:integer*
 cFunctionCall.functions["string-to-codepoints"]	= function(oSequence1) {
-	throw "Function '" + "string-to-codepoints" + "' not implemented";
+	if (arguments.length < 1)
+		throw new cXPath2Error("XPST0017");
+
+	var oSequence	= new cXPath2Sequence;
+	var sValue	= oSequence1.toString();
+	if (sValue == '')
+		return oSequence;
+
+	for (var nIndex = 0, nLength = sValue.length; nIndex < nLength; nIndex++)
+		oSequence.add(sValue.charCodeAt(nIndex));
+
+	return oSequence;
 };
 
 // 7.3 Equality and Comparison of Strings
 // fn:compare($comparand1 as xs:string?, $comparand2 as xs:string?) as xs:integer?
 // fn:compare($comparand1 as xs:string?, $comparand2 as xs:string?, $collation as xs:string) as xs:integer?
 cFunctionCall.functions["compare"]	= function(oSequence1, oSequence2, oSequence3) {
-	throw "Function '" + "compare" + "' not implemented";
+	if (arguments.length < 2)
+		throw new cXPath2Error("XPST0017");
+
+	if (oSequence1.isEmpty() || oSequence2.isEmpty())
+		return new cXPath2Sequence;
+
+	var sValue1	= oSequence1.toString(),
+		sValue2	= oSequence2.toString();
+
+	// TODO: Implement proper comparison, as this is used in operators
+	// TODO: Implement collation handling
+
+	return new cXPath2Sequence(sValue1 == sValue2 ? 0 : sValue1 > sValue2 ? 1 :-1);
 };
 
 // fn:codepoint-equal($comparand1 as xs:string?, $comparand2  as xs:string?) as xs:boolean?
 cFunctionCall.functions["codepoint-equal"]	= function(oSequence1, oSequence2) {
-	throw "Function '" + "codepoint-equal" + "' not implemented";
+	if (arguments.length < 2)
+		throw new cXPath2Error("XPST0017");
+
+	if (oSequence1.isEmpty() || oSequence2.isEmpty())
+		return new cXPath2Sequence;
+
+	var sValue1	= oSequence1.toString(),
+		sValue2	= oSequence2.toString();
+
+	// TODO: Check if JS uses 'Unicode code point collation' here
+
+	return new cXPath2Sequence(sValue1 == sValue2);
 };
 
 
