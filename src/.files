@@ -1,6 +1,7 @@
 # Import variables from environment
 import.js
 # Helper classes
+helpers/QName.js
 helpers/DOMAdapter.js
 helpers/XPath2Error.js
 helpers/XPath2Lexer.js
