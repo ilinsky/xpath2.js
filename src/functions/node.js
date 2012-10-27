@@ -98,7 +98,7 @@ cFunctionCall.functions["lang"]	= function(oSequence1) {
 cFunctionCall.functions["root"]	= function(oSequence1) {
 	var oParent	= arguments.length ? oSequence1.items[0] : this.context;
 
-	if (!cXPath2.DOMAdapter.isNode(oNode))
+	if (!cXPath2.DOMAdapter.isNode(oParent))
 		throw new cXPath2Error("XPTY0004");
 
 	for (var oNode = oParent; oNode; oNode = cXPath2.DOMAdapter.getProperty(oParent, "parentNode"))
