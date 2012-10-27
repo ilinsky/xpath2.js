@@ -15,11 +15,12 @@
 // fn:resolve-uri($relative as xs:string?) as xs:anyURI?
 // fn:resolve-uri($relative as xs:string?, $base as xs:string) as xs:anyURI?
 cFunctionCall.functions["resolve-uri"]	= function(oSequence1, oSequence2) {
-	var oSequence	= new cXPath2Sequence,
-		sBaseUri;
 	// Validate arguments
 	if (!arguments.length)
 		throw new cXPath2Error("XPST0017");
+
+	var oSequence	= new cXPath2Sequence,
+		sBaseUri;
 
 	if (arguments.length < 2) {
 		if (!cXPath2.DOMAdapter.isNode(this.context))
