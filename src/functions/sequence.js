@@ -216,7 +216,7 @@ cFunctionCall.functions["zero-or-one"]	= function(oSequence1) {
 		throw new cXPath2Error("XPST0017");
 
 	if (oSequence1.length > 1)
-		throw new cXPath2Error("FORG0003")
+		throw new cXPath2Error("FORG0003");
 
 	return oSequence1;
 };
@@ -227,7 +227,7 @@ cFunctionCall.functions["one-or-more"]	= function(oSequence1) {
 		throw new cXPath2Error("XPST0017");
 
 	if (oSequence1.length < 1)
-		throw new cXPath2Error("FORG0004")
+		throw new cXPath2Error("FORG0004");
 
 	return oSequence1;
 };
