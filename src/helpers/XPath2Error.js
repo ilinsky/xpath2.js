@@ -27,4 +27,7 @@ oXPathError_messages["XPTY0020"]	= "In an axis step, the context item is not a n
 oXPathError_messages["XPST0081"]	= "A QName used in an expression contains a namespace prefix that cannot be expanded into a namespace URI by using the statically known namespaces.";
 //
 oXPathError_messages["FORG0001"]	= "Invalid value for cast/constructor.";
+oXPathError_messages["FORG0003"]	= "fn:zero-or-one called with a sequence containing more than one item.";
+oXPathError_messages["FORG0004"]	= "fn:one-or-more called with a sequence containing no items.";
+oXPathError_messages["FORG0005"]	= "fn:exactly-one called with a sequence containing zero or more than one item.";
 

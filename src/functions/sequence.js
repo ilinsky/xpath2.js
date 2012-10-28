@@ -212,17 +212,35 @@ cFunctionCall.functions["unordered"]	= function(oSequence1) {
 // 15.2 Functions That Test the Cardinality of Sequences
 // fn:zero-or-one($arg as item()*) as item()?
 cFunctionCall.functions["zero-or-one"]	= function(oSequence1) {
-	throw "Function '" + "zero-or-one" + "' not implemented";
+	if (arguments.length < 1)
+		throw new cXPath2Error("XPST0017");
+
+	if (oSequence1.length > 1)
+		throw new cXPath2Error("FORG0003")
+
+	return oSequence1;
 };
 
 // fn:one-or-more($arg as item()*) as item()+
 cFunctionCall.functions["one-or-more"]	= function(oSequence1) {
-	throw "Function '" + "one-or-more" + "' not implemented";
+	if (arguments.length < 1)
+		throw new cXPath2Error("XPST0017");
+
+	if (oSequence1.length < 1)
+		throw new cXPath2Error("FORG0004")
+
+	return oSequence1;
 };
 
 // fn:exactly-one($arg as item()*) as item()
 cFunctionCall.functions["exactly-one"]	= function(oSequence1) {
-	throw "Function '" + "exactly-one" + "' not implemented";
+	if (arguments.length < 1)
+		throw new cXPath2Error("XPST0017");
+
+	if (oSequence1.length != 1)
+		throw new cXPath2Error("FORG0005")
+
+	return oSequence1;
 };
 
 
