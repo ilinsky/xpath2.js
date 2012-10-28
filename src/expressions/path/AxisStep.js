@@ -76,8 +76,12 @@ cAxisStep.parse	= function (oLexer, oResolver) {
 
 // Public members
 cAxisStep.prototype.evaluate	= function (oContext) {
-	var oSequence	= new cXPath2Sequence;
 	var oItem	= oContext.context;
+
+	if (!cXPath2.DOMAdapter.isNode(oItem))
+		throw new cXPath2Error("XPTY0020");
+
+	var oSequence	= new cXPath2Sequence;
 	var fGetChildrenForward	= function(oNode) {
 		for (var oChild; oNode; oNode = cXPath2.DOMAdapter.getProperty(oNode, "nextSibling")) {
 			oSequence.add(oNode);
