@@ -43,7 +43,7 @@ cComparisonExpr.prototype.evaluate	= function (oContext) {
 	return oSequence;
 };
 
-// Operators
+// General comparison
 cComparisonExpr.GeneralComp	= function(oExpr, oContext) {
 	var oLeft	= cXPath2Sequence.atomize(oExpr.left.evaluate(oContext));
 	if (oLeft.isEmpty())
@@ -56,7 +56,7 @@ cComparisonExpr.GeneralComp	= function(oExpr, oContext) {
 	var bResult	= false;
 	for (var nLeftIndex = 0, nLeftLength = oLeft.items.length; (nLeftIndex < nLeftLength) &&!bResult; nLeftIndex++)
 		for (var nRightIndex = 0, nRightLength = oRight.items.length; (nRightIndex < nRightLength) &&!bResult; nRightIndex++)
-			bResult	= cComparisonExpr.ValueComp.compare(cComparisonExpr.GeneralComp.map[oExpr.operator], oLeft.items[nLeftIndex], oRight.items[nRightIndex]);
+			bResult	= cComparisonExpr.ValueComp.operators[cComparisonExpr.GeneralComp.map[oExpr.operator]](oLeft.items[nLeftIndex], oRight.items[nRightIndex]);
 	return bResult;
 };
 
@@ -69,6 +69,7 @@ cComparisonExpr.GeneralComp.map	= {
 	'<=':	'le'
 };
 
+// Value comparison
 cComparisonExpr.ValueComp	= function(oExpr, oContext) {
 	var oLeft	= cXPath2Sequence.atomize(oExpr.left.evaluate(oContext));
 	if (oLeft.isEmpty())
@@ -85,22 +86,30 @@ cComparisonExpr.ValueComp	= function(oExpr, oContext) {
 		throw new cXPath2Error("XPTY0004");
 
 	//
-	return cComparisonExpr.ValueComp.compare(oExpr.operator, oLeft.items[0], oRight.items[0]);
+	return cComparisonExpr.ValueComp.operators[oExpr.operator](oLeft.items[0], oRight.items[0]);
 };
 
-cComparisonExpr.ValueComp.compare	= function(sOperator, oLeft, oRight) {
-	switch (sOperator) {
-		case 'eq':	return oLeft == oRight;
-		case 'ne':	return oLeft != oRight;
-		case 'lt':	return oLeft < oRight;
-		case 'le':	return oLeft <= oRight;
-		case 'gt':	return oLeft > oRight;
-		case 'ge':	return oLeft >= oRight;
-	}
-
-	throw "InternalError: ComparisonExpr.ValueComp.compare called for an inapropriate operator";
+cComparisonExpr.ValueComp.operators	= {};
+cComparisonExpr.ValueComp.operators['eq']	= function(oLeft, oRight) {
+	return oLeft == oRight;
+};
+cComparisonExpr.ValueComp.operators['ne']	= function(oLeft, oRight) {
+	return oLeft != oRight;
+};
+cComparisonExpr.ValueComp.operators['lt']	= function(oLeft, oRight) {
+	return oLeft < oRight;
+};
+cComparisonExpr.ValueComp.operators['gt']	= function(oLeft, oRight) {
+	return oLeft > oRight;
+};
+cComparisonExpr.ValueComp.operators['le']	= function(oLeft, oRight) {
+	return oLeft <= oRight;
+};
+cComparisonExpr.ValueComp.operators['ge']	= function(oLeft, oRight) {
+	return oLeft >= oRight;
 };
 
+// Node comparison
 cComparisonExpr.NodeComp	= function(oExpr, oContext) {
 	var oLeft	= oExpr.left.evaluate(oContext);
 	if (oLeft.isEmpty())
@@ -120,13 +129,18 @@ cComparisonExpr.NodeComp	= function(oExpr, oContext) {
 	if (!cXPath2.DOMAdapter.isNode(oRight.items[0]))
 		throw new cXPath2Error("XPTY0004");
 
-	switch (oExpr.operator) {
-		case 'is':	return cXPath2.DOMAdapter.isSameNode(oLeft.items[0], oRight.items[0]);
-		case '>>':	return !!(cXPath2.DOMAdapter.compareDocumentPosition(oLeft.items[0], oRight.items[0]) & 2);
-		case '<<':	return !!(cXPath2.DOMAdapter.compareDocumentPosition(oLeft.items[0], oRight.items[0]) & 4);
-	}
+	return cComparisonExpr.NodeComp.operators[oExpr.operator](oLeft.items[0], oRight.items[0]);
+};
 
-	throw "InternalError: cComparisonExpr.NodeComp called for inappropriate operator";
+cComparisonExpr.NodeComp.operators	= {};
+cComparisonExpr.NodeComp.operators['is']	= function(oLeft, oRight) {
+	return cXPath2.DOMAdapter.isSameNode(oLeft, oRight);
+};
+cComparisonExpr.NodeComp.operators['>>']	= function(oLeft, oRight) {
+	return !!(cXPath2.DOMAdapter.compareDocumentPosition(oLeft, oRight) & 2);
+};
+cComparisonExpr.NodeComp.operators['<<']	= function(oLeft, oRight) {
+	return !!(cXPath2.DOMAdapter.compareDocumentPosition(oLeft, oRight) & 4);
 };
 
 // Operators
