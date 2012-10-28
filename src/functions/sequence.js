@@ -285,13 +285,16 @@ cFunctionCall.functions["max"]	= function(oSequence1, oSequence2) {
 
 	// TODO: Implement collation
 
-	var nValue	= 0,
-		nMax	=-nInfinity;
-	for (var nIndex = 0, nLength = oSequence1.items.length; nIndex < nLength; nIndex++)
-		if ((nValue = new cXPath2Sequence(oSequence1.items[nIndex]).toNumber()) > nMax)
-			nMax	= nValue;
+	// Atomize sequence
+	oSequence1	= cXPath2Sequence.atomize(oSequence1);
 
-	return new cXPath2Sequence(nMax);
+	//
+	var oItem	= oSequence1.items[0];
+	for (var nIndex = 1, nLength = oSequence1.items.length; nIndex < nLength; nIndex++)
+		if (cComparisonExpr.ValueComp.compare('ge', oSequence1.items[nIndex], oItem))
+			oItem	= oSequence1.items[nIndex];
+
+	return new cXPath2Sequence(oItem);
 };
 
 // fn:min($arg as xs:anyAtomicType*) as xs:anyAtomicType?
@@ -305,13 +308,15 @@ cFunctionCall.functions["min"]	= function(oSequence1, oSequence2) {
 
 	// TODO: Implement collation
 
-	var nValue	= 0,
-		nMin	= nInfinity;
-	for (var nIndex = 0, nLength = oSequence1.items.length; nIndex < nLength; nIndex++)
-		if ((nValue = new cXPath2Sequence(oSequence1.items[nIndex]).toNumber()) < nMin)
-			nMin	= nValue;
+	// Atomize sequence
+	oSequence1	= cXPath2Sequence.atomize(oSequence1);
 
-	return new cXPath2Sequence(nMin);
+	var oItem	= oSequence1.items[0];
+	for (var nIndex = 0, nLength = oSequence1.items.length; nIndex < nLength; nIndex++)
+		if (cComparisonExpr.ValueComp.compare('le', oSequence1.items[nIndex], oItem))
+			oItem	= oSequence1.items[nIndex];
+
+	return new cXPath2Sequence(oItem);
 };
 
 // fn:sum($arg as xs:anyAtomicType*) as xs:anyAtomicType
