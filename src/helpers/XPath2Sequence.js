@@ -56,7 +56,7 @@ cXPath2Sequence.atomize		= function(oSequence1) {
 
 cXPath2Sequence.atomizeItem		= function(oItem) {
 	// Untyped
-	if (oItem == null || typeof oItem == "undefined")
+	if (oItem === null || typeof oItem == "undefined")
 		return null;
 
 	// Node type
@@ -82,12 +82,15 @@ cXPath2Sequence.atomizeItem		= function(oItem) {
 		}
 	}
 
-	if (oItem instanceof cQName)
-		return oItem.toString();
-
 	// Base types
 	if (typeof oItem == "boolean" || typeof oItem == "number" || typeof oItem == "string")
 		return oItem;
+
+	// Schema types
+	if (oItem instanceof cXSQName
+		|| oItem instanceof cXSDateTime || oItem instanceof cXSDate|| oItem instanceof cXSTime
+		|| oItem instanceof cXSDuration|| oItem instanceof cXSDayTimeDuration || oItem instanceof cXSYearMonthDuration)
+		return oItem.toString();
 
 	// Other types
 	return null;
@@ -135,12 +138,14 @@ cXPath2Sequence.prototype.toBoolean	= function() {
 
 // fn:number()
 cXPath2Sequence.prototype.toNumber	= function() {
-	return this.items.length && this.items[0] !== '' ?+cXPath2Sequence.atomizeItem(this.items[0]) : nNaN;
+	var oItem;
+	return this.items.length && (oItem = cXPath2Sequence.atomizeItem(this.items[0])) !== null ?+oItem : nNaN;
 };
 
 // fn:string()
 cXPath2Sequence.prototype.toString	= function() {
-	return this.items.length && this.items[0] !== null ? '' + cXPath2Sequence.atomizeItem(this.items[0]) : '';
+	var oItem;
+	return this.items.length && (oItem = cXPath2Sequence.atomizeItem(this.items[0])) !== null ? '' + oItem : '';
 };
 
 // Orders items in sequence in document order

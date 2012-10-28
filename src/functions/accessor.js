@@ -32,17 +32,17 @@ cFunctionCall.functions["node-name"]	= function(oSequence1) {
 		switch (cXPath2.DOMAdapter.getProperty(oNode, "nodeType")) {
 			case 1:	// ELEMENT_NAME
 			case 2:	// ATTRIBUTE_NODE
-				oSequence.add(new cQName(cXPath2.DOMAdapter.getProperty(oNode, "prefix"), cXPath2.DOMAdapter.getProperty(oNode, "localName"), cXPath2.DOMAdapter.getProperty(oNode, "namespaceURI")));
+				oSequence.add(new cXSQName(cXPath2.DOMAdapter.getProperty(oNode, "prefix"), cXPath2.DOMAdapter.getProperty(oNode, "localName"), cXPath2.DOMAdapter.getProperty(oNode, "namespaceURI")));
 				break;
 			case 5:	// ENTITY_REFERENCE_NODE
 				throw "Not implemented";
 			case 6:	// ENTITY_NODE
 				throw "Not implemented";
 			case 7:	// PROCESSING_INSTRUCTION_NODE
-				oSequence.add(new cQName(null, cXPath2.DOMAdapter.getProperty(oNode, "target"), null));
+				oSequence.add(new cXSQName(null, cXPath2.DOMAdapter.getProperty(oNode, "target"), null));
 				break;
 			case 10:// DOCUMENT_TYPE_NODE
-				oSequence.add(new cQName(null, cXPath2.DOMAdapter.getProperty(oNode, "name"), null));
+				oSequence.add(new cXSQName(null, cXPath2.DOMAdapter.getProperty(oNode, "name"), null));
 				break;
 		}
 	}
