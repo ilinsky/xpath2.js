@@ -83,14 +83,8 @@ cXPath2Sequence.atomizeItem		= function(oItem) {
 	}
 
 	// Base types
-	if (typeof oItem == "boolean" || typeof oItem == "number" || typeof oItem == "string")
+	if (typeof oItem == "boolean" || typeof oItem == "number" || typeof oItem == "string" || oItem instanceof cXSAnyAtomicType)
 		return oItem;
-
-	// Schema types
-	if (oItem instanceof cXSQName
-		|| oItem instanceof cXSDateTime || oItem instanceof cXSDate|| oItem instanceof cXSTime
-		|| oItem instanceof cXSDuration|| oItem instanceof cXSDayTimeDuration || oItem instanceof cXSYearMonthDuration)
-		return oItem.toString();
 
 	// Other types
 	return null;
@@ -139,7 +133,7 @@ cXPath2Sequence.prototype.toBoolean	= function() {
 // fn:number()
 cXPath2Sequence.prototype.toNumber	= function() {
 	var oItem;
-	return this.items.length && (oItem = cXPath2Sequence.atomizeItem(this.items[0])) !== null ?+oItem : nNaN;
+	return this.items.length && (oItem = cXPath2Sequence.atomizeItem(this.items[0])) !== null ? +oItem : nNaN;
 };
 
 // fn:string()

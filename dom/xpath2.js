@@ -12,6 +12,7 @@
 	// Import objects from environment
 	files.push("../src/import.js");
 	// Data types
+	files.push("../src/types/XSAnyAtomicType.js");
 	files.push("../src/types/XSQName.js");
 	files.push("../src/types/XSDateTime.js");
 	files.push("../src/types/XSDate.js");

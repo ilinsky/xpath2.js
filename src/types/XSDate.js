@@ -7,6 +7,8 @@ function cXSDate(nYear, nMonth, nDay, nTimezone) {
 
 cXSDate.RegExp	= /^-?([1-9]\d\d\d+|0\d\d\d)-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])(Z|[+\-](0\d|1[0-4]):[0-5]\d)?$/;
 
+cXSDate.prototype	= new cXSAnyAtomicType;
+
 cXSDate.prototype.year		= null;
 cXSDate.prototype.month		= null;
 cXSDate.prototype.day		= null;
