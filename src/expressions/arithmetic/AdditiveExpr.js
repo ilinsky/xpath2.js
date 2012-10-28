@@ -18,8 +18,12 @@ cAdditiveExpr.prototype.items	= null;
 //
 cAdditiveExpr.operators	={};
 
-cAdditiveExpr.operators['+']	= {};
-cAdditiveExpr.operators['-']	= {};
+cAdditiveExpr.operators['+']	= function(oLeft, oRight) {
+	return fFunctionCall_number_add(oLeft, oRight);
+};
+cAdditiveExpr.operators['-']	= function (oLeft, oRight) {
+	return fFunctionCall_number_subtract(oLeft, oRight);
+};
 
 // Static members
 cAdditiveExpr.parse	= function (oLexer, oResolver) {
@@ -44,12 +48,7 @@ cAdditiveExpr.parse	= function (oLexer, oResolver) {
 // Public members
 cAdditiveExpr.prototype.evaluate	= function (oContext) {
 	var oValue	= cXPath2Sequence.atomize(this.left.evaluate(oContext)).items[0];
-	for (var nIndex = 0, nLength = this.items.length, oRight; nIndex < nLength; nIndex++) {
-		oRight	= cXPath2Sequence.atomize(this.items[nIndex][1].evaluate(oContext)).items[0];
-		if (this.items[nIndex][0] == '-')
-			oValue	= fFunctionCall_number_subtract(oValue, oRight);
-		else
-			oValue	= fFunctionCall_number_add(oValue, oRight);
-	}
+	for (var nIndex = 0, nLength = this.items.length; nIndex < nLength; nIndex++)
+		oValue	= cAdditiveExpr.operators[this.items[nIndex][0] == '-' ? '-' : '+'](oValue, cXPath2Sequence.atomize(this.items[nIndex][1].evaluate(oContext)).items[0]);
 	return new cXPath2Sequence(oValue);
 };

@@ -18,10 +18,18 @@ cMultiplicativeExpr.prototype.items	= null;
 //
 cMultiplicativeExpr.operators	={};
 
-cMultiplicativeExpr.operators['*']		= {};
-cMultiplicativeExpr.operators['div']	= {};
-cMultiplicativeExpr.operators['idiv']	= {};
-cMultiplicativeExpr.operators['mod']	= {};
+cMultiplicativeExpr.operators['*']		= function (oLeft, oRight) {
+	return fFunctionCall_number_multiply(oLeft, oRight);
+};
+cMultiplicativeExpr.operators['div']	= function (oLeft, oRight) {
+	return fFunctionCall_number_divide(oLeft, oRight);
+};
+cMultiplicativeExpr.operators['idiv']	= function (oLeft, oRight) {
+	return ~~(oLeft / oRight);
+};
+cMultiplicativeExpr.operators['mod']	= function (oLeft, oRight) {
+	return oLeft % oRight;
+};
 
 // Static members
 cMultiplicativeExpr.parse	= function (oLexer, oResolver) {
@@ -46,22 +54,7 @@ cMultiplicativeExpr.parse	= function (oLexer, oResolver) {
 // Public members
 cMultiplicativeExpr.prototype.evaluate	= function (oContext) {
 	var oValue	= cXPath2Sequence.atomize(this.left.evaluate(oContext)).items[0];
-	for (var nIndex = 0, nLength = this.items.length, oRight; nIndex < nLength; nIndex++) {
-		oRight	= cXPath2Sequence.atomize(this.items[nIndex][1].evaluate(oContext)).items[0];
-		switch (this.items[nIndex][0]) {
-			case '*':
-				oValue	= fFunctionCall_number_multiply(oValue, oRight);
-				break;
-			case 'div':
-				oValue	= fFunctionCall_number_divide(oValue, oRight);
-				break;
-			case 'idiv':
-				oValue	= ~~(oValue / oRight);
-				break;
-			case 'mod':
-				oValue	%= oRight;
-				break;
-		}
-	}
+	for (var nIndex = 0, nLength = this.items.length; nIndex < nLength; nIndex++)
+		oValue	= cMultiplicativeExpr.operators[this.items[nIndex][0]](oValue, cXPath2Sequence.atomize(this.items[nIndex][1].evaluate(oContext)).items[0]);
 	return new cXPath2Sequence(oValue);
 };
