@@ -320,8 +320,12 @@ cFunctionCall.functions["sum"]	= function(oSequence1, oSequence2) {
 	if (!arguments.length)
 		throw new cXPath2Error("XPST0017");
 
-	if (oSequence1.isEmpty())
-		return new cXPath2Sequence;
+	var oSequence	= new cXPath2Sequence;
+	if (oSequence1.isEmpty()) {
+		if (arguments.length > 1)
+			oSequence.add(oSequence2.toNumber());
+		return oSequence;
+	}
 
 	// TODO: Implement collation
 
@@ -329,7 +333,8 @@ cFunctionCall.functions["sum"]	= function(oSequence1, oSequence2) {
 	for (var nIndex = 0, nLength = oSequence1.items.length; nIndex < nLength; nIndex++)
 		nValue	+= new cXPath2Sequence(oSequence1.items[nIndex]).toNumber();
 
-	return new cXPath2Sequence(nValue);
+	oSequence.add(nValue);
+	return oSequence;
 };
 
 
