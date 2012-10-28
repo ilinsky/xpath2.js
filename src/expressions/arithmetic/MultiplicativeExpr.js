@@ -45,23 +45,23 @@ cMultiplicativeExpr.parse	= function (oLexer, oResolver) {
 
 // Public members
 cMultiplicativeExpr.prototype.evaluate	= function (oContext) {
-	var nValue	= this.left.evaluate(oContext).toNumber();
-	for (var nIndex = 0, nLength = this.items.length, nRight; nIndex < nLength; nIndex++) {
-		nRight	= this.items[nIndex][1].evaluate(oContext).toNumber();
+	var oValue	= cXPath2Sequence.atomize(this.left.evaluate(oContext)).items[0];
+	for (var nIndex = 0, nLength = this.items.length, oRight; nIndex < nLength; nIndex++) {
+		oRight	= cXPath2Sequence.atomize(this.items[nIndex][1].evaluate(oContext)).items[0];
 		switch (this.items[nIndex][0]) {
 			case '*':
-				nValue	= fFunctionCall_number_multiply(nValue, nRight);
+				oValue	= fFunctionCall_number_multiply(oValue, oRight);
 				break;
 			case 'div':
-				nValue	= fFunctionCall_number_divide(nValue, nRight);
+				oValue	= fFunctionCall_number_divide(oValue, oRight);
 				break;
 			case 'idiv':
-				nValue	= ~~(nValue / nRight);
+				oValue	= ~~(oValue / oRight);
 				break;
 			case 'mod':
-				nValue	%= nRight;
+				oValue	%= oRight;
 				break;
 		}
 	}
-	return new cXPath2Sequence(nValue);
+	return new cXPath2Sequence(oValue);
 };
