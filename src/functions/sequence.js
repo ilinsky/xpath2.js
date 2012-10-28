@@ -261,25 +261,75 @@ cFunctionCall.functions["count"]	= function(oSequence1) {
 
 // fn:avg($arg as xs:anyAtomicType*) as xs:anyAtomicType?
 cFunctionCall.functions["avg"]	= function(oSequence1) {
-	throw "Function '" + "avg" + "' not implemented";
+	if (!arguments.length)
+		throw new cXPath2Error("XPST0017");
+
+	if (oSequence1.isEmpty())
+		return new cXPath2Sequence;
+
+	var nValue	= 0;
+	for (var nIndex = 0, nLength = oSequence1.items.length; nIndex < nLength; nIndex++)
+		nValue	+= new cXPath2Sequence(oSequence1.items[nIndex]).toNumber();
+
+	return new cXPath2Sequence(nValue / nLength);
 };
 
 // fn:max($arg as xs:anyAtomicType*) as xs:anyAtomicType?
 // fn:max($arg as xs:anyAtomicType*, $collation as string) as xs:anyAtomicType?
 cFunctionCall.functions["max"]	= function(oSequence1, oSequence2) {
-	throw "Function '" + "max" + "' not implemented";
+	if (!arguments.length)
+		throw new cXPath2Error("XPST0017");
+
+	if (oSequence1.isEmpty())
+		return new cXPath2Sequence;
+
+	// TODO: Implement collation
+
+	var nValue	= 0,
+		nMax	=-nInfinity;
+	for (var nIndex = 0, nLength = oSequence1.items.length; nIndex < nLength; nIndex++)
+		if ((nValue = new cXPath2Sequence(oSequence1.items[nIndex]).toNumber()) > nMax)
+			nMax	= nValue;
+
+	return new cXPath2Sequence(nMax);
 };
 
 // fn:min($arg as xs:anyAtomicType*) as xs:anyAtomicType?
 // fn:min($arg as xs:anyAtomicType*, $collation as string) as xs:anyAtomicType?
 cFunctionCall.functions["min"]	= function(oSequence1, oSequence2) {
-	throw "Function '" + "min" + "' not implemented";
+	if (!arguments.length)
+		throw new cXPath2Error("XPST0017");
+
+	if (oSequence1.isEmpty())
+		return new cXPath2Sequence;
+
+	// TODO: Implement collation
+
+	var nValue	= 0,
+		nMin	= nInfinity;
+	for (var nIndex = 0, nLength = oSequence1.items.length; nIndex < nLength; nIndex++)
+		if ((nValue = new cXPath2Sequence(oSequence1.items[nIndex]).toNumber()) < nMin)
+			nMin	= nValue;
+
+	return new cXPath2Sequence(nMin);
 };
 
 // fn:sum($arg as xs:anyAtomicType*) as xs:anyAtomicType
 // fn:sum($arg as xs:anyAtomicType*, $zero as xs:anyAtomicType?) as xs:anyAtomicType?
 cFunctionCall.functions["sum"]	= function(oSequence1, oSequence2) {
-	throw "Function '" + "sum" + "' not implemented";
+	if (!arguments.length)
+		throw new cXPath2Error("XPST0017");
+
+	if (oSequence1.isEmpty())
+		return new cXPath2Sequence;
+
+	// TODO: Implement collation
+
+	var nValue	= 0;
+	for (var nIndex = 0, nLength = oSequence1.items.length; nIndex < nLength; nIndex++)
+		nValue	+= new cXPath2Sequence(oSequence1.items[nIndex]).toNumber();
+
+	return new cXPath2Sequence(nValue);
 };
 
 
