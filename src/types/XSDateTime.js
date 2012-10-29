@@ -65,10 +65,12 @@ function fXSDateTime_pad(vValue) {
 
 function fXSDateTime_getTZComponent(oDateTime) {
 	var nTimezone	= oDateTime.timezone;
-	return (nTimezone < 0 ? '+' : '-')
-			+ fXSDateTime_pad(cMath.abs(~~(nTimezone / 60)))
-			+ ':'
-			+ fXSDateTime_pad(cMath.abs(nTimezone % 60));
+	return nTimezone
+			? (nTimezone < 0 ? '+' : '-')
+				+ fXSDateTime_pad(cMath.abs(~~(nTimezone / 60)))
+				+ ':'
+				+ fXSDateTime_pad(cMath.abs(nTimezone % 60))
+			: 'Z';
 };
 
 function fXSDateTime_getDateComponent(oDateTime) {
@@ -81,5 +83,7 @@ function fXSDateTime_getTimeComponent(oDateTime) {
 	return fXSDateTime_pad(oDateTime.hour)
 			+ ':' + fXSDateTime_pad(oDateTime.minute)
 			+ ':' + fXSDateTime_pad(oDateTime.second)
-			+ '.' + fXSDateTime_pad(oDateTime.millisecond, 3);
+			+ (oDateTime.millisecond
+				? '.' + fXSDateTime_pad(oDateTime.millisecond, 3)
+				: '');
 };
