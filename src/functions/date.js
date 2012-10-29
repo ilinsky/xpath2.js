@@ -104,8 +104,7 @@ cFunctionCall.operators["dateTime-equal"]	= function(oLeft, oRight) {
 			&& oLeft.hour	== oRight.hour
 			&& oLeft.minute	== oRight.minute
 			&& oLeft.second	== oRight.second
-			&& oLeft.millisecond== oRight.millisecond
-			&& oLeft.timezone	== oRight.timezone;
+			&& oLeft.millisecond== oRight.millisecond;
 };
 
 cFunctionCall.operators["date-equal"]	= function(oLeft, oRight) {
