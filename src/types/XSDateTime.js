@@ -49,7 +49,7 @@ cXSDateTime.parse	= function(sValue) {
 								bValue ? 0 : +aMatch[6],
 								bValue ? 0 : +aMatch[7],
 								bValue ? +aMatch[10] || 0 : +aMatch[8] || 0,
-								!aMatch[11] || aMatch[11] == 'Z' ? 0 : (aMatch[12] == '-' ? 1 : -1) * (aMatch[13] * 60 + aMatch[14] * 1)
+								aMatch[11] ? aMatch[11] == 'Z' ? 0 : (aMatch[12] == '-' ? 1 : -1) * (aMatch[13] * 60 + aMatch[14] * 1) : null
 		);
 	}
 	throw new cXPath2Error("FORG0001");
@@ -65,12 +65,14 @@ function fXSDateTime_pad(vValue) {
 
 function fXSDateTime_getTZComponent(oDateTime) {
 	var nTimezone	= oDateTime.timezone;
-	return nTimezone
-			? (nTimezone < 0 ? '+' : '-')
-				+ fXSDateTime_pad(cMath.abs(~~(nTimezone / 60)))
-				+ ':'
-				+ fXSDateTime_pad(cMath.abs(nTimezone % 60))
-			: 'Z';
+	return nTimezone === null
+			? ''
+			: nTimezone
+				? (nTimezone < 0 ? '+' : '-')
+					+ fXSDateTime_pad(cMath.abs(~~(nTimezone / 60)))
+					+ ':'
+					+ fXSDateTime_pad(cMath.abs(nTimezone % 60))
+				: 'Z';
 };
 
 function fXSDateTime_getDateComponent(oDateTime) {

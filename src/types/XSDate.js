@@ -34,7 +34,7 @@ cXSDate.parse	= function(sValue) {
 		return new cXSDate(+aMatch[1],
 							+aMatch[2],
 							+aMatch[3],
-							!aMatch[4] || aMatch[4] == 'Z' ? 0 : (aMatch[5] == '-' ? 1 : -1) * (aMatch[6] * 60 + aMatch[7] * 1)
+							aMatch[4] ? aMatch[4] == 'Z' ? 0 : (aMatch[5] == '-' ? 1 : -1) * (aMatch[6] * 60 + aMatch[7] * 1) : null
 		);
 	throw new cXPath2Error("FORG0001");
 };
