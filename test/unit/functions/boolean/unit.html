@@ -46,6 +46,20 @@
 				// Not W3C tests
 				assertEquals(true,
 						evaluateXPathSingle('fn:not(fn:false())'));
+				assertEquals(false,
+						evaluateXPathSingle('fn:not("true")'));
+				assertEquals(true,
+						evaluateXPathSingle('fn:not("")'));
+				assertEquals(true,
+						evaluateXPathSingle('fn:not(())'));
+				assertEquals(false,
+						evaluateXPathSingle('fn:not("1")'));
+				assertEquals(false,
+						evaluateXPathSingle('fn:not("0")'));
+				assertEquals(false,
+						evaluateXPathSingle('fn:not(1)'));
+				assertEquals(true,
+						evaluateXPathSingle('fn:not(0)'));
 			}
 		</script>
 	</head>
