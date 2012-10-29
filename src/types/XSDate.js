@@ -28,7 +28,8 @@ cXSDate.prototype.toString	= function() {
 			+ fXSDateTime_getTZComponent(this);
 };
 
-cXSDate.parse	= function(sValue) {
+//
+cFunctionCall.dataTypes["date"]	= function(sValue) {
 	var aMatch	= sValue.match(cXSDate.RegExp);
 	if (aMatch)
 		return new cXSDate(+aMatch[1],
@@ -38,5 +39,3 @@ cXSDate.parse	= function(sValue) {
 		);
 	throw new cXPath2Error("FORG0001");
 };
-//
-cFunctionCall.dataTypes["date"]	= cXSDate;

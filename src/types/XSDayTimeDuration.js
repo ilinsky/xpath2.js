@@ -20,7 +20,8 @@ cXSDayTimeDuration.prototype.toString	= function() {
 			+ (fXSDuration_getDayTimeComponent(this) || 'T0S');
 };
 
-cXSDayTimeDuration.parse	= function(sValue) {
+//
+cFunctionCall.dataTypes["dayTimeDuration"]	= function(sValue) {
 	var aMatch	= sValue.match(cXSDayTimeDuration.RegExp);
 	if (aMatch)
 		return new cXSDayTimeDuration(+aMatch[2] || 0,
@@ -31,5 +32,3 @@ cXSDayTimeDuration.parse	= function(sValue) {
 		);
 	throw new cXPath2Error("FORG0001");
 };
-//
-cFunctionCall.dataTypes["dayTimeDuration"]	= cXSDayTimeDuration;

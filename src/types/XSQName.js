@@ -25,11 +25,10 @@ cXSQName.prototype.toString	= function() {
 	return (this.prefix ? this.prefix + ':' : '') + this.localName;
 };
 
-cXSQName.parse	= function(sValue) {
+//
+cFunctionCall.dataTypes["QName"]	= function(sValue) {
 	var aMatch	= sValue.match(cXSQName.RegExp);
 	if (aMatch)
 		return new cXSQName(aMatch[1] || null, aMatch[2], null);
 	throw new cXPath2Error("FORG0001");
 };
-//
-cFunctionCall.dataTypes["QName"]	= cXSQName;

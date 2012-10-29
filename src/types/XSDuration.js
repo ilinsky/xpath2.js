@@ -34,7 +34,8 @@ cXSDuration.prototype.toString	= function() {
 			+ ((fXSDuration_getYearMonthComponent(this) + fXSDuration_getDayTimeComponent(this)) || 'T0S');
 };
 
-cXSDuration.parse	= function(sValue) {
+//
+cFunctionCall.dataTypes["duration"]	= function(sValue) {
 	var aMatch	= sValue.match(cXSDuration.RegExp);
 	if (aMatch)
 		return new cXSDuration(+aMatch[2] || 0,
@@ -46,8 +47,6 @@ cXSDuration.parse	= function(sValue) {
 								aMatch[1] == '-');
 	throw new cXPath2Error("FORG0001");
 };
-//
-cFunctionCall.dataTypes["duration"]	= cXSDuration;
 
 function fXSDuration_getYearMonthComponent(oDuration) {
 	return (oDuration.year ? oDuration.year + 'Y' : '')

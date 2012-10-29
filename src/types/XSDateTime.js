@@ -38,7 +38,8 @@ cXSDateTime.prototype.toString	= function() {
 			+ fXSDateTime_getTZComponent(this);
 };
 
-cXSDateTime.parse	= function(sValue) {
+//
+cFunctionCall.dataTypes["dateTime"]	= function(sValue) {
 	var aMatch	= sValue.match(cXSDateTime.RegExp);
 	if (aMatch) {
 		var bValue	= aMatch[9] == "24:00:00";
@@ -54,8 +55,6 @@ cXSDateTime.parse	= function(sValue) {
 	}
 	throw new cXPath2Error("FORG0001");
 };
-//
-cFunctionCall.dataTypes["dateTime"]	= cXSDateTime;
 
 //
 function fXSDateTime_pad(vValue) {

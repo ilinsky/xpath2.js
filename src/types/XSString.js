@@ -13,8 +13,7 @@ function cXSString() {
 
 cXSString.prototype	= new cXSAnyAtomicType;
 
-cXSString.parse	= function(sValue) {
+//
+cFunctionCall.dataTypes["string"]	= function(sValue) {
 	return sValue;
 };
-//
-cFunctionCall.dataTypes["string"]	= cXSString;

@@ -20,7 +20,8 @@ cXSYearMonthDuration.prototype.toString	= function() {
 			+ (fXSDuration_getYearMonthComponent(this) || '0M');
 };
 
-cXSYearMonthDuration.parse	= function(sValue) {
+//
+cFunctionCall.dataTypes["yearMonthDuration"]	= function(sValue) {
 	var aMatch	= sValue.match(cXSYearMonthDuration.RegExp);
 	if (aMatch)
 		return new cXSYearMonthDuration(+aMatch[2] || 0,
@@ -29,5 +30,3 @@ cXSYearMonthDuration.parse	= function(sValue) {
 		);
 	throw new cXPath2Error("FORG0001");
 };
-//
-cFunctionCall.dataTypes["yearMonthDuration"]	= cXSYearMonthDuration;

@@ -75,7 +75,7 @@ cFunctionCall.prototype.evaluate	= function (oContext) {
 	if (this.namespaceURI == "http://www.w3.org/2001/XMLSchema") {
 		if (fFunction = cFunctionCall.dataTypes[this.localName]) {
 			if (aArguments.length == 1)
-				return new cXPath2Sequence(fFunction.parse(aArguments[0].toString()));
+				return new cXPath2Sequence(fFunction(aArguments[0].toString()));
 			throw new cXPath2Error("XPST0017", "A constructor function must have exactly one argument");
 		}
 		throw new cXPath2Error("XPST0017", "Unknown constructor function: " + '{' + this.namespaceURI + '}' + this.localName);
