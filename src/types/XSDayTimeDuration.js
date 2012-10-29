@@ -21,7 +21,15 @@ cXSDayTimeDuration.prototype.toString	= function() {
 };
 
 cXSDayTimeDuration.parse	= function(sValue) {
-	if (sValue.match(cXSDayTimeDuration.RegExp))
-		return new cXSDayTimeDuration;
+	var aMatch	= sValue.match(cXSDayTimeDuration.RegExp);
+	if (aMatch)
+		return new cXSDayTimeDuration(+aMatch[2] || 0,
+										+aMatch[3] || 0,
+										+aMatch[4] || 0,
+										+aMatch[5] || 0,
+										aMatch[1] == '-'
+		);
 	throw new cXPath2Error("FORG0001");
 };
+//
+cFunctionCall.dataTypes["dayTimeDuration"]	= cXSDayTimeDuration;

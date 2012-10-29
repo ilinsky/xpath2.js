@@ -35,10 +35,19 @@ cXSDuration.prototype.toString	= function() {
 };
 
 cXSDuration.parse	= function(sValue) {
-	if (sValue.match(cXSDuration.RegExp))
-		return new cXSDuration;
+	var aMatch	= sValue.match(cXSDuration.RegExp);
+	if (aMatch)
+		return new cXSDuration(+aMatch[2] || 0,
+								+aMatch[3] || 0,
+								+aMatch[4] || 0,
+								+aMatch[5] || 0,
+								+aMatch[6] || 0,
+								+aMatch[7] || 0,
+								aMatch[1] == '-');
 	throw new cXPath2Error("FORG0001");
 };
+//
+cFunctionCall.dataTypes["duration"]	= cXSDuration;
 
 function fXSDuration_getYearMonthComponent(oDuration) {
 	return (oDuration.year ? oDuration.year + 'Y' : '')

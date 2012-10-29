@@ -21,7 +21,13 @@ cXSYearMonthDuration.prototype.toString	= function() {
 };
 
 cXSYearMonthDuration.parse	= function(sValue) {
-	if (sValue.match(cXSYearMonthDuration.RegExp))
-		return new cXSYearMonthDuration;
+	var aMatch	= sValue.match(cXSYearMonthDuration.RegExp);
+	if (aMatch)
+		return new cXSYearMonthDuration(+aMatch[2] || 0,
+										+aMatch[3] || 0,
+										aMatch[1] == '-'
+		);
 	throw new cXPath2Error("FORG0001");
 };
+//
+cFunctionCall.dataTypes["yearMonthDuration"]	= cXSYearMonthDuration;
