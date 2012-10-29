@@ -7,17 +7,19 @@
  *
  */
 
-function cNameTest(sNameSpaceURI, sLocalName) {
-	this.namespaceURI	= sNameSpaceURI;
+function cNameTest(sPrefix, sLocalName, sNameSpaceURI) {
+	this.prefix			= sPrefix;
 	this.localName		= sLocalName;
+	this.namespaceURI	= sNameSpaceURI;
 };
 
 cNameTest.RegExp	= /^(?:(?![0-9-])([\w-]+|\*)\:)?(?![0-9-])([\w-]+|\*)$/;
 
 cNameTest.prototype	= new cNodeTest;
 
-cNameTest.prototype.namespaceURI	= null;
+cNameTest.prototype.prefix			= null;
 cNameTest.prototype.localName		= null;
+cNameTest.prototype.namespaceURI	= null;
 
 // Static members
 cNameTest.parse	= function (oLexer, oResolver) {
@@ -26,7 +28,7 @@ cNameTest.parse	= function (oLexer, oResolver) {
 		if (aMatch[1] == '*' && aMatch[2] == '*')
 			throw "NameTest.parse: illegal wildcard value";
 		oLexer.next();
-		return new cNameTest(aMatch[1] ? aMatch[1] == '*' ? '*' : oResolver(aMatch[1]) : null, aMatch[2]);
+		return new cNameTest(aMatch[1] || null, aMatch[2], aMatch[1] ? aMatch[1] == '*' ? '*' : oResolver(aMatch[1]) || null : null);
 	}
 };
 

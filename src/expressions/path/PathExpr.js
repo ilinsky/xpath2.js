@@ -26,7 +26,7 @@ cPathExpr.parse	= function (oLexer, oResolver) {
 	// Parse first step
 	if (sSlash == sDoubleSlash || sSlash == sSingleSlash) {
 		oLexer.next();
-		oPathExpr.items.push(new cFunctionCall("root"));
+		oPathExpr.items.push(new cFunctionCall(null, "root", "http://www.w3.org/2005/xpath-functions"));
 		//
 		if (sSlash == sDoubleSlash)
 			oPathExpr.items.push(new cAxisStep("descendant-or-self", new cKindTest("node")));

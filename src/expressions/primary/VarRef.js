@@ -7,19 +7,23 @@
  *
  */
 
-function cVarRef(sUri) {
-	this.uri	= sUri;
+function cVarRef(sPrefix, sLocalName, sNameSpaceURI) {
+	this.prefix			= sPrefix;
+	this.localName		= sLocalName;
+	this.namespaceURI	= sNameSpaceURI;
 };
 
 cVarRef.RegExp	= /^\$(?:(?![0-9-])([\w-]+)\:)?(?![0-9-])([\w-]+)$/;
 
-cVarRef.prototype.uri	= null;
+cVarRef.prototype.prefix		= null;
+cVarRef.prototype.localName		= null;
+cVarRef.prototype.namespaceURI	= null;
 
 // Static members
 cVarRef.parse	= function (oLexer, oResolver) {
 	var aMatch	= oLexer.peek().match(cVarRef.RegExp);
 	if (aMatch) {
-		var oVarRef	= new cVarRef((aMatch[1] ? oResolver(aMatch[1]) + '#' : '') + aMatch[2]);
+		var oVarRef	= new cVarRef(aMatch[1] || null, aMatch[2], aMatch[1] ? oResolver(aMatch[1]) + '#' : null);
 		oLexer.next();
 		return oVarRef;
 	}
@@ -27,8 +31,9 @@ cVarRef.parse	= function (oLexer, oResolver) {
 
 // Public members
 cVarRef.prototype.evaluate	= function (oContext) {
-	if (oContext.scope.hasOwnProperty(this.uri))
-		return new cXPath2Sequence(oContext.scope[this.uri]);
+	var sUri	= (this.namespaceURI ? this.namespaceURI + '#' : '') + this.localName;
+	if (oContext.scope.hasOwnProperty(sUri))
+		return new cXPath2Sequence(oContext.scope[sUri]);
 	else
 		return new cXPath2Sequence;
 };

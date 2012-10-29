@@ -7,18 +7,23 @@
  *
  */
 
-function cFunctionCall(sUri) {
-	this.uri	= sUri;
+function cFunctionCall(sPrefix, sLocalName, sNameSpaceURI) {
+	this.prefix			= sPrefix;
+	this.localName		= sLocalName;
+	this.namespaceURI	= sNameSpaceURI;
 	this.args	= [];
 };
 
 cFunctionCall.RegExp	= /^(?:(?![0-9-])([\w-]+|\*)\:)?(?![0-9-])([\w-]+|\*)$/;
 
-cFunctionCall.prototype.uri		= null;
+cFunctionCall.prototype.prefix			= null;
+cFunctionCall.prototype.localName		= null;
+cFunctionCall.prototype.namespaceURI	= null;
 cFunctionCall.prototype.args	= null;
 
 cFunctionCall.functions	= {};
 cFunctionCall.operators	= {};
+cFunctionCall.dataTypes	= {};
 
 // http://www.w3.org/2005/xpath-functions
 
@@ -32,7 +37,7 @@ cFunctionCall.parse	= function (oLexer, oResolver) {
 		// Other functions
 		if (aMatch[1] == '*' || aMatch[2] == '*')
 			throw "FunctionCall.parse: illegal use of wildcard in function name";
-		var oFunctionCallExpr	= new cFunctionCall((aMatch[1] && aMatch[1] != 'fn' ? oResolver(aMatch[1]) + '#' : '') + aMatch[2]),
+		var oFunctionCallExpr	= new cFunctionCall(aMatch[1] || null, aMatch[2], aMatch[1] ? oResolver(aMatch[1]) || null : "http://www.w3.org/2005/xpath-functions"),
 			oExpr;
 		oLexer.next(2);
 		//
@@ -62,11 +67,22 @@ cFunctionCall.prototype.evaluate	= function (oContext) {
 		aArguments.push(this.args[nIndex].evaluate(oContext));
 
 	// Call function
-	if (fFunction = cFunctionCall.functions[this.uri])
+	if (this.namespaceURI == "http://www.w3.org/2005/xpath-functions") {
+		if (fFunction = cFunctionCall.functions[this.localName])
+			return fFunction.apply(oContext, aArguments);
+		throw new cXPath2Error("XPST0017", "Unknown system function " + this.localName + '()');
+	}
+	if (this.namespaceURI == "http://www.w3.org/2001/XMLSchema") {
+		if (fFunction = cFunctionCall.dataTypes[this.localName]) {
+			if (aArguments.length == 1)
+				return cFunctionCall.parse(aArguments.toString());
+			throw new cXPath2Error("XPST0017", "A constructor function must have exactly one argument");
+		}
+		throw new cXPath2Error("XPST0017", "Unknown constructor function: " + '{' + this.namespaceURI + '}' + this.localName);
+	}
+	var sUri	= (this.namespaceURI ? this.namespaceURI + '#' : '') + this.localName;
+	if (oContext.scope.hasOwnProperty(sUri) && (fFunction = oContext.scope[sUri]) && typeof fFunction == "function")
 		return fFunction.apply(oContext, aArguments);
-	else
-	if ((fFunction = oContext.scope[this.uri]) && typeof fFunction == "function")
-		return fFunction.apply(oContext, aArguments);
-	else
-		throw "FunctionCall.prototype.evaluate: Could not find function: " + this.uri;
+	//
+	throw new cXPath2Error("XPST0017", "Unknown user function: " + '{' + this.namespaceURI + '}' + this.localName);
 };
