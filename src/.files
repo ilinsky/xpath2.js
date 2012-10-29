@@ -68,6 +68,7 @@ types/XSTime.js
 types/XSDuration.js
 types/XSYearMonthDuration.js
 types/XSDayTimeDuration.js
+types/XSDecimal.js
 # Operators
 operators/binary.js
 operators/boolean.js
