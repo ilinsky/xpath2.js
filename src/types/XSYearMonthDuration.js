@@ -1,5 +1,5 @@
 function cXSYearMonthDuration(nYear, nMonth, bNegative) {
-	cXSDuration.call(this, nYear, nMonth, null, null, null, null, bNegative);
+	cXSDuration.call(this, nYear, nMonth, 0, 0, 0, 0, bNegative);
 };
 
 cXSYearMonthDuration.RegExp	= /^(-)?P(?:([0-9]+)Y)?(?:([0-9]+)M)?$/;

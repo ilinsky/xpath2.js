@@ -88,23 +88,15 @@
 // 10.4 Comparison Operators on Duration, Date and Time Values
 cFunctionCall.operators["duration-equal"]	= function(oLeft, oRight) {
 	return oLeft.negative == oRight.negative
-			&& oLeft.year	== oRight.year
-			&& oLeft.month	== oRight.month
-			&& oLeft.day	== oRight.day
-			&& oLeft.hour	== oRight.hour
-			&& oLeft.minute	== oRight.minute
-			&& oLeft.second	== oRight.second;
+			&& (oLeft.year * 12 + oLeft.month)
+				== (oRight.year * 12 + oRight.month)
+			&& (((oLeft.day * 24 + oLeft.hour) * 60 + oLeft.minute) * 60 + oLeft.second)
+				== (((oRight.day * 24 + oRight.hour) * 60 + oRight.minute) * 60 + oRight.second);
 };
 
 cFunctionCall.operators["dateTime-equal"]	= function(oLeft, oRight) {
-	return oLeft.timezone == oRight.timezone
-			&& oLeft.year	== oRight.year
-			&& oLeft.month	== oRight.month
-			&& oLeft.day	== oRight.day
-			&& oLeft.hour	== oRight.hour
-			&& oLeft.minute	== oRight.minute
-			&& oLeft.second	== oRight.second
-			&& oLeft.millisecond== oRight.millisecond;
+	return cFunctionCall.operators["date-equal"](oLeft, oRight)
+			&& cFunctionCall.operators["time-equal"](oLeft, oRight);
 };
 
 cFunctionCall.operators["date-equal"]	= function(oLeft, oRight) {
@@ -115,11 +107,8 @@ cFunctionCall.operators["date-equal"]	= function(oLeft, oRight) {
 };
 
 cFunctionCall.operators["time-equal"]	= function(oLeft, oRight) {
-	return oLeft.timezone == oRight.timezone
-			&& oLeft.hour	== oRight.hour
-			&& oLeft.minute	== oRight.minute
-			&& oLeft.second	== oRight.second
-			&& oLeft.millisecond== oRight.millisecond;
+	return ((oLeft.hour * 60 + oLeft.minute + oLeft.timezone) * 60 + oLeft.second + oLeft.millisecond / 1000)
+			== ((oRight.hour * 60 + oRight.minute + oRight.timezone) * 60 + oRight.second + oRight.millisecond / 1000);
 };
 
 // 10.5 Component Extraction Functions on Durations, Dates and Times
