@@ -16,7 +16,7 @@ cUnionExpr.prototype.left	= null;
 cUnionExpr.prototype.items	= null;
 
 cUnionExpr.operators	= {};
-cUnionExpr.operators['|']	= function(oLeft, oRight) {
+cUnionExpr.operators["union"]	= function(oLeft, oRight) {
 	return cFunctionCall.operators["union"](oLeft, oRight);
 };
 
@@ -43,6 +43,6 @@ cUnionExpr.parse	= function (oLexer, oResolver) {
 cUnionExpr.prototype.evaluate	= function (oContext) {
 	var oSequence	= this.left.evaluate(oContext);
 	for (var nIndex = 0, nLength = this.items.length; nIndex < nLength; nIndex++)
-		oSequence	= cUnionExpr.operators['|'](oSequence, this.items[nIndex].evaluate(oContext));
+		oSequence	= cUnionExpr.operators["union"](oSequence, this.items[nIndex].evaluate(oContext));
 	return oSequence;
 };
