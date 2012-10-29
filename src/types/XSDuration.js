@@ -31,8 +31,7 @@ cXSDuration.prototype.negative	= null;
 
 cXSDuration.prototype.toString	= function() {
 	return (this.negative ? '-' : '') + 'P'
-			+ fXSDuration_getYearMonthComponent(this)
-			+ fXSDuration_getDayTimeComponent(this);
+			+ ((fXSDuration_getYearMonthComponent(this) + fXSDuration_getDayTimeComponent(this)) || 'T0S');
 };
 
 cXSDuration.parse	= function(sValue) {

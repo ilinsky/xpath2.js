@@ -17,7 +17,7 @@ cXSDayTimeDuration.prototype	= new cXSDuration;
 
 cXSDayTimeDuration.prototype.toString	= function() {
 	return (this.negative ? '-' : '') + 'P'
-			+ fXSDuration_getDayTimeComponent(this);
+			+ (fXSDuration_getDayTimeComponent(this) || 'T0S');
 };
 
 cXSDayTimeDuration.parse	= function(sValue) {

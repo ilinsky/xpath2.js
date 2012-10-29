@@ -17,7 +17,7 @@ cXSYearMonthDuration.prototype	= new cXSDuration;
 
 cXSYearMonthDuration.prototype.toString	= function() {
 	return (this.negative ? '-' : '') + 'P'
-			+ fXSDuration_getYearMonthComponent(this);
+			+ (fXSDuration_getYearMonthComponent(this) || '0M');
 };
 
 cXSYearMonthDuration.parse	= function(sValue) {
