@@ -78,12 +78,10 @@ operators/sequence.js
 # Functions
 functions/accessor.js
 functions/anyuri.js
-functions/binary.js
 functions/boolean.js
 functions/context.js
 functions/date.js
 functions/node.js
-functions/notation.js
 functions/numeric.js
 functions/qname.js
 functions/sequence.js

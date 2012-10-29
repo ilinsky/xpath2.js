@@ -89,12 +89,10 @@
 	// Functions
 	files.push("../src/functions/accessor.js");
 	files.push("../src/functions/anyuri.js");
-	files.push("../src/functions/binary.js");
 	files.push("../src/functions/boolean.js");
 	files.push("../src/functions/context.js");
 	files.push("../src/functions/date.js");
 	files.push("../src/functions/node.js");
-	files.push("../src/functions/notation.js");
 	files.push("../src/functions/numeric.js");
 	files.push("../src/functions/qname.js");
 	files.push("../src/functions/sequence.js");
