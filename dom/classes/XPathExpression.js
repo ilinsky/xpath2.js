@@ -9,7 +9,7 @@
 
 function cXPathExpression(sExpression, oResolver) {
 	try {
-		this.expression	= new cXPath2Parser().parse(sExpression, oResolver);
+		this.expression	= XPath2.compile(sExpression, oResolver);
 	} catch (e) {
 		throw new cXPathException(cXPathException.INVALID_EXPRESSION_ERR);
 	}
@@ -28,7 +28,7 @@ cXPathExpression.prototype.evaluate	= function(oNode, nType, oResult) {
 };
 
 function fXPathExpression_evaluate(oExpression, oNode, nType, oResult) {
-	var oContext	= new cXPath2Context(oNode),
+	var oContext	= new XPath2.Context(oNode),
 		oSequence	= oExpression.expression.evaluate(oContext);
 	// Determine type if not specified
 	if (!nType) {

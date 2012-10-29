@@ -19,3 +19,7 @@ cXPath2.DOMAdapter	= cDOMAdapter;
 cXPath2.evaluate	= function(sExpression/*[[[*/, oNode/*[[*/, oResolver/*[*/, oScope/*]]]*/) {
 	return new cXPath2Parser().parse(sExpression, oResolver).evaluate(new cXPath2Context(oNode, oScope)).items;
 };
+
+cXPath2.compile		= function(sExpression/*[*/, oResolver/*]*/) {
+	return new cXPath2Parser().parse(sExpression, oResolver);
+};
