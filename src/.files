@@ -1,14 +1,5 @@
 # Import variables from environment
 import.js
-# Data types
-types/XSAnyAtomicType.js
-types/XSQName.js
-types/XSDateTime.js
-types/XSDate.js
-types/XSTime.js
-types/XSDuration.js
-types/XSYearMonthDuration.js
-types/XSDayTimeDuration.js
 # Helper classes
 helpers/DOMAdapter.js
 helpers/XPath2Error.js
@@ -66,6 +57,15 @@ expressions/type/types/AtomicType.js
 expressions/type/types/ItemType.js
 expressions/type/types/SequenceType.js
 expressions/type/types/SingleType.js
+# Data types
+types/XSAnyAtomicType.js
+types/XSQName.js
+types/XSDateTime.js
+types/XSDate.js
+types/XSTime.js
+types/XSDuration.js
+types/XSYearMonthDuration.js
+types/XSDayTimeDuration.js
 # Operators
 operators/binary.js
 operators/boolean.js
