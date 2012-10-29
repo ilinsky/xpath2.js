@@ -6,9 +6,10 @@ cXSDayTimeDuration.RegExp	= /^(-)?P(?:([0-9]+)D)?(?:T(?:([0-9]+)H)?(?:([0-9]+)M)
 
 cXSDayTimeDuration.prototype	= new cXSDuration;
 
-/*cXSDayTimeDuration.prototype.toString	= function() {
-
-};*/
+cXSDayTimeDuration.prototype.toString	= function() {
+	return (this.negative ? '-' : '') + 'P'
+			+ fXSDuration_getDayTimeComponent(this);
+};
 
 cXSDayTimeDuration.parse	= function(sValue) {
 	if (sValue.match(cXSDayTimeDuration.RegExp))

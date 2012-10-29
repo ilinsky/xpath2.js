@@ -21,21 +21,28 @@ cXSDuration.prototype.second	= null;
 cXSDuration.prototype.negative	= null;
 
 cXSDuration.prototype.toString	= function() {
-	return (this.negative ? '-' : '')
-			+ 'P'
-			+ (this.year ? this.year + 'Y' : '')
-			+ (this.month ? this.month + 'M' : '')
-			+ (this.day ? this.day + 'D' : '')
-			+ (this.hour || this.minute || this.second
-				? 'T'
-					+ (this.hour ? this.hour + 'H' : '')
-					+ (this.minute ? this.minute + 'M' : '')
-					+ (this.second ? this.second + 'S' : '')
-				: '');
+	return (this.negative ? '-' : '') + 'P'
+			+ fXSDuration_getYearMonthComponent(this)
+			+ fXSDuration_getDayTimeComponent(this);
 };
 
 cXSDuration.parse	= function(sValue) {
 	if (sValue.match(cXSDuration.RegExp))
 		return new cXSDuration;
 	throw new cXPath2Error("FORG0001");
+};
+
+function fXSDuration_getYearMonthComponent(oDuration) {
+	return (oDuration.year ? oDuration.year + 'Y' : '')
+			+ (oDuration.month ? oDuration.month + 'M' : '');
+};
+
+function fXSDuration_getDayTimeComponent(oDuration) {
+	return (oDuration.day ? oDuration.day + 'D' : '')
+			+ (oDuration.hour || oDuration.minute || oDuration.second
+				? 'T'
+					+ (oDuration.hour ? oDuration.hour + 'H' : '')
+					+ (oDuration.minute ? oDuration.minute + 'M' : '')
+					+ (oDuration.second ? oDuration.second + 'S' : '')
+				: '');
 };
