@@ -13,7 +13,7 @@ function cXSQName(sPrefix, sLocalName, sNameSpaceURI) {
 	this.namespaceURI	= sNameSpaceURI;
 };
 
-cXSQName.RegExp	= /^(?:(?![0-9-])(?:[\w-]+)\:)?(?![0-9-])(?:[\w-]+)$/;
+cXSQName.RegExp	= /^(?:(?![0-9-])([\w-]+)\:)?(?![0-9-])([\w-]+)$/;
 
 cXSQName.prototype	= new cXSAnyAtomicType;
 
@@ -26,7 +26,10 @@ cXSQName.prototype.toString	= function() {
 };
 
 cXSQName.parse	= function(sValue) {
-	if (sValue.match(cXSQName.RegExp))
-		return new cXSQName;
+	var aMatch	= sValue.match(cXSQName.RegExp);
+	if (aMatch)
+		return new cXSQName(aMatch[1] || null, aMatch[2], null);
 	throw new cXPath2Error("FORG0001");
 };
+//
+cFunctionCall.dataTypes["QName"]	= cXSQName;
