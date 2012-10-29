@@ -7,9 +7,9 @@
  *
  */
 
-function cXPath2Error(sCode) {
+function cXPath2Error(sCode, sMessage) {
 	this.code		= sCode;
-	this.message	= oXPathError_messages[sCode];
+	this.message	= sMessage || oXPathError_messages[sCode];
 };
 
 // "http://www.w3.org/2005/xqt-errors"
