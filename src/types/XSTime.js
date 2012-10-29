@@ -15,7 +15,7 @@ function cXSTime(nHour, nMinute, nSecond, nMillisecond, nTimezone) {
 	this.timezone	= nTimezone;
 };
 
-cXSTime.RegExp	= /^(([01]\d|2[0-3]):[0-5]\d:[0-5]\d(\.\d+)?|24:00:00(\.0+)?)(Z|[+\-](0\d|1[0-4]):[0-5]\d)?$/;
+cXSTime.RegExp	= /^(([01]\d|2[0-3]):([0-5]\d):([0-5]\d)(\.\d+)?|(24:00:00)(\.0+)?)(Z|([+\-])(0\d|1[0-4]):([0-5]\d))?$/;
 
 cXSTime.prototype	= new cXSAnyAtomicType;
 
@@ -31,7 +31,17 @@ cXSTime.prototype.toString	= function() {
 };
 
 cXSTime.parse	= function(sValue) {
-	if (sValue.match(cXSTime.RegExp))
-		return new cXSTime;
+	var aMatch	= sValue.match(cXSTime.RegExp);
+	if (aMatch) {
+		var bValue	= aMatch[6] == "24:00:00";
+		return new cXSDate(bValue ? 24 : +aMatch[2],
+							bValue ? 0 : +aMatch[3],
+							bValue ? 0 : +aMatch[4],
+							bValue ? +aMatch[7] || 0 : +aMatch[5] || 0,
+							!aMatch[8] || aMatch[8] == 'Z' ? 0 : (aMatch[9] == '-' ? 1 : -1) * (aMatch[10] * 60 + aMatch[11] * 1)
+		);
+	}
 	throw new cXPath2Error("FORG0001");
 };
+//
+cFunctionCall.dataTypes["time"]	= cXSTime;

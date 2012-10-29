@@ -18,7 +18,7 @@ function cXSDateTime(nYear, nMonth, nDay, nHour, nMinute, nSecond, nMillisecond,
 	this.timezone	= nTimezone;
 };
 
-cXSDateTime.RegExp	= /^-?([1-9]\d\d\d+|0\d\d\d)-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])T(([01]\d|2[0-3]):[0-5]\d:[0-5]\d(\.\d+)?|24:00:00(\.0+)?)(Z|[+\-](0\d|1[0-4]):[0-5]\d)?$/;
+cXSDateTime.RegExp	= /^-?([1-9]\d\d\d+|0\d\d\d)-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])T(([01]\d|2[0-3]):([0-5]\d):([0-5]\d)(\.\d+)?|(24:00:00)(\.0+)?)(Z|([+\-])(0\d|1[0-4]):([0-5]\d))?$/;
 
 cXSDateTime.prototype	= new cXSAnyAtomicType;
 
@@ -39,10 +39,23 @@ cXSDateTime.prototype.toString	= function() {
 };
 
 cXSDateTime.parse	= function(sValue) {
-	if (sValue.match(cXSDateTime.RegExp))
-		return new cXSDateTime;
+	var aMatch	= sValue.match(cXSDateTime.RegExp);
+	if (aMatch) {
+		var bValue	= aMatch[9] == "24:00:00";
+		return new cXSDateTime(+aMatch[1],
+								+aMatch[2],
+								+aMatch[3],
+								bValue ? 24 : +aMatch[5],
+								bValue ? 0 : +aMatch[6],
+								bValue ? 0 : +aMatch[7],
+								bValue ? +aMatch[10] || 0 : +aMatch[8] || 0,
+								!aMatch[11] || aMatch[11] == 'Z' ? 0 : (aMatch[12] == '-' ? 1 : -1) * (aMatch[13] * 60 + aMatch[14] * 1)
+		);
+	}
 	throw new cXPath2Error("FORG0001");
 };
+//
+cFunctionCall.dataTypes["dateTime"]	= cXSDateTime;
 
 //
 function fXSDateTime_pad(vValue) {

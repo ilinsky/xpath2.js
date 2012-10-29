@@ -14,7 +14,7 @@ function cXSDate(nYear, nMonth, nDay, nTimezone) {
 	this.timezone	= nTimezone;
 };
 
-cXSDate.RegExp	= /^-?([1-9]\d\d\d+|0\d\d\d)-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])(Z|[+\-](0\d|1[0-4]):[0-5]\d)?$/;
+cXSDate.RegExp	= /^-?([1-9]\d\d\d+|0\d\d\d)-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])(Z|([+\-])(0\d|1[0-4]):([0-5]\d))?$/;
 
 cXSDate.prototype	= new cXSAnyAtomicType;
 
@@ -29,7 +29,14 @@ cXSDate.prototype.toString	= function() {
 };
 
 cXSDate.parse	= function(sValue) {
-	if (sValue.match(cXSDate.RegExp))
-		return new cXSDate;
+	var aMatch	= sValue.match(cXSDate.RegExp);
+	if (aMatch)
+		return new cXSDate(+aMatch[1],
+							+aMatch[2],
+							+aMatch[3],
+							!aMatch[4] || aMatch[4] == 'Z' ? 0 : (aMatch[5] == '-' ? 1 : -1) * (aMatch[6] * 60 + aMatch[7] * 1)
+		);
 	throw new cXPath2Error("FORG0001");
 };
+//
+cFunctionCall.dataTypes["date"]	= cXSDate;
