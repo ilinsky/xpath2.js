@@ -21,7 +21,7 @@ cDOMAdapter.getProperty	= function(oNode, sName) {
 };
 
 // Standard members
-cDOMAdapter.isNameNode	= function(oNode, oNode2) {
+cDOMAdapter.isSameNode	= function(oNode, oNode2) {
 	return oNode.isSameNode(oNode2);
 };
 
