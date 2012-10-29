@@ -85,6 +85,44 @@
 		op:subtract-dayTimeDuration-from-time
 */
 
+// 10.4 Comparison Operators on Duration, Date and Time Values
+cFunctionCall.operators["duration-equal"]	= function(oLeft, oRight) {
+	return oLeft.negative	== oRight.negative
+			&& oLeft.year == oRight.year
+			&& oLeft.month	== oRight.month
+			&& oLeft.day	== oRight.day
+			&& oLeft.hour	== oRight.hour
+			&& oLeft.minute	== oRight.minute
+			&& oLeft.second	== oRight.second;
+};
+
+cFunctionCall.operators["dateTime-equal"]	= function(oLeft, oRight) {
+	return oLeft.timezone	== oRight.timezone
+			&& oLeft.year	== oRight.year
+			&& oLeft.month	== oRight.month
+			&& oLeft.day	== oRight.day
+			&& oLeft.hour	== oRight.hour
+			&& oLeft.minute	== oRight.minute
+			&& oLeft.second	== oRight.second
+			&& oLeft.millisecond== oRight.millisecond
+			&& oLeft.timezone	== oRight.timezone;
+};
+
+cFunctionCall.operators["date-equal"]	= function(oLeft, oRight) {
+	return oLeft.timezone	== oRight.timezone
+			&& oLeft.year == oRight.year
+			&& oLeft.month	== oRight.month
+			&& oLeft.day	== oRight.day;
+};
+
+cFunctionCall.operators["time-equal"]	= function(oLeft, oRight) {
+	return oLeft.timezone	== oRight.timezone
+			&& oLeft.hour	== oRight.hour
+			&& oLeft.minute	== oRight.minute
+			&& oLeft.second	== oRight.second
+			&& oLeft.millisecond== oRight.millisecond;
+};
+
 // 10.5 Component Extraction Functions on Durations, Dates and Times
 // functions on duration
 // fn:years-from-duration($arg as xs:duration?) as xs:integer?
