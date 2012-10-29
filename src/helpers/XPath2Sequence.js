@@ -22,30 +22,6 @@ cXPath2Sequence.reverse	= function(oSequence1) {
 	return oSequence;
 };
 
-cXPath2Sequence.union		= function(oSequence1, oSequence2) {
-	var oSequence	= new cXPath2Sequence(oSequence1);
-	for (var nIndex = 0, nLength = oSequence2.items.length; nIndex < nLength; nIndex++)
-		if (oSequence.items.indexOf(oSequence2.items[nIndex]) ==-1)
-			oSequence.add(oSequence2.items[nIndex]);
-	return oSequence;
-};
-
-cXPath2Sequence.except		= function(oSequence1, oSequence2) {
-	var oSequence	= new cXPath2Sequence;
-	for (var nIndex = 0, nLength = oSequence1.items.length; nIndex < nLength; nIndex++)
-		if (oSequence2.items.indexOf(oSequence1.items[nIndex]) ==-1)
-			oSequence.add(oSequence1.items[nIndex]);
-	return oSequence;
-};
-
-cXPath2Sequence.intersect	= function(oSequence1, oSequence2) {
-	var oSequence	= new cXPath2Sequence;
-	for (var nIndex = 0, nLength = oSequence1.items.length; nIndex < nLength; nIndex++)
-		if (oSequence2.items.indexOf(oSequence1.items[nIndex]) >-1)
-			oSequence.add(oSequence1.items[nIndex]);
-	return oSequence;
-};
-
 cXPath2Sequence.atomize		= function(oSequence1) {
 	var oSequence	= new cXPath2Sequence;
 	for (var nIndex = 0, nLength = oSequence1.items.length, vValue; nIndex < nLength; nIndex++)

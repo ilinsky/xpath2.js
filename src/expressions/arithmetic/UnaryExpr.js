@@ -17,8 +17,18 @@ cUnaryExpr.prototype.expression	= null;
 
 //
 cUnaryExpr.operators	= {};
-cUnaryExpr.operators['-']	= {};
-cUnaryExpr.operators['+']	= {};
+cUnaryExpr.operators['-']	= function(oRight) {
+	if (typeof oRight == "number")
+		return cFunctionCall.operators["numeric-unary-minus"](oRight);
+	//
+	throw new cXPath2Error("XPTY0004");	// Required item type of operand of '-' is numeric; supplied value has item type {type1}
+};
+cUnaryExpr.operators['+']	= function(oRight){
+	if (typeof oRight == "number")
+		return cFunctionCall.operators["numeric-unary-plus"](oRight);
+	//
+	throw new cXPath2Error("XPTY0004");	// Required item type of operand of '-' is numeric; supplied value has item type {type1}
+};
 
 // Static members
 // UnaryExpr	:= ("-" | "+")* ValueExpr
@@ -38,5 +48,6 @@ cUnaryExpr.parse	= function (oLexer, oResolver) {
 };
 
 cUnaryExpr.prototype.evaluate	= function (oContext) {
-	return new cXPath2Sequence((this.operator == '-' ? -1 : 1) * this.expression.evaluate(oContext).toNumber());
+	var oRight	= cXPath2Sequence.atomize(this.expression.evaluate(oContext));
+	return new cXPath2Sequence(cUnaryExpr.operators[this.operator == '-' ? '-' : '+'](oRight.items[0]));
 };

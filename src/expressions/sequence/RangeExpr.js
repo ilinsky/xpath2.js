@@ -33,8 +33,10 @@ cRangeExpr.parse	= function (oLexer, oResolver) {
 
 // Public members
 cRangeExpr.prototype.evaluate	= function (oContext) {
-	var oSequence	= new cXPath2Sequence;
-	for (var nIndex = this.left.evaluate(oContext).toNumber(), nLength = this.right.evaluate(oContext).toNumber(); nIndex <= nLength; nIndex++)
-		oSequence.add(nIndex);
-	return oSequence;
+	var oLeft	= this.left.evaluate(oContext),
+		oRight	= this.right.evaluate(oContext);
+	if (typeof oLeft.items[0] == "number" && typeof oRight.items[0] == "number")
+		return cFunctionCall.operators["to"](oLeft.items[0], oRight.items[0]);
+	//
+	throw new cXPath2Error("XPTY0004");	//Required item type of second operand of 'to' is xs:integer; supplied value has item type {type2}
 };

@@ -42,6 +42,6 @@ cUnionExpr.parse	= function (oLexer, oResolver) {
 cUnionExpr.prototype.evaluate	= function (oContext) {
 	var oSequence	= this.left.evaluate(oContext);
 	for (var nIndex = 0, nLength = this.items.length; nIndex < nLength; nIndex++)
-		oSequence	= cXPath2Sequence.union(oSequence, this.items[nIndex].evaluate(oContext));
+		oSequence	= cFunctionCall.operators["union"](oSequence, this.items[nIndex].evaluate(oContext));
 	return oSequence;
 };

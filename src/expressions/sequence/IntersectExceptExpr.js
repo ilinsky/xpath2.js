@@ -18,8 +18,13 @@ cIntersectExceptExpr.prototype.items	= null;
 //
 cIntersectExceptExpr.operators	={};
 
-cIntersectExceptExpr.operators["intersect"]	= {};
-cIntersectExceptExpr.operators["except"]	= {};
+// Operator mappings
+cIntersectExceptExpr.operators["intersect"]	= function(oLeft, oRight) {
+	return cFunctionCall.operators["intersect"](oLeft, oRight);
+};
+cIntersectExceptExpr.operators["except"]	= function(oLeft, oRight) {
+	return cFunctionCall.operators["except"](oLeft, oRight);
+};
 
 // Static members
 // TODO: Should parse as IntersectExceptExpr->InstanceofExpr->TreatExpr->CastableExpr->CastExpr->UnaryExpr
@@ -45,13 +50,7 @@ cIntersectExceptExpr.parse	= function (oLexer, oResolver) {
 // Public members
 cIntersectExceptExpr.prototype.evaluate	= function (oContext) {
 	var oSequence	= this.left.evaluate(oContext);
-	for (var nIndex = 0, nLength = this.items.length, oItem; nIndex < nLength; nIndex++) {
-		oItem	= this.items[nIndex];
-		if (oItem[0] == "intersect")
-			oSequence	= cXPath2Sequence.intersect(oSequence, oItem[1].evaluate(oContext));
-		else
-		if (oItem[0] == "except")
-			oSequence	= cXPath2Sequence.except(oSequence, oItem[1].evaluate(oContext));
-	}
+	for (var nIndex = 0, nLength = this.items.length, oItem; nIndex < nLength; nIndex++)
+		oSequence	= cIntersectExceptExpr.operators[(oItem = this.items[nIndex])[0]](oSequence, oItem[1].evaluate(oContext));
 	return oSequence;
 };

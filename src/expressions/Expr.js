@@ -36,6 +36,6 @@ cExpr.parse	= function(oLexer, oResolver) {
 cExpr.prototype.evaluate	= function(oContext) {
 	var oSequence	= new cXPath2Sequence;
 	for (var nIndex = 0, nLength = this.items.length; nIndex < nLength; nIndex++)
-		oSequence.add(this.items[nIndex].evaluate(oContext));
+		oSequence	= cFunctionCall.operators["concatenate"](oSequence, this.items[nIndex].evaluate(oContext));
 	return oSequence;
 };

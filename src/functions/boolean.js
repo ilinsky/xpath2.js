@@ -21,6 +21,7 @@
 		not
 */
 
+// 9.1 Additional Boolean Constructor Functions
 // fn:true() as xs:boolean
 cFunctionCall.functions["true"]		= function() {
 	return new cXPath2Sequence(true);
@@ -31,6 +32,23 @@ cFunctionCall.functions["false"]	= function() {
 	return new cXPath2Sequence(false);
 };
 
+// 9.2 Operators on Boolean Values
+// op:boolean-equal($value1 as xs:boolean, $value2 as xs:boolean) as xs:boolean
+cFunctionCall.operators["boolean-equal"]	= function(oLeft, oRight) {
+	return oLeft == oRight;
+};
+
+// op:boolean-less-than($arg1 as xs:boolean, $arg2 as xs:boolean) as xs:boolean
+cFunctionCall.operators["boolean-less-than"]	= function(oLeft, oRight) {
+	return oLeft < oRight;
+};
+
+// op:boolean-greater-than($arg1 as xs:boolean, $arg2 as xs:boolean) as xs:boolean
+cFunctionCall.operators["boolean-greater-than"]	= function(oLeft, oRight) {
+	return oLeft > oRight;
+};
+
+// 9.3 Functions on Boolean Values
 // fn:not($arg as item()*) as xs:boolean
 cFunctionCall.functions["not"]	= function(oSequence) {
 	if (!arguments.length)

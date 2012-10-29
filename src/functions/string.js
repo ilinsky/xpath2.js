@@ -293,7 +293,7 @@ cFunctionCall.functions["substring-after"]	= function(oSequence1, oSequence2, oS
 
 
 // 7.6 String Functions that Use Pattern Matching
-function fFunction_createRegExp(sValue, sFlags) {
+function fFunctionCall_string_createRegExp(sValue, sFlags) {
 	var d1	= '\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u02FF',
 		d2	= '\u0370-\u037D\u037F-\u1FFF\u200C-\u200D',
 		d3	= '\u2070-\u218F\u2C00-\u2FEF\u3001-\uD7FF\uF900-\uFDCF\uFDF0-\uFFFD',
@@ -347,7 +347,7 @@ cFunctionCall.functions["matches"]	= function(oSequence1, oSequence2, oSequence3
 		throw new cXPath2Error("XPST0017");
 
 	var sValue	= oSequence1.toString(),
-		rRegExp	= fFunction_createRegExp(oSequence2.toString(), arguments.length > 2 ? oSequence3.toString() : '');
+		rRegExp	= fFunctionCall_string_createRegExp(oSequence2.toString(), arguments.length > 2 ? oSequence3.toString() : '');
 
 	return new cXPath2Sequence(rRegExp.test(sValue));
 };
@@ -359,7 +359,7 @@ cFunctionCall.functions["replace"]	= function(oSequence1, oSequence2, oSequence3
 		throw new cXPath2Error("XPST0017");
 
 	var sValue	= oSequence1.toString(),
-		rRegExp	= fFunction_createRegExp(oSequence2.toString(), arguments.length > 3 ? oSequence4.toString() : 'g'),
+		rRegExp	= fFunctionCall_string_createRegExp(oSequence2.toString(), arguments.length > 3 ? oSequence4.toString() : 'g'),
 		sReplacement	= oSequence3.toString();
 
 	return new cXPath2Sequence(sValue.replace(rRegExp, sReplacement));
@@ -372,7 +372,7 @@ cFunctionCall.functions["tokenize"]	= function(oSequence1, oSequence2, oSequence
 		throw new cXPath2Error("XPST0017");
 
 	var sValue	= oSequence1.toString(),
-		rRegExp	= fFunction_createRegExp(oSequence2.toString(), arguments.length > 2 ? oSequence3.toString() : '');
+		rRegExp	= fFunctionCall_string_createRegExp(oSequence2.toString(), arguments.length > 2 ? oSequence3.toString() : '');
 
 	var oSequence	= new cXPath2Sequence,
 		aValue = sValue.split(rRegExp);

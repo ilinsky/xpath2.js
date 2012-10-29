@@ -106,3 +106,18 @@ cFunctionCall.functions["root"]	= function(oSequence1) {
 
 	return new cXPath2Sequence(oParent);
 };
+
+// op:is-same-node($parameter1 as node(), $parameter2 as node()) as xs:boolean
+cFunctionCall.operators["is-same-node"]	= function(oLeft, oRight) {
+	return cXPath2.DOMAdapter.isSameNode(oLeft, oRight);
+};
+
+// op:node-before($parameter1 as node(), $parameter2 as node()) as xs:boolean
+cFunctionCall.operators["node-before"]	= function(oLeft, oRight) {
+	return !!(cXPath2.DOMAdapter.compareDocumentPosition(oLeft, oRight) & 4);
+};
+
+// op:node-after($parameter1 as node(), $parameter2 as node()) as xs:boolean
+cFunctionCall.operators["node-after"]	= function(oLeft, oRight) {
+	return !!(cXPath2.DOMAdapter.compareDocumentPosition(oLeft, oRight) & 2);
+};

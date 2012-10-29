@@ -114,3 +114,8 @@ cFunctionCall.functions["namespace-uri-for-prefix"]	= function(oSequence1, oSequ
 cFunctionCall.functions["in-scope-prefixes"]	= function(oSequence1) {
 	throw "Function '" + "in-scope-prefixes" + "' not implemented";
 };
+
+// op:QName-equal($arg1 as xs:QName, $arg2 as xs:QName) as xs:boolean
+cFunctionCall.operators["QName-equal"]	= function(oLeft, oRight) {
+	return oLeft.localName == oRight.localName && oLeft.namespaceURI == oRight.namespaceURI;
+};

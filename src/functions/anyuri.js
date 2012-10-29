@@ -36,30 +36,30 @@ cFunctionCall.functions["resolve-uri"]	= function(oSequence1, oSequence2) {
 	if (!oSequence1.items.length)
 		return oSequence;
 	//
-	oSequence.add(fFunctionCall_resolveUri(oSequence1.toString(), sBaseUri));
+	oSequence.add(fFunctionCall_anyuri_resolveUri(oSequence1.toString(), sBaseUri));
 	//
 	return oSequence;
 };
 
-var hFunctionCall_uriCache	= {};
+var hFunctionCall_anyuri_cache	= {};
 /*
  * Returns an array of uri components:
  * [scheme, authority, path, query, fragment]
  */
-function fFunctionCall_getUriComponents(sUri) {
-	var aResult	= hFunctionCall_uriCache[sUri] ||(hFunctionCall_uriCache[sUri] = sUri.match(/^(([^:\/?#]+):)?(\/\/([^\/?#]*))?([^?#]*)(\?([^#]*))?(#(.*))?/));
+function fFunctionCall_anyuri_getUriComponents(sUri) {
+	var aResult	= hFunctionCall_anyuri_cache[sUri] ||(hFunctionCall_anyuri_cache[sUri] = sUri.match(/^(([^:\/?#]+):)?(\/\/([^\/?#]*))?([^?#]*)(\?([^#]*))?(#(.*))?/));
 	return [aResult[1], aResult[3], aResult[5], aResult[6], aResult[8]];
 };
 
-function fFunctionCall_resolveUri(sUri, sBaseUri) {
+function fFunctionCall_anyuri_resolveUri(sUri, sBaseUri) {
 	if (sUri == '' || sUri.charAt(0) == '#')
 		return sBaseUri;
 
-	var aUri	= fFunctionCall_getUriComponents(sUri);
+	var aUri	= fFunctionCall_anyuri_getUriComponents(sUri);
 	if (aUri[0])	// scheme
 		return sUri;
 
-	var aBaseUri	= fFunctionCall_getUriComponents(sBaseUri);
+	var aBaseUri	= fFunctionCall_anyuri_getUriComponents(sBaseUri);
 	aUri[0]	= aBaseUri[0];	// scheme
 
 	if (!aUri[1]) {
