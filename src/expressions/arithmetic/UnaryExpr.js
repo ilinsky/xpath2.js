@@ -39,9 +39,13 @@ cUnaryExpr.parse	= function (oLexer, oResolver) {
 		return cValueExpr.parse(oLexer, oResolver);
 
 	// Unary expression
-	var sOperator	= oLexer.peek(),
+	var sOperator	= '+',
 		oExpr;
-	oLexer.next();
+	while (oLexer.peek() in cUnaryExpr.operators) {
+		if (oLexer.peek() == '-')
+			sOperator	= sOperator == '-' ? '+' : '-';
+		oLexer.next();
+	}
 	if (oLexer.eof() ||!(oExpr = cValueExpr.parse(oLexer, oResolver)))
 		throw "UnaryExpr.parse: Expected ValueExpr expression";
 	return new cUnaryExpr(sOperator, oExpr);
