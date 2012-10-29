@@ -77,6 +77,15 @@
 	files.push("../src/expressions/type/types/ItemType.js");
 	files.push("../src/expressions/type/types/SequenceType.js");
 	files.push("../src/expressions/type/types/SingleType.js");
+	// Operators
+	files.push("../src/operators/binary.js");
+	files.push("../src/operators/boolean.js");
+	files.push("../src/operators/date.js");
+	files.push("../src/operators/node.js");
+	files.push("../src/operators/notation.js");
+	files.push("../src/operators/numeric.js");
+	files.push("../src/operators/qname.js");
+	files.push("../src/operators/sequence.js");
 	// Functions
 	files.push("../src/functions/accessor.js");
 	files.push("../src/functions/anyuri.js");

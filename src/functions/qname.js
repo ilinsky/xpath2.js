@@ -18,7 +18,6 @@
 		namespace-uri-from-QName
 		namespace-uri-for-prefix
 		in-scope-prefixes
-		op:QName-equal
 
 */
 
@@ -53,7 +52,7 @@ cFunctionCall.functions["QName"]	= function(oSequence1, oSequence2) {
 	return new cXPath2Sequence(new cXSQName(sPrefix, sLocalName, oSequence1.toString()));
 };
 
-// 11.2 Functions and Operators Related to QNames
+// 11.2 Functions Related to QNames
 // fn:prefix-from-QName($arg as xs:QName?) as xs:NCName?
 cFunctionCall.functions["prefix-from-QName"]	= function(oSequence1) {
 	if (arguments.length < 1)
@@ -113,9 +112,4 @@ cFunctionCall.functions["namespace-uri-for-prefix"]	= function(oSequence1, oSequ
 // fn:in-scope-prefixes($element as element()) as xs:string*
 cFunctionCall.functions["in-scope-prefixes"]	= function(oSequence1) {
 	throw "Function '" + "in-scope-prefixes" + "' not implemented";
-};
-
-// op:QName-equal($arg1 as xs:QName, $arg2 as xs:QName) as xs:boolean
-cFunctionCall.operators["QName-equal"]	= function(oLeft, oRight) {
-	return oLeft.localName == oRight.localName && oLeft.namespaceURI == oRight.namespaceURI;
 };

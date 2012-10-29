@@ -15,11 +15,10 @@
 		number
 		lang
 		root
-		op:is-same-node
-		op:node-before
-		op:node-after
+
 */
 
+// 14 Functions on Nodes
 // fn:name() as xs:string
 // fn:name($arg as node()?) as xs:string
 cFunctionCall.functions["name"]	= function(oSequence1) {
@@ -105,19 +104,4 @@ cFunctionCall.functions["root"]	= function(oSequence1) {
 		oParent	= oNode;
 
 	return new cXPath2Sequence(oParent);
-};
-
-// op:is-same-node($parameter1 as node(), $parameter2 as node()) as xs:boolean
-cFunctionCall.operators["is-same-node"]	= function(oLeft, oRight) {
-	return cXPath2.DOMAdapter.isSameNode(oLeft, oRight);
-};
-
-// op:node-before($parameter1 as node(), $parameter2 as node()) as xs:boolean
-cFunctionCall.operators["node-before"]	= function(oLeft, oRight) {
-	return !!(cXPath2.DOMAdapter.compareDocumentPosition(oLeft, oRight) & 4);
-};
-
-// op:node-after($parameter1 as node(), $parameter2 as node()) as xs:boolean
-cFunctionCall.operators["node-after"]	= function(oLeft, oRight) {
-	return !!(cXPath2.DOMAdapter.compareDocumentPosition(oLeft, oRight) & 2);
 };

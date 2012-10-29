@@ -66,6 +66,15 @@ expressions/type/types/AtomicType.js
 expressions/type/types/ItemType.js
 expressions/type/types/SequenceType.js
 expressions/type/types/SingleType.js
+# Operators
+operators/binary.js
+operators/boolean.js
+operators/date.js
+operators/node.js
+operators/notation.js
+operators/numeric.js
+operators/qname.js
+operators/sequence.js
 # Functions
 functions/accessor.js
 functions/anyuri.js
