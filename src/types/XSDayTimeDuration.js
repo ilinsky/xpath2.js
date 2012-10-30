@@ -32,6 +32,10 @@ cFunctionCall.dataTypes["dayTimeDuration"]	= function(sValue) {
 		);
 	throw new cXPath2Error("FORG0001");
 };
+//
+function fXSDayTimeDuration_toSeconds(oDuration) {
+	return (((oDuration.day * 24 + oDuration.hour) * 60 + oDuration.minute) * 60 + oDuration.second) * (oDuration.negative ? -1 : 1);
+};
 
 function fXSDayTimeDuration_normalize(oDuration) {
 	if (oDuration.second >= 60) {

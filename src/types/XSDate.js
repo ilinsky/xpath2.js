@@ -39,3 +39,8 @@ cFunctionCall.dataTypes["date"]	= function(sValue) {
 		);
 	throw new cXPath2Error("FORG0001");
 };
+
+//
+function fXSDate_toSeconds(oDate) {
+
+};

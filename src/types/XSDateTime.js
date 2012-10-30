@@ -57,6 +57,11 @@ cFunctionCall.dataTypes["dateTime"]	= function(sValue) {
 };
 
 //
+function fXSDateTime_toSeconds(oDateTime) {
+	var nValue	= fXSDate_toSeconds(oDateTime);
+	return nValue + fXSTime_toSeconds(oDateTime) * (nValue > 0 ? 1 :-1);
+};
+
 function fXSDateTime_pad(vValue) {
 	sValue	= cString(vValue);
 	return new cArray(1 - sValue.length +(arguments[1] || 2)).join('0') + sValue;

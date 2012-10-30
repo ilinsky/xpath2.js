@@ -44,3 +44,8 @@ cFunctionCall.dataTypes["time"]	= function(sValue) {
 	}
 	throw new cXPath2Error("FORG0001");
 };
+
+//
+function fXSTime_toSeconds(oTime) {
+
+};
