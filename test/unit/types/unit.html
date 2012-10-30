@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>JsUnit testing page</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+		<!-- JsUnitClient driver -->
+		<script type="text/javascript" src="../jsUnitClient.js"></script>
+
+		<!-- Library -->
+		<script type="text/javascript" src="../../../xpath2.js"></script>
+
+		<!-- Suite definition -->
+		<script type="text/javascript">
+			// Helper function
+			function evaluateXPath(sXPath) {
+				return XPath2.evaluate(sXPath);
+			}
+			function evaluateXPathSingle(sXPath) {
+				return evaluateXPath(sXPath)[0];
+			}
+			function evaluateXPathError(sXPath) {
+				var value	= null,
+					error	= null;
+				try {
+					value	= evaluateXPathSingle(sXPath);
+				}
+				catch (e) {
+					error	= e.code;
+				}
+				return error;
+			}
+
+			// Dummy test
+			function testPage() {
+				assertTrue(true);
+			}
+
+			// Tests
+			function testXSAnyAtomicType() {
+				assertEquals("XPST0017", evaluateXPathError('xs:anyAtomicType("try")'));
+			}
+
+			// basic
+			function testXSString() {
+				assertEquals("true",
+						evaluateXPathSingle('xs:string("true")'));
+				assertEquals("",
+						evaluateXPathSingle('xs:string("")'));
+			}
+
+			function testXSBoolean() {
+				assertEquals(true,
+						evaluateXPathSingle('xs:boolean("true")'));
+				assertEquals(false,
+						evaluateXPathSingle('xs:boolean("false")'));
+				assertEquals(true,
+						evaluateXPathSingle('xs:boolean("1")'));
+				assertEquals(false,
+						evaluateXPathSingle('xs:boolean("0")'));
+			}
+
+			function testXSDecimal() {
+				assertEquals(0,
+						evaluateXPathSingle('xs:decimal("0")'));
+				assertEquals(1,
+						evaluateXPathSingle('xs:decimal("1")'));
+				assertEquals(1.2,
+						evaluateXPathSingle('xs:decimal("1.2")'));
+				assertEquals(1.2e5,
+						evaluateXPathSingle('xs:decimal("1.2e5")'));
+				assertEquals(-1.2e5,
+						evaluateXPathSingle('xs:decimal("-1.2e5")'));
+				// Test errors
+				assertEquals("FORG0001", evaluateXPathError('xs:decimal("")'));
+			}
+
+			// dates
+			function testXSDate() {
+				assertEquals("2012-10-30",
+						evaluateXPathSingle('string(xs:date("2012-10-30"))'));
+				assertEquals("2012-10-30Z",
+						evaluateXPathSingle('string(xs:date("2012-10-30Z"))'));
+				assertEquals("2012-10-30Z",
+						evaluateXPathSingle('string(xs:date("2012-10-30+00:00"))'));
+				assertEquals("2012-10-30Z",
+						evaluateXPathSingle('string(xs:date("2012-10-30-00:00"))'));
+				assertEquals("2012-10-30+02:00",
+						evaluateXPathSingle('string(xs:date("2012-10-30+02:00"))'));
+				assertEquals("2012-10-30-02:00",
+						evaluateXPathSingle('string(xs:date("2012-10-30-02:00"))'));
+				// Test errors
+				assertEquals("FORG0001", evaluateXPathError('xs:date("")'));
+				assertEquals("FORG0001", evaluateXPathError('xs:date("DATE")'));
+			};
+
+			function testXSTime() {
+				assertEquals("09:17:23",
+						evaluateXPathSingle('string(xs:time("09:17:23"))'));
+				assertEquals("09:17:23.025",
+						evaluateXPathSingle('string(xs:time("09:17:23.025"))'));
+				assertEquals("09:17:23.250",
+						evaluateXPathSingle('string(xs:time("09:17:23.250"))'));
+				assertEquals("09:17:23Z",
+						evaluateXPathSingle('string(xs:time("09:17:23Z"))'));
+				assertEquals("09:17:23Z",
+						evaluateXPathSingle('string(xs:time("09:17:23+00:00"))'));
+				assertEquals("09:17:23Z",
+						evaluateXPathSingle('string(xs:time("09:17:23-00:00"))'));
+				assertEquals("09:17:23+02:00",
+						evaluateXPathSingle('string(xs:time("09:17:23+02:00"))'));
+				assertEquals("09:17:23-02:00",
+						evaluateXPathSingle('string(xs:time("09:17:23-02:00"))'));
+				assertEquals("24:00:00",
+						evaluateXPathSingle('string(xs:time("24:00:00.000"))'));
+				assertEquals("24:00:00+02:00",
+						evaluateXPathSingle('string(xs:time("24:00:00.000+02:00"))'));
+				// Test errors
+				assertEquals("FORG0001", evaluateXPathError('xs:time("")'));
+				assertEquals("FORG0001", evaluateXPathError('xs:time("TIME")'));
+			};
+
+			function xtestXSDateTime() {
+				assertEquals("2012-10-30T09:17:23",
+						evaluateXPathSingle('string(xs:dateTime("2012-10-30T09:17:23"))'));
+				assertEquals("2012-10-30T09:17:23.025",
+						evaluateXPathSingle('string(xs:dateTime("2012-10-30T09:17:23.025"))'));
+				assertEquals("2012-10-30T09:17:23.250",
+						evaluateXPathSingle('string(xs:dateTime("2012-10-30T09:17:23.250"))'));
+				assertEquals("2012-10-30T09:17:23Z",
+						evaluateXPathSingle('string(xs:dateTime("2012-10-30T09:17:23Z"))'));
+				assertEquals("2012-10-30T09:17:23Z",
+						evaluateXPathSingle('string(xs:dateTime("2012-10-30T09:17:23+00:00"))'));
+				assertEquals("2012-10-30T09:17:23Z",
+						evaluateXPathSingle('string(xs:dateTime("2012-10-30T09:17:23-00:00"))'));
+				assertEquals("2012-10-30T09:17:23+02:00",
+						evaluateXPathSingle('string(xs:dateTime("2012-10-30T09:17:23+02:00"))'));
+				assertEquals("2012-10-30T09:17:23-02:00",
+						evaluateXPathSingle('string(xs:dateTime("2012-10-30T09:17:23-02:00"))'));
+				assertEquals("2012-10-30T24:00:00",
+						evaluateXPathSingle('string(xs:dateTime("2012-10-30T24:00:00.000"))'));
+				assertEquals("2012-10-30T24:00:00+02:00",
+						evaluateXPathSingle('string(xs:dateTime("2012-10-30T24:00:00.000+02:00"))'));
+				// Test errors
+				assertEquals("FORG0001", evaluateXPathError('xs:dateTime("")'));
+				assertEquals("FORG0001", evaluateXPathError('xs:dateTime("NOW")'));
+				assertEquals("FORG0001", evaluateXPathError('xs:dateTime("2012-10-30")'));
+				assertEquals("FORG0001", evaluateXPathError('xs:dateTime("2012-10-30T")'));
+				assertEquals("FORG0001", evaluateXPathError('xs:dateTime("09:17:23")'));
+				assertEquals("FORG0001", evaluateXPathError('xs:dateTime("T09:17:23")'));
+			};
+
+			// durations
+			function testXSYearMonthDuration() {
+				assertEquals("P2Y3M",
+						evaluateXPathSingle('string(xs:yearMonthDuration("P2Y3M"))'));
+				assertEquals("-P2Y3M",
+						evaluateXPathSingle('string(xs:yearMonthDuration("-P2Y3M"))'));
+				assertEquals("P2Y3M",
+						evaluateXPathSingle('string(xs:yearMonthDuration("P2Y3M"))'));
+				assertEquals("P2Y",
+						evaluateXPathSingle('string(xs:yearMonthDuration("P2Y"))'));
+				assertEquals("P3M",
+						evaluateXPathSingle('string(xs:yearMonthDuration("P3M"))'));
+				assertEquals("P0M",
+						evaluateXPathSingle('string(xs:yearMonthDuration("P0Y0M"))'));
+				// Test errors
+				assertEquals("FORG0001", evaluateXPathError('xs:yearMonthDuration("")'));
+				assertEquals("FORG0001", evaluateXPathError('xs:yearMonthDuration("DECADE")'));
+				assertEquals("FORG0001", evaluateXPathError('xs:yearMonthDuration("1Y2M")'));
+				assertEquals("FORG0001", evaluateXPathError('xs:yearMonthDuration("--P1Y2M")'));
+				assertEquals("FORG0001", evaluateXPathError('xs:yearMonthDuration("P1Y2.5M")'));
+			}
+
+			function testXSDayTimeDuration() {
+				assertEquals("P1DT2H3M4S",
+						evaluateXPathSingle('string(xs:dayTimeDuration("P1DT2H3M4S"))'));
+				assertEquals("-P1DT2H3M4S",
+						evaluateXPathSingle('string(xs:dayTimeDuration("-P1DT2H3M4S"))'));
+				assertEquals("P1DT2H3M",
+						evaluateXPathSingle('string(xs:dayTimeDuration("P1DT2H3M"))'));
+				assertEquals("P1DT2H",
+						evaluateXPathSingle('string(xs:dayTimeDuration("P1DT2H"))'));
+				assertEquals("PT2M",
+						evaluateXPathSingle('string(xs:dayTimeDuration("PT2M"))'));
+				assertEquals("P1D",
+						evaluateXPathSingle('string(xs:dayTimeDuration("P1D"))'));
+				assertEquals("PT0S",
+						evaluateXPathSingle('string(xs:dayTimeDuration("P0DT0H0M0S"))'));
+				assertEquals("PT23.5S",
+						evaluateXPathSingle('string(xs:dayTimeDuration("PT23.5S"))'));
+				// Test errors
+				assertEquals("FORG0001", evaluateXPathError('xs:dayTimeDuration("")'));
+				assertEquals("FORG0001", evaluateXPathError('xs:dayTimeDuration("DAY")'));
+				assertEquals("FORG0001", evaluateXPathError('xs:dayTimeDuration("1D")'));
+				assertEquals("FORG0001", evaluateXPathError('xs:dayTimeDuration("--P1D")'));
+				assertEquals("FORG0001", evaluateXPathError('xs:dayTimeDuration("P1.5D")'));
+				assertEquals("FORG0001", evaluateXPathError('xs:dayTimeDuration("P1D5H")'));
+			}
+
+			function testXSDuration() {
+				// YearMonth
+				assertEquals("P2Y3M",
+						evaluateXPathSingle('string(xs:duration("P2Y3M"))'));
+				assertEquals("-P2Y3M",
+						evaluateXPathSingle('string(xs:duration("-P2Y3M"))'));
+				assertEquals("P2Y3M",
+						evaluateXPathSingle('string(xs:duration("P2Y3M"))'));
+				assertEquals("P2Y",
+						evaluateXPathSingle('string(xs:duration("P2Y"))'));
+				assertEquals("P3M",
+						evaluateXPathSingle('string(xs:duration("P3M"))'));
+				assertEquals("PT0S",
+						evaluateXPathSingle('string(xs:duration("P0Y0M"))'));
+				// DayTime
+				assertEquals("P1DT2H3M4S",
+						evaluateXPathSingle('string(xs:duration("P1DT2H3M4S"))'));
+				assertEquals("-P1DT2H3M4S",
+						evaluateXPathSingle('string(xs:duration("-P1DT2H3M4S"))'));
+				assertEquals("P1DT2H3M",
+						evaluateXPathSingle('string(xs:duration("P1DT2H3M"))'));
+				assertEquals("P1DT2H",
+						evaluateXPathSingle('string(xs:duration("P1DT2H"))'));
+				assertEquals("PT2M",
+						evaluateXPathSingle('string(xs:duration("PT2M"))'));
+				assertEquals("P1D",
+						evaluateXPathSingle('string(xs:duration("P1D"))'));
+				assertEquals("PT0S",
+						evaluateXPathSingle('string(xs:duration("P0DT0H0M0S"))'));
+				assertEquals("PT23.5S",
+						evaluateXPathSingle('string(xs:duration("PT23.5S"))'));
+				// YearMonth+DayTime
+				assertEquals("P1Y2M3DT4H5M6S",
+						evaluateXPathSingle('string(xs:duration("P1Y2M3DT4H5M6S"))'));
+				assertEquals("-P1Y2M3DT4H5M6S",
+						evaluateXPathSingle('string(xs:duration("-P1Y2M3DT4H5M6S"))'));
+				assertEquals("PT0S",
+						evaluateXPathSingle('string(xs:duration("P0Y0M0DT0H0M0S"))'));
+				// Test errors
+				assertEquals("FORG0001", evaluateXPathError('xs:duration("")'));
+				assertEquals("FORG0001", evaluateXPathError('xs:duration("YEAR")'));
+				assertEquals("FORG0001", evaluateXPathError('xs:duration("1D")'));
+				assertEquals("FORG0001", evaluateXPathError('xs:duration("--P1D")'));
+				assertEquals("FORG0001", evaluateXPathError('xs:duration("P1.5D")'));
+				assertEquals("FORG0001", evaluateXPathError('xs:duration("P1D5H")'));
+				assertEquals("FORG0001", evaluateXPathError('xs:duration("DECADE")'));
+				assertEquals("FORG0001", evaluateXPathError('xs:duration("1Y2M")'));
+				assertEquals("FORG0001", evaluateXPathError('xs:duration("--P1Y2M")'));
+				assertEquals("FORG0001", evaluateXPathError('xs:duration("P1Y2.5M")'));
+			}
+
+			function testXSQName() {
+				assertEquals("pref:name",
+						evaluateXPathSingle('string(xs:QName("pref:name"))'));
+				assertEquals("name",
+						evaluateXPathSingle('string(xs:QName("name"))'));
+				// Test errors
+				assertEquals("FORG0001", evaluateXPathError('string(xs:QName(""))'));
+				assertEquals("FORG0001", evaluateXPathError('string(xs:QName("pref/name"))'));
+			}
+		</script>
+	</head>
+	<body>
+		<p>XPath2.js JsUnit unit page</p>
+	</body>
+</html>
