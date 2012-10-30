@@ -18,7 +18,7 @@ function cXSDateTime(nYear, nMonth, nDay, nHour, nMinute, nSecond, nMillisecond,
 	this.timezone	= nTimezone;
 };
 
-cXSDateTime.RegExp	= /^-?([1-9]\d\d\d+|0\d\d\d)-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])T(([01]\d|2[0-3]):([0-5]\d):([0-5]\d)(\.\d+)?|(24:00:00)(\.0+)?)(Z|([+\-])(0\d|1[0-4]):([0-5]\d))?$/;
+cXSDateTime.RegExp	= /^-?([1-9]\d\d\d+|0\d\d\d)-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])T(([01]\d|2[0-3]):([0-5]\d):([0-5]\d)(?:\.(\d+))?|(24:00:00)(?:\.(0+))?)(Z|([+\-])(0\d|1[0-4]):([0-5]\d))?$/;
 
 cXSDateTime.prototype	= new cXSAnyAtomicType;
 
