@@ -45,6 +45,7 @@
 			function testXSString() {
 				assertEquals("true",
 						evaluateXPathSingle('xs:string("true")'));
+				// Test errors
 				assertEquals("",
 						evaluateXPathSingle('xs:string("")'));
 			}
@@ -58,6 +59,10 @@
 						evaluateXPathSingle('xs:boolean("1")'));
 				assertEquals(false,
 						evaluateXPathSingle('xs:boolean("0")'));
+				// Test errors
+				assertEquals("FORG0001", evaluateXPathError('xs:boolean("")'));
+				assertEquals("FORG0001", evaluateXPathError('xs:boolean("2")'));
+				assertEquals("FORG0001", evaluateXPathError('xs:boolean("maybe")'));
 			}
 
 			function testXSDecimal() {
@@ -73,6 +78,7 @@
 						evaluateXPathSingle('xs:decimal("-1.2e5")'));
 				// Test errors
 				assertEquals("FORG0001", evaluateXPathError('xs:decimal("")'));
+				assertEquals("FORG0001", evaluateXPathError('xs:decimal("1f5")'));
 			}
 
 			// dates
