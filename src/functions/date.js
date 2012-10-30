@@ -168,7 +168,7 @@ cFunctionCall.functions["adjust-time-to-timezone"]	= function(oSequence1, oSeque
 };
 
 //
-fFunctionCall_duration_getComponent	= function(oSequence1, cType, sName) {
+function fFunctionCall_duration_getComponent(oSequence1, cType, sName) {
 	if (arguments.length < 1)
 		throw new cXPath2Error("XPST0017");
 
@@ -186,7 +186,7 @@ fFunctionCall_duration_getComponent	= function(oSequence1, cType, sName) {
 };
 
 //
-fFunctionCall_dateTime_getComponent	= function(oSequence1, cType, sName) {
+function fFunctionCall_dateTime_getComponent(oSequence1, cType, sName) {
 	if (arguments.length < 1)
 		throw new cXPath2Error("XPST0017");
 
