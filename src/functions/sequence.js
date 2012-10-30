@@ -287,7 +287,7 @@ cFunctionCall.functions["max"]	= function(oSequence1, oSequence2) {
 	//
 	var oItem	= oSequence1.items[0];
 	for (var nIndex = 1, nLength = oSequence1.items.length; nIndex < nLength; nIndex++)
-		if (cComparisonExpr.ValueComp.compare('ge', oSequence1.items[nIndex], oItem))
+		if (cComparisonExpr.ValueComp.operators['ge'](oSequence1.items[nIndex], oItem))
 			oItem	= oSequence1.items[nIndex];
 
 	return new cXPath2Sequence(oItem);
@@ -309,7 +309,7 @@ cFunctionCall.functions["min"]	= function(oSequence1, oSequence2) {
 
 	var oItem	= oSequence1.items[0];
 	for (var nIndex = 0, nLength = oSequence1.items.length; nIndex < nLength; nIndex++)
-		if (cComparisonExpr.ValueComp.compare('le', oSequence1.items[nIndex], oItem))
+		if (cComparisonExpr.ValueComp.operators['le'](oSequence1.items[nIndex], oItem))
 			oItem	= oSequence1.items[nIndex];
 
 	return new cXPath2Sequence(oItem);
