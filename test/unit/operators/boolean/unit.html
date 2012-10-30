@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>JsUnit testing page</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+		<!-- JsUnitClient driver -->
+		<script type="text/javascript" src="../../jsUnitClient.js"></script>
+
+		<!-- Library -->
+		<script type="text/javascript" src="../../../../xpath2.js"></script>
+
+		<!-- Suite definition -->
+		<script type="text/javascript">
+			// Helper function
+			function evaluateXPath(sXPath) {
+				return XPath2.evaluate(sXPath);
+			}
+
+			function evaluateXPathSingle(sXPath) {
+				return evaluateXPath(sXPath)[0];
+			}
+
+			// Dummy test
+			function testPage() {
+				assertTrue(true);
+			}
+
+			// Tests
+			function testBooleanEqual() {
+				// Not W3C tests
+				assertEquals(true,
+						evaluateXPathSingle("true() eq true()"));
+				assertEquals(true,
+						evaluateXPathSingle("false() eq false()"));
+				assertEquals(false,
+						evaluateXPathSingle("true() eq false()"));
+				assertEquals(false,
+						evaluateXPathSingle("false() eq true()"));
+			}
+
+			function testBooleanLessThan() {
+				// Not W3C tests
+				assertEquals(false,
+						evaluateXPathSingle("true() lt true()"));
+				assertEquals(false,
+						evaluateXPathSingle("false() lt false()"));
+				assertEquals(false,
+						evaluateXPathSingle("true() lt false()"));
+				assertEquals(true,
+						evaluateXPathSingle("false() lt true()"));
+			}
+
+			function testBooleanGreaterThan() {
+				// Not W3C tests
+				assertEquals(false,
+						evaluateXPathSingle("true() gt true()"));
+				assertEquals(false,
+						evaluateXPathSingle("false() gt false()"));
+				assertEquals(true,
+						evaluateXPathSingle("true() gt false()"));
+				assertEquals(false,
+						evaluateXPathSingle("false() gt true()"));
+			}
+		</script>
+	</head>
+	<body>
+		<p>XPath2.js JsUnit unit page</p>
+	</body>
+</html>
