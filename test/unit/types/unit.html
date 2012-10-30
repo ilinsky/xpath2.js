@@ -37,6 +37,7 @@
 			}
 
 			// Tests
+			// These are not W3C tests!
 			function testXSAnyAtomicType() {
 				assertEquals("XPST0017", evaluateXPathError('xs:anyAtomicType("try")'));
 			}
@@ -95,6 +96,8 @@
 						evaluateXPathSingle('string(xs:date("2012-10-30+02:00"))'));
 				assertEquals("2012-10-30-02:00",
 						evaluateXPathSingle('string(xs:date("2012-10-30-02:00"))'));
+				assertEquals("-2012-10-30",
+						evaluateXPathSingle('string(xs:date("-2012-10-30"))'));
 				// Test errors
 				assertEquals("FORG0001", evaluateXPathError('xs:date("")'));
 				assertEquals("FORG0001", evaluateXPathError('xs:date("DATE")'));
@@ -124,6 +127,7 @@
 				// Test errors
 				assertEquals("FORG0001", evaluateXPathError('xs:time("")'));
 				assertEquals("FORG0001", evaluateXPathError('xs:time("TIME")'));
+				assertEquals("FORG0001", evaluateXPathError('xs:time("-09:17:23")'));
 			};
 
 			function xtestXSDateTime() {
@@ -143,6 +147,8 @@
 						evaluateXPathSingle('string(xs:dateTime("2012-10-30T09:17:23+02:00"))'));
 				assertEquals("2012-10-30T09:17:23-02:00",
 						evaluateXPathSingle('string(xs:dateTime("2012-10-30T09:17:23-02:00"))'));
+				assertEquals("-2012-10-30T09:17:23-02:00",
+						evaluateXPathSingle('string(xs:dateTime("-2012-10-30T09:17:23-02:00"))'));
 				assertEquals("2012-10-30T24:00:00",
 						evaluateXPathSingle('string(xs:dateTime("2012-10-30T24:00:00.000"))'));
 				assertEquals("2012-10-30T24:00:00+02:00",
