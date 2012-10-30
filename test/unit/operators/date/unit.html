@@ -28,11 +28,15 @@
 			// Tests
 			// 10.6 Arithmetic Operators on Durations
 			function testAddYearMonthDurations() {
-
+				// Not W3C tests
+				assertEquals("P5Y5M",
+						evaluateXPathSingle('string(xs:yearMonthDuration("P3Y3M") + xs:yearMonthDuration("P2Y2M"))'));
 			}
 
 			function testSubstractYearMonthDurations() {
-
+				// Not W3C tests
+				assertEquals("P1Y1M",
+						evaluateXPathSingle('string(xs:yearMonthDuration("P3Y3M") - xs:yearMonthDuration("P2Y2M"))'));
 			}
 
 			function testMultiplyYearMonthDuration() {
