@@ -43,7 +43,7 @@ function fXSDayTimeDuration_normalize(oDuration) {
 		oDuration.minute	%= 60;
 	}
 	if (oDuration.hour >= 24) {
-		oDuration.day		+= ~~(oDuration.hour / 60);
+		oDuration.day		+= ~~(oDuration.hour / 24);
 		oDuration.hour		%= 24;
 	}
 };
