@@ -15,6 +15,9 @@ function cXSDuration(nYear, nMonth, nDay, nHour, nMinute, nSecond, bNegative) {
 	this.minute	= nMinute;
 	this.second	= nSecond;
 	this.negative	= bNegative;
+	//
+	fXSYearMonthDuration_normalize(this);
+	fXSDayTimeDuration_normalize(this);
 };
 
 cXSDuration.RegExp	= /^(-)?P(?:([0-9]+)Y)?(?:([0-9]+)M)?(?:([0-9]+)D)?(?:T(?:([0-9]+)H)?(?:([0-9]+)M)?(?:((?:(?:[0-9]+(?:.[0-9]*)?)|(?:.[0-9]+)))S)?)?$/;

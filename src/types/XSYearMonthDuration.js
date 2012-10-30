@@ -30,3 +30,10 @@ cFunctionCall.dataTypes["yearMonthDuration"]	= function(sValue) {
 		);
 	throw new cXPath2Error("FORG0001");
 };
+
+function fXSYearMonthDuration_normalize(oDuration) {
+	if (oDuration.month >= 12) {
+		oDuration.year	+= ~~(oDuration.month / 12);
+		oDuration.month	%= 12;
+	}
+};
