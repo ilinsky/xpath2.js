@@ -167,27 +167,27 @@ cFunctionCall.operators["divide-yearMonthDuration-by-yearMonthDuration"]	= funct
 
 // op:add-dayTimeDurations($arg1 as xs:dayTimeDuration, $arg2 as xs:dayTimeDuration) as xs:dayTimeDuration
 cFunctionCall.operators["add-dayTimeDurations"]	= function(oLeft, oRight) {
-
+	return fXSDayTimeDuration_fromSeconds(fXSDayTimeDuration_toSeconds(oLeft) + fXSDayTimeDuration_toSeconds(oRight));
 };
 
 // op:subtract-dayTimeDurations($arg1 as xs:dayTimeDuration, $arg2 as xs:dayTimeDuration) as xs:dayTimeDuration
 cFunctionCall.operators["subtract-dayTimeDurations"]	= function(oLeft, oRight) {
-
+	return fXSDayTimeDuration_fromSeconds(fXSDayTimeDuration_toSeconds(oLeft) - fXSDayTimeDuration_toSeconds(oRight));
 };
 
 // op:multiply-dayTimeDurations($arg1 as xs:dayTimeDuration, $arg2 as xs:double) as xs:dayTimeDuration
 cFunctionCall.operators["multiply-dayTimeDuration"]	= function(oLeft, oRight) {
-
+	return fXSDayTimeDuration_fromSeconds(fXSDayTimeDuration_toSeconds(oLeft) * oRight);
 };
 
 // op:divide-dayTimeDurations($arg1 as xs:dayTimeDuration, $arg2 as xs:double) as xs:dayTimeDuration
 cFunctionCall.operators["divide-dayTimeDuration"]	= function(oLeft, oRight) {
-
+	return fXSDayTimeDuration_fromSeconds(fXSDayTimeDuration_toSeconds(oLeft) / oRight);
 };
 
 // op:divide-dayTimeDuration-by-dayTimeDuration($arg1 as xs:dayTimeDuration, $arg2 as xs:dayTimeDuration) as xs:decimal
 cFunctionCall.operators["divide-dayTimeDuration-by-dayTimeDuration"]	= function(oLeft, oRight) {
-
+	return fXSDayTimeDuration_toSeconds(oLeft) / fXSDayTimeDuration_toSeconds(oRight);
 };
 
 // 10.8 Arithmetic Operators on Durations, Dates and Times
