@@ -210,7 +210,7 @@ cFunctionCall.functions["zero-or-one"]	= function(oSequence1) {
 	if (arguments.length < 1)
 		throw new cXPath2Error("XPST0017");
 
-	if (oSequence1.length > 1)
+	if (oSequence1.items.length > 1)
 		throw new cXPath2Error("FORG0003");
 
 	return oSequence1;
@@ -221,7 +221,7 @@ cFunctionCall.functions["one-or-more"]	= function(oSequence1) {
 	if (arguments.length < 1)
 		throw new cXPath2Error("XPST0017");
 
-	if (oSequence1.length < 1)
+	if (oSequence1.items.length < 1)
 		throw new cXPath2Error("FORG0004");
 
 	return oSequence1;
@@ -232,7 +232,7 @@ cFunctionCall.functions["exactly-one"]	= function(oSequence1) {
 	if (arguments.length < 1)
 		throw new cXPath2Error("XPST0017");
 
-	if (oSequence1.length != 1)
+	if (oSequence1.items.length != 1)
 		throw new cXPath2Error("FORG0005")
 
 	return oSequence1;

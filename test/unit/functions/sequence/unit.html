@@ -21,6 +21,18 @@
 				return evaluateXPath(sXPath)[0];
 			}
 
+			function evaluateXPathError(sXPath) {
+				var value	= null,
+					error	= null;
+				try {
+					value	= evaluateXPathSingle(sXPath);
+				}
+				catch (e) {
+					error	= e.code;
+				}
+				return error;
+			}
+
 			// Dummy test
 			function testPage() {
 				assertTrue(true);
@@ -123,6 +135,41 @@
 						evaluateXPath('fn:subsequence(("a", "b", "c", "d", "e"), 4)'));
 				assertArrayEquals(["c", "d"],
 						evaluateXPath('fn:subsequence(("a", "b", "c", "d", "e"), 3, 2)'));
+			}
+
+			function testUnordered() {
+
+			}
+
+			// 15.2 Functions That Test the Cardinality of Sequences
+			function testZeroOrOne() {
+				// Not W3C tests
+				assertArrayEquals([1],
+						evaluateXPath('fn:zero-or-one((1))'));
+				assertArrayEquals([],
+						evaluateXPath('fn:zero-or-one(())'));
+				assertEquals("FORG0003",
+						evaluateXPathError('fn:zero-or-one((1, 2))'));
+			}
+
+			function testOneOrMore() {
+				// Not W3C tests
+				assertArrayEquals([1],
+						evaluateXPath('fn:one-or-more((1))'));
+				assertArrayEquals([1, 2],
+						evaluateXPath('fn:one-or-more((1, 2))'));
+				assertEquals("FORG0004",
+						evaluateXPathError('fn:one-or-more(())'));
+			}
+
+			function testExactlyOne() {
+				// Not W3C tests
+				assertArrayEquals([1],
+						evaluateXPath('fn:exactly-one((1))'));
+				assertEquals("FORG0005",
+						evaluateXPathError('fn:exactly-one((1, 2))'));
+				assertEquals("FORG0005",
+						evaluateXPathError('fn:exactly-one(())'));
 			}
 		</script>
 	</head>
