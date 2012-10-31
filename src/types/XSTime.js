@@ -35,7 +35,7 @@ cFunctionCall.dataTypes["time"]	= function(sValue) {
 	var aMatch	= sValue.match(cXSTime.RegExp);
 	if (aMatch) {
 		var bValue	= aMatch[6] == "24:00:00";
-		return new cXSTime(bValue ? 24 : +aMatch[2],
+		return new cXSTime(bValue ? 0 : +aMatch[2],
 							bValue ? 0 : +aMatch[3],
 							bValue ? 0 : +aMatch[4],
 							bValue ? +aMatch[7] || 0 : +aMatch[5] || 0,
@@ -47,5 +47,5 @@ cFunctionCall.dataTypes["time"]	= function(sValue) {
 
 //
 function fXSTime_toSeconds(oTime) {
-
+	return oTime.second + oTime.millisecond + (oTime.minute + (oTime.timezone !== null ? oTime.timezone % 60 : 0) + (oTime.hour + (oTime.timezone !== null ? ~~(oTime.timezone / 60) : 0)) * 60) * 60;
 };

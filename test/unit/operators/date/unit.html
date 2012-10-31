@@ -91,11 +91,11 @@
 			}
 
 			function testSubstractTimes() {
-				assertEquals("PT2H12M",
-						evaluateXPathSingle('string(xs:time("11:12:00Z") - xs:time("04:00:00"))'));
+//				assertEquals("PT2H12M",	// Depends on implicit timezone
+//						evaluateXPathSingle('string(xs:time("11:12:00Z") - xs:time("04:00:00"))'));
 				assertEquals("PT0S",
 						evaluateXPathSingle('string(xs:time("11:00:00-05:00") - xs:time("21:30:00+05:30"))'));
-				assertEquals("PT1D",
+				assertEquals("P1D",
 						evaluateXPathSingle('string(xs:time("17:00:00-06:00") - xs:time("08:00:00+09:00"))'));
 				assertEquals("-PT23H59M59S",
 						evaluateXPathSingle('string(xs:time("24:00:00") - xs:time("23:59:59"))'));
@@ -127,7 +127,7 @@
 			}
 
 			function testAddDayTimeDurationToDate() {
-				assertEquals("2004-11-01",
+				assertEquals("2004-11-01Z",
 						evaluateXPathSingle('string(xs:date("2004-10-30Z") + xs:dayTimeDuration("P2DT2H30M0S"))'));
 			}
 
