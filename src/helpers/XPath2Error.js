@@ -30,4 +30,5 @@ oXPathError_messages["FORG0001"]	= "Invalid value for cast/constructor.";
 oXPathError_messages["FORG0003"]	= "fn:zero-or-one called with a sequence containing more than one item.";
 oXPathError_messages["FORG0004"]	= "fn:one-or-more called with a sequence containing no items.";
 oXPathError_messages["FORG0005"]	= "fn:exactly-one called with a sequence containing zero or more than one item.";
+oXPathError_messages["FORG0006"]	= "Invalid argument type.";
 
