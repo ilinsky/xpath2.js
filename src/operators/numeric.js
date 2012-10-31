@@ -54,7 +54,7 @@ cFunctionCall.operators["numeric-multiply"]	= function(oLeft, oRight) {
 // op:numeric-divide($arg1 as numeric, $arg2 as numeric) as numeric
 cFunctionCall.operators["numeric-divide"]	= function(oLeft, oRight) {
 	var c	= cMath.pow(10, fFunctionCall_numeric_getPower(oLeft, oRight));
-	return ((oLeft * c) / (oRight * c));
+	return (oLeft * c) / (oRight * c);
 };
 
 // op:numeric-integer-divide($arg1 as numeric, $arg2 as numeric) as xs:integer
@@ -64,7 +64,8 @@ cFunctionCall.operators["numeric-integer-divide"]	= function(oLeft, oRight) {
 
 // op:numeric-mod($arg1 as numeric, $arg2 as numeric) as numeric
 cFunctionCall.operators["numeric-mod"]	= function(oLeft, oRight) {
-	return oLeft % oRight;
+	var c	= cMath.pow(10, fFunctionCall_numeric_getPower(oLeft, oRight));
+	return ((oLeft * c) % (oRight * c)) / c;
 };
 
 // op:numeric-unary-plus($arg as numeric) as numeric
