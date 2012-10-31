@@ -83,7 +83,9 @@ function fXSDateTime_getDateComponent(oDateTime) {
 };
 
 function fXSDateTime_getTimeComponent(oDateTime) {
+	var aValue	= cString(oDateTime.seconds).split('.');
 	return fXSDateTime_pad(oDateTime.hours)
 			+ ':' + fXSDateTime_pad(oDateTime.minutes)
-			+ ':' + fXSDateTime_pad(oDateTime.seconds);
+			+ ':' + fXSDateTime_pad(aValue[0])
+			+ (aValue.length > 1 ? '.' + aValue[1] : '');
 };
