@@ -77,7 +77,7 @@ function fXSDateTime_getTZComponent(oDateTime) {
 };
 
 function fXSDateTime_getDateComponent(oDateTime) {
-	return oDateTime.year
+	return fXSDateTime_pad(oDateTime.year, 4)
 			+ '-' + fXSDateTime_pad(oDateTime.month)
 			+ '-' + fXSDateTime_pad(oDateTime.day);
 };
