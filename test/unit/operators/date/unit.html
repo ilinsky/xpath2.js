@@ -55,12 +55,12 @@
 			}
 
 			function testAddDayTimeDurations() {
-				assertEquals("PT8D5M",
+				assertEquals("P8DT5M",
 						evaluateXPathSingle('string(xs:dayTimeDuration("P2DT12H5M") + xs:dayTimeDuration("P5DT12H"))'));
 			}
 
 			function testSubstractDayTimeDurations() {
-				assertEquals("PT1D1H30M",
+				assertEquals("P1DT1H30M",
 						evaluateXPathSingle('string(xs:dayTimeDuration("P2DT12H") - xs:dayTimeDuration("P1DT10H30M"))'));
 			}
 
