@@ -24,10 +24,7 @@ cXSYearMonthDuration.prototype.toString	= function() {
 cFunctionCall.dataTypes["yearMonthDuration"]	= function(sValue) {
 	var aMatch	= sValue.match(cXSYearMonthDuration.RegExp);
 	if (aMatch)
-		return new cXSYearMonthDuration(+aMatch[2] || 0,
-										+aMatch[3] || 0,
-										aMatch[1] == '-'
-		);
+		return fXSYearMonthDuration_normalize(new cXSYearMonthDuration(+aMatch[2] || 0, +aMatch[3] || 0, aMatch[1] == '-'));
 	throw new cXPath2Error("FORG0001");
 };
 
@@ -48,4 +45,5 @@ function fXSYearMonthDuration_normalize(oDuration) {
 		oDuration.year	+= ~~(oDuration.month / 12);
 		oDuration.month	%= 12;
 	}
+	return oDuration;
 };

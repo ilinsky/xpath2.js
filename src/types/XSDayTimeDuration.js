@@ -24,12 +24,7 @@ cXSDayTimeDuration.prototype.toString	= function() {
 cFunctionCall.dataTypes["dayTimeDuration"]	= function(sValue) {
 	var aMatch	= sValue.match(cXSDayTimeDuration.RegExp);
 	if (aMatch)
-		return new cXSDayTimeDuration(+aMatch[2] || 0,
-										+aMatch[3] || 0,
-										+aMatch[4] || 0,
-										+aMatch[5] || 0,
-										aMatch[1] == '-'
-		);
+		return fXSDayTimeDuration_normalize(new cXSDayTimeDuration(+aMatch[2] || 0, +aMatch[3] || 0, +aMatch[4] || 0, +aMatch[5] || 0, aMatch[1] == '-'));
 	throw new cXPath2Error("FORG0001");
 };
 //
@@ -59,4 +54,5 @@ function fXSDayTimeDuration_normalize(oDuration) {
 		oDuration.day		+= ~~(oDuration.hour / 24);
 		oDuration.hour		%= 24;
 	}
+	return oDuration;
 };

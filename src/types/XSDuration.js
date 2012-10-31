@@ -15,9 +15,6 @@ function cXSDuration(nYear, nMonth, nDay, nHour, nMinute, nSecond, bNegative) {
 	this.minute	= nMinute;
 	this.second	= nSecond;
 	this.negative	= bNegative;
-	//
-	fXSYearMonthDuration_normalize(this);
-	fXSDayTimeDuration_normalize(this);
 };
 
 cXSDuration.RegExp	= /^(-)?P(?:([0-9]+)Y)?(?:([0-9]+)M)?(?:([0-9]+)D)?(?:T(?:([0-9]+)H)?(?:([0-9]+)M)?(?:((?:(?:[0-9]+(?:.[0-9]*)?)|(?:.[0-9]+)))S)?)?$/;
@@ -41,13 +38,7 @@ cXSDuration.prototype.toString	= function() {
 cFunctionCall.dataTypes["duration"]	= function(sValue) {
 	var aMatch	= sValue.match(cXSDuration.RegExp);
 	if (aMatch)
-		return new cXSDuration(+aMatch[2] || 0,
-								+aMatch[3] || 0,
-								+aMatch[4] || 0,
-								+aMatch[5] || 0,
-								+aMatch[6] || 0,
-								+aMatch[7] || 0,
-								aMatch[1] == '-');
+		return fXSDuration_normalize(new cXSDuration(+aMatch[2] || 0, +aMatch[3] || 0, +aMatch[4] || 0, +aMatch[5] || 0, +aMatch[6] || 0, +aMatch[7] || 0, aMatch[1] == '-'));
 	throw new cXPath2Error("FORG0001");
 };
 
@@ -64,4 +55,8 @@ function fXSDuration_getDayTimeComponent(oDuration) {
 					+ (oDuration.minute ? oDuration.minute + 'M' : '')
 					+ (oDuration.second ? oDuration.second + 'S' : '')
 				: '');
+};
+
+function fXSDuration_normalize(oDuration) {
+	return fXSYearMonthDuration_normalize(fXSDayTimeDuration_normalize(oDuration));
 };
