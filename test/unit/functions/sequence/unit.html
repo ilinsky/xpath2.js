@@ -171,6 +171,107 @@
 				assertEquals("FORG0005",
 						evaluateXPathError('fn:exactly-one(())'));
 			}
+
+			// 15.4 Aggregate Functions
+			function testCount() {
+				// Not W3C tests
+				assertEquals(3,
+						evaluateXPathSingle('fn:count((true(), 2, "3"))'));
+				assertEquals(0,
+						evaluateXPathSingle('fn:count(())'));
+			}
+
+			function testAvg() {
+				assertEquals(4,
+						evaluateXPathSingle('fn:avg((3, 4, 5))'));
+				assertEquals("P10Y5M",
+						evaluateXPathSingle('string(fn:avg((xs:yearMonthDuration("P20Y"), xs:yearMonthDuration("P10M"))))'));
+				assertEquals("FORG0006",
+						evaluateXPathError('fn:avg((xs:yearMonthDuration("P20Y"), (3, 4, 5))))'));
+				assertArrayEquals([],
+						evaluateXPath('fn:avg(())'));
+//				assertEquals("NaN",
+//						evaluateXPathSingle("string(fn:avg((xs:float('INF'), xs:float('-INF'))))"));
+//				assertEquals("NaN",
+//						evaluateXPathSingle("string(fn:avg(((3, 4, 5), xs:float('NaN'))))"));
+			}
+
+			function testMax() {
+				assertEquals(5,
+						evaluateXPathSingle('fn:max((3,4,5))'));
+				assertEquals(5.0e0,
+						evaluateXPathSingle('fn:max((5, 5.0e0))'));
+				assertEquals("FORG0006",
+						evaluateXPathError('fn:max((3,4,"Zero"))'));
+				// 1 test not copied
+				assertEquals("c",
+						evaluateXPathSingle('fn:max(("a", "b", "c"))'));	// under a typical default collation.
+			}
+
+			function testMin() {
+				assertEquals(3,
+						evaluateXPathSingle('fn:min((3,4,5))'));
+				assertEquals(5.0e0,
+						evaluateXPathSingle('fn:min((5, 5.0e0))'));
+				assertEquals("FORG0006",
+						evaluateXPathError('fn:min((3,4,"Zero"))'));
+//				assertEquals(-0,
+//						evaluateXPathSingle('fn:min((xs:float(0.0E0), xs:float(-0.0E0)))'));
+				// 1 test not copied
+				assertEquals("a",
+						evaluateXPathSingle('fn:min(("a", "b", "c"))'));	// under a typical default collation.
+			}
+
+			function testSum() {
+				assertEquals("P20Y10M",
+						evaluateXPathSingle('fn:string(fn:sum((xs:yearMonthDuration("P20Y"), xs:yearMonthDuration("P10M"))))'));
+				// 1 test not copied
+				assertEquals(12,
+						evaluateXPathSingle('fn:sum((3, 4, 5))'));
+				assertEquals(0,
+						evaluateXPathSingle('fn:sum(())'));
+				assertArrayEquals([],
+						evaluateXPath('fn:sum((),())'));
+				assertEquals("FORG0006",	// Input to sum() contains a mix of duration and non-duration values
+						evaluateXPathError('fn:sum((xs:yearMonthDuration("P20Y"), 9E1))'));
+			}
+
+			// 15.5 Functions and Operators that Generate Sequences
+			function testId() {
+				// Not W3C tests
+				assertNotUndefined(
+						evaluateXPathSingle('fn:id("id")'));
+			}
+
+			function testIdref() {
+				// Not W3C tests
+				assertNotUndefined(
+						evaluateXPathSingle('fn:idref("idref")'));
+			}
+
+			function testDoc() {
+				// Not W3C tests
+				assertNotUndefined(
+						evaluateXPathSingle('fn:doc("doc.xml")'));
+			}
+
+			function testDocAvailable() {
+				// Not W3C tests
+				assertNotUndefined(
+						evaluateXPathSingle('fn:doc-available("doc-available.xml")'));
+			}
+
+			function testCollection() {
+				// Not W3C tests
+				assertNotUndefined(
+						evaluateXPathSingle('fn:collection("collection.xml")'));
+			}
+
+			function testElementWithId() {
+				// Not W3C tests
+				assertNotUndefined(
+						evaluateXPathSingle('fn:element-with-id("element-with-id")'));
+			}
 		</script>
 	</head>
 	<body>
