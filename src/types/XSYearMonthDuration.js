@@ -36,9 +36,11 @@ function fXSYearMonthDuration_toMonths(oDuration) {
 	return (oDuration.year * 12 + oDuration.month) * (oDuration.negative ? -1 : 1);
 };
 
-function fXSYearMonthDuration_fromMonths(nMonths) {
-	nMonths	= cMath.round(nMonths);
-	return new cXSYearMonthDuration(~~(nMonths / 12), nMonths % 12);
+function fXSYearMonthDuration_fromMonths(nValue) {
+	var nNegative	=(nValue = cMath.round(nValue)) < 0,
+		nYears	= ~~((nValue = cMath.abs(nValue)) / 12),
+		nMonths		= nValue -= nYears * 12;
+	return new cXSYearMonthDuration(nYears, nMonths, nNegative);
 };
 
 function fXSYearMonthDuration_normalize(oDuration) {
