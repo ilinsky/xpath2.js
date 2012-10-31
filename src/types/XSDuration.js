@@ -7,13 +7,13 @@
  *
  */
 
-function cXSDuration(nYear, nMonth, nDay, nHour, nMinute, nSecond, bNegative) {
+function cXSDuration(nYear, nMonth, nDay, nHours, nMinutes, nSeconds, bNegative) {
 	this.year	= nYear;
 	this.month	= nMonth;
 	this.day	= nDay;
-	this.hour	= nHour;
-	this.minute	= nMinute;
-	this.second	= nSecond;
+	this.hours	= nHours;
+	this.minutes	= nMinutes;
+	this.seconds	= nSeconds;
 	this.negative	= bNegative;
 };
 
@@ -24,9 +24,9 @@ cXSDuration.prototype	= new cXSAnyAtomicType;
 cXSDuration.prototype.year		= null;
 cXSDuration.prototype.month		= null;
 cXSDuration.prototype.day		= null;
-cXSDuration.prototype.hour		= null;
-cXSDuration.prototype.minute	= null;
-cXSDuration.prototype.second	= null;
+cXSDuration.prototype.hours		= null;
+cXSDuration.prototype.minutes	= null;
+cXSDuration.prototype.seconds	= null;
 cXSDuration.prototype.negative	= null;
 
 cXSDuration.prototype.toString	= function() {
@@ -49,11 +49,11 @@ function fXSDuration_getYearMonthComponent(oDuration) {
 
 function fXSDuration_getDayTimeComponent(oDuration) {
 	return (oDuration.day ? oDuration.day + 'D' : '')
-			+ (oDuration.hour || oDuration.minute || oDuration.second
+			+ (oDuration.hours || oDuration.minutes || oDuration.seconds
 				? 'T'
-					+ (oDuration.hour ? oDuration.hour + 'H' : '')
-					+ (oDuration.minute ? oDuration.minute + 'M' : '')
-					+ (oDuration.second ? oDuration.second + 'S' : '')
+					+ (oDuration.hours ? oDuration.hours + 'H' : '')
+					+ (oDuration.minutes ? oDuration.minutes + 'M' : '')
+					+ (oDuration.seconds ? oDuration.seconds + 'S' : '')
 				: '');
 };
 

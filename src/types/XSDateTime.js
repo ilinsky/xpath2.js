@@ -7,14 +7,14 @@
  *
  */
 
-function cXSDateTime(nYear, nMonth, nDay, nHour, nMinute, nSecond, nMillisecond, nTimezone) {
+function cXSDateTime(nYear, nMonth, nDay, nHours, nMinutes, nSeconds, nMilliseconds, nTimezone) {
 	this.year	= nYear;
 	this.month	= nMonth;
 	this.day	= nDay;
-	this.hour	= nHour;
-	this.minute	= nMinute;
-	this.second	= nSecond;
-	this.millisecond= nMillisecond;
+	this.hours	= nHours;
+	this.minutes	= nMinutes;
+	this.seconds	= nSeconds;
+	this.milliseconds= nMilliseconds;
 	this.timezone	= nTimezone;
 };
 
@@ -25,10 +25,10 @@ cXSDateTime.prototype	= new cXSAnyAtomicType;
 cXSDateTime.prototype.year		= null;
 cXSDateTime.prototype.month		= null;
 cXSDateTime.prototype.day		= null;
-cXSDateTime.prototype.hour		= null;
-cXSDateTime.prototype.minute	= null;
-cXSDateTime.prototype.second	= null;
-cXSDateTime.prototype.millisecond	= null;
+cXSDateTime.prototype.hours		= null;
+cXSDateTime.prototype.minutes	= null;
+cXSDateTime.prototype.seconds	= null;
+cXSDateTime.prototype.milliseconds	= null;
 cXSDateTime.prototype.timezone		= null;
 
 cXSDateTime.prototype.toString	= function() {
@@ -86,10 +86,10 @@ function fXSDateTime_getDateComponent(oDateTime) {
 };
 
 function fXSDateTime_getTimeComponent(oDateTime) {
-	return fXSDateTime_pad(oDateTime.hour)
-			+ ':' + fXSDateTime_pad(oDateTime.minute)
-			+ ':' + fXSDateTime_pad(oDateTime.second)
-			+ (oDateTime.millisecond
-				? '.' + fXSDateTime_pad(oDateTime.millisecond, 3)
+	return fXSDateTime_pad(oDateTime.hours)
+			+ ':' + fXSDateTime_pad(oDateTime.minutes)
+			+ ':' + fXSDateTime_pad(oDateTime.seconds)
+			+ (oDateTime.milliseconds
+				? '.' + fXSDateTime_pad(oDateTime.milliseconds, 3)
 				: '');
 };

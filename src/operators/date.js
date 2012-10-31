@@ -212,10 +212,10 @@ cFunctionCall.operators["add-yearMonthDuration-to-dateTime"]	= function(oLeft, o
 	oDate.setUTCFullYear(oLeft.year + oRight.year);
 	oDate.setUTCMonth(oLeft.month + oRight.month - 1);
 	oDate.setUTCDate(oLeft.day);
-	oDate.setUTCHours(oLeft.hour + (oLeft.timezone !== null ? ~~(oLeft.timezone / 60) : 0));
-	oDate.setUTCMinutes(oLeft.minute + (oLeft.timezone !== null ? oLeft.timezone % 60 : 0));
-	oDate.setUTCSeconds(oLeft.second);
-	oDate.setUTCMilliseconds(oLeft.millisecond);
+	oDate.setUTCHours(oLeft.hours + (oLeft.timezone !== null ? ~~(oLeft.timezone / 60) : 0));
+	oDate.setUTCMinutes(oLeft.minutes + (oLeft.timezone !== null ? oLeft.timezone % 60 : 0));
+	oDate.setUTCSeconds(oLeft.seconds);
+	oDate.setUTCMilliseconds(oLeft.milliseconds);
 
 	return new cXSDateTime(oDate.getUTCFullYear(), oDate.getUTCMonth() + 1, oDate.getUTCDate(), oDate.getUTCHours(), oDate.getUTCMinutes(), oDate.getUTCSeconds(), oDate.getUTCMilliseconds(), oLeft.timezone);*/
 	throw "Not implemented";
@@ -227,10 +227,10 @@ cFunctionCall.operators["add-dayTimeDuration-to-dateTime"]	= function(oLeft, oRi
 	oDate.setUTCFullYear(oLeft.year);
 	oDate.setUTCMonth(oLeft.month - 1);
 	oDate.setUTCDate(oLeft.day + oRight.day);
-	oDate.setUTCHours(oLeft.hour + oRight.hour + (oLeft.timezone !== null ? ~~(oLeft.timezone / 60) : 0));
-	oDate.setUTCMinutes(oLeft.minute + oRight.minute + (oLeft.timezone !== null ? oLeft.timezone % 60 : 0));
-	oDate.setUTCSeconds(oLeft.second + oRight.second);
-	oDate.setUTCMilliseconds(oLeft.millisecond);
+	oDate.setUTCHours(oLeft.hours + oRight.hours + (oLeft.timezone !== null ? ~~(oLeft.timezone / 60) : 0));
+	oDate.setUTCMinutes(oLeft.minutes + oRight.minutes + (oLeft.timezone !== null ? oLeft.timezone % 60 : 0));
+	oDate.setUTCSeconds(oLeft.seconds + oRight.seconds);
+	oDate.setUTCMilliseconds(oLeft.milliseconds);
 
 	return new cXSDateTime(oDate.getUTCFullYear(), oDate.getUTCMonth() + 1, oDate.getUTCDate(), oDate.getUTCHours(), oDate.getUTCMinutes(), oDate.getUTCSeconds(), oDate.getUTCMilliseconds(), oLeft.timezone);*/
 	throw "Not implemented";
@@ -242,10 +242,10 @@ cFunctionCall.operators["subtract-yearMonthDuration-from-dateTime"]	= function(o
 	oDate.setUTCFullYear(oLeft.year - oRight.year);
 	oDate.setUTCMonth(oLeft.month - oRight.month - 1);
 	oDate.setUTCDate(oLeft.day);
-	oDate.setUTCHours(oLeft.hour + (oLeft.timezone !== null ? ~~(oLeft.timezone / 60) : 0));
-	oDate.setUTCMinutes(oLeft.minute + (oLeft.timezone !== null ? oLeft.timezone % 60 : 0));
-	oDate.setUTCSeconds(oLeft.second);
-	oDate.setUTCMilliseconds(oLeft.millisecond);
+	oDate.setUTCHours(oLeft.hours + (oLeft.timezone !== null ? ~~(oLeft.timezone / 60) : 0));
+	oDate.setUTCMinutes(oLeft.minutes + (oLeft.timezone !== null ? oLeft.timezone % 60 : 0));
+	oDate.setUTCSeconds(oLeft.seconds);
+	oDate.setUTCMilliseconds(oLeft.milliseconds);
 
 	return new cXSDateTime(oDate.getUTCFullYear(), oDate.getUTCMonth() + 1, oDate.getUTCDate(), oDate.getUTCHours(), oDate.getUTCMinutes(), oDate.getUTCSeconds(), oDate.getUTCMilliseconds(), oLeft.timezone);*/
 	throw "Not implemented";
@@ -258,10 +258,10 @@ cFunctionCall.operators["subtract-dayTimeDuration-from-dateTime"]	= function(oLe
 	oDate.setUTCFullYear(oLeft.year);
 	oDate.setUTCMonth(oLeft.month - 1);
 	oDate.setUTCDate(oLeft.day - oRight.day);
-	oDate.setUTCHours(oLeft.hour - oRight.hour + (oLeft.timezone !== null ? ~~(oLeft.timezone / 60) : 0));
-	oDate.setUTCMinutes(oLeft.minute - oRight.minute + (oLeft.timezone !== null ? oLeft.timezone % 60 : 0));
-	oDate.setUTCSeconds(oLeft.second - oRight.second);
-	oDate.setUTCMilliseconds(oLeft.millisecond);
+	oDate.setUTCHours(oLeft.hours - oRight.hours + (oLeft.timezone !== null ? ~~(oLeft.timezone / 60) : 0));
+	oDate.setUTCMinutes(oLeft.minutes - oRight.minutes + (oLeft.timezone !== null ? oLeft.timezone % 60 : 0));
+	oDate.setUTCSeconds(oLeft.seconds - oRight.seconds);
+	oDate.setUTCMilliseconds(oLeft.milliseconds);
 
 	return new cXSDateTime(oDate.getUTCFullYear(), oDate.getUTCMonth() + 1, oDate.getUTCDate(), oDate.getUTCHours(), oDate.getUTCMinutes(), oDate.getUTCSeconds(), oDate.getUTCMilliseconds(), oLeft.timezone);*/
 	throw "Not implemented";
@@ -284,9 +284,9 @@ cFunctionCall.operators["add-dayTimeDuration-to-date"]	= function(oLeft, oRight)
 	oDate.setUTCFullYear(oLeft.year);
 	oDate.setUTCMonth(oLeft.month - 1);
 	oDate.setUTCDate(oLeft.day + oRight.day);
-	oDate.setUTCHours(oRight.hour + (oLeft.timezone !== null ? ~~(oLeft.timezone / 60) : 0));
-	oDate.setUTCMinutes(oRight.minute + (oLeft.timezone !== null ? oLeft.timezone % 60 : 0));
-	oDate.setUTCSeconds(oRight.second);
+	oDate.setUTCHours(oRight.hours + (oLeft.timezone !== null ? ~~(oLeft.timezone / 60) : 0));
+	oDate.setUTCMinutes(oRight.minutes + (oLeft.timezone !== null ? oLeft.timezone % 60 : 0));
+	oDate.setUTCSeconds(oRight.seconds);
 	oDate.setUTCMilliseconds(0);
 
 	return new cXSDate(oDate.getUTCFullYear(), oDate.getUTCMonth() + 1, oDate.getUTCDate(), oLeft.timezone);*/
@@ -317,7 +317,7 @@ cFunctionCall.operators["subtract-dayTimeDuration-from-date"]	= function(oLeft, 
 	oDate.setUTCHours(oLeft.timezone !== null ? ~~(oLeft.timezone / 60) : 0, oLeft.timezone !== null ? oLeft.timezone % 60 : 0, 0, 0);
 	// change
 	oDate.setUTCDate(oDate.getUTCDate() - oRight.day);
-	oDate.setUTCHours(oDate.getUTCHours() - oRight.hour, oDate.getUTCMinutes() - oRight.minute, oDate.getUTCSeconds() - oRight.second);
+	oDate.setUTCHours(oDate.getUTCHours() - oRight.hours, oDate.getUTCMinutes() - oRight.minutes, oDate.getUTCSeconds() - oRight.seconds);
 
 	return new cXSDate(oDate.getUTCFullYear(), oDate.getUTCMonth() + 1, oDate.getUTCDate(), oLeft.timezone);*/
 	throw "Not implemented";

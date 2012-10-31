@@ -7,11 +7,11 @@
  *
  */
 
-function cXSTime(nHour, nMinute, nSecond, nMillisecond, nTimezone) {
-	this.hour	= nHour;
-	this.minute	= nMinute;
-	this.second	= nSecond;
-	this.millisecond= nMillisecond;
+function cXSTime(nHours, nMinutes, nSeconds, nMilliseconds, nTimezone) {
+	this.hours	= nHours;
+	this.minutes	= nMinutes;
+	this.seconds	= nSeconds;
+	this.milliseconds= nMilliseconds;
 	this.timezone	= nTimezone;
 };
 
@@ -19,10 +19,10 @@ cXSTime.RegExp	= /^(([01]\d|2[0-3]):([0-5]\d):([0-5]\d)(?:\.(\d+))?|(24:00:00)(?
 
 cXSTime.prototype	= new cXSAnyAtomicType;
 
-cXSTime.prototype.hour		= null;
-cXSTime.prototype.minute	= null;
-cXSTime.prototype.second	= null;
-cXSTime.prototype.millisecond	= null;
+cXSTime.prototype.hours		= null;
+cXSTime.prototype.minutes	= null;
+cXSTime.prototype.seconds	= null;
+cXSTime.prototype.milliseconds	= null;
 cXSTime.prototype.timezone		= null;
 
 cXSTime.prototype.toString	= function() {
@@ -47,5 +47,5 @@ cFunctionCall.dataTypes["time"]	= function(sValue) {
 
 //
 function fXSTime_toSeconds(oTime) {
-	return oTime.second + oTime.millisecond + (oTime.minute + (oTime.timezone !== null ? oTime.timezone % 60 : 0) + (oTime.hour + (oTime.timezone !== null ? ~~(oTime.timezone / 60) : 0)) * 60) * 60;
+	return oTime.seconds + oTime.milliseconds + (oTime.minutes + (oTime.timezone !== null ? oTime.timezone % 60 : 0) + (oTime.hours + (oTime.timezone !== null ? ~~(oTime.timezone / 60) : 0)) * 60) * 60;
 };

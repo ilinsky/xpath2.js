@@ -211,7 +211,7 @@ function fFunctionCall_dateTime_getComponent(oSequence1, cType, sName) {
 				if (nValue == 24)
 					nValue	= 0;
 			if (sName == "second")
-				nValue	+= cNumber('.' + oItem.millisecond);	// TODO: Maybe get rid of millisecond component
+				nValue	+= cNumber('.' + oItem.milliseconds);	// TODO: Maybe get rid of millisecond component
 		}
 		if (cType != cXSTime)
 			nValue	*= oItem.negative ?-1 : 1;

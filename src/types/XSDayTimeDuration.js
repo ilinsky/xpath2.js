@@ -7,8 +7,8 @@
  *
  */
 
-function cXSDayTimeDuration(nDay, nHour, nMinute, nSecond, bNegative) {
-	cXSDuration.call(this, 0, 0, nDay, nHour, nMinute, nSecond, bNegative);
+function cXSDayTimeDuration(nDay, nHours, nMinutes, nSeconds, bNegative) {
+	cXSDuration.call(this, 0, 0, nDay, nHours, nMinutes, nSeconds, bNegative);
 };
 
 cXSDayTimeDuration.RegExp	= /^(-)?P(?:([0-9]+)D)?(?:T(?:([0-9]+)H)?(?:([0-9]+)M)?(?:((?:(?:[0-9]+(?:.[0-9]*)?)|(?:.[0-9]+)))S)?)?$/;
@@ -29,7 +29,7 @@ cFunctionCall.dataTypes["dayTimeDuration"]	= function(sValue) {
 };
 //
 function fXSDayTimeDuration_toSeconds(oDuration) {
-	return (((oDuration.day * 24 + oDuration.hour) * 60 + oDuration.minute) * 60 + oDuration.second) * (oDuration.negative ? -1 : 1);
+	return (((oDuration.day * 24 + oDuration.hours) * 60 + oDuration.minutes) * 60 + oDuration.seconds) * (oDuration.negative ? -1 : 1);
 };
 
 function fXSDayTimeDuration_fromSeconds(nValue) {
@@ -42,17 +42,17 @@ function fXSDayTimeDuration_fromSeconds(nValue) {
 };
 
 function fXSDayTimeDuration_normalize(oDuration) {
-	if (oDuration.second >= 60) {
-		oDuration.minute	+= ~~(oDuration.second / 60);
-		oDuration.second	%= 60;
+	if (oDuration.seconds >= 60) {
+		oDuration.minutes	+= ~~(oDuration.seconds / 60);
+		oDuration.seconds	%= 60;
 	}
-	if (oDuration.minute >= 60) {
-		oDuration.hour		+= ~~(oDuration.minute / 60);
-		oDuration.minute	%= 60;
+	if (oDuration.minutes >= 60) {
+		oDuration.hours		+= ~~(oDuration.minutes / 60);
+		oDuration.minutes	%= 60;
 	}
-	if (oDuration.hour >= 24) {
-		oDuration.day		+= ~~(oDuration.hour / 24);
-		oDuration.hour		%= 24;
+	if (oDuration.hours >= 24) {
+		oDuration.day		+= ~~(oDuration.hours / 24);
+		oDuration.hours		%= 24;
 	}
 	return oDuration;
 };
