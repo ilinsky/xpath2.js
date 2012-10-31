@@ -7,17 +7,17 @@
  *
  */
 
-function cXSDecimal() {
+function cXSFloat() {
 
 };
 
-cXSDecimal.RegExp	= /^[+\-]?((\d+(\.\d*)?)|(\.\d+))$/;
+cXSFloat.RegExp	= /^([+\-]?((\d+(\.\d*)?)|(\.\d+))([eE][+\-]?\d+)?|-?INF|NaN)$/;
 
-cXSDecimal.prototype	= new cXSAnyAtomicType;
+cXSFloat.prototype	= new cXSAnyAtomicType;
 
 //
-cFunctionCall.dataTypes["decimal"]	= function(sValue) {
-	var aMatch	= sValue.match(cXSDecimal.RegExp);
+cFunctionCall.dataTypes["float"]	= function(sValue) {
+	var aMatch	= sValue.match(cXSFloat.RegExp);
 	if (aMatch)
 		return +sValue;
 	throw new cXPath2Error("FORG0001");

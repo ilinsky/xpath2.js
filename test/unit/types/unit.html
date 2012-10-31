@@ -73,13 +73,35 @@
 						evaluateXPathSingle('xs:decimal("1")'));
 				assertEquals(1.2,
 						evaluateXPathSingle('xs:decimal("1.2")'));
-				assertEquals(1.2e5,
-						evaluateXPathSingle('xs:decimal("1.2e5")'));
-				assertEquals(-1.2e5,
-						evaluateXPathSingle('xs:decimal("-1.2e5")'));
 				// Test errors
+				assertEquals("FORG0001", evaluateXPathError('xs:decimal("1.2e5")'));
+				assertEquals("FORG0001", evaluateXPathError('xs:decimal("NaN")'));
+				assertEquals("FORG0001", evaluateXPathError('xs:decimal("INF")'));
+				assertEquals("FORG0001", evaluateXPathError('xs:decimal("-INF")'));
 				assertEquals("FORG0001", evaluateXPathError('xs:decimal("")'));
 				assertEquals("FORG0001", evaluateXPathError('xs:decimal("1f5")'));
+			}
+
+			function testXSFloat() {
+				assertEquals(0,
+						evaluateXPathSingle('xs:float("0")'));
+				assertEquals(1,
+						evaluateXPathSingle('xs:float("1")'));
+				assertEquals(1.2,
+						evaluateXPathSingle('xs:float("1.2")'));
+				assertEquals(1.2e5,
+						evaluateXPathSingle('xs:float("1.2e5")'));
+				assertEquals(-1.2e5,
+						evaluateXPathSingle('xs:float("-1.2e5")'));
+				assertNaN(
+						evaluateXPathSingle('xs:float("NaN")'));
+				assertEquals(Infinity,
+						evaluateXPathSingle('xs:float("INF")'));
+				assertEquals(-Infinity,
+						evaluateXPathSingle('xs:float("-INF")'));
+				// Test errors
+				assertEquals("FORG0001", evaluateXPathError('xs:float("")'));
+				assertEquals("FORG0001", evaluateXPathError('xs:float("1f5")'));
 			}
 
 			// dates
