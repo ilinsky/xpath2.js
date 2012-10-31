@@ -56,17 +56,17 @@ cFunctionCall.functions["days-from-duration"]	= function(oSequence1) {
 
 // fn:hours-from-duration($arg as xs:duration?) as xs:integer?
 cFunctionCall.functions["hours-from-duration"]	= function(oSequence1) {
-	return fFunctionCall_duration_getComponent(oSequence1, cXSDuration, "hour");
+	return fFunctionCall_duration_getComponent(oSequence1, cXSDuration, "hours");
 };
 
 // fn:minutes-from-duration($arg as xs:duration?) as xs:integer?
 cFunctionCall.functions["minutes-from-duration"]	= function(oSequence1) {
-	return fFunctionCall_duration_getComponent(oSequence1, cXSDuration, "minute");
+	return fFunctionCall_duration_getComponent(oSequence1, cXSDuration, "minutes");
 };
 
 // fn:seconds-from-duration($arg as xs:duration?) as xs:decimal?
 cFunctionCall.functions["seconds-from-duration"]	= function(oSequence1) {
-	return fFunctionCall_duration_getComponent(oSequence1, cXSDuration, "second");
+	return fFunctionCall_duration_getComponent(oSequence1, cXSDuration, "seconds");
 };
 
 // functions on dateTime
@@ -87,17 +87,17 @@ cFunctionCall.functions["day-from-dateTime"]	= function(oSequence1) {
 
 // fn:hours-from-dateTime($arg as xs:dateTime?) as xs:integer?
 cFunctionCall.functions["hours-from-dateTime"]	= function(oSequence1) {
-	return fFunctionCall_dateTime_getComponent(oSequence1, cXSDateTime, "hour");
+	return fFunctionCall_dateTime_getComponent(oSequence1, cXSDateTime, "hours");
 };
 
 // fn:minutes-from-dateTime($arg as xs:dateTime?) as xs:integer?
 cFunctionCall.functions["minutes-from-dateTime"]	= function(oSequence1) {
-	return fFunctionCall_dateTime_getComponent(oSequence1, cXSDateTime, "minute");
+	return fFunctionCall_dateTime_getComponent(oSequence1, cXSDateTime, "minutes");
 };
 
 // fn:seconds-from-dateTime($arg as xs:dateTime?) as xs:decimal?
 cFunctionCall.functions["seconds-from-dateTime"]	= function(oSequence1) {
-	return fFunctionCall_dateTime_getComponent(oSequence1, cXSDateTime, "second");
+	return fFunctionCall_dateTime_getComponent(oSequence1, cXSDateTime, "seconds");
 };
 
 // fn:timezone-from-dateTime($arg as xs:dateTime?) as xs:dayTimeDuration?
@@ -129,17 +129,17 @@ cFunctionCall.functions["timezone-from-date"]	= function(oSequence1) {
 // functions on time
 // fn:hours-from-time($arg as xs:time?) as xs:integer?
 cFunctionCall.functions["hours-from-time"]	= function(oSequence1) {
-	return fFunctionCall_dateTime_getComponent(oSequence1, cXSTime, "hour");
+	return fFunctionCall_dateTime_getComponent(oSequence1, cXSTime, "hours");
 };
 
 // fn:minutes-from-time($arg as xs:time?) as xs:integer?
 cFunctionCall.functions["minutes-from-time"]	= function(oSequence1) {
-	return fFunctionCall_dateTime_getComponent(oSequence1, cXSTime, "minute");
+	return fFunctionCall_dateTime_getComponent(oSequence1, cXSTime, "minutes");
 };
 
 // fn:seconds-from-time($arg as xs:time?) as xs:decimal?
 cFunctionCall.functions["seconds-from-time"]	= function(oSequence1) {
-	return fFunctionCall_dateTime_getComponent(oSequence1, cXSTime, "second");
+	return fFunctionCall_dateTime_getComponent(oSequence1, cXSTime, "seconds");
 };
 
 // fn:timezone-from-time($arg as xs:time?) as xs:dayTimeDuration?
@@ -207,11 +207,9 @@ function fFunctionCall_dateTime_getComponent(oSequence1, cType, sName) {
 	else {
 		var nValue	= oItem[sName];
 		if (cType != cXSDate) {
-			if (sName == "hour")
+			if (sName == "hours")
 				if (nValue == 24)
 					nValue	= 0;
-			if (sName == "second")
-				nValue	+= cNumber('.' + oItem.milliseconds);	// TODO: Maybe get rid of millisecond component
 		}
 		if (cType != cXSTime)
 			nValue	*= oItem.negative ?-1 : 1;

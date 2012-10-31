@@ -32,7 +32,7 @@ cFunctionCall.functions["last"]	= function() {
 // fn:current-dateTime() as xs:dateTime (2004-05-12T18:17:15.125Z)
 cFunctionCall.functions["current-dateTime"]	= function() {
 	var oDate	= new cDate;
-	return new cXPath2Sequence(new cXSDateTime(oDate.getFullYear(), oDate.getMonth() + 1, oDate.getDate(), oDate.getHours(), oDate.getMinutes(), oDate.getSeconds(), oDate.getMilliseconds(), oDate.getTimezoneOffset()));
+	return new cXPath2Sequence(new cXSDateTime(oDate.getFullYear(), oDate.getMonth() + 1, oDate.getDate(), oDate.getHours(), oDate.getMinutes(), oDate.getSeconds() + oDate.getMilliseconds() / 1000, oDate.getTimezoneOffset()));
 };
 
 // fn:current-date() as xs:date (2004-05-12+01:00)
@@ -44,7 +44,7 @@ cFunctionCall.functions["current-date"]	= function() {
 // fn:current-time() as xs:time (23:17:00.000-05:00)
 cFunctionCall.functions["current-time"]	= function() {
 	var oDate	= new cDate;
-	return new cXPath2Sequence(new cXSTime(oDate.getHours(), oDate.getMinutes(), oDate.getSeconds(), oDate.getMilliseconds(), oDate.getTimezoneOffset()));
+	return new cXPath2Sequence(new cXSTime(oDate.getHours(), oDate.getMinutes(), oDate.getSeconds() + oDate.getMilliseconds() / 1000, oDate.getTimezoneOffset()));
 };
 
 // fn:implicit-timezone as xs:dayTimeDuration

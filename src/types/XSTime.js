@@ -7,11 +7,10 @@
  *
  */
 
-function cXSTime(nHours, nMinutes, nSeconds, nMilliseconds, nTimezone) {
+function cXSTime(nHours, nMinutes, nSeconds, nTimezone) {
 	this.hours	= nHours;
 	this.minutes	= nMinutes;
 	this.seconds	= nSeconds;
-	this.milliseconds= nMilliseconds;
 	this.timezone	= nTimezone;
 };
 
@@ -22,7 +21,6 @@ cXSTime.prototype	= new cXSAnyAtomicType;
 cXSTime.prototype.hours		= null;
 cXSTime.prototype.minutes	= null;
 cXSTime.prototype.seconds	= null;
-cXSTime.prototype.milliseconds	= null;
 cXSTime.prototype.timezone		= null;
 
 cXSTime.prototype.toString	= function() {
@@ -37,8 +35,7 @@ cFunctionCall.dataTypes["time"]	= function(sValue) {
 		var bValue	= aMatch[6] == "24:00:00";
 		return new cXSTime(bValue ? 0 : +aMatch[2],
 							bValue ? 0 : +aMatch[3],
-							bValue ? 0 : +aMatch[4],
-							bValue ? +aMatch[7] || 0 : +aMatch[5] || 0,
+							cNumber((bValue ? 0 : aMatch[4]) + '.' + (bValue ? aMatch[7] || 0 : aMatch[5] || 0)),
 							aMatch[8] ? aMatch[8] == 'Z' ? 0 : (aMatch[9] == '-' ? 1 : -1) * (aMatch[10] * 60 + aMatch[11] * 1) : null
 		);
 	}
@@ -47,5 +44,5 @@ cFunctionCall.dataTypes["time"]	= function(sValue) {
 
 //
 function fXSTime_toSeconds(oTime) {
-	return oTime.seconds + oTime.milliseconds + (oTime.minutes + (oTime.timezone !== null ? oTime.timezone % 60 : 0) + (oTime.hours + (oTime.timezone !== null ? ~~(oTime.timezone / 60) : 0)) * 60) * 60;
+	return oTime.seconds + (oTime.minutes + (oTime.timezone !== null ? oTime.timezone % 60 : 0) + (oTime.hours + (oTime.timezone !== null ? ~~(oTime.timezone / 60) : 0)) * 60) * 60;
 };

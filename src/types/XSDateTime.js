@@ -7,14 +7,13 @@
  *
  */
 
-function cXSDateTime(nYear, nMonth, nDay, nHours, nMinutes, nSeconds, nMilliseconds, nTimezone) {
+function cXSDateTime(nYear, nMonth, nDay, nHours, nMinutes, nSeconds, nTimezone) {
 	this.year	= nYear;
 	this.month	= nMonth;
 	this.day	= nDay;
 	this.hours	= nHours;
 	this.minutes	= nMinutes;
 	this.seconds	= nSeconds;
-	this.milliseconds= nMilliseconds;
 	this.timezone	= nTimezone;
 };
 
@@ -28,7 +27,6 @@ cXSDateTime.prototype.day		= null;
 cXSDateTime.prototype.hours		= null;
 cXSDateTime.prototype.minutes	= null;
 cXSDateTime.prototype.seconds	= null;
-cXSDateTime.prototype.milliseconds	= null;
 cXSDateTime.prototype.timezone		= null;
 
 cXSDateTime.prototype.toString	= function() {
@@ -48,8 +46,7 @@ cFunctionCall.dataTypes["dateTime"]	= function(sValue) {
 								+aMatch[4],
 								bValue ? 24 : +aMatch[6],
 								bValue ? 0 : +aMatch[7],
-								bValue ? 0 : +aMatch[8],
-								bValue ? +aMatch[11] || 0 : +aMatch[9] || 0,
+								cNumber((bValue ? 0 : aMatch[8]) + '.' + (bValue ? aMatch[11] || 0 : aMatch[9] || 0)),
 								aMatch[12] ? aMatch[12] == 'Z' ? 0 : (aMatch[13] == '-' ? 1 : -1) * (aMatch[14] * 60 + aMatch[15] * 1) : null
 		);
 	}
@@ -88,8 +85,5 @@ function fXSDateTime_getDateComponent(oDateTime) {
 function fXSDateTime_getTimeComponent(oDateTime) {
 	return fXSDateTime_pad(oDateTime.hours)
 			+ ':' + fXSDateTime_pad(oDateTime.minutes)
-			+ ':' + fXSDateTime_pad(oDateTime.seconds)
-			+ (oDateTime.milliseconds
-				? '.' + fXSDateTime_pad(oDateTime.milliseconds, 3)
-				: '');
+			+ ':' + fXSDateTime_pad(oDateTime.seconds);
 };
