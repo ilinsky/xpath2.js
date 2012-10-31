@@ -190,10 +190,10 @@
 						evaluateXPathError('fn:avg((xs:yearMonthDuration("P20Y"), (3, 4, 5))))'));
 				assertArrayEquals([],
 						evaluateXPath('fn:avg(())'));
-//				assertEquals("NaN",
-//						evaluateXPathSingle("string(fn:avg((xs:float('INF'), xs:float('-INF'))))"));
-//				assertEquals("NaN",
-//						evaluateXPathSingle("string(fn:avg(((3, 4, 5), xs:float('NaN'))))"));
+				assertEquals("NaN",
+						evaluateXPathSingle("string(fn:avg((xs:float('INF'), xs:float('-INF'))))"));
+				assertEquals("NaN",
+						evaluateXPathSingle("string(fn:avg(((3, 4, 5), xs:float('NaN'))))"));
 			}
 
 			function testMax() {
@@ -215,8 +215,8 @@
 						evaluateXPathSingle('fn:min((5, 5.0e0))'));
 				assertEquals("FORG0006",
 						evaluateXPathError('fn:min((3,4,"Zero"))'));
-//				assertEquals(-0,
-//						evaluateXPathSingle('fn:min((xs:float(0.0E0), xs:float(-0.0E0)))'));
+				assertEquals(-0,
+						evaluateXPathSingle('fn:min((xs:float(0.0E0), xs:float(-0.0E0)))'));
 				// 1 test not copied
 				assertEquals("a",
 						evaluateXPathSingle('fn:min(("a", "b", "c"))'));	// under a typical default collation.
