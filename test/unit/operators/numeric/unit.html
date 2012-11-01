@@ -34,6 +34,9 @@
 						evaluateXPathSingle('-4.5 + 6'));
 				assertEquals(10.5,
 						evaluateXPathSingle('6 + 4.5'));
+				// JS floating problem
+				assertEquals(0.3,
+						evaluateXPathSingle('0.1 + 0.2'));
 				// TODO: operations on INF, NaN
 			}
 
@@ -43,6 +46,9 @@
 						evaluateXPathSingle('4.5 - 6'));
 				assertEquals(1.5,
 						evaluateXPathSingle('6 - 4.5'));
+				// JS floating problem
+				assertEquals(0.1,
+						evaluateXPathSingle('0.3 - 0.2'));
 				// TODO: operations on INF, NaN
 			}
 
@@ -56,6 +62,9 @@
 						evaluateXPathSingle('-6 * 4.5'));
 				assertEquals(27,
 						evaluateXPathSingle('-6 * -4.5'));
+				// JS floating problem
+				assertEquals(0.08,
+						evaluateXPathSingle('0.2 * 0.4'));
 				// TODO: operations on INF, NaN, 0
 			}
 
@@ -69,6 +78,9 @@
 						evaluateXPathSingle('-6 div 4'));
 				assertEquals(1.5,
 						evaluateXPathSingle('-6 div -4'));
+				// JS floating problem
+				assertEquals(0.75,
+						evaluateXPathSingle('0.3 div 0.4'));
 				// TODO: operations on INF, NaN, 0
 			}
 
@@ -103,6 +115,9 @@
 						evaluateXPathSingle('4.5 mod 1.2'));
 				assertEquals(3.0E0,
 						evaluateXPathSingle('1.23E2 mod 0.6E1'));
+				// JS floating problem
+				assertEquals(0.9,
+						evaluateXPathSingle('4.5 mod 1.2'));
 				// Not W3C tests, influenced though
 				// TODO: operations on INF, NaN, 0
 //				assertNaN(
