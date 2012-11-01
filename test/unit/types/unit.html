@@ -82,6 +82,24 @@
 				assertEquals("FORG0001", evaluateXPathError('xs:decimal("1f5")'));
 			}
 
+			function testXSInteger() {
+				assertEquals(0,
+						evaluateXPathSingle('xs:integer("0")'));
+				assertEquals(1,
+						evaluateXPathSingle('xs:integer("1")'));
+				assertEquals(-1,
+						evaluateXPathSingle('xs:integer("-1")'));
+				// Test errors
+				assertEquals("FORG0001", evaluateXPathError('xs:integer("1.2")'));
+				assertEquals("FORG0001", evaluateXPathError('xs:integer("NaN")'));
+				assertEquals("FORG0001", evaluateXPathError('xs:integer("INF")'));
+				assertEquals("FORG0001", evaluateXPathError('xs:integer("-INF")'));
+				assertEquals("FORG0001", evaluateXPathError('xs:integer("")'));
+				assertEquals("FORG0001", evaluateXPathError('xs:integer("1f5")'));
+				assertEquals("FORG0001", evaluateXPathError('xs:integer("f15")'));
+				assertEquals("FORG0001", evaluateXPathError('xs:integer("15f")'));
+			}
+
 			function testXSFloat() {
 				assertEquals(0,
 						evaluateXPathSingle('xs:float("0")'));
