@@ -120,6 +120,9 @@
 						evaluateXPathSingle('xs:time("08:00:00+09:00") eq xs:time("17:00:00-06:00")'));
 				assertEquals(true,
 						evaluateXPathSingle('xs:time("21:30:00+10:30") eq xs:time("06:00:00-05:00")'));
+			}
+
+			function testTimeEqual_24_00_00() {
 				assertEquals(true,
 						evaluateXPathSingle('xs:time("24:00:00+01:00") eq xs:time("00:00:00+01:00")'));
 			}
@@ -130,6 +133,16 @@
 //						evaluateXPathSingle('xs:time("12:00:00") lt xs:time("23:00:00+06:00")'));
 //				assertEquals(true,	// Requires specific implicit timezone
 //						evaluateXPathSingle('xs:time("11:00:00") lt xs:time("17:00:00Z")'));
+				// Not W3C tests
+				assertEquals(false,
+						evaluateXPathSingle('xs:time("22:59:59") lt xs:time("22:59:59")'));
+				assertEquals(true,
+						evaluateXPathSingle('xs:time("22:59:59") lt xs:time("23:59:59")'));
+				assertEquals(true,
+						evaluateXPathSingle('xs:time("12:00:00Z") lt xs:time("11:00:00-02:00")'));
+			}
+
+			function testTimeLessThan_24_00_00() {
 				assertEquals(false,
 						evaluateXPathSingle('xs:time("23:59:59") lt xs:time("24:00:00")'));
 			}
@@ -137,6 +150,11 @@
 			function testTimeGreaterThan() {
 				assertEquals(false,
 						evaluateXPathSingle('xs:time("08:00:00+09:00") gt xs:time("17:00:00-06:00")'));
+			}
+
+			function testTimeGreaterThan_24_00_00() {
+				assertEquals(true,
+						evaluateXPathSingle('xs:time("23:59:59") gt xs:time("24:00:00")'));
 			}
 			// Gregoran calendar date types not implemented, so not tested for now
 
