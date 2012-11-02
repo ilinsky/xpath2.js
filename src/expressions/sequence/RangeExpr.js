@@ -35,6 +35,10 @@ cRangeExpr.parse	= function (oLexer, oResolver) {
 cRangeExpr.prototype.evaluate	= function (oContext) {
 	var oLeft	= this.left.evaluate(oContext),
 		oRight	= this.right.evaluate(oContext);
+
+	if (oLeft.isEmpty() || oRight.isEmpty())
+		return new cXPath2Sequence;
+
 	if (typeof oLeft.items[0] == "number" && ~~oLeft.items[0] == oLeft.items[0] && typeof oRight.items[0] == "number" && ~~oRight.items[0] == oRight.items[0])
 		return cFunctionCall.operators["to"](oLeft.items[0], oRight.items[0]);
 	//
