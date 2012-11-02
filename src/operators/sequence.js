@@ -40,7 +40,7 @@ cFunctionCall.operators["union"]	= function(oSequence1, oSequence2) {
 		//
 		bDuplicate	= false;
 		for (var nLeftIndex = 0, nLeftLength = oSequence.items.length; (nLeftIndex < nLeftLength) && !bDuplicate; nLeftIndex++)
-			bDuplicate	= cXPath2.DOMAdapter.isSameNode(oSequence[nLeftIndex], oItem);
+			bDuplicate	= cXPath2.DOMAdapter.isSameNode(oSequence.items[nLeftIndex], oItem);
 		if (!bDuplicate)
 			oSequence.add(oItem);
 	}
@@ -51,7 +51,7 @@ cFunctionCall.operators["union"]	= function(oSequence1, oSequence2) {
 		//
 		bDuplicate	= false;
 		for (var nLeftIndex = 0, nLeftLength = oSequence.items.length; (nLeftIndex < nLeftLength) && !bDuplicate; nLeftIndex++)
-			bDuplicate	= cXPath2.DOMAdapter.isSameNode(oSequence[nLeftIndex], oItem);
+			bDuplicate	= cXPath2.DOMAdapter.isSameNode(oSequence.items[nLeftIndex], oItem);
 		if (!bDuplicate)
 			oSequence.add(oItem);
 	}
@@ -77,7 +77,7 @@ cFunctionCall.operators["intersect"]	= function(oSequence1, oSequence2) {
 			// See if it is not yet in return sequence
 			bDuplicate	= false;
 			for (var nLeftIndex = 0, nLeftLength = oSequence.items.length; (nLeftIndex < nLeftLength) && !bDuplicate; nLeftIndex++)
-				bDuplicate	= cXPath2.DOMAdapter.isSameNode(oSequence[nLeftIndex], oItem);
+				bDuplicate	= cXPath2.DOMAdapter.isSameNode(oSequence.items[nLeftIndex], oItem);
 			if (!bDuplicate)
 				oSequence.add(oItem);
 		}
@@ -104,7 +104,7 @@ cFunctionCall.operators["except"]	= function(oSequence1, oSequence2) {
 			// See if it is not yet in return sequence
 			bDuplicate = false;
 			for (var nLeftIndex = 0, nLeftLength = oSequence.items.length; (nLeftIndex < nLeftLength) && !bDuplicate; nLeftIndex++)
-				bDuplicate	= cXPath2.DOMAdapter.isSameNode(oSequence[nLeftIndex], oItem);
+				bDuplicate	= cXPath2.DOMAdapter.isSameNode(oSequence.items[nLeftIndex], oItem);
 			if (!bDuplicate)
 				oSequence.add(oItem);
 		}
