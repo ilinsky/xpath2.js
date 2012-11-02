@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>JsUnit testing page</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+		<!-- JsUnitClient driver -->
+		<script type="text/javascript" src="../../jsUnitClient.js"></script>
+
+		<!-- Library -->
+		<script type="text/javascript" src="../../../../xpath2.js"></script>
+
+		<!-- Suite definition -->
+		<script type="text/javascript">
+			// Helper function
+			function evaluateXPath(sXPath) {
+				return XPath2.evaluate(sXPath);
+			}
+
+			function evaluateXPathSingle(sXPath) {
+				return evaluateXPath(sXPath)[0];
+			}
+
+			// Dummy test
+			function testPage() {
+				assertTrue(true);
+			}
+
+			// Tests
+			function testAnd() {
+				// Not W3C tests
+				assertEquals(false,
+						evaluateXPathSingle('1 and false()'));
+				assertEquals(true,
+						evaluateXPathSingle('1 and true()'));
+				assertEquals(false,
+						evaluateXPathSingle('1 and 0'));
+				assertEquals(true,
+						evaluateXPathSingle('1 and 1'));
+				assertEquals(false,
+						evaluateXPathSingle('1 and ""'));
+				assertEquals(true,
+						evaluateXPathSingle('1 and "string"'));
+				assertEquals(true,
+						evaluateXPathSingle('1 and (1)'));
+				assertEquals(false,
+						evaluateXPathSingle('1 and ()'));
+				assertEquals(false,
+						evaluateXPathSingle('false() and ()'));
+				assertEquals(false,
+						evaluateXPathSingle('0 and ""'));
+
+				assertEquals(false,
+						evaluateXPathSingle('false() and 1'));
+				assertEquals(true,
+						evaluateXPathSingle('true() and 1'));
+				assertEquals(false,
+						evaluateXPathSingle('0 and 1'));
+				assertEquals(true,
+						evaluateXPathSingle('1 and 1'));
+				assertEquals(false,
+						evaluateXPathSingle('"" and 1'));
+				assertEquals(true,
+						evaluateXPathSingle('"string" and 1'));
+				assertEquals(true,
+						evaluateXPathSingle('(1) and 1'));
+				assertEquals(false,
+						evaluateXPathSingle('() and 1'));
+				assertEquals(false,
+						evaluateXPathSingle('() and false()'));
+				assertEquals(false,
+						evaluateXPathSingle('"" and 0'));
+			}
+
+			function testAndDouble() {
+				// Not W3C tests
+				assertEquals(false,
+						evaluateXPathSingle('0 and false() and ""'));
+				assertEquals(false,
+						evaluateXPathSingle('0 and false() and "string"'));
+				assertEquals(false,
+						evaluateXPathSingle('0 and true() and ""'));
+				assertEquals(true,
+						evaluateXPathSingle('1 and true() and "string"'));
+			}
+
+			function testOr() {
+				// Not W3C tests
+				assertEquals(true,
+						evaluateXPathSingle('1 or false()'));
+				assertEquals(true,
+						evaluateXPathSingle('1 or true()'));
+				assertEquals(true,
+						evaluateXPathSingle('1 or 0'));
+				assertEquals(true,
+						evaluateXPathSingle('1 or 1'));
+				assertEquals(true,
+						evaluateXPathSingle('1 or ""'));
+				assertEquals(true,
+						evaluateXPathSingle('1 or "string"'));
+				assertEquals(true,
+						evaluateXPathSingle('1 or (1)'));
+				assertEquals(true,
+						evaluateXPathSingle('1 or ()'));
+				assertEquals(false,
+						evaluateXPathSingle('false() or ()'));
+				assertEquals(false,
+						evaluateXPathSingle('0 or ""'));
+
+				assertEquals(true,
+						evaluateXPathSingle('false() or 1'));
+				assertEquals(true,
+						evaluateXPathSingle('true() or 1'));
+				assertEquals(true,
+						evaluateXPathSingle('0 or 1'));
+				assertEquals(true,
+						evaluateXPathSingle('1 or 1'));
+				assertEquals(true,
+						evaluateXPathSingle('"" or 1'));
+				assertEquals(true,
+						evaluateXPathSingle('"string" or 1'));
+				assertEquals(true,
+						evaluateXPathSingle('(1) or 1'));
+				assertEquals(true,
+						evaluateXPathSingle('() or 1'));
+				assertEquals(false,
+						evaluateXPathSingle('() or false()'));
+				assertEquals(false,
+						evaluateXPathSingle('"" or 0'));
+			}
+
+			function testOrDouble() {
+				// Not W3C tests
+				assertEquals(false,
+						evaluateXPathSingle('0 or false() or ""'));
+				assertEquals(true,
+						evaluateXPathSingle('0 or false() or "string"'));
+				assertEquals(true,
+						evaluateXPathSingle('0 or true() or ""'));
+				assertEquals(true,
+						evaluateXPathSingle('1 or true() or "string"'));
+			}
+
+		</script>
+	</head>
+	<body>
+		<p>XPath2.js JsUnit unit page</p>
+	</body>
+</html>
