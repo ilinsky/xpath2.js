@@ -158,9 +158,9 @@
 
 			function testTo_type() {
 				assertEquals("XPTY0004",
-						evaluateXPath("1 to 5.5"));
+						evaluateXPathError("1 to 5.5"));
 				assertEquals("XPTY0004",
-						evaluateXPath("1.5 to 5"));
+						evaluateXPathError("1.5 to 5"));
 			}
 		</script>
 	</head>
