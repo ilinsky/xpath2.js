@@ -343,7 +343,27 @@ cFunctionCall.functions["sum"]	= function(oSequence1, oSequence2) {
 // fn:id($arg as xs:string*) as element()*
 // fn:id($arg as xs:string*, $node as node()) as element()*
 cFunctionCall.functions["id"]	= function(oSequence1, oSequence2) {
-	throw "Function '" + "id" + "' not implemented";
+	if (arguments.length < 1)
+		throw new cXPath2Error("XPST0017");
+
+	// Get context item
+	var oNode	= arguments.length > 1 ? oSequence2.items[0] : this.context;
+	if (!cXPath2.DOMAdapter.isNode(oNode))
+		throw new cXPath2Error("XPTY0004", "id() function called when the context item is not a node");
+
+	// Get root node and check if it is Document
+	var oDocument	= cFunctionCall.functions["root"].call(this, new cXPath2Sequence(oNode)).items[0];
+	if (cXPath2.DOMAdapter.getProperty(oDocument, "nodeType") != 9)
+		throw new cXPath2Error("FODC0001");
+
+	// Search for elements
+	var oSequence	= new cXPath2Sequence;
+	for (var nIndex = 0; nIndex < oSequence1.items.length; nIndex++)
+		for (var nRightIndex = 0, aValue = oSequence1.items[nIndex].toString().replace(/^\s+|\s+$/g).split(/\s+/), nRightLength = aValue.length; nRightIndex < nRightLength; nRightIndex++)
+			if (oNode = cDOMAdapter.getElementById(oDocument, aValue[nRightIndex]))
+				oSequence.add(oNode);
+	// TODO: Remove duplicates, order
+	return oSequence;
 };
 
 // fn:idref($arg as xs:string*) as node()*

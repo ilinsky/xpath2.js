@@ -36,3 +36,8 @@ cDOMAdapter.lookupPrefix	= function(oNode, sNameSpaceURI) {
 cDOMAdapter.lookupNamespaceURI	= function(oNode, sPrefix) {
 	return oNode.lookupNamespaceURI(sPrefix);
 };
+
+// Document object members
+cDOMAdapter.getElementById	= function(oNode, sId) {
+	return oNode.getElementById(sId);
+};
