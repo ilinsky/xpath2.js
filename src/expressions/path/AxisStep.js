@@ -81,6 +81,19 @@ cAxisStep.prototype.evaluate	= function (oContext) {
 	if (!cXPath2.DOMAdapter.isNode(oItem))
 		throw new cXPath2Error("XPTY0020");
 
+	// Change working item if context is attribute
+	switch (this.axis) {
+		case "ancestor":
+		case "ancestor-or-self":
+		case "parent":
+		case "preceding":
+		case "preceding-sibling":
+		case "following":
+		case "following-sibling":
+			if (cXPath2.DOMAdapter.getProperty(oItem, "nodeType") == 2)
+				oItem	= cXPath2.DOMAdapter.getProperty(oItem, "ownerElement");
+	}
+
 	var oSequence	= new cXPath2Sequence;
 	var fGetChildrenForward	= function(oNode) {
 		for (var oChild; oNode; oNode = cXPath2.DOMAdapter.getProperty(oNode, "nextSibling")) {
