@@ -102,16 +102,9 @@ cFunctionCall.functions["distinct-values"]	= function(oSequence1, oSequence2) {
 	if (oSequence1.isEmpty())
 		return oSequence;
 
-	// TODO: Change implementation to omit following items rather than previous ones
-	for (var nIndex = 0, nLength = oSequence1.items.length, oValue, bFound; nIndex < nLength; nIndex++) {
-		bFound	= false;
-		oValue	= oSequence1.items[nIndex];
-		for (var nRightIndex = nIndex + 1; (nRightIndex < nLength) &&!bFound; nRightIndex++)
-			if (oValue === oSequence1.items[nRightIndex])
-				bFound	= true;
-		if (!bFound)
-			oSequence.add(oValue);
-	}
+	for (var nIndex = 0, nLength = oSequence1.items.length, oItem; nIndex < nLength; nIndex++)
+		if (oSequence.indexOf(oItem = oSequence1.items[nIndex]) ==-1)
+			oSequence.add(oItem);
 
 	return oSequence;
 };
