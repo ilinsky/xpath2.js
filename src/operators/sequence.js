@@ -49,8 +49,7 @@ cFunctionCall.operators["union"]	= function(oSequence1, oSequence2) {
 		if (oSequence.indexOf(oItem) ==-1)
 			oSequence.add(oItem);
 	}
-	// TODO: Document order
-	return oSequence;
+	return cXPath2Sequence.order(oSequence);
 };
 
 // op:intersect($parameter1 as node()*, $parameter2 as node()*) as node()*
@@ -70,8 +69,7 @@ cFunctionCall.operators["intersect"]	= function(oSequence1, oSequence2) {
 		if (bFound && oSequence.indexOf(oItem) ==-1)
 			oSequence.add(oItem);
 	}
-	// TODO: Document order
-	return oSequence;
+	return cXPath2Sequence.order(oSequence);
 };
 
 // op:except($parameter1 as node()*, $parameter2 as node()*) as node()*
@@ -91,8 +89,7 @@ cFunctionCall.operators["except"]	= function(oSequence1, oSequence2) {
 		if (!bFound && oSequence.indexOf(oItem) ==-1)
 			oSequence.add(oItem);
 	}
-	// TODO: Document order
-	return oSequence;
+	return cXPath2Sequence.order(oSequence);
 };
 
 // 15.5 Functions and Operators that Generate Sequences
