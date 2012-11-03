@@ -120,5 +120,8 @@ cXPath2Sequence.prototype.toString	= function() {
 
 // Orders items in sequence in document order
 cXPath2Sequence.prototype.order		= function() {
-
+	this.items.sort(function(oNode, oNode2) {
+		var nPosition	= cXPath2.DOMAdapter.compareDocumentPosition(oNode, oNode2);
+		return nPosition & 2 ? 1 : nPosition & 4 ?-1 : 0;
+	});
 };
