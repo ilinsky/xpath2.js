@@ -100,6 +100,10 @@ cFunctionCall.functions["root"]	= function(oSequence1) {
 	if (!cXPath2.DOMAdapter.isNode(oParent))
 		throw new cXPath2Error("XPTY0004");
 
+	// If context node is Attribute
+	if (cXPath2.DOMAdapter.getProperty(oParent, "nodeType") == 2)
+		oParent	= cXPath2.DOMAdapter.getProperty(oParent, "ownerElement");
+
 	for (var oNode = oParent; oNode; oNode = cXPath2.DOMAdapter.getProperty(oParent, "parentNode"))
 		oParent	= oNode;
 
