@@ -34,25 +34,19 @@ cFunctionCall.operators["concatenate"]	= function(oSequence1, oSequence2) {
 cFunctionCall.operators["union"]	= function(oSequence1, oSequence2) {
 	var oSequence	= new cXPath2Sequence;
 	// Process first collection
-	for (var nIndex = 0, nLength = oSequence1.items.length, oItem, bDuplicate; nIndex < nLength; nIndex++) {
+	for (var nIndex = 0, nLength = oSequence1.items.length, oItem; nIndex < nLength; nIndex++) {
 		if (!cXPath2.DOMAdapter.isNode(oItem = oSequence1.items[nIndex]))
 			throw new cXPath2Error("XPTY0004", "Required item type of first operand of 'union' is node()");	// Required item type of second operand of 'intersect' is node(); supplied value has item type xs:integer
 		//
-		bDuplicate	= false;
-		for (var nLeftIndex = 0, nLeftLength = oSequence.items.length; (nLeftIndex < nLeftLength) && !bDuplicate; nLeftIndex++)
-			bDuplicate	= cXPath2.DOMAdapter.isSameNode(oSequence.items[nLeftIndex], oItem);
-		if (!bDuplicate)
+		if (oSequence.indexOf(oItem) ==-1)
 			oSequence.add(oItem);
 	}
 	// Process second collection
-	for (var nIndex = 0, nLength = oSequence2.items.length, oItem, bDuplicate; nIndex < nLength; nIndex++) {
+	for (var nIndex = 0, nLength = oSequence2.items.length, oItem; nIndex < nLength; nIndex++) {
 		if (!cXPath2.DOMAdapter.isNode(oItem = oSequence2.items[nIndex]))
 			throw new cXPath2Error("XPTY0004", "Required item type of second operand of 'union' is node()");	// Required item type of second operand of 'intersect' is node(); supplied value has item type xs:integer
 		//
-		bDuplicate	= false;
-		for (var nLeftIndex = 0, nLeftLength = oSequence.items.length; (nLeftIndex < nLeftLength) && !bDuplicate; nLeftIndex++)
-			bDuplicate	= cXPath2.DOMAdapter.isSameNode(oSequence.items[nLeftIndex], oItem);
-		if (!bDuplicate)
+		if (oSequence.indexOf(oItem) ==-1)
 			oSequence.add(oItem);
 	}
 	// TODO: Document order
@@ -62,7 +56,7 @@ cFunctionCall.operators["union"]	= function(oSequence1, oSequence2) {
 // op:intersect($parameter1 as node()*, $parameter2 as node()*) as node()*
 cFunctionCall.operators["intersect"]	= function(oSequence1, oSequence2) {
 	var oSequence	= new cXPath2Sequence;
-	for (var nIndex = 0, nLength = oSequence1.items.length, oItem, bFound, bDuplicate; nIndex < nLength; nIndex++) {
+	for (var nIndex = 0, nLength = oSequence1.items.length, oItem, bFound; nIndex < nLength; nIndex++) {
 		if (!cXPath2.DOMAdapter.isNode(oItem = oSequence1.items[nIndex]))
 			throw new cXPath2Error("XPTY0004", "Required item type of second operand of 'intersect' is node()");	// Required item type of second operand of 'intersect' is node(); supplied value has item type xs:integer
 		//
@@ -73,14 +67,8 @@ cFunctionCall.operators["intersect"]	= function(oSequence1, oSequence2) {
 			bFound = cXPath2.DOMAdapter.isSameNode(oSequence2.items[nRightIndex], oItem);
 		}
 		//
-		if (bFound) {
-			// See if it is not yet in return sequence
-			bDuplicate	= false;
-			for (var nLeftIndex = 0, nLeftLength = oSequence.items.length; (nLeftIndex < nLeftLength) && !bDuplicate; nLeftIndex++)
-				bDuplicate	= cXPath2.DOMAdapter.isSameNode(oSequence.items[nLeftIndex], oItem);
-			if (!bDuplicate)
-				oSequence.add(oItem);
-		}
+		if (bFound && oSequence.indexOf(oItem) ==-1)
+			oSequence.add(oItem);
 	}
 	// TODO: Document order
 	return oSequence;
@@ -89,7 +77,7 @@ cFunctionCall.operators["intersect"]	= function(oSequence1, oSequence2) {
 // op:except($parameter1 as node()*, $parameter2 as node()*) as node()*
 cFunctionCall.operators["except"]	= function(oSequence1, oSequence2) {
 	var oSequence	= new cXPath2Sequence;
-	for (var nIndex = 0, nLength = oSequence1.items.length, oItem, bFound, bDuplicate; nIndex < nLength; nIndex++) {
+	for (var nIndex = 0, nLength = oSequence1.items.length, oItem, bFound; nIndex < nLength; nIndex++) {
 		if (!cXPath2.DOMAdapter.isNode(oItem = oSequence1.items[nIndex]))
 			throw new cXPath2Error("XPTY0004", "Required item type of second operand of 'except' is node()");	// Required item type of second operand of 'intersect' is node(); supplied value has item type xs:integer
 		//
@@ -100,14 +88,8 @@ cFunctionCall.operators["except"]	= function(oSequence1, oSequence2) {
 			bFound = cXPath2.DOMAdapter.isSameNode(oSequence2.items[nRightIndex], oItem);
 		}
 		//
-		if (!bFound) {
-			// See if it is not yet in return sequence
-			bDuplicate = false;
-			for (var nLeftIndex = 0, nLeftLength = oSequence.items.length; (nLeftIndex < nLeftLength) && !bDuplicate; nLeftIndex++)
-				bDuplicate	= cXPath2.DOMAdapter.isSameNode(oSequence.items[nLeftIndex], oItem);
-			if (!bDuplicate)
-				oSequence.add(oItem);
-		}
+		if (!bFound && oSequence.indexOf(oItem) ==-1)
+			oSequence.add(oItem);
 	}
 	// TODO: Document order
 	return oSequence;
