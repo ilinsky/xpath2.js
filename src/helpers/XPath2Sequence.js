@@ -125,3 +125,10 @@ cXPath2Sequence.prototype.order		= function() {
 		return nPosition & 2 ? 1 : nPosition & 4 ?-1 : 0;
 	});
 };
+
+cXPath2Sequence.prototype.indexOf	= function(oItem) {
+	for (var nIndex = 0, nLength = this.items.length; nIndex < nLength; nIndex++)
+		if (this.items[nIndex] === oItem)
+			return nIndex;
+	return -1;
+};
