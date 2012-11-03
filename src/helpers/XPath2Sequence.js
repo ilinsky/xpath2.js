@@ -16,6 +16,17 @@ function cXPath2Sequence(oItem) {
 cXPath2Sequence.prototype.items	= null;
 
 // Static members
+
+// Orders items in sequence in document order
+cXPath2Sequence.order		= function(oSequence1) {
+	var oSequence	= new cXPath2Sequence(oSequence1);
+	oSequence.items.sort(function(oNode, oNode2) {
+		var nPosition	= cXPath2.DOMAdapter.compareDocumentPosition(oNode, oNode2);
+		return nPosition & 2 ? 1 : nPosition & 4 ?-1 : 0;
+	});
+	return oSequence;
+};
+
 cXPath2Sequence.reverse	= function(oSequence1) {
 	var oSequence	= new cXPath2Sequence();
 	oSequence.items	= oSequence1.items.reverse();
@@ -116,14 +127,6 @@ cXPath2Sequence.prototype.toNumber	= function() {
 cXPath2Sequence.prototype.toString	= function() {
 	var oItem;
 	return this.items.length && (oItem = cXPath2Sequence.atomizeItem(this.items[0])) !== null ? '' + oItem : '';
-};
-
-// Orders items in sequence in document order
-cXPath2Sequence.prototype.order		= function() {
-	this.items.sort(function(oNode, oNode2) {
-		var nPosition	= cXPath2.DOMAdapter.compareDocumentPosition(oNode, oNode2);
-		return nPosition & 2 ? 1 : nPosition & 4 ?-1 : 0;
-	});
 };
 
 cXPath2Sequence.prototype.indexOf	= function(oItem) {
