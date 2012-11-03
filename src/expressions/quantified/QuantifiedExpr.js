@@ -49,14 +49,15 @@ cQuantifiedExpr.prototype.evaluate	= function (oContext) {
 		bResult	= bEvery ? true : false;
 	(function(oSelf, nBinding) {
 		var oBinding	= oSelf.bindings[nBinding++],
-			oSequence1	= oBinding.inExpr.evaluate(oContext);
+			oSequence1	= oBinding.inExpr.evaluate(oContext),
+			sUri	= (oBinding.namespaceURI ? oBinding.namespaceURI + '#' : '') + oBinding.localName;
 		for (var nIndex = 0, nLength = oSequence1.items.length; (nIndex < nLength) && (bEvery ? bResult :!bResult); nIndex++) {
-			oContext.pushVariable(oBinding.uri, oSequence1.items[nIndex]);
+			oContext.pushVariable(sUri, oSequence1.items[nIndex]);
 			if (nBinding < oSelf.bindings.length)
 				arguments.callee(oSelf, nBinding);
 			else
 				bResult	= oSelf.satisfiesExpr.evaluate(oContext).toBoolean();
-			oContext.popVariable(oBinding.uri);
+			oContext.popVariable(sUri);
 		}
 	})(this, 0);
 
@@ -66,12 +67,16 @@ cQuantifiedExpr.prototype.evaluate	= function (oContext) {
 
 
 //
-function cSimpleQuantifiedBinding(sUri, oInExpr) {
-	this.uri	= sUri;
-	this.inExpr	= oInExpr;
+function cSimpleQuantifiedBinding(sPrefix, sLocalName, sNameSpaceURI, oInExpr) {
+	this.prefix			= sPrefix;
+	this.localName		= sLocalName;
+	this.namespaceURI	= sNameSpaceURI;
+	this.inExpr		= oInExpr;
 };
 
-cSimpleQuantifiedBinding.prototype.uri		= null;
+cSimpleQuantifiedBinding.prototype.prefix		= null;
+cSimpleQuantifiedBinding.prototype.localName	= null;
+cSimpleQuantifiedBinding.prototype.namespaceURI	= null;
 cSimpleQuantifiedBinding.prototype.inExpr	= null;
 
 cSimpleQuantifiedBinding.RegExp	= /^\$(?:(?![0-9-])([\w-]+)\:)?(?![0-9-])([\w-]+)$/;
@@ -80,7 +85,7 @@ cSimpleQuantifiedBinding.parse	= function(oLexer, oResolver) {
 	var aMatch	= oLexer.peek().match(cSimpleQuantifiedBinding.RegExp);
 	if (aMatch && oLexer.peek(1) == "in") {
 		oLexer.next(2);
-		return new cSimpleQuantifiedBinding((aMatch[1] ? oResolver(aMatch[1]) + '#' : '') +  aMatch[2], cExprSingle.parse(oLexer, oResolver));
+		return new cSimpleQuantifiedBinding(aMatch[1] || null, aMatch[2], aMatch[1] ? oResolver(aMatch[1]) : null, cExprSingle.parse(oLexer, oResolver));
 	}
 	else
 		throw "Not SimpleQuantifiedBinding expression";

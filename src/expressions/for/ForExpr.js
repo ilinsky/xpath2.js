@@ -46,14 +46,15 @@ cForExpr.prototype.evaluate	= function (oContext) {
 	var oSequence	= new cXPath2Sequence;
 	(function(oSelf, nBinding) {
 		var oBinding	= oSelf.bindings[nBinding++],
-			oSequence1	= oBinding.inExpr.evaluate(oContext);
+			oSequence1	= oBinding.inExpr.evaluate(oContext),
+			sUri	= (oBinding.namespaceURI ? oBinding.namespaceURI + '#' : '') + oBinding.localName;
 		for (var nIndex = 0, nLength = oSequence1.items.length; nIndex < nLength; nIndex++) {
-			oContext.pushVariable(oBinding.uri, oSequence1.items[nIndex]);
+			oContext.pushVariable(sUri, oSequence1.items[nIndex]);
 			if (nBinding < oSelf.bindings.length)
 				arguments.callee(oSelf, nBinding);
 			else
 				oSequence.add(oSelf.returnExpr.evaluate(oContext));
-			oContext.popVariable(oBinding.uri);
+			oContext.popVariable(sUri);
 		}
 	})(this, 0);
 
@@ -61,13 +62,17 @@ cForExpr.prototype.evaluate	= function (oContext) {
 };
 
 //
-function cSimpleForBinding(sUri, oInExpr) {
-	this.uri	= sUri;
-	this.inExpr	= oInExpr;
+function cSimpleForBinding(sPrefix, sLocalName, sNameSpaceURI, oInExpr) {
+	this.prefix			= sPrefix;
+	this.localName		= sLocalName;
+	this.namespaceURI	= sNameSpaceURI;
+	this.inExpr		= oInExpr;
 };
 
-cSimpleForBinding.prototype.uri		= null;
-cSimpleForBinding.prototype.inExpr	= null;
+cSimpleForBinding.prototype.prefix			= null;
+cSimpleForBinding.prototype.localName		= null;
+cSimpleForBinding.prototype.namespaceURI	= null;
+cSimpleForBinding.prototype.inExpr		= null;
 
 cSimpleForBinding.RegExp	= /^\$(?:(?![0-9-])([\w-]+)\:)?(?![0-9-])([\w-]+)$/;
 
@@ -75,7 +80,7 @@ cSimpleForBinding.parse	= function(oLexer, oResolver) {
 	var aMatch	= oLexer.peek().match(cSimpleForBinding.RegExp);
 	if (aMatch && oLexer.peek(1) == "in") {
 		oLexer.next(2);
-		return new cSimpleForBinding((aMatch[1] ? oResolver(aMatch[1]) + '#' : '') + aMatch[2], cExprSingle.parse(oLexer, oResolver));
+		return new cSimpleForBinding(aMatch[1] || null, aMatch[2], aMatch[1] ? oResolver(aMatch[1]) : null, cExprSingle.parse(oLexer, oResolver));
 	}
 	else
 		throw "Not SimpleForBinding expression";
