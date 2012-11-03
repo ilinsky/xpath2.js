@@ -87,9 +87,9 @@
 
 			function testDistinctValues() {
 				// Not W3C tests
-				assertArrayEquals([4, 5, 3, 2, 1],			// [1, 2, 3, 4, 5],
+				assertArrayEquals([5, 4, 3, 2, 1],
 						evaluateXPath('fn:distinct-values((5, 4, 5, 3, 2, 3, 2, 1))'));
-				assertArrayEquals([true, 1, "", 0, false],	// ["", true, 1, 0, false]
+				assertArrayEquals(["", true, 1, 0, false],
 						evaluateXPath('fn:distinct-values(("", true(), 1, true(), 0, false(), 1, "", 0, false()))'));
 			}
 
