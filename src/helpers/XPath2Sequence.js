@@ -28,8 +28,8 @@ cXPath2Sequence.order		= function(oSequence1) {
 };
 
 cXPath2Sequence.reverse	= function(oSequence1) {
-	var oSequence	= new cXPath2Sequence();
-	oSequence.items	= oSequence1.items.reverse();
+	var oSequence	= new cXPath2Sequence(oSequence1);
+	oSequence.items.reverse();
 	return oSequence;
 };
 
