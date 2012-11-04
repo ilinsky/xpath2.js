@@ -64,12 +64,16 @@ cPathExpr.parse	= function (oLexer, oResolver) {
 cPathExpr.prototype.evaluate	= function (oContext) {
 	var oSequence	= new cXPath2Sequence(oContext.context),
 		oContext1	= new cXPath2Context,
+		oSequence1,
 		oStep;
 	for (var nItemIndex = 0, nItemLength = this.items.length; nItemIndex < nItemLength; nItemIndex++) {
 		oStep	= new cXPath2Sequence;
 		for (var nIndex = 0, nLength = oSequence.items.length; nIndex < nLength; nIndex++) {
 			oContext1.context	= oSequence.items[nIndex];
-			oStep.add(this.items[nItemIndex].evaluate(oContext1));
+			oSequence1	= this.items[nItemIndex].evaluate(oContext1);
+			for (var nRightIndex = 0, nRightLength = oSequence1.items.length; nRightIndex < nRightLength; nRightIndex++)
+				if (oStep.indexOf(oSequence1.items[nRightIndex]) ==-1)
+					oStep.add(oSequence1.items[nRightIndex]);
 		}
 		oSequence	= oStep;
 	};
