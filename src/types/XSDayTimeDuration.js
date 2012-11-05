@@ -20,6 +20,21 @@ cXSDayTimeDuration.prototype.toString	= function() {
 			+ (fXSDuration_getDayTimeComponent(this) || 'T0S');
 };
 
+cXSDayTimeDuration.cast	= function(vValue) {
+	var cType	= cXSAnyAtomicType.typeOf(vValue);
+	switch (cType) {
+		case cXSDayTimeDuration:
+			return vValue;
+		case cXSUntypedAtomic:
+		case cXSString:
+			//
+		case cXSDuration:
+		case cXSYearMonthDuration:
+			return cFunctionCall.dataTypes["dayTimeDuration"](cString(vValue));
+	}
+	throw new cXPath2Error("XPTY0004", "Casting from " + cType + " to xs:dayTimeDuration can never succeed");
+};
+
 //
 cFunctionCall.dataTypes["dayTimeDuration"]	= function(sValue) {
 	var aMatch	= sValue.match(cXSDayTimeDuration.RegExp);

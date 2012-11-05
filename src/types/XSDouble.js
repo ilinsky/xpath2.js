@@ -15,6 +15,24 @@ cXSDouble.RegExp	= /^([+\-]?((\d+(\.\d*)?)|(\.\d+))([eE][+\-]?\d+)?|-?INF|NaN)$/
 
 cXSDouble.prototype	= new cXSAnyAtomicType;
 
+cXSDouble.cast	= function(vValue) {
+	var cType	= cXSAnyAtomicType.typeOf(vValue);
+	switch (cType) {
+		case cXSDouble:
+			return vValue;
+		case cXSBoolean:
+			vValue	= !!vValue;
+		case cXSUntypedAtomic:
+		case cXSString:
+			//
+		case cXSFloat:
+		case cXSDecimal:
+		case cXSInteger:
+			return cFunctionCall.dataTypes["double"](cString(vValue));
+	}
+	throw new cXPath2Error("XPTY0004", "Casting from " + cType + " to xs:double can never succeed");
+};
+
 //
 cFunctionCall.dataTypes["double"]	= function(sValue) {
 	var aMatch	= sValue.match(cXSDouble.RegExp);

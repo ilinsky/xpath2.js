@@ -34,6 +34,21 @@ cXSDuration.prototype.toString	= function() {
 			+ ((fXSDuration_getYearMonthComponent(this) + fXSDuration_getDayTimeComponent(this)) || 'T0S');
 };
 
+cXSDuration.cast	= function(vValue) {
+	var cType	= cXSAnyAtomicType.typeOf(vValue);
+	switch (cType) {
+		case cXSDuration:
+			return vValue;
+		case cXSUntypedAtomic:
+		case cXSString:
+			//
+		case cXSYearMonthDuration:
+		case cXSDayTimeDuration:
+			return cFunctionCall.dataTypes["duration"](cString(vValue));
+	}
+	throw new cXPath2Error("XPTY0004", "Casting from " + cType + " to xs:duration can never succeed");
+};
+
 //
 cFunctionCall.dataTypes["duration"]	= function(sValue) {
 	var aMatch	= sValue.match(cXSDuration.RegExp);

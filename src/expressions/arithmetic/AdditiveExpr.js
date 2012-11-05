@@ -141,7 +141,7 @@ cAdditiveExpr.prototype.evaluate	= function (oContext) {
 
 	var vLeft	= oLeft.items[0];
 	if (vLeft instanceof cXSUntypedAtomic)
-		vLeft	=+vLeft;	// cast to xs:double
+		vLeft	= cXSDouble.cast(vLeft);	// cast to xs:double
 
 	for (var nIndex = 0, nLength = this.items.length, oRight, vRight; nIndex < nLength; nIndex++) {
 		oRight	= cXPath2Sequence.atomize(this.items[nIndex][1].evaluate(oContext));
@@ -153,7 +153,7 @@ cAdditiveExpr.prototype.evaluate	= function (oContext) {
 
 		vRight	= oRight.items[0];
 		if (vRight instanceof cXSUntypedAtomic)
-			vRight	=+vRight;	// cast to xs:double
+			vRight	= cXSDouble.cast(vRight);	// cast to xs:double
 
 		vLeft	= cAdditiveExpr.operators[this.items[nIndex][0]](vLeft, vRight);
 	}

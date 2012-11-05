@@ -69,37 +69,16 @@ cComparisonExpr.GeneralComp	= function(oExpr, oContext) {
 
 			if (bLeft && bRight) {
 				// Both left and right are untyped
-				vLeft	= '' + vLeft;
-				vRight	= '' + vRight;
+				vLeft	= cXSString.cast(vLeft);
+				vRight	= cXSString.cast(vRight);
 			}
 			else
-			if (bLeft) {
-				// Only left is untyped
-				if (typeof vRight == "number")
-					vLeft	=+vLeft;	// cast to xs:double
-				else
-				if (vRight instanceof cXSDayTimeDuration)
-					vLeft	= cXSDayTimeDuration.parse(vLeft);
-				else
-				if (vRight instanceof cXSYearMonthDuration)
-					vLeft	= cXSYearMonthDuration.parse(vLeft);
-				else	// TODO: Convert left value to base type of right value
-					vLeft	= '' + vLeft;	// cast to xs:string
-			}
+			if (bLeft)
+				vLeft	= cXSAnyAtomicType.typeOf(vRight).cast(vLeft);
 			else
-			if (bRight) {
-				// Only right is untyped
-				if (typeof vLeft == "number")
-					vRight	=+vRight;	// cast to xs:double
-				else
-				if (vLeft instanceof cXSDayTimeDuration)
-					vRight	= cXSDayTimeDuration.parse(vRight);
-				else
-				if (vLeft instanceof cXSYearMonthDuration)
-					vRight	= cXSYearMonthDuration.parse(vRight);
-				else	// TODO: Convert right value to base type of left value
-					vRight	= '' + vRight;	// cast to xs:string
-			}
+			if (bRight)
+				vRight	= cXSAnyAtomicType.typeOf(vLeft).cast(vRight);
+
 			bResult	= cComparisonExpr.ValueComp.operators[cComparisonExpr.GeneralComp.map[oExpr.operator]](vLeft, vRight);
 		}
 	}
@@ -135,9 +114,9 @@ cComparisonExpr.ValueComp	= function(oExpr, oContext) {
 		vRight	= oRight.items[0];
 
 	if (vLeft instanceof cXSUntypedAtomic)
-		vLeft	= '' + vLeft;	// cast to xs:string
+		vLeft	= cXSAnyAtomicType.castTo(vLeft, cXSString);	// cast to xs:string
 	if (vRight instanceof cXSUntypedAtomic)
-		vRight	= '' + vRight;	// cast to xs:string
+		vRight	= cXSAnyAtomicType.castTo(vRight, cXSString);	// cast to xs:string
 
 	//
 	return cComparisonExpr.ValueComp.operators[oExpr.operator](vLeft, vRight);

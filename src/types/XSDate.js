@@ -28,6 +28,21 @@ cXSDate.prototype.toString	= function() {
 			+ fXSDateTime_getTZComponent(this);
 };
 
+cXSDate.cast	= function(vValue) {
+	var cType	= cXSAnyAtomicType.typeOf(vValue);
+	switch (cType) {
+		case cXSDate:
+			return vValue;
+		case cXSUntypedAtomic:
+		case cXSString:
+			//
+			// TODO: Gregorian
+		case cXSDateTime:
+			return cFunctionCall.dataTypes["date"](cString(vValue));
+	}
+	throw new cXPath2Error("XPTY0004", "Casting from " + cType + " to xs:date can never succeed");
+};
+
 //
 cFunctionCall.dataTypes["date"]	= function(sValue) {
 	var aMatch	= sValue.match(cXSDate.RegExp);

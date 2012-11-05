@@ -13,6 +13,38 @@ function cXSString() {
 
 cXSString.prototype	= new cXSAnyAtomicType;
 
+cXSString.cast	= function(vValue) {
+	var cType	= cXSAnyAtomicType.typeOf(vValue);
+	switch (cType) {
+		case cXSString:
+			return vValue;
+
+		case cXSUntypedAtomic:
+		//
+		case cXSFloat:
+		case cXSDouble:
+		case cXSDecimal:
+		case cXSInteger:
+		//
+		case cXSDuration:
+		case cXSYearMonthDuration:
+		case cXSDayTimeDuration:
+		//
+		case cXSDateTime:
+		case cXSTime:
+		case cXSDate:
+		// TODO: Gregorian
+		//
+		// TODO: Binary
+		// TODO: anyURI
+		//
+		case cXSQName:
+			//
+			return cFunctionCall.dataTypes["string"](cString(vValue));
+	}
+	throw new cXPath2Error("XPTY0004", "Casting from " + cType + " to xs:string can never succeed");
+};
+
 //
 cFunctionCall.dataTypes["string"]	= function(sValue) {
 	return sValue;

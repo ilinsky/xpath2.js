@@ -25,6 +25,20 @@ cXSQName.prototype.toString	= function() {
 	return (this.prefix ? this.prefix + ':' : '') + this.localName;
 };
 
+cXSQName.cast	= function(vValue) {
+	var cType	= cXSAnyAtomicType.typeOf(vValue);
+	switch (cType) {
+		case cXSQName:
+			return vValue;
+
+		case cXSUntypedAtomic:
+		case cXSString:
+			//
+			return cFunctionCall.dataTypes["QName"](cString(vValue));
+	}
+	throw new cXPath2Error("XPTY0004", "Casting from " + cType + " to xs:QName can never succeed");
+};
+
 //
 cFunctionCall.dataTypes["QName"]	= function(sValue) {
 	var aMatch	= sValue.match(cXSQName.RegExp);

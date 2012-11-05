@@ -62,7 +62,7 @@ cUnaryExpr.prototype.evaluate	= function (oContext) {
 
 	var vRight	= oRight.items[0];
 	if (vRight instanceof cXSUntypedAtomic)
-		vRight	=+vRight;	// cast to xs:double
+		vRight	= cXSDouble.cast(vRight);	// cast to xs:double
 
 	return new cXPath2Sequence(cUnaryExpr.operators[this.operator](vRight));
 };

@@ -28,6 +28,19 @@ cXSTime.prototype.toString	= function() {
 			+ fXSDateTime_getTZComponent(this);
 };
 
+cXSTime.cast	= function(vValue) {
+	var cType	= cXSAnyAtomicType.typeOf(vValue);
+	switch (cType) {
+		case cXSTime:
+			return vValue;
+		case cXSUntypedAtomic:
+		case cXSString:
+			//
+			return cFunctionCall.dataTypes["time"](cString(vValue));
+	}
+	throw new cXPath2Error("XPTY0004", "Casting from " + cType + " to xs:time can never succeed");
+};
+
 //
 cFunctionCall.dataTypes["time"]	= function(sValue) {
 	var aMatch	= sValue.match(cXSTime.RegExp);

@@ -20,6 +20,21 @@ cXSYearMonthDuration.prototype.toString	= function() {
 			+ (fXSDuration_getYearMonthComponent(this) || '0M');
 };
 
+cXSYearMonthDuration.cast	= function(vValue) {
+	var cType	= cXSAnyAtomicType.typeOf(vValue);
+	switch (cType) {
+		case cXSYearMonthDuration:
+			return vValue;
+		case cXSUntypedAtomic:
+		case cXSString:
+			//
+		case cXSDuration:
+		case cXSDayTimeDuration:
+			return cFunctionCall.dataTypes["yearMonthDuration"](cString(vValue));
+	}
+	throw new cXPath2Error("XPTY0004", "Casting from " + cType + " to xs:yearMonthDuration can never succeed");
+};
+
 //
 cFunctionCall.dataTypes["yearMonthDuration"]	= function(sValue) {
 	var aMatch	= sValue.match(cXSYearMonthDuration.RegExp);
