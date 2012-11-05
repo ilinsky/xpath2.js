@@ -67,36 +67,38 @@ cComparisonExpr.GeneralComp	= function(oExpr, oContext) {
 			bLeft	= vLeft instanceof cXSUntypedAtomic;
 			bRight	= vRight instanceof cXSUntypedAtomic;
 
-			if (bLeft || bRight) {
-				if (bLeft && bRight) {
-					vLeft	= '' + vLeft;
-					vRight	= '' + vRight;
-				}
+			if (bLeft && bRight) {
+				// Both left and right are untyped
+				vLeft	= '' + vLeft;
+				vRight	= '' + vRight;
+			}
+			else
+			if (bLeft) {
+				// Only left is untyped
+				if (typeof vRight == "number")
+					vLeft	=+vLeft;	// cast to xs:double
 				else
-				if (bLeft) {
-					if (typeof vRight == "number")
-						vLeft	=+vLeft;	// cast to xs:double
-					else
-					if (vRight instanceof cXSDayTimeDuration)
-						vLeft	= cXSDayTimeDuration.parse(vLeft);
-					else
-					if (vRight instanceof cXSYearMonthDuration)
-						vLeft	= cXSYearMonthDuration.parse(vLeft);
-					else	// TODO: Convert left value to base type of right value
-						vLeft	= '' + vLeft;	// cast to xs:string
-				}
-				else {
-					if (typeof vLeft == "number")
-						vRight	=+vRight;	// cast to xs:double
-					else
-					if (vLeft instanceof cXSDayTimeDuration)
-						vRight	= cXSDayTimeDuration.parse(vRight);
-					else
-					if (vLeft instanceof cXSYearMonthDuration)
-						vRight	= cXSYearMonthDuration.parse(vRight);
-					else	// TODO: Convert right value to base type of left value
-						vRight	= '' + vRight;	// cast to xs:string
-				}
+				if (vRight instanceof cXSDayTimeDuration)
+					vLeft	= cXSDayTimeDuration.parse(vLeft);
+				else
+				if (vRight instanceof cXSYearMonthDuration)
+					vLeft	= cXSYearMonthDuration.parse(vLeft);
+				else	// TODO: Convert left value to base type of right value
+					vLeft	= '' + vLeft;	// cast to xs:string
+			}
+			else
+			if (bRight) {
+				// Only right is untyped
+				if (typeof vLeft == "number")
+					vRight	=+vRight;	// cast to xs:double
+				else
+				if (vLeft instanceof cXSDayTimeDuration)
+					vRight	= cXSDayTimeDuration.parse(vRight);
+				else
+				if (vLeft instanceof cXSYearMonthDuration)
+					vRight	= cXSYearMonthDuration.parse(vRight);
+				else	// TODO: Convert right value to base type of left value
+					vRight	= '' + vRight;	// cast to xs:string
 			}
 			bResult	= cComparisonExpr.ValueComp.operators[cComparisonExpr.GeneralComp.map[oExpr.operator]](vLeft, vRight);
 		}
