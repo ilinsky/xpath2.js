@@ -310,7 +310,7 @@ cFunctionCall.functions["min"]	= function(oSequence1, oSequence2) {
 	oSequence1	= cXPath2Sequence.atomize(oSequence1);
 
 	var vValue	= oSequence1.items[0];
-	for (var nIndex = 0, nLength = oSequence1.items.length; nIndex < nLength; nIndex++)
+	for (var nIndex = 1, nLength = oSequence1.items.length; nIndex < nLength; nIndex++)
 		if (cComparisonExpr.ValueComp.operators['le'](oSequence1.items[nIndex], vValue))
 			vValue	= oSequence1.items[nIndex];
 
