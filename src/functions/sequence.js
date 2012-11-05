@@ -287,12 +287,12 @@ cFunctionCall.functions["max"]	= function(oSequence1, oSequence2) {
 	oSequence1	= cXPath2Sequence.atomize(oSequence1);
 
 	//
-	var oItem	= oSequence1.items[0];
+	var vValue	= oSequence1.items[0];
 	for (var nIndex = 1, nLength = oSequence1.items.length; nIndex < nLength; nIndex++)
-		if (cComparisonExpr.ValueComp.operators['ge'](oSequence1.items[nIndex], oItem))
-			oItem	= oSequence1.items[nIndex];
+		if (cComparisonExpr.ValueComp.operators['ge'](oSequence1.items[nIndex], vValue))
+			vValue	= oSequence1.items[nIndex];
 
-	return new cXPath2Sequence(oItem);
+	return new cXPath2Sequence(vValue);
 };
 
 // fn:min($arg as xs:anyAtomicType*) as xs:anyAtomicType?
@@ -309,12 +309,12 @@ cFunctionCall.functions["min"]	= function(oSequence1, oSequence2) {
 	// Atomize sequence
 	oSequence1	= cXPath2Sequence.atomize(oSequence1);
 
-	var oItem	= oSequence1.items[0];
+	var vValue	= oSequence1.items[0];
 	for (var nIndex = 0, nLength = oSequence1.items.length; nIndex < nLength; nIndex++)
-		if (cComparisonExpr.ValueComp.operators['le'](oSequence1.items[nIndex], oItem))
-			oItem	= oSequence1.items[nIndex];
+		if (cComparisonExpr.ValueComp.operators['le'](oSequence1.items[nIndex], vValue))
+			vValue	= oSequence1.items[nIndex];
 
-	return new cXPath2Sequence(oItem);
+	return new cXPath2Sequence(vValue);
 };
 
 // fn:sum($arg as xs:anyAtomicType*) as xs:anyAtomicType
