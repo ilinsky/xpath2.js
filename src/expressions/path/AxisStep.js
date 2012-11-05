@@ -164,12 +164,9 @@ cAxisStep.prototype.evaluate	= function (oContext) {
 			break;
 
 		case "preceding":
-			for (var oParent = oItem, oSibling; oParent; oParent = cXPath2.DOMAdapter.getProperty(oParent, "parentNode")) {
-				if (oParent != oItem)
-					oSequence.add(oParent);
+			for (var oParent = oItem, oSibling; oParent; oParent = cXPath2.DOMAdapter.getProperty(oParent, "parentNode"))
 				if (oSibling = cXPath2.DOMAdapter.getProperty(oParent, "previousSibling"))
 					fGetChildrenBackward(oSibling);
-			}
 			break;
 
 		case "preceding-sibling":
