@@ -82,19 +82,8 @@ cAxisStep.prototype.evaluate	= function (oContext) {
 		throw new cXPath2Error("XPTY0020");
 
 	var nType	= cXPath2.DOMAdapter.getProperty(oItem, "nodeType");
-
-	// Change working item if context is attribute
-	switch (this.axis) {
-		case "ancestor":
-		case "ancestor-or-self":
-		case "parent":
-		case "preceding":
-		case "following":
-			if (nType == 2)
-				oItem	= cXPath2.DOMAdapter.getProperty(oItem, "ownerElement");
-	}
-
 	var oSequence	= new cXPath2Sequence;
+
 	var fGetChildrenForward	= function(oNode) {
 		for (var oChild; oNode; oNode = cXPath2.DOMAdapter.getProperty(oNode, "nextSibling")) {
 			oSequence.add(oNode);
@@ -130,6 +119,7 @@ cAxisStep.prototype.evaluate	= function (oContext) {
 			break;
 
 		case "following":
+			// TODO: Attribute node context
 			for (var oParent = oItem, oSibling; oParent; oParent = cXPath2.DOMAdapter.getProperty(oParent, "parentNode"))
 				if (oSibling = cXPath2.DOMAdapter.getProperty(oParent, "nextSibling"))
 					fGetChildrenForward(oSibling);
@@ -149,17 +139,18 @@ cAxisStep.prototype.evaluate	= function (oContext) {
 			oSequence.add(oItem);
 			// No break left intentionally
 		case "ancestor":
-			for (var oNode = oItem; oNode = cXPath2.DOMAdapter.getProperty(oNode, "parentNode");)
+			for (var oNode = nType == 2 ? cXPath2.DOMAdapter.getProperty(oItem, "ownerElement") : oItem; oNode = cXPath2.DOMAdapter.getProperty(oNode, "parentNode");)
 				oSequence.add(oNode);
 			break;
 
 		case "parent":
-			var oParent	= cXPath2.DOMAdapter.getProperty(oItem, "parentNode");
+			var oParent	= nType == 2 ? cXPath2.DOMAdapter.getProperty(oItem, "ownerElement") : cXPath2.DOMAdapter.getProperty(oItem, "parentNode");
 			if (oParent)
 				oSequence.add(oParent);
 			break;
 
 		case "preceding":
+			// TODO: Attribute node context
 			for (var oParent = oItem, oSibling; oParent; oParent = cXPath2.DOMAdapter.getProperty(oParent, "parentNode"))
 				if (oSibling = cXPath2.DOMAdapter.getProperty(oParent, "previousSibling"))
 					fGetChildrenBackward(oSibling);
