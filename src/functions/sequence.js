@@ -256,11 +256,20 @@ cFunctionCall.functions["avg"]	= function(oSequence1) {
 	if (oSequence1.isEmpty())
 		return new cXPath2Sequence;
 
-	var nValue	= 0;
-	for (var nIndex = 0, nLength = oSequence1.items.length; nIndex < nLength; nIndex++)
-		nValue	+= new cXPath2Sequence(oSequence1.items[nIndex]).toNumber();
+	// Atomize sequence
+	oSequence1	= cXPath2Sequence.atomize(oSequence1);
 
-	return new cXPath2Sequence(nValue / nLength);
+	var vValue	= oSequence1.items[0];
+	if (vValue instanceof cXSUntypedAtomic)
+		vValue	= cXSDouble.cast(vValue);
+	for (var nIndex = 1, nLength = oSequence1.items.length, vRight; nIndex < nLength; nIndex++) {
+		vRight	= oSequence1.items[nIndex];
+		if (vRight instanceof cXSUntypedAtomic)
+			vRight	= cXSDouble.cast(vRight);
+		vValue	= cAdditiveExpr.operators['+'](vValue, vRight);
+	}
+
+	return new cXPath2Sequence(cMultiplicativeExpr.operators['div'](vValue, nLength));
 };
 
 // fn:max($arg as xs:anyAtomicType*) as xs:anyAtomicType?
@@ -316,18 +325,30 @@ cFunctionCall.functions["sum"]	= function(oSequence1, oSequence2) {
 
 	var oSequence	= new cXPath2Sequence;
 	if (oSequence1.isEmpty()) {
-		if (arguments.length > 1)
-			oSequence.add(oSequence2.toNumber());
+		if (arguments.length > 1) {
+			oSequence2	= cXPath2Sequence.atomize(oSequence2);
+			if (oSequence2.length)
+				oSequence.add(oSequence2.items[0]);
+		}
 		return oSequence;
 	}
 
 	// TODO: Implement collation
 
-	var nValue	= 0;
-	for (var nIndex = 0, nLength = oSequence1.items.length; nIndex < nLength; nIndex++)
-		nValue	+= new cXPath2Sequence(oSequence1.items[nIndex]).toNumber();
+	// Atomize sequence
+	oSequence1	= cXPath2Sequence.atomize(oSequence1);
 
-	oSequence.add(nValue);
+	var vValue	= oSequence1.items[0];
+	if (vValue instanceof cXSUntypedAtomic)
+		vValue	= cXSDouble.cast(vValue);
+	for (var nIndex = 1, nLength = oSequence1.items.length, vRight; nIndex < nLength; nIndex++) {
+		vRight	= oSequence1.items[nIndex];
+		if (vRight instanceof cXSUntypedAtomic)
+			vRight	= cXSDouble.cast(vRight);
+		vValue	= cAdditiveExpr.operators['+'](vValue, vRight);
+	}
+
+	oSequence.add(vValue);
 	return oSequence;
 };
 
