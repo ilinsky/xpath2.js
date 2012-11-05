@@ -130,13 +130,9 @@ cAxisStep.prototype.evaluate	= function (oContext) {
 			break;
 
 		case "following":
-			for (var oParent = oItem, oChild, oSibling; oParent; oParent = cXPath2.DOMAdapter.getProperty(oParent, "parentNode")) {
-				if (oParent == oItem)
-					if (oChild = cXPath2.DOMAdapter.getProperty(oParent, "firstChild"))
-						fGetChildrenForward(oChild);
+			for (var oParent = oItem, oSibling; oParent; oParent = cXPath2.DOMAdapter.getProperty(oParent, "parentNode"))
 				if (oSibling = cXPath2.DOMAdapter.getProperty(oParent, "nextSibling"))
 					fGetChildrenForward(oSibling);
-			}
 			break;
 
 		case "following-sibling":
