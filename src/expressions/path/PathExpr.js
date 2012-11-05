@@ -77,5 +77,5 @@ cPathExpr.prototype.evaluate	= function (oContext) {
 		}
 		oSequence	= oStep;
 	};
-	return oSequence;
+	return cXPath2Sequence.order(oSequence);
 };
