@@ -7,15 +7,17 @@
  *
  */
 
-function cAtomicType(sNameSpaceURI, sLocalName) {
-	this.namespaceURI	= sNameSpaceURI;
+function cAtomicType(sPrefix, sLocalName, sNameSpaceURI) {
+	this.prefix			= sPrefix;
 	this.localName		= sLocalName;
+	this.namespaceURI	= sNameSpaceURI;
 };
 
 cAtomicType.RegExp	= /^(?:(?![0-9-])([\w-]+|\*)\:)?(?![0-9-])([\w-]+|\*)$/;
 
-cAtomicType.prototype.namespaceURI	= null;
+cAtomicType.prototype.prefix		= null;
 cAtomicType.prototype.localName		= null;
+cAtomicType.prototype.namespaceURI	= null;
 
 cAtomicType.parse	= function(oLexer, oResolver) {
 	var aMatch	= oLexer.peek().match(cAtomicType.RegExp);
@@ -23,6 +25,6 @@ cAtomicType.parse	= function(oLexer, oResolver) {
 		if (aMatch[1] == '*' || aMatch[2] == '*')
 			throw "AtomicType.parse: illegal wildcard value";
 		oLexer.next();
-		return new cAtomicType(aMatch[1] ? oResolver(aMatch[1]) : null, aMatch[2]);
+		return new cAtomicType(aMatch[1] || null, aMatch[2], aMatch[1] ? oResolver(aMatch[1]) : null);
 	}
 };
