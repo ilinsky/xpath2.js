@@ -35,8 +35,8 @@ cXSInteger.cast	= function(vValue) {
 
 //
 cFunctionCall.dataTypes["integer"]	= function(sValue) {
-	var aMatch	= sValue.match(cXSInteger.RegExp);
+	var aMatch	= sValue.match(cXSDecimal.RegExp);
 	if (aMatch)
-		return +sValue;
+		return ~~sValue;
 	throw new cXPath2Error("FORG0001");
 };
