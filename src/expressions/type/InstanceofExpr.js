@@ -32,5 +32,28 @@ cInstanceofExpr.parse	= function(oLexer, oResolver) {
 };
 
 cInstanceofExpr.prototype.evaluate	= function(oContext) {
-	throw "InstanceofExpr.prototype.evaluate: Not implemented";
+	var oSequence1	= this.expression.evaluate(oContext);
+	// Validate cardinality
+	if (!this.type.itemType)	// empty-sequence()
+		return new cXPath2Sequence(oSequence1.isEmpty());
+	// Validate occurence
+	if (this.type.occurence == '?') {
+		if (oSequence1.isEmpty())
+			return new cXPath2Sequence(true);
+		if (!(oSequence1.isSingleton()))
+			return new cXPath2Sequence(false);
+	}
+	if (this.type.occurence == '+')
+		if (oSequence1.items.length < 1)
+			return new cXPath2Sequence(false);
+	// Validate type
+	var oType	= this.type.itemType;
+	if (!oType.test)	// item()
+		return new cXPath2Sequence(true);
+
+	var bValue	= true;
+	for (var nIndex = 0, nLength = oSequence1.items.length; (nIndex < nLength) && bValue; nIndex++)
+		bValue	= oType.test.test(oSequence1.items[nIndex]);
+	//
+	return new cXPath2Sequence(bValue);
 };

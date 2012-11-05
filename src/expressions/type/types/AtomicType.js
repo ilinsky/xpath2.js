@@ -28,3 +28,12 @@ cAtomicType.parse	= function(oLexer, oResolver) {
 		return new cAtomicType(aMatch[1] || null, aMatch[2], aMatch[1] ? oResolver(aMatch[1]) : null);
 	}
 };
+
+cAtomicType.prototype.test	= function(oItem) {
+	// Cast
+	var sName	= '{' + this.namespaceURI + '}' + this.localName;
+	if (cFunctionCall.dataTypes[sName])
+		return cFunctionCall.dataTypes[sName].cast(oItem);
+	//
+	throw new cXPath2Error("XPST0051", "Unknown simple type " + (this.prefix ? this.prefix + ':' : '') + this.localName);
+};

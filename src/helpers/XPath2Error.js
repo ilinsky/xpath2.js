@@ -24,6 +24,7 @@ oXPathError_messages["XPST0017"]	= "Expanded QName and number of arguments in a 
 oXPathError_messages["XPTY0018"]	= "The result of the last step in a path expression contains both nodes and atomic values";
 oXPathError_messages["XPTY0019"]	= "The result of a step (other than the last step) in a path expression contains an atomic value.";
 oXPathError_messages["XPTY0020"]	= "In an axis step, the context item is not a node.";
+oXPathError_messages["XPST0051"]	= "It is a static error if a QName that is used as an AtomicType in a SequenceType is not defined in the in-scope schema types as an atomic type.";
 oXPathError_messages["XPST0081"]	= "A QName used in an expression contains a namespace prefix that cannot be expanded into a namespace URI by using the statically known namespaces.";
 //
 oXPathError_messages["FORG0001"]	= "Invalid value for cast/constructor.";
