@@ -53,10 +53,54 @@ cComparisonExpr.GeneralComp	= function(oExpr, oContext) {
 	if (oRight.isEmpty())
 		return false;
 
-	var bResult	= false;
-	for (var nLeftIndex = 0, nLeftLength = oLeft.items.length; (nLeftIndex < nLeftLength) &&!bResult; nLeftIndex++)
-		for (var nRightIndex = 0, nRightLength = oRight.items.length; (nRightIndex < nRightLength) &&!bResult; nRightIndex++)
-			bResult	= cComparisonExpr.ValueComp.operators[cComparisonExpr.GeneralComp.map[oExpr.operator]](oLeft.items[nLeftIndex], oRight.items[nRightIndex]);
+	var bResult	= false,
+		bLeft,
+		bRight,
+		vLeft,
+		vRight;
+	for (var nLeftIndex = 0, nLeftLength = oLeft.items.length; (nLeftIndex < nLeftLength) &&!bResult; nLeftIndex++) {
+		for (var nRightIndex = 0, nRightLength = oRight.items.length; (nRightIndex < nRightLength) &&!bResult; nRightIndex++) {
+
+			vLeft	= oLeft.items[nLeftIndex];
+			vRight	= oRight.items[nRightIndex];
+
+			bLeft	= vLeft instanceof cXSUntypedAtomic;
+			bRight	= vRight instanceof cXSUntypedAtomic;
+
+			if (bLeft || bRight) {
+				if (bLeft && bRight) {
+					vLeft	= '' + vLeft;
+					vRight	= '' + vRight;
+				}
+				else
+				if (bLeft) {
+					if (typeof vRight == "number")
+						vLeft	=+vLeft;	// cast to xs:double
+					else
+					if (vRight instanceof cXSDayTimeDuration)
+						vLeft	= cXSDayTimeDuration.parse(vLeft);
+					else
+					if (vRight instanceof cXSYearMonthDuration)
+						vLeft	= cXSYearMonthDuration.parse(vLeft);
+					else	// TODO: Convert left value to base type of right value
+						vLeft	= '' + vLeft;	// cast to xs:string
+				}
+				else {
+					if (typeof vLeft == "number")
+						vRight	=+vRight;	// cast to xs:double
+					else
+					if (vLeft instanceof cXSDayTimeDuration)
+						vRight	= cXSDayTimeDuration.parse(vRight);
+					else
+					if (vLeft instanceof cXSYearMonthDuration)
+						vRight	= cXSYearMonthDuration.parse(vRight);
+					else	// TODO: Convert right value to base type of left value
+						vRight	= '' + vRight;	// cast to xs:string
+				}
+			}
+			bResult	= cComparisonExpr.ValueComp.operators[cComparisonExpr.GeneralComp.map[oExpr.operator]](vLeft, vRight);
+		}
+	}
 	return bResult;
 };
 
@@ -85,8 +129,16 @@ cComparisonExpr.ValueComp	= function(oExpr, oContext) {
 	if (!oRight.isSingleton())	// Must be singleton
 		throw new cXPath2Error("XPTY0004");
 
+	var vLeft	= oLeft.items[0],
+		vRight	= oRight.items[0];
+
+	if (vLeft instanceof cXSUntypedAtomic)
+		vLeft	= '' + vLeft;	// cast to xs:string
+	if (vRight instanceof cXSUntypedAtomic)
+		vRight	= '' + vRight;	// cast to xs:string
+
 	//
-	return cComparisonExpr.ValueComp.operators[oExpr.operator](oLeft.items[0], oRight.items[0]);
+	return cComparisonExpr.ValueComp.operators[oExpr.operator](vLeft, vRight);
 };
 
 cComparisonExpr.ValueComp.operators	= {};

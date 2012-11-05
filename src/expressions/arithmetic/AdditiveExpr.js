@@ -131,8 +131,31 @@ cAdditiveExpr.parse	= function (oLexer, oResolver) {
 
 // Public members
 cAdditiveExpr.prototype.evaluate	= function (oContext) {
-	var oValue	= cXPath2Sequence.atomize(this.left.evaluate(oContext)).items[0];
-	for (var nIndex = 0, nLength = this.items.length; nIndex < nLength; nIndex++)
-		oValue	= cAdditiveExpr.operators[this.items[nIndex][0] == '-' ? '-' : '+'](oValue, cXPath2Sequence.atomize(this.items[nIndex][1].evaluate(oContext)).items[0]);
-	return new cXPath2Sequence(oValue);
+	var oLeft	= cXPath2Sequence.atomize(this.left.evaluate(oContext));
+
+	//
+	if (oLeft.isEmpty())
+		return new cXPath2Sequence;
+	if (oLeft.items.length > 1)
+		throw new cXPath2Error("XPTY0004");
+
+	var vLeft	= oLeft.items[0];
+	if (vLeft instanceof cXSUntypedAtomic)
+		vLeft	=+vLeft;	// cast to xs:double
+
+	for (var nIndex = 0, nLength = this.items.length, oRight, vRight; nIndex < nLength; nIndex++) {
+		oRight	= cXPath2Sequence.atomize(this.items[nIndex][1].evaluate(oContext));
+
+		if (oRight.isEmpty())
+			return new cXPath2Sequence;
+		if (oRight.items.length > 1)
+			throw new cXPath2Error("XPTY0004");
+
+		vRight	= oRight.items[0];
+		if (vRight instanceof cXSUntypedAtomic)
+			vRight	=+vRight;	// cast to xs:double
+
+		vLeft	= cAdditiveExpr.operators[this.items[nIndex][0]](vLeft, vRight);
+	}
+	return new cXPath2Sequence(vLeft);
 };

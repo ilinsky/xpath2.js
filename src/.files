@@ -59,6 +59,7 @@ expressions/type/types/SequenceType.js
 expressions/type/types/SingleType.js
 # Data types
 types/XSAnyAtomicType.js
+types/XSUntypedAtomic.js
 types/XSBoolean.js
 types/XSString.js
 types/XSQName.js

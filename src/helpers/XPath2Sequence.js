@@ -50,22 +50,22 @@ cXPath2Sequence.atomizeItem		= function(oItem) {
 	if (cXPath2.DOMAdapter.isNode(oItem)) {
 		switch (cXPath2.DOMAdapter.getProperty(oItem, "nodeType")) {
 			case 1:	// ELEMENT_NODE
-				return cXPath2.DOMAdapter.getProperty(oItem, "textContent");
+				return new cXSUntypedAtomic(cXPath2.DOMAdapter.getProperty(oItem, "textContent"));
 
 			case 2:	// ATTRIBUTE_NODE
-				return cXPath2.DOMAdapter.getProperty(oItem, "value");
+				return new cXSUntypedAtomic(cXPath2.DOMAdapter.getProperty(oItem, "value"));
 
 			case 3:	// TEXT_NODE
 			case 4:	// CDATA_SECTION_NODE
 			case 8:	// COMMENT_NODE
-				return cXPath2.DOMAdapter.getProperty(oItem, "data");
+				return new cXSUntypedAtomic(cXPath2.DOMAdapter.getProperty(oItem, "data"));
 
 			case 7:	// PROCESSING_INSTRUCTION_NODE
-				return cXPath2.DOMAdapter.getProperty(oItem, "data");
+				return new cXSUntypedAtomic(cXPath2.DOMAdapter.getProperty(oItem, "data"));
 
 			case 9:	// DOCUMENT_NODE
 				var oNode	= cXPath2.DOMAdapter.getProperty(oItem, "documentElement");
-				return oNode ? cXPath2.DOMAdapter.getProperty(oNode, "textContent") : '';
+				return new cXSUntypedAtomic(oNode ? cXPath2.DOMAdapter.getProperty(oNode, "textContent") : '');
 		}
 	}
 

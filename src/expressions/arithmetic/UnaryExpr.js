@@ -53,5 +53,16 @@ cUnaryExpr.parse	= function (oLexer, oResolver) {
 
 cUnaryExpr.prototype.evaluate	= function (oContext) {
 	var oRight	= cXPath2Sequence.atomize(this.expression.evaluate(oContext));
-	return new cXPath2Sequence(cUnaryExpr.operators[this.operator == '-' ? '-' : '+'](oRight.items[0]));
+
+	//
+	if (oRight.isEmpty())
+		return new cXPath2Sequence;
+	if (oRight.items.length > 1)
+		throw new cXPath2Error("XPTY0004");
+
+	var vRight	= oRight.items[0];
+	if (vRight instanceof cXSUntypedAtomic)
+		vRight	=+vRight;	// cast to xs:double
+
+	return new cXPath2Sequence(cUnaryExpr.operators[this.operator](vRight));
 };
