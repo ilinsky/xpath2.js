@@ -27,8 +27,8 @@
 // 6.2 Operators on Numeric Values
 var rFunctionCall_numeric_regExp	= /^-?\d+?(?:\.(\d*))?(?:[eE]([+-])?(\d+))?$/;
 function fFunctionCall_numeric_getPower(a, b) {
-	if (fIsNaN(a) || fIsNaN(b))
-		return 1;
+	if (fIsNaN(a) || (cMath.abs(a) == nInfinity) || fIsNaN(b) || (cMath.abs(b) == nInfinity))
+		return 0;
 	var d	= cString(a).match(rFunctionCall_numeric_regExp),
 		e	= cString(b).match(rFunctionCall_numeric_regExp),
 		c	= cMath.max(1, (d[1] || '').length + (d[3] || 0) * (d[2] == '+' ?-1 : 1), (e[1] || '').length + (e[3] || 0) * (e[2] == '+' ?-1 : 1));
