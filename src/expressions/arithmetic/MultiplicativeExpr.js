@@ -106,7 +106,7 @@ cMultiplicativeExpr.prototype.evaluate	= function (oContext) {
 	//
 	if (oLeft.isEmpty())
 		return new cXPath2Sequence;
-	if (oLeft.items.length > 1)
+	if (!oLeft.isSingleton())
 		throw new cXPath2Error("XPTY0004");
 
 	var vLeft	= oLeft.items[0];
@@ -118,7 +118,7 @@ cMultiplicativeExpr.prototype.evaluate	= function (oContext) {
 
 		if (oRight.isEmpty())
 			return new cXPath2Sequence;
-		if (oRight.items.length > 1)
+		if (!oRight.isSingleton())
 			throw new cXPath2Error("XPTY0004");
 
 		vRight	= oRight.items[0];

@@ -173,7 +173,7 @@ cAxisStep.prototype.evaluate	= function (oContext) {
 	}
 
 	// Apply predicates
-	if (this.predicates.length && oSequence.items.length)
+	if (this.predicates.length && !oSequence.isEmpty())
 		oSequence	= cStepExpr.prototype.applyPredicates.call(this, oContext, oSequence);
 
 	// Reverse results if reverse axis

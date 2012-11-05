@@ -33,7 +33,7 @@ function fXPathExpression_evaluate(oExpression, oNode, nType, oResult) {
 	// Determine type if not specified
 	if (!nType) {
 		nType	= 4;	// Default: XPathResult.UNORDERED_NODE_ITERATOR_TYPE
-		if (oSequence.items.length) {
+		if (!oSequence.isEmpty()) {
 			var sType	= typeof oSequence.items[0];
 			if (sType == "number")
 				nType	= 1;	// XPathResult.NUMBER_TYPE

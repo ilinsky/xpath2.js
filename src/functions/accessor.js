@@ -24,7 +24,7 @@ cFunctionCall.functions["node-name"]	= function(oSequence1) {
 		throw new cXPath2Error("XPST0017");
 
 	var oSequence	= new cXPath2Sequence;
-	if (!oSequence1.items.length)
+	if (oSequence1.isEmpty())
 		return oSequence;
 	//
 	var oNode	= oSequence1.items[0];
@@ -56,7 +56,7 @@ cFunctionCall.functions["nilled"]	= function(oSequence1) {
 		throw new cXPath2Error("XPST0017");
 
 	var oSequence	= new cXPath2Sequence;
-	if (!oSequence1.items.length)
+	if (oSequence1.isEmpty())
 		return oSequence;
 
 	var oNode	= oSequence1.items[0];
@@ -89,7 +89,7 @@ cFunctionCall.functions["base-uri"]		= function(oSequence1) {
 	if (!arguments.length)
 		oSequence1	= new cXPath2Sequence(this.context);
 	else
-	if (!oSequence1.items.length)
+	if (oSequence1.isEmpty())
 		return oSequence;
 	//
 	var oNode	= oSequence1.items[0];

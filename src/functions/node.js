@@ -26,7 +26,7 @@ cFunctionCall.functions["name"]	= function(oSequence1) {
 	if (!arguments.length)
 		oSequence1	= new cXPath2Sequence(this.context);
 	else
-	if (!oSequence1.items.length) {
+	if (oSequence1.isEmpty()) {
 		oSequence.add('');
 		return oSequence;
 	}
@@ -47,7 +47,7 @@ cFunctionCall.functions["local-name"]	= function(oSequence1) {
 	if (!arguments.length)
 		oSequence1	= new cXPath2Sequence(this.context);
 	else
-	if (!oSequence1.items.length) {
+	if (oSequence1.isEmpty()) {
 		oSequence.add('');
 		return oSequence;
 	}
@@ -66,7 +66,7 @@ cFunctionCall.functions["namespace-uri"]	= function(oSequence1) {
 	if (!arguments.length)
 		oSequence1	= new cXPath2Sequence(this.context);
 	else
-	if (!oSequence1.items.length) {
+	if (oSequence1.isEmpty()) {
 		oSequence.add('');
 		return oSequence;
 	}

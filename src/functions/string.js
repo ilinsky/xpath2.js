@@ -149,7 +149,7 @@ cFunctionCall.functions["string-length"]	= function(oSequence1) {
 	if (arguments.length < 1)
 		oSequence1	= new cXPath2Sequence(this.context);
 
-	return new cXPath2Sequence(oSequence1.items.length ? oSequence1.toString().length : 0);
+	return new cXPath2Sequence(oSequence1.isEmpty() ? 0 : oSequence1.toString().length);
 };
 
 // fn:normalize-space() as xs:string
@@ -158,7 +158,7 @@ cFunctionCall.functions["normalize-space"]	= function(oSequence1) {
 	if (arguments.length < 1)
 		oSequence1	= new cXPath2Sequence(this.context);
 
-	return new cXPath2Sequence(oSequence1.items.length ? oSequence1.toString().replace(/^\s+|\s+$/g, '').replace(/\s\s+/g, ' ') : '');
+	return new cXPath2Sequence(oSequence1.isEmpty() ? '' : oSequence1.toString().replace(/^\s+|\s+$/g, '').replace(/\s\s+/g, ' '));
 };
 
 // fn:normalize-unicode($arg as xs:string?) as xs:string

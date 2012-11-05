@@ -28,12 +28,12 @@ cFunctionCall.functions["resolve-uri"]	= function(oSequence1, oSequence2) {
 		sBaseUri	= cXPath2.DOMAdapter.getProperty(this.context, "baseURI");
 	}
 	else
-	if (oSequence2.items.length)
+	if (!oSequence2.isEmpty())
 		sBaseUri	= oSequence2.toString();
 	else
 		throw new cXPath2Error("XPTY0004");
 
-	if (!oSequence1.items.length)
+	if (oSequence1.isEmpty())
 		return oSequence;
 	//
 	oSequence.add(fFunctionCall_anyuri_resolveUri(oSequence1.toString(), sBaseUri));
