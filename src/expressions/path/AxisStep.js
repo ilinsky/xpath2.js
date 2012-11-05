@@ -87,9 +87,7 @@ cAxisStep.prototype.evaluate	= function (oContext) {
 		case "ancestor-or-self":
 		case "parent":
 		case "preceding":
-		case "preceding-sibling":
 		case "following":
-		case "following-sibling":
 			if (cXPath2.DOMAdapter.getProperty(oItem, "nodeType") == 2)
 				oItem	= cXPath2.DOMAdapter.getProperty(oItem, "ownerElement");
 	}
