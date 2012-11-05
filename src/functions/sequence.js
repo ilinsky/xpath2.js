@@ -352,7 +352,7 @@ cFunctionCall.functions["id"]	= function(oSequence1, oSequence2) {
 	// Search for elements
 	var oSequence	= new cXPath2Sequence;
 	for (var nIndex = 0; nIndex < oSequence1.items.length; nIndex++)
-		for (var nRightIndex = 0, aValue = oSequence1.items[nIndex].toString().replace(/^\s+|\s+$/g).split(/\s+/), nRightLength = aValue.length; nRightIndex < nRightLength; nRightIndex++)
+		for (var nRightIndex = 0, aValue = new cXPath2Sequence(oSequence1.items[nIndex]).toString().replace(/^\s+|\s+$/g).split(/\s+/), nRightLength = aValue.length; nRightIndex < nRightLength; nRightIndex++)
 			if ((oNode = cDOMAdapter.getElementById(oDocument, aValue[nRightIndex])) && oSequence.indexOf(oNode) ==-1)
 				oSequence.add(oNode);
 	return cXPath2Sequence.order(oSequence);
