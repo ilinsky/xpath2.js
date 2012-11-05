@@ -69,6 +69,7 @@ types/XSTime.js
 types/XSDuration.js
 types/XSYearMonthDuration.js
 types/XSDayTimeDuration.js
+types/XSDouble.js
 types/XSDecimal.js
 types/XSInteger.js
 types/XSFloat.js
