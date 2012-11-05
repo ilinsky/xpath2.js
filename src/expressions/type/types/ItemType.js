@@ -31,7 +31,3 @@ cItemType.parse	= function(oLexer, oResolver) {
 	if (oExpr = cAtomicType.parse(oLexer, oResolver))
 		return new cItemType(oExpr);
 };
-
-cItemType.prototype.evaluate	= function(oContext) {
-
-};

@@ -40,7 +40,3 @@ cSequenceType.parse	= function(oLexer, oResolver) {
 
 	return new cSequenceType(oExpr, sOccurence);
 };
-
-cSequenceType.prototype.evaluate	= function(oContext) {
-
-};
