@@ -17,7 +17,7 @@ cXSUntypedAtomic.prototype.toString	= function() {
 	return '' + this.value;
 };
 
-cXSString.cast	= function(vValue) {
+cXSUntypedAtomic.cast	= function(vValue) {
 	var cType	= cXSAnyAtomicType.typeOf(vValue);
 	switch (cType) {
 		case cXSUntypedAtomic:
