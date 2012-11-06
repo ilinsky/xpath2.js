@@ -19,13 +19,13 @@ cFunctionCall.dataTypes["anyAtomicType"]	= cXSAnyAtomicType;
 
 //
 cXSAnyAtomicType.typeOf	= function(oValue) {
+	if (oValue instanceof cXSUntypedAtomic)
+		return cXSUntypedAtomic;
 	switch (typeof oValue) {
 		case "boolean":	return cXSBoolean;
 		case "string":	return cXSString;
 		case "number":	return ~~oValue == oValue ? cXSInteger : cXSDecimal;
 		default:
-			if (oValue instanceof cXSUntypedAtomic)
-				return cXSUntypedAtomic;
 			// Date/Time
 			if (oValue instanceof cXSDate)
 				return cXSDate;
