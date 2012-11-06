@@ -58,7 +58,7 @@ cXSDateTime.cast	= function(vValue) {
 											nDay,
 											bValue ? 24 : +aMatch[6],
 											bValue ? 0 : +aMatch[7],
-											cNumber((bValue ? 0 : aMatch[8]) + '.' + (bValue ? aMatch[11] || 0 : aMatch[9] || 0)),
+											cNumber((bValue ? 0 : aMatch[8]) + '.' + (bValue ? 0 : aMatch[9] || 0)),
 											aMatch[12] ? aMatch[12] == 'Z' ? 0 : (aMatch[13] == '-' ? 1 : -1) * (aMatch[14] * 60 + aMatch[15] * 1) : null,
 											aMatch[1] == '-'
 					);

@@ -41,7 +41,7 @@ cXSTime.cast	= function(vValue) {
 				var bValue	= !!aMatch[6];
 				return new cXSTime(bValue ? 24 : +aMatch[2],
 									bValue ? 0 : +aMatch[3],
-									cNumber((bValue ? 0 : aMatch[4]) + '.' + (bValue ? aMatch[7] || 0 : aMatch[5] || 0)),
+									cNumber((bValue ? 0 : aMatch[4]) + '.' + (bValue ? 0 : aMatch[5] || 0)),
 									aMatch[8] ? aMatch[8] == 'Z' ? 0 : (aMatch[9] == '-' ? 1 : -1) * (aMatch[10] * 60 + aMatch[11] * 1) : null
 				);
 			}
