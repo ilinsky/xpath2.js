@@ -89,17 +89,17 @@ cFunctionCall.operators["duration-equal"]	= function(oLeft, oRight) {
 
 // op:dateTime-equal($arg1 as xs:dateTime, $arg2 as xs:dateTime)
 cFunctionCall.operators["dateTime-equal"]	= function(oLeft, oRight) {
-	return fXSDateTime_toSeconds(oLeft) == fXSDateTime_toSeconds(oRight);
+//	return oLeft == oRight;
 };
 
 // op:dateTime-less-than($arg1 as xs:dateTime, $arg2 as xs:dateTime) as xs:boolean
 cFunctionCall.operators["dateTime-less-than"]	= function(oLeft, oRight) {
-	return fXSDateTime_toSeconds(oLeft) < fXSDateTime_toSeconds(oRight);
+	return oLeft < oRight;
 };
 
 //op:dateTime-greater-than($arg1 as xs:dateTime, $arg2 as xs:dateTime) as xs:boolean
 cFunctionCall.operators["dateTime-greater-than"]	= function(oLeft, oRight) {
-	return fXSDateTime_toSeconds(oLeft) > fXSDateTime_toSeconds(oRight);
+	return oLeft > oRight;
 };
 
 // op:date-equal($arg1 as xs:date, $arg2 as xs:date) as xs:boolean
@@ -205,12 +205,12 @@ cFunctionCall.operators["divide-dayTimeDuration-by-dayTimeDuration"]	= function(
 // 10.8 Arithmetic Operators on Durations, Dates and Times
 // op:subtract-dateTimes($arg1 as xs:dateTime, $arg2 as xs:dateTime) as xs:dateTimeDuration
 cFunctionCall.operators["subtract-dateTimes"]	= function(oLeft, oRight) {
-	return fXSDayTimeDuration_fromSeconds(fXSDateTime_toSeconds(oLeft) - fXSDateTime_toSeconds(oRight));
+//	return fXSDayTimeDuration_fromSeconds(oLeft - oRight);
 };
 
 // op:subtract-dates($arg1 as xs:date, $arg2 as xs:date) as xs:dateTimeDuration
 cFunctionCall.operators["subtract-dates"]	= function(oLeft, oRight) {
-	return fXSDayTimeDuration_fromSeconds(fXSDate_toSeconds(oLeft) - fXSDate_toSeconds(oRight));
+//	return fXSDayTimeDuration_fromSeconds(oLeft - oRight);
 };
 
 // op:subtract-times($arg1 as xs:time, $arg2 as xs:time) as xs:dayTimeDuration

@@ -63,8 +63,3 @@ cXSDate.cast	= function(vValue) {
 
 //
 cFunctionCall.dataTypes["date"]	= cXSDate;
-
-// Utilities
-function fXSDate_toSeconds(oDate) {
-
-};
