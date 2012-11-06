@@ -51,7 +51,7 @@ cXSDateTime.cast	= function(vValue) {
 				var nYear	= +aMatch[2],
 					nMonth	= +aMatch[3],
 					nDay	= +aMatch[4],
-					bValue	= aMatch[10] == "24:00:00";
+					bValue	= !!aMatch[10];
 				if (fXSDateTime_isValidDate(nYear, nMonth, nDay))
 					return new cXSDateTime( nYear,
 											nMonth,

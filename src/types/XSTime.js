@@ -38,7 +38,7 @@ cXSTime.cast	= function(vValue) {
 		case cXSString:
 			var aMatch	= vValue.match(cXSTime.RegExp);
 			if (aMatch) {
-				var bValue	= aMatch[6] == "24:00:00";
+				var bValue	= !!aMatch[6];
 				return new cXSTime(bValue ? 24 : +aMatch[2],
 									bValue ? 0 : +aMatch[3],
 									cNumber((bValue ? 0 : aMatch[4]) + '.' + (bValue ? aMatch[7] || 0 : aMatch[5] || 0)),
