@@ -44,7 +44,7 @@ cXSDateTime.cast	= function(vValue) {
 		case cXSUntypedAtomic:
 			vValue	= vValue.toString();
 		case cXSString:
-			var aMatch	= cString(vValue).match(cXSDateTime.RegExp);
+			var aMatch	= vValue.match(cXSDateTime.RegExp);
 			if (aMatch) {
 				var bValue	= aMatch[10] == "24:00:00";
 				return new cXSDateTime( aMatch[2] * (aMatch[1] == '-' ?-1 : 1),

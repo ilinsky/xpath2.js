@@ -36,7 +36,7 @@ cXSDate.cast	= function(vValue) {
 		case cXSUntypedAtomic:
 			vValue	= vValue.toString();
 		case cXSString:
-			var aMatch	= cString(vValue).match(cXSDate.RegExp);
+			var aMatch	= vValue.match(cXSDate.RegExp);
 			if (aMatch)
 				return new cXSDate( aMatch[2] * (aMatch[1] == '-' ?-1 : 1),
 									+aMatch[3],

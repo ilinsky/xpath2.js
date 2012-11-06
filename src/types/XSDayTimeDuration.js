@@ -28,7 +28,7 @@ cXSDayTimeDuration.cast	= function(vValue) {
 		case cXSUntypedAtomic:
 			vValue	= vValue.toString();
 		case cXSString:
-			var aMatch	= cString(vValue).match(cXSDayTimeDuration.RegExp);
+			var aMatch	= vValue.match(cXSDayTimeDuration.RegExp);
 			if (aMatch)
 				return fXSDayTimeDuration_normalize(new cXSDayTimeDuration(+aMatch[2] || 0, +aMatch[3] || 0, +aMatch[4] || 0, +aMatch[5] || 0, aMatch[1] == '-'));
 			throw new cXPath2Error("FORG0001");
