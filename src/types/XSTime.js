@@ -46,6 +46,8 @@ cXSTime.cast	= function(vValue) {
 				);
 			}
 			throw new cXPath2Error("FORG0001");
+		case cXSDateTime:
+			return new cXSTime(vValue.hours, vValue.minutes, vValue.seconds, vValue.timezone);
 	}
 	throw new cXPath2Error("XPTY0004", "Casting from " + cType + " to xs:time can never succeed");
 };

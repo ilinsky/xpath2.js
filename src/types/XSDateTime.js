@@ -44,10 +44,6 @@ cXSDateTime.cast	= function(vValue) {
 		case cXSUntypedAtomic:
 			vValue	= vValue.toString();
 		case cXSString:
-			//
-			// TODO: Gregorian
-		case cXSTime:
-		case cXSDate:
 			var aMatch	= cString(vValue).match(cXSDateTime.RegExp);
 			if (aMatch) {
 				var bValue	= aMatch[10] == "24:00:00";
@@ -61,6 +57,9 @@ cXSDateTime.cast	= function(vValue) {
 				);
 			}
 			throw new cXPath2Error("FORG0001");
+			// TODO: Gregorian
+		case cXSDate:
+			return new cXSDateTime(vValue.year, vValue.month, vValue.day, vValue.timezone);
 	}
 	throw new cXPath2Error("XPTY0004", "Casting from " + cType + " to xs:dateTime can never succeed");
 };
