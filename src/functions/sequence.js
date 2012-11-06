@@ -330,6 +330,8 @@ cFunctionCall.functions["sum"]	= function(oSequence1, oSequence2) {
 			if (oSequence2.length)
 				oSequence.add(oSequence2.items[0]);
 		}
+		else
+			oSequence.add(0);
 		return oSequence;
 	}
 
