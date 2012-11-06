@@ -308,6 +308,10 @@ function fFunctionCall_string_createRegExp(sValue, sFlags) {
 				.replace(/\\c/g, '[:' + c + ']')
 				.replace(/\\C/g, '[^:' + c + ']');
 
+	// Check if all flags are legal
+	if (sFlags && !sFlags.match(/^[smix]+$/))
+		throw new cXPath2Error("FORX0001");	// Invalid character '{%0}' in regular expression flags
+
 	var bFlagS	= sFlags.indexOf('s') >= 0,
 		bFlagX	= sFlags.indexOf('x') >= 0;
 	if (bFlagS || bFlagX) {
@@ -337,7 +341,7 @@ function fFunctionCall_string_createRegExp(sValue, sFlags) {
 		sValue	= aValue.join('');
 	}
 
-	return new cRegExp(sValue, sFlags);
+	return new cRegExp(sValue, sFlags + 'g');
 };
 
 // fn:matches($input as xs:string?, $pattern as xs:string) as xs:boolean
@@ -359,7 +363,7 @@ cFunctionCall.functions["replace"]	= function(oSequence1, oSequence2, oSequence3
 		throw new cXPath2Error("XPST0017");
 
 	var sValue	= oSequence1.toString(),
-		rRegExp	= fFunctionCall_string_createRegExp(oSequence2.toString(), arguments.length > 3 ? oSequence4.toString() : 'g'),
+		rRegExp	= fFunctionCall_string_createRegExp(oSequence2.toString(), arguments.length > 3 ? oSequence4.toString() : ''),
 		sReplacement	= oSequence3.toString();
 
 	return new cXPath2Sequence(sValue.replace(rRegExp, sReplacement));
