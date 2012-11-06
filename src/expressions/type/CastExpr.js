@@ -42,5 +42,6 @@ cCastExpr.prototype.evaluate	= function(oContext) {
 	if (!oSequence1.isSingleton())
 		throw new cXPath2Error("XPTY0004", "Required cardinality of value in 'cast as' expression is exactly one; supplied value has cardinality one or more");
 
-	return new cXPath2Sequence(this.type.test(cXPath2Sequence.atomizeItem(oSequence.items[0])));
+	//
+	return new cXPath2Sequence(this.type.itemType.cast(cXPath2Sequence.atomizeItem(oSequence1.items[0])));
 };

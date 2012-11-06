@@ -29,13 +29,21 @@ cAtomicType.parse	= function(oLexer, oResolver) {
 	}
 };
 
-cAtomicType.prototype.test	= function(oItem) {
-	// Cast
-	var cItemType	= cXSAnyAtomicType.typeOf(oItem),
-		sName	= /*'{' + this.namespaceURI + '}' + */this.localName,
-		cTestType	= cFunctionCall.dataTypes[sName];
+cAtomicType.prototype.test	= function(vItem) {
+	// Test
+	var cTestType	= cFunctionCall.dataTypes[/*'{' + this.namespaceURI + '}' + */this.localName],
+		cItemType	= cXSAnyAtomicType.typeOf(vItem);
 	if (cTestType)
 		return cTestType == cItemType || cItemType.prototype instanceof cTestType;
+	//
+	throw new cXPath2Error("XPST0051", "Unknown simple type " + (this.prefix ? this.prefix + ':' : '') + this.localName);
+};
+
+cAtomicType.prototype.cast	= function(vItem) {
+	// Cast
+	var cCastType	= cFunctionCall.dataTypes[/*'{' + this.namespaceURI + '}' + */this.localName];
+	if (cCastType)
+		return cCastType.cast(vItem);
 	//
 	throw new cXPath2Error("XPST0051", "Unknown simple type " + (this.prefix ? this.prefix + ':' : '') + this.localName);
 };
