@@ -28,13 +28,14 @@ cXSYearMonthDuration.cast	= function(vValue) {
 		case cXSUntypedAtomic:
 			vValue	= vValue.toString();
 		case cXSString:
-			//
-		case cXSDuration:
-		case cXSDayTimeDuration:
 			var aMatch	= cString(vValue).match(cXSYearMonthDuration.RegExp);
 			if (aMatch)
 				return fXSYearMonthDuration_normalize(new cXSYearMonthDuration(+aMatch[2] || 0, +aMatch[3] || 0, aMatch[1] == '-'));
 			throw new cXPath2Error("FORG0001");
+		case cXSDuration:
+			return new cXSYearMonthDuration(vValue.year, vValue.month, vValue.negative);
+		case cXSDayTimeDuration:
+			return new cXSYearMonthDuration(0, 0);
 	}
 	throw new cXPath2Error("XPTY0004", "Casting from " + cType + " to xs:yearMonthDuration can never succeed");
 };

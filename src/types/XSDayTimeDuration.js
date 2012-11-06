@@ -28,13 +28,15 @@ cXSDayTimeDuration.cast	= function(vValue) {
 		case cXSUntypedAtomic:
 			vValue	= vValue.toString();
 		case cXSString:
-			//
-		case cXSDuration:
-		case cXSYearMonthDuration:
 			var aMatch	= cString(vValue).match(cXSDayTimeDuration.RegExp);
 			if (aMatch)
 				return fXSDayTimeDuration_normalize(new cXSDayTimeDuration(+aMatch[2] || 0, +aMatch[3] || 0, +aMatch[4] || 0, +aMatch[5] || 0, aMatch[1] == '-'));
 			throw new cXPath2Error("FORG0001");
+		case cXSDuration:
+			return new cXSDayTimeDuration(vValue.day, vValue.hours, vValue.minutes, vValue.seconds, vValue.negative);
+		case cXSYearMonthDuration:
+			return new cXSDayTimeDuration(0, 0, 0, 0);
+
 	}
 	throw new cXPath2Error("XPTY0004", "Casting from " + cType + " to xs:dayTimeDuration can never succeed");
 };

@@ -42,13 +42,14 @@ cXSDuration.cast	= function(vValue) {
 		case cXSUntypedAtomic:
 			vValue	= vValue.toString();
 		case cXSString:
-			//
-		case cXSYearMonthDuration:
-		case cXSDayTimeDuration:
 			var aMatch	= cString(vValue).match(cXSDuration.RegExp);
 			if (aMatch)
 				return fXSDuration_normalize(new cXSDuration(+aMatch[2] || 0, +aMatch[3] || 0, +aMatch[4] || 0, +aMatch[5] || 0, +aMatch[6] || 0, +aMatch[7] || 0, aMatch[1] == '-'));
 			throw new cXPath2Error("FORG0001");
+		case cXSYearMonthDuration:
+			return new cXSDuration(vValue.year, vValue.month, 0, 0, 0, 0, vValue.negative);
+		case cXSDayTimeDuration:
+			return new cXSDuration(0, 0, vValue.day, vValue.hours, vValue.minutes, vValue.seconds, vValue.negative);
 	}
 	throw new cXPath2Error("XPTY0004", "Casting from " + cType + " to xs:duration can never succeed");
 };
