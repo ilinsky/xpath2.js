@@ -126,6 +126,7 @@ cComparisonExpr.ValueComp.operators	= {};
 cComparisonExpr.ValueComp.operators['eq']	= function(oLeft, oRight) {
 	var cLeft	= cXSAnyAtomicType.typeOf(oLeft),
 		cRight	= cXSAnyAtomicType.typeOf(oRight);
+
 	if (cXSAnyAtomicType.isNumeric(cLeft)) {
 		if (cXSAnyAtomicType.isNumeric(cRight))
 			return cFunctionCall.operators["numeric-equal"](oLeft, oRight);
@@ -147,7 +148,7 @@ cComparisonExpr.ValueComp.operators['eq']	= function(oLeft, oRight) {
 		if (cLeft == cXSDateTime)
 			return cFunctionCall.operators["dateTime-equal"](oLeft, oRight);
 		else
-		if (cLeft == cXSDuration)
+		if (cLeft == cXSDuration || cLeft == cXSYearMonthDuration || cLeft == cXSDayTimeDuration)
 			return cFunctionCall.operators["duration-equal"](oLeft, oRight);
 		// skipped: Gregorian
 		// skipped: xs:hexBinary
@@ -156,6 +157,11 @@ cComparisonExpr.ValueComp.operators['eq']	= function(oLeft, oRight) {
 		else
 		if (cLeft == cXSQName)
 			return cFunctionCall.operators["QName-equal"](oLeft, oRight);
+	}
+	else	// If types of operands are different but are duration inherited
+	if (cLeft == cXSDuration || cLeft == cXSYearMonthDuration || cLeft == cXSDayTimeDuration) {
+		if (cRight == cXSDuration || cRight == cXSYearMonthDuration || cRight == cXSDayTimeDuration)
+			return cFunctionCall.operators["duration-equal"](oLeft, oRight);
 	}
 	// skipped: xs:NOTATION
 	throw new cXPath2Error("XPTY0004");	// Cannot compare {type1} to {type2}
