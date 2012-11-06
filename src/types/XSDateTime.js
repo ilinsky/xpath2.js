@@ -7,7 +7,7 @@
  *
  */
 
-function cXSDateTime(nYear, nMonth, nDay, nHours, nMinutes, nSeconds, nTimezone) {
+function cXSDateTime(nYear, nMonth, nDay, nHours, nMinutes, nSeconds, nTimezone, bNegative) {
 	this.year	= nYear;
 	this.month	= nMonth;
 	this.day	= nDay;
@@ -15,6 +15,7 @@ function cXSDateTime(nYear, nMonth, nDay, nHours, nMinutes, nSeconds, nTimezone)
 	this.minutes	= nMinutes;
 	this.seconds	= nSeconds;
 	this.timezone	= nTimezone;
+	this.negative	= bNegative;
 };
 
 cXSDateTime.RegExp	= /^(-?)([1-9]\d\d\d+|0\d\d\d)-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])T(([01]\d|2[0-3]):([0-5]\d):([0-5]\d)(?:\.(\d+))?|(24:00:00)(?:\.(0+))?)(Z|([+\-])(0\d|1[0-4]):([0-5]\d))?$/;
@@ -27,7 +28,8 @@ cXSDateTime.prototype.day		= null;
 cXSDateTime.prototype.hours		= null;
 cXSDateTime.prototype.minutes	= null;
 cXSDateTime.prototype.seconds	= null;
-cXSDateTime.prototype.timezone		= null;
+cXSDateTime.prototype.timezone	= null;
+cXSDateTime.prototype.negative	= null;
 
 cXSDateTime.prototype.toString	= function() {
 	return fXSDateTime_getDateComponent(this)
@@ -47,19 +49,20 @@ cXSDateTime.cast	= function(vValue) {
 			var aMatch	= vValue.match(cXSDateTime.RegExp);
 			if (aMatch) {
 				var bValue	= aMatch[10] == "24:00:00";
-				return new cXSDateTime( aMatch[2] * (aMatch[1] == '-' ?-1 : 1),
+				return new cXSDateTime( +aMatch[2],
 										+aMatch[3],
 										+aMatch[4],
 										bValue ? 24 : +aMatch[6],
 										bValue ? 0 : +aMatch[7],
 										cNumber((bValue ? 0 : aMatch[8]) + '.' + (bValue ? aMatch[11] || 0 : aMatch[9] || 0)),
-										aMatch[12] ? aMatch[12] == 'Z' ? 0 : (aMatch[13] == '-' ? 1 : -1) * (aMatch[14] * 60 + aMatch[15] * 1) : null
+										aMatch[12] ? aMatch[12] == 'Z' ? 0 : (aMatch[13] == '-' ? 1 : -1) * (aMatch[14] * 60 + aMatch[15] * 1) : null,
+										aMatch[1] == '-'
 				);
 			}
 			throw new cXPath2Error("FORG0001");
 			// TODO: Gregorian
 		case cXSDate:
-			return new cXSDateTime(vValue.year, vValue.month, vValue.day, 0, 0, 0, vValue.timezone);
+			return new cXSDateTime(vValue.year, vValue.month, vValue.day, 0, 0, 0, vValue.timezone, vValue.negative);
 	}
 	throw new cXPath2Error("XPTY0004", "Casting from " + cType + " to xs:dateTime can never succeed");
 };
@@ -91,7 +94,8 @@ function fXSDateTime_getTZComponent(oDateTime) {
 };
 
 function fXSDateTime_getDateComponent(oDateTime) {
-	return fXSDateTime_pad(oDateTime.year, 4)
+	return (oDateTime.negative ? '-' : '')
+			+ fXSDateTime_pad(oDateTime.year, 4)
 			+ '-' + fXSDateTime_pad(oDateTime.month)
 			+ '-' + fXSDateTime_pad(oDateTime.day);
 };
