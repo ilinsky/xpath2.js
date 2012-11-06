@@ -39,13 +39,20 @@ cXSDate.cast	= function(vValue) {
 			vValue	= vValue.toString();
 		case cXSString:
 			var aMatch	= vValue.match(cXSDate.RegExp);
-			if (aMatch)
-				return new cXSDate( +aMatch[2],
-									+aMatch[3],
-									+aMatch[4],
-									aMatch[5] ? aMatch[5] == 'Z' ? 0 : (aMatch[6] == '-' ? 1 : -1) * (aMatch[7] * 60 + aMatch[8] * 1) : null,
-									aMatch[1] == '-'
-				);
+			if (aMatch) {
+				var nYear	= +aMatch[2],
+					nMonth	= +aMatch[3],
+					nDay	= +aMatch[4];
+				if (fXSDateTime_isValidDate(nYear, nMonth, nDay))
+					return new cXSDate( nYear,
+										nMonth,
+										nDay,
+										aMatch[5] ? aMatch[5] == 'Z' ? 0 : (aMatch[6] == '-' ? 1 : -1) * (aMatch[7] * 60 + aMatch[8] * 1) : null,
+										aMatch[1] == '-'
+					);
+				//
+				throw new cXPath2Error("FORG0001", "Invalid date '" + vValue + "' (Non-existent date)");
+			}
 			throw new cXPath2Error("FORG0001");
 			// TODO: Gregorian
 		case cXSDateTime:

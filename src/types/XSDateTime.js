@@ -48,16 +48,22 @@ cXSDateTime.cast	= function(vValue) {
 		case cXSString:
 			var aMatch	= vValue.match(cXSDateTime.RegExp);
 			if (aMatch) {
-				var bValue	= aMatch[10] == "24:00:00";
-				return new cXSDateTime( +aMatch[2],
-										+aMatch[3],
-										+aMatch[4],
-										bValue ? 24 : +aMatch[6],
-										bValue ? 0 : +aMatch[7],
-										cNumber((bValue ? 0 : aMatch[8]) + '.' + (bValue ? aMatch[11] || 0 : aMatch[9] || 0)),
-										aMatch[12] ? aMatch[12] == 'Z' ? 0 : (aMatch[13] == '-' ? 1 : -1) * (aMatch[14] * 60 + aMatch[15] * 1) : null,
-										aMatch[1] == '-'
-				);
+				var nYear	= +aMatch[2],
+					nMonth	= +aMatch[3],
+					nDay	= +aMatch[4],
+					bValue	= aMatch[10] == "24:00:00";
+				if (fXSDateTime_isValidDate(nYear, nMonth, nDay))
+					return new cXSDateTime( nYear,
+											nMonth,
+											nDay,
+											bValue ? 24 : +aMatch[6],
+											bValue ? 0 : +aMatch[7],
+											cNumber((bValue ? 0 : aMatch[8]) + '.' + (bValue ? aMatch[11] || 0 : aMatch[9] || 0)),
+											aMatch[12] ? aMatch[12] == 'Z' ? 0 : (aMatch[13] == '-' ? 1 : -1) * (aMatch[14] * 60 + aMatch[15] * 1) : null,
+											aMatch[1] == '-'
+					);
+				//
+				throw new cXPath2Error("FORG0001", "Invalid date '" + vValue + "' (Non-existent date)");
 			}
 			throw new cXPath2Error("FORG0001");
 			// TODO: Gregorian
@@ -71,6 +77,10 @@ cXSDateTime.cast	= function(vValue) {
 cFunctionCall.dataTypes["dateTime"]	= cXSDateTime;
 
 // Utilities
+function fXSDateTime_isValidDate(nYear, nMonth, nDay) {
+	return nDay == 29 && nMonth == 2 ? nYear % 400 == 0 || nYear % 100 != 0 && nYear % 4 == 0 : nDay - 1 < [31,28,31,30,31,30,31,31,30,31,30,31][nMonth - 1];
+};
+
 function fXSDateTime_toSeconds(oDateTime) {
 	var nValue	= fXSDate_toSeconds(oDateTime);
 	return nValue + fXSTime_toSeconds(oDateTime) * (nValue > 0 ? 1 :-1);
