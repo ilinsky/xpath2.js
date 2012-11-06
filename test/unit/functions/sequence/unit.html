@@ -186,8 +186,6 @@
 						evaluateXPathSingle('fn:avg((3, 4, 5))'));
 				assertEquals("P10Y5M",
 						evaluateXPathSingle('string(fn:avg((xs:yearMonthDuration("P20Y"), xs:yearMonthDuration("P10M"))))'));
-				assertEquals("FORG0006",
-						evaluateXPathError('fn:avg((xs:yearMonthDuration("P20Y"), (3, 4, 5))))'));
 				assertArrayEquals([],
 						evaluateXPath('fn:avg(())'));
 				assertEquals("NaN",
@@ -196,16 +194,24 @@
 						evaluateXPathSingle("string(fn:avg(((3, 4, 5), xs:float('NaN'))))"));
 			}
 
+			function testAvg_mixedSequenceType() {
+				assertEquals("FORG0006",
+						evaluateXPathError('fn:avg((xs:yearMonthDuration("P20Y"), (3, 4, 5))))'));
+			}
+
 			function testMax() {
 				assertEquals(5,
 						evaluateXPathSingle('fn:max((3,4,5))'));
 				assertEquals(5.0e0,
 						evaluateXPathSingle('fn:max((5, 5.0e0))'));
-				assertEquals("FORG0006",
-						evaluateXPathError('fn:max((3,4,"Zero"))'));
 				// 1 test not copied
 				assertEquals("c",
 						evaluateXPathSingle('fn:max(("a", "b", "c"))'));	// under a typical default collation.
+			}
+
+			function testMax_mixedSequenceType() {
+				assertEquals("FORG0006",
+						evaluateXPathError('fn:max((3,4,"Zero"))'));
 			}
 
 			function testMin() {
@@ -213,13 +219,16 @@
 						evaluateXPathSingle('fn:min((3,4,5))'));
 				assertEquals(5.0e0,
 						evaluateXPathSingle('fn:min((5, 5.0e0))'));
-				assertEquals("FORG0006",
-						evaluateXPathError('fn:min((3,4,"Zero"))'));
 				assertEquals(-0,
 						evaluateXPathSingle('fn:min((xs:float(0.0E0), xs:float(-0.0E0)))'));
 				// 1 test not copied
 				assertEquals("a",
 						evaluateXPathSingle('fn:min(("a", "b", "c"))'));	// under a typical default collation.
+			}
+
+			function testMin_mixedSequenceType() {
+				assertEquals("FORG0006",
+						evaluateXPathError('fn:min((3,4,"Zero"))'));
 			}
 
 			function testSum() {
@@ -232,6 +241,9 @@
 						evaluateXPathSingle('fn:sum(())'));
 				assertArrayEquals([],
 						evaluateXPath('fn:sum((),())'));
+			}
+
+			function testSum_mixedSequenceType() {
 				assertEquals("FORG0006",	// Input to sum() contains a mix of duration and non-duration values
 						evaluateXPathError('fn:sum((xs:yearMonthDuration("P20Y"), 9E1))'));
 			}
