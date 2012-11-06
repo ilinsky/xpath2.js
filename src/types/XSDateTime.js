@@ -59,7 +59,7 @@ cXSDateTime.cast	= function(vValue) {
 			throw new cXPath2Error("FORG0001");
 			// TODO: Gregorian
 		case cXSDate:
-			return new cXSDateTime(vValue.year, vValue.month, vValue.day, vValue.timezone);
+			return new cXSDateTime(vValue.year, vValue.month, vValue.day, 0, 0, 0, vValue.timezone);
 	}
 	throw new cXPath2Error("XPTY0004", "Casting from " + cType + " to xs:dateTime can never succeed");
 };
