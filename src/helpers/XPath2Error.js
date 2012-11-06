@@ -34,3 +34,5 @@ oXPathError_messages["FORG0005"]	= "fn:exactly-one called with a sequence contai
 oXPathError_messages["FORG0006"]	= "Invalid argument type.";
 //
 oXPathError_messages["FODC0001"]	= "No context document.";
+//
+oXPathError_messages["FORX0001"]	= "Invalid regular expression flags.";
