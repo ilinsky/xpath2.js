@@ -19,62 +19,67 @@ cMultiplicativeExpr.prototype.items	= null;
 cMultiplicativeExpr.operators	={};
 
 cMultiplicativeExpr.operators['*']		= function (oLeft, oRight) {
-	if (typeof oLeft == "number") {
-		if (typeof oRight == "number")
+	var cLeft	= cXSAnyAtomicType.typeOf(oLeft),
+		cRight	= cXSAnyAtomicType.typeOf(oRight);
+	if (cXSAnyAtomicType.isNumeric(cLeft)) {
+		if (cXSAnyAtomicType.isNumeric(cRight))
 			return cFunctionCall.operators["numeric-multiply"](oLeft, oRight);
-		if (oRight instanceof cXSYearMonthDuration)
+		if (cRight == cXSYearMonthDuration)
 			return cFunctionCall.operators["multiply-yearMonthDuration"](oRight, oLeft);
-		if (oRight instanceof cXSDayTimeDuration)
+		if (cRight == cXSDayTimeDuration)
 			return cFunctionCall.operators["multiply-dayTimeDuration"](oRight, oLeft);
 	}
-	else
-	if (oLeft instanceof cXSYearMonthDuration) {
-		if (typeof oRight == "number")
-			return cFunctionCall.operators["multiply-yearMonthDuration"](oLeft, oRight);
-	}
-	else
-	if (oLeft instanceof cXSDayTimeDuration) {
-		if (typeof oRight == "number")
-			return cFunctionCall.operators["multiply-dayTimeDuration"](oLeft, oRight);
+	else {
+		if (cLeft == cXSYearMonthDuration) {
+			if (cXSAnyAtomicType.isNumeric(cRight))
+				return cFunctionCall.operators["multiply-yearMonthDuration"](oLeft, oRight);
+		}
+		else
+		if (cLeft == cXSDayTimeDuration) {
+			if (cXSAnyAtomicType.isNumeric(cRight))
+				return cFunctionCall.operators["multiply-dayTimeDuration"](oLeft, oRight);
+		}
 	}
 	//
 	throw new cXPath2Error("XPTY0004");	// Arithmetic operator is not defined for arguments of types
 };
 cMultiplicativeExpr.operators['div']	= function (oLeft, oRight) {
-	if (typeof oLeft == "number") {
-		if (typeof oRight == "number")
+	var cLeft	= cXSAnyAtomicType.typeOf(oLeft),
+		cRight	= cXSAnyAtomicType.typeOf(oRight);
+	if (cXSAnyAtomicType.isNumeric(cLeft)) {
+		if (cXSAnyAtomicType.isNumeric(cRight))
 			return cFunctionCall.operators["numeric-divide"](oLeft, oRight);
 	}
 	else
-	if (oLeft instanceof cXSYearMonthDuration) {
-		if (typeof oRight == "number")
+	if (cLeft == cXSYearMonthDuration) {
+		if (cXSAnyAtomicType.isNumeric(cRight))
 			return cFunctionCall.operators["divide-yearMonthDuration"](oLeft, oRight);
-		if (oRight instanceof cXSYearMonthDuration)
+		if (cRight == cXSYearMonthDuration)
 			return cFunctionCall.operators["divide-yearMonthDuration-by-yearMonthDuration"](oLeft, oRight);
 	}
 	else
-	if (oLeft instanceof cXSDayTimeDuration) {
-		if (typeof oRight == "number")
+	if (cLeft == cXSDayTimeDuration) {
+		if (cXSAnyAtomicType.isNumeric(cRight))
 			return cFunctionCall.operators["divide-dayTimeDuration"](oLeft, oRight);
-		if (oRight instanceof cXSDayTimeDuration)
+		if (cRight == cXSDayTimeDuration)
 			return cFunctionCall.operators["divide-dayTimeDuration-by-dayTimeDuration"](oLeft, oRight);
 	}
 	//
 	throw new cXPath2Error("XPTY0004");	// Arithmetic operator is not defined for arguments of types
 };
 cMultiplicativeExpr.operators['idiv']	= function (oLeft, oRight) {
-	if (typeof oLeft == "number") {
-		if (typeof oRight == "number")
-			return cFunctionCall.operators["numeric-integer-divide"](oLeft, oRight);
-	}
+	var cLeft	= cXSAnyAtomicType.typeOf(oLeft),
+		cRight	= cXSAnyAtomicType.typeOf(oRight);
+	if (cXSAnyAtomicType.isNumeric(cLeft) && cXSAnyAtomicType.isNumeric(cRight))
+		return cFunctionCall.operators["numeric-integer-divide"](oLeft, oRight);
 	//
 	throw new cXPath2Error("XPTY0004");	// Arithmetic operator is not defined for arguments of types
 };
 cMultiplicativeExpr.operators['mod']	= function (oLeft, oRight) {
-	if (typeof oLeft == "number") {
-		if (typeof oRight == "number")
-			return cFunctionCall.operators["numeric-mod"](oLeft, oRight);
-	}
+	var cLeft	= cXSAnyAtomicType.typeOf(oLeft),
+		cRight	= cXSAnyAtomicType.typeOf(oRight);
+	if (cXSAnyAtomicType.isNumeric(cLeft) && cXSAnyAtomicType.isNumeric(cRight))
+		return cFunctionCall.operators["numeric-mod"](oLeft, oRight);
 	//
 	throw new cXPath2Error("XPTY0004");	// Arithmetic operator is not defined for arguments of types
 };

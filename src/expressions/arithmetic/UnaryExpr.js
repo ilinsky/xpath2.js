@@ -18,13 +18,15 @@ cUnaryExpr.prototype.expression	= null;
 //
 cUnaryExpr.operators	= {};
 cUnaryExpr.operators['-']	= function(oRight) {
-	if (typeof oRight == "number")
+	var cRight	= cXSAnyAtomicType.typeOf(oRight);
+	if (cXSAnyAtomicType.isNumeric(cRight))
 		return cFunctionCall.operators["numeric-unary-minus"](oRight);
 	//
 	throw new cXPath2Error("XPTY0004");	// Required item type of operand of '-' is numeric; supplied value has item type {type1}
 };
-cUnaryExpr.operators['+']	= function(oRight){
-	if (typeof oRight == "number")
+cUnaryExpr.operators['+']	= function(oRight) {
+	var cRight	= cXSAnyAtomicType.typeOf(oRight);
+	if (cXSAnyAtomicType.isNumeric(cRight))
 		return cFunctionCall.operators["numeric-unary-plus"](oRight);
 	//
 	throw new cXPath2Error("XPTY0004");	// Required item type of operand of '-' is numeric; supplied value has item type {type1}

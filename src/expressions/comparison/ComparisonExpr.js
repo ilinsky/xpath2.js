@@ -124,48 +124,37 @@ cComparisonExpr.ValueComp	= function(oExpr, oContext) {
 
 cComparisonExpr.ValueComp.operators	= {};
 cComparisonExpr.ValueComp.operators['eq']	= function(oLeft, oRight) {
-	if (typeof oLeft == "number") {
-		if (typeof oRight == "number")
+	var cLeft	= cXSAnyAtomicType.typeOf(oLeft),
+		cRight	= cXSAnyAtomicType.typeOf(oRight);
+	if (cXSAnyAtomicType.isNumeric(cLeft)) {
+		if (cXSAnyAtomicType.isNumeric(cRight))
 			return cFunctionCall.operators["numeric-equal"](oLeft, oRight);
 	}
 	else
-	if (typeof oLeft == "boolean") {
-		if (typeof oRight == "boolean")
+	if (cLeft == cRight) {
+		if (cLeft == cXSBoolean)
 			return cFunctionCall.operators["boolean-equal"](oLeft, oRight);
-	}
-	else
-	if (typeof oLeft == "string") {
-		if (typeof oRight == "string") {
+		else
+		if (cLeft == cXSString)
 			return cFunctionCall.operators["numeric-equal"](cFunctionCall.functions["compare"](new cXPath2Sequence(oLeft), new cXPath2Sequence(oRight)).items[0], 0);
-		}
-	}
-	else
-	if (oLeft instanceof cXSDate) {
-		if (oRight instanceof cXSDate)
+		else
+		if (cLeft == cXSDate)
 			return cFunctionCall.operators["date-equal"](oLeft, oRight);
-	}
-	else
-	if (oLeft instanceof cXSTime) {
-		if (oRight instanceof cXSTime)
+		else
+		if (cLeft == cXSTime)
 			return cFunctionCall.operators["time-equal"](oLeft, oRight);
-	}
-	else
-	if (oLeft instanceof cXSDateTime) {
-		if (oRight instanceof cXSDateTime)
+		else
+		if (cLeft == cXSDateTime)
 			return cFunctionCall.operators["dateTime-equal"](oLeft, oRight);
-	}
-	else
-	if (oLeft instanceof cXSDuration) {
-		if (oRight instanceof cXSDuration)
+		else
+		if (cLeft == cXSDuration)
 			return cFunctionCall.operators["duration-equal"](oLeft, oRight);
-	}
-	// skipped: Gregorian
-	// skipped: xs:hexBinary
-	// skipped: xs:base64Binary
-	// skipped: xs:anyURI (covered by xs:string)
-	else
-	if (oLeft instanceof cXSQName) {
-		if (oRight instanceof cXSQName)
+		// skipped: Gregorian
+		// skipped: xs:hexBinary
+		// skipped: xs:base64Binary
+		// skipped: xs:anyURI (covered by xs:string)
+		else
+		if (cLeft == cXSQName)
 			return cFunctionCall.operators["QName-equal"](oLeft, oRight);
 	}
 	// skipped: xs:NOTATION
@@ -175,172 +164,132 @@ cComparisonExpr.ValueComp.operators['ne']	= function(oLeft, oRight) {
 	return !cComparisonExpr.ValueComp.operators['eq'](oLeft, oRight);
 };
 cComparisonExpr.ValueComp.operators['gt']	= function(oLeft, oRight) {
-	if (typeof oLeft == "number") {
-		if (typeof oRight == "number")
+	var cLeft	= cXSAnyAtomicType.typeOf(oLeft),
+		cRight	= cXSAnyAtomicType.typeOf(oRight);
+	if (cXSAnyAtomicType.isNumeric(cLeft)) {
+		if (cXSAnyAtomicType.isNumeric(cRight))
 			return cFunctionCall.operators["numeric-greater-than"](oLeft, oRight);
 	}
 	else
-	if (typeof oLeft == "boolean") {
-		if (typeof oRight == "boolean")
+	if (cLeft == cRight) {
+		if (cLeft == cXSBoolean)
 			return cFunctionCall.operators["boolean-greater-than"](oLeft, oRight);
-	}
-	else
-	if (typeof oLeft == "string") {
-		if (typeof oRight == "string")
+		else
+		if (cLeft == cXSString)
 			return cFunctionCall.operators["numeric-greater-than"](cFunctionCall.functions["compare"](new cXPath2Sequence(oLeft), new cXPath2Sequence(oRight)).items[0], 0);
-	}
-	else
-	if (oLeft instanceof cXSDate) {
-		if (oRight instanceof cXSDate)
+		else
+		if (cLeft == cXSDate)
 			return cFunctionCall.operators["date-greater-than"](oLeft, oRight);
-	}
-	else
-	if (oLeft instanceof cXSTime) {
-		if (oRight instanceof cXSTime)
+		else
+		if (cLeft == cXSTime)
 			return cFunctionCall.operators["time-greater-than"](oLeft, oRight);
-	}
-	else
-	if (oLeft instanceof cXSDateTime) {
-		if (oRight instanceof cXSDateTime)
+		else
+		if (cLeft == cXSDateTime)
 			return cFunctionCall.operators["dateTime-greater-than"](oLeft, oRight);
-	}
-	else
-	if (oLeft instanceof cXSYearMonthDuration) {
-		if (oRight instanceof cXSYearMonthDuration)
+		else
+		if (cLeft == cXSYearMonthDuration)
 			return cFunctionCall.operators["yearMonthDuration-greater-than"](oLeft, oRight);
-	}
-	else
-	if (oLeft instanceof cXSDayTimeDuration) {
-		if (oRight instanceof cXSDayTimeDuration)
+		else
+		if (cLeft == cXSDayTimeDuration)
 			return cFunctionCall.operators["dayTimeDuration-greater-than"](oLeft, oRight);
 	}
 	// skipped: xs:anyURI (covered by xs:string)
 	throw new cXPath2Error("XPTY0004");	// Cannot compare {type1} to {type2}
 };
 cComparisonExpr.ValueComp.operators['lt']	= function(oLeft, oRight) {
-	if (typeof oLeft == "number") {
-		if (typeof oRight == "number")
+	var cLeft	= cXSAnyAtomicType.typeOf(oLeft),
+		cRight	= cXSAnyAtomicType.typeOf(oRight);
+	if (cXSAnyAtomicType.isNumeric(cLeft)) {
+		if (cXSAnyAtomicType.isNumeric(cRight))
 			return cFunctionCall.operators["numeric-less-than"](oLeft, oRight);
 	}
 	else
-	if (typeof oLeft == "boolean") {
-		if (typeof oRight == "boolean")
+	if (cLeft == cRight) {
+		if (cLeft == cXSBoolean)
 			return cFunctionCall.operators["boolean-less-than"](oLeft, oRight);
-	}
-	else
-	if (typeof oLeft == "string") {
-		if (typeof oRight == "string")
+		else
+		if (cLeft == cXSBoolean)
 			return cFunctionCall.operators["numeric-less-than"](cFunctionCall.functions["compare"](new cXPath2Sequence(oLeft), new cXPath2Sequence(oRight)).items[0], 0);
-	}
-	else
-	if (oLeft instanceof cXSDate) {
-		if (oRight instanceof cXSDate)
+		else
+		if (cLeft == cXSDate)
 			return cFunctionCall.operators["date-less-than"](oLeft, oRight);
-	}
-	else
-	if (oLeft instanceof cXSTime) {
-		if (oRight instanceof cXSTime)
+		else
+		if (cLeft == cXSTime)
 			return cFunctionCall.operators["time-less-than"](oLeft, oRight);
-	}
-	else
-	if (oLeft instanceof cXSDateTime) {
-		if (oRight instanceof cXSDateTime)
+		else
+		if (cLeft == cXSDateTime)
 			return cFunctionCall.operators["dateTime-less-than"](oLeft, oRight);
-	}
-	else
-	if (oLeft instanceof cXSYearMonthDuration) {
-		if (oRight instanceof cXSYearMonthDuration)
+		else
+		if (cLeft == cXSYearMonthDuration)
 			return cFunctionCall.operators["yearMonthDuration-less-than"](oLeft, oRight);
-	}
-	else
-	if (oLeft instanceof cXSDayTimeDuration) {
-		if (oRight instanceof cXSDayTimeDuration)
+		else
+		if (cLeft == cXSDayTimeDuration)
 			return cFunctionCall.operators["dayTimeDuration-less-than"](oLeft, oRight);
 	}
 	// skipped: xs:anyURI (covered by xs:string)
 	throw new cXPath2Error("XPTY0004");	// Cannot compare {type1} to {type2}
 };
 cComparisonExpr.ValueComp.operators['ge']	= function(oLeft, oRight) {
-	if (typeof oLeft == "number") {
-		if (typeof oRight == "number")
+	var cLeft	= cXSAnyAtomicType.typeOf(oLeft),
+		cRight	= cXSAnyAtomicType.typeOf(oRight);
+	if (cXSAnyAtomicType.isNumeric(cLeft)) {
+		if (cXSAnyAtomicType.isNumeric(cRight))
 			return cFunctionCall.operators["numeric-greater-than"](oLeft, oRight) || cFunctionCall.operators["numeric-equal"](oLeft, oRight);
 	}
 	else
-	if (typeof oLeft == "boolean") {
-		if (typeof oRight == "boolean")
+	if (cLeft == cRight) {
+		if (cLeft == cXSBoolean)
 			return !cFunctionCall.operators["boolean-less-than"](oLeft, oRight);
-	}
-	else
-	if (typeof oLeft == "string") {
-		if (typeof oRight == "string")
+		else
+		if (cLeft == cXSString)
 			return cFunctionCall.operators["numeric-greater-than"](cFunctionCall.functions["compare"](new cXPath2Sequence(oLeft), new cXPath2Sequence(oRight)).items[0], -1);
-	}
-	else
-	if (oLeft instanceof cXSDate) {
-		if (oRight instanceof cXSDate)
+		else
+		if (cLeft == cXSDate)
 			return !cFunctionCall.operators["date-less-than"](oLeft, oRight);
-	}
-	else
-	if (oLeft instanceof cXSTime) {
-		if (oRight instanceof cXSTime)
+		else
+		if (cLeft == cXSTime)
 			return !cFunctionCall.operators["time-less-than"](oLeft, oRight);
-	}
-	else
-	if (oLeft instanceof cXSDateTime) {
-		if (oRight instanceof cXSDateTime)
+		else
+		if (cLeft == cXSDateTime)
 			return !cFunctionCall.operators["dateTime-less-than"](oLeft, oRight);
-	}
-	else
-	if (oLeft instanceof cXSYearMonthDuration) {
-		if (oRight instanceof cXSYearMonthDuration)
+		else
+		if (cLeft == cXSYearMonthDuration)
 			return !cFunctionCall.operators["yearMonthDuration-less-than"](oLeft, oRight);
-	}
-	else
-	if (oLeft instanceof cXSDayTimeDuration) {
-		if (oRight instanceof cXSDayTimeDuration)
+		else
+		if (cLeft == cXSDayTimeDuration)
 			return !cFunctionCall.operators["dayTimeDuration-less-than"](oLeft, oRight);
 	}
 	// skipped: xs:anyURI (covered by xs:string)
 	throw new cXPath2Error("XPTY0004");	// Cannot compare {type1} to {type2}
 };
 cComparisonExpr.ValueComp.operators['le']	= function(oLeft, oRight) {
-	if (typeof oLeft == "number") {
-		if (typeof oRight == "number")
+	var cLeft	= cXSAnyAtomicType.typeOf(oLeft),
+		cRight	= cXSAnyAtomicType.typeOf(oRight);
+	if (cXSAnyAtomicType.isNumeric(cLeft)) {
+		if (cXSAnyAtomicType.isNumeric(cRight))
 			return cFunctionCall.operators["numeric-less-than"](oLeft, oRight) || cFunctionCall.operators["numeric-equal"](oLeft, oRight);
 	}
 	else
-	if (typeof oLeft == "boolean") {
-		if (typeof oRight == "boolean")
+	if (cLeft == cRight) {
+		if (cLeft == cXSBoolean)
 			return !cFunctionCall.operators["boolean-greater-than"](oLeft, oRight);
-	}
-	else
-	if (typeof oLeft == "string") {
-		if (typeof oRight == "string")
+		else
+		if (cLeft == cXSString)
 			return cFunctionCall.operators["numeric-less-than"](cFunctionCall.functions["compare"](new cXPath2Sequence(oLeft), new cXPath2Sequence(oRight)).items[0], 1);
-	}
-	else
-	if (oLeft instanceof cXSDate) {
-		if (oRight instanceof cXSDate)
+		else
+		if (cLeft == cXSDate)
 			return !cFunctionCall.operators["date-greater-than"](oLeft, oRight);
-	}
-	else
-	if (oLeft instanceof cXSTime) {
-		if (oRight instanceof cXSTime)
+		else
+		if (cLeft == cXSTime)
 			return !cFunctionCall.operators["time-greater-than"](oLeft, oRight);
-	}
-	else
-	if (oLeft instanceof cXSDateTime) {
-		if (oRight instanceof cXSDateTime)
+		else
+		if (cLeft == cXSDateTime)
 			return !cFunctionCall.operators["dateTime-greater-than"](oLeft, oRight);
-	}
-	else
-	if (oLeft instanceof cXSYearMonthDuration) {
-		if (oRight instanceof cXSYearMonthDuration)
+		else
+		if (cLeft == cXSYearMonthDuration)
 			return !cFunctionCall.operators["yearMonthDuration-greater-than"](oLeft, oRight);
-	}
-	else
-	if (oLeft instanceof cXSDayTimeDuration) {
-		if (oRight instanceof cXSDayTimeDuration)
+		else
+		if (cLeft == cXSDayTimeDuration)
 			return !cFunctionCall.operators["dayTimeDuration-greater-than"](oLeft, oRight);
 	}
 	// skipped: xs:anyURI (covered by xs:string)

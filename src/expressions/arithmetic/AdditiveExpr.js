@@ -19,90 +19,94 @@ cAdditiveExpr.prototype.items	= null;
 cAdditiveExpr.operators	={};
 
 cAdditiveExpr.operators['+']	= function(oLeft, oRight) {
-	if (typeof oLeft == "number") {
-		if (typeof oRight == "number")
+	var cLeft	= cXSAnyAtomicType.typeOf(oLeft),
+		cRight	= cXSAnyAtomicType.typeOf(oRight);
+	if (cXSAnyAtomicType.isNumeric(cLeft)) {
+		if (cXSAnyAtomicType.isNumeric(cRight))
 			return cFunctionCall.operators["numeric-add"](oLeft, oRight);
 	}
 	else
-	if (oLeft instanceof cXSDate) {
-		if (oRight instanceof cXSYearMonthDuration)
+	if (cLeft == cXSDate) {
+		if (cRight == cXSYearMonthDuration)
 			return cFunctionCall.operators["add-yearMonthDuration-to-date"](oLeft, oRight);
-		if (oRight instanceof cXSDayTimeDuration)
+		if (cRight == cXSDayTimeDuration)
 			return cFunctionCall.operators["add-dayTimeDuration-to-date"](oLeft, oRight);
 	}
 	else
-	if (oLeft instanceof cXSYearMonthDuration) {
-		if (oRight instanceof cXSDate)
+	if (cLeft == cXSYearMonthDuration) {
+		if (cRight == cXSDate)
 			return cFunctionCall.operators["add-yearMonthDuration-to-date"](oRight, oLeft);
-		if (oRight instanceof cXSDateTime)
+		if (cRight == cXSDateTime)
 			return cFunctionCall.operators["add-yearMonthDuration-to-dateTime"](oRight, oLeft);
-		if (oRight instanceof cXSYearMonthDuration)
+		if (cRight == cXSYearMonthDuration)
 			return cFunctionCall.operators["add-yearMonthDurations"](oLeft, oRight);
 	}
 	else
-	if (oLeft instanceof cXSDayTimeDuration) {
-		if (oRight instanceof cXSDate)
+	if (cLeft == cXSDayTimeDuration) {
+		if (cRight == cXSDate)
 			return cFunctionCall.operators["add-dayTimeDuration-to-date"](oRight, oLeft);
-		if (oRight instanceof cXSTime)
+		if (cRight == cXSTime)
 			return cFunctionCall.operators["add-dayTimeDuration-to-time"](oRight, oLeft);
-		if (oRight instanceof cXSDateTime)
+		if (cRight == cXSDateTime)
 			return cFunctionCall.operators["add-dayTimeDuration-to-dateTime"](oRight, oLeft);
-		if (oRight instanceof cXSDayTimeDuration)
+		if (cRight == cXSDayTimeDuration)
 			return cFunctionCall.operators["add-dayTimeDurations"](oLeft, oRight);
 	}
 	else
-	if (oLeft instanceof cXSTime) {
-		if (oRight instanceof cXSDayTimeDuration)
+	if (cLeft == cXSTime) {
+		if (cRight == cXSDayTimeDuration)
 			return cFunctionCall.operators["add-dayTimeDuration-to-time"](oLeft, oRight);
 	}
 	else
-	if (oLeft instanceof cXSDateTime) {
-		if (oRight instanceof cXSYearMonthDuration)
+	if (cLeft == cXSDateTime) {
+		if (cRight == cXSYearMonthDuration)
 			return cFunctionCall.operators["add-yearMonthDuration-to-dateTime"](oLeft, oRight);
-		if (oRight instanceof cXSDayTimeDuration)
+		if (cRight == cXSDayTimeDuration)
 			return cFunctionCall.operators["add-dayTimeDuration-to-dateTime"](oLeft, oRight);
 	}
 	//
 	throw new cXPath2Error("XPTY0004");	// Arithmetic operator is not defined for arguments of types
 };
 cAdditiveExpr.operators['-']	= function (oLeft, oRight) {
-	if (typeof oLeft == "number") {
-		if (typeof oRight == "number")
+	var cLeft	= cXSAnyAtomicType.typeOf(oLeft),
+		cRight	= cXSAnyAtomicType.typeOf(oRight);
+	if (cXSAnyAtomicType.isNumeric(cLeft)) {
+		if (cXSAnyAtomicType.isNumeric(cRight))
 			return cFunctionCall.operators["numeric-subtract"](oLeft, oRight);
 	}
 	else
-	if (oLeft instanceof cXSDate) {
-		if (oRight instanceof cXSDate)
+	if (cLeft == cXSDate) {
+		if (cRight == cXSDate)
 			return cFunctionCall.operators["subtract-dates"](oLeft, oRight);
-		if (oRight instanceof cXSYearMonthDuration)
+		if (cRight == cXSYearMonthDuration)
 			return cFunctionCall.operators["subtract-yearMonthDuration-from-date"](oLeft, oRight);
-		if (oRight instanceof cXSDayTimeDuration)
+		if (cRight == cXSDayTimeDuration)
 			return cFunctionCall.operators["subtract-dayTimeDuration-from-date"](oLeft, oRight);
 	}
 	else
-	if (oLeft instanceof cXSTime) {
-		if (oRight instanceof cXSTime)
+	if (cLeft == cXSTime) {
+		if (cRight == cXSTime)
 			return cFunctionCall.operators["subtract-times"](oLeft, oRight);
-		if (oRight instanceof cXSDayTimeDuration)
+		if (cRight == cXSDayTimeDuration)
 			return cFunctionCall.operators["subtract-dayTimeDuration-from-time"](oLeft, oRight);
 	}
 	else
-	if (oLeft instanceof cXSDateTime) {
-		if (oRight instanceof cXSDateTime)
+	if (cLeft == cXSDateTime) {
+		if (cRight == cXSDateTime)
 			return cFunctionCall.operators["subtract-dateTimes"](oLeft, oRight);
-		if (oRight instanceof cXSYearMonthDuration)
+		if (cRight == cXSYearMonthDuration)
 			return cFunctionCall.operators["subtract-yearMonthDuration-from-dateTime"](oLeft, oRight);
-		if (oRight instanceof cXSDayTimeDuration)
+		if (cRight == cXSDayTimeDuration)
 			return cFunctionCall.operators["subtract-dayTimeDuration-from-dateTime"](oLeft, oRight);
 	}
 	else
-	if (oLeft instanceof cXSYearMonthDuration) {
-		if (oRight instanceof cXSYearMonthDuration)
+	if (cLeft == cXSYearMonthDuration) {
+		if (cRight == cXSYearMonthDuration)
 			return cFunctionCall.operators["subtract-yearMonthDurations"](oLeft, oRight);
 	}
 	else
-	if (oLeft instanceof cXSDayTimeDuration) {
-		if (oRight instanceof cXSDayTimeDuration)
+	if (cLeft == cXSDayTimeDuration) {
+		if (cRight == cXSDayTimeDuration)
 			return cFunctionCall.operators["subtract-dayTimeDurations"](oLeft, oRight);
 	}
 	//
