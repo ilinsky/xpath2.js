@@ -20,23 +20,22 @@ cXSDouble.cast	= function(vValue) {
 	switch (cType) {
 		case cXSDouble:
 			return vValue;
-		case cXSBoolean:
-			vValue	= !!vValue;
 		case cXSUntypedAtomic:
+			vValue	= vValue.toString();
 		case cXSString:
-			//
+			var aMatch	= vValue.match(cXSDouble.RegExp);
+			if (aMatch)
+				return +vValue;
+			throw new cXPath2Error("FORG0001");
+		case cXSBoolean:
+			vValue	= vValue * 1;
 		case cXSFloat:
 		case cXSDecimal:
 		case cXSInteger:
-			return cFunctionCall.dataTypes["double"](cString(vValue));
+			return vValue;
 	}
 	throw new cXPath2Error("XPTY0004", "Casting from " + cType + " to xs:double can never succeed");
 };
 
 //
-cFunctionCall.dataTypes["double"]	= function(sValue) {
-	var aMatch	= sValue.match(cXSDouble.RegExp);
-	if (aMatch)
-		return +sValue;
-	throw new cXPath2Error("FORG0001");
-};
+cFunctionCall.dataTypes["double"]	= cXSDouble;

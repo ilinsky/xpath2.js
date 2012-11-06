@@ -30,19 +30,16 @@ cXSQName.cast	= function(vValue) {
 	switch (cType) {
 		case cXSQName:
 			return vValue;
-
 		case cXSUntypedAtomic:
+			vValue	= vValue.toString();
 		case cXSString:
-			//
-			return cFunctionCall.dataTypes["QName"](cString(vValue));
+			var aMatch	= vValue.match(cXSQName.RegExp);
+			if (aMatch)
+				return new cXSQName(aMatch[1] || null, aMatch[2], null);
+			throw new cXPath2Error("FORG0001");
 	}
 	throw new cXPath2Error("XPTY0004", "Casting from " + cType + " to xs:QName can never succeed");
 };
 
 //
-cFunctionCall.dataTypes["QName"]	= function(sValue) {
-	var aMatch	= sValue.match(cXSQName.RegExp);
-	if (aMatch)
-		return new cXSQName(aMatch[1] || null, aMatch[2], null);
-	throw new cXPath2Error("FORG0001");
-};
+cFunctionCall.dataTypes["QName"]	= cXSQName;

@@ -34,28 +34,27 @@ cXSDate.cast	= function(vValue) {
 		case cXSDate:
 			return vValue;
 		case cXSUntypedAtomic:
+			vValue	= vValue.toString();
 		case cXSString:
 			//
 			// TODO: Gregorian
 		case cXSDateTime:
-			return cFunctionCall.dataTypes["date"](cString(vValue));
+			var aMatch	= cString(vValue).match(cXSDate.RegExp);
+			if (aMatch)
+				return new cXSDate( aMatch[2] * (aMatch[1] == '-' ?-1 : 1),
+									+aMatch[3],
+									+aMatch[4],
+									aMatch[5] ? aMatch[5] == 'Z' ? 0 : (aMatch[6] == '-' ? 1 : -1) * (aMatch[7] * 60 + aMatch[8] * 1) : null
+				);
+			throw new cXPath2Error("FORG0001");
 	}
 	throw new cXPath2Error("XPTY0004", "Casting from " + cType + " to xs:date can never succeed");
 };
 
 //
-cFunctionCall.dataTypes["date"]	= function(sValue) {
-	var aMatch	= sValue.match(cXSDate.RegExp);
-	if (aMatch)
-		return new cXSDate( aMatch[2] * (aMatch[1] == '-' ?-1 : 1),
-							+aMatch[3],
-							+aMatch[4],
-							aMatch[5] ? aMatch[5] == 'Z' ? 0 : (aMatch[6] == '-' ? 1 : -1) * (aMatch[7] * 60 + aMatch[8] * 1) : null
-		);
-	throw new cXPath2Error("FORG0001");
-};
+cFunctionCall.dataTypes["date"]	= cXSDate;
 
-//
+// Utilities
 function fXSDate_toSeconds(oDate) {
 
 };

@@ -18,9 +18,8 @@ cXSString.cast	= function(vValue) {
 	switch (cType) {
 		case cXSString:
 			return vValue;
-
 		case cXSUntypedAtomic:
-		//
+			vValue	= vValue.toString();
 		case cXSFloat:
 		case cXSDouble:
 		case cXSDecimal:
@@ -40,12 +39,10 @@ cXSString.cast	= function(vValue) {
 		//
 		case cXSQName:
 			//
-			return cFunctionCall.dataTypes["string"](cString(vValue));
+			return cString(vValue);
 	}
 	throw new cXPath2Error("XPTY0004", "Casting from " + cType + " to xs:string can never succeed");
 };
 
 //
-cFunctionCall.dataTypes["string"]	= function(sValue) {
-	return sValue;
-};
+cFunctionCall.dataTypes["string"]	= cXSString;

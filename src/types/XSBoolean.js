@@ -20,23 +20,21 @@ cXSBoolean.cast	= function(vValue) {
 	switch (cType) {
 		case cXSBoolean:
 			return vValue;
-
 		case cXSUntypedAtomic:
+			vValue	= vValue.toString();
 		case cXSString:
-			//
+			var aMatch;
+			if (aMatch = vValue.match(cXSBoolean.RegExp))
+				return aMatch[1] == "1" || aMatch[1] == "true";
+			throw new cXPath2Error("FORG0001");
 		case cXSFloat:
 		case cXSDouble:
 		case cXSDecimal:
 		case cXSInteger:
-			return cFunctionCall.dataTypes["boolean"](cString(vValue));
+			return vValue != 0;
 	}
 	throw new cXPath2Error("XPTY0004", "Casting from " + cType + " to xs:boolean can never succeed");
 };
 
 //
-cFunctionCall.dataTypes["boolean"]	= function(sValue) {
-	var aMatch;
-	if (aMatch = sValue.match(cXSBoolean.RegExp))
-		return aMatch[1] == "1" || aMatch[1] == "true";
-	throw new cXPath2Error("FORG0001");
-};;
+cFunctionCall.dataTypes["boolean"]	= cXSBoolean;

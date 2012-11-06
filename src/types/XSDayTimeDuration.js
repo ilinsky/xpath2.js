@@ -26,23 +26,23 @@ cXSDayTimeDuration.cast	= function(vValue) {
 		case cXSDayTimeDuration:
 			return vValue;
 		case cXSUntypedAtomic:
+			vValue	= vValue.toString();
 		case cXSString:
 			//
 		case cXSDuration:
 		case cXSYearMonthDuration:
-			return cFunctionCall.dataTypes["dayTimeDuration"](cString(vValue));
+			var aMatch	= cString(vValue).match(cXSDayTimeDuration.RegExp);
+			if (aMatch)
+				return fXSDayTimeDuration_normalize(new cXSDayTimeDuration(+aMatch[2] || 0, +aMatch[3] || 0, +aMatch[4] || 0, +aMatch[5] || 0, aMatch[1] == '-'));
+			throw new cXPath2Error("FORG0001");
 	}
 	throw new cXPath2Error("XPTY0004", "Casting from " + cType + " to xs:dayTimeDuration can never succeed");
 };
 
 //
-cFunctionCall.dataTypes["dayTimeDuration"]	= function(sValue) {
-	var aMatch	= sValue.match(cXSDayTimeDuration.RegExp);
-	if (aMatch)
-		return fXSDayTimeDuration_normalize(new cXSDayTimeDuration(+aMatch[2] || 0, +aMatch[3] || 0, +aMatch[4] || 0, +aMatch[5] || 0, aMatch[1] == '-'));
-	throw new cXPath2Error("FORG0001");
-};
-//
+cFunctionCall.dataTypes["dayTimeDuration"]	= cXSDayTimeDuration;
+
+// Utilities
 function fXSDayTimeDuration_toSeconds(oDuration) {
 	return (((oDuration.day * 24 + oDuration.hours) * 60 + oDuration.minutes) * 60 + oDuration.seconds) * (oDuration.negative ? -1 : 1);
 };

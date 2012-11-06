@@ -40,23 +40,23 @@ cXSDuration.cast	= function(vValue) {
 		case cXSDuration:
 			return vValue;
 		case cXSUntypedAtomic:
+			vValue	= vValue.toString();
 		case cXSString:
 			//
 		case cXSYearMonthDuration:
 		case cXSDayTimeDuration:
-			return cFunctionCall.dataTypes["duration"](cString(vValue));
+			var aMatch	= cString(vValue).match(cXSDuration.RegExp);
+			if (aMatch)
+				return fXSDuration_normalize(new cXSDuration(+aMatch[2] || 0, +aMatch[3] || 0, +aMatch[4] || 0, +aMatch[5] || 0, +aMatch[6] || 0, +aMatch[7] || 0, aMatch[1] == '-'));
+			throw new cXPath2Error("FORG0001");
 	}
 	throw new cXPath2Error("XPTY0004", "Casting from " + cType + " to xs:duration can never succeed");
 };
 
 //
-cFunctionCall.dataTypes["duration"]	= function(sValue) {
-	var aMatch	= sValue.match(cXSDuration.RegExp);
-	if (aMatch)
-		return fXSDuration_normalize(new cXSDuration(+aMatch[2] || 0, +aMatch[3] || 0, +aMatch[4] || 0, +aMatch[5] || 0, +aMatch[6] || 0, +aMatch[7] || 0, aMatch[1] == '-'));
-	throw new cXPath2Error("FORG0001");
-};
+cFunctionCall.dataTypes["duration"]	= cXSDuration;
 
+// Utilities
 function fXSDuration_getYearMonthComponent(oDuration) {
 	return (oDuration.year ? oDuration.year + 'Y' : '')
 			+ (oDuration.month ? oDuration.month + 'M' : '');

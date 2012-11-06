@@ -42,34 +42,33 @@ cXSDateTime.cast	= function(vValue) {
 		case cXSDateTime:
 			return vValue;
 		case cXSUntypedAtomic:
+			vValue	= vValue.toString();
 		case cXSString:
 			//
 			// TODO: Gregorian
 		case cXSTime:
 		case cXSDate:
-			return cFunctionCall.dataTypes["dateTime"](cString(vValue));
+			var aMatch	= cString(vValue).match(cXSDateTime.RegExp);
+			if (aMatch) {
+				var bValue	= aMatch[10] == "24:00:00";
+				return new cXSDateTime( aMatch[2] * (aMatch[1] == '-' ?-1 : 1),
+										+aMatch[3],
+										+aMatch[4],
+										bValue ? 24 : +aMatch[6],
+										bValue ? 0 : +aMatch[7],
+										cNumber((bValue ? 0 : aMatch[8]) + '.' + (bValue ? aMatch[11] || 0 : aMatch[9] || 0)),
+										aMatch[12] ? aMatch[12] == 'Z' ? 0 : (aMatch[13] == '-' ? 1 : -1) * (aMatch[14] * 60 + aMatch[15] * 1) : null
+				);
+			}
+			throw new cXPath2Error("FORG0001");
 	}
 	throw new cXPath2Error("XPTY0004", "Casting from " + cType + " to xs:dateTime can never succeed");
 };
 
 //
-cFunctionCall.dataTypes["dateTime"]	= function(sValue) {
-	var aMatch	= sValue.match(cXSDateTime.RegExp);
-	if (aMatch) {
-		var bValue	= aMatch[10] == "24:00:00";
-		return new cXSDateTime( aMatch[2] * (aMatch[1] == '-' ?-1 : 1),
-								+aMatch[3],
-								+aMatch[4],
-								bValue ? 24 : +aMatch[6],
-								bValue ? 0 : +aMatch[7],
-								cNumber((bValue ? 0 : aMatch[8]) + '.' + (bValue ? aMatch[11] || 0 : aMatch[9] || 0)),
-								aMatch[12] ? aMatch[12] == 'Z' ? 0 : (aMatch[13] == '-' ? 1 : -1) * (aMatch[14] * 60 + aMatch[15] * 1) : null
-		);
-	}
-	throw new cXPath2Error("FORG0001");
-};
+cFunctionCall.dataTypes["dateTime"]	= cXSDateTime;
 
-//
+// Utilities
 function fXSDateTime_toSeconds(oDateTime) {
 	var nValue	= fXSDate_toSeconds(oDateTime);
 	return nValue + fXSTime_toSeconds(oDateTime) * (nValue > 0 ? 1 :-1);

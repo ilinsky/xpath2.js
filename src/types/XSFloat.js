@@ -20,23 +20,22 @@ cXSFloat.cast	= function(vValue) {
 	switch (cType) {
 		case cXSFloat:
 			return vValue;
-		case cXSBoolean:
-			vValue	= !!vValue;
 		case cXSUntypedAtomic:
+			vValue	= vValue.toString();
 		case cXSString:
-			//
+			var aMatch	= vValue.match(cXSFloat.RegExp);
+			if (aMatch)
+				return +vValue;
+			throw new cXPath2Error("FORG0001");
+		case cXSBoolean:
+			vValue	= vValue * 1;
 		case cXSDouble:
 		case cXSDecimal:
 		case cXSInteger:
-			return cFunctionCall.dataTypes["float"](cString(vValue));
+			return vValue;
 	}
 	throw new cXPath2Error("XPTY0004", "Casting from " + cType + " to xs:float can never succeed");
 };
 
 //
-cFunctionCall.dataTypes["float"]	= function(sValue) {
-	var aMatch	= sValue.match(cXSFloat.RegExp);
-	if (aMatch)
-		return +sValue;
-	throw new cXPath2Error("FORG0001");
-};
+cFunctionCall.dataTypes["float"]	= cXSFloat;

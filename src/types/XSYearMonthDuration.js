@@ -26,22 +26,21 @@ cXSYearMonthDuration.cast	= function(vValue) {
 		case cXSYearMonthDuration:
 			return vValue;
 		case cXSUntypedAtomic:
+			vValue	= vValue.toString();
 		case cXSString:
 			//
 		case cXSDuration:
 		case cXSDayTimeDuration:
-			return cFunctionCall.dataTypes["yearMonthDuration"](cString(vValue));
+			var aMatch	= cString(vValue).match(cXSYearMonthDuration.RegExp);
+			if (aMatch)
+				return fXSYearMonthDuration_normalize(new cXSYearMonthDuration(+aMatch[2] || 0, +aMatch[3] || 0, aMatch[1] == '-'));
+			throw new cXPath2Error("FORG0001");
 	}
 	throw new cXPath2Error("XPTY0004", "Casting from " + cType + " to xs:yearMonthDuration can never succeed");
 };
 
 //
-cFunctionCall.dataTypes["yearMonthDuration"]	= function(sValue) {
-	var aMatch	= sValue.match(cXSYearMonthDuration.RegExp);
-	if (aMatch)
-		return fXSYearMonthDuration_normalize(new cXSYearMonthDuration(+aMatch[2] || 0, +aMatch[3] || 0, aMatch[1] == '-'));
-	throw new cXPath2Error("FORG0001");
-};
+cFunctionCall.dataTypes["yearMonthDuration"]	= cXSYearMonthDuration;
 
 //
 function fXSYearMonthDuration_toMonths(oDuration) {

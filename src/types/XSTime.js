@@ -34,28 +34,26 @@ cXSTime.cast	= function(vValue) {
 		case cXSTime:
 			return vValue;
 		case cXSUntypedAtomic:
+			vValue	= vValue.toString();
 		case cXSString:
-			//
-			return cFunctionCall.dataTypes["time"](cString(vValue));
+			var aMatch	= cString(vValue).match(cXSTime.RegExp);
+			if (aMatch) {
+				var bValue	= aMatch[6] == "24:00:00";
+				return new cXSTime(bValue ? 24 : +aMatch[2],
+									bValue ? 0 : +aMatch[3],
+									cNumber((bValue ? 0 : aMatch[4]) + '.' + (bValue ? aMatch[7] || 0 : aMatch[5] || 0)),
+									aMatch[8] ? aMatch[8] == 'Z' ? 0 : (aMatch[9] == '-' ? 1 : -1) * (aMatch[10] * 60 + aMatch[11] * 1) : null
+				);
+			}
+			throw new cXPath2Error("FORG0001");
 	}
 	throw new cXPath2Error("XPTY0004", "Casting from " + cType + " to xs:time can never succeed");
 };
 
 //
-cFunctionCall.dataTypes["time"]	= function(sValue) {
-	var aMatch	= sValue.match(cXSTime.RegExp);
-	if (aMatch) {
-		var bValue	= aMatch[6] == "24:00:00";
-		return new cXSTime(bValue ? 24 : +aMatch[2],
-							bValue ? 0 : +aMatch[3],
-							cNumber((bValue ? 0 : aMatch[4]) + '.' + (bValue ? aMatch[7] || 0 : aMatch[5] || 0)),
-							aMatch[8] ? aMatch[8] == 'Z' ? 0 : (aMatch[9] == '-' ? 1 : -1) * (aMatch[10] * 60 + aMatch[11] * 1) : null
-		);
-	}
-	throw new cXPath2Error("FORG0001");
-};
+cFunctionCall.dataTypes["time"]	= cXSTime;
 
-//
+// Utilities
 function fXSTime_toSeconds(oTime) {
 	return oTime.seconds + (oTime.minutes + (oTime.timezone !== null ? oTime.timezone % 60 : 0) + (oTime.hours + (oTime.timezone !== null ? ~~(oTime.timezone / 60) : 0)) * 60) * 60;
 };

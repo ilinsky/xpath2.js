@@ -20,23 +20,22 @@ cXSInteger.cast	= function(vValue) {
 	switch (cType) {
 		case cXSInteger:
 			return vValue;
-		case cXSBoolean:
-			vValue	= !!vValue;
 		case cXSUntypedAtomic:
+			vValue	= vValue.toString();
 		case cXSString:
-			//
+			var aMatch	= vValue.match(cXSInteger.RegExp);
+			if (aMatch)
+				return ~~vValue;
+			throw new cXPath2Error("FORG0001");
+		case cXSBoolean:
+			vValue	= vValue * 1;
 		case cXSFloat:
 		case cXSDouble:
 		case cXSDecimal:
-			return cFunctionCall.dataTypes["integer"](cString(vValue));
+			return ~~vValue;
 	}
 	throw new cXPath2Error("XPTY0004", "Casting from " + cType + " to xs:integer can never succeed");
 };
 
 //
-cFunctionCall.dataTypes["integer"]	= function(sValue) {
-	var aMatch	= sValue.match(cXSInteger.RegExp);
-	if (aMatch)
-		return ~~sValue;
-	throw new cXPath2Error("FORG0001");
-};
+cFunctionCall.dataTypes["integer"]	= cXSInteger;

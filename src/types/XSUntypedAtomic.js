@@ -7,8 +7,8 @@
  *
  */
 
-function cXSUntypedAtomic(vValue) {
-	this.value	= vValue;
+function cXSUntypedAtomic(sValue) {
+	this.value	= sValue;
 };
 
 cXSUntypedAtomic.prototype	= new cXSAnyAtomicType;
@@ -43,12 +43,9 @@ cXSUntypedAtomic.cast	= function(vValue) {
 		// TODO: anyURI
 		//
 		case cXSQName:
-			//
-			return cFunctionCall.dataTypes["untypedAtomic"](cString(vValue));
+			return new cXSUntypedAtomic(cString(vValue));
 	}
 	throw new cXPath2Error("XPTY0004", "Casting from " + cType + " to xs:untypedAtomic can never succeed");
 };
 //
-cFunctionCall.dataTypes["untypedAtomic"]	= function(sValue) {
-	return sValue;
-};
+cFunctionCall.dataTypes["untypedAtomic"]	= cXSUntypedAtomic;

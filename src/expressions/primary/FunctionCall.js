@@ -74,8 +74,11 @@ cFunctionCall.prototype.evaluate	= function (oContext) {
 	}
 	if (this.namespaceURI == "http://www.w3.org/2001/XMLSchema") {
 		if (fFunction = cFunctionCall.dataTypes[this.localName]) {
-			if (aArguments.length == 1)
-				return new cXPath2Sequence(fFunction(aArguments[0].toString()));
+			if (aArguments.length == 1) {
+				if (aArguments[0].isSingleton())
+					return new cXPath2Sequence(fFunction.cast(aArguments[0].items[0]));
+				throw new cXPath2Error("XPTY0004", "Required cardinality of value in 'cast as' expression is exactly one; supplied value has cardinality one or more");
+			}
 			throw new cXPath2Error("XPST0017", "A constructor function must have exactly one argument");
 		}
 		throw new cXPath2Error("XPST0017", "Unknown constructor function: " + '{' + this.namespaceURI + '}' + this.localName);
