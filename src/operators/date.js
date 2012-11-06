@@ -104,17 +104,29 @@ cFunctionCall.operators["dateTime-greater-than"]	= function(oLeft, oRight) {
 
 // op:date-equal($arg1 as xs:date, $arg2 as xs:date) as xs:boolean
 cFunctionCall.operators["date-equal"]	= function(oLeft, oRight) {
-	return fXSDate_toSeconds(oLeft) == fXSDate_toSeconds(oRight);
+	return oLeft.year == oRight.year
+		&& oLeft.month == oRight.month
+		&& oLeft.day == oRight.day
+		&&((oLeft.timezone !== null ? oLeft.timezone : 0) == (oRight.timezone !== null ? oRight.timezone : 0));
+	// TODO:  Use implicit timezone from static context instead of 0 in comparison
 };
 
 // op:date-less-than($arg1 as xs:date, $arg2 as xs:date) as xs:boolean
 cFunctionCall.operators["date-less-than"]	= function(oLeft, oRight) {
-	return fXSDate_toSeconds(oLeft) < fXSDate_toSeconds(oRight);
+	return oLeft.year <= oRight.year
+		&& oLeft.month <= oRight.month
+		&& oLeft.day <= oRight.day
+		&&((oLeft.timezone !== null ? oLeft.timezone : 0) <= (oRight.timezone !== null ? oRight.timezone : 0));
+	// TODO:  Use implicit timezone from static context instead of 0 in comparison
 };
 
 // op:date-greater-than($arg1 as xs:date, $arg2 as xs:date) as xs:boolean
 cFunctionCall.operators["date-greater-than"]	= function(oLeft, oRight) {
-	return fXSDate_toSeconds(oLeft) > fXSDate_toSeconds(oRight);
+	return oLeft.year >= oRight.year
+			&& oLeft.month >= oRight.month
+			&& oLeft.day >= oRight.day
+			&&((oLeft.timezone !== null ? oLeft.timezone : 0) >= (oRight.timezone !== null ? oRight.timezone : 0));
+	// TODO:  Use implicit timezone from static context instead of 0 in comparison
 };
 
 // op:time-equal($arg1 as xs:time, $arg2 as xs:time) as xs:boolean
