@@ -31,9 +31,11 @@ cAtomicType.parse	= function(oLexer, oResolver) {
 
 cAtomicType.prototype.test	= function(oItem) {
 	// Cast
-	var sName	= '{' + this.namespaceURI + '}' + this.localName;
-	if (cFunctionCall.dataTypes[sName])
-		return cFunctionCall.dataTypes[sName].cast(oItem);
+	var cItemType	= cXSAnyAtomicType.typeOf(oItem),
+		sName	= /*'{' + this.namespaceURI + '}' + */this.localName,
+		cTestType	= cFunctionCall.dataTypes[sName];
+	if (cTestType)
+		return cTestType == cItemType || cItemType.prototype instanceof cTestType;
 	//
 	throw new cXPath2Error("XPST0051", "Unknown simple type " + (this.prefix ? this.prefix + ':' : '') + this.localName);
 };
