@@ -11,6 +11,13 @@ function cXSAnyAtomicType() {
 
 };
 
+cXSAnyAtomicType.prototype.cast	= function() {
+	throw new cXPath2Error("XPST0017", "Abstract type used in constructor function xs:anyAtomicType");	//  {http://www.w3.org/2001/XMLSchema}anyAtomicType
+};
+
+cFunctionCall.dataTypes["anyAtomicType"]	= cXSAnyAtomicType;
+
+//
 cXSAnyAtomicType.typeOf	= function(oValue) {
 	switch (typeof oValue) {
 		case "boolean":	return cXSBoolean;
