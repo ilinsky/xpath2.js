@@ -27,6 +27,7 @@
 
 			// Tests
 			// 10.4 Comparison Operators on Duration, Date and Time Values
+			//
 			function testYearMonthDurationLessThan() {
 				// Not W3C tests
 				assertEquals(true,
@@ -96,6 +97,7 @@
 						evaluateXPathSingle('xs:duration("P0Y0M10D") eq xs:dayTimeDuration("PT240H")'));
 			}
 
+			//
 			function testDateTimeEqual() {
 				assertEquals(true,
 						evaluateXPathSingle('xs:dateTime("2002-04-02T12:00:00-01:00") eq xs:dateTime("2002-04-02T17:00:00+04:00")'));
@@ -108,6 +110,9 @@
 						evaluateXPathSingle('xs:dateTime("2002-04-02T12:00:00") eq xs:dateTime("2002-04-02T12:00:00")'));
 				assertEquals(true,
 						evaluateXPathSingle('xs:dateTime("2002-04-02T23:00:00-04:00") eq xs:dateTime("2002-04-03T02:00:00-01:00")'));
+			}
+
+			function testDateTimeEqual_24_00_00() {
 				assertEquals(true,
 						evaluateXPathSingle('xs:dateTime("1999-12-31T24:00:00") eq xs:dateTime("2000-01-01T00:00:00")'));
 				assertEquals(false,
@@ -116,19 +121,30 @@
 
 			function testDateTimeLessThan() {
 				// Not W3C tests
-//				assertEquals(true,
-//						evaluateXPathSingle(''));
+				assertEquals(false,
+						evaluateXPathSingle('xs:dateTime("2004-12-25T12:00:00") lt xs:dateTime("2004-12-25T11:00:00")'));
+				assertEquals(false,
+						evaluateXPathSingle('xs:dateTime("2004-12-25T12:00:00") lt xs:dateTime("2004-12-25T12:00:00")'));
+				assertEquals(true,
+						evaluateXPathSingle('xs:dateTime("2004-12-25T12:00:00") lt xs:dateTime("2004-12-25T13:00:00")'));
 			}
 
 			function testDateTimeGreaterThan() {
 				// Not W3C tests
-//				assertEquals(true,
-//						evaluateXPathSingle(''));
+				assertEquals(true,
+						evaluateXPathSingle('xs:dateTime("2004-12-25T12:00:00") gt xs:dateTime("2004-12-25T11:00:00")'));
+				assertEquals(false,
+						evaluateXPathSingle('xs:dateTime("2004-12-25T12:00:00") gt xs:dateTime("2004-12-25T12:00:00")'));
+				assertEquals(false,
+						evaluateXPathSingle('xs:dateTime("2004-12-25T12:00:00") gt xs:dateTime("2004-12-25T13:00:00")'));
 			}
 
 			function testDateEqual() {
 				assertEquals(false,
 						evaluateXPathSingle('xs:date("2004-12-25Z") eq xs:date("2004-12-25+07:00")'));
+			}
+
+			function testDateEqual_TZ_12() {
 				assertEquals(true,
 						evaluateXPathSingle('xs:date("2004-12-25-12:00") eq xs:date("2004-12-26+12:00")'));
 			}
@@ -136,15 +152,31 @@
 			function testDateLessThan() {
 				assertEquals(true,
 						evaluateXPathSingle('xs:date("2004-12-25Z") lt xs:date("2004-12-25-05:00")'));
+				// Not W3C tests
+				assertEquals(true,
+						evaluateXPathSingle('xs:date("2004-12-25-04:00") lt xs:date("2004-12-25-05:00")'));
+			}
+
+			function testDateLessThan_TZ_12() {
 				assertEquals(false,
 						evaluateXPathSingle('xs:date("2004-12-25-12:00") lt xs:date("2004-12-26+12:00")'));
+				// Not W3C tests
+				assertEquals(true,
+						evaluateXPathSingle('xs:date("2004-12-25-11:00") lt xs:date("2004-12-26+12:00")'));
 			}
 
 			function testDateGreaterThan() {
 				assertEquals(true,
 						evaluateXPathSingle('xs:date("2004-12-25Z") gt xs:date("2004-12-25+07:00")'));
+				// Not W3C tests
+				assertEquals(true,
+						evaluateXPathSingle('xs:date("2004-12-25-06:00") lt xs:date("2004-12-25-05:00")'));
+			}
+
+			function testDateGreaterThan_TZ_12() {
 				assertEquals(false,
 						evaluateXPathSingle('xs:date("2004-12-25-12:00") gt xs:date("2004-12-26+12:00")'));
+				// Not W3C tests
 			}
 
 			function testTimeEqual() {
@@ -243,7 +275,7 @@
 				assertEquals(1.4378349,
 						String(evaluateXPathSingle('xs:dayTimeDuration("P2DT53M11S") div xs:dayTimeDuration("P1DT10H")')).substr(0, 9) * 1);
 			}
-/*
+
 			// 10.8 Arithmetic Operators on Durations, Dates and Times
 			function testSubtractDateTimes() {
 				assertEquals("P337DT2H12M",
@@ -323,7 +355,7 @@
 				assertEquals("22:10:00-05:00",
 						evaluateXPathSingle('string(xs:time("08:20:00-05:00") - xs:dayTimeDuration("P23DT10H10M"))'));
 			}
-*/
+
 		</script>
 	</head>
 	<body>
