@@ -67,7 +67,8 @@ cFunctionCall.functions["index-of"]	= function(oSequence1, oSequence2, oSequence
 	var oSequence	= new cXPath2Sequence;
 	for (var nIndex = 0, nLength = oSequence1.items.length, oValue = oSequence2.items[0]; nIndex < nLength; nIndex++)
 		if (oSequence1.items[nIndex] == oValue)
-			return oSequence.add(nIndex + 1);
+			oSequence.add(nIndex + 1);
+
 	return oSequence;
 };
 
