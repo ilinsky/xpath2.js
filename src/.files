@@ -57,7 +57,7 @@ expressions/type/types/AtomicType.js
 expressions/type/types/ItemType.js
 expressions/type/types/SequenceType.js
 expressions/type/types/SingleType.js
-# Data types
+# XML Schema 1.1 data types
 types/XSAnyAtomicType.js
 types/XSUntypedAtomic.js
 types/XSBoolean.js
@@ -73,6 +73,16 @@ types/XSDouble.js
 types/XSDecimal.js
 types/XSInteger.js
 types/XSFloat.js
+# XPath data types
+types-xpath/XTItem.js
+types-xpath/XTNode.js
+types-xpath/XTNumeric.js
+types-xpath/node/XTAttribute.js
+types-xpath/node/XTComment.js
+types-xpath/node/XTDocument.js
+types-xpath/node/XTElement.js
+types-xpath/node/XTProcessingInstruction.js
+types-xpath/node/XTText.js
 # Operators
 operators/binary.js
 operators/boolean.js
