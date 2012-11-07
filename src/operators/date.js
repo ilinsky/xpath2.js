@@ -94,12 +94,12 @@ cFunctionCall.operators["dateTime-equal"]	= function(oLeft, oRight) {
 
 // op:dateTime-less-than($arg1 as xs:dateTime, $arg2 as xs:dateTime) as xs:boolean
 cFunctionCall.operators["dateTime-less-than"]	= function(oLeft, oRight) {
-	return oLeft < oRight;
+//	return oLeft < oRight;
 };
 
 //op:dateTime-greater-than($arg1 as xs:dateTime, $arg2 as xs:dateTime) as xs:boolean
 cFunctionCall.operators["dateTime-greater-than"]	= function(oLeft, oRight) {
-	return oLeft > oRight;
+//	return oLeft > oRight;
 };
 
 // op:date-equal($arg1 as xs:date, $arg2 as xs:date) as xs:boolean
