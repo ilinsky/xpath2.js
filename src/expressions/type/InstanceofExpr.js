@@ -44,7 +44,7 @@ cInstanceofExpr.prototype.evaluate	= function(oContext) {
 			return new cXPath2Sequence(false);
 	}
 	if (this.type.occurence == '+')
-		if (oSequence1.items.length < 1)
+		if (oSequence1.isEmpty())
 			return new cXPath2Sequence(false);
 	// Validate type
 	var oType	= this.type.itemType;
