@@ -357,10 +357,14 @@ cFunctionCall.functions["id"]	= function(oSequence1, oSequence2) {
 	if (arguments.length < 1)
 		throw new cXPath2Error("XPST0017");
 
+	if (arguments.length < 2) {
+		if (!cXPath2.DOMAdapter.isNode(this.context))
+			throw new cXPath2Error("XPTY0004", "id() function called when the context item is not a node");
+		oSequence2	= new cXPath2Sequence(this.context);
+	}
+
 	// Get context item
-	var oNode	= arguments.length > 1 ? oSequence2.items[0] : this.context;
-	if (!cXPath2.DOMAdapter.isNode(oNode))
-		throw new cXPath2Error("XPTY0004", "id() function called when the context item is not a node");
+	var oNode	= oSequence2.items[0];
 
 	// Get root node and check if it is Document
 	var oDocument	= cFunctionCall.functions["root"].call(this, new cXPath2Sequence(oNode));

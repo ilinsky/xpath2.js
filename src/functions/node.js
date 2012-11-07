@@ -22,15 +22,14 @@
 // fn:name() as xs:string
 // fn:name($arg as node()?) as xs:string
 cFunctionCall.functions["name"]	= function(oSequence1) {
-	if (!arguments.length)
+	if (!arguments.length) {
+		if (!cXPath2.DOMAdapter.isNode(this.context))
+			throw new cXPath2Error("XPTY0004");
 		oSequence1	= new cXPath2Sequence(this.context);
+	}
 	else
 	if (oSequence1.isEmpty())
 		return '';
-	//
-	var oNode	= oSequence1.items[0];
-	if (!cXPath2.DOMAdapter.isNode(oNode))
-		throw new cXPath2Error("XPTY0004");
 	//
 	var vValue	= cFunctionCall.functions["node-name"].call(this, oSequence1);
 	return vValue === null ? '' : vValue.toString();
@@ -39,33 +38,31 @@ cFunctionCall.functions["name"]	= function(oSequence1) {
 // fn:local-name() as xs:string
 // fn:local-name($arg as node()?) as xs:string
 cFunctionCall.functions["local-name"]	= function(oSequence1) {
-	if (!arguments.length)
+	if (!arguments.length) {
+		if (!cXPath2.DOMAdapter.isNode(this.context))
+			throw new cXPath2Error("XPTY0004");
 		oSequence1	= new cXPath2Sequence(this.context);
+	}
 	else
 	if (oSequence1.isEmpty())
 		return '';
 	//
-	var oNode	= oSequence1.items[0];
-	if (!cXPath2.DOMAdapter.isNode(oNode))
-		throw new cXPath2Error("XPTY0004");
-	//
-	return cXPath2.DOMAdapter.getProperty(oNode, "localName");
+	return cXPath2.DOMAdapter.getProperty(oSequence1.items[0], "localName");
 };
 
 // fn:namespace-uri() as xs:anyURI
 // fn:namespace-uri($arg as node()?) as xs:anyURI
 cFunctionCall.functions["namespace-uri"]	= function(oSequence1) {
-	if (!arguments.length)
+	if (!arguments.length) {
+		if (!cXPath2.DOMAdapter.isNode(this.context))
+			throw new cXPath2Error("XPTY0004");
 		oSequence1	= new cXPath2Sequence(this.context);
+	}
 	else
 	if (oSequence1.isEmpty())
 		return '';
 	//
-	var oNode	= oSequence1.items[0];
-	if (!cXPath2.DOMAdapter.isNode(oNode))
-		throw new cXPath2Error("XPTY0004");
-	//
-	return cXPath2.DOMAdapter.getProperty(oNode, "namespaceURI");
+	return cXPath2.DOMAdapter.getProperty(oSequence1.items[0], "namespaceURI");
 };
 
 // fn:number() as xs:double
@@ -86,10 +83,16 @@ cFunctionCall.functions["lang"]	= function(oSequence1) {
 // fn:root() as node()
 // fn:root($arg as node()?) as node()?
 cFunctionCall.functions["root"]	= function(oSequence1) {
-	var oParent	= arguments.length ? oSequence1.items[0] : this.context;
+	if (!arguments.length) {
+		if (!cXPath2.DOMAdapter.isNode(this.context))
+			throw new cXPath2Error("XPTY0004");
+		oSequence1	= new cXPath2Sequence(this.context);
+	}
+	else
+	if (oSequence1.isEmpty())
+		return null;
 
-	if (!cXPath2.DOMAdapter.isNode(oParent))
-		throw new cXPath2Error("XPTY0004");
+	var oParent	= oSequence1.items[0];
 
 	// If context node is Attribute
 	if (cXPath2.DOMAdapter.getProperty(oParent, "nodeType") == 2)

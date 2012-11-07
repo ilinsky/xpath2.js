@@ -80,17 +80,16 @@ cFunctionCall.functions["data"]		= function(oSequence1) {
 // fn:base-uri() as xs:anyURI?
 // fn:base-uri($arg as node()?) as xs:anyURI?
 cFunctionCall.functions["base-uri"]		= function(oSequence1) {
-	if (!arguments.length)
+	if (!arguments.length) {
+		if (!cXPath2.DOMAdapter.isNode(this.context))
+			throw new cXPath2Error("XPTY0004");
 		oSequence1	= new cXPath2Sequence(this.context);
+	}
 	else
 	if (oSequence1.isEmpty())
 		return null;
 	//
-	var oNode	= oSequence1.items[0];
-	if (!cXPath2.DOMAdapter.isNode(oNode))
-		throw new cXPath2Error("XPTY0004");
-
-	return cXPath2.DOMAdapter.getProperty(oNode, "baseURI");
+	return cXPath2.DOMAdapter.getProperty(oSequence1.items[0], "baseURI");
 };
 
 // fn:document-uri($arg as node()?) as xs:anyURI?
