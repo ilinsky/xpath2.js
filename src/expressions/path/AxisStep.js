@@ -163,7 +163,7 @@ cAxisStep.prototype.evaluate	= function (oContext) {
 	}
 
 	// Apply test
-	if (this.test && oSequence.items.length) {
+	if (this.test && !oSequence.isEmpty()) {
 		var oSequence1	= oSequence;
 		oSequence	= new cXPath2Sequence;
 		for (var nIndex = 0, nLength = oSequence1.items.length; nIndex < nLength; nIndex++) {
