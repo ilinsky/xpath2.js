@@ -34,11 +34,9 @@ cFunctionCall.functions["resolve-uri"]	= function(oSequence1, oSequence2) {
 		throw new cXPath2Error("XPTY0004");
 
 	if (oSequence1.isEmpty())
-		return oSequence;
+		return null;
 	//
-	oSequence.add(fFunctionCall_anyuri_resolveUri(oSequence1.toString(), sBaseUri));
-	//
-	return oSequence;
+	return fFunctionCall_anyuri_resolveUri(oSequence1.toString(), sBaseUri);
 };
 
 var hFunctionCall_anyuri_cache	= {};

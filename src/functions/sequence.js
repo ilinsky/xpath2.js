@@ -50,7 +50,7 @@
 cFunctionCall.functions["boolean"]	= function(oSequence1) {
 	if (!arguments.length)
 		throw new cXPath2Error("XPST0017");
-	return new cXPath2Sequence(oSequence1.toBoolean());
+	return oSequence1.toBoolean();
 };
 
 // fn:index-of($seqParam as xs:anyAtomicType*, $srchParam as xs:anyAtomicType) as xs:integer*
@@ -59,20 +59,15 @@ cFunctionCall.functions["index-of"]	= function(oSequence1, oSequence2, oSequence
 	if (arguments.length < 2)
 		throw new cXPath2Error("XPST0017");
 
-	var oSequence	= new cXPath2Sequence;
-	if (oSequence1.isEmpty())
-		return oSequence;
-
-	if (oSequence2.isEmpty())
-		return oSequence;
+	if (oSequence1.isEmpty() || oSequence2.isEmpty())
+		return new cXPath2Sequence;
 
 	// TODO: Implement collation
 
-	var oValue	= oSequence2.items[0];
-	for (var nIndex = 0, nLength = oSequence1.items.length; nIndex < nLength; nIndex++)
+	var oSequence	= new cXPath2Sequence;
+	for (var nIndex = 0, nLength = oSequence1.items.length, oValue = oSequence2.items[0]; nIndex < nLength; nIndex++)
 		if (oSequence1.items[nIndex] == oValue)
-			oSequence.add(nIndex + 1);
-
+			return oSequence.add(nIndex + 1);
 	return oSequence;
 };
 
@@ -81,7 +76,7 @@ cFunctionCall.functions["empty"]	= function(oSequence1) {
 	if (arguments.length < 1)
 		throw new cXPath2Error("XPST0017");
 
-	return new cXPath2Sequence(oSequence1.isEmpty());
+	return oSequence1.isEmpty();
 };
 
 // fn:exists($arg as item()*) as xs:boolean
@@ -89,7 +84,7 @@ cFunctionCall.functions["exists"]	= function(oSequence1) {
 	if (arguments.length < 1)
 		throw new cXPath2Error("XPST0017");
 
-	return new cXPath2Sequence(!oSequence1.isEmpty());
+	return !oSequence1.isEmpty();
 };
 
 // fn:distinct-values($arg as xs:anyAtomicType*) as xs:anyAtomicType*
@@ -98,10 +93,10 @@ cFunctionCall.functions["distinct-values"]	= function(oSequence1, oSequence2) {
 	if (arguments.length < 1)
 		throw new cXPath2Error("XPST0017");
 
-	var oSequence	= new cXPath2Sequence;
 	if (oSequence1.isEmpty())
-		return oSequence;
+		return null;
 
+	var oSequence	= new cXPath2Sequence;
 	for (var nIndex = 0, nLength = oSequence1.items.length, oItem; nIndex < nLength; nIndex++)
 		if (oSequence.indexOf(oItem = oSequence1.items[nIndex]) ==-1)
 			oSequence.add(oItem);
@@ -245,7 +240,7 @@ cFunctionCall.functions["deep-equal"]	= function(oSequence1, oSequence2, oSequen
 cFunctionCall.functions["count"]	= function(oSequence1) {
 	if (!arguments.length)
 		throw new cXPath2Error("XPST0017");
-	return new cXPath2Sequence(oSequence1.items.length);
+	return oSequence1.items.length;
 };
 
 // fn:avg($arg as xs:anyAtomicType*) as xs:anyAtomicType?
@@ -254,7 +249,7 @@ cFunctionCall.functions["avg"]	= function(oSequence1) {
 		throw new cXPath2Error("XPST0017");
 
 	if (oSequence1.isEmpty())
-		return new cXPath2Sequence;
+		return null;
 
 	// Atomize sequence
 	oSequence1	= cXPath2Sequence.atomize(oSequence1);
@@ -269,7 +264,7 @@ cFunctionCall.functions["avg"]	= function(oSequence1) {
 		vValue	= cAdditiveExpr.operators['+'](vValue, vRight);
 	}
 
-	return new cXPath2Sequence(cMultiplicativeExpr.operators['div'](vValue, nLength));
+	return cMultiplicativeExpr.operators['div'](vValue, nLength);
 };
 
 // fn:max($arg as xs:anyAtomicType*) as xs:anyAtomicType?
@@ -279,7 +274,7 @@ cFunctionCall.functions["max"]	= function(oSequence1, oSequence2) {
 		throw new cXPath2Error("XPST0017");
 
 	if (oSequence1.isEmpty())
-		return new cXPath2Sequence;
+		return null;
 
 	// TODO: Implement collation
 
@@ -292,7 +287,7 @@ cFunctionCall.functions["max"]	= function(oSequence1, oSequence2) {
 		if (cComparisonExpr.ValueComp.operators['ge'](oSequence1.items[nIndex], vValue))
 			vValue	= oSequence1.items[nIndex];
 
-	return new cXPath2Sequence(vValue);
+	return vValue;
 };
 
 // fn:min($arg as xs:anyAtomicType*) as xs:anyAtomicType?
@@ -302,7 +297,7 @@ cFunctionCall.functions["min"]	= function(oSequence1, oSequence2) {
 		throw new cXPath2Error("XPST0017");
 
 	if (oSequence1.isEmpty())
-		return new cXPath2Sequence;
+		return null;
 
 	// TODO: Implement collation
 
@@ -314,7 +309,7 @@ cFunctionCall.functions["min"]	= function(oSequence1, oSequence2) {
 		if (cComparisonExpr.ValueComp.operators['le'](oSequence1.items[nIndex], vValue))
 			vValue	= oSequence1.items[nIndex];
 
-	return new cXPath2Sequence(vValue);
+	return vValue;
 };
 
 // fn:sum($arg as xs:anyAtomicType*) as xs:anyAtomicType
@@ -328,11 +323,12 @@ cFunctionCall.functions["sum"]	= function(oSequence1, oSequence2) {
 		if (arguments.length > 1) {
 			oSequence2	= cXPath2Sequence.atomize(oSequence2);
 			if (oSequence2.length)
-				oSequence.add(oSequence2.items[0]);
+				return oSequence2.items[0];
 		}
 		else
-			oSequence.add(0);
-		return oSequence;
+			return 0;
+
+		return null;
 	}
 
 	// TODO: Implement collation
@@ -350,8 +346,7 @@ cFunctionCall.functions["sum"]	= function(oSequence1, oSequence2) {
 		vValue	= cAdditiveExpr.operators['+'](vValue, vRight);
 	}
 
-	oSequence.add(vValue);
-	return oSequence;
+	return vValue;
 };
 
 
@@ -368,7 +363,7 @@ cFunctionCall.functions["id"]	= function(oSequence1, oSequence2) {
 		throw new cXPath2Error("XPTY0004", "id() function called when the context item is not a node");
 
 	// Get root node and check if it is Document
-	var oDocument	= cFunctionCall.functions["root"].call(this, new cXPath2Sequence(oNode)).items[0];
+	var oDocument	= cFunctionCall.functions["root"].call(this, new cXPath2Sequence(oNode));
 	if (cXPath2.DOMAdapter.getProperty(oDocument, "nodeType") != 9)
 		throw new cXPath2Error("FODC0001");
 

@@ -13,9 +13,9 @@
 */
 
 // fn:trace($value as item()*, $label as xs:string) as item()*
-cFunctionCall.functions["trace"]	= function(oSequence, oSequence1) {
+cFunctionCall.functions["trace"]	= function(oSequence1, oSequence2) {
 	var oConsole	= window.console;
 	if (oConsole && oConsole.log)
-		oConsole.log((oSequence1 ? oSequence1.items[0] : ''), oSequence.items);
-	return oSequence;
+		oConsole.log((oSequence2 ? oSequence2.items[0] : ''), oSequence1.items);
+	return oSequence1;
 };

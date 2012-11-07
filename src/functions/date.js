@@ -174,15 +174,13 @@ function fFunctionCall_duration_getComponent(oSequence1, cType, sName) {
 
 	var oSequence	= new cXPath2Sequence;
 	if (oSequence1.isEmpty())
-		return oSequence;
+		return null;
 
 	var oItem	= oSequence1.items[0];
 	if (!(oItem instanceof cType))
 		throw new cXPath2Error("XPST0017");
 
-	oSequence.add(oItem[sName] * (oItem.negative ?-1 : 1));
-
-	return oSequence;
+	return oItem[sName] * (oItem.negative ?-1 : 1);
 };
 
 //
@@ -192,7 +190,7 @@ function fFunctionCall_dateTime_getComponent(oSequence1, cType, sName) {
 
 	var oSequence	= new cXPath2Sequence;
 	if (oSequence1.isEmpty())
-		return oSequence;
+		return null;
 
 	var oItem	= oSequence1.items[0];
 	if (!(oItem instanceof cType))
@@ -202,7 +200,7 @@ function fFunctionCall_dateTime_getComponent(oSequence1, cType, sName) {
 		var nTimezone	= oItem.timezone;
 		if (nTimezone === null)
 			return oSequence;
-		oSequence.add(new cXSDayTimeDuration(0, cMath.abs(~~(nTimezone / 60)), cMath.abs(nTimezone % 60), 0, nTimezone > 0));
+		return new cXSDayTimeDuration(0, cMath.abs(~~(nTimezone / 60)), cMath.abs(nTimezone % 60), 0, nTimezone > 0);
 	}
 	else {
 		var nValue	= oItem[sName];
@@ -213,7 +211,6 @@ function fFunctionCall_dateTime_getComponent(oSequence1, cType, sName) {
 		}
 		if (cType != cXSTime)
 			nValue	*= oItem.negative ?-1 : 1;
-		oSequence.add(nValue);
+		return nValue;
 	}
-	return oSequence;
 };

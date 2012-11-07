@@ -19,12 +19,12 @@
 // 9.1 Additional Boolean Constructor Functions
 // fn:true() as xs:boolean
 cFunctionCall.functions["true"]		= function() {
-	return new cXPath2Sequence(true);
+	return true;
 };
 
 // fn:false() as xs:boolean
 cFunctionCall.functions["false"]	= function() {
-	return new cXPath2Sequence(false);
+	return false;
 };
 
 // 9.3 Functions on Boolean Values
@@ -32,5 +32,5 @@ cFunctionCall.functions["false"]	= function() {
 cFunctionCall.functions["not"]	= function(oSequence) {
 	if (!arguments.length)
 		throw new cXPath2Error("XPST0017");
-	return new cXPath2Sequence(!oSequence.toBoolean());
+	return !oSequence.toBoolean();
 };

@@ -53,7 +53,7 @@ cFunctionCall.functions["codepoints-to-string"]	= function(oSequence1) {
 	for (var nIndex = 0, nLength = oSequence1.items.length; nIndex < nLength; nIndex++)
 		aValue.push(cString.fromCharCode(new cXPath2Sequence(oSequence1.items[nIndex]).toNumber()));
 
-	return new cXPath2Sequence(aValue.join(''));
+	return aValue.join('');
 };
 
 // fn:string-to-codepoints($arg as xs:string?) as xs:integer*
@@ -80,7 +80,7 @@ cFunctionCall.functions["compare"]	= function(oSequence1, oSequence2, oSequence3
 		throw new cXPath2Error("XPST0017");
 
 	if (oSequence1.isEmpty() || oSequence2.isEmpty())
-		return new cXPath2Sequence;
+		return null;
 
 	var sValue1	= oSequence1.toString(),
 		sValue2	= oSequence2.toString();
@@ -88,7 +88,7 @@ cFunctionCall.functions["compare"]	= function(oSequence1, oSequence2, oSequence3
 	// TODO: Implement proper comparison, as this is used in operators
 	// TODO: Implement collation handling
 
-	return new cXPath2Sequence(sValue1 == sValue2 ? 0 : sValue1 > sValue2 ? 1 :-1);
+	return sValue1 == sValue2 ? 0 : sValue1 > sValue2 ? 1 :-1;
 };
 
 // fn:codepoint-equal($comparand1 as xs:string?, $comparand2  as xs:string?) as xs:boolean?
@@ -97,14 +97,14 @@ cFunctionCall.functions["codepoint-equal"]	= function(oSequence1, oSequence2) {
 		throw new cXPath2Error("XPST0017");
 
 	if (oSequence1.isEmpty() || oSequence2.isEmpty())
-		return new cXPath2Sequence;
+		return null;
 
 	var sValue1	= oSequence1.toString(),
 		sValue2	= oSequence2.toString();
 
 	// TODO: Check if JS uses 'Unicode code point collation' here
 
-	return new cXPath2Sequence(sValue1 == sValue2);
+	return sValue1 == sValue2;
 };
 
 
@@ -118,7 +118,7 @@ cFunctionCall.functions["concat"]	= function(oSequence1, oSequence2) {
 	for (var nIndex = 0, nLength = arguments.length; nIndex < nLength; nIndex++)
 		aValue[aValue.length]	= arguments[nIndex].toString();
 
-	return new cXPath2Sequence(aValue.join(''));
+	return aValue.join('');
 };
 
 // fn:string-join($arg1 as xs:string*, $arg2 as xs:string) as xs:string
@@ -126,7 +126,7 @@ cFunctionCall.functions["string-join"]	= function(oSequence1, oSequence2) {
 	if (arguments.length < 2)
 		throw new cXPath2Error("XPST0017");
 
-	return new cXPath2Sequence(oSequence1.items.join(oSequence2.toString()));
+	return oSequence1.items.join(oSequence2.toString());
 };
 
 // fn:substring($sourceString as xs:string?, $startingLoc as xs:double) as xs:string
@@ -140,7 +140,7 @@ cFunctionCall.functions["substring"]	= function(oSequence1, oSequence2, oSequenc
 		nEnd	= oSequence3 ? nStart + cMath.round(oSequence3.toNumber()) : sValue.length;
 
 	// TODO: start can be negative
-	return new cXPath2Sequence(nEnd > nStart ? sValue.substring(nStart, nEnd) : '');
+	return nEnd > nStart ? sValue.substring(nStart, nEnd) : '';
 };
 
 // fn:string-length() as xs:integer
@@ -149,7 +149,7 @@ cFunctionCall.functions["string-length"]	= function(oSequence1) {
 	if (arguments.length < 1)
 		oSequence1	= new cXPath2Sequence(this.context);
 
-	return new cXPath2Sequence(oSequence1.isEmpty() ? 0 : oSequence1.toString().length);
+	return oSequence1.isEmpty() ? 0 : oSequence1.toString().length;
 };
 
 // fn:normalize-space() as xs:string
@@ -158,7 +158,7 @@ cFunctionCall.functions["normalize-space"]	= function(oSequence1) {
 	if (arguments.length < 1)
 		oSequence1	= new cXPath2Sequence(this.context);
 
-	return new cXPath2Sequence(oSequence1.isEmpty() ? '' : oSequence1.toString().replace(/^\s+|\s+$/g, '').replace(/\s\s+/g, ' '));
+	return oSequence1.isEmpty() ? '' : oSequence1.toString().replace(/^\s+|\s+$/g, '').replace(/\s\s+/g, ' ');
 };
 
 // fn:normalize-unicode($arg as xs:string?) as xs:string
@@ -172,7 +172,7 @@ cFunctionCall.functions["upper-case"]	= function(oSequence1) {
 	if (arguments.length < 1)
 		throw new cXPath2Error("XPST0017");
 
-	return new cXPath2Sequence(oSequence1.toString().toUpperCase());
+	return oSequence1.toString().toUpperCase();
 };
 
 // fn:lower-case($arg as xs:string?) as xs:string
@@ -180,7 +180,7 @@ cFunctionCall.functions["lower-case"]	= function(oSequence1) {
 	if (arguments.length < 1)
 		throw new cXPath2Error("XPST0017");
 
-	return new cXPath2Sequence(oSequence1.toString().toLowerCase());
+	return oSequence1.toString().toLowerCase();
 };
 
 // fn:translate($arg as xs:string?, $mapString as xs:string, $transString as xs:string) as xs:string
@@ -200,7 +200,7 @@ cFunctionCall.functions["translate"]	= function(oSequence1, oSequence2, oSequenc
 		if (nPosition < nTranslateLength)
 			aReturn[aReturn.length]	= aTranslate[nPosition];
 
-	return new cXPath2Sequence(aReturn.join(''));
+	return aReturn.join('');
 };
 
 // fn:encode-for-uri($uri-part as xs:string?) as xs:string
@@ -208,7 +208,7 @@ cFunctionCall.functions["encode-for-uri"]	= function(oSequence1) {
 	if (arguments.length < 1)
 		throw new cXPath2Error("XPST0017");
 
-	return new cXPath2Sequence(window.encodeURIComponent(oSequence1.toString()));
+	return window.encodeURIComponent(oSequence1.toString());
 };
 
 // fn:iri-to-uri($iri as xs:string?) as xs:string
@@ -235,10 +235,7 @@ cFunctionCall.functions["contains"]	= function(oSequence1, oSequence2, oSequence
 	if (arguments.length < 2)
 		throw new cXPath2Error("XPST0017");
 
-	var sValue	= oSequence1.toString(),
-		sSearch	= oSequence2.toString();
-
-	return new cXPath2Sequence(sValue.indexOf(sSearch) >= 0);
+	return oSequence1.toString().indexOf(oSequence2.toString()) >= 0;
 };
 
 // fn:starts-with($arg1 as xs:string?, $arg2 as xs:string?) as xs:boolean
@@ -247,10 +244,7 @@ cFunctionCall.functions["starts-with"]	= function(oSequence1, oSequence2, oSeque
 	if (arguments.length < 2)
 		throw new cXPath2Error("XPST0017");
 
-	var sValue	= oSequence1.toString(),
-		sSearch	= oSequence2.toString();
-
-	return new cXPath2Sequence(sValue.indexOf(sSearch) == 0);
+	return oSequence1.toString().indexOf(oSequence2.toString()) == 0;
 };
 
 // fn:ends-with($arg1 as xs:string?, $arg2 as xs:string?) as xs:boolean
@@ -262,7 +256,7 @@ cFunctionCall.functions["ends-with"]	= function(oSequence1, oSequence2, oSequenc
 	var sValue	= oSequence1.toString(),
 		sSearch	= oSequence2.toString();
 
-	return new cXPath2Sequence(sValue.indexOf(sSearch) == sValue.length - sSearch.length);
+	return sValue.indexOf(sSearch) == sValue.length - sSearch.length;
 };
 
 // fn:substring-before($arg1 as xs:string?, $arg2 as xs:string?) as xs:string
@@ -275,7 +269,7 @@ cFunctionCall.functions["substring-before"]	= function(oSequence1, oSequence2, o
 		sSearch	= oSequence2.toString(),
 		nPosition;
 
-	return new cXPath2Sequence((nPosition = sValue.indexOf(sSearch)) >= 0 ? sValue.substring(0, nPosition) : '');
+	return (nPosition = sValue.indexOf(sSearch)) >= 0 ? sValue.substring(0, nPosition) : '';
 };
 
 // fn:substring-after($arg1 as xs:string?, $arg2 as xs:string?) as xs:string
@@ -288,7 +282,7 @@ cFunctionCall.functions["substring-after"]	= function(oSequence1, oSequence2, oS
 		sSearch	= oSequence2.toString(),
 		nPosition;
 
-	return new cXPath2Sequence((nPosition = sValue.indexOf(sSearch)) >= 0 ? sValue.substring(nPosition + sSearch.length) : '');
+	return (nPosition = sValue.indexOf(sSearch)) >= 0 ? sValue.substring(nPosition + sSearch.length) : '';
 };
 
 
@@ -353,7 +347,7 @@ cFunctionCall.functions["matches"]	= function(oSequence1, oSequence2, oSequence3
 	var sValue	= oSequence1.toString(),
 		rRegExp	= fFunctionCall_string_createRegExp(oSequence2.toString(), arguments.length > 2 ? oSequence3.toString() : '');
 
-	return new cXPath2Sequence(rRegExp.test(sValue));
+	return rRegExp.test(sValue);
 };
 
 // fn:replace($input as xs:string?, $pattern as xs:string, $replacement as xs:string) as xs:string
@@ -366,7 +360,7 @@ cFunctionCall.functions["replace"]	= function(oSequence1, oSequence2, oSequence3
 		rRegExp	= fFunctionCall_string_createRegExp(oSequence2.toString(), arguments.length > 3 ? oSequence4.toString() : ''),
 		sReplacement	= oSequence3.toString();
 
-	return new cXPath2Sequence(sValue.replace(rRegExp, sReplacement));
+	return sValue.replace(rRegExp, sReplacement);
 };
 
 // fn:tokenize($input as xs:string?, $pattern as xs:string) as xs:string*

@@ -26,7 +26,7 @@ cFunctionCall.functions["abs"]	= function(oSequence1) {
 	if (fIsNaN(nValue))
 		throw new cXPath2Error("XPTY0004");
 
-	return new cXPath2Sequence(cMath.abs(nValue));
+	return cMath.abs(nValue);
 };
 
 // fn:ceiling($arg as numeric?) as numeric?
@@ -38,7 +38,7 @@ cFunctionCall.functions["ceiling"]	= function(oSequence1) {
 	if (fIsNaN(nValue))
 		throw new cXPath2Error("XPTY0004");
 
-	return new cXPath2Sequence(cMath.ceil(nValue));
+	return cMath.ceil(nValue);
 };
 
 // fn:floor($arg as numeric?) as numeric?
@@ -50,7 +50,7 @@ cFunctionCall.functions["floor"]	= function(oSequence1) {
 	if (fIsNaN(nValue))
 		throw new cXPath2Error("XPTY0004");
 
-	return new cXPath2Sequence(cMath.floor(nValue));
+	return cMath.floor(nValue);
 };
 
 // fn:round($arg as numeric?) as numeric?
@@ -62,7 +62,7 @@ cFunctionCall.functions["round"]	= function(oSequence1) {
 	if (fIsNaN(nValue))
 		throw new cXPath2Error("XPTY0004");
 
-	return new cXPath2Sequence(cMath.round(nValue));
+	return cMath.round(nValue);
 };
 
 // fn:round-half-to-even($arg as numeric?) as numeric?
@@ -87,13 +87,13 @@ cFunctionCall.functions["round-half-to-even"]	= function(oSequence1, oSequence2)
 		var nPower	= cMath.pow(10,-nPrecision),
 			nRounded= cMath.round(cFunctionCall.operators["numeric-divide"](nValue, nPower)),
 			nDecimal= cMath.abs(cFunctionCall.operators["numeric-subtract"](nRounded, cFunctionCall.operators["numeric-divide"](nValue, nPower)));
-		return new cXPath2Sequence(cFunctionCall.operators["numeric-multiply"](cFunctionCall.operators["numeric-add"](nRounded, (nDecimal == 0.5 && nRounded % 2 ?-1 : 0)), nPower));
+		return cFunctionCall.operators["numeric-multiply"](cFunctionCall.operators["numeric-add"](nRounded, (nDecimal == 0.5 && nRounded % 2 ?-1 : 0)), nPower);
 	}
 	else {
 		var nPower	= cMath.pow(10, nPrecision),
 			nRounded= cMath.round(cFunctionCall.operators["numeric-multiply"](nValue, nPower)),
 			nDecimal= cMath.abs(cFunctionCall.operators["numeric-subtract"](nRounded, cFunctionCall.operators["numeric-multiply"](nValue, nPower)));
-		return new cXPath2Sequence(cFunctionCall.operators["numeric-divide"](cFunctionCall.operators["numeric-add"](nRounded, (nDecimal == 0.5 && nRounded % 2 ?-1 : 0)), nPower));
+		return cFunctionCall.operators["numeric-divide"](cFunctionCall.operators["numeric-add"](nRounded, (nDecimal == 0.5 && nRounded % 2 ?-1 : 0)), nPower);
 	}
 };
 

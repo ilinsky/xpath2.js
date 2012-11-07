@@ -137,7 +137,7 @@ cComparisonExpr.ValueComp.operators['eq']	= function(oLeft, oRight) {
 			return cFunctionCall.operators["boolean-equal"](oLeft, oRight);
 		else
 		if (cLeft == cXSString)
-			return cFunctionCall.operators["numeric-equal"](cFunctionCall.functions["compare"](new cXPath2Sequence(oLeft), new cXPath2Sequence(oRight)).items[0], 0);
+			return cFunctionCall.operators["numeric-equal"](cFunctionCall.functions["compare"](new cXPath2Sequence(oLeft), new cXPath2Sequence(oRight)), 0);
 		else
 		if (cLeft == cXSDate)
 			return cFunctionCall.operators["date-equal"](oLeft, oRight);
@@ -163,6 +163,7 @@ cComparisonExpr.ValueComp.operators['eq']	= function(oLeft, oRight) {
 		if (cRight == cXSDuration || cRight == cXSYearMonthDuration || cRight == cXSDayTimeDuration)
 			return cFunctionCall.operators["duration-equal"](oLeft, oRight);
 	}
+
 	// skipped: xs:NOTATION
 	throw new cXPath2Error("XPTY0004");	// Cannot compare {type1} to {type2}
 };
@@ -182,7 +183,7 @@ cComparisonExpr.ValueComp.operators['gt']	= function(oLeft, oRight) {
 			return cFunctionCall.operators["boolean-greater-than"](oLeft, oRight);
 		else
 		if (cLeft == cXSString)
-			return cFunctionCall.operators["numeric-greater-than"](cFunctionCall.functions["compare"](new cXPath2Sequence(oLeft), new cXPath2Sequence(oRight)).items[0], 0);
+			return cFunctionCall.operators["numeric-greater-than"](cFunctionCall.functions["compare"](new cXPath2Sequence(oLeft), new cXPath2Sequence(oRight)), 0);
 		else
 		if (cLeft == cXSDate)
 			return cFunctionCall.operators["date-greater-than"](oLeft, oRight);
@@ -215,7 +216,7 @@ cComparisonExpr.ValueComp.operators['lt']	= function(oLeft, oRight) {
 			return cFunctionCall.operators["boolean-less-than"](oLeft, oRight);
 		else
 		if (cLeft == cXSBoolean)
-			return cFunctionCall.operators["numeric-less-than"](cFunctionCall.functions["compare"](new cXPath2Sequence(oLeft), new cXPath2Sequence(oRight)).items[0], 0);
+			return cFunctionCall.operators["numeric-less-than"](cFunctionCall.functions["compare"](new cXPath2Sequence(oLeft), new cXPath2Sequence(oRight)), 0);
 		else
 		if (cLeft == cXSDate)
 			return cFunctionCall.operators["date-less-than"](oLeft, oRight);
@@ -248,7 +249,7 @@ cComparisonExpr.ValueComp.operators['ge']	= function(oLeft, oRight) {
 			return !cFunctionCall.operators["boolean-less-than"](oLeft, oRight);
 		else
 		if (cLeft == cXSString)
-			return cFunctionCall.operators["numeric-greater-than"](cFunctionCall.functions["compare"](new cXPath2Sequence(oLeft), new cXPath2Sequence(oRight)).items[0], -1);
+			return cFunctionCall.operators["numeric-greater-than"](cFunctionCall.functions["compare"](new cXPath2Sequence(oLeft), new cXPath2Sequence(oRight)), -1);
 		else
 		if (cLeft == cXSDate)
 			return !cFunctionCall.operators["date-less-than"](oLeft, oRight);
@@ -281,7 +282,7 @@ cComparisonExpr.ValueComp.operators['le']	= function(oLeft, oRight) {
 			return !cFunctionCall.operators["boolean-greater-than"](oLeft, oRight);
 		else
 		if (cLeft == cXSString)
-			return cFunctionCall.operators["numeric-less-than"](cFunctionCall.functions["compare"](new cXPath2Sequence(oLeft), new cXPath2Sequence(oRight)).items[0], 1);
+			return cFunctionCall.operators["numeric-less-than"](cFunctionCall.functions["compare"](new cXPath2Sequence(oLeft), new cXPath2Sequence(oRight)), 1);
 		else
 		if (cLeft == cXSDate)
 			return !cFunctionCall.operators["date-greater-than"](oLeft, oRight);

@@ -22,60 +22,50 @@
 // fn:name() as xs:string
 // fn:name($arg as node()?) as xs:string
 cFunctionCall.functions["name"]	= function(oSequence1) {
-	var oSequence	= new cXPath2Sequence;
 	if (!arguments.length)
 		oSequence1	= new cXPath2Sequence(this.context);
 	else
-	if (oSequence1.isEmpty()) {
-		oSequence.add('');
-		return oSequence;
-	}
+	if (oSequence1.isEmpty())
+		return '';
 	//
 	var oNode	= oSequence1.items[0];
 	if (!cXPath2.DOMAdapter.isNode(oNode))
 		throw new cXPath2Error("XPTY0004");
 	//
-	oSequence.add(cFunctionCall.functions["node-name"].call(this, oSequence1).toString());
-	//
-	return oSequence;
+	var vValue	= cFunctionCall.functions["node-name"].call(this, oSequence1);
+	return vValue === null ? '' : vValue.toString();
 };
 
 // fn:local-name() as xs:string
 // fn:local-name($arg as node()?) as xs:string
 cFunctionCall.functions["local-name"]	= function(oSequence1) {
-	var oSequence	= new cXPath2Sequence;
 	if (!arguments.length)
 		oSequence1	= new cXPath2Sequence(this.context);
 	else
-	if (oSequence1.isEmpty()) {
-		oSequence.add('');
-		return oSequence;
-	}
+	if (oSequence1.isEmpty())
+		return '';
 	//
 	var oNode	= oSequence1.items[0];
 	if (!cXPath2.DOMAdapter.isNode(oNode))
 		throw new cXPath2Error("XPTY0004");
-	oSequence.add(cXPath2.DOMAdapter.getProperty(oNode, "localName"));
-	return oSequence;
+	//
+	return cXPath2.DOMAdapter.getProperty(oNode, "localName");
 };
 
 // fn:namespace-uri() as xs:anyURI
 // fn:namespace-uri($arg as node()?) as xs:anyURI
 cFunctionCall.functions["namespace-uri"]	= function(oSequence1) {
-	var oSequence	= new cXPath2Sequence;
 	if (!arguments.length)
 		oSequence1	= new cXPath2Sequence(this.context);
 	else
-	if (oSequence1.isEmpty()) {
-		oSequence.add('');
-		return oSequence;
-	}
+	if (oSequence1.isEmpty())
+		return '';
 	//
 	var oNode	= oSequence1.items[0];
 	if (!cXPath2.DOMAdapter.isNode(oNode))
 		throw new cXPath2Error("XPTY0004");
-	oSequence.add(cXPath2.DOMAdapter.getProperty(oNode, "namespaceURI"));
-	return oSequence;
+	//
+	return cXPath2.DOMAdapter.getProperty(oNode, "namespaceURI");
 };
 
 // fn:number() as xs:double
@@ -83,7 +73,8 @@ cFunctionCall.functions["namespace-uri"]	= function(oSequence1) {
 cFunctionCall.functions["number"]	= function(/*[*/oSequence1/*]*/) {
 	if (!arguments.length)
 		oSequence1	= new cXPath2Sequence(this.context);
-	return new cXPath2Sequence(oSequence1.toNumber());
+	//
+	return oSequence1.toNumber();
 };
 
 // fn:lang($testlang as xs:string?) as xs:boolean
@@ -107,5 +98,5 @@ cFunctionCall.functions["root"]	= function(oSequence1) {
 	for (var oNode = oParent; oNode; oNode = cXPath2.DOMAdapter.getProperty(oParent, "parentNode"))
 		oParent	= oNode;
 
-	return new cXPath2Sequence(oParent);
+	return oParent;
 };

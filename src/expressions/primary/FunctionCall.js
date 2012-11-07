@@ -73,8 +73,10 @@ cFunctionCall.prototype.evaluate	= function (oContext) {
 			// Validate/Cast arguments
 			if (aParameters = fFunction.parameters)
 				fFunctionCall_prepare(this.localName, aParameters, fFunction, aArguments);
-
-			return fFunction.apply(oContext, aArguments);
+			//
+			var vResult	= fFunction.apply(oContext, aArguments);
+			//
+			return vResult === null ? new cXPath2Sequence : new cXPath2Sequence(vResult);
 		}
 		throw new cXPath2Error("XPST0017", "Unknown system function " + this.localName + '()');
 	}
