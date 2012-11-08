@@ -18,19 +18,19 @@
 
 // 9.1 Additional Boolean Constructor Functions
 // fn:true() as xs:boolean
-cFunctionCall.functions["true"]		= function() {
+fFunctionCall_defineSystemFunction("true",	[],	function() {
 	return true;
-};
+});
 
 // fn:false() as xs:boolean
-cFunctionCall.functions["false"]	= function() {
+fFunctionCall_defineSystemFunction("false",	[],	function() {
 	return false;
-};
+});
 
 // 9.3 Functions on Boolean Values
 // fn:not($arg as item()*) as xs:boolean
-cFunctionCall.functions["not"]	= function(oSequence) {
+fFunctionCall_defineSystemFunction("not",	[[cXTItem, '*']],	function(oSequence1) {
 	if (!arguments.length)
 		throw new cXPath2Error("XPST0017");
-	return !oSequence.toBoolean();
-};
+	return !oSequence1.toBoolean();
+});

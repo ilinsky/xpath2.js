@@ -21,7 +21,7 @@
 // 14 Functions on Nodes
 // fn:name() as xs:string
 // fn:name($arg as node()?) as xs:string
-cFunctionCall.functions["name"]	= function(oSequence1) {
+fFunctionCall_defineSystemFunction("name",	[[cXTNode, '?', true]],	function(oSequence1) {
 	if (!arguments.length) {
 		if (!cXPath2.DOMAdapter.isNode(this.context))
 			throw new cXPath2Error("XPTY0004");
@@ -33,11 +33,11 @@ cFunctionCall.functions["name"]	= function(oSequence1) {
 	//
 	var vValue	= cFunctionCall.functions["node-name"].call(this, oSequence1);
 	return vValue === null ? '' : vValue.toString();
-};
+});
 
 // fn:local-name() as xs:string
 // fn:local-name($arg as node()?) as xs:string
-cFunctionCall.functions["local-name"]	= function(oSequence1) {
+fFunctionCall_defineSystemFunction("local-name",	[[cXTNode, '?', true]],	function(oSequence1) {
 	if (!arguments.length) {
 		if (!cXPath2.DOMAdapter.isNode(this.context))
 			throw new cXPath2Error("XPTY0004");
@@ -48,11 +48,11 @@ cFunctionCall.functions["local-name"]	= function(oSequence1) {
 		return '';
 	//
 	return cXPath2.DOMAdapter.getProperty(oSequence1.items[0], "localName");
-};
+});
 
 // fn:namespace-uri() as xs:anyURI
 // fn:namespace-uri($arg as node()?) as xs:anyURI
-cFunctionCall.functions["namespace-uri"]	= function(oSequence1) {
+fFunctionCall_defineSystemFunction("namespace-uri",	[[cXTNode, '?', true]],	function(oSequence1) {
 	if (!arguments.length) {
 		if (!cXPath2.DOMAdapter.isNode(this.context))
 			throw new cXPath2Error("XPTY0004");
@@ -63,26 +63,26 @@ cFunctionCall.functions["namespace-uri"]	= function(oSequence1) {
 		return '';
 	//
 	return cXPath2.DOMAdapter.getProperty(oSequence1.items[0], "namespaceURI");
-};
+});
 
 // fn:number() as xs:double
 // fn:number($arg as xs:anyAtomicType?) as xs:double
-cFunctionCall.functions["number"]	= function(/*[*/oSequence1/*]*/) {
+fFunctionCall_defineSystemFunction("number",	[[cXSAnyAtomicType, '?', true]],	function(/*[*/oSequence1/*]*/) {
 	if (!arguments.length)
 		oSequence1	= new cXPath2Sequence(this.context);
 	//
 	return oSequence1.toNumber();
-};
+});
 
 // fn:lang($testlang as xs:string?) as xs:boolean
 // fn:lang($testlang as xs:string?, $node as node()) as xs:boolean
-cFunctionCall.functions["lang"]	= function(oSequence1) {
+fFunctionCall_defineSystemFunction("lang",	[[cXSString, '?'], [cXTNode, '?', true]],	function(oSequence1) {
 	throw "Funciton '" + "lang" + "' not implemented";
-};
+});
 
 // fn:root() as node()
 // fn:root($arg as node()?) as node()?
-cFunctionCall.functions["root"]	= function(oSequence1) {
+fFunctionCall_defineSystemFunction("root",	[[cXTNode, '?', true]],	function(oSequence1) {
 	if (!arguments.length) {
 		if (!cXPath2.DOMAdapter.isNode(this.context))
 			throw new cXPath2Error("XPTY0004");
@@ -102,4 +102,4 @@ cFunctionCall.functions["root"]	= function(oSequence1) {
 		oParent	= oNode;
 
 	return oParent;
-};
+});

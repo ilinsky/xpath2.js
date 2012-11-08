@@ -19,7 +19,7 @@
 */
 
 // fn:node-name($arg as node()?) as xs:QName?
-cFunctionCall.functions["node-name"]	= function(oSequence1) {
+fFunctionCall_defineSystemFunction("node-name",		[[cXTNode, '?']],	function(oSequence1) {
 	if (arguments.length < 1)
 		throw new cXPath2Error("XPST0017");
 
@@ -44,10 +44,10 @@ cFunctionCall.functions["node-name"]	= function(oSequence1) {
 	}
 	//
 	return null;
-};
+});
 
 // fn:nilled($arg as node()?) as xs:boolean?
-cFunctionCall.functions["nilled"]	= function(oSequence1) {
+fFunctionCall_defineSystemFunction("nilled",	[[cXTNode, '?']],	function(oSequence1) {
 	if (arguments.length < 1)
 		throw new cXPath2Error("XPST0017");
 
@@ -59,27 +59,27 @@ cFunctionCall.functions["nilled"]	= function(oSequence1) {
 		return false;	// TODO: Detrmine if node is nilled
 
 	return null;
-};
+});
 
 // fn:string() as xs:string
 // fn:string($arg as item()?) as xs:string
-cFunctionCall.functions["string"]	= function(/*[*/oSequence1/*]*/) {
+fFunctionCall_defineSystemFunction("string",	[[cXTItem, '?', true]],	function(/*[*/oSequence1/*]*/) {
 	if (!arguments.length)
 		oSequence1	= new cXPath2Sequence(this.context);
 	return oSequence1.toString();
-};
+});
 
 // fn:data($arg as item()*) as xs:anyAtomicType*
-cFunctionCall.functions["data"]		= function(oSequence1) {
+fFunctionCall_defineSystemFunction("data",	[[cXTItem, '*']],		function(oSequence1) {
 	if (arguments.length < 1)
 		throw new cXPath2Error("XPST0017");
 
 	return cXPath2Sequence.atomize(oSequence1);
-};
+});
 
 // fn:base-uri() as xs:anyURI?
 // fn:base-uri($arg as node()?) as xs:anyURI?
-cFunctionCall.functions["base-uri"]		= function(oSequence1) {
+fFunctionCall_defineSystemFunction("base-uri",	[[cXTNode, '?']],	function(oSequence1) {
 	if (!arguments.length) {
 		if (!cXPath2.DOMAdapter.isNode(this.context))
 			throw new cXPath2Error("XPTY0004");
@@ -90,10 +90,10 @@ cFunctionCall.functions["base-uri"]		= function(oSequence1) {
 		return null;
 	//
 	return cXPath2.DOMAdapter.getProperty(oSequence1.items[0], "baseURI");
-};
+});
 
 // fn:document-uri($arg as node()?) as xs:anyURI?
-cFunctionCall.functions["document-uri"]		= function(oSequence1) {
+fFunctionCall_defineSystemFunction("document-uri",	[[cXTNode, '?']],	function(oSequence1) {
 	if (arguments.length < 1)
 		throw new cXPath2Error("XPST0017");
 
@@ -103,4 +103,4 @@ cFunctionCall.functions["document-uri"]		= function(oSequence1) {
 		return cXPath2.DOMAdapter.getProperty(oNode, "documentURI");
 	//
 	return null;
-};
+});

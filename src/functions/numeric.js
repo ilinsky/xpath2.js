@@ -18,68 +18,32 @@
 
 // 6.4 Functions on Numeric Values
 // fn:abs($arg as numeric?) as numeric?
-cFunctionCall.functions["abs"]	= function(oSequence1) {
-	if (!arguments.length)
-		throw new cXPath2Error("XPST0017");
-
-	var nValue	= oSequence1.toNumber();
-	if (fIsNaN(nValue))
-		throw new cXPath2Error("XPTY0004");
-
-	return cMath.abs(nValue);
-};
+fFunctionCall_defineSystemFunction("abs",		[[cXTNumeric, '?']],	function(oSequence1) {
+	return cMath.abs(oSequence1.items[0]);
+});
 
 // fn:ceiling($arg as numeric?) as numeric?
-cFunctionCall.functions["ceiling"]	= function(oSequence1) {
-	if (!arguments.length)
-		throw new cXPath2Error("XPST0017");
-
-	var nValue	= oSequence1.toNumber();
-	if (fIsNaN(nValue))
-		throw new cXPath2Error("XPTY0004");
-
-	return cMath.ceil(nValue);
-};
+fFunctionCall_defineSystemFunction("ceiling",	[[cXTNumeric, '?']],	function(oSequence1) {
+	return cMath.ceil(oSequence1.items[0]);
+});
 
 // fn:floor($arg as numeric?) as numeric?
-cFunctionCall.functions["floor"]	= function(oSequence1) {
-	if (!arguments.length)
-		throw new cXPath2Error("XPST0017");
-
-	var nValue	= oSequence1.toNumber();
-	if (fIsNaN(nValue))
-		throw new cXPath2Error("XPTY0004");
-
-	return cMath.floor(nValue);
-};
+fFunctionCall_defineSystemFunction("floor",		[[cXTNumeric, '?']],	function(oSequence1) {
+	return cMath.floor(oSequence1.items[0]);
+});
 
 // fn:round($arg as numeric?) as numeric?
-cFunctionCall.functions["round"]	= function(oSequence1) {
-	if (!arguments.length)
-		throw new cXPath2Error("XPST0017");
-
-	var nValue	= oSequence1.toNumber();
-	if (fIsNaN(nValue))
-		throw new cXPath2Error("XPTY0004");
-
-	return cMath.round(nValue);
-};
+fFunctionCall_defineSystemFunction("round",		[[cXTNumeric, '?']],	function(oSequence1) {
+	return cMath.round(oSequence1.items[0]);
+});
 
 // fn:round-half-to-even($arg as numeric?) as numeric?
 // fn:round-half-to-even($arg as numeric?, $precision as xs:integer) as numeric?
-cFunctionCall.functions["round-half-to-even"]	= function(oSequence1, oSequence2) {
-	if (!arguments.length)
-		throw new cXPath2Error("XPST0017");
-
-	var nValue	= oSequence1.toNumber();
-	if (fIsNaN(nValue))
-		throw new cXPath2Error("XPTY0004");
-
+fFunctionCall_defineSystemFunction("round-half-to-even",	[[cXTNumeric, '?'], [cXSInteger, '', true]],	function(oSequence1, oSequence2) {
+	var nValue	= oSequence1.items[0];
 	var nPrecision	= 0;
 	if (arguments.length > 1) {
-		nPrecision	= oSequence2.toNumber();
-		if (fIsNaN(nPrecision))
-			throw new cXPath2Error("XPTY0004");
+		nPrecision	= oSequence2.items[0];
 	}
 
 	//
@@ -95,6 +59,4 @@ cFunctionCall.functions["round-half-to-even"]	= function(oSequence1, oSequence2)
 			nDecimal= cMath.abs(cFunctionCall.operators["numeric-subtract"](nRounded, cFunctionCall.operators["numeric-multiply"](nValue, nPower)));
 		return cFunctionCall.operators["numeric-divide"](cFunctionCall.operators["numeric-add"](nRounded, (nDecimal == 0.5 && nRounded % 2 ?-1 : 0)), nPower);
 	}
-};
-
-
+});

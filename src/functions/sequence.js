@@ -47,18 +47,15 @@
 
 // 15.1 General Functions and Operators on Sequences
 // fn:boolean($arg as item()*) as xs:boolean
-cFunctionCall.functions["boolean"]	= function(oSequence1) {
+fFunctionCall_defineSystemFunction("boolean",	[[cXTItem, '*']],	function(oSequence1) {
 	if (!arguments.length)
 		throw new cXPath2Error("XPST0017");
 	return oSequence1.toBoolean();
-};
+});
 
 // fn:index-of($seqParam as xs:anyAtomicType*, $srchParam as xs:anyAtomicType) as xs:integer*
 // fn:index-of($seqParam as xs:anyAtomicType*, $srchParam as xs:anyAtomicType, $collation as xs:string) as xs:integer*
-cFunctionCall.functions["index-of"]	= function(oSequence1, oSequence2, oSequence3) {
-	if (arguments.length < 2)
-		throw new cXPath2Error("XPST0017");
-
+fFunctionCall_defineSystemFunction("index-of",	[[cXSAnyAtomicType, '*'], [cXSAnyAtomicType], [cXSString, '', true]],	function(oSequence1, oSequence2, oSequence3) {
 	if (oSequence1.isEmpty() || oSequence2.isEmpty())
 		return new cXPath2Sequence;
 
@@ -70,30 +67,21 @@ cFunctionCall.functions["index-of"]	= function(oSequence1, oSequence2, oSequence
 			oSequence.add(nIndex + 1);
 
 	return oSequence;
-};
+});
 
 // fn:empty($arg as item()*) as xs:boolean
-cFunctionCall.functions["empty"]	= function(oSequence1) {
-	if (arguments.length < 1)
-		throw new cXPath2Error("XPST0017");
-
+fFunctionCall_defineSystemFunction("empty",	[[cXTItem, '*']],	function(oSequence1) {
 	return oSequence1.isEmpty();
-};
+});
 
 // fn:exists($arg as item()*) as xs:boolean
-cFunctionCall.functions["exists"]	= function(oSequence1) {
-	if (arguments.length < 1)
-		throw new cXPath2Error("XPST0017");
-
+fFunctionCall_defineSystemFunction("exists",	[[cXTItem, '*']],	function(oSequence1) {
 	return !oSequence1.isEmpty();
-};
+});
 
 // fn:distinct-values($arg as xs:anyAtomicType*) as xs:anyAtomicType*
 // fn:distinct-values($arg as xs:anyAtomicType*, $collation as xs:string) as xs:anyAtomicType*
-cFunctionCall.functions["distinct-values"]	= function(oSequence1, oSequence2) {
-	if (arguments.length < 1)
-		throw new cXPath2Error("XPST0017");
-
+fFunctionCall_defineSystemFunction("distinct-values",	[[cXSAnyAtomicType, '*'], [cXSString, '', true]],	function(oSequence1, oSequence2) {
 	if (oSequence1.isEmpty())
 		return null;
 
@@ -103,20 +91,17 @@ cFunctionCall.functions["distinct-values"]	= function(oSequence1, oSequence2) {
 			oSequence.add(oItem);
 
 	return oSequence;
-};
+});
 
 // fn:insert-before($target as item()*, $position as xs:integer, $inserts as item()*) as item()*
-cFunctionCall.functions["insert-before"]	= function(oSequence1, oSequence2, oSequence3) {
-	if (arguments.length < 3)
-		throw new cXPath2Error("XPST0017");
-
+fFunctionCall_defineSystemFunction("insert-before",	[[cXTItem, '*'], [cXSInteger], [cXTItem, '*']],	function(oSequence1, oSequence2, oSequence3) {
 	if (oSequence1.isEmpty())
 		return oSequence3;
 	if (oSequence3.isEmpty())
 		return oSequence1;
 
 	var nLength 	= oSequence1.items.length,
-		nPosition	= oSequence2.toNumber();
+		nPosition	= oSequence2.items[0];
 	if (nPosition < 1)
 		nPosition	= 1;
 	else
@@ -133,19 +118,16 @@ cFunctionCall.functions["insert-before"]	= function(oSequence1, oSequence2, oSeq
 		oSequence.add(oSequence3);
 
 	return oSequence;
-};
+});
 
 // fn:remove($target as item()*, $position as xs:integer) as item()*
-cFunctionCall.functions["remove"]	= function(oSequence1, oSequence2) {
-	if (arguments.length < 2)
-		throw new cXPath2Error("XPST0017");
-
+fFunctionCall_defineSystemFunction("remove",	[[cXTItem, '*'], [cXSInteger]],	function(oSequence1, oSequence2) {
 	var oSequence	= new cXPath2Sequence;
 	if (oSequence1.isEmpty())
 		return oSequence;
 
 	var nLength 	= oSequence1.items.length,
-		nPosition	= oSequence2.toNumber();
+		nPosition	= oSequence2.items[0];
 
 	if (nPosition < 1 || nPosition > nLength)
 		return oSequence1;
@@ -156,104 +138,78 @@ cFunctionCall.functions["remove"]	= function(oSequence1, oSequence2) {
 			oSequence.add(oSequence1.items[nIndex]);
 
 	return oSequence;
-};
+});
 
 // fn:reverse($arg as item()*) as item()*
-cFunctionCall.functions["reverse"]	= function(oSequence1) {
-	if (arguments.length < 1)
-		throw new cXPath2Error("XPST0017");
-
+fFunctionCall_defineSystemFunction("reverse",	[[cXTItem, '*']],	function(oSequence1) {
 	oSequence1.items.reverse();
 
 	return oSequence1;
-};
+});
 
 // fn:subsequence($sourceSeq as item()*, $startingLoc as xs:double) as item()*
 // fn:subsequence($sourceSeq as item()*, $startingLoc as xs:double, $length as xs:double) as item()*
-cFunctionCall.functions["subsequence"]	= function(oSequence1, oSequence2, oSequence3) {
-	if (arguments.length < 2)
-		throw new cXPath2Error("XPST0017");
-
-	var nPosition	= cMath.round(oSequence2.toNumber()),
-		nLength		= arguments.length > 2 ? cMath.round(oSequence3.toNumber()) : oSequence1.items.length - nPosition + 1;
+fFunctionCall_defineSystemFunction("subsequence",	[[cXTItem, '*'], [cXSDouble, ''], [cXSDouble, '', true]],	function(oSequence1, oSequence2, oSequence3) {
+	var nPosition	= cMath.round(oSequence2.items[0]),
+		nLength		= arguments.length > 2 ? cMath.round(oSequence3.items[0]) : oSequence1.items.length - nPosition + 1;
 
 	// TODO: Handle out-of-range position and length values
 	var oSequence	= new cXPath2Sequence(oSequence1);
 	oSequence.items	= oSequence.items.slice(nPosition - 1, nPosition - 1 + nLength);
 
 	return oSequence;
-};
+});
 
 // fn:unordered($sourceSeq as item()*) as item()*
-cFunctionCall.functions["unordered"]	= function(oSequence1) {
-	if (arguments.length < 1)
-		throw new cXPath2Error("XPST0017");
-
+fFunctionCall_defineSystemFunction("unordered",	[[cXTItem, '*']],	function(oSequence1) {
 	return oSequence1;
-};
+});
 
 
 // 15.2 Functions That Test the Cardinality of Sequences
 // fn:zero-or-one($arg as item()*) as item()?
-cFunctionCall.functions["zero-or-one"]	= function(oSequence1) {
-	if (arguments.length < 1)
-		throw new cXPath2Error("XPST0017");
-
+fFunctionCall_defineSystemFunction("zero-or-one",	[[cXTItem, '*']],	function(oSequence1) {
 	if (!(oSequence1.isEmpty() || oSequence1.isSingleton()))
 		throw new cXPath2Error("FORG0003");
 
 	return oSequence1;
-};
+});
 
 // fn:one-or-more($arg as item()*) as item()+
-cFunctionCall.functions["one-or-more"]	= function(oSequence1) {
-	if (arguments.length < 1)
-		throw new cXPath2Error("XPST0017");
-
+fFunctionCall_defineSystemFunction("one-or-more",	[[cXTItem, '*']],	function(oSequence1) {
 	if (oSequence1.isEmpty())
 		throw new cXPath2Error("FORG0004");
 
 	return oSequence1;
-};
+});
 
 // fn:exactly-one($arg as item()*) as item()
-cFunctionCall.functions["exactly-one"]	= function(oSequence1) {
-	if (arguments.length < 1)
-		throw new cXPath2Error("XPST0017");
-
+fFunctionCall_defineSystemFunction("exactly-one",	[[cXTItem, '*']],	function(oSequence1) {
 	if (!oSequence1.isSingleton())
 		throw new cXPath2Error("FORG0005");
 
 	return oSequence1;
-};
+});
 
 
 // 15.3 Equals, Union, Intersection and Except
 // fn:deep-equal($parameter1 as item()*, $parameter2 as item()*) as xs:boolean
 // fn:deep-equal($parameter1 as item()*, $parameter2 as item()*, $collation as string) as xs:boolean
-cFunctionCall.functions["deep-equal"]	= function(oSequence1, oSequence2, oSequence3) {
+fFunctionCall_defineSystemFunction("deep-equal",	[[cXTItem, '*'], [cXTItem, '*'], [cXSString, '', true]],	function(oSequence1, oSequence2, oSequence3) {
 	throw "Function '" + "deep-equal" + "' not implemented";
-};
+});
 
 
 // 15.4 Aggregate Functions
 // fn:count($arg as item()*) as xs:integer
-cFunctionCall.functions["count"]	= function(oSequence1) {
-	if (!arguments.length)
-		throw new cXPath2Error("XPST0017");
+fFunctionCall_defineSystemFunction("count",	[[cXTItem, '*']],	function(oSequence1) {
 	return oSequence1.items.length;
-};
+});
 
 // fn:avg($arg as xs:anyAtomicType*) as xs:anyAtomicType?
-cFunctionCall.functions["avg"]	= function(oSequence1) {
-	if (!arguments.length)
-		throw new cXPath2Error("XPST0017");
-
+fFunctionCall_defineSystemFunction("avg",	[[cXSAnyAtomicType, '*']],	function(oSequence1) {
 	if (oSequence1.isEmpty())
 		return null;
-
-	// Atomize sequence
-	oSequence1	= cXPath2Sequence.atomize(oSequence1);
 
 	var vValue	= oSequence1.items[0];
 	if (vValue instanceof cXSUntypedAtomic)
@@ -266,21 +222,15 @@ cFunctionCall.functions["avg"]	= function(oSequence1) {
 	}
 
 	return cMultiplicativeExpr.operators['div'](vValue, nLength);
-};
+});
 
 // fn:max($arg as xs:anyAtomicType*) as xs:anyAtomicType?
 // fn:max($arg as xs:anyAtomicType*, $collation as string) as xs:anyAtomicType?
-cFunctionCall.functions["max"]	= function(oSequence1, oSequence2) {
-	if (!arguments.length)
-		throw new cXPath2Error("XPST0017");
-
+fFunctionCall_defineSystemFunction("max",	[[cXSAnyAtomicType, '*'], [cXSString, '', true]],	function(oSequence1, oSequence2) {
 	if (oSequence1.isEmpty())
 		return null;
 
 	// TODO: Implement collation
-
-	// Atomize sequence
-	oSequence1	= cXPath2Sequence.atomize(oSequence1);
 
 	//
 	var vValue	= oSequence1.items[0];
@@ -289,21 +239,15 @@ cFunctionCall.functions["max"]	= function(oSequence1, oSequence2) {
 			vValue	= oSequence1.items[nIndex];
 
 	return vValue;
-};
+});
 
 // fn:min($arg as xs:anyAtomicType*) as xs:anyAtomicType?
 // fn:min($arg as xs:anyAtomicType*, $collation as string) as xs:anyAtomicType?
-cFunctionCall.functions["min"]	= function(oSequence1, oSequence2) {
-	if (!arguments.length)
-		throw new cXPath2Error("XPST0017");
-
+fFunctionCall_defineSystemFunction("min",	[[cXSAnyAtomicType, '*'], [cXSString, '', true]],	function(oSequence1, oSequence2) {
 	if (oSequence1.isEmpty())
 		return null;
 
 	// TODO: Implement collation
-
-	// Atomize sequence
-	oSequence1	= cXPath2Sequence.atomize(oSequence1);
 
 	var vValue	= oSequence1.items[0];
 	for (var nIndex = 1, nLength = oSequence1.items.length; nIndex < nLength; nIndex++)
@@ -311,18 +255,13 @@ cFunctionCall.functions["min"]	= function(oSequence1, oSequence2) {
 			vValue	= oSequence1.items[nIndex];
 
 	return vValue;
-};
+});
 
 // fn:sum($arg as xs:anyAtomicType*) as xs:anyAtomicType
 // fn:sum($arg as xs:anyAtomicType*, $zero as xs:anyAtomicType?) as xs:anyAtomicType?
-cFunctionCall.functions["sum"]	= function(oSequence1, oSequence2) {
-	if (!arguments.length)
-		throw new cXPath2Error("XPST0017");
-
-	var oSequence	= new cXPath2Sequence;
+fFunctionCall_defineSystemFunction("sum",	[[cXSAnyAtomicType, '*'], [cXSAnyAtomicType, '?', true]],	function(oSequence1, oSequence2) {
 	if (oSequence1.isEmpty()) {
 		if (arguments.length > 1) {
-			oSequence2	= cXPath2Sequence.atomize(oSequence2);
 			if (oSequence2.length)
 				return oSequence2.items[0];
 		}
@@ -333,9 +272,6 @@ cFunctionCall.functions["sum"]	= function(oSequence1, oSequence2) {
 	}
 
 	// TODO: Implement collation
-
-	// Atomize sequence
-	oSequence1	= cXPath2Sequence.atomize(oSequence1);
 
 	var vValue	= oSequence1.items[0];
 	if (vValue instanceof cXSUntypedAtomic)
@@ -348,16 +284,13 @@ cFunctionCall.functions["sum"]	= function(oSequence1, oSequence2) {
 	}
 
 	return vValue;
-};
+});
 
 
 // 15.5 Functions and Operators that Generate Sequences
 // fn:id($arg as xs:string*) as element()*
 // fn:id($arg as xs:string*, $node as node()) as element()*
-cFunctionCall.functions["id"]	= function(oSequence1, oSequence2) {
-	if (arguments.length < 1)
-		throw new cXPath2Error("XPST0017");
-
+fFunctionCall_defineSystemFunction("id",	[[cXSString, '*'], [cXTNode, '', true]],	function(oSequence1, oSequence2) {
 	if (arguments.length < 2) {
 		if (!cXPath2.DOMAdapter.isNode(this.context))
 			throw new cXPath2Error("XPTY0004", "id() function called when the context item is not a node");
@@ -375,36 +308,37 @@ cFunctionCall.functions["id"]	= function(oSequence1, oSequence2) {
 	// Search for elements
 	var oSequence	= new cXPath2Sequence;
 	for (var nIndex = 0; nIndex < oSequence1.items.length; nIndex++)
-		for (var nRightIndex = 0, aValue = new cXPath2Sequence(oSequence1.items[nIndex]).toString().replace(/^\s+|\s+$/g).split(/\s+/), nRightLength = aValue.length; nRightIndex < nRightLength; nRightIndex++)
+		for (var nRightIndex = 0, aValue = oSequence1.items[nIndex].replace(/^\s+|\s+$/g).split(/\s+/), nRightLength = aValue.length; nRightIndex < nRightLength; nRightIndex++)
 			if ((oNode = cDOMAdapter.getElementById(oDocument, aValue[nRightIndex])) && oSequence.indexOf(oNode) ==-1)
 				oSequence.add(oNode);
+	//
 	return cXPath2Sequence.order(oSequence);
-};
+});
 
 // fn:idref($arg as xs:string*) as node()*
 // fn:idref($arg as xs:string*, $node as node()) as node()*
-cFunctionCall.functions["idref"]	= function(oSequence1, oSequence2) {
+fFunctionCall_defineSystemFunction("idref",	[[cXSString, '*'], [cXTNode, '', true]],	function(oSequence1, oSequence2) {
 	throw "Function '" + "idref" + "' not implemented";
-};
+});
 
 // fn:doc($uri as xs:string?) as document-node()?
-cFunctionCall.functions["doc"]	= function(oSequence1) {
+fFunctionCall_defineSystemFunction("doc",			[[cXSString, '?', true]],	function(oSequence1) {
 	throw "Function '" + "doc" + "' not implemented";
-};
+});
 
 // fn:doc-available($uri as xs:string?) as xs:boolean
-cFunctionCall.functions["doc-available"]	= function(oSequence1) {
+fFunctionCall_defineSystemFunction("doc-available",	[[cXSString, '?', true]],	function(oSequence1) {
 	throw "Function '" + "doc-available" + "' not implemented";
-};
+});
 
 // fn:collection() as node()*
 // fn:collection($arg as xs:string?) as node()*
-cFunctionCall.functions["collection"]	= function(oSequence1) {
+fFunctionCall_defineSystemFunction("collection",	[[cXSString, '?', true]],	function(oSequence1) {
 	throw "Function '" + "collection" + "' not implemented";
-};
+});
 
 // fn:element-with-id($arg as xs:string*) as element()*
 // fn:element-with-id($arg as xs:string*, $node as node()) as element()*
-cFunctionCall.functions["element-with-id"]	= function(oSequence1, oSequence2) {
+fFunctionCall_defineSystemFunction("element-with-id",	[[cXSString, '*'], [cXTNode, '', true]],	function(oSequence1, oSequence2) {
 	throw "Function '" + "element-with-id" + "' not implemented";
-};
+});

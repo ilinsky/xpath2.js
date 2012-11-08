@@ -23,11 +23,8 @@
 
 // 11.1 Additional Constructor Functions for QNames
 // fn:resolve-QName($qname as xs:string?, $element as element()) as xs:QName?
-cFunctionCall.functions["resolve-QName"]	= function(oSequence1, oSequence2) {
-	if (arguments.length < 2)
-		throw new cXPath2Error("XPST0017");
-
-	var sQName	= oSequence1.toString(),
+fFunctionCall_defineSystemFunction("resolve-QName",	[[cXSString, '?'], [cXTElement]],	function(oSequence1, oSequence2) {
+	var sQName	= oSequence1.items[0] || '',
 		aQName	= sQName.split(':'),
 		sLocalName	= aQName.pop(),
 		sPrefix	= aQName.pop() || null;
@@ -36,68 +33,44 @@ cFunctionCall.functions["resolve-QName"]	= function(oSequence1, oSequence2) {
 		return null;
 
 	return new cXSQName(sPrefix, sLocalName, cXPath2.DOMAdapter.lookupNamespaceURI(oSequence2.items[0], sPrefix || ""));
-};
+});
 
 // fn:QName($paramURI as xs:string?, $paramQName as xs:string) as xs:QName
-cFunctionCall.functions["QName"]	= function(oSequence1, oSequence2) {
-	if (arguments.length < 2)
-		throw new cXPath2Error("XPST0017");
-
-	var sQName	= oSequence2.toString(),
+fFunctionCall_defineSystemFunction("QName",		[[cXSString, '?'], [cXSString]],	function(oSequence1, oSequence2) {
+	var sQName	= oSequence2.items[0],
 		aQName	= sQName.split(':'),
 		sLocalName	= aQName.pop(),
 		sPrefix	= aQName.pop() || null;
 
 	// TODO: Implement QName type
-	return new cXSQName(sPrefix, sLocalName, oSequence1.toString());
-};
+	return new cXSQName(sPrefix, sLocalName, oSequence1.items[0] || '');
+});
 
 // 11.2 Functions Related to QNames
 // fn:prefix-from-QName($arg as xs:QName?) as xs:NCName?
-cFunctionCall.functions["prefix-from-QName"]	= function(oSequence1) {
-	if (arguments.length < 1)
-		throw new cXPath2Error("XPST0017");
-
+fFunctionCall_defineSystemFunction("prefix-from-QName",			[[cXSQName, '?']],	function(oSequence1) {
 	if (oSequence1.isEmpty())
 		return null;
-
-	if (!(oSequence1.items[0] instanceof cXSQName))
-		throw new cXPath2Error("XPST0017");
 
 	if (oSequence1.items[0].prefix)
 		return oSequence1.items[0].prefix;
 
 	return null;
-};
+});
 
 // fn:local-name-from-QName($arg as xs:QName?) as xs:NCName?
-cFunctionCall.functions["local-name-from-QName"]	= function(oSequence1) {
-	if (arguments.length < 1)
-		throw new cXPath2Error("XPST0017");
-
-	if (!(oSequence1.items[0] instanceof cXSQName))
-		throw new cXPath2Error("XPST0017");
-
+fFunctionCall_defineSystemFunction("local-name-from-QName",		[[cXSQName, '?']],	function(oSequence1) {
 	return oSequence1.items[0].localName;
-};
+});
 
 // fn:namespace-uri-from-QName($arg as xs:QName?) as xs:anyURI?
-cFunctionCall.functions["namespace-uri-from-QName"]	= function(oSequence1) {
-	if (arguments.length < 1)
-		throw new cXPath2Error("XPST0017");
-
-	if (!(oSequence1.items[0] instanceof cXSQName))
-		throw new cXPath2Error("XPST0017");
-
+fFunctionCall_defineSystemFunction("namespace-uri-from-QName",	[[cXSQName, '?']],	function(oSequence1) {
 	return oSequence1.items[0].namespaceURI;
-};
+});
 
 // fn:namespace-uri-for-prefix($prefix as xs:string?, $element as element()) as xs:anyURI?
-cFunctionCall.functions["namespace-uri-for-prefix"]	= function(oSequence1, oSequence2) {
-	if (arguments.length < 2)
-		throw new cXPath2Error("XPST0017");
-
-	var sQName	= oSequence1.toString(),
+fFunctionCall_defineSystemFunction("namespace-uri-for-prefix",	[[cXSString, '?'], [cXTElement]],	function(oSequence1, oSequence2) {
+	var sQName	= oSequence1.items[0] || '',
 		aQName	= sQName.split(':'),
 		sLocalName	= aQName.pop(),
 		sPrefix	= aQName.pop() || null;
@@ -106,9 +79,9 @@ cFunctionCall.functions["namespace-uri-for-prefix"]	= function(oSequence1, oSequ
 		return null;
 
 	return cXPath2.DOMAdapter.lookupNamespaceURI(oSequence2.items[0], sPrefix || "");
-};
+});
 
 // fn:in-scope-prefixes($element as element()) as xs:string*
-cFunctionCall.functions["in-scope-prefixes"]	= function(oSequence1) {
+fFunctionCall_defineSystemFunction("in-scope-prefixes",	[[cXTElement]],	function(oSequence1) {
 	throw "Function '" + "in-scope-prefixes" + "' not implemented";
-};
+});

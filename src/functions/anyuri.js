@@ -14,14 +14,8 @@
 
 // fn:resolve-uri($relative as xs:string?) as xs:anyURI?
 // fn:resolve-uri($relative as xs:string?, $base as xs:string) as xs:anyURI?
-cFunctionCall.functions["resolve-uri"]	= function(oSequence1, oSequence2) {
-	// Validate arguments
-	if (!arguments.length)
-		throw new cXPath2Error("XPST0017");
-
-	var oSequence	= new cXPath2Sequence,
-		sBaseUri;
-
+fFunctionCall_defineSystemFunction("resolve-uri",	[[cXSString, '?'], [cXSString, '', true]],	function(oSequence1, oSequence2) {
+	var sBaseUri;
 	if (arguments.length < 2) {
 		if (!cXPath2.DOMAdapter.isNode(this.context))
 			throw new cXPath2Error("XPTY0004");
@@ -29,15 +23,15 @@ cFunctionCall.functions["resolve-uri"]	= function(oSequence1, oSequence2) {
 	}
 	else
 	if (!oSequence2.isEmpty())
-		sBaseUri	= oSequence2.toString();
+		sBaseUri	= oSequence2.items[0];
 	else
 		throw new cXPath2Error("XPTY0004");
 
 	if (oSequence1.isEmpty())
 		return null;
 	//
-	return fFunctionCall_anyuri_resolveUri(oSequence1.toString(), sBaseUri);
-};
+	return fFunctionCall_anyuri_resolveUri(oSequence1.items[0], sBaseUri);
+});
 
 var hFunctionCall_anyuri_cache	= {};
 /*
