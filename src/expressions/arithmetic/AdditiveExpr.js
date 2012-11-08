@@ -141,7 +141,7 @@ cAdditiveExpr.prototype.evaluate	= function (oContext) {
 	if (oLeft.isEmpty())
 		return new cXPath2Sequence;
 	if (!oLeft.isSingleton())
-		throw new cXPath2Error("XPTY0004");
+		throw new cXPath2Error("XPTY0004", "Required cardinality of first operand of '" + this.items[0][0] + "' is zero or one; supplied value has cardinality one or more");
 
 	var vLeft	= oLeft.items[0];
 	if (vLeft instanceof cXSUntypedAtomic)
@@ -153,7 +153,7 @@ cAdditiveExpr.prototype.evaluate	= function (oContext) {
 		if (oRight.isEmpty())
 			return new cXPath2Sequence;
 		if (!oRight.isSingleton())
-			throw new cXPath2Error("XPTY0004");
+			throw new cXPath2Error("XPTY0004", "Required cardinality of second operand of '" + this.items[nIndex][0] + "' is zero or one; supplied value has cardinality one or more");
 
 		vRight	= oRight.items[0];
 		if (vRight instanceof cXSUntypedAtomic)
