@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>JsUnit testing page</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+		<!-- JsUnitClient driver -->
+		<script type="text/javascript" src="../../jsUnitClient.js"></script>
+
+		<!-- Library -->
+		<script type="text/javascript" src="../../../../xpath2.js"></script>
+
+		<!-- Suite definition -->
+		<script type="text/javascript">
+			// Helper function
+			function evaluateXPath(sXPath) {
+				return XPath2.evaluate(sXPath, document);
+			}
+
+			function evaluateXPathSingle(sXPath) {
+				return evaluateXPath(sXPath)[0];
+			}
+
+			// Dummy test
+			function testPage() {
+				assertTrue(true);
+			}
+
+			// Tests
+			function testNodeName() {
+				// Not W3C tests
+				assertArrayEquals([],
+						evaluateXPath('node-name(.)'));
+				assertArrayEquals(["html"],
+						evaluateXPath('string(node-name(child::element()))'));	// string wrapper, as xs:QName returned
+			}
+
+			function testNilled() {
+				// Not W3C tests
+				assertArrayEquals([],
+						evaluateXPath('nilled(.)'));	// empty sequence for non-elements
+				assertArrayEquals([false],
+						evaluateXPath('nilled(child::element())'));
+			}
+
+			function testString() {
+				// Not W3C tests
+				assertArrayEquals(["1"],
+						evaluateXPath('string(1)'));
+			}
+
+			function testData() {
+				// Not W3C tests
+				assertArrayEquals(["2", 1, true],
+						evaluateXPath('data(("2", 1, true()))'));
+				// TODO: Check attribute/element values
+			}
+
+			function testBaseUri() {
+				// Not W3C tests
+				assertNotUndefined(
+						evaluateXPathSingle('base-uri()'));
+				assertNotUndefined(
+						evaluateXPathSingle('base-uri(child::element())'));
+			}
+
+			function testDocumentUri() {
+				// Not W3C tests
+				assertNotUndefined(
+						evaluateXPathSingle('document-uri(.)'));
+				assertArrayEquals([],
+						evaluateXPath('document-uri(child::element())'));
+			}
+		</script>
+	</head>
+	<body>
+		<p>XPath2.js JsUnit unit page</p>
+	</body>
+</html>
