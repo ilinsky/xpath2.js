@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>JsUnit testing page</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+		<!-- JsUnitClient driver -->
+		<script type="text/javascript" src="../../jsUnitClient.js"></script>
+
+		<!-- Library -->
+		<script type="text/javascript" src="../../../../xpath2.js"></script>
+
+		<!-- Suite definition -->
+		<script type="text/javascript">
+			// Helper function
+			function evaluateXPath(sXPath) {
+				return XPath2.evaluate(sXPath);
+			}
+
+			// Dummy test
+			function testPage() {
+				assertTrue(true);
+			}
+
+			// Tests
+
+		</script>
+	</head>
+	<body>
+		<p>XPath2.js JsUnit unit page</p>
+	</body>
+</html>
