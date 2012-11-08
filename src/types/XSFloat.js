@@ -11,7 +11,7 @@ function cXSFloat() {
 
 };
 
-cXSFloat.RegExp	= /^([+\-]?((\d+(\.\d*)?)|(\.\d+))([eE][+\-]?\d+)?|-?INF|NaN)$/;
+cXSFloat.RegExp	= /^([+\-]?((\d+(\.\d*)?)|(\.\d+))([eE][+\-]?\d+)?|(-?INF)|NaN)$/;
 
 cXSFloat.prototype	= new cXSAnyAtomicType;
 
@@ -25,7 +25,7 @@ cXSFloat.cast	= function(vValue) {
 		case cXSString:
 			var aMatch	= vValue.match(cXSFloat.RegExp);
 			if (aMatch)
-				return +vValue;
+				return aMatch[7] ? +aMatch[7].replace("INF", "Infinity") : +vValue;
 			throw new cXPath2Error("FORG0001");
 		case cXSBoolean:
 			vValue	= vValue * 1;

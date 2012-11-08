@@ -11,7 +11,7 @@ function cXSDouble() {
 
 };
 
-cXSDouble.RegExp	= /^([+\-]?((\d+(\.\d*)?)|(\.\d+))([eE][+\-]?\d+)?|-?INF|NaN)$/;
+cXSDouble.RegExp	= /^([+\-]?((\d+(\.\d*)?)|(\.\d+))([eE][+\-]?\d+)?|(-?INF)|NaN)$/;
 
 cXSDouble.prototype	= new cXSAnyAtomicType;
 
@@ -25,7 +25,7 @@ cXSDouble.cast	= function(vValue) {
 		case cXSString:
 			var aMatch	= vValue.match(cXSDouble.RegExp);
 			if (aMatch)
-				return +vValue;
+				return aMatch[7] ? +aMatch[7].replace("INF", "Infinity") : +vValue;
 			throw new cXPath2Error("FORG0001");
 		case cXSBoolean:
 			vValue	= vValue * 1;
