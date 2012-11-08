@@ -160,22 +160,25 @@
 						evaluateXPathSingle('string(xs:time("09:17:23+02:00"))'));
 				assertEquals("09:17:23-02:00",
 						evaluateXPathSingle('string(xs:time("09:17:23-02:00"))'));
-				assertEquals("00:00:00",
-						evaluateXPathSingle('string(xs:time("24:00:00.000"))'));
-				assertEquals("00:00:00+02:00",
-						evaluateXPathSingle('string(xs:time("24:00:00.000+02:00"))'));
 				// Test errors
 				assertEquals("FORG0001", evaluateXPathError('xs:time("")'));
 				assertEquals("FORG0001", evaluateXPathError('xs:time("TIME")'));
 				assertEquals("FORG0001", evaluateXPathError('xs:time("-09:17:23")'));
 			};
 
-			function xtestXSDateTime() {
+			function testXSTime_24_00_00() {
+				assertEquals("00:00:00",
+						evaluateXPathSingle('string(xs:time("24:00:00.000"))'));
+				assertEquals("00:00:00+02:00",
+						evaluateXPathSingle('string(xs:time("24:00:00.000+02:00"))'));
+			}
+
+			function testXSDateTime() {
 				assertEquals("2012-10-30T09:17:23",
 						evaluateXPathSingle('string(xs:dateTime("2012-10-30T09:17:23"))'));
 				assertEquals("2012-10-30T09:17:23.025",
 						evaluateXPathSingle('string(xs:dateTime("2012-10-30T09:17:23.025"))'));
-				assertEquals("2012-10-30T09:17:23.250",
+				assertEquals("2012-10-30T09:17:23.25",
 						evaluateXPathSingle('string(xs:dateTime("2012-10-30T09:17:23.250"))'));
 				assertEquals("2012-10-30T09:17:23Z",
 						evaluateXPathSingle('string(xs:dateTime("2012-10-30T09:17:23Z"))'));
@@ -189,10 +192,6 @@
 						evaluateXPathSingle('string(xs:dateTime("2012-10-30T09:17:23-02:00"))'));
 				assertEquals("-2012-10-30T09:17:23-02:00",
 						evaluateXPathSingle('string(xs:dateTime("-2012-10-30T09:17:23-02:00"))'));
-				assertEquals("2012-10-30T24:00:00",
-						evaluateXPathSingle('string(xs:dateTime("2012-10-30T24:00:00.000"))'));
-				assertEquals("2012-10-30T24:00:00+02:00",
-						evaluateXPathSingle('string(xs:dateTime("2012-10-30T24:00:00.000+02:00"))'));
 				// Test errors
 				assertEquals("FORG0001", evaluateXPathError('xs:dateTime("")'));
 				assertEquals("FORG0001", evaluateXPathError('xs:dateTime("NOW")'));
@@ -201,6 +200,13 @@
 				assertEquals("FORG0001", evaluateXPathError('xs:dateTime("09:17:23")'));
 				assertEquals("FORG0001", evaluateXPathError('xs:dateTime("T09:17:23")'));
 			};
+
+			function testXSDateTime_24_00_00() {
+				assertEquals("2012-10-31T00:00:00",
+						evaluateXPathSingle('string(xs:dateTime("2012-10-30T24:00:00.000"))'));
+				assertEquals("2012-10-31T00:00:00+02:00",
+						evaluateXPathSingle('string(xs:dateTime("2012-10-30T24:00:00.000+02:00"))'));
+			}
 
 			// durations
 			function testXSYearMonthDuration() {
