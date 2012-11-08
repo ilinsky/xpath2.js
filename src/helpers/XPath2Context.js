@@ -26,6 +26,7 @@ cXPath2Context.prototype.position	= null;
 cXPath2Context.prototype.last		= null;
 cXPath2Context.prototype.stack		= null;	// Variables stack
 cXPath2Context.prototype.dateTime	= null;
+cXPath2Context.prototype.timezone	= null;
 
 cXPath2Context.prototype.pushVariable	= function(sName, vValue) {
 	if (!this.stack.hasOwnProperty(sName))
