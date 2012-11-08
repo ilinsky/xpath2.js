@@ -79,7 +79,7 @@ fFunctionCall_defineSystemFunction("data",	[[cXTItem, '*']],		function(oSequence
 
 // fn:base-uri() as xs:anyURI?
 // fn:base-uri($arg as node()?) as xs:anyURI?
-fFunctionCall_defineSystemFunction("base-uri",	[[cXTNode, '?']],	function(oSequence1) {
+fFunctionCall_defineSystemFunction("base-uri",	[[cXTNode, '?', true]],	function(oSequence1) {
 	if (!arguments.length) {
 		if (!cXPath2.DOMAdapter.isNode(this.context))
 			throw new cXPath2Error("XPTY0004");
