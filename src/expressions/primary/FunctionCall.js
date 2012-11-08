@@ -122,17 +122,17 @@ function fFunctionCall_prepare(sName, aParameters, fFunction, aArguments) {
 			// Check sequence cardinality
 			if (sCardinality == '?') {	// =0 or 1
 				if (nItemsLength > 1)
-					throw new cXPath2Error("XPTY0004", "Required cardinality of " + aFunctionCall_numbers[nIndex] + " argument in function " + sName + "() is one or zero");
+					throw new cXPath2Error("XPTY0004", "Required cardinality of " + aFunctionCall_numbers[nIndex] + " argument of " + sName + "() is one or zero");
 			}
 			else
 			if (sCardinality == '+') {	// =1+
 				if (nItemsLength < 1)
-					throw new cXPath2Error("XPTY0004", "Required cardinality of " + aFunctionCall_numbers[nIndex] + " argument in function " + sName + "() is one or more");
+					throw new cXPath2Error("XPTY0004", "Required cardinality of " + aFunctionCall_numbers[nIndex] + " argument of " + sName + "() is one or more");
 			}
 			else
 			if (sCardinality != '*') {	// =1 ('*' =0+)
 				if (nItemsLength != 1)
-					throw new cXPath2Error("XPTY0004", "Required cardinality of " + aFunctionCall_numbers[nIndex] + " argument in " + sName + "() is exactly one");
+					throw new cXPath2Error("XPTY0004", "Required cardinality of " + aFunctionCall_numbers[nIndex] + " argument of " + sName + "() is exactly one");
 			}
 
 			// Check sequence items data types consistency
