@@ -153,15 +153,15 @@ function fFunctionCall_prepare(sName, aParameters, fFunction, aArguments) {
 				}
 				else
 				// Atomic types
-				if (cDataType == cXSAnyAtomicType || cDataType.prototype instanceof cXSAnyAtomicType) {
+				if (cDataType == cXSAnyAtomicType || cDataType.prototype instanceof cXSAnyAtomicType || cDataType == cXTNumeric) {
 					// Atomize item
 					vItem	= cXPath2Sequence.atomizeItem(vItem);
 					// Cast if item type is xs:untypedAtomic
 					if (cDataType != cXSAnyAtomicType && vItem instanceof cXSUntypedAtomic)
-						vItem	= cDataType.cast(vItem);
+						vItem	=(cDataType != cXTNumeric ? cDataType : cXSDecimal).cast(vItem);
 					// Check type
 					cItemType	= cXSAnyAtomicType.typeOf(vItem);
-					if (cItemType != cDataType && !(cItemType.prototype instanceof cDataType))
+					if (cDataType != cXTNumeric ? (cItemType != cDataType && !(cItemType.prototype instanceof cDataType)) : !cXSAnyAtomicType.isNumeric(cItemType))
 						throw new cXPath2Error("XPTY0004", "Required item type of " + aFunctionCall_numbers[nIndex] + " argument of " + sName + "() is " + cDataType);
 					// Write value back to sequence
 					oArgument.items[nItemIndex]	= vItem;
