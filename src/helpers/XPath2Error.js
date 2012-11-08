@@ -12,6 +12,8 @@ function cXPath2Error(sCode, sMessage) {
 	this.message	= sMessage || oXPathError_messages[sCode];
 };
 
+cXPath2Error.prototype	= new cError;
+
 // "http://www.w3.org/2005/xqt-errors"
 
 var oXPathError_messages	= {};
