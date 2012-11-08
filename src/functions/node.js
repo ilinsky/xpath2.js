@@ -47,7 +47,7 @@ fFunctionCall_defineSystemFunction("local-name",	[[cXTNode, '?', true]],	functio
 	if (oSequence1.isEmpty())
 		return '';
 	//
-	return cXPath2.DOMAdapter.getProperty(oSequence1.items[0], "localName");
+	return cXPath2.DOMAdapter.getProperty(oSequence1.items[0], "localName") || '';
 });
 
 // fn:namespace-uri() as xs:anyURI
@@ -62,7 +62,7 @@ fFunctionCall_defineSystemFunction("namespace-uri",	[[cXTNode, '?', true]],	func
 	if (oSequence1.isEmpty())
 		return '';
 	//
-	return cXPath2.DOMAdapter.getProperty(oSequence1.items[0], "namespaceURI");
+	return cXPath2.DOMAdapter.getProperty(oSequence1.items[0], "namespaceURI") || '';
 });
 
 // fn:number() as xs:double
