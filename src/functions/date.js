@@ -157,13 +157,13 @@ fFunctionCall_defineSystemFunction("adjust-dateTime-to-timezone",	[[cXSDateTime,
 
 // fn:adjust-date-to-timezone($arg as xs:date?) as xs:date?
 // fn:adjust-date-to-timezone($arg as xs:date?, $timezone as xs:dayTimeDuration?) as xs:date?
-fFunctionCall_defineSystemFunction("adjust-date-to-timezone",		[[cXSDateTime, '?'], [cXSDayTimeDuration, '?', true]],	function(oSequence1, oSequence2) {
+fFunctionCall_defineSystemFunction("adjust-date-to-timezone",		[[cXSDate, '?'], [cXSDayTimeDuration, '?', true]],	function(oSequence1, oSequence2) {
 	throw "Function" + "adjust-date-to-timezone" + "' not implemented";
 });
 
 // fn:adjust-time-to-timezone($arg as xs:time?) as xs:time?
 // fn:adjust-time-to-timezone($arg as xs:time?, $timezone as xs:dayTimeDuration?) as xs:time?
-fFunctionCall_defineSystemFunction("adjust-time-to-timezone",		[[cXSDateTime, '?'], [cXSDayTimeDuration, '?', true]],	function(oSequence1, oSequence2) {
+fFunctionCall_defineSystemFunction("adjust-time-to-timezone",		[[cXSTime, '?'], [cXSDayTimeDuration, '?', true]],	function(oSequence1, oSequence2) {
 	throw "Function '" + "adjust-time-to-timezone" + "' not implemented";
 });
 
