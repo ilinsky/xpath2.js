@@ -147,7 +147,7 @@ function fFunctionCall_prepare(sName, aParameters, fFunction, aArguments) {
 					// Check node type
 					if (cItemType != cXTNode) {
 						nNodeType	= cXPath2.DOMAdapter.getProperty(vItem, "nodeType");
-						if ([cXTElement, cXTAttribute, cXTText, cXTText, null, null, cXTProcessingInstruction, cXTComment, cXTDocument, null, null, null][nNodeType] != cItemType)
+						if ([null, cXTElement, cXTAttribute, cXTText, cXTText, null, null, cXTProcessingInstruction, cXTComment, cXTDocument, null, null, null][nNodeType] != cItemType)
 							throw new cXPath2Error("XPTY0004", "Required item type of " + aFunctionCall_numbers[nIndex] + " argument of " + sName + "() is " + cItemType);
 					}
 				}
