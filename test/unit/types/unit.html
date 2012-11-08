@@ -160,9 +160,9 @@
 						evaluateXPathSingle('string(xs:time("09:17:23+02:00"))'));
 				assertEquals("09:17:23-02:00",
 						evaluateXPathSingle('string(xs:time("09:17:23-02:00"))'));
-				assertEquals("24:00:00",
+				assertEquals("00:00:00",
 						evaluateXPathSingle('string(xs:time("24:00:00.000"))'));
-				assertEquals("24:00:00+02:00",
+				assertEquals("00:00:00+02:00",
 						evaluateXPathSingle('string(xs:time("24:00:00.000+02:00"))'));
 				// Test errors
 				assertEquals("FORG0001", evaluateXPathError('xs:time("")'));
