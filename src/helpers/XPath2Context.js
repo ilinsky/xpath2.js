@@ -44,12 +44,3 @@ cXPath2Context.prototype.popVariable	= function(sName) {
 			delete this.stack[sName];
 	}
 };
-
-cXPath2Context.clone	= function(oContext) {
-	// Make clone of scope
-	var oScope	= {};
-	for (var sKey in oContext.scope)
-		if (oContext.scope.hasOwnProperty(sKey))
-			oScope[sKey]	= oContext.scope[sKey];
-	return new cXPath2Context(oContext.node, oScope, oContext.position);
-};
