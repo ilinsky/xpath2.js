@@ -14,7 +14,7 @@ function cXPath2Context(oNode, oScope, nPosition, nLast) {
 	this.last		= nLast || 1;
 	this.stack		= {};
 	//
-	var oDate	= new Date,
+	var oDate	= new cDate,
 		nOffset	= oDate.getTimezoneOffset();
 	this.dateTime	= new cXSDateTime(oDate.getFullYear(), oDate.getMonth() + 1, oDate.getDate(), oDate.getHours(), oDate.getMinutes(), oDate.getSeconds() + oDate.getMilliseconds() / 1000, nOffset);
 	this.timezone	= new cXSDayTimeDuration(0, cMath.abs(~~(nOffset / 60)), cMath.abs(nOffset % 60), 0, nOffset > 0);
