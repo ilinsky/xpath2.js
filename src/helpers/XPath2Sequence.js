@@ -112,9 +112,11 @@ cXPath2Sequence.prototype.toBoolean	= function() {
 		else
 		if (typeof oItem == "number")
 			return !(fIsNaN(oItem) || oItem == 0);
+
+		throw new cXPath2Error("FORG0006", "Effective boolean value is defined only for sequences containing booleans, strings, numbers, URIs, or nodes");
 	}
 
-	throw "TypeError in XPathSequence.prototype.toBoolean";
+	throw new cXPath2Error("FORG0006", "Effective boolean value is not defined for a sequence of two or more items");
 };
 
 // fn:string()
