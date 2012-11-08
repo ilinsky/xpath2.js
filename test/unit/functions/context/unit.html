@@ -29,50 +29,53 @@
 			// Tests
 			function testPosition() {
 				// Not W3C tests
-//				assertEquals(true,
-//						evaluateXPathSingle('xs:QName("aa:cc") eq xs:QName("bb:cc")'));
+				assertArrayEquals([2],
+						evaluateXPath('(1, 2, 3)[position() = 2]'));
 			}
 
 			function testLast() {
 				// Not W3C tests
-//				assertEquals(true,
-//						evaluateXPathSingle('xs:QName("aa:cc") eq xs:QName("bb:cc")'));
+				assertArrayEquals([3],
+						evaluateXPath('(1, 2, 3)[last()]'));
 			}
 
 			function testCurrentDateTime() {
 				// Not W3C tests
-//				assertEquals(true,
-//						evaluateXPathSingle('xs:QName("aa:cc") eq xs:QName("bb:cc")'));
+				assertEquals(true,
+						evaluateXPathSingle('current-dateTime() cast as xs:date eq current-date()'));
+				assertEquals(true,
+						evaluateXPathSingle('current-dateTime() cast as xs:time eq current-time()'));
 			}
-
+/*
 			function testCurrentDate() {
 				// Not W3C tests
-//				assertEquals(true,
-//						evaluateXPathSingle('xs:QName("aa:cc") eq xs:QName("bb:cc")'));
 			}
 
 			function testCurrentTime() {
 				// Not W3C tests
-//				assertEquals(true,
-//						evaluateXPathSingle('xs:QName("aa:cc") eq xs:QName("bb:cc")'));
 			}
-
+*/
 			function testImplicitTimeZone() {
+				var offset	= new Date().getTimezoneOffset(),
+					sign	= offset < 0,
+					hours	= ~~(Math.abs(offset) / 60),
+					minutes	= Math.abs(offset) % 60;
+
 				// Not W3C tests
-//				assertEquals(true,
-//						evaluateXPathSingle('xs:QName("aa:cc") eq xs:QName("bb:cc")'));
+				assertEquals((sign ? '' : '-') + "PT" + (hours ? hours + "H" : '') + (minutes ? minutes + "M" : '') + (hours || minutes ? '' : "0S"),
+						evaluateXPathSingle('string(implicit-timezone())'));
 			}
 
 			function testDefaultCollation() {
 				// Not W3C tests
-//				assertEquals(true,
-//						evaluateXPathSingle('xs:QName("aa:cc") eq xs:QName("bb:cc")'));
+				assertEquals("http://www.w3.org/2005/xpath-functions/collation/codepoint",
+						evaluateXPathSingle('default-collation()'));
 			}
 
 			function testStaticBaseUri() {
 				// Not W3C tests
-//				assertEquals(true,
-//						evaluateXPathSingle('xs:QName("aa:cc") eq xs:QName("bb:cc")'));
+				assertNotUndefined(
+						evaluateXPathSingle('static-base-uri()'));
 			}
 		</script>
 	</head>
