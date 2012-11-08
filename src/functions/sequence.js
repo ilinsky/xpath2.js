@@ -48,8 +48,6 @@
 // 15.1 General Functions and Operators on Sequences
 // fn:boolean($arg as item()*) as xs:boolean
 fFunctionCall_defineSystemFunction("boolean",	[[cXTItem, '*']],	function(oSequence1) {
-	if (!arguments.length)
-		throw new cXPath2Error("XPST0017");
 	return oSequence1.toBoolean();
 });
 

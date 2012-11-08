@@ -30,7 +30,5 @@ fFunctionCall_defineSystemFunction("false",	[],	function() {
 // 9.3 Functions on Boolean Values
 // fn:not($arg as item()*) as xs:boolean
 fFunctionCall_defineSystemFunction("not",	[[cXTItem, '*']],	function(oSequence1) {
-	if (!arguments.length)
-		throw new cXPath2Error("XPST0017");
 	return !oSequence1.toBoolean();
 });

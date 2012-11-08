@@ -20,27 +20,22 @@
 
 // fn:node-name($arg as node()?) as xs:QName?
 fFunctionCall_defineSystemFunction("node-name",		[[cXTNode, '?']],	function(oSequence1) {
-	if (arguments.length < 1)
-		throw new cXPath2Error("XPST0017");
-
 	if (oSequence1.isEmpty())
 		return null;
 	//
 	var oNode	= oSequence1.items[0];
-	if (cXPath2.DOMAdapter.isNode(oNode)) {
-		switch (cXPath2.DOMAdapter.getProperty(oNode, "nodeType")) {
-			case 1:	// ELEMENT_NAME
-			case 2:	// ATTRIBUTE_NODE
-				return new cXSQName(cXPath2.DOMAdapter.getProperty(oNode, "prefix"), cXPath2.DOMAdapter.getProperty(oNode, "localName"), cXPath2.DOMAdapter.getProperty(oNode, "namespaceURI"));
-			case 5:	// ENTITY_REFERENCE_NODE
-				throw "Not implemented";
-			case 6:	// ENTITY_NODE
-				throw "Not implemented";
-			case 7:	// PROCESSING_INSTRUCTION_NODE
-				return new cXSQName(null, cXPath2.DOMAdapter.getProperty(oNode, "target"), null);
-			case 10:// DOCUMENT_TYPE_NODE
-				return new cXSQName(null, cXPath2.DOMAdapter.getProperty(oNode, "name"), null);
-		}
+	switch (cXPath2.DOMAdapter.getProperty(oNode, "nodeType")) {
+		case 1:	// ELEMENT_NAME
+		case 2:	// ATTRIBUTE_NODE
+			return new cXSQName(cXPath2.DOMAdapter.getProperty(oNode, "prefix"), cXPath2.DOMAdapter.getProperty(oNode, "localName"), cXPath2.DOMAdapter.getProperty(oNode, "namespaceURI"));
+		case 5:	// ENTITY_REFERENCE_NODE
+			throw "Not implemented";
+		case 6:	// ENTITY_NODE
+			throw "Not implemented";
+		case 7:	// PROCESSING_INSTRUCTION_NODE
+			return new cXSQName(null, cXPath2.DOMAdapter.getProperty(oNode, "target"), null);
+		case 10:// DOCUMENT_TYPE_NODE
+			return new cXSQName(null, cXPath2.DOMAdapter.getProperty(oNode, "name"), null);
 	}
 	//
 	return null;
@@ -48,15 +43,12 @@ fFunctionCall_defineSystemFunction("node-name",		[[cXTNode, '?']],	function(oSeq
 
 // fn:nilled($arg as node()?) as xs:boolean?
 fFunctionCall_defineSystemFunction("nilled",	[[cXTNode, '?']],	function(oSequence1) {
-	if (arguments.length < 1)
-		throw new cXPath2Error("XPST0017");
-
 	if (oSequence1.isEmpty())
 		return null;
 
 	var oNode	= oSequence1.items[0];
-	if (cXPath2.DOMAdapter.isNode(oNode) && cXPath2.DOMAdapter.getProperty(oNode, "nodeType") == 1)
-		return false;	// TODO: Detrmine if node is nilled
+	if (cXPath2.DOMAdapter.getProperty(oNode, "nodeType") == 1)
+		return false;	// TODO: Determine if node is nilled
 
 	return null;
 });
@@ -71,9 +63,6 @@ fFunctionCall_defineSystemFunction("string",	[[cXTItem, '?', true]],	function(/*
 
 // fn:data($arg as item()*) as xs:anyAtomicType*
 fFunctionCall_defineSystemFunction("data",	[[cXTItem, '*']],		function(oSequence1) {
-	if (arguments.length < 1)
-		throw new cXPath2Error("XPST0017");
-
 	return cXPath2Sequence.atomize(oSequence1);
 });
 
@@ -94,12 +83,11 @@ fFunctionCall_defineSystemFunction("base-uri",	[[cXTNode, '?', true]],	function(
 
 // fn:document-uri($arg as node()?) as xs:anyURI?
 fFunctionCall_defineSystemFunction("document-uri",	[[cXTNode, '?']],	function(oSequence1) {
-	if (arguments.length < 1)
-		throw new cXPath2Error("XPST0017");
-
+	if (oSequence1.isEmpty())
+		return null;
 	//
 	var oNode	= oSequence1.items[0];
-	if (cXPath2.DOMAdapter.isNode(oNode) && cXPath2.DOMAdapter.getProperty(oNode, "nodeType") == 9)
+	if (cXPath2.DOMAdapter.getProperty(oNode, "nodeType") == 9)
 		return cXPath2.DOMAdapter.getProperty(oNode, "documentURI");
 	//
 	return null;
