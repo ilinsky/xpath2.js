@@ -306,7 +306,7 @@ fFunctionCall_defineSystemFunction("id",	[[cXSString, '*'], [cXTNode, '', true]]
 	// Search for elements
 	var oSequence	= new cXPath2Sequence;
 	for (var nIndex = 0; nIndex < oSequence1.items.length; nIndex++)
-		for (var nRightIndex = 0, aValue = oSequence1.items[nIndex].replace(/^\s+|\s+$/g).split(/\s+/), nRightLength = aValue.length; nRightIndex < nRightLength; nRightIndex++)
+		for (var nRightIndex = 0, aValue = fString_trim.call(oSequence1.items[nIndex]).split(/\s+/), nRightLength = aValue.length; nRightIndex < nRightLength; nRightIndex++)
 			if ((oNode = cDOMAdapter.getElementById(oDocument, aValue[nRightIndex])) && oSequence.indexOf(oNode) ==-1)
 				oSequence.add(oNode);
 	//

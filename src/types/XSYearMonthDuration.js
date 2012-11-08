@@ -28,7 +28,7 @@ cXSYearMonthDuration.cast	= function(vValue) {
 		case cXSUntypedAtomic:
 			vValue	= vValue.toString();
 		case cXSString:
-			var aMatch	= vValue.match(cXSYearMonthDuration.RegExp);
+			var aMatch	= fString_trim.call(vValue).match(cXSYearMonthDuration.RegExp);
 			if (aMatch)
 				return fXSYearMonthDuration_normalize(new cXSYearMonthDuration(+aMatch[2] || 0, +aMatch[3] || 0, aMatch[1] == '-'));
 			throw new cXPath2Error("FORG0001");

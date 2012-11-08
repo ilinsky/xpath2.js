@@ -33,7 +33,7 @@ cXSQName.cast	= function(vValue) {
 		case cXSUntypedAtomic:
 			vValue	= vValue.toString();
 		case cXSString:
-			var aMatch	= vValue.match(cXSQName.RegExp);
+			var aMatch	= fString_trim.call(vValue).match(cXSQName.RegExp);
 			if (aMatch)
 				return new cXSQName(aMatch[1] || null, aMatch[2], null);
 			throw new cXPath2Error("FORG0001");

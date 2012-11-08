@@ -46,7 +46,7 @@ cXSDateTime.cast	= function(vValue) {
 		case cXSUntypedAtomic:
 			vValue	= vValue.toString();
 		case cXSString:
-			var aMatch	= vValue.match(cXSDateTime.RegExp);
+			var aMatch	= fString_trim.call(vValue).match(cXSDateTime.RegExp);
 			if (aMatch) {
 				var nYear	= +aMatch[2],
 					nMonth	= +aMatch[3],

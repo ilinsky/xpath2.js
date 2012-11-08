@@ -144,7 +144,7 @@ fFunctionCall_defineSystemFunction("normalize-space",	[[cXSString, '?', true]],	
 	if (arguments.length < 1)
 		oSequence1	= new cXPath2Sequence(this.context);
 
-	return oSequence1.isEmpty() ? '' : oSequence1.toString().replace(/^\s+|\s+$/g, '').replace(/\s\s+/g, ' ');
+	return oSequence1.isEmpty() ? '' : fString_trim.call(oSequence1.toString()).replace(/\s\s+/g, ' ');
 });
 
 // fn:normalize-unicode($arg as xs:string?) as xs:string

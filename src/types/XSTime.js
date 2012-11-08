@@ -36,7 +36,7 @@ cXSTime.cast	= function(vValue) {
 		case cXSUntypedAtomic:
 			vValue	= vValue.toString();
 		case cXSString:
-			var aMatch	= vValue.match(cXSTime.RegExp);
+			var aMatch	= fString_trim.call(vValue).match(cXSTime.RegExp);
 			if (aMatch) {
 				var bValue	= !!aMatch[6];
 				return new cXSTime(bValue ? 0 : +aMatch[2],

@@ -24,7 +24,7 @@ cXSBoolean.cast	= function(vValue) {
 			vValue	= vValue.toString();
 		case cXSString:
 			var aMatch;
-			if (aMatch = vValue.match(cXSBoolean.RegExp))
+			if (aMatch = fString_trim.call(vValue).match(cXSBoolean.RegExp))
 				return aMatch[1] == "1" || aMatch[1] == "true";
 			throw new cXPath2Error("FORG0001");
 		case cXSFloat:

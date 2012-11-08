@@ -23,7 +23,7 @@ cXSDecimal.cast	= function(vValue) {
 		case cXSUntypedAtomic:
 			vValue	= vValue.toString();
 		case cXSString:
-			var aMatch	= vValue.match(cXSDecimal.RegExp);
+			var aMatch	= fString_trim.call(vValue).match(cXSDecimal.RegExp);
 			if (aMatch)
 				return +vValue;
 			throw new cXPath2Error("FORG0001");

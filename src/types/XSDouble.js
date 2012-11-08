@@ -23,7 +23,7 @@ cXSDouble.cast	= function(vValue) {
 		case cXSUntypedAtomic:
 			vValue	= vValue.toString();
 		case cXSString:
-			var aMatch	= vValue.match(cXSDouble.RegExp);
+			var aMatch	= fString_trim.call(vValue).match(cXSDouble.RegExp);
 			if (aMatch)
 				return aMatch[7] ? +aMatch[7].replace("INF", "Infinity") : +vValue;
 			throw new cXPath2Error("FORG0001");
