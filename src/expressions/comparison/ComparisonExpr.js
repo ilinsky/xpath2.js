@@ -101,14 +101,14 @@ cComparisonExpr.ValueComp	= function(oExpr, oContext) {
 		return null;
 
 	if (!oLeft.isSingleton())		// Must be singleton
-		throw new cXPath2Error("XPTY0004");
+		throw new cXPath2Error("XPTY0004", "Required cardinality of first operand of '" + oExpr.operator + "' is zero or one; supplied value has cardinality one or more");
 
 	var oRight	= cXPath2Sequence.atomize(oExpr.right.evaluate(oContext));
 	if (oRight.isEmpty())
 		return null;
 
 	if (!oRight.isSingleton())	// Must be singleton
-		throw new cXPath2Error("XPTY0004");
+		throw new cXPath2Error("XPTY0004", "Required cardinality of second operand of '" + oExpr.operator + "' is zero or one; supplied value has cardinality one or more");
 
 	var vLeft	= oLeft.items[0],
 		vRight	= oRight.items[0];
