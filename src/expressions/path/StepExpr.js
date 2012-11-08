@@ -38,20 +38,20 @@ cStepExpr.parsePredicates	= function (oLexer, oResolver, oStep) {
 
 // Public members
 cStepExpr.prototype.applyPredicates	= function(oContext, oSequence) {
-	var oSequence1,
-		oContext1,
-		oSequence2;
-
-	for (var nPredicateIndex = 0, nPredicateLength = this.predicates.length; nPredicateIndex < nPredicateLength; nPredicateIndex++) {
+	var vContextItem	= oContext.context,
+		nContextPosition= oContext.position,
+		nContextLast	= oContext.last;
+	//
+	for (var nPredicateIndex = 0, oSequence1, nPredicateLength = this.predicates.length; nPredicateIndex < nPredicateLength; nPredicateIndex++) {
 		oSequence1	= oSequence;
-		oContext1	= new cXPath2Context;
 		oSequence	= new cXPath2Sequence;
-		for (var nIndex = 0, nLength = oSequence1.items.length; nIndex < nLength; nIndex++) {
-			oContext1.last		= nLength;
-			oContext1.context	= oSequence1.items[nIndex];
-			oContext1.position	= nIndex + 1;
+		for (var nIndex = 0, oSequence2, nLength = oSequence1.items.length; nIndex < nLength; nIndex++) {
+			// Set new context
+			oContext.context	= oSequence1.items[nIndex];
+			oContext.position	= nIndex + 1;
+			oContext.last		= nLength;
 			//
-			oSequence2	= this.predicates[nPredicateIndex].evaluate(oContext1);
+			oSequence2	= this.predicates[nPredicateIndex].evaluate(oContext);
 			//
 			if (oSequence2.isSingleton() && typeof oSequence2.items[0] == "number") {
 				if (oSequence2.items[0] == nIndex + 1)
@@ -62,5 +62,10 @@ cStepExpr.prototype.applyPredicates	= function(oContext, oSequence) {
 				oSequence.add(oSequence1.items[nIndex]);
 		}
 	}
+	// Restore context
+	oContext.context	= vContextItem;
+	oContext.position	= nContextPosition;
+	oContext.last		= nContextLast;
+	//
 	return oSequence;
 };

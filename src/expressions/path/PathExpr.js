@@ -62,20 +62,29 @@ cPathExpr.parse	= function (oLexer, oResolver) {
 
 // Public members
 cPathExpr.prototype.evaluate	= function (oContext) {
-	var oSequence	= new cXPath2Sequence(oContext.context),
-		oContext1	= new cXPath2Context,
-		oSequence1,
-		oStep;
-	for (var nItemIndex = 0, nItemLength = this.items.length; nItemIndex < nItemLength; nItemIndex++) {
-		oStep	= new cXPath2Sequence;
+	var vContextItem	= oContext.context,
+		nContextPosition= oContext.position,
+		nContextLast	= oContext.last;
+	//
+	var oSequence	= new cXPath2Sequence(vContextItem);
+	for (var nItemIndex = 0, nItemLength = this.items.length, oSequence1; nItemIndex < nItemLength; nItemIndex++) {
+		oSequence1	= new cXPath2Sequence;
 		for (var nIndex = 0, nLength = oSequence.items.length; nIndex < nLength; nIndex++) {
-			oContext1.context	= oSequence.items[nIndex];
-			oSequence1	= this.items[nItemIndex].evaluate(oContext1);
-			for (var nRightIndex = 0, nRightLength = oSequence1.items.length; nRightIndex < nRightLength; nRightIndex++)
-				if (oStep.indexOf(oSequence1.items[nRightIndex]) ==-1)
-					oStep.add(oSequence1.items[nRightIndex]);
+			// Set new context
+			oContext.context	= oSequence.items[nIndex];
+			oContext.position	= 1;
+			oContext.last		= 1;
+			//
+			for (var nRightIndex = 0, oSequence2 = this.items[nItemIndex].evaluate(oContext), nRightLength = oSequence2.items.length; nRightIndex < nRightLength; nRightIndex++)
+				if (oSequence1.indexOf(oSequence2.items[nRightIndex]) ==-1)
+					oSequence1.add(oSequence2.items[nRightIndex]);
 		}
-		oSequence	= oStep;
+		oSequence	= oSequence1;
 	};
+	// Restore context
+	oContext.context	= vContextItem;
+	oContext.position	= nContextPosition;
+	oContext.last		= nContextLast;
+	//
 	return cXPath2Sequence.order(oSequence);
 };
