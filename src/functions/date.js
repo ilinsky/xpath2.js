@@ -72,7 +72,7 @@ fFunctionCall_defineSystemFunction("seconds-from-duration",	[[cXSDuration, '?']]
 // functions on dateTime
 // fn:year-from-dateTime($arg as xs:dateTime?) as xs:integer?
 fFunctionCall_defineSystemFunction("year-from-dateTime",		[[cXSDateTime, '?']],	function(oSequence1) {
-	return fFunctionCall_dateTime_getComponent(oSequence1, cXSDat,	[[cXSDuration, '?']],	e, "year");
+	return fFunctionCall_dateTime_getComponent(oSequence1, cXSDateTime,	"year");
 });
 
 // fn:month-from-dateTime($arg as xs:dateTime?) as xs:integer?
