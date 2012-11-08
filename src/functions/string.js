@@ -45,7 +45,7 @@
 
 // 7.2 Functions to Assemble and Disassemble Strings
 // fn:codepoints-to-string($arg as xs:integer*) as xs:string
-fFunctionCall_defineSystemFunction("codepoints-to-string",	[[cXSInteger, '?']],	function(oSequence1) {
+fFunctionCall_defineSystemFunction("codepoints-to-string",	[[cXSInteger, '*']],	function(oSequence1) {
 	var aValue	= [];
 	for (var nIndex = 0, nLength = oSequence1.items.length; nIndex < nLength; nIndex++)
 		aValue.push(cString.fromCharCode(oSequence1.items[nIndex]));
