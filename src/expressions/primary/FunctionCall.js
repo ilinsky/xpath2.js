@@ -104,8 +104,8 @@ function fFunctionCall_prepare(sName, aParameters, fFunction, aArguments) {
 		nParametersLength	= aParameters.length,
 		nParametersRequired	= 0,
 		sCardinality,
-		cDataType,
-		cItemType;
+		cItemType,
+		cDataType;
 
 	// Determine amount of parameters required
 	while ((nParametersRequired < aParameters.length) && !aParameters[nParametersRequired][2])
@@ -114,7 +114,7 @@ function fFunctionCall_prepare(sName, aParameters, fFunction, aArguments) {
 	for (var nIndex = 0, nItemsLength; nIndex < nParametersLength; nIndex++) {
 		oParameter	= aParameters[nIndex];
 		sCardinality= oParameter[1];
-		cDataType	= oParameter[0];
+		cItemType	= oParameter[0];
 		//
 		if (nIndex < nArgumentsLength) {
 			oArgument	= aArguments[nIndex];
@@ -139,30 +139,30 @@ function fFunctionCall_prepare(sName, aParameters, fFunction, aArguments) {
 			for (var nItemIndex = 0, nNodeType, vItem; nItemIndex < nItemsLength; nItemIndex++) {
 				vItem	= oArgument.items[nItemIndex];
 				// Node types
-				if (cDataType == cXTNode || cDataType.prototype instanceof cXTNode) {
+				if (cItemType == cXTNode || cItemType.prototype instanceof cXTNode) {
 					// Check if is node
 					if (!cXPath2.DOMAdapter.isNode(vItem))
-						throw new cXPath2Error("XPTY0004", "Required item type of " + aFunctionCall_numbers[nIndex] + " argument of " + sName + "() is " + cDataType);
+						throw new cXPath2Error("XPTY0004", "Required item type of " + aFunctionCall_numbers[nIndex] + " argument of " + sName + "() is " + cItemType);
 
 					// Check node type
-					if (cDataType != cXTNode) {
+					if (cItemType != cXTNode) {
 						nNodeType	= cXPath2.DOMAdapter.getProperty(vItem, "nodeType");
-						if ([cXTElement, cXTAttribute, cXTText, cXTText, null, null, cXTProcessingInstruction, cXTComment, cXTDocument, null, null, null][nNodeType] != cDataType)
-							throw new cXPath2Error("XPTY0004", "Required item type of " + aFunctionCall_numbers[nIndex] + " argument of " + sName + "() is " + cDataType);
+						if ([cXTElement, cXTAttribute, cXTText, cXTText, null, null, cXTProcessingInstruction, cXTComment, cXTDocument, null, null, null][nNodeType] != cItemType)
+							throw new cXPath2Error("XPTY0004", "Required item type of " + aFunctionCall_numbers[nIndex] + " argument of " + sName + "() is " + cItemType);
 					}
 				}
 				else
 				// Atomic types
-				if (cDataType == cXSAnyAtomicType || cDataType.prototype instanceof cXSAnyAtomicType || cDataType == cXTNumeric) {
+				if (cItemType == cXSAnyAtomicType || cItemType.prototype instanceof cXSAnyAtomicType || cItemType == cXTNumeric) {
 					// Atomize item
 					vItem	= cXPath2Sequence.atomizeItem(vItem);
 					// Cast if item type is xs:untypedAtomic
-					if (cDataType != cXSAnyAtomicType && vItem instanceof cXSUntypedAtomic)
-						vItem	=(cDataType != cXTNumeric ? cDataType : cXSDecimal).cast(vItem);
+					if (cItemType != cXSAnyAtomicType && vItem instanceof cXSUntypedAtomic)
+						vItem	=(cItemType != cXTNumeric ? cItemType : cXSDecimal).cast(vItem);
 					// Check type
-					cItemType	= cXSAnyAtomicType.typeOf(vItem);
-					if (cDataType != cXTNumeric ? (cItemType != cDataType && !(cItemType.prototype instanceof cDataType)) : !cXSAnyAtomicType.isNumeric(cItemType))
-						throw new cXPath2Error("XPTY0004", "Required item type of " + aFunctionCall_numbers[nIndex] + " argument of " + sName + "() is " + cDataType);
+					cDataType	= cXSAnyAtomicType.typeOf(vItem);
+					if (cItemType != cXTNumeric ? (cDataType != cItemType && !(cDataType.prototype instanceof cItemType)) : !cXSAnyAtomicType.isNumeric(cDataType))
+						throw new cXPath2Error("XPTY0004", "Required item type of " + aFunctionCall_numbers[nIndex] + " argument of " + sName + "() is " + cItemType);
 					// Write value back to sequence
 					oArgument.items[nItemIndex]	= vItem;
 				}
