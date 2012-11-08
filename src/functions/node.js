@@ -71,7 +71,17 @@ fFunctionCall_defineSystemFunction("number",	[[cXSAnyAtomicType, '?', true]],	fu
 	if (!arguments.length)
 		oSequence1	= new cXPath2Sequence(this.context);
 
-	return oSequence1.isEmpty() ? nNaN :+oSequence1.items[0];
+	// If input item cannot be cast to xs:decimal, a NaN should be returned
+	var vValue	= nNaN;
+	if (!oSequence1.isEmpty()) {
+		try {
+			vValue	= cXSDouble.cast(oSequence1.items[0]);
+		}
+		catch (e) {
+
+		}
+	}
+	return vValue;
 });
 
 // fn:lang($testlang as xs:string?) as xs:boolean
