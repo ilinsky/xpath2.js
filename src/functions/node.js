@@ -70,8 +70,8 @@ fFunctionCall_defineSystemFunction("namespace-uri",	[[cXTNode, '?', true]],	func
 fFunctionCall_defineSystemFunction("number",	[[cXSAnyAtomicType, '?', true]],	function(/*[*/oSequence1/*]*/) {
 	if (!arguments.length)
 		oSequence1	= new cXPath2Sequence(this.context);
-	//
-	return oSequence1.toNumber();
+
+	return oSequence1.isEmpty() ? nNaN :+oSequence1.items[0];
 });
 
 // fn:lang($testlang as xs:string?) as xs:boolean

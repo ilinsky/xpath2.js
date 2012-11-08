@@ -117,12 +117,6 @@ cXPath2Sequence.prototype.toBoolean	= function() {
 	throw "TypeError in XPathSequence.prototype.toBoolean";
 };
 
-// fn:number()
-cXPath2Sequence.prototype.toNumber	= function() {
-	var oItem;
-	return this.items.length && (oItem = cXPath2Sequence.atomizeItem(this.items[0])) !== null ? +oItem : nNaN;
-};
-
 // fn:string()
 cXPath2Sequence.prototype.toString	= function() {
 	var oItem;
