@@ -93,6 +93,9 @@
 						evaluateXPathSingle('fn:year-from-dateTime(xs:dateTime("1999-05-31T21:30:00-05:00"))'));
 				assertEquals(1999,
 						evaluateXPathSingle('fn:year-from-dateTime(xs:dateTime("1999-12-31T19:20:00"))'));
+			}
+
+			function testYearFromDateTime_24_00_00() {
 				assertEquals(2000,
 						evaluateXPathSingle('fn:year-from-dateTime(xs:dateTime("1999-12-31T24:00:00"))'));
 			}
@@ -127,6 +130,9 @@
 //						evaluateXPathSingle('fn:hours-from-dateTime(fn:adjust-dateTime-to-timezone(xs:dateTime("1999-12-31T21:20:00-05:00"), xs:dayTimeDuration("PT0S")))'));
 				assertEquals(12,
 						evaluateXPathSingle('fn:hours-from-dateTime(xs:dateTime("1999-12-31T12:00:00"))'));
+			}
+
+			function testHoursFromDateTime_24_00_00() {
 				assertEquals(0,
 						evaluateXPathSingle('fn:hours-from-dateTime(xs:dateTime("1999-12-31T24:00:00"))'));
 			}
@@ -195,6 +201,9 @@
 				// Bad test as introduces dependency on fn:adjust-dateTime-to-timezone
 //				assertEquals(20,
 //						evaluateXPathSingle('fn:hours-from-time(fn:adjust-time-to-timezone(xs:time("01:23:00+05:00"), xs:dayTimeDuration("PT0S")))'));
+			}
+
+			function testHoursFromTime_24_00_00() {
 				assertEquals(0,
 						evaluateXPathSingle('fn:hours-from-time(xs:time("24:00:00"))'));
 			}
