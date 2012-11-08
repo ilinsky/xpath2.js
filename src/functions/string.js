@@ -98,11 +98,17 @@ fFunctionCall_defineSystemFunction("codepoint-equal",	[[cXSString, '?'], [cXSStr
 
 // 7.4 Functions on String Values
 // fn:concat($arg1 as xs:anyAtomicType?, $arg2 as xs:anyAtomicType?, ...) as xs:string
-fFunctionCall_defineSystemFunction("concat",	[[cXSAnyAtomicType, '?']],	function(oSequence1, oSequence2) {
-	// TODO: Custom vqlidation/casting required
+fFunctionCall_defineSystemFunction("concat",	null,	function(oSequence1, oSequence2) {
+	// check arguments length
+	if (arguments.length < 2)
+		throw new cXPath2Error("XPST0017", "Function concat() must have at least 2 arguments");
+
 	var aValue	= [];
-	for (var nIndex = 0, nLength = arguments.length; nIndex < nLength; nIndex++)
+	for (var nIndex = 0, nLength = arguments.length; nIndex < nLength; nIndex++) {
+		if (arguments[nIndex].items.length > 1)
+			throw new cXPath2Error("XPTY0004", "Required cardinality of each argument of concat() is one or zero");
 		aValue[aValue.length]	= arguments[nIndex].toString();
+	}
 
 	return aValue.join('');
 });
