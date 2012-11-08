@@ -31,26 +31,22 @@ fFunctionCall_defineSystemFunction("last",	[],	function() {
 
 // fn:current-dateTime() as xs:dateTime (2004-05-12T18:17:15.125Z)
 fFunctionCall_defineSystemFunction("current-dateTime",	[],	 function() {
-	var oDate	= new cDate;
-	return new cXSDateTime(oDate.getFullYear(), oDate.getMonth() + 1, oDate.getDate(), oDate.getHours(), oDate.getMinutes(), oDate.getSeconds() + oDate.getMilliseconds() / 1000, oDate.getTimezoneOffset());
+	return this.dateTime;
 });
 
 // fn:current-date() as xs:date (2004-05-12+01:00)
 fFunctionCall_defineSystemFunction("current-date",	[],	function() {
-	var oDate	= new cDate;
-	return new cXSDate(oDate.getFullYear(), oDate.getMonth() + 1, oDate.getDate(), oDate.getTimezoneOffset());
+	return cXSDate.cast(this.dateTime);
 });
 
 // fn:current-time() as xs:time (23:17:00.000-05:00)
 fFunctionCall_defineSystemFunction("current-time",	[],	function() {
-	var oDate	= new cDate;
-	return new cXSTime(oDate.getHours(), oDate.getMinutes(), oDate.getSeconds() + oDate.getMilliseconds() / 1000, oDate.getTimezoneOffset());
+	return cXSTime.cast(this.dateTime);
 });
 
 // fn:implicit-timezone() as xs:dayTimeDuration
 fFunctionCall_defineSystemFunction("implicit-timezone",	[],	function() {
-	var nTimezone	= (new cDate).getTimezoneOffset();
-	return new cXSDayTimeDuration(0, cMath.abs(~~(nTimezone / 60)), cMath.abs(nTimezone % 60), 0, nTimezone > 0);
+	return this.timezone;
 });
 
 // fn:default-collation() as xs:string
