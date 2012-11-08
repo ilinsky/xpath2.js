@@ -65,7 +65,7 @@ cAdditiveExpr.operators['+']	= function(oLeft, oRight) {
 			return cFunctionCall.operators["add-dayTimeDuration-to-dateTime"](oLeft, oRight);
 	}
 	//
-	throw new cXPath2Error("XPTY0004");	// Arithmetic operator is not defined for arguments of types
+	throw new cXPath2Error("XPTY0004", "Arithmetic operator is not defined for provided arguments");	// Arithmetic operator is not defined for arguments of types ({type1}, {type2})
 };
 cAdditiveExpr.operators['-']	= function (oLeft, oRight) {
 	var cLeft	= cXSAnyAtomicType.typeOf(oLeft),
@@ -110,7 +110,7 @@ cAdditiveExpr.operators['-']	= function (oLeft, oRight) {
 			return cFunctionCall.operators["subtract-dayTimeDurations"](oLeft, oRight);
 	}
 	//
-	throw new cXPath2Error("XPTY0004");	// Arithmetic operator is not defined for arguments of types
+	throw new cXPath2Error("XPTY0004", "Arithmetic operator is not defined for provided arguments");	// Arithmetic operator is not defined for arguments of types ({type1}, {type2})
 };
 
 // Static members

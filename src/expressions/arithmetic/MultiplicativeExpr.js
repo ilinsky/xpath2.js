@@ -41,7 +41,7 @@ cMultiplicativeExpr.operators['*']		= function (oLeft, oRight) {
 		}
 	}
 	//
-	throw new cXPath2Error("XPTY0004");	// Arithmetic operator is not defined for arguments of types
+	throw new cXPath2Error("XPTY0004", "Arithmetic operator is not defined for provided arguments");	// Arithmetic operator is not defined for arguments of types ({type1}, {type2})
 };
 cMultiplicativeExpr.operators['div']	= function (oLeft, oRight) {
 	var cLeft	= cXSAnyAtomicType.typeOf(oLeft),
@@ -65,7 +65,7 @@ cMultiplicativeExpr.operators['div']	= function (oLeft, oRight) {
 			return cFunctionCall.operators["divide-dayTimeDuration-by-dayTimeDuration"](oLeft, oRight);
 	}
 	//
-	throw new cXPath2Error("XPTY0004");	// Arithmetic operator is not defined for arguments of types
+	throw new cXPath2Error("XPTY0004", "Arithmetic operator is not defined for provided arguments");	// Arithmetic operator is not defined for arguments of types ({type1}, {type2})
 };
 cMultiplicativeExpr.operators['idiv']	= function (oLeft, oRight) {
 	var cLeft	= cXSAnyAtomicType.typeOf(oLeft),
@@ -73,7 +73,7 @@ cMultiplicativeExpr.operators['idiv']	= function (oLeft, oRight) {
 	if (cXSAnyAtomicType.isNumeric(cLeft) && cXSAnyAtomicType.isNumeric(cRight))
 		return cFunctionCall.operators["numeric-integer-divide"](oLeft, oRight);
 	//
-	throw new cXPath2Error("XPTY0004");	// Arithmetic operator is not defined for arguments of types
+	throw new cXPath2Error("XPTY0004", "Arithmetic operator is not defined for provided arguments");	// Arithmetic operator is not defined for arguments of types ({type1}, {type2})
 };
 cMultiplicativeExpr.operators['mod']	= function (oLeft, oRight) {
 	var cLeft	= cXSAnyAtomicType.typeOf(oLeft),
@@ -81,7 +81,7 @@ cMultiplicativeExpr.operators['mod']	= function (oLeft, oRight) {
 	if (cXSAnyAtomicType.isNumeric(cLeft) && cXSAnyAtomicType.isNumeric(cRight))
 		return cFunctionCall.operators["numeric-mod"](oLeft, oRight);
 	//
-	throw new cXPath2Error("XPTY0004");	// Arithmetic operator is not defined for arguments of types
+	throw new cXPath2Error("XPTY0004", "Arithmetic operator is not defined for provided arguments");	// Arithmetic operator is not defined for arguments of types ({type1}, {type2})
 };
 
 // Static members
