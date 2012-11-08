@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>JsUnit testing page</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+		<!-- JsUnitClient driver -->
+		<script type="text/javascript" src="../../jsUnitClient.js"></script>
+
+		<!-- Library -->
+		<script type="text/javascript" src="../../../../xpath2.js"></script>
+
+		<!-- Suite definition -->
+		<script type="text/javascript">
+			// Helper function
+			function evaluateXPath(sXPath) {
+				return XPath2.evaluate(sXPath);
+			}
+
+			function evaluateXPathSingle(sXPath) {
+				return evaluateXPath(sXPath)[0];
+			}
+
+			// Dummy test
+			function testPage() {
+				assertTrue(true);
+			}
+
+			// Tests
+			function testPosition() {
+				// Not W3C tests
+//				assertEquals(true,
+//						evaluateXPathSingle('xs:QName("aa:cc") eq xs:QName("bb:cc")'));
+			}
+
+			function testLast() {
+				// Not W3C tests
+//				assertEquals(true,
+//						evaluateXPathSingle('xs:QName("aa:cc") eq xs:QName("bb:cc")'));
+			}
+
+			function testCurrentDateTime() {
+				// Not W3C tests
+//				assertEquals(true,
+//						evaluateXPathSingle('xs:QName("aa:cc") eq xs:QName("bb:cc")'));
+			}
+
+			function testCurrentDate() {
+				// Not W3C tests
+//				assertEquals(true,
+//						evaluateXPathSingle('xs:QName("aa:cc") eq xs:QName("bb:cc")'));
+			}
+
+			function testCurrentTime() {
+				// Not W3C tests
+//				assertEquals(true,
+//						evaluateXPathSingle('xs:QName("aa:cc") eq xs:QName("bb:cc")'));
+			}
+
+			function testImplicitTimeZone() {
+				// Not W3C tests
+//				assertEquals(true,
+//						evaluateXPathSingle('xs:QName("aa:cc") eq xs:QName("bb:cc")'));
+			}
+
+			function testDefaultCollation() {
+				// Not W3C tests
+//				assertEquals(true,
+//						evaluateXPathSingle('xs:QName("aa:cc") eq xs:QName("bb:cc")'));
+			}
+
+			function testStaticBaseUri() {
+				// Not W3C tests
+//				assertEquals(true,
+//						evaluateXPathSingle('xs:QName("aa:cc") eq xs:QName("bb:cc")'));
+			}
+		</script>
+	</head>
+	<body>
+		<p>XPath2.js JsUnit unit page</p>
+	</body>
+</html>
