@@ -18,14 +18,11 @@ fFunctionCall_defineSystemFunction("resolve-uri",	[[cXSString, '?'], [cXSString,
 	var sBaseUri;
 	if (arguments.length < 2) {
 		if (!cXPath2.DOMAdapter.isNode(this.context))
-			throw new cXPath2Error("XPTY0004");
+			throw new cXPath2Error("XPTY0004", "resolve-uri() function called when the context item is not a node");
 		sBaseUri	= cXPath2.DOMAdapter.getProperty(this.context, "baseURI");
 	}
 	else
-	if (!oSequence2.isEmpty())
 		sBaseUri	= oSequence2.items[0];
-	else
-		throw new cXPath2Error("XPTY0004");
 
 	if (oSequence1.isEmpty())
 		return null;

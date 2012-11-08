@@ -71,7 +71,7 @@ fFunctionCall_defineSystemFunction("data",	[[cXTItem, '*']],		function(oSequence
 fFunctionCall_defineSystemFunction("base-uri",	[[cXTNode, '?', true]],	function(oSequence1) {
 	if (!arguments.length) {
 		if (!cXPath2.DOMAdapter.isNode(this.context))
-			throw new cXPath2Error("XPTY0004");
+			throw new cXPath2Error("XPTY0004", "base-uri() function called when the context item is not a node");
 		oSequence1	= new cXPath2Sequence(this.context);
 	}
 	else

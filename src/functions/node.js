@@ -24,7 +24,7 @@
 fFunctionCall_defineSystemFunction("name",	[[cXTNode, '?', true]],	function(oSequence1) {
 	if (!arguments.length) {
 		if (!cXPath2.DOMAdapter.isNode(this.context))
-			throw new cXPath2Error("XPTY0004");
+			throw new cXPath2Error("XPTY0004", "name() function called when the context item is not a node");
 		oSequence1	= new cXPath2Sequence(this.context);
 	}
 	else
@@ -40,7 +40,7 @@ fFunctionCall_defineSystemFunction("name",	[[cXTNode, '?', true]],	function(oSeq
 fFunctionCall_defineSystemFunction("local-name",	[[cXTNode, '?', true]],	function(oSequence1) {
 	if (!arguments.length) {
 		if (!cXPath2.DOMAdapter.isNode(this.context))
-			throw new cXPath2Error("XPTY0004");
+			throw new cXPath2Error("XPTY0004", "local-name() function called when the context item is not a node");
 		oSequence1	= new cXPath2Sequence(this.context);
 	}
 	else
@@ -55,7 +55,7 @@ fFunctionCall_defineSystemFunction("local-name",	[[cXTNode, '?', true]],	functio
 fFunctionCall_defineSystemFunction("namespace-uri",	[[cXTNode, '?', true]],	function(oSequence1) {
 	if (!arguments.length) {
 		if (!cXPath2.DOMAdapter.isNode(this.context))
-			throw new cXPath2Error("XPTY0004");
+			throw new cXPath2Error("XPTY0004", "namespace-uri() function called when the context item is not a node");
 		oSequence1	= new cXPath2Sequence(this.context);
 	}
 	else
@@ -85,7 +85,7 @@ fFunctionCall_defineSystemFunction("lang",	[[cXSString, '?'], [cXTNode, '?', tru
 fFunctionCall_defineSystemFunction("root",	[[cXTNode, '?', true]],	function(oSequence1) {
 	if (!arguments.length) {
 		if (!cXPath2.DOMAdapter.isNode(this.context))
-			throw new cXPath2Error("XPTY0004");
+			throw new cXPath2Error("XPTY0004", "root() function called when the context item is not a node");
 		oSequence1	= new cXPath2Sequence(this.context);
 	}
 	else
