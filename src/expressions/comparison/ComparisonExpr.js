@@ -165,7 +165,7 @@ cComparisonExpr.ValueComp.operators['eq']	= function(oLeft, oRight) {
 	}
 
 	// skipped: xs:NOTATION
-	throw new cXPath2Error("XPTY0004");	// Cannot compare {type1} to {type2}
+	throw new cXPath2Error("XPTY0004", "Cannot compare values of given types");	// Cannot compare {type1} to {type2}
 };
 cComparisonExpr.ValueComp.operators['ne']	= function(oLeft, oRight) {
 	return !cComparisonExpr.ValueComp.operators['eq'](oLeft, oRight);
@@ -201,7 +201,7 @@ cComparisonExpr.ValueComp.operators['gt']	= function(oLeft, oRight) {
 			return cFunctionCall.operators["dayTimeDuration-greater-than"](oLeft, oRight);
 	}
 	// skipped: xs:anyURI (covered by xs:string)
-	throw new cXPath2Error("XPTY0004");	// Cannot compare {type1} to {type2}
+	throw new cXPath2Error("XPTY0004", "Cannot compare values of given types");	// Cannot compare {type1} to {type2}
 };
 cComparisonExpr.ValueComp.operators['lt']	= function(oLeft, oRight) {
 	var cLeft	= cXSAnyAtomicType.typeOf(oLeft),
@@ -234,7 +234,7 @@ cComparisonExpr.ValueComp.operators['lt']	= function(oLeft, oRight) {
 			return cFunctionCall.operators["dayTimeDuration-less-than"](oLeft, oRight);
 	}
 	// skipped: xs:anyURI (covered by xs:string)
-	throw new cXPath2Error("XPTY0004");	// Cannot compare {type1} to {type2}
+	throw new cXPath2Error("XPTY0004", "Cannot compare values of given types");	// Cannot compare {type1} to {type2}
 };
 cComparisonExpr.ValueComp.operators['ge']	= function(oLeft, oRight) {
 	var cLeft	= cXSAnyAtomicType.typeOf(oLeft),
@@ -267,7 +267,7 @@ cComparisonExpr.ValueComp.operators['ge']	= function(oLeft, oRight) {
 			return !cFunctionCall.operators["dayTimeDuration-less-than"](oLeft, oRight);
 	}
 	// skipped: xs:anyURI (covered by xs:string)
-	throw new cXPath2Error("XPTY0004");	// Cannot compare {type1} to {type2}
+	throw new cXPath2Error("XPTY0004", "Cannot compare values of given types");	// Cannot compare {type1} to {type2}
 };
 cComparisonExpr.ValueComp.operators['le']	= function(oLeft, oRight) {
 	var cLeft	= cXSAnyAtomicType.typeOf(oLeft),
@@ -300,7 +300,7 @@ cComparisonExpr.ValueComp.operators['le']	= function(oLeft, oRight) {
 			return !cFunctionCall.operators["dayTimeDuration-greater-than"](oLeft, oRight);
 	}
 	// skipped: xs:anyURI (covered by xs:string)
-	throw new cXPath2Error("XPTY0004");	// Cannot compare {type1} to {type2}
+	throw new cXPath2Error("XPTY0004", "Cannot compare values of given types");	// Cannot compare {type1} to {type2}
 };
 
 // Node comparison
