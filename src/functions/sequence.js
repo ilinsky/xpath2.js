@@ -209,17 +209,23 @@ fFunctionCall_defineSystemFunction("avg",	[[cXSAnyAtomicType, '*']],	function(oS
 	if (oSequence1.isEmpty())
 		return null;
 
-	var vValue	= oSequence1.items[0];
-	if (vValue instanceof cXSUntypedAtomic)
-		vValue	= cXSDouble.cast(vValue);
-	for (var nIndex = 1, nLength = oSequence1.items.length, vRight; nIndex < nLength; nIndex++) {
-		vRight	= oSequence1.items[nIndex];
-		if (vRight instanceof cXSUntypedAtomic)
-			vRight	= cXSDouble.cast(vRight);
-		vValue	= cAdditiveExpr.operators['+'](vValue, vRight);
+	//
+	try {
+		var vValue	= oSequence1.items[0];
+		if (vValue instanceof cXSUntypedAtomic)
+			vValue	= cXSDouble.cast(vValue);
+		for (var nIndex = 1, nLength = oSequence1.items.length, vRight; nIndex < nLength; nIndex++) {
+			vRight	= oSequence1.items[nIndex];
+			if (vRight instanceof cXSUntypedAtomic)
+				vRight	= cXSDouble.cast(vRight);
+			vValue	= cAdditiveExpr.operators['+'](vValue, vRight);
+		}
+		return cMultiplicativeExpr.operators['div'](vValue, nLength);
 	}
-
-	return cMultiplicativeExpr.operators['div'](vValue, nLength);
+	catch (e) {
+		// XPTY0004: Arithmetic operator is not defined for provided arguments
+		throw e.code != "XPTY0004" ? e : new cXPath2Error("FORG0006", "Input to avg() contains a mix of types");
+	}
 });
 
 // fn:max($arg as xs:anyAtomicType*) as xs:anyAtomicType?
@@ -231,12 +237,17 @@ fFunctionCall_defineSystemFunction("max",	[[cXSAnyAtomicType, '*'], [cXSString, 
 	// TODO: Implement collation
 
 	//
-	var vValue	= oSequence1.items[0];
-	for (var nIndex = 1, nLength = oSequence1.items.length; nIndex < nLength; nIndex++)
-		if (cComparisonExpr.ValueComp.operators['ge'](oSequence1.items[nIndex], vValue))
-			vValue	= oSequence1.items[nIndex];
-
-	return vValue;
+	try {
+		var vValue	= oSequence1.items[0];
+		for (var nIndex = 1, nLength = oSequence1.items.length; nIndex < nLength; nIndex++)
+			if (cComparisonExpr.ValueComp.operators['ge'](oSequence1.items[nIndex], vValue))
+				vValue	= oSequence1.items[nIndex];
+		return vValue;
+	}
+	catch (e) {
+		// XPTY0004: Cannot compare {type1} with {type2}
+		throw e.code != "XPTY0004" ? e : new cXPath2Error("FORG0006", "Input to max() contains a mix of not comparable values");
+	}
 });
 
 // fn:min($arg as xs:anyAtomicType*) as xs:anyAtomicType?
@@ -247,12 +258,18 @@ fFunctionCall_defineSystemFunction("min",	[[cXSAnyAtomicType, '*'], [cXSString, 
 
 	// TODO: Implement collation
 
-	var vValue	= oSequence1.items[0];
-	for (var nIndex = 1, nLength = oSequence1.items.length; nIndex < nLength; nIndex++)
-		if (cComparisonExpr.ValueComp.operators['le'](oSequence1.items[nIndex], vValue))
-			vValue	= oSequence1.items[nIndex];
-
-	return vValue;
+	//
+	try {
+		var vValue	= oSequence1.items[0];
+		for (var nIndex = 1, nLength = oSequence1.items.length; nIndex < nLength; nIndex++)
+			if (cComparisonExpr.ValueComp.operators['le'](oSequence1.items[nIndex], vValue))
+				vValue	= oSequence1.items[nIndex];
+		return vValue;
+	}
+	catch (e) {
+		// Cannot compare {type1} with {type2}
+		throw e.code != "XPTY0004" ? e : new cXPath2Error("FORG0006", "Input to min() contains a mix of not comparable values");
+	}
 });
 
 // fn:sum($arg as xs:anyAtomicType*) as xs:anyAtomicType
@@ -271,17 +288,23 @@ fFunctionCall_defineSystemFunction("sum",	[[cXSAnyAtomicType, '*'], [cXSAnyAtomi
 
 	// TODO: Implement collation
 
-	var vValue	= oSequence1.items[0];
-	if (vValue instanceof cXSUntypedAtomic)
-		vValue	= cXSDouble.cast(vValue);
-	for (var nIndex = 1, nLength = oSequence1.items.length, vRight; nIndex < nLength; nIndex++) {
-		vRight	= oSequence1.items[nIndex];
-		if (vRight instanceof cXSUntypedAtomic)
-			vRight	= cXSDouble.cast(vRight);
-		vValue	= cAdditiveExpr.operators['+'](vValue, vRight);
+	//
+	try {
+		var vValue	= oSequence1.items[0];
+		if (vValue instanceof cXSUntypedAtomic)
+			vValue	= cXSDouble.cast(vValue);
+		for (var nIndex = 1, nLength = oSequence1.items.length, vRight; nIndex < nLength; nIndex++) {
+			vRight	= oSequence1.items[nIndex];
+			if (vRight instanceof cXSUntypedAtomic)
+				vRight	= cXSDouble.cast(vRight);
+			vValue	= cAdditiveExpr.operators['+'](vValue, vRight);
+		}
+		return vValue;
 	}
-
-	return vValue;
+	catch (e) {
+		// XPTY0004: Arithmetic operator is not defined for provided arguments
+		throw e.code != "XPTY0004" ? e : new cXPath2Error("FORG0006", "Input to sum() contains a mix of types");
+	}
 });
 
 
