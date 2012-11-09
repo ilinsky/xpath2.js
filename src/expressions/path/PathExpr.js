@@ -35,7 +35,7 @@ cPathExpr.parse	= function (oLexer, oResolver) {
 	//
 	if (oLexer.eof() ||!(oExpr = cStepExpr.parse(oLexer, oResolver))) {
 		if (sSlash == sSingleSlash)
-			return oPathExpr.items[0];
+			return oPathExpr.items[0];	// '/' expression
 		//
 		throw "PathExpr.parse: expected AxisStep expression";
 	}
@@ -62,9 +62,7 @@ cPathExpr.parse	= function (oLexer, oResolver) {
 
 // Public members
 cPathExpr.prototype.evaluate	= function (oContext) {
-	var vContextItem	= oContext.context,
-		nContextPosition= oContext.position,
-		nContextLast	= oContext.last;
+	var vContextItem	= oContext.context;
 	//
 	var oSequence	= new cXPath2Sequence(vContextItem);
 	for (var nItemIndex = 0, nItemLength = this.items.length, oSequence1; nItemIndex < nItemLength; nItemIndex++) {
@@ -72,8 +70,6 @@ cPathExpr.prototype.evaluate	= function (oContext) {
 		for (var nIndex = 0, nLength = oSequence.items.length; nIndex < nLength; nIndex++) {
 			// Set new context
 			oContext.context	= oSequence.items[nIndex];
-			oContext.position	= 1;
-			oContext.last		= 1;
 			//
 			for (var nRightIndex = 0, oSequence2 = this.items[nItemIndex].evaluate(oContext), nRightLength = oSequence2.items.length; nRightIndex < nRightLength; nRightIndex++)
 				if (oSequence1.indexOf(oSequence2.items[nRightIndex]) ==-1)
@@ -83,8 +79,6 @@ cPathExpr.prototype.evaluate	= function (oContext) {
 	};
 	// Restore context
 	oContext.context	= vContextItem;
-	oContext.position	= nContextPosition;
-	oContext.last		= nContextLast;
 	//
 	return cXPath2Sequence.order(oSequence);
 };
