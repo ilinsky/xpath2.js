@@ -17,14 +17,26 @@ cXPath2.Sequence	= cXPath2Sequence;
 cXPath2.DOMAdapter	= cDOMAdapter;
 //
 cXPath2.evaluate	= function(sExpression/*[[[*/, oNode/*[[*/, oResolver/*[*/, oScope/*]]]*/) {
-	return new cXPath2Parser().parse(sExpression, oResolver || function(sPrefix) {
-		if (sPrefix == "fn")
-			return "http://www.w3.org/2005/xpath-functions";
-		if (sPrefix == "xs")
-			return "http://www.w3.org/2001/XMLSchema";
-	}).evaluate(new cXPath2Context(oNode, oScope)).items;
+	return cXPath2.compile(sExpression, oResolver).evaluate(new cXPath2Context(oNode, oScope)).items;
 };
 
-cXPath2.compile		= function(sExpression/*[*/, oResolver/*]*/) {
-	return new cXPath2Parser().parse(sExpression, oResolver);
-};
+cXPath2.compile		= (function(sExpression/*[*/, oResolver/*]*/) {
+	var oCache	= {},
+		oDefaultResolver	= function (sPrefix) {
+			if (sPrefix == "fn")
+				return "http://www.w3.org/2005/xpath-functions";
+			if (sPrefix == "xs")
+				return "http://www.w3.org/2001/XMLSchema";
+		};
+	return function(sExpression, oResolver) {
+		return oCache[sExpression] || (oCache[sExpression] = new cXPath2Parser().parse(sExpression, function(sPrefix) {
+			var sNameSpaceURI;
+			if (oResolver && (sNameSpaceURI = oResolver(sPrefix)))
+				return sNameSpaceURI;
+			if (sNameSpaceURI = oDefaultResolver(sPrefix))
+				return sNameSpaceURI;
+			//
+			throw new cXPath2Error("XPST0081", "Prefix '" + sPrefix + "' has not been declared");
+		}));
+	};
+})();
