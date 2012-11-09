@@ -7,11 +7,12 @@
  *
  */
 
-function cXPath2Context(vItem, oScope, nPosition, nSize) {
+function cXPath2Context(vItem, nPosition, nSize, oScope) {
 	this.item		= vItem;
-	this.scope		= oScope || {};
 	this.position	= nPosition || 1;
 	this.size		= nSize || 1;
+	//
+	this.scope		= oScope || {};
 	this.stack		= {};
 	//
 	var oDate	= new cDate,
@@ -21,10 +22,12 @@ function cXPath2Context(vItem, oScope, nPosition, nSize) {
 };
 
 cXPath2Context.prototype.item		= null;
-cXPath2Context.prototype.scope		= null;
 cXPath2Context.prototype.position	= null;
 cXPath2Context.prototype.size		= null;
+//
+cXPath2Context.prototype.scope		= null;
 cXPath2Context.prototype.stack		= null;	// Variables stack
+//
 cXPath2Context.prototype.dateTime	= null;
 cXPath2Context.prototype.timezone	= null;
 
