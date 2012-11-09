@@ -26,7 +26,7 @@ fFunctionCall_defineSystemFunction("position",	[],	function() {
 
 // fn:last() as xs:integer
 fFunctionCall_defineSystemFunction("last",	[],	function() {
-	return this.last;
+	return this.size;
 });
 
 // fn:current-dateTime() as xs:dateTime (2004-05-12T18:17:15.125Z)

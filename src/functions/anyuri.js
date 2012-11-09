@@ -17,9 +17,9 @@
 fFunctionCall_defineSystemFunction("resolve-uri",	[[cXSString, '?'], [cXSString, '', true]],	function(oSequence1, oSequence2) {
 	var sBaseUri;
 	if (arguments.length < 2) {
-		if (!cXPath2.DOMAdapter.isNode(this.context))
+		if (!cXPath2.DOMAdapter.isNode(this.item))
 			throw new cXPath2Error("XPTY0004", "resolve-uri() function called when the context item is not a node");
-		sBaseUri	= cXPath2.DOMAdapter.getProperty(this.context, "baseURI");
+		sBaseUri	= cXPath2.DOMAdapter.getProperty(this.item, "baseURI");
 	}
 	else
 		sBaseUri	= oSequence2.items[0];

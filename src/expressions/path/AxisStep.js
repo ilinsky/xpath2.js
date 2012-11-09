@@ -76,7 +76,7 @@ cAxisStep.parse	= function (oLexer, oResolver) {
 
 // Public members
 cAxisStep.prototype.evaluate	= function (oContext) {
-	var oItem	= oContext.context;
+	var oItem	= oContext.item;
 
 	if (!cXPath2.DOMAdapter.isNode(oItem))
 		throw new cXPath2Error("XPTY0020");

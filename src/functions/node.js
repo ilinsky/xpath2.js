@@ -23,9 +23,9 @@
 // fn:name($arg as node()?) as xs:string
 fFunctionCall_defineSystemFunction("name",	[[cXTNode, '?', true]],	function(oSequence1) {
 	if (!arguments.length) {
-		if (!cXPath2.DOMAdapter.isNode(this.context))
+		if (!cXPath2.DOMAdapter.isNode(this.item))
 			throw new cXPath2Error("XPTY0004", "name() function called when the context item is not a node");
-		oSequence1	= new cXPath2Sequence(this.context);
+		oSequence1	= new cXPath2Sequence(this.item);
 	}
 	else
 	if (oSequence1.isEmpty())
@@ -39,9 +39,9 @@ fFunctionCall_defineSystemFunction("name",	[[cXTNode, '?', true]],	function(oSeq
 // fn:local-name($arg as node()?) as xs:string
 fFunctionCall_defineSystemFunction("local-name",	[[cXTNode, '?', true]],	function(oSequence1) {
 	if (!arguments.length) {
-		if (!cXPath2.DOMAdapter.isNode(this.context))
+		if (!cXPath2.DOMAdapter.isNode(this.item))
 			throw new cXPath2Error("XPTY0004", "local-name() function called when the context item is not a node");
-		oSequence1	= new cXPath2Sequence(this.context);
+		oSequence1	= new cXPath2Sequence(this.item);
 	}
 	else
 	if (oSequence1.isEmpty())
@@ -54,9 +54,9 @@ fFunctionCall_defineSystemFunction("local-name",	[[cXTNode, '?', true]],	functio
 // fn:namespace-uri($arg as node()?) as xs:anyURI
 fFunctionCall_defineSystemFunction("namespace-uri",	[[cXTNode, '?', true]],	function(oSequence1) {
 	if (!arguments.length) {
-		if (!cXPath2.DOMAdapter.isNode(this.context))
+		if (!cXPath2.DOMAdapter.isNode(this.item))
 			throw new cXPath2Error("XPTY0004", "namespace-uri() function called when the context item is not a node");
-		oSequence1	= new cXPath2Sequence(this.context);
+		oSequence1	= new cXPath2Sequence(this.item);
 	}
 	else
 	if (oSequence1.isEmpty())
@@ -69,7 +69,7 @@ fFunctionCall_defineSystemFunction("namespace-uri",	[[cXTNode, '?', true]],	func
 // fn:number($arg as xs:anyAtomicType?) as xs:double
 fFunctionCall_defineSystemFunction("number",	[[cXSAnyAtomicType, '?', true]],	function(/*[*/oSequence1/*]*/) {
 	if (!arguments.length)
-		oSequence1	= new cXPath2Sequence(this.context);
+		oSequence1	= new cXPath2Sequence(this.item);
 
 	// If input item cannot be cast to xs:decimal, a NaN should be returned
 	var vValue	= nNaN;
@@ -94,9 +94,9 @@ fFunctionCall_defineSystemFunction("lang",	[[cXSString, '?'], [cXTNode, '?', tru
 // fn:root($arg as node()?) as node()?
 fFunctionCall_defineSystemFunction("root",	[[cXTNode, '?', true]],	function(oSequence1) {
 	if (!arguments.length) {
-		if (!cXPath2.DOMAdapter.isNode(this.context))
+		if (!cXPath2.DOMAdapter.isNode(this.item))
 			throw new cXPath2Error("XPTY0004", "root() function called when the context item is not a node");
-		oSequence1	= new cXPath2Sequence(this.context);
+		oSequence1	= new cXPath2Sequence(this.item);
 	}
 	else
 	if (oSequence1.isEmpty())

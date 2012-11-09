@@ -62,14 +62,14 @@ cPathExpr.parse	= function (oLexer, oResolver) {
 
 // Public members
 cPathExpr.prototype.evaluate	= function (oContext) {
-	var vContextItem	= oContext.context;
+	var vContextItem	= oContext.item;
 	//
 	var oSequence	= new cXPath2Sequence(vContextItem);
 	for (var nItemIndex = 0, nItemLength = this.items.length, oSequence1; nItemIndex < nItemLength; nItemIndex++) {
 		oSequence1	= new cXPath2Sequence;
 		for (var nIndex = 0, nLength = oSequence.items.length; nIndex < nLength; nIndex++) {
-			// Set new context
-			oContext.context	= oSequence.items[nIndex];
+			// Set new context item
+			oContext.item	= oSequence.items[nIndex];
 			//
 			for (var nRightIndex = 0, oSequence2 = this.items[nItemIndex].evaluate(oContext), nRightLength = oSequence2.items.length; nRightIndex < nRightLength; nRightIndex++)
 				if (oSequence1.indexOf(oSequence2.items[nRightIndex]) ==-1)
@@ -77,8 +77,8 @@ cPathExpr.prototype.evaluate	= function (oContext) {
 		}
 		oSequence	= oSequence1;
 	};
-	// Restore context
-	oContext.context	= vContextItem;
+	// Restore context item
+	oContext.item	= vContextItem;
 	//
 	return cXPath2Sequence.order(oSequence);
 };

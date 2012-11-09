@@ -38,18 +38,18 @@ cStepExpr.parsePredicates	= function (oLexer, oResolver, oStep) {
 
 // Public members
 cStepExpr.prototype.applyPredicates	= function(oContext, oSequence) {
-	var vContextItem	= oContext.context,
+	var vContextItem	= oContext.item,
 		nContextPosition= oContext.position,
-		nContextLast	= oContext.last;
+		nContextSize	= oContext.size;
 	//
 	for (var nPredicateIndex = 0, oSequence1, nPredicateLength = this.predicates.length; nPredicateIndex < nPredicateLength; nPredicateIndex++) {
 		oSequence1	= oSequence;
 		oSequence	= new cXPath2Sequence;
 		for (var nIndex = 0, oSequence2, nLength = oSequence1.items.length; nIndex < nLength; nIndex++) {
 			// Set new context
-			oContext.context	= oSequence1.items[nIndex];
+			oContext.item		= oSequence1.items[nIndex];
 			oContext.position	= nIndex + 1;
-			oContext.last		= nLength;
+			oContext.size		= nLength;
 			//
 			oSequence2	= this.predicates[nPredicateIndex].evaluate(oContext);
 			//
@@ -63,9 +63,9 @@ cStepExpr.prototype.applyPredicates	= function(oContext, oSequence) {
 		}
 	}
 	// Restore context
-	oContext.context	= vContextItem;
+	oContext.item		= vContextItem;
 	oContext.position	= nContextPosition;
-	oContext.last		= nContextLast;
+	oContext.size		= nContextSize;
 	//
 	return oSequence;
 };

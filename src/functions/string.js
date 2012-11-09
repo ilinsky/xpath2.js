@@ -133,7 +133,7 @@ fFunctionCall_defineSystemFunction("substring",	[[cXSString, '?'], [cXTNumeric],
 // fn:string-length($arg as xs:string?) as xs:integer
 fFunctionCall_defineSystemFunction("string-length",	[[cXSString, '?', true]],	function(oSequence1) {
 	if (arguments.length < 1)
-		oSequence1	= new cXPath2Sequence(this.context);
+		oSequence1	= new cXPath2Sequence(this.item);
 
 	return oSequence1.isEmpty() ? 0 : oSequence1.toString().length;
 });
@@ -142,7 +142,7 @@ fFunctionCall_defineSystemFunction("string-length",	[[cXSString, '?', true]],	fu
 // fn:normalize-space($arg as xs:string?) as xs:string
 fFunctionCall_defineSystemFunction("normalize-space",	[[cXSString, '?', true]],	function(oSequence1) {
 	if (arguments.length < 1)
-		oSequence1	= new cXPath2Sequence(this.context);
+		oSequence1	= new cXPath2Sequence(this.item);
 
 	return oSequence1.isEmpty() ? '' : fString_trim.call(oSequence1.toString()).replace(/\s\s+/g, ' ');
 });

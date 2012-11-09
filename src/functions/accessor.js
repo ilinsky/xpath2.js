@@ -57,7 +57,7 @@ fFunctionCall_defineSystemFunction("nilled",	[[cXTNode, '?']],	function(oSequenc
 // fn:string($arg as item()?) as xs:string
 fFunctionCall_defineSystemFunction("string",	[[cXTItem, '?', true]],	function(/*[*/oSequence1/*]*/) {
 	if (!arguments.length)
-		oSequence1	= new cXPath2Sequence(this.context);
+		oSequence1	= new cXPath2Sequence(this.item);
 	return oSequence1.toString();
 });
 
@@ -70,9 +70,9 @@ fFunctionCall_defineSystemFunction("data",	[[cXTItem, '*']],		function(oSequence
 // fn:base-uri($arg as node()?) as xs:anyURI?
 fFunctionCall_defineSystemFunction("base-uri",	[[cXTNode, '?', true]],	function(oSequence1) {
 	if (!arguments.length) {
-		if (!cXPath2.DOMAdapter.isNode(this.context))
+		if (!cXPath2.DOMAdapter.isNode(this.item))
 			throw new cXPath2Error("XPTY0004", "base-uri() function called when the context item is not a node");
-		oSequence1	= new cXPath2Sequence(this.context);
+		oSequence1	= new cXPath2Sequence(this.item);
 	}
 	else
 	if (oSequence1.isEmpty())

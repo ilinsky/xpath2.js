@@ -290,9 +290,9 @@ fFunctionCall_defineSystemFunction("sum",	[[cXSAnyAtomicType, '*'], [cXSAnyAtomi
 // fn:id($arg as xs:string*, $node as node()) as element()*
 fFunctionCall_defineSystemFunction("id",	[[cXSString, '*'], [cXTNode, '', true]],	function(oSequence1, oSequence2) {
 	if (arguments.length < 2) {
-		if (!cXPath2.DOMAdapter.isNode(this.context))
+		if (!cXPath2.DOMAdapter.isNode(this.item))
 			throw new cXPath2Error("XPTY0004", "id() function called when the context item is not a node");
-		oSequence2	= new cXPath2Sequence(this.context);
+		oSequence2	= new cXPath2Sequence(this.item);
 	}
 
 	// Get context item
