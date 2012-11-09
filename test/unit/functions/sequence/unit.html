@@ -251,8 +251,10 @@
 			// 15.5 Functions and Operators that Generate Sequences
 			function testId() {
 				// Not W3C tests
-				assertNotUndefined(
+				assertUndefined(
 						evaluateXPathSingle('fn:id("id")'));
+				assertEquals(document.getElementById("id_test"),
+						evaluateXPathSingle('fn:id("id_test")'));
 			}
 
 			function testIdref() {
@@ -286,7 +288,7 @@
 			}
 		</script>
 	</head>
-	<body>
+	<body id="id_test">
 		<p>XPath2.js JsUnit unit page</p>
 	</body>
 </html>
