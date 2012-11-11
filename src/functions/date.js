@@ -152,19 +152,28 @@ fFunctionCall_defineSystemFunction("timezone-from-time",	[[cXSTime, '?']],	funct
 // fn:adjust-dateTime-to-timezone($arg as xs:dateTime?) as xs:dateTime?
 // fn:adjust-dateTime-to-timezone($arg as xs:dateTime?, $timezone as xs:dayTimeDuration?) as xs:dateTime?
 fFunctionCall_defineSystemFunction("adjust-dateTime-to-timezone",	[[cXSDateTime, '?'], [cXSDayTimeDuration, '?', true]],	function(oSequence1, oSequence2) {
-	throw "Function '" + "adjust-dateTime-to-timezone" + "' not implemented";
+	if (oSequence1.isEmpty())
+		return null;
+	//
+	return fXSDateTime_setTimezone(oSequence1.items[0], arguments.length > 1 && oSequence2.isEmpty() ? null : arguments.length > 1 ? oSequence2.items[0] : this.timezone);
 });
 
 // fn:adjust-date-to-timezone($arg as xs:date?) as xs:date?
 // fn:adjust-date-to-timezone($arg as xs:date?, $timezone as xs:dayTimeDuration?) as xs:date?
 fFunctionCall_defineSystemFunction("adjust-date-to-timezone",		[[cXSDate, '?'], [cXSDayTimeDuration, '?', true]],	function(oSequence1, oSequence2) {
-	throw "Function '" + "adjust-date-to-timezone" + "' not implemented";
+	if (oSequence1.isEmpty())
+		return null;
+	//
+	return fXSDateTime_setTimezone(oSequence1.items[0], arguments.length > 1 && oSequence2.isEmpty() ? null : arguments.length > 1 ? oSequence2.items[0] : this.timezone);
 });
 
 // fn:adjust-time-to-timezone($arg as xs:time?) as xs:time?
 // fn:adjust-time-to-timezone($arg as xs:time?, $timezone as xs:dayTimeDuration?) as xs:time?
 fFunctionCall_defineSystemFunction("adjust-time-to-timezone",		[[cXSTime, '?'], [cXSDayTimeDuration, '?', true]],	function(oSequence1, oSequence2) {
-	throw "Function '" + "adjust-time-to-timezone" + "' not implemented";
+	if (oSequence1.isEmpty())
+		return null;
+	//
+	return fXSDateTime_setTimezone(oSequence1.items[0], arguments.length > 1 && oSequence2.isEmpty() ? null : arguments.length > 1 ? oSequence2.items[0] : this.timezone);
 });
 
 //
@@ -187,7 +196,7 @@ function fFunctionCall_dateTime_getComponent(oSequence1, sName) {
 		var nTimezone	= oItem.timezone;
 		if (nTimezone === null)
 			return null;
-		return new cXSDayTimeDuration(0, cMath.abs(~~(nTimezone / 60)), cMath.abs(nTimezone % 60), 0, nTimezone > 0);
+		return new cXSDayTimeDuration(0, cMath.abs(~~(nTimezone / 60)), cMath.abs(nTimezone % 60), 0, nTimezone < 0);
 	}
 	else {
 		var nValue	= oItem[sName];

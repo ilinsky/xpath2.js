@@ -89,44 +89,32 @@ cFunctionCall.operators["duration-equal"]	= function(oLeft, oRight) {
 
 // op:dateTime-equal($arg1 as xs:dateTime, $arg2 as xs:dateTime)
 cFunctionCall.operators["dateTime-equal"]	= function(oLeft, oRight) {
-//	return oLeft == oRight;
+	return fFunctionCall_operators_compareDateTime(oLeft, oRight, 'eq');
 };
 
 // op:dateTime-less-than($arg1 as xs:dateTime, $arg2 as xs:dateTime) as xs:boolean
 cFunctionCall.operators["dateTime-less-than"]	= function(oLeft, oRight) {
-//	return oLeft < oRight;
+	return fFunctionCall_operators_compareDateTime(oLeft, oRight, 'lt');
 };
 
 //op:dateTime-greater-than($arg1 as xs:dateTime, $arg2 as xs:dateTime) as xs:boolean
 cFunctionCall.operators["dateTime-greater-than"]	= function(oLeft, oRight) {
-//	return oLeft > oRight;
+	return fFunctionCall_operators_compareDateTime(oLeft, oRight, 'gt');
 };
 
 // op:date-equal($arg1 as xs:date, $arg2 as xs:date) as xs:boolean
 cFunctionCall.operators["date-equal"]	= function(oLeft, oRight) {
-	return oLeft.year == oRight.year
-		&& oLeft.month == oRight.month
-		&& oLeft.day == oRight.day
-		&&((oLeft.timezone !== null ? oLeft.timezone : 0) == (oRight.timezone !== null ? oRight.timezone : 0));
-	// TODO:  Use implicit timezone from static context instead of 0 in comparison
+	return fFunctionCall_operators_compareDateTime(oLeft, oRight, 'eq');
 };
 
 // op:date-less-than($arg1 as xs:date, $arg2 as xs:date) as xs:boolean
 cFunctionCall.operators["date-less-than"]	= function(oLeft, oRight) {
-	return oLeft.year <= oRight.year
-		&& oLeft.month <= oRight.month
-		&& oLeft.day <= oRight.day
-		&&((oLeft.timezone !== null ? oLeft.timezone : 0) <= (oRight.timezone !== null ? oRight.timezone : 0));
-	// TODO:  Use implicit timezone from static context instead of 0 in comparison
+	return fFunctionCall_operators_compareDateTime(oLeft, oRight, 'lt');
 };
 
 // op:date-greater-than($arg1 as xs:date, $arg2 as xs:date) as xs:boolean
 cFunctionCall.operators["date-greater-than"]	= function(oLeft, oRight) {
-	return oLeft.year >= oRight.year
-			&& oLeft.month >= oRight.month
-			&& oLeft.day >= oRight.day
-			&&((oLeft.timezone !== null ? oLeft.timezone : 0) >= (oRight.timezone !== null ? oRight.timezone : 0));
-	// TODO:  Use implicit timezone from static context instead of 0 in comparison
+	return fFunctionCall_operators_compareDateTime(oLeft, oRight, 'gt');
 };
 
 // op:time-equal($arg1 as xs:time, $arg2 as xs:time) as xs:boolean
@@ -203,14 +191,18 @@ cFunctionCall.operators["divide-dayTimeDuration-by-dayTimeDuration"]	= function(
 };
 
 // 10.8 Arithmetic Operators on Durations, Dates and Times
-// op:subtract-dateTimes($arg1 as xs:dateTime, $arg2 as xs:dateTime) as xs:dateTimeDuration
+// op:subtract-dateTimes($arg1 as xs:dateTime, $arg2 as xs:dateTime) as xs:dayTimeDuration
 cFunctionCall.operators["subtract-dateTimes"]	= function(oLeft, oRight) {
-//	return fXSDayTimeDuration_fromSeconds(oLeft - oRight);
+	var oZLeft	= oLeft.toZ(),
+		oZRight	= oRight.toZ();
+	throw "Not implemented";
 };
 
-// op:subtract-dates($arg1 as xs:date, $arg2 as xs:date) as xs:dateTimeDuration
+// op:subtract-dates($arg1 as xs:date, $arg2 as xs:date) as xs:dayTimeDuration
 cFunctionCall.operators["subtract-dates"]	= function(oLeft, oRight) {
-//	return fXSDayTimeDuration_fromSeconds(oLeft - oRight);
+	var oZLeft	= oLeft.toZ(),
+		oZRight	= oRight.toZ();
+	throw "Not implemented";
 };
 
 // op:subtract-times($arg1 as xs:time, $arg2 as xs:time) as xs:dayTimeDuration
@@ -219,116 +211,43 @@ cFunctionCall.operators["subtract-times"]	= function(oLeft, oRight) {
 };
 
 // op:add-yearMonthDuration-to-dateTime($arg1 as xs:dateTime, $arg2 as xs:yearMonthDuration) as xs:dateTime
-cFunctionCall.operators["add-yearMonthDuration-to-dateTime"]	= function(oLeft, oRight) {/*
-	var oDate	= new Date();
-	oDate.setUTCFullYear(oLeft.year + oRight.year);
-	oDate.setUTCMonth(oLeft.month + oRight.month - 1);
-	oDate.setUTCDate(oLeft.day);
-	oDate.setUTCHours(oLeft.hours + (oLeft.timezone !== null ? ~~(oLeft.timezone / 60) : 0));
-	oDate.setUTCMinutes(oLeft.minutes + (oLeft.timezone !== null ? oLeft.timezone % 60 : 0));
-	oDate.setUTCSeconds(oLeft.seconds);
-
-	return new cXSDateTime(oDate.getUTCFullYear(), oDate.getUTCMonth() + 1, oDate.getUTCDate(), oDate.getUTCHours(), oDate.getUTCMinutes(), oDate.getUTCSeconds() + oDate.getUTCMilliseconds() / 1000, oLeft.timezone);*/
-	throw "Not implemented";
+cFunctionCall.operators["add-yearMonthDuration-to-dateTime"]	= function(oLeft, oRight) {
+	return fFunctionCall_operators_addYearMonthDurationToDateTime(oLeft, oRight, '+');
 };
 
 // op:add-dayTimeDuration-to-dateTime($arg1 as xs:dateTime, $arg2 as xs:dayTimeDuration) as xs:dateTime
-cFunctionCall.operators["add-dayTimeDuration-to-dateTime"]	= function(oLeft, oRight) {/*
-	var oDate	= new Date();
-	oDate.setUTCFullYear(oLeft.year);
-	oDate.setUTCMonth(oLeft.month - 1);
-	oDate.setUTCDate(oLeft.day + oRight.day);
-	oDate.setUTCHours(oLeft.hours + oRight.hours + (oLeft.timezone !== null ? ~~(oLeft.timezone / 60) : 0));
-	oDate.setUTCMinutes(oLeft.minutes + oRight.minutes + (oLeft.timezone !== null ? oLeft.timezone % 60 : 0));
-	oDate.setUTCSeconds(oLeft.seconds + oRight.seconds);
-
-	return new cXSDateTime(oDate.getUTCFullYear(), oDate.getUTCMonth() + 1, oDate.getUTCDate(), oDate.getUTCHours(), oDate.getUTCMinutes(), oDate.getUTCSeconds() + oDate.getUTCMilliseconds() / 1000, oLeft.timezone);*/
-	throw "Not implemented";
+cFunctionCall.operators["add-dayTimeDuration-to-dateTime"]	= function(oLeft, oRight) {
+	return fFunctionCall_operators_addDayTimeDurationToDateTime(oLeft, oRight, '+');
 };
 
 // op:subtract-yearMonthDuration-from-dateTime($arg1 as xs:dateTime, $arg2 as xs:yearMonthDuration) as xs:dateTime
-cFunctionCall.operators["subtract-yearMonthDuration-from-dateTime"]	= function(oLeft, oRight) {/*
-	var oDate	= new Date();
-	oDate.setUTCFullYear(oLeft.year - oRight.year);
-	oDate.setUTCMonth(oLeft.month - oRight.month - 1);
-	oDate.setUTCDate(oLeft.day);
-	oDate.setUTCHours(oLeft.hours + (oLeft.timezone !== null ? ~~(oLeft.timezone / 60) : 0));
-	oDate.setUTCMinutes(oLeft.minutes + (oLeft.timezone !== null ? oLeft.timezone % 60 : 0));
-	oDate.setUTCSeconds(oLeft.seconds);
-
-	return new cXSDateTime(oDate.getUTCFullYear(), oDate.getUTCMonth() + 1, oDate.getUTCDate(), oDate.getUTCHours(), oDate.getUTCMinutes(), oDate.getUTCSeconds() + oDate.getUTCMilliseconds() / 1000, oLeft.timezone);*/
-	throw "Not implemented";
-
+cFunctionCall.operators["subtract-yearMonthDuration-from-dateTime"]	= function(oLeft, oRight) {
+	return fFunctionCall_operators_addYearMonthDurationToDateTime(oLeft, oRight, '-');
 };
 
 // op:subtract-dayTimeDuration-from-dateTime($arg1 as xs:dateTime, $arg2 as xs:dayTimeDuration) as xs:dateTime
-cFunctionCall.operators["subtract-dayTimeDuration-from-dateTime"]	= function(oLeft, oRight) {/*
-	var oDate	= new Date();
-	oDate.setUTCFullYear(oLeft.year);
-	oDate.setUTCMonth(oLeft.month - 1);
-	oDate.setUTCDate(oLeft.day - oRight.day);
-	oDate.setUTCHours(oLeft.hours - oRight.hours + (oLeft.timezone !== null ? ~~(oLeft.timezone / 60) : 0));
-	oDate.setUTCMinutes(oLeft.minutes - oRight.minutes + (oLeft.timezone !== null ? oLeft.timezone % 60 : 0));
-	oDate.setUTCSeconds(oLeft.seconds - oRight.seconds);
-
-	return new cXSDateTime(oDate.getUTCFullYear(), oDate.getUTCMonth() + 1, oDate.getUTCDate(), oDate.getUTCHours(), oDate.getUTCMinutes(), oDate.getUTCSeconds() + oDate.getUTCMilliseconds() / 1000, oLeft.timezone);*/
-	throw "Not implemented";
+cFunctionCall.operators["subtract-dayTimeDuration-from-dateTime"]	= function(oLeft, oRight) {
+	return fFunctionCall_operators_addDayTimeDurationToDateTime(oLeft, oRight, '-');
 };
 
 // op:add-yearMonthDuration-to-date($arg1 as xs:date, $arg2 as xs:yearMonthDuration) as xs:date
-cFunctionCall.operators["add-yearMonthDuration-to-date"]	= function(oLeft, oRight) {/*
-	var oDate	= new Date();
-	oDate.setUTCFullYear(oLeft.year + oRight.year);
-	oDate.setUTCMonth(oLeft.month + oRight.month - 1);
-	oDate.setUTCDate(oLeft.day);
-
-	return new cXSDate(oDate.getUTCFullYear(), oDate.getUTCMonth() + 1, oDate.getUTCDate(), oLeft.timezone);*/
-	throw "Not implemented";
+cFunctionCall.operators["add-yearMonthDuration-to-date"]	= function(oLeft, oRight) {
+	return fFunctionCall_operators_addYearMonthDurationToDateTime(oLeft, oRight, '+');
 };
 
 // op:add-dayTimeDuration-to-date($arg1 as xs:date, $arg2 as xs:dayTimeDuration) as xs:date
-cFunctionCall.operators["add-dayTimeDuration-to-date"]	= function(oLeft, oRight) {/*
-	var oDate	= new Date();
-	oDate.setUTCFullYear(oLeft.year);
-	oDate.setUTCMonth(oLeft.month - 1);
-	oDate.setUTCDate(oLeft.day + oRight.day);
-	oDate.setUTCHours(oRight.hours + (oLeft.timezone !== null ? ~~(oLeft.timezone / 60) : 0));
-	oDate.setUTCMinutes(oRight.minutes + (oLeft.timezone !== null ? oLeft.timezone % 60 : 0));
-	oDate.setUTCSeconds(oRight.seconds);
-	oDate.setUTCMilliseconds(0);
-
-	return new cXSDate(oDate.getUTCFullYear(), oDate.getUTCMonth() + 1, oDate.getUTCDate(), oLeft.timezone);*/
-	throw "Not implemented";
+cFunctionCall.operators["add-dayTimeDuration-to-date"]	= function(oLeft, oRight) {
+	return fFunctionCall_operators_addDayTimeDurationToDateTime(oLeft, oRight, '+');
 };
 
 // op:subtract-yearMonthDuration-from-date($arg1 as xs:date, $arg2  as xs:yearMonthDuration) as xs:date
 cFunctionCall.operators["subtract-yearMonthDuration-from-date"]	= function(oLeft, oRight) {
-	/*
-	var oDate	= new Date();
-	// init
-	oDate.setUTCHours(oLeft.timezone !== null ? ~~(oLeft.timezone / 60) : 0, oLeft.timezone !== null ? oLeft.timezone % 60 : 0, 0, 0);
-	oDate.setUTCFullYear(oLeft.year, oLeft.month - 1, oLeft.day);
-	// change
-	oDate.setFullYear(oLeft.year - oRight.year);
-//	if (oRight.month)
-//		oDate.setMonth(oLeft.month - oRight.month - 1);
-
-	return new cXSDate(oDate.getUTCFullYear(), oDate.getUTCMonth() + 1, oDate.getUTCDate(), oLeft.timezone);*/
-	throw "Not implemented";
+	return fFunctionCall_operators_addYearMonthDurationToDateTime(oLeft, oRight, '-');
 };
 
 // op:subtract-dayTimeDuration-from-date($arg1 as xs:date, $arg2  as xs:dayTimeDuration) as xs:date
 cFunctionCall.operators["subtract-dayTimeDuration-from-date"]	= function(oLeft, oRight) {
-/*	var oDate	= new Date();
-	// init
-	oDate.setUTCFullYear(oLeft.year, oLeft.month - 1, oLeft.day);
-	oDate.setUTCHours(oLeft.timezone !== null ? ~~(oLeft.timezone / 60) : 0, oLeft.timezone !== null ? oLeft.timezone % 60 : 0, 0, 0);
-	// change
-	oDate.setUTCDate(oDate.getUTCDate() - oRight.day);
-	oDate.setUTCHours(oDate.getUTCHours() - oRight.hours, oDate.getUTCMinutes() - oRight.minutes, oDate.getUTCSeconds() - oRight.seconds);
-
-	return new cXSDate(oDate.getUTCFullYear(), oDate.getUTCMonth() + 1, oDate.getUTCDate(), oLeft.timezone);*/
-	throw "Not implemented";
+	return fFunctionCall_operators_addDayTimeDurationToDateTime(oLeft, oRight, '+');
 };
 
 // op:add-dayTimeDuration-to-time($arg1 as xs:time, $arg2  as xs:dayTimeDuration) as xs:time
@@ -341,5 +260,47 @@ cFunctionCall.operators["subtract-dayTimeDuration-from-time"]	= function(oLeft, 
 	return fXSTime_fromSeconds(fXSTime_toSeconds(oLeft) - fXSDayTimeDuration_toSeconds(oRight));
 };
 
+function fFunctionCall_operators_compareDateTime(oLeft, oRight, sComparator) {
+	// Adjust object time zone to Z and compare as strings
+	var oTimezone	= new cXSDayTimeDuration(0, 0, 0, 0),
+		sLeft	= fXSDateTime_setTimezone(oLeft, oTimezone).toString(),
+		sRight	= fXSDateTime_setTimezone(oRight, oTimezone).toString();
+	return sComparator == 'lt' ? sLeft < sRight : sComparator == 'gt' ? sLeft > sRight : sLeft == sRight;
+};
 
+function fFunctionCall_operators_addYearMonthDurationToDateTime(oLeft, oRight, sOperator) {
+	var oValue;
+	if (oLeft instanceof cXSDate) {
+		oValue	= new cXSDate(oLeft.year, oLeft.month, oLeft.day, oLeft.timezone, oLeft.negative);
+		oValue.year		= oValue.year + oRight.year * (sOperator == '-' ?-1 : 1);
+		oValue.month	= oValue.month + oRight.month * (sOperator == '-' ?-1 : 1);
+		fXSDate_normalize(oValue);
+	}
+	else
+	if (oLeft instanceof cXSDateTime) {
+		oValue	= new cXSDateTime(oLeft.year, oLeft.month, oLeft.day, oLeft.hours, oLeft.minutes, oLeft.seconds, oLeft.timezone, oLeft.negative);
+		oValue.year		= oValue.year + oRight.year * (sOperator == '-' ?-1 : 1);
+		oValue.month	= oValue.month + oRight.month * (sOperator == '-' ?-1 : 1);
+		fXSDateTime_normalize(oValue);
+	}
+	return oValue;
+};
 
+function fFunctionCall_operators_addDayTimeDurationToDateTime(oLeft, oRight, sOperator) {
+	var oValue;
+	if (oLeft instanceof cXSDate) {
+		oValue	= new cXSDate(oLeft.year, oLeft.month, oLeft.day, oLeft.timezone, oLeft.negative);
+		oValue.day	= oValue.day + oRight.day * (sOperator == '-' ?-1 : 1);
+		fXSDate_normalize(oValue);
+	}
+	else
+	if (oLeft instanceof cXSDateTime) {
+		oValue	= new cXSDateTime(oLeft.year, oLeft.month, oLeft.day, oLeft.hours, oLeft.minutes, oLeft.seconds, oLeft.timezone, oLeft.negative);
+		oValue.seconds	= oValue.seconds + oRight.seconds * (sOperator == '-' ?-1 : 1);
+		oValue.minutes	= oValue.minutes + oRight.minutes * (sOperator == '-' ?-1 : 1);
+		oValue.hours	= oValue.hours + oRight.hours * (sOperator == '-' ?-1 : 1);
+		oValue.day		= oValue.day + oRight.day * (sOperator == '-' ?-1 : 1);
+		fXSDateTime_normalize(oValue);
+	}
+	return oValue;
+};

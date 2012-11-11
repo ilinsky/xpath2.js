@@ -43,11 +43,11 @@ cXSDate.cast	= function(vValue) {
 				var nYear	= +aMatch[2],
 					nMonth	= +aMatch[3],
 					nDay	= +aMatch[4];
-				if (fXSDateTime_isValidDate(nYear, nMonth, nDay))
+				if (nDay - 1 < fXSDate_getDaysForYearMonth(nYear, nMonth))
 					return new cXSDate( nYear,
 										nMonth,
 										nDay,
-										aMatch[5] ? aMatch[5] == 'Z' ? 0 : (aMatch[6] == '-' ? 1 : -1) * (aMatch[7] * 60 + aMatch[8] * 1) : null,
+										aMatch[5] ? aMatch[5] == 'Z' ? 0 : (aMatch[6] == '-' ? -1 : 1) * (aMatch[7] * 60 + aMatch[8] * 1) : null,
 										aMatch[1] == '-'
 					);
 				//
@@ -63,3 +63,58 @@ cXSDate.cast	= function(vValue) {
 
 //
 cFunctionCall.dataTypes["date"]	= cXSDate;
+
+// Utilities
+var aXSDate_days	= [31,28,31,30,31,30,31,31,30,31,30,31];
+function fXSDate_getDaysForYearMonth(nYear, nMonth) {
+	return nMonth == 2 && (nYear % 400 == 0 || nYear % 100 != 0 && nYear % 4 == 0) ? 29 : aXSDate_days[nMonth - 1];
+};
+
+function fXSDate_normalize(oValue) {
+	// Adjust day for month/year
+	var nDay	= fXSDate_getDaysForYearMonth(oValue.year, oValue.month);
+	if (oValue.day > nDay) {
+		while (oValue.day > nDay) {
+			oValue.month	+= 1;
+			if (oValue.month > 12) {
+				oValue.year		+= 1;
+				if (oValue.year == 0)
+					oValue.year	= 1;
+				oValue.month	= 1;
+			}
+			oValue.day	-= nDay;
+			nDay = fXSDate_getDaysForYearMonth(oValue.year, oValue.month);
+		}
+	}
+	else
+	if (oValue.day < 1) {
+		while (oValue.day < 1) {
+			oValue.month	-= 1;
+			if (oValue.month < 1) {
+				oValue.year		-= 1;
+				if (oValue.year == 0)
+					oValue.year	=-1;
+				oValue.month	= 12;
+			}
+			nDay = fXSDate_getDaysForYearMonth(oValue.year, oValue.month);
+			oValue.day	+= nDay;
+		}
+	}
+//?	else
+	// Adjust month
+	if (oValue.month > 12) {
+		oValue.year		+= ~~(oValue.month / 12);
+		if (oValue.year == 0)
+			oValue.year	= 1;
+		oValue.month	= oValue.month % 12;
+	}
+	else
+	if (oValue.month < 1) {
+		oValue.year		+= ~~(oValue.month / 12) - 1;
+		if (oValue.year == 0)
+			oValue.year	=-1;
+		oValue.month	= oValue.month % 12 + 12;
+	}
+
+	return oValue;
+};

@@ -249,6 +249,17 @@
 				assertEquals("2002-03-07T10:00:00",
 						evaluateXPathSingle('string(fn:adjust-dateTime-to-timezone(xs:dateTime("2002-03-07T10:00:00-07:00"), ()))'));
 			}
+			function testAdjustDateTimeToTimezone_Z() {
+				// Not W3C tests
+				assertEquals("2002-03-07T11:00:00Z",
+						evaluateXPathSingle('string(fn:adjust-dateTime-to-timezone(xs:dateTime("2002-03-07T22:00:00+11:00"), xs:dayTimeDuration("PT0S")))'));
+				assertEquals("2002-03-06T23:00:00Z",
+						evaluateXPathSingle('string(fn:adjust-dateTime-to-timezone(xs:dateTime("2002-03-07T10:00:00+11:00"), xs:dayTimeDuration("PT0S")))'));
+				assertEquals("2002-03-08T09:00:00Z",
+						evaluateXPathSingle('string(fn:adjust-dateTime-to-timezone(xs:dateTime("2002-03-07T22:00:00-11:00"), xs:dayTimeDuration("PT0S")))'));
+				assertEquals("2002-03-07T21:00:00Z",
+						evaluateXPathSingle('string(fn:adjust-dateTime-to-timezone(xs:dateTime("2002-03-07T10:00:00-11:00"), xs:dayTimeDuration("PT0S")))'));
+			}
 
 			function testAdjustDateToTimezone() {
 				// Assume the dynamic context provides an implicit timezone of -05:00 (-PT5H0M).
@@ -264,6 +275,30 @@
 						evaluateXPathSingle('string(fn:adjust-date-to-timezone(xs:date("2002-03-07"), ()))'));
 				assertEquals("2002-03-07",
 						evaluateXPathSingle('string(fn:adjust-date-to-timezone(xs:date("2002-03-07-07:00"), ()))'));
+				// Not W3C tests
+				assertEquals("2002-03-06+10:00",
+						evaluateXPathSingle('string(fn:adjust-date-to-timezone(xs:date("2002-03-07+11:00"), xs:dayTimeDuration("PT10H")))'));
+				assertEquals("2002-03-07+12:00",
+						evaluateXPathSingle('string(fn:adjust-date-to-timezone(xs:date("2002-03-07+11:00"), xs:dayTimeDuration("PT12H")))'));
+				assertEquals("2002-03-07+10:00",
+						evaluateXPathSingle('string(fn:adjust-date-to-timezone(xs:date("2002-03-07-11:00"), xs:dayTimeDuration("PT10H")))'));
+				assertEquals("2002-03-07+12:00",
+						evaluateXPathSingle('string(fn:adjust-date-to-timezone(xs:date("2002-03-07-11:00"), xs:dayTimeDuration("PT12H")))'));
+				assertEquals("2002-03-06-10:00",
+						evaluateXPathSingle('string(fn:adjust-date-to-timezone(xs:date("2002-03-07+11:00"), xs:dayTimeDuration("-PT10H")))'));
+				assertEquals("2002-03-06-12:00",
+						evaluateXPathSingle('string(fn:adjust-date-to-timezone(xs:date("2002-03-07+11:00"), xs:dayTimeDuration("-PT12H")))'));
+				assertEquals("2002-03-07-10:00",
+						evaluateXPathSingle('string(fn:adjust-date-to-timezone(xs:date("2002-03-07-11:00"), xs:dayTimeDuration("-PT10H")))'));
+				assertEquals("2002-03-06-12:00",
+						evaluateXPathSingle('string(fn:adjust-date-to-timezone(xs:date("2002-03-07-11:00"), xs:dayTimeDuration("-PT12H")))'));
+			}
+			function testAdjustDateToTimezone_Z() {
+				// Not W3C tests
+				assertEquals("2002-03-06Z",
+						evaluateXPathSingle('string(fn:adjust-date-to-timezone(xs:date("2002-03-07+11:00"), xs:dayTimeDuration("PT0S")))'));
+				assertEquals("2002-03-07Z",
+						evaluateXPathSingle('string(fn:adjust-date-to-timezone(xs:date("2002-03-07-11:00"), xs:dayTimeDuration("PT0S")))'));
 			}
 
 			function testAdjustTimeToTimezone() {
@@ -282,6 +317,17 @@
 						evaluateXPathSingle('string(fn:adjust-time-to-timezone(xs:time("10:00:00-07:00"), ()))'));
 				assertEquals("03:00:00+10:00",
 						evaluateXPathSingle('string(fn:adjust-time-to-timezone(xs:time("10:00:00-07:00"), xs:dayTimeDuration("PT10H")))'));
+			}
+			function testAdjustTimeToTimezone_Z() {
+				// Not W3C tests
+				assertEquals("11:00:00Z",
+						evaluateXPathSingle('string(fn:adjust-time-to-timezone(xs:time("22:00:00+11:00"), xs:dayTimeDuration("PT0S")))'));
+				assertEquals("23:00:00Z",
+						evaluateXPathSingle('string(fn:adjust-time-to-timezone(xs:time("10:00:00+11:00"), xs:dayTimeDuration("PT0S")))'));
+				assertEquals("09:00:00Z",
+						evaluateXPathSingle('string(fn:adjust-time-to-timezone(xs:time("22:00:00-11:00"), xs:dayTimeDuration("PT0S")))'));
+				assertEquals("21:00:00Z",
+						evaluateXPathSingle('string(fn:adjust-time-to-timezone(xs:time("10:00:00-11:00"), xs:dayTimeDuration("PT0S")))'));
 			}
 		</script>
 	</head>

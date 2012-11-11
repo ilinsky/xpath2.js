@@ -322,6 +322,14 @@
 				assertEquals("2001-12-30",
 						evaluateXPathSingle('string(xs:date("2000-10-30") + xs:yearMonthDuration("P1Y2M"))'));
 			}
+			function testAddYearMonthDurationToDate_leap() {
+				assertEquals("2001-02-28Z",
+						evaluateXPathSingle('string(xs:date("2000-02-29Z") + xs:yearMonthDuration("P1Y"))'));
+				assertEquals("2000-02-29Z",
+						evaluateXPathSingle('string(xs:date("2000-01-31Z") + xs:yearMonthDuration("P1M"))'));
+				assertEquals("2000-02-29Z",
+						evaluateXPathSingle('string(xs:date("2000-01-30Z") + xs:yearMonthDuration("P1M"))'));
+			}
 
 			function testAddDayTimeDurationToDate() {
 				assertEquals("2004-11-01Z",
@@ -331,10 +339,16 @@
 			function testSubtractYearMonthDurationFromDate() {
 				assertEquals("1999-08-30",
 						evaluateXPathSingle('string(xs:date("2000-10-30") - xs:yearMonthDuration("P1Y2M"))'));
-				assertEquals("1999-02-28Z",
-						evaluateXPathSingle('string(xs:date("2000-02-29Z") - xs:yearMonthDuration("P1Y"))'));
 				assertEquals("1999-09-30-05:00",
 						evaluateXPathSingle('string(xs:date("2000-10-31-05:00") - xs:yearMonthDuration("P1Y1M"))'));
+			}
+			function testSubtractYearMonthDurationFromDate_leap() {
+				assertEquals("1999-02-28Z",
+						evaluateXPathSingle('string(xs:date("2000-02-29Z") - xs:yearMonthDuration("P1Y"))'));
+				assertEquals("2000-02-29Z",
+						evaluateXPathSingle('string(xs:date("2000-01-31Z") - xs:yearMonthDuration("P1M"))'));
+				assertEquals("2000-02-29Z",
+						evaluateXPathSingle('string(xs:date("2000-01-30Z") - xs:yearMonthDuration("P1M"))'));
 			}
 
 			function testSubtractDayTimeDurationFromDate() {

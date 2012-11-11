@@ -52,16 +52,16 @@ cXSDateTime.cast	= function(vValue) {
 					nMonth	= +aMatch[3],
 					nDay	= +aMatch[4],
 					bValue	= !!aMatch[10];
-				if (fXSDateTime_isValidDate(nYear, nMonth, nDay))
-					return new cXSDateTime( nYear,
+				if (nDay - 1 < fXSDate_getDaysForYearMonth(nYear, nMonth))
+					return fXSDateTime_normalize(new cXSDateTime( nYear,
 											nMonth,
 											nDay,
 											bValue ? 24 : +aMatch[6],
 											bValue ? 0 : +aMatch[7],
 											cNumber((bValue ? 0 : aMatch[8]) + '.' + (bValue ? 0 : aMatch[9] || 0)),
-											aMatch[12] ? aMatch[12] == 'Z' ? 0 : (aMatch[13] == '-' ? 1 : -1) * (aMatch[14] * 60 + aMatch[15] * 1) : null,
+											aMatch[12] ? aMatch[12] == 'Z' ? 0 : (aMatch[13] == '-' ? -1 : 1) * (aMatch[14] * 60 + aMatch[15] * 1) : null,
 											aMatch[1] == '-'
-					);
+					));
 				//
 				throw new cXPath2Error("FORG0001", "Invalid date '" + vValue + "' (Non-existent date)");
 			}
@@ -77,10 +77,6 @@ cXSDateTime.cast	= function(vValue) {
 cFunctionCall.dataTypes["dateTime"]	= cXSDateTime;
 
 // Utilities
-function fXSDateTime_isValidDate(nYear, nMonth, nDay) {
-	return nDay == 29 && nMonth == 2 ? nYear % 400 == 0 || nYear % 100 != 0 && nYear % 4 == 0 : nDay - 1 < [31,28,31,30,31,30,31,31,30,31,30,31][nMonth - 1];
-};
-
 function fXSDateTime_pad(vValue) {
 	sValue	= cString(vValue);
 	return new cArray(1 - sValue.length +(arguments[1] || 2)).join('0') + sValue;
@@ -91,7 +87,7 @@ function fXSDateTime_getTZComponent(oDateTime) {
 	return nTimezone === null
 			? ''
 			: nTimezone
-				? (nTimezone < 0 ? '+' : '-')
+				? (nTimezone > 0 ? '+' : '-')
 					+ fXSDateTime_pad(cMath.abs(~~(nTimezone / 60)))
 					+ ':'
 					+ fXSDateTime_pad(cMath.abs(nTimezone % 60))
@@ -111,4 +107,43 @@ function fXSDateTime_getTimeComponent(oDateTime) {
 			+ ':' + fXSDateTime_pad(oDateTime.minutes)
 			+ ':' + fXSDateTime_pad(aValue[0])
 			+ (aValue.length > 1 ? '.' + aValue[1] : '');
+};
+
+function fXSDateTime_normalize(oValue) {
+	return fXSDate_normalize(fXSTime_normalize(oValue));
+};
+
+//
+function fXSDateTime_setTimezone(oDateTime, oTimezone) {
+	// Create a copy
+	var oValue;
+	if (oDateTime instanceof cXSDate)
+		oValue	= new cXSDate(oDateTime.year, oDateTime.month, oDateTime.day, oDateTime.timezone, oDateTime.negative);
+	else
+	if (oDateTime instanceof cXSTime)
+		oValue	= new cXSTime(oDateTime.hours, oDateTime.minutes, oDateTime.seconds, oDateTime.timezone, oDateTime.negative);
+	else
+		oValue	= new cXSDateTime(oDateTime.year, oDateTime.month, oDateTime.day, oDateTime.hours, oDateTime.minutes, oDateTime.seconds, oDateTime.timezone, oDateTime.negative);
+
+	//
+	if (oTimezone == null)
+		oValue.timezone	= null;
+	else {
+		var nTimezone	= fXSDayTimeDuration_toSeconds(oTimezone) / 60;
+		if (oDateTime.timezone !== null) {
+			var nDiff	= nTimezone - oDateTime.timezone;
+			if (oDateTime instanceof cXSDate) {
+				if (nDiff < 0)
+					oValue.day--;
+			}
+			else {
+				oValue.minutes	+= nDiff % 60;
+				oValue.hours	+= ~~(nDiff / 60);
+			}
+			//
+			fXSDateTime_normalize(oValue);
+		}
+		oValue.timezone	= nTimezone;
+	}
+	return oValue;
 };

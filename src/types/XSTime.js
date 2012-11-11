@@ -42,7 +42,7 @@ cXSTime.cast	= function(vValue) {
 				return new cXSTime(bValue ? 0 : +aMatch[2],
 									bValue ? 0 : +aMatch[3],
 									cNumber((bValue ? 0 : aMatch[4]) + '.' + (bValue ? 0 : aMatch[5] || 0)),
-									aMatch[8] ? aMatch[8] == 'Z' ? 0 : (aMatch[9] == '-' ? 1 : -1) * (aMatch[10] * 60 + aMatch[11] * 1) : null
+									aMatch[8] ? aMatch[8] == 'Z' ? 0 : (aMatch[9] == '-' ? -1 : 1) * (aMatch[10] * 60 + aMatch[11] * 1) : null
 				);
 			}
 			throw new cXPath2Error("FORG0001");
@@ -57,5 +57,26 @@ cFunctionCall.dataTypes["time"]	= cXSTime;
 
 // Utilities
 function fXSTime_toSeconds(oTime) {
-	return oTime.seconds + (oTime.minutes + (oTime.timezone !== null ? oTime.timezone % 60 : 0) + (oTime.hours + (oTime.timezone !== null ? ~~(oTime.timezone / 60) : 0)) * 60) * 60;
+	return oTime.seconds + (oTime.minutes - (oTime.timezone !== null ? oTime.timezone % 60 : 0) + (oTime.hours - (oTime.timezone !== null ? ~~(oTime.timezone / 60) : 0)) * 60) * 60;
+};
+
+function fXSTime_normalize(oValue) {
+	//
+	if (oValue.seconds >= 60 || oValue.seconds < 0) {
+		oValue.minutes	+= ~~(oValue.seconds / 60) - (oValue.seconds < 0 && oValue.seconds % 60 ? 1 : 0);
+		oValue.seconds	= oValue.seconds % 60 + (oValue.seconds < 0 && oValue.seconds % 60 ? 60 : 0);
+	}
+	//
+	if (oValue.minutes >= 60 || oValue.minutes < 0) {
+		oValue.hours	+= ~~(oValue.minutes / 60) - (oValue.minutes < 0 && oValue.minutes % 60 ? 1 : 0);
+		oValue.minutes	= oValue.minutes % 60 + (oValue.minutes < 0 && oValue.minutes % 60 ? 60 : 0);
+	}
+	//
+	if (oValue.hours >= 24 || oValue.hours < 0) {
+		if (oValue instanceof cXSDateTime)
+			oValue.day		+= ~~(oValue.hours / 24) - (oValue.hours < 0 && oValue.hours % 24 ? 1 : 0);
+		oValue.hours	= oValue.hours % 24 + (oValue.hours < 0 && oValue.hours % 24 ? 24 : 0);
+	}
+	//
+	return oValue;
 };
