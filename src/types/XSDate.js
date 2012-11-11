@@ -70,34 +70,36 @@ function fXSDate_getDaysForYearMonth(nYear, nMonth) {
 	return nMonth == 2 && (nYear % 400 == 0 || nYear % 100 != 0 && nYear % 4 == 0) ? 29 : aXSDate_days[nMonth - 1];
 };
 
-function fXSDate_normalize(oValue) {
+function fXSDate_normalize(oValue, bDay) {
 	// Adjust day for month/year
-	var nDay	= fXSDate_getDaysForYearMonth(oValue.year, oValue.month);
-	if (oValue.day > nDay) {
-		while (oValue.day > nDay) {
-			oValue.month	+= 1;
-			if (oValue.month > 12) {
-				oValue.year		+= 1;
-				if (oValue.year == 0)
-					oValue.year	= 1;
-				oValue.month	= 1;
+	if (!bDay) {
+		var nDay	= fXSDate_getDaysForYearMonth(oValue.year, oValue.month);
+		if (oValue.day > nDay) {
+			while (oValue.day > nDay) {
+				oValue.month	+= 1;
+				if (oValue.month > 12) {
+					oValue.year		+= 1;
+					if (oValue.year == 0)
+						oValue.year	= 1;
+					oValue.month	= 1;
+				}
+				oValue.day	-= nDay;
+				nDay = fXSDate_getDaysForYearMonth(oValue.year, oValue.month);
 			}
-			oValue.day	-= nDay;
-			nDay = fXSDate_getDaysForYearMonth(oValue.year, oValue.month);
 		}
-	}
-	else
-	if (oValue.day < 1) {
-		while (oValue.day < 1) {
-			oValue.month	-= 1;
-			if (oValue.month < 1) {
-				oValue.year		-= 1;
-				if (oValue.year == 0)
-					oValue.year	=-1;
-				oValue.month	= 12;
+		else
+		if (oValue.day < 1) {
+			while (oValue.day < 1) {
+				oValue.month	-= 1;
+				if (oValue.month < 1) {
+					oValue.year		-= 1;
+					if (oValue.year == 0)
+						oValue.year	=-1;
+					oValue.month	= 12;
+				}
+				nDay = fXSDate_getDaysForYearMonth(oValue.year, oValue.month);
+				oValue.day	+= nDay;
 			}
-			nDay = fXSDate_getDaysForYearMonth(oValue.year, oValue.month);
-			oValue.day	+= nDay;
 		}
 	}
 //?	else

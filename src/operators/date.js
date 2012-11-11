@@ -270,19 +270,21 @@ function fFunctionCall_operators_compareDateTime(oLeft, oRight, sComparator) {
 
 function fFunctionCall_operators_addYearMonthDurationToDateTime(oLeft, oRight, sOperator) {
 	var oValue;
-	if (oLeft instanceof cXSDate) {
+	if (oLeft instanceof cXSDate)
 		oValue	= new cXSDate(oLeft.year, oLeft.month, oLeft.day, oLeft.timezone, oLeft.negative);
-		oValue.year		= oValue.year + oRight.year * (sOperator == '-' ?-1 : 1);
-		oValue.month	= oValue.month + oRight.month * (sOperator == '-' ?-1 : 1);
-		fXSDate_normalize(oValue);
-	}
 	else
-	if (oLeft instanceof cXSDateTime) {
+	if (oLeft instanceof cXSDateTime)
 		oValue	= new cXSDateTime(oLeft.year, oLeft.month, oLeft.day, oLeft.hours, oLeft.minutes, oLeft.seconds, oLeft.timezone, oLeft.negative);
-		oValue.year		= oValue.year + oRight.year * (sOperator == '-' ?-1 : 1);
-		oValue.month	= oValue.month + oRight.month * (sOperator == '-' ?-1 : 1);
-		fXSDateTime_normalize(oValue);
-	}
+	//
+	oValue.year		= oValue.year + oRight.year * (sOperator == '-' ?-1 : 1);
+	oValue.month	= oValue.month + oRight.month * (sOperator == '-' ?-1 : 1);
+	//
+	fXSDate_normalize(oValue, true);
+	// Correct day if out of month range
+	var nDay	= fXSDate_getDaysForYearMonth(oValue.year, oValue.month);
+	if (oValue.day > nDay)
+		oValue.day	= nDay;
+	//
 	return oValue;
 };
 
