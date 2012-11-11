@@ -247,7 +247,7 @@ cFunctionCall.operators["subtract-yearMonthDuration-from-date"]	= function(oLeft
 
 // op:subtract-dayTimeDuration-from-date($arg1 as xs:date, $arg2  as xs:dayTimeDuration) as xs:date
 cFunctionCall.operators["subtract-dayTimeDuration-from-date"]	= function(oLeft, oRight) {
-	return fFunctionCall_operators_addDayTimeDurationToDateTime(oLeft, oRight, '+');
+	return fFunctionCall_operators_addDayTimeDurationToDateTime(oLeft, oRight, '-');
 };
 
 // op:add-dayTimeDuration-to-time($arg1 as xs:time, $arg2  as xs:dayTimeDuration) as xs:time
