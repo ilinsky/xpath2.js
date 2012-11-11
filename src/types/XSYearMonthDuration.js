@@ -37,7 +37,11 @@ cXSYearMonthDuration.cast	= function(vValue) {
 		case cXSDayTimeDuration:
 			return new cXSYearMonthDuration(0, 0);
 	}
-	throw new cXPath2Error("XPTY0004", "Casting from " + cType + " to xs:yearMonthDuration can never succeed");
+	throw new cXPath2Error("XPTY0004"
+//->Debug
+			, "Casting from " + cType + " to xs:yearMonthDuration can never succeed"
+//<-Debug
+	);
 };
 
 //

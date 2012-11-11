@@ -314,7 +314,11 @@ fFunctionCall_defineSystemFunction("sum",	[[cXSAnyAtomicType, '*'], [cXSAnyAtomi
 fFunctionCall_defineSystemFunction("id",	[[cXSString, '*'], [cXTNode, '', true]],	function(oSequence1, oSequence2) {
 	if (arguments.length < 2) {
 		if (!cXPath2.DOMAdapter.isNode(this.item))
-			throw new cXPath2Error("XPTY0004", "id() function called when the context item is not a node");
+			throw new cXPath2Error("XPTY0004"
+//->Debug
+					, "id() function called when the context item is not a node"
+//<-Debug
+			);
 		oSequence2	= new cXPath2Sequence(this.item);
 	}
 

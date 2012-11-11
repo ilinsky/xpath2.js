@@ -36,7 +36,11 @@ cAtomicType.prototype.test	= function(vItem) {
 	if (cTestType)
 		return cTestType == cItemType || cItemType.prototype instanceof cTestType;
 	//
-	throw new cXPath2Error("XPST0051", "Unknown simple type " + (this.prefix ? this.prefix + ':' : '') + this.localName);
+	throw new cXPath2Error("XPST0051"
+//->Debug
+			, "Unknown simple type " + (this.prefix ? this.prefix + ':' : '') + this.localName
+//<-Debug
+	);
 };
 
 cAtomicType.prototype.cast	= function(vItem) {
@@ -45,5 +49,9 @@ cAtomicType.prototype.cast	= function(vItem) {
 	if (cCastType)
 		return cCastType.cast(vItem);
 	//
-	throw new cXPath2Error("XPST0051", "Unknown simple type " + (this.prefix ? this.prefix + ':' : '') + this.localName);
+	throw new cXPath2Error("XPST0051"
+//->Debug
+			, "Unknown simple type " + (this.prefix ? this.prefix + ':' : '') + this.localName
+//<-Debug
+	);
 };

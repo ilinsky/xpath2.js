@@ -51,7 +51,11 @@ cXSDuration.cast	= function(vValue) {
 		case cXSDayTimeDuration:
 			return new cXSDuration(0, 0, vValue.day, vValue.hours, vValue.minutes, vValue.seconds, vValue.negative);
 	}
-	throw new cXPath2Error("XPTY0004", "Casting from " + cType + " to xs:duration can never succeed");
+	throw new cXPath2Error("XPTY0004"
+//->Debug
+			, "Casting from " + cType + " to xs:duration can never succeed"
+//<-Debug
+	);
 };
 
 //

@@ -45,7 +45,11 @@ cXSUntypedAtomic.cast	= function(vValue) {
 		case cXSQName:
 			return new cXSUntypedAtomic(cString(vValue));
 	}
-	throw new cXPath2Error("XPTY0004", "Casting from " + cType + " to xs:untypedAtomic can never succeed");
+	throw new cXPath2Error("XPTY0004"
+//->Debug
+			, "Casting from " + cType + " to xs:untypedAtomic can never succeed"
+//<-Debug
+	);
 };
 //
 cFunctionCall.dataTypes["untypedAtomic"]	= cXSUntypedAtomic;

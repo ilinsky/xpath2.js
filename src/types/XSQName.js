@@ -38,7 +38,11 @@ cXSQName.cast	= function(vValue) {
 				return new cXSQName(aMatch[1] || null, aMatch[2], null);
 			throw new cXPath2Error("FORG0001");
 	}
-	throw new cXPath2Error("XPTY0004", "Casting from " + cType + " to xs:QName can never succeed");
+	throw new cXPath2Error("XPTY0004"
+//->Debug
+			, "Casting from " + cType + " to xs:QName can never succeed"
+//<-Debug
+	);
 };
 
 //

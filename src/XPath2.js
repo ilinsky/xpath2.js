@@ -36,7 +36,11 @@ cXPath2.compile		= (function(sExpression/*[*/, oResolver/*]*/) {
 			if (sNameSpaceURI = oDefaultResolver(sPrefix))
 				return sNameSpaceURI;
 			//
-			throw new cXPath2Error("XPST0081", "Prefix '" + sPrefix + "' has not been declared");
+			throw new cXPath2Error("XPST0081"
+//->Debug
+					, "Prefix '" + sPrefix + "' has not been declared"
+//<-Debug
+			);
 		}));
 	};
 })();

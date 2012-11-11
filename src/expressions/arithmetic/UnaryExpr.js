@@ -22,14 +22,22 @@ cUnaryExpr.operators['-']	= function(oRight) {
 	if (cXSAnyAtomicType.isNumeric(cRight))
 		return cFunctionCall.operators["numeric-unary-minus"](oRight);
 	//
-	throw new cXPath2Error("XPTY0004", "Arithmetic operator is not defined for provided arguments");	// Arithmetic operator is not defined for arguments of types ({type1}, {type2})
+	throw new cXPath2Error("XPTY0004"
+//->Debug
+			, "Arithmetic operator is not defined for provided arguments"
+//<-Debug
+	);	// Arithmetic operator is not defined for arguments of types ({type1}, {type2})
 };
 cUnaryExpr.operators['+']	= function(oRight) {
 	var cRight	= cXSAnyAtomicType.typeOf(oRight);
 	if (cXSAnyAtomicType.isNumeric(cRight))
 		return cFunctionCall.operators["numeric-unary-plus"](oRight);
 	//
-	throw new cXPath2Error("XPTY0004", "Arithmetic operator is not defined for provided arguments");	// Arithmetic operator is not defined for arguments of types ({type1}, {type2})
+	throw new cXPath2Error("XPTY0004"
+//->Debug
+			, "Arithmetic operator is not defined for provided arguments"
+//<-Debug
+	);	// Arithmetic operator is not defined for arguments of types ({type1}, {type2})
 };
 
 // Static members
@@ -60,7 +68,11 @@ cUnaryExpr.prototype.evaluate	= function (oContext) {
 	if (oRight.isEmpty())
 		return new cXPath2Sequence;
 	if (!oRight.isSingleton())
-		throw new cXPath2Error("XPTY0004", "Required cardinality of second operand of '" + this.operator + "' is zero or one; supplied value has cardinality one or more");
+		throw new cXPath2Error("XPTY0004"
+//->Debug
+				, "Required cardinality of second operand of '" + this.operator + "' is zero or one; supplied value has cardinality one or more"
+//<-Debug
+		);
 
 	var vRight	= oRight.items[0];
 	if (vRight instanceof cXSUntypedAtomic)

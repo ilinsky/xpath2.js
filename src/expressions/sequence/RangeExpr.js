@@ -42,5 +42,9 @@ cRangeExpr.prototype.evaluate	= function (oContext) {
 	if (typeof oLeft.items[0] == "number" && ~~oLeft.items[0] == oLeft.items[0] && typeof oRight.items[0] == "number" && ~~oRight.items[0] == oRight.items[0])
 		return cFunctionCall.operators["to"](oLeft.items[0], oRight.items[0]);
 	//
-	throw new cXPath2Error("XPTY0004", "Required item type of operands of 'to' is xs:integer");	//Required item type of second operand of 'to' is xs:integer; supplied value has item type {type2}
+	throw new cXPath2Error("XPTY0004"
+//->Debug
+			, "Required item type of operands of 'to' is xs:integer"
+//<-Debug
+	);	//Required item type of second operand of 'to' is xs:integer; supplied value has item type {type2}
 };

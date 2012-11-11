@@ -12,7 +12,11 @@ function cXSAnyAtomicType() {
 };
 
 cXSAnyAtomicType.cast	= function(vValue) {
-	throw new cXPath2Error("XPST0017", "Abstract type used in constructor function xs:anyAtomicType");	//  {http://www.w3.org/2001/XMLSchema}anyAtomicType
+	throw new cXPath2Error("XPST0017"
+//->Debug
+			, "Abstract type used in constructor function xs:anyAtomicType"
+//<-Debug
+	);	//  {http://www.w3.org/2001/XMLSchema}anyAtomicType
 };
 
 cFunctionCall.dataTypes["anyAtomicType"]	= cXSAnyAtomicType;

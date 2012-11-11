@@ -101,14 +101,22 @@ cComparisonExpr.ValueComp	= function(oExpr, oContext) {
 		return null;
 
 	if (!oLeft.isSingleton())		// Must be singleton
-		throw new cXPath2Error("XPTY0004", "Required cardinality of first operand of '" + oExpr.operator + "' is zero or one; supplied value has cardinality one or more");
+		throw new cXPath2Error("XPTY0004"
+//->Debug
+				, "Required cardinality of first operand of '" + oExpr.operator + "' is zero or one; supplied value has cardinality one or more"
+//<-Debug
+		);
 
 	var oRight	= cXPath2Sequence.atomize(oExpr.right.evaluate(oContext));
 	if (oRight.isEmpty())
 		return null;
 
 	if (!oRight.isSingleton())	// Must be singleton
-		throw new cXPath2Error("XPTY0004", "Required cardinality of second operand of '" + oExpr.operator + "' is zero or one; supplied value has cardinality one or more");
+		throw new cXPath2Error("XPTY0004"
+//->Debug
+				, "Required cardinality of second operand of '" + oExpr.operator + "' is zero or one; supplied value has cardinality one or more"
+//<-Debug
+		);
 
 	var vLeft	= oLeft.items[0],
 		vRight	= oRight.items[0];
@@ -165,7 +173,11 @@ cComparisonExpr.ValueComp.operators['eq']	= function(oLeft, oRight) {
 	}
 
 	// skipped: xs:NOTATION
-	throw new cXPath2Error("XPTY0004", "Cannot compare values of given types");	// Cannot compare {type1} to {type2}
+	throw new cXPath2Error("XPTY0004"
+//->Debug
+			, "Cannot compare values of given types"
+//<-Debug
+	);	// Cannot compare {type1} to {type2}
 };
 cComparisonExpr.ValueComp.operators['ne']	= function(oLeft, oRight) {
 	return !cComparisonExpr.ValueComp.operators['eq'](oLeft, oRight);
@@ -201,7 +213,11 @@ cComparisonExpr.ValueComp.operators['gt']	= function(oLeft, oRight) {
 			return cFunctionCall.operators["dayTimeDuration-greater-than"](oLeft, oRight);
 	}
 	// skipped: xs:anyURI (covered by xs:string)
-	throw new cXPath2Error("XPTY0004", "Cannot compare values of given types");	// Cannot compare {type1} to {type2}
+	throw new cXPath2Error("XPTY0004"
+//->Debug
+			, "Cannot compare values of given types"
+//<-Debug
+	);	// Cannot compare {type1} to {type2}
 };
 cComparisonExpr.ValueComp.operators['lt']	= function(oLeft, oRight) {
 	var cLeft	= cXSAnyAtomicType.typeOf(oLeft),
@@ -234,7 +250,11 @@ cComparisonExpr.ValueComp.operators['lt']	= function(oLeft, oRight) {
 			return cFunctionCall.operators["dayTimeDuration-less-than"](oLeft, oRight);
 	}
 	// skipped: xs:anyURI (covered by xs:string)
-	throw new cXPath2Error("XPTY0004", "Cannot compare values of given types");	// Cannot compare {type1} to {type2}
+	throw new cXPath2Error("XPTY0004"
+//->Debug
+			, "Cannot compare values of given types"
+//<-Debug
+	);	// Cannot compare {type1} to {type2}
 };
 cComparisonExpr.ValueComp.operators['ge']	= function(oLeft, oRight) {
 	var cLeft	= cXSAnyAtomicType.typeOf(oLeft),
@@ -267,7 +287,11 @@ cComparisonExpr.ValueComp.operators['ge']	= function(oLeft, oRight) {
 			return !cFunctionCall.operators["dayTimeDuration-less-than"](oLeft, oRight);
 	}
 	// skipped: xs:anyURI (covered by xs:string)
-	throw new cXPath2Error("XPTY0004", "Cannot compare values of given types");	// Cannot compare {type1} to {type2}
+	throw new cXPath2Error("XPTY0004"
+//->Debug
+			, "Cannot compare values of given types"
+//<-Debug
+	);	// Cannot compare {type1} to {type2}
 };
 cComparisonExpr.ValueComp.operators['le']	= function(oLeft, oRight) {
 	var cLeft	= cXSAnyAtomicType.typeOf(oLeft),
@@ -300,7 +324,11 @@ cComparisonExpr.ValueComp.operators['le']	= function(oLeft, oRight) {
 			return !cFunctionCall.operators["dayTimeDuration-greater-than"](oLeft, oRight);
 	}
 	// skipped: xs:anyURI (covered by xs:string)
-	throw new cXPath2Error("XPTY0004", "Cannot compare values of given types");	// Cannot compare {type1} to {type2}
+	throw new cXPath2Error("XPTY0004"
+//->Debug
+			, "Cannot compare values of given types"
+//<-Debug
+	);	// Cannot compare {type1} to {type2}
 };
 
 // Node comparison
@@ -310,18 +338,34 @@ cComparisonExpr.NodeComp	= function(oExpr, oContext) {
 		return null;
 
 	if (!oLeft.isSingleton())	// Must be singleton (A sequence of more than one item is not allowed as the first operand of '{operator}')
-		throw new cXPath2Error("XPTY0004", "Required cardinality of first operand of '" + oExpr.operator + "' is zero or one; supplied value has cardinality one or more");
+		throw new cXPath2Error("XPTY0004"
+//->Debug
+				, "Required cardinality of first operand of '" + oExpr.operator + "' is zero or one; supplied value has cardinality one or more"
+//<-Debug
+		);
 	if (!cXPath2.DOMAdapter.isNode(oLeft.items[0]))
-		throw new cXPath2Error("XPTY0004", "Required item type of first operand of '" + oExpr.operator + "' is node()");	// Required item type of first operand of '{operator}' is node(); supplied value has item type {type2}
+		throw new cXPath2Error("XPTY0004"
+//->Debug
+				, "Required item type of first operand of '" + oExpr.operator + "' is node()"
+//<-Debug
+		);	// Required item type of first operand of '{operator}' is node(); supplied value has item type {type2}
 
 	var oRight	= oExpr.right.evaluate(oContext);
 	if (oRight.isEmpty())
 		return null;
 
 	if (!oRight.isSingleton())	// Must be singleton (A sequence of more than one item is not allowed as the first operand of '{operator}')
-		throw new cXPath2Error("XPTY0004", "Required cardinality of second operand of '" + oExpr.operator + "' is zero or one; supplied value has cardinality one or more");
+		throw new cXPath2Error("XPTY0004"
+//->Debug
+				, "Required cardinality of second operand of '" + oExpr.operator + "' is zero or one; supplied value has cardinality one or more"
+//<-Debug
+		);
 	if (!cXPath2.DOMAdapter.isNode(oRight.items[0]))
-		throw new cXPath2Error("XPTY0004", "Required item type of second operand of '" + oExpr.operator + "' is node()");	// Required item type of first operand of '{operator}' is node(); supplied value has item type {type2}
+		throw new cXPath2Error("XPTY0004"
+//->Debug
+				, "Required item type of second operand of '" + oExpr.operator + "' is node()"
+//<-Debug
+		);	// Required item type of first operand of '{operator}' is node(); supplied value has item type {type2}
 
 	return cComparisonExpr.NodeComp.operators[oExpr.operator](oLeft.items[0], oRight.items[0]);
 };

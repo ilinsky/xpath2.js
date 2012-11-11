@@ -34,7 +34,11 @@ cXSInteger.cast	= function(vValue) {
 		case cXSDecimal:
 			return ~~vValue;
 	}
-	throw new cXPath2Error("XPTY0004", "Casting from " + cType + " to xs:integer can never succeed");
+	throw new cXPath2Error("XPTY0004"
+//->Debug
+			, "Casting from " + cType + " to xs:integer can never succeed"
+//<-Debug
+	);
 };
 
 //

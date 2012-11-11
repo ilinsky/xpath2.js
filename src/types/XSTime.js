@@ -49,7 +49,11 @@ cXSTime.cast	= function(vValue) {
 		case cXSDateTime:
 			return new cXSTime(vValue.hours, vValue.minutes, vValue.seconds, vValue.timezone);
 	}
-	throw new cXPath2Error("XPTY0004", "Casting from " + cType + " to xs:time can never succeed");
+	throw new cXPath2Error("XPTY0004"
+//->Debug
+			, "Casting from " + cType + " to xs:time can never succeed"
+//<-Debug
+	);
 };
 
 //

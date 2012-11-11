@@ -36,11 +36,19 @@ cCastExpr.prototype.evaluate	= function(oContext) {
 	// Validate cardinality
 	if (oSequence1.isEmpty()) {
 		if (this.type.occurence != '?')
-			throw new cXPath2Error("XPTY0004", "An empty sequence is not allowed as the value in 'cast as' expression");
+			throw new cXPath2Error("XPTY0004"
+//->Debug
+					, "An empty sequence is not allowed as the value in 'cast as' expression"
+//<-Debug
+			);
 		return new cXPath2Sequence;
 	}
 	if (!oSequence1.isSingleton())
-		throw new cXPath2Error("XPTY0004", "Required cardinality of value in 'cast as' expression is exactly one; supplied value has cardinality one or more");
+		throw new cXPath2Error("XPTY0004"
+//->Debug
+				, "Required cardinality of value in 'cast as' expression is exactly one; supplied value has cardinality one or more"
+//<-Debug
+		);
 
 	//
 	return new cXPath2Sequence(this.type.itemType.cast(cXPath2Sequence.atomizeItem(oSequence1.items[0])));

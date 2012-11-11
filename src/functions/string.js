@@ -101,12 +101,20 @@ fFunctionCall_defineSystemFunction("codepoint-equal",	[[cXSString, '?'], [cXSStr
 fFunctionCall_defineSystemFunction("concat",	null,	function(oSequence1, oSequence2) {
 	// check arguments length
 	if (arguments.length < 2)
-		throw new cXPath2Error("XPST0017", "Function concat() must have at least 2 arguments");
+		throw new cXPath2Error("XPST0017"
+//->Debug
+				, "Function concat() must have at least 2 arguments"
+//<-Debug
+		);
 
 	var aValue	= [];
 	for (var nIndex = 0, nLength = arguments.length; nIndex < nLength; nIndex++) {
 		if (arguments[nIndex].items.length > 1)
-			throw new cXPath2Error("XPTY0004", "Required cardinality of each argument of concat() is one or zero");
+			throw new cXPath2Error("XPTY0004"
+//->Debug
+					, "Required cardinality of each argument of concat() is one or zero"
+//<-Debug
+			);
 		aValue[aValue.length]	= arguments[nIndex].toString();
 	}
 

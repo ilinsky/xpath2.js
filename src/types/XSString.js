@@ -41,7 +41,11 @@ cXSString.cast	= function(vValue) {
 			//
 			return cString(vValue);
 	}
-	throw new cXPath2Error("XPTY0004", "Casting from " + cType + " to xs:string can never succeed");
+	throw new cXPath2Error("XPTY0004"
+//->Debug
+			, "Casting from " + cType + " to xs:string can never succeed"
+//<-Debug
+	);
 };
 
 //

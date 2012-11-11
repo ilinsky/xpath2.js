@@ -35,5 +35,9 @@ cVarRef.prototype.evaluate	= function (oContext) {
 	if (oContext.scope.hasOwnProperty(sUri))
 		return new cXPath2Sequence(oContext.scope[sUri]);
 	//
-	throw new cXPath2Error("XPST0008", "Variable $" + (this.prefix ? this.prefix + ':' : '') + this.localName + " has not been declared");
+	throw new cXPath2Error("XPST0008"
+//->Debug
+			, "Variable $" + (this.prefix ? this.prefix + ':' : '') + this.localName + " has not been declared"
+//<-Debug
+	);
 };

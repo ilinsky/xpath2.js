@@ -36,7 +36,11 @@ cFunctionCall.operators["union"]	= function(oSequence1, oSequence2) {
 	// Process first collection
 	for (var nIndex = 0, nLength = oSequence1.items.length, oItem; nIndex < nLength; nIndex++) {
 		if (!cXPath2.DOMAdapter.isNode(oItem = oSequence1.items[nIndex]))
-			throw new cXPath2Error("XPTY0004", "Required item type of first operand of 'union' is node()");	// Required item type of second operand of 'intersect' is node(); supplied value has item type xs:integer
+			throw new cXPath2Error("XPTY0004"
+//->Debug
+					, "Required item type of first operand of 'union' is node()"
+//<-Debug
+			);	// Required item type of second operand of 'intersect' is node(); supplied value has item type xs:integer
 		//
 		if (oSequence.indexOf(oItem) ==-1)
 			oSequence.add(oItem);
@@ -44,7 +48,11 @@ cFunctionCall.operators["union"]	= function(oSequence1, oSequence2) {
 	// Process second collection
 	for (var nIndex = 0, nLength = oSequence2.items.length, oItem; nIndex < nLength; nIndex++) {
 		if (!cXPath2.DOMAdapter.isNode(oItem = oSequence2.items[nIndex]))
-			throw new cXPath2Error("XPTY0004", "Required item type of second operand of 'union' is node()");	// Required item type of second operand of 'intersect' is node(); supplied value has item type xs:integer
+			throw new cXPath2Error("XPTY0004"
+//->Debug
+					, "Required item type of second operand of 'union' is node()"
+//<-Debug
+			);	// Required item type of second operand of 'intersect' is node(); supplied value has item type xs:integer
 		//
 		if (oSequence.indexOf(oItem) ==-1)
 			oSequence.add(oItem);
@@ -57,12 +65,20 @@ cFunctionCall.operators["intersect"]	= function(oSequence1, oSequence2) {
 	var oSequence	= new cXPath2Sequence;
 	for (var nIndex = 0, nLength = oSequence1.items.length, oItem, bFound; nIndex < nLength; nIndex++) {
 		if (!cXPath2.DOMAdapter.isNode(oItem = oSequence1.items[nIndex]))
-			throw new cXPath2Error("XPTY0004", "Required item type of second operand of 'intersect' is node()");	// Required item type of second operand of 'intersect' is node(); supplied value has item type xs:integer
+			throw new cXPath2Error("XPTY0004"
+//->Debug
+					, "Required item type of second operand of 'intersect' is node()"
+//<-Debug
+			);	// Required item type of second operand of 'intersect' is node(); supplied value has item type xs:integer
 		//
 		bFound	= false;
 		for (var nRightIndex = 0, nRightLength = oSequence2.items.length;(nRightIndex < nRightLength) && !bFound; nRightIndex++) {
 			if (!cXPath2.DOMAdapter.isNode(oSequence2.items[nRightIndex]))
-				throw new cXPath2Error("XPTY0004", "Required item type of first operand of 'intersect' is node()");
+				throw new cXPath2Error("XPTY0004"
+//->Debug
+						, "Required item type of first operand of 'intersect' is node()"
+//<-Debug
+				);
 			bFound = cXPath2.DOMAdapter.isSameNode(oSequence2.items[nRightIndex], oItem);
 		}
 		//
@@ -77,12 +93,20 @@ cFunctionCall.operators["except"]	= function(oSequence1, oSequence2) {
 	var oSequence	= new cXPath2Sequence;
 	for (var nIndex = 0, nLength = oSequence1.items.length, oItem, bFound; nIndex < nLength; nIndex++) {
 		if (!cXPath2.DOMAdapter.isNode(oItem = oSequence1.items[nIndex]))
-			throw new cXPath2Error("XPTY0004", "Required item type of second operand of 'except' is node()");	// Required item type of second operand of 'intersect' is node(); supplied value has item type xs:integer
+			throw new cXPath2Error("XPTY0004"
+//->Debug
+					, "Required item type of second operand of 'except' is node()"
+//<-Debug
+			);	// Required item type of second operand of 'intersect' is node(); supplied value has item type xs:integer
 		//
 		bFound	= false;
 		for (var nRightIndex = 0, nRightLength = oSequence2.items.length;(nRightIndex < nRightLength) && !bFound; nRightIndex++) {
 			if (!cXPath2.DOMAdapter.isNode(oSequence2.items[nRightIndex]))
-				throw new cXPath2Error("XPTY0004", "Required item type of first operand of 'except' is node()");
+				throw new cXPath2Error("XPTY0004"
+//->Debug
+						, "Required item type of first operand of 'except' is node()"
+//<-Debug
+				);
 			bFound = cXPath2.DOMAdapter.isSameNode(oSequence2.items[nRightIndex], oItem);
 		}
 		//

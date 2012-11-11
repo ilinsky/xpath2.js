@@ -65,7 +65,11 @@ cAdditiveExpr.operators['+']	= function(oLeft, oRight) {
 			return cFunctionCall.operators["add-dayTimeDuration-to-dateTime"](oLeft, oRight);
 	}
 	//
-	throw new cXPath2Error("XPTY0004", "Arithmetic operator is not defined for provided arguments");	// Arithmetic operator is not defined for arguments of types ({type1}, {type2})
+	throw new cXPath2Error("XPTY0004"
+//->Debug
+			, "Arithmetic operator is not defined for provided arguments"
+//<-Debug
+	);	// Arithmetic operator is not defined for arguments of types ({type1}, {type2})
 };
 cAdditiveExpr.operators['-']	= function (oLeft, oRight) {
 	var cLeft	= cXSAnyAtomicType.typeOf(oLeft),
@@ -110,7 +114,11 @@ cAdditiveExpr.operators['-']	= function (oLeft, oRight) {
 			return cFunctionCall.operators["subtract-dayTimeDurations"](oLeft, oRight);
 	}
 	//
-	throw new cXPath2Error("XPTY0004", "Arithmetic operator is not defined for provided arguments");	// Arithmetic operator is not defined for arguments of types ({type1}, {type2})
+	throw new cXPath2Error("XPTY0004"
+//->Debug
+			, "Arithmetic operator is not defined for provided arguments"
+//<-Debug
+	);	// Arithmetic operator is not defined for arguments of types ({type1}, {type2})
 };
 
 // Static members
@@ -141,7 +149,11 @@ cAdditiveExpr.prototype.evaluate	= function (oContext) {
 	if (oLeft.isEmpty())
 		return new cXPath2Sequence;
 	if (!oLeft.isSingleton())
-		throw new cXPath2Error("XPTY0004", "Required cardinality of first operand of '" + this.items[0][0] + "' is zero or one; supplied value has cardinality one or more");
+		throw new cXPath2Error("XPTY0004"
+//->Debug
+				, "Required cardinality of first operand of '" + this.items[0][0] + "' is zero or one; supplied value has cardinality one or more"
+//<-Debug
+		);
 
 	var vLeft	= oLeft.items[0];
 	if (vLeft instanceof cXSUntypedAtomic)
@@ -153,7 +165,11 @@ cAdditiveExpr.prototype.evaluate	= function (oContext) {
 		if (oRight.isEmpty())
 			return new cXPath2Sequence;
 		if (!oRight.isSingleton())
-			throw new cXPath2Error("XPTY0004", "Required cardinality of second operand of '" + this.items[nIndex][0] + "' is zero or one; supplied value has cardinality one or more");
+			throw new cXPath2Error("XPTY0004"
+//->Debug
+					, "Required cardinality of second operand of '" + this.items[nIndex][0] + "' is zero or one; supplied value has cardinality one or more"
+//<-Debug
+			);
 
 		vRight	= oRight.items[0];
 		if (vRight instanceof cXSUntypedAtomic)
