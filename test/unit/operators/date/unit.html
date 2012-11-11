@@ -346,9 +346,9 @@
 				assertEquals("1999-02-28Z",
 						evaluateXPathSingle('string(xs:date("2000-02-29Z") - xs:yearMonthDuration("P1Y"))'));
 				assertEquals("2000-02-29Z",
-						evaluateXPathSingle('string(xs:date("2000-01-31Z") - xs:yearMonthDuration("P1M"))'));
+						evaluateXPathSingle('string(xs:date("2000-03-31Z") - xs:yearMonthDuration("P1M"))'));
 				assertEquals("2000-02-29Z",
-						evaluateXPathSingle('string(xs:date("2000-01-30Z") - xs:yearMonthDuration("P1M"))'));
+						evaluateXPathSingle('string(xs:date("2000-03-30Z") - xs:yearMonthDuration("P1M"))'));
 			}
 
 			function testSubtractDayTimeDurationFromDate() {
