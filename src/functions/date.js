@@ -41,110 +41,110 @@
 // functions on duration
 // fn:years-from-duration($arg as xs:duration?) as xs:integer?
 fFunctionCall_defineSystemFunction("years-from-duration",	[[cXSDuration, '?']],	function(oSequence1) {
-	return fFunctionCall_duration_getComponent(oSequence1, cXSDuration, "year");
+	return fFunctionCall_duration_getComponent(oSequence1, "year");
 });
 
 // fn:months-from-duration($arg as xs:duration?) as xs:integer?
 fFunctionCall_defineSystemFunction("months-from-duration",	[[cXSDuration, '?']],	function(oSequence1) {
-	return fFunctionCall_duration_getComponent(oSequence1, cXSDuration, "month");
+	return fFunctionCall_duration_getComponent(oSequence1, "month");
 });
 
 // fn:days-from-duration($arg as xs:duration?) as xs:integer?
 fFunctionCall_defineSystemFunction("days-from-duration",	[[cXSDuration, '?']],	function(oSequence1) {
-	return fFunctionCall_duration_getComponent(oSequence1, cXSDuration, "day");
+	return fFunctionCall_duration_getComponent(oSequence1, "day");
 });
 
 // fn:hours-from-duration($arg as xs:duration?) as xs:integer?
 fFunctionCall_defineSystemFunction("hours-from-duration",	[[cXSDuration, '?']],	function(oSequence1) {
-	return fFunctionCall_duration_getComponent(oSequence1, cXSDuration, "hours");
+	return fFunctionCall_duration_getComponent(oSequence1, "hours");
 });
 
 // fn:minutes-from-duration($arg as xs:duration?) as xs:integer?
 fFunctionCall_defineSystemFunction("minutes-from-duration",	[[cXSDuration, '?']],	function(oSequence1) {
-	return fFunctionCall_duration_getComponent(oSequence1, cXSDuration, "minutes");
+	return fFunctionCall_duration_getComponent(oSequence1, "minutes");
 });
 
 // fn:seconds-from-duration($arg as xs:duration?) as xs:decimal?
 fFunctionCall_defineSystemFunction("seconds-from-duration",	[[cXSDuration, '?']],	function(oSequence1) {
-	return fFunctionCall_duration_getComponent(oSequence1, cXSDuration, "seconds");
+	return fFunctionCall_duration_getComponent(oSequence1, "seconds");
 });
 
 // functions on dateTime
 // fn:year-from-dateTime($arg as xs:dateTime?) as xs:integer?
 fFunctionCall_defineSystemFunction("year-from-dateTime",		[[cXSDateTime, '?']],	function(oSequence1) {
-	return fFunctionCall_dateTime_getComponent(oSequence1, cXSDateTime,	"year");
+	return fFunctionCall_dateTime_getComponent(oSequence1,	"year");
 });
 
 // fn:month-from-dateTime($arg as xs:dateTime?) as xs:integer?
 fFunctionCall_defineSystemFunction("month-from-dateTime",		[[cXSDateTime, '?']],	function(oSequence1) {
-	return fFunctionCall_dateTime_getComponent(oSequence1, cXSDateTime, "month");
+	return fFunctionCall_dateTime_getComponent(oSequence1, "month");
 });
 
 // fn:day-from-dateTime($arg as xs:dateTime?) as xs:integer?
 fFunctionCall_defineSystemFunction("day-from-dateTime",			[[cXSDateTime, '?']],	function(oSequence1) {
-	return fFunctionCall_dateTime_getComponent(oSequence1, cXSDateTime, "day");
+	return fFunctionCall_dateTime_getComponent(oSequence1, "day");
 });
 
 // fn:hours-from-dateTime($arg as xs:dateTime?) as xs:integer?
 fFunctionCall_defineSystemFunction("hours-from-dateTime",		[[cXSDateTime, '?']],	function(oSequence1) {
-	return fFunctionCall_dateTime_getComponent(oSequence1, cXSDateTime, "hours");
+	return fFunctionCall_dateTime_getComponent(oSequence1, "hours");
 });
 
 // fn:minutes-from-dateTime($arg as xs:dateTime?) as xs:integer?
 fFunctionCall_defineSystemFunction("minutes-from-dateTime",		[[cXSDateTime, '?']],	function(oSequence1) {
-	return fFunctionCall_dateTime_getComponent(oSequence1, cXSDateTime, "minutes");
+	return fFunctionCall_dateTime_getComponent(oSequence1, "minutes");
 });
 
 // fn:seconds-from-dateTime($arg as xs:dateTime?) as xs:decimal?
 fFunctionCall_defineSystemFunction("seconds-from-dateTime",		[[cXSDateTime, '?']],	function(oSequence1) {
-	return fFunctionCall_dateTime_getComponent(oSequence1, cXSDateTime, "seconds");
+	return fFunctionCall_dateTime_getComponent(oSequence1, "seconds");
 });
 
 // fn:timezone-from-dateTime($arg as xs:dateTime?) as xs:dayTimeDuration?
 fFunctionCall_defineSystemFunction("timezone-from-dateTime",	[[cXSDateTime, '?']],	function(oSequence1) {
-	return fFunctionCall_dateTime_getComponent(oSequence1, cXSDateTime, "timezone");
+	return fFunctionCall_dateTime_getComponent(oSequence1, "timezone");
 });
 
 // functions on date
 // fn:year-from-date($arg as xs:date?) as xs:integer?
 fFunctionCall_defineSystemFunction("year-from-date",	[[cXSDate, '?']],	function(oSequence1) {
-	return fFunctionCall_dateTime_getComponent(oSequence1, cXSDate, "year");
+	return fFunctionCall_dateTime_getComponent(oSequence1, "year");
 });
 
 // fn:month-from-date($arg as xs:date?) as xs:integer?
 fFunctionCall_defineSystemFunction("month-from-date",	[[cXSDate, '?']],	function(oSequence1) {
-	return fFunctionCall_dateTime_getComponent(oSequence1, cXSDate, "month");
+	return fFunctionCall_dateTime_getComponent(oSequence1, "month");
 });
 
 // fn:day-from-date($arg as xs:date?) as xs:integer?
 fFunctionCall_defineSystemFunction("day-from-date",		[[cXSDate, '?']],	function(oSequence1) {
-	return fFunctionCall_dateTime_getComponent(oSequence1, cXSDate, "day");
+	return fFunctionCall_dateTime_getComponent(oSequence1, "day");
 });
 
 // fn:timezone-from-date($arg as xs:date?) as xs:dayTimeDuration?
 fFunctionCall_defineSystemFunction("timezone-from-date",	[[cXSDate, '?']],	function(oSequence1) {
-	return fFunctionCall_dateTime_getComponent(oSequence1, cXSDate, "timezone");
+	return fFunctionCall_dateTime_getComponent(oSequence1, "timezone");
 });
 
 // functions on time
 // fn:hours-from-time($arg as xs:time?) as xs:integer?
 fFunctionCall_defineSystemFunction("hours-from-time",		[[cXSTime, '?']],	function(oSequence1) {
-	return fFunctionCall_dateTime_getComponent(oSequence1, cXSTime, "hours");
+	return fFunctionCall_dateTime_getComponent(oSequence1, "hours");
 });
 
 // fn:minutes-from-time($arg as xs:time?) as xs:integer?
 fFunctionCall_defineSystemFunction("minutes-from-time",		[[cXSTime, '?']],	function(oSequence1) {
-	return fFunctionCall_dateTime_getComponent(oSequence1, cXSTime, "minutes");
+	return fFunctionCall_dateTime_getComponent(oSequence1, "minutes");
 });
 
 // fn:seconds-from-time($arg as xs:time?) as xs:decimal?
 fFunctionCall_defineSystemFunction("seconds-from-time",		[[cXSTime, '?']],	function(oSequence1) {
-	return fFunctionCall_dateTime_getComponent(oSequence1, cXSTime, "seconds");
+	return fFunctionCall_dateTime_getComponent(oSequence1, "seconds");
 });
 
 // fn:timezone-from-time($arg as xs:time?) as xs:dayTimeDuration?
 fFunctionCall_defineSystemFunction("timezone-from-time",	[[cXSTime, '?']],	function(oSequence1) {
-	return fFunctionCall_dateTime_getComponent(oSequence1, cXSTime, "timezone");
+	return fFunctionCall_dateTime_getComponent(oSequence1, "timezone");
 });
 
 
@@ -158,7 +158,7 @@ fFunctionCall_defineSystemFunction("adjust-dateTime-to-timezone",	[[cXSDateTime,
 // fn:adjust-date-to-timezone($arg as xs:date?) as xs:date?
 // fn:adjust-date-to-timezone($arg as xs:date?, $timezone as xs:dayTimeDuration?) as xs:date?
 fFunctionCall_defineSystemFunction("adjust-date-to-timezone",		[[cXSDate, '?'], [cXSDayTimeDuration, '?', true]],	function(oSequence1, oSequence2) {
-	throw "Function" + "adjust-date-to-timezone" + "' not implemented";
+	throw "Function '" + "adjust-date-to-timezone" + "' not implemented";
 });
 
 // fn:adjust-time-to-timezone($arg as xs:time?) as xs:time?
@@ -168,7 +168,7 @@ fFunctionCall_defineSystemFunction("adjust-time-to-timezone",		[[cXSTime, '?'], 
 });
 
 //
-function fFunctionCall_duration_getComponent(oSequence1, cType, sName) {
+function fFunctionCall_duration_getComponent(oSequence1, sName) {
 	if (oSequence1.isEmpty())
 		return null;
 
@@ -177,11 +177,12 @@ function fFunctionCall_duration_getComponent(oSequence1, cType, sName) {
 };
 
 //
-function fFunctionCall_dateTime_getComponent(oSequence1, cType, sName) {
+function fFunctionCall_dateTime_getComponent(oSequence1, sName) {
 	if (oSequence1.isEmpty())
 		return null;
 
-	var oItem	= oSequence1.items[0];
+	var oItem	= oSequence1.items[0],
+		cType	= cXSAnyAtomicType.typeOf(oItem);
 	if (sName == "timezone") {
 		var nTimezone	= oItem.timezone;
 		if (nTimezone === null)
