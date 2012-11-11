@@ -224,7 +224,11 @@ fFunctionCall_defineSystemFunction("avg",	[[cXSAnyAtomicType, '*']],	function(oS
 	}
 	catch (e) {
 		// XPTY0004: Arithmetic operator is not defined for provided arguments
-		throw e.code != "XPTY0004" ? e : new cXPath2Error("FORG0006", "Input to avg() contains a mix of types");
+		throw e.code != "XPTY0004" ? e : new cXPath2Error("FORG0006"
+//->Debug
+				, "Input to avg() contains a mix of types"
+//<-Debug
+		);
 	}
 });
 
@@ -246,7 +250,11 @@ fFunctionCall_defineSystemFunction("max",	[[cXSAnyAtomicType, '*'], [cXSString, 
 	}
 	catch (e) {
 		// XPTY0004: Cannot compare {type1} with {type2}
-		throw e.code != "XPTY0004" ? e : new cXPath2Error("FORG0006", "Input to max() contains a mix of not comparable values");
+		throw e.code != "XPTY0004" ? e : new cXPath2Error("FORG0006"
+//->Debug
+				, "Input to max() contains a mix of not comparable values"
+//<-Debug
+		);
 	}
 });
 
@@ -268,7 +276,11 @@ fFunctionCall_defineSystemFunction("min",	[[cXSAnyAtomicType, '*'], [cXSString, 
 	}
 	catch (e) {
 		// Cannot compare {type1} with {type2}
-		throw e.code != "XPTY0004" ? e : new cXPath2Error("FORG0006", "Input to min() contains a mix of not comparable values");
+		throw e.code != "XPTY0004" ? e : new cXPath2Error("FORG0006"
+//->Debug
+				, "Input to min() contains a mix of not comparable values"
+//<-Debug
+		);
 	}
 });
 
@@ -303,7 +315,11 @@ fFunctionCall_defineSystemFunction("sum",	[[cXSAnyAtomicType, '*'], [cXSAnyAtomi
 	}
 	catch (e) {
 		// XPTY0004: Arithmetic operator is not defined for provided arguments
-		throw e.code != "XPTY0004" ? e : new cXPath2Error("FORG0006", "Input to sum() contains a mix of types");
+		throw e.code != "XPTY0004" ? e : new cXPath2Error("FORG0006"
+//->Debug
+				, "Input to sum() contains a mix of types"
+//<-Debug
+		);
 	}
 });
 

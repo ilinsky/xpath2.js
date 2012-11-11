@@ -78,7 +78,11 @@ cFunctionCall.prototype.evaluate	= function (oContext) {
 			//
 			return vResult === null ? new cXPath2Sequence : new cXPath2Sequence(vResult);
 		}
-		throw new cXPath2Error("XPST0017", "Unknown system function " + this.localName + '()');
+		throw new cXPath2Error("XPST0017"
+//->Debug
+				, "Unknown system function " + this.localName + '()'
+//<-Debug
+		);
 	}
 	if (this.namespaceURI == "http://www.w3.org/2001/XMLSchema") {
 		if (fFunction = cFunctionCall.dataTypes[this.localName]) {
@@ -87,13 +91,21 @@ cFunctionCall.prototype.evaluate	= function (oContext) {
 			//
 			return new cXPath2Sequence(fFunction.cast(aArguments[0].items[0]));
 		}
-		throw new cXPath2Error("XPST0017", "Unknown constructor function: " + '{' + this.namespaceURI + '}' + this.localName);
+		throw new cXPath2Error("XPST0017"
+//->Debug
+				, "Unknown constructor function: " + '{' + this.namespaceURI + '}' + this.localName
+//<-Debug
+		);
 	}
 	var sUri	= (this.namespaceURI ? this.namespaceURI + '#' : '') + this.localName;
 	if (oContext.scope.hasOwnProperty(sUri) && (fFunction = oContext.scope[sUri]) && typeof fFunction == "function")
 		return fFunction.apply(oContext, aArguments);
 	//
-	throw new cXPath2Error("XPST0017", "Unknown user function: " + '{' + this.namespaceURI + '}' + this.localName);
+	throw new cXPath2Error("XPST0017"
+//->Debug
+			, "Unknown user function: " + '{' + this.namespaceURI + '}' + this.localName
+//<-Debug
+	);
 };
 
 var aFunctionCall_numbers	= ["first", "second", "third", "fourth", "fifth"];
@@ -122,17 +134,29 @@ function fFunctionCall_prepare(sName, aParameters, fFunction, aArguments) {
 			// Check sequence cardinality
 			if (sCardinality == '?') {	// =0 or 1
 				if (nItemsLength > 1)
-					throw new cXPath2Error("XPTY0004", "Required cardinality of " + aFunctionCall_numbers[nIndex] + " argument of " + sName + "() is one or zero");
+					throw new cXPath2Error("XPTY0004"
+//->Debug
+							, "Required cardinality of " + aFunctionCall_numbers[nIndex] + " argument of " + sName + "() is one or zero"
+//<-Debug
+					);
 			}
 			else
 			if (sCardinality == '+') {	// =1+
 				if (nItemsLength < 1)
-					throw new cXPath2Error("XPTY0004", "Required cardinality of " + aFunctionCall_numbers[nIndex] + " argument of " + sName + "() is one or more");
+					throw new cXPath2Error("XPTY0004"
+//->Debug
+							, "Required cardinality of " + aFunctionCall_numbers[nIndex] + " argument of " + sName + "() is one or more"
+//<-Debug
+					);
 			}
 			else
 			if (sCardinality != '*') {	// =1 ('*' =0+)
 				if (nItemsLength != 1)
-					throw new cXPath2Error("XPTY0004", "Required cardinality of " + aFunctionCall_numbers[nIndex] + " argument of " + sName + "() is exactly one");
+					throw new cXPath2Error("XPTY0004"
+//->Debug
+							, "Required cardinality of " + aFunctionCall_numbers[nIndex] + " argument of " + sName + "() is exactly one"
+//<-Debug
+					);
 			}
 
 			// Check sequence items data types consistency
@@ -142,13 +166,21 @@ function fFunctionCall_prepare(sName, aParameters, fFunction, aArguments) {
 				if (cItemType == cXTNode || cItemType.prototype instanceof cXTNode) {
 					// Check if is node
 					if (!cXPath2.DOMAdapter.isNode(vItem))
-						throw new cXPath2Error("XPTY0004", "Required item type of " + aFunctionCall_numbers[nIndex] + " argument of " + sName + "() is " + cItemType);
+						throw new cXPath2Error("XPTY0004"
+//->Debug
+								, "Required item type of " + aFunctionCall_numbers[nIndex] + " argument of " + sName + "() is " + cItemType
+//<-Debug
+						);
 
 					// Check node type
 					if (cItemType != cXTNode) {
 						nNodeType	= cXPath2.DOMAdapter.getProperty(vItem, "nodeType");
 						if ([null, cXTElement, cXTAttribute, cXTText, cXTText, null, null, cXTProcessingInstruction, cXTComment, cXTDocument, null, null, null][nNodeType] != cItemType)
-							throw new cXPath2Error("XPTY0004", "Required item type of " + aFunctionCall_numbers[nIndex] + " argument of " + sName + "() is " + cItemType);
+							throw new cXPath2Error("XPTY0004"
+//->Debug
+									, "Required item type of " + aFunctionCall_numbers[nIndex] + " argument of " + sName + "() is " + cItemType
+//<-Debug
+							);
 					}
 				}
 				else
@@ -162,7 +194,11 @@ function fFunctionCall_prepare(sName, aParameters, fFunction, aArguments) {
 					// Check type
 					cDataType	= cXSAnyAtomicType.typeOf(vItem);
 					if (cItemType != cXTNumeric ? (cDataType != cItemType && !(cDataType.prototype instanceof cItemType)) : !cXSAnyAtomicType.isNumeric(cDataType))
-						throw new cXPath2Error("XPTY0004", "Required item type of " + aFunctionCall_numbers[nIndex] + " argument of " + sName + "() is " + cItemType);
+						throw new cXPath2Error("XPTY0004"
+//->Debug
+								, "Required item type of " + aFunctionCall_numbers[nIndex] + " argument of " + sName + "() is " + cItemType
+//<-Debug
+						);
 					// Write value back to sequence
 					oArgument.items[nItemIndex]	= vItem;
 				}
@@ -170,15 +206,20 @@ function fFunctionCall_prepare(sName, aParameters, fFunction, aArguments) {
 		}
 		else
 		if (!oParameter[2])
-			throw new cXPath2Error("XPST0017", "Function " + sName + "() must have " + (nParametersRequired == nParametersLength ? "exactly" : "at least") + " " + nParametersRequired + " argument" + (nParametersLength > 1 ? 's' : ''));
+			throw new cXPath2Error("XPST0017"
+//->Debug
+					, "Function " + sName + "() must have " + (nParametersRequired == nParametersLength ? "exactly" : "at least") + " " + nParametersRequired + " argument" + (nParametersLength > 1 ? 's' : '')
+//<-Debug
+			);
 	}
 	// Validate arguments length
 	if (nArgumentsLength > nParametersLength)
-		throw new cXPath2Error("XPST0017", "Function " + sName + "() must have no more than " + nParametersLength + " argument" + (nParametersLength > 1 ? 's' : ''));
+		throw new cXPath2Error("XPST0017"
+//->Debug
+				, "Function " + sName + "() must have no more than " + nParametersLength + " argument" + (nParametersLength > 1 ? 's' : '')
+//<-Debug
+		);
 };
-
-//
-// throw new cXPath2Error("XPST0017", "A constructor function must have exactly one argument");
 
 function fFunctionCall_defineSystemFunction(sName, aParameters, fFunction) {
 	(cFunctionCall.functions[sName]	= fFunction).parameters	= aParameters;
