@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>JsUnit testing page</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+		<!-- JsUnitClient driver -->
+		<script type="text/javascript" src="../../jsUnitClient.js"></script>
+
+		<!-- Library -->
+		<script type="text/javascript" src="../../../../xpath2.js"></script>
+
+		<!-- Suite definition -->
+		<script type="text/javascript">
+			// Helper function
+			function evaluateXPath(sXPath, vContext) {
+				return XPath2.evaluate(sXPath, vContext);
+			}
+
+			function evaluateXPathSingle(sXPath, vContext) {
+				return evaluateXPath(sXPath, vContext)[0];
+			}
+
+			function evaluateXPathError(sXPath, vContext) {
+				var value	= null,
+					error	= null;
+				try {
+					value	= evaluateXPathSingle(sXPath, vContext);
+				}
+				catch (e) {
+					error	= e.code;
+				}
+				return error;
+			}
+
+			// Tests
+			function testContextItem() {
+				assertArrayEquals([document],
+						evaluateXPath(".", document));
+				assertArrayEquals([23],
+						evaluateXPath(".", 23));
+				assertArrayEquals([false],
+						evaluateXPath(".", false));
+				assertArrayEquals([null],
+						evaluateXPath(".", null));
+				assertUndefined(
+						evaluateXPathSingle("."));
+			}
+
+			function testFilter() {
+				assertArrayEquals([2],
+						evaluateXPath("(1, 2)[2]"));
+				assertArrayEquals([],
+						evaluateXPath("(1, 2)[3]"));
+				assertArrayEquals([3],
+						evaluateXPath("(1, 2, 3)[. eq 3]"));
+				assertArrayEquals([],
+						evaluateXPath("(1, 2, 3)[. eq 4]"));
+				assertArrayEquals([1],
+						evaluateXPath("1[true()]"));
+				assertArrayEquals([],
+						evaluateXPath("1[false()]"));
+				assertArrayEquals([1],
+						evaluateXPath("1[1]"));
+				assertArrayEquals([],
+						evaluateXPath("1[2]"));
+			}
+
+			function testFunctionCall() {
+				assertArrayEquals([true],
+						evaluateXPath("true()"));
+				assertArrayEquals([false],
+						evaluateXPath("not(true())"));
+			}
+
+			function testNumericLiteral() {
+				assertArrayEquals([1],
+						evaluateXPath("1"));
+				assertArrayEquals([1.2],
+						evaluateXPath("1.2"));
+				assertArrayEquals([-1.2],
+						evaluateXPath("-1.2"));
+				// Negative
+/*				assertArrayEquals([Infinity],
+						evaluateXPath("INF"));*/
+			}
+
+			function testParenthesized() {
+				assertArrayEquals([1, 2],
+						evaluateXPath("(1, 2)"));
+				assertArrayEquals([1, 2, 3, 4],
+						evaluateXPath("(1, (2, 3), 4)"));
+				assertArrayEquals([],
+						evaluateXPath("()"));
+			}
+
+			function testStringLiteral() {
+				assertArrayEquals(["1"],
+						evaluateXPath("'1'"));
+				assertArrayEquals(["false"],
+						evaluateXPath("'false'"));
+				assertArrayEquals(["0"],
+						evaluateXPath("'0'"));
+				assertArrayEquals(["-0"],
+						evaluateXPath("'-0'"));
+			}
+
+			// TODO
+/*			function testVarRef() {
+
+			}*/
+
+		</script>
+	</head>
+	<body>
+		<p>XPath2.js JsUnit unit page</p>
+	</body>
+</html>
