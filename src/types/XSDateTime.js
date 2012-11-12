@@ -85,9 +85,11 @@ cXSDateTime.cast	= function(vValue) {
 cFunctionCall.dataTypes["dateTime"]	= cXSDateTime;
 
 // Utilities
-function fXSDateTime_pad(vValue) {
+function fXSDateTime_pad(vValue, nLength) {
 	sValue	= cString(vValue);
-	return new cArray(1 - sValue.length +(arguments[1] || 2)).join('0') + sValue;
+	if (!arguments.length)
+		nLength	= 2;
+	return (sValue.length < nLength + 1 ? new cArray(nLength + 1 - sValue.length).join('0') : '') + sValue;
 };
 
 function fXSDateTime_getTZComponent(oDateTime) {
