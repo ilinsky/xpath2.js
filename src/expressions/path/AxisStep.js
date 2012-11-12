@@ -66,7 +66,7 @@ cAxisStep.parse	= function (oLexer, oResolver) {
 	else {
 		if (oLexer.eof() ||!(oExpr = cNodeTest.parse(oLexer, oResolver)))
 			return;
-		oStep	= new cAxisStep("child", oExpr);
+		oStep	= new cAxisStep(oExpr instanceof cKindTest && oExpr.name == "attribute" ? "attribute" : "child", oExpr);
 	}
 	//
 	cStepExpr.parsePredicates(oLexer, oResolver, oStep);
