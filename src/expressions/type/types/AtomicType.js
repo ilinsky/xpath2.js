@@ -29,7 +29,7 @@ cAtomicType.parse	= function(oLexer, oStaticContext) {
 	}
 };
 
-cAtomicType.prototype.test	= function(oContext, vItem) {
+cAtomicType.prototype.test	= function(vItem, oContext) {
 	// Test
 	var cTestType	= cFunctionCall.dataTypes[/*'{' + this.namespaceURI + '}' + */this.localName],
 		cItemType	= cXSAnyAtomicType.typeOf(vItem);

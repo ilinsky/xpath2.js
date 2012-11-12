@@ -50,7 +50,7 @@ cInstanceofExpr.prototype.evaluate	= function(oContext) {
 
 	var bValue	= true;
 	for (var nIndex = 0, nLength = oSequence1.items.length; (nIndex < nLength) && bValue; nIndex++)
-		bValue	= oType.test.test(oContext, oSequence1.items[nIndex]);
+		bValue	= oType.test.test(oSequence1.items[nIndex], oContext);
 	//
 	return new cXPath2Sequence(bValue);
 };

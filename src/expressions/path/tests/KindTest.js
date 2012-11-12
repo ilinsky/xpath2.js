@@ -87,7 +87,7 @@ cKindTest.parse	= function (oLexer, oStaticContext) {
 };
 
 // Public members
-cKindTest.prototype.test	= function (oContext, oNode) {
+cKindTest.prototype.test	= function (oNode, oContext) {
 	var nType	= oContext.staticContext.DOMAdapter.isNode(oNode) ? oContext.staticContext.DOMAdapter.getProperty(oNode, "nodeType") : 0;
 	switch (this.name) {
 		// Node type test

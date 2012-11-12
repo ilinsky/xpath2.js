@@ -33,7 +33,7 @@ cNameTest.parse	= function (oLexer, oStaticContext) {
 };
 
 // Public members
-cNameTest.prototype.test	= function (oContext, oNode) {
+cNameTest.prototype.test	= function (oNode, oContext) {
 	var nType	= oContext.staticContext.DOMAdapter.getProperty(oNode, "nodeType"),
 		sLocalName		= oContext.staticContext.DOMAdapter.getProperty(oNode, "localName"),
 		sNameSpaceURI	= oContext.staticContext.DOMAdapter.getProperty(oNode, "namespaceURI");
