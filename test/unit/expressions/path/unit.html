@@ -40,15 +40,15 @@
 
 			function testKindTest_Attribute() {
 				var context	= document.documentElement;
-
-				var attributes	= context.attributes;
-				assertArrayEquals([attributes[0], attributes[1], attributes[2]],
-						evaluateXPath("attribute()", context));
+				assertArrayEquals([context.getAttributeNode("dec"), context.getAttributeNode("int"), context.getAttributeNode("boo")],
+						evaluateXPath("attribute()", document.documentElement));
 			}
 
 			function testKindTest_ProcessingInstruction() {
 				assertArrayEquals([document.childNodes[1]],
 						evaluateXPathWithDocument("processing-instruction()"));
+			}
+			function testKindTest_ProcessingInstruction_params() {
 				assertArrayEquals([document.childNodes[1]],
 						evaluateXPathWithDocument("processing-instruction('pi-target')"));
 				assertArrayEquals([],
