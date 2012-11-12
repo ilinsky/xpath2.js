@@ -155,6 +155,8 @@
 				// Not W3C tests
 				assertEquals(true,
 						evaluateXPathSingle('xs:date("2004-12-25-04:00") lt xs:date("2004-12-25-05:00")'));
+				assertEquals(false,
+						evaluateXPathSingle('xs:date("2004-12-25-04:00") lt xs:date("2004-12-25-03:00")'));
 			}
 
 			function testDateLessThan_TZ_12() {
@@ -170,7 +172,9 @@
 						evaluateXPathSingle('xs:date("2004-12-25Z") gt xs:date("2004-12-25+07:00")'));
 				// Not W3C tests
 				assertEquals(true,
-						evaluateXPathSingle('xs:date("2004-12-25-06:00") lt xs:date("2004-12-25-05:00")'));
+						evaluateXPathSingle('xs:date("2004-12-25-06:00") gt xs:date("2004-12-25-05:00")'));
+				assertEquals(false,
+						evaluateXPathSingle('xs:date("2004-12-25-06:00") gt xs:date("2004-12-25-07:00")'));
 			}
 
 			function testDateGreaterThan_TZ_12() {
