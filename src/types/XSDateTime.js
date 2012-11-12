@@ -122,38 +122,3 @@ function fXSDateTime_getTimeComponent(oDateTime) {
 function fXSDateTime_normalize(oValue) {
 	return fXSDate_normalize(fXSTime_normalize(oValue));
 };
-
-//
-function fXSDateTime_setTimezone(oDateTime, oTimezone) {
-	// Create a copy
-	var oValue;
-	if (oDateTime instanceof cXSDate)
-		oValue	= new cXSDate(oDateTime.year, oDateTime.month, oDateTime.day, oDateTime.timezone, oDateTime.negative);
-	else
-	if (oDateTime instanceof cXSTime)
-		oValue	= new cXSTime(oDateTime.hours, oDateTime.minutes, oDateTime.seconds, oDateTime.timezone, oDateTime.negative);
-	else
-		oValue	= new cXSDateTime(oDateTime.year, oDateTime.month, oDateTime.day, oDateTime.hours, oDateTime.minutes, oDateTime.seconds, oDateTime.timezone, oDateTime.negative);
-
-	//
-	if (oTimezone == null)
-		oValue.timezone	= null;
-	else {
-		var nTimezone	= fXSDayTimeDuration_toSeconds(oTimezone) / 60;
-		if (oDateTime.timezone !== null) {
-			var nDiff	= nTimezone - oDateTime.timezone;
-			if (oDateTime instanceof cXSDate) {
-				if (nDiff < 0)
-					oValue.day--;
-			}
-			else {
-				oValue.minutes	+= nDiff % 60;
-				oValue.hours	+= ~~(nDiff / 60);
-			}
-			//
-			fXSDateTime_normalize(oValue);
-		}
-		oValue.timezone	= nTimezone;
-	}
-	return oValue;
-};

@@ -155,7 +155,7 @@ fFunctionCall_defineSystemFunction("adjust-dateTime-to-timezone",	[[cXSDateTime,
 	if (oSequence1.isEmpty())
 		return null;
 	//
-	return fXSDateTime_setTimezone(oSequence1.items[0], arguments.length > 1 && oSequence2.isEmpty() ? null : arguments.length > 1 ? oSequence2.items[0] : this.timezone);
+	return fFunctionCall_dateTime_adjustTimezone(oSequence1.items[0], arguments.length > 1 && oSequence2.isEmpty() ? null : arguments.length > 1 ? oSequence2.items[0] : this.timezone);
 });
 
 // fn:adjust-date-to-timezone($arg as xs:date?) as xs:date?
@@ -164,7 +164,7 @@ fFunctionCall_defineSystemFunction("adjust-date-to-timezone",		[[cXSDate, '?'], 
 	if (oSequence1.isEmpty())
 		return null;
 	//
-	return fXSDateTime_setTimezone(oSequence1.items[0], arguments.length > 1 && oSequence2.isEmpty() ? null : arguments.length > 1 ? oSequence2.items[0] : this.timezone);
+	return fFunctionCall_dateTime_adjustTimezone(oSequence1.items[0], arguments.length > 1 && oSequence2.isEmpty() ? null : arguments.length > 1 ? oSequence2.items[0] : this.timezone);
 });
 
 // fn:adjust-time-to-timezone($arg as xs:time?) as xs:time?
@@ -173,7 +173,7 @@ fFunctionCall_defineSystemFunction("adjust-time-to-timezone",		[[cXSTime, '?'], 
 	if (oSequence1.isEmpty())
 		return null;
 	//
-	return fXSDateTime_setTimezone(oSequence1.items[0], arguments.length > 1 && oSequence2.isEmpty() ? null : arguments.length > 1 ? oSequence2.items[0] : this.timezone);
+	return fFunctionCall_dateTime_adjustTimezone(oSequence1.items[0], arguments.length > 1 && oSequence2.isEmpty() ? null : arguments.length > 1 ? oSequence2.items[0] : this.timezone);
 });
 
 //
@@ -209,4 +209,39 @@ function fFunctionCall_dateTime_getComponent(oSequence1, sName) {
 			nValue	*= oItem.negative ?-1 : 1;
 		return nValue;
 	}
+};
+
+//
+function fFunctionCall_dateTime_adjustTimezone(oDateTime, oTimezone) {
+	// Create a copy
+	var oValue;
+	if (oDateTime instanceof cXSDate)
+		oValue	= new cXSDate(oDateTime.year, oDateTime.month, oDateTime.day, oDateTime.timezone, oDateTime.negative);
+	else
+	if (oDateTime instanceof cXSTime)
+		oValue	= new cXSTime(oDateTime.hours, oDateTime.minutes, oDateTime.seconds, oDateTime.timezone, oDateTime.negative);
+	else
+		oValue	= new cXSDateTime(oDateTime.year, oDateTime.month, oDateTime.day, oDateTime.hours, oDateTime.minutes, oDateTime.seconds, oDateTime.timezone, oDateTime.negative);
+
+	//
+	if (oTimezone == null)
+		oValue.timezone	= null;
+	else {
+		var nTimezone	= fXSDayTimeDuration_toSeconds(oTimezone) / 60;
+		if (oDateTime.timezone !== null) {
+			var nDiff	= nTimezone - oDateTime.timezone;
+			if (oDateTime instanceof cXSDate) {
+				if (nDiff < 0)
+					oValue.day--;
+			}
+			else {
+				oValue.minutes	+= nDiff % 60;
+				oValue.hours	+= ~~(nDiff / 60);
+			}
+			//
+			fXSDateTime_normalize(oValue);
+		}
+		oValue.timezone	= nTimezone;
+	}
+	return oValue;
 };

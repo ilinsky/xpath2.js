@@ -273,8 +273,8 @@ cFunctionCall.operators["subtract-dayTimeDuration-from-time"]	= function(oLeft, 
 function fFunctionCall_operators_compareDateTime(oLeft, oRight, sComparator) {
 	// Adjust object time zone to Z and compare as strings
 	var oTimezone	= new cXSDayTimeDuration(0, 0, 0, 0),
-		sLeft	= fXSDateTime_setTimezone(oLeft, oTimezone).toString(),
-		sRight	= fXSDateTime_setTimezone(oRight, oTimezone).toString();
+		sLeft	= fFunctionCall_dateTime_adjustTimezone(oLeft, oTimezone).toString(),
+		sRight	= fFunctionCall_dateTime_adjustTimezone(oRight, oTimezone).toString();
 	return sComparator == 'lt' ? sLeft < sRight : sComparator == 'gt' ? sLeft > sRight : sLeft == sRight;
 };
 
