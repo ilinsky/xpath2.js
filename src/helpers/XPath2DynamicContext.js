@@ -7,7 +7,7 @@
  *
  */
 
-function cXPath2Context(vItem, nPosition, nSize, oScope) {
+function cXPath2DynamicContext(vItem, nPosition, nSize, oScope) {
 	this.item		= vItem;
 	this.position	= nPosition || 1;
 	this.size		= nSize || 1;
@@ -21,24 +21,24 @@ function cXPath2Context(vItem, nPosition, nSize, oScope) {
 	this.timezone	= new cXSDayTimeDuration(0, cMath.abs(~~(nOffset / 60)), cMath.abs(nOffset % 60), 0, nOffset > 0);
 };
 
-cXPath2Context.prototype.item		= null;
-cXPath2Context.prototype.position	= null;
-cXPath2Context.prototype.size		= null;
+cXPath2DynamicContext.prototype.item		= null;
+cXPath2DynamicContext.prototype.position	= null;
+cXPath2DynamicContext.prototype.size		= null;
 //
-cXPath2Context.prototype.scope		= null;
-cXPath2Context.prototype.stack		= null;	// Variables stack
+cXPath2DynamicContext.prototype.scope		= null;
+cXPath2DynamicContext.prototype.stack		= null;	// Variables stack
 //
-cXPath2Context.prototype.dateTime	= null;
-cXPath2Context.prototype.timezone	= null;
+cXPath2DynamicContext.prototype.dateTime	= null;
+cXPath2DynamicContext.prototype.timezone	= null;
 
-cXPath2Context.prototype.pushVariable	= function(sName, vValue) {
+cXPath2DynamicContext.prototype.pushVariable	= function(sName, vValue) {
 	if (!this.stack.hasOwnProperty(sName))
 		this.stack[sName]	= [];
 	this.stack[sName].push(this.scope[sName]);
 	this.scope[sName] = vValue;
 };
 
-cXPath2Context.prototype.popVariable	= function(sName) {
+cXPath2DynamicContext.prototype.popVariable	= function(sName) {
 	if (this.stack.hasOwnProperty(sName)) {
 		this.scope[sName] = this.stack[sName].pop();
 		if (typeof this.scope[sName] == "undefined")

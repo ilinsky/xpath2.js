@@ -12,12 +12,15 @@ function cXPath2() {
 };
 
 cXPath2.Parser		= cXPath2Parser;
-cXPath2.Context		= cXPath2Context;
 cXPath2.Sequence	= cXPath2Sequence;
 cXPath2.DOMAdapter	= cDOMAdapter;
 //
 cXPath2.evaluate	= function(sExpression/*[[[*/, oNode/*[[*/, oResolver/*[*/, oScope/*]]]*/) {
-	return cXPath2.compile(sExpression, oResolver).evaluate(new cXPath2Context(oNode, 1, 1, oScope)).items;
+	return cXPath2.compile(sExpression, oResolver).evaluate(new cXPath2DynamicContext(oNode, 1, 1, oScope)).items;
+};
+
+cXPath2.resolve		= function(sExpression/*[[[*/, oNode/*[[*/, oResolver/*[*/, oScope/*]]]*/) {
+	return cXPath2.compile(sExpression, oResolver).evaluate(new cXPath2DynamicContext(oNode, 1, 1, oScope)).items;
 };
 
 cXPath2.compile		= (function(sExpression/*[*/, oResolver/*]*/) {

@@ -5,7 +5,7 @@ helpers/DOMAdapter.js
 helpers/XPath2Error.js
 helpers/XPath2Lexer.js
 helpers/XPath2Parser.js
-helpers/XPath2Context.js
+helpers/XPath2DynamicContext.js
 helpers/XPath2Sequence.js
 #
 expressions/Expr.js
