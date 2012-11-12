@@ -62,6 +62,7 @@ types/XSAnyAtomicType.js
 types/XSUntypedAtomic.js
 types/XSBoolean.js
 types/XSString.js
+types/XSAnyURI.js
 types/XSQName.js
 types/XSDateTime.js
 types/XSDate.js
