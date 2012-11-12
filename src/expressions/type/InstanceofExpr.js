@@ -33,19 +33,16 @@ cInstanceofExpr.parse	= function(oLexer, oResolver) {
 
 cInstanceofExpr.prototype.evaluate	= function(oContext) {
 	var oSequence1	= this.expression.evaluate(oContext);
-	// Validate cardinality
-	if (!this.type.itemType)	// empty-sequence()
+	// Validate empty-sequence()
+	if (!this.type.itemType)
 		return new cXPath2Sequence(oSequence1.isEmpty());
-	// Validate occurence
-	if (this.type.occurence == '?') {
-		if (oSequence1.isEmpty())
-			return new cXPath2Sequence(true);
-		if (!(oSequence1.isSingleton()))
+	// Validate cardinality
+	if (oSequence1.isEmpty())
+		return new cXPath2Sequence(this.type.occurence == '?' || this.type.occurence == '*');
+	if (!(oSequence1.isSingleton()))
+		if (!(this.type.occurence == '+' || this.type.occurence == '*'))
 			return new cXPath2Sequence(false);
-	}
-	if (this.type.occurence == '+')
-		if (oSequence1.isEmpty())
-			return new cXPath2Sequence(false);
+
 	// Validate type
 	var oType	= this.type.itemType;
 	if (!oType.test)	// item()
