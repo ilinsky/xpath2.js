@@ -17,13 +17,13 @@
 fFunctionCall_defineSystemFunction("resolve-uri",	[[cXSString, '?'], [cXSString, '', true]],	function(oSequence1, oSequence2) {
 	var sBaseUri;
 	if (arguments.length < 2) {
-		if (!cXPath2.DOMAdapter.isNode(this.item))
+		if (!this.staticContext.DOMAdapter.isNode(this.item))
 			throw new cXPath2Error("XPTY0004"
 //->Debug
 					, "resolve-uri() function called when the context item is not a node"
 //<-Debug
 			);
-		sBaseUri	= cXPath2.DOMAdapter.getProperty(this.item, "baseURI");
+		sBaseUri	= this.staticContext.DOMAdapter.getProperty(this.item, "baseURI");
 	}
 	else
 		sBaseUri	= oSequence2.items[0];
@@ -74,5 +74,5 @@ fFunctionCall_defineSystemFunction("resolve-uri",	[[cXSString, '?'], [cXSString,
 		}
 	}
 
-	return oUri.toString();
+	return oUri.toString(this);
 });

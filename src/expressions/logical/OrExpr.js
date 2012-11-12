@@ -16,9 +16,9 @@ cOrExpr.prototype.left	= null;
 cOrExpr.prototype.items	= null;
 
 // Static members
-cOrExpr.parse	= function (oLexer, oResolver) {
+cOrExpr.parse	= function (oLexer, oStaticContext) {
 	var oExpr;
-	if (oLexer.eof() ||!(oExpr = cAndExpr.parse(oLexer, oResolver)))
+	if (oLexer.eof() ||!(oExpr = cAndExpr.parse(oLexer, oStaticContext)))
 		return;
 	if (oLexer.peek() != "or")
 		return oExpr;
@@ -27,7 +27,7 @@ cOrExpr.parse	= function (oLexer, oResolver) {
 	var oOrExpr	= new cOrExpr(oExpr);
 	while (oLexer.peek() == "or") {
 		oLexer.next();
-		if (oLexer.eof() ||!(oExpr = cAndExpr.parse(oLexer, oResolver)))
+		if (oLexer.eof() ||!(oExpr = cAndExpr.parse(oLexer, oStaticContext)))
 			throw "OrExpr.parse: right operand missing";
 		oOrExpr.items.push(oExpr);
 	}
@@ -36,8 +36,8 @@ cOrExpr.parse	= function (oLexer, oResolver) {
 
 // Public members
 cOrExpr.prototype.evaluate	= function (oContext) {
-	var bValue	= this.left.evaluate(oContext).toBoolean();
+	var bValue	= this.left.evaluate(oContext).toBoolean(oContext);
 	for (var nIndex = 0, nLength = this.items.length; (nIndex < nLength) && !bValue; nIndex++)
-		bValue	= this.items[nIndex].evaluate(oContext).toBoolean();
+		bValue	= this.items[nIndex].evaluate(oContext).toBoolean(oContext);
 	return new cXPath2Sequence(bValue);
 };

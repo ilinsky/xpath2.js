@@ -15,7 +15,7 @@ function cSequenceType(oItemType, sOccurence) {
 cSequenceType.prototype.itemType	= null;
 cSequenceType.prototype.occurence	= null;
 
-cSequenceType.parse	= function(oLexer, oResolver) {
+cSequenceType.parse	= function(oLexer, oStaticContext) {
 	if (oLexer.eof())
 		return;
 
@@ -29,7 +29,7 @@ cSequenceType.parse	= function(oLexer, oResolver) {
 
 	var oExpr,
 		sOccurence;
-	if (oLexer.eof() ||!(oExpr = cItemType.parse(oLexer, oResolver)))
+	if (oLexer.eof() ||!(oExpr = cItemType.parse(oLexer, oStaticContext)))
 		throw "SequenceType.parse: Expected ItemType expression";
 
 	sOccurence	= oLexer.peek();

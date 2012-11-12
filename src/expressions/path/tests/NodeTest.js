@@ -12,8 +12,8 @@ function cNodeTest() {
 };
 
 // Static members
-cNodeTest.parse	= function (oLexer, oResolver) {
+cNodeTest.parse	= function (oLexer, oStaticContext) {
 	if (!oLexer.eof())
-		return cKindTest.parse(oLexer, oResolver)
-			|| cNameTest.parse(oLexer, oResolver);
+		return cKindTest.parse(oLexer, oStaticContext)
+			|| cNameTest.parse(oLexer, oStaticContext);
 };

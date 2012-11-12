@@ -16,17 +16,17 @@ cRangeExpr.prototype.left	= null;
 cRangeExpr.prototype.right	= null;
 
 // Static members
-cRangeExpr.parse	= function (oLexer, oResolver) {
+cRangeExpr.parse	= function (oLexer, oStaticContext) {
 	var oExpr,
 		oRight;
-	if (oLexer.eof() ||!(oExpr = cAdditiveExpr.parse(oLexer, oResolver)))
+	if (oLexer.eof() ||!(oExpr = cAdditiveExpr.parse(oLexer, oStaticContext)))
 		return;
 	if (oLexer.peek() != "to")
 		return oExpr;
 
 	// Range expression
 	oLexer.next();
-	if (oLexer.eof() ||!(oRight = cAdditiveExpr.parse(oLexer, oResolver)))
+	if (oLexer.eof() ||!(oRight = cAdditiveExpr.parse(oLexer, oStaticContext)))
 		throw "RangeExpr.parse: expected right operand";
 	return new cRangeExpr(oExpr, oRight);
 };
@@ -39,8 +39,8 @@ cRangeExpr.prototype.evaluate	= function (oContext) {
 	if (oLeft.isEmpty() || oRight.isEmpty())
 		return new cXPath2Sequence;
 
-	var vLeft	= cXPath2Sequence.atomizeItem(oLeft.items[0]),
-		vRight	= cXPath2Sequence.atomizeItem(oRight.items[0]);
+	var vLeft	= cXPath2Sequence.atomizeItem(oLeft.items[0], oContext),
+		vRight	= cXPath2Sequence.atomizeItem(oRight.items[0], oContext);
 
 	if (vLeft instanceof cXSUntypedAtomic)
 		vLeft	= cXSInteger.cast(vLeft);
@@ -48,7 +48,7 @@ cRangeExpr.prototype.evaluate	= function (oContext) {
 		vRight	= cXSInteger.cast(vRight);
 
 	if (typeof vLeft == "number" && ~~vLeft == vLeft && typeof vRight == "number" && ~~vRight == vRight)
-		return cFunctionCall.operators["to"](vLeft, vRight);
+		return cFunctionCall.operators["to"].call(oContext, vLeft, vRight);
 	//
 	throw new cXPath2Error("XPTY0004"
 //->Debug

@@ -14,7 +14,7 @@ function cPathExpr() {
 cPathExpr.prototype.items	= [];
 
 // Static members
-cPathExpr.parse	= function (oLexer, oResolver) {
+cPathExpr.parse	= function (oLexer, oStaticContext) {
 	if (oLexer.eof())
 		return;
 	var sSingleSlash	= '/',
@@ -33,7 +33,7 @@ cPathExpr.parse	= function (oLexer, oResolver) {
 	}
 
 	//
-	if (oLexer.eof() ||!(oExpr = cStepExpr.parse(oLexer, oResolver))) {
+	if (oLexer.eof() ||!(oExpr = cStepExpr.parse(oLexer, oStaticContext))) {
 		if (sSlash == sSingleSlash)
 			return oPathExpr.items[0];	// '/' expression
 		//
@@ -47,7 +47,7 @@ cPathExpr.parse	= function (oLexer, oResolver) {
 			oPathExpr.items.push(new cAxisStep("descendant-or-self", new cKindTest("node")));
 		//
 		oLexer.next();
-		if (oLexer.eof() ||!(oExpr = cStepExpr.parse(oLexer, oResolver)))
+		if (oLexer.eof() ||!(oExpr = cStepExpr.parse(oLexer, oStaticContext)))
 			throw "PathExpr.parse: Expected StepExpr expression";
 		//
 		oPathExpr.items.push(oExpr);
@@ -80,5 +80,5 @@ cPathExpr.prototype.evaluate	= function (oContext) {
 	// Restore context item
 	oContext.item	= vContextItem;
 	//
-	return cXPath2Sequence.order(oSequence);
+	return cXPath2Sequence.order(oSequence, oContext);
 };

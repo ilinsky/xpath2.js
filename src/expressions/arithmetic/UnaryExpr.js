@@ -17,10 +17,10 @@ cUnaryExpr.prototype.expression	= null;
 
 //
 cUnaryExpr.operators	= {};
-cUnaryExpr.operators['-']	= function(oRight) {
+cUnaryExpr.operators['-']	= function(oRight, oContext) {
 	var cRight	= cXSAnyAtomicType.typeOf(oRight);
 	if (cXSAnyAtomicType.isNumeric(cRight))
-		return cFunctionCall.operators["numeric-unary-minus"](oRight);
+		return cFunctionCall.operators["numeric-unary-minus"].call(oContext, oRight);
 	//
 	throw new cXPath2Error("XPTY0004"
 //->Debug
@@ -28,10 +28,10 @@ cUnaryExpr.operators['-']	= function(oRight) {
 //<-Debug
 	);	// Arithmetic operator is not defined for arguments of types ({type1}, {type2})
 };
-cUnaryExpr.operators['+']	= function(oRight) {
+cUnaryExpr.operators['+']	= function(oRight, oContext) {
 	var cRight	= cXSAnyAtomicType.typeOf(oRight);
 	if (cXSAnyAtomicType.isNumeric(cRight))
-		return cFunctionCall.operators["numeric-unary-plus"](oRight);
+		return cFunctionCall.operators["numeric-unary-plus"].call(oContext, oRight);
 	//
 	throw new cXPath2Error("XPTY0004"
 //->Debug
@@ -42,11 +42,11 @@ cUnaryExpr.operators['+']	= function(oRight) {
 
 // Static members
 // UnaryExpr	:= ("-" | "+")* ValueExpr
-cUnaryExpr.parse	= function (oLexer, oResolver) {
+cUnaryExpr.parse	= function (oLexer, oStaticContext) {
 	if (oLexer.eof())
 		return;
 	if (!(oLexer.peek() in cUnaryExpr.operators))
-		return cValueExpr.parse(oLexer, oResolver);
+		return cValueExpr.parse(oLexer, oStaticContext);
 
 	// Unary expression
 	var sOperator	= '+',
@@ -56,13 +56,13 @@ cUnaryExpr.parse	= function (oLexer, oResolver) {
 			sOperator	= sOperator == '-' ? '+' : '-';
 		oLexer.next();
 	}
-	if (oLexer.eof() ||!(oExpr = cValueExpr.parse(oLexer, oResolver)))
+	if (oLexer.eof() ||!(oExpr = cValueExpr.parse(oLexer, oStaticContext)))
 		throw "UnaryExpr.parse: Expected ValueExpr expression";
 	return new cUnaryExpr(sOperator, oExpr);
 };
 
 cUnaryExpr.prototype.evaluate	= function (oContext) {
-	var oRight	= cXPath2Sequence.atomize(this.expression.evaluate(oContext));
+	var oRight	= cXPath2Sequence.atomize(this.expression.evaluate(oContext), oContext);
 
 	//
 	if (oRight.isEmpty())
@@ -78,5 +78,5 @@ cUnaryExpr.prototype.evaluate	= function (oContext) {
 	if (vRight instanceof cXSUntypedAtomic)
 		vRight	= cXSDouble.cast(vRight);	// cast to xs:double
 
-	return new cXPath2Sequence(cUnaryExpr.operators[this.operator](vRight));
+	return new cXPath2Sequence(cUnaryExpr.operators[this.operator](vRight, oContext));
 };

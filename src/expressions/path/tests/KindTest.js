@@ -30,7 +30,7 @@ cKindTest.names["schema-element"]	= {};
 cKindTest.names["schema-attribute"]	= {};
 
 // Static members
-cKindTest.parse	= function (oLexer, oResolver) {
+cKindTest.parse	= function (oLexer, oStaticContext) {
 	var sName	= oLexer.peek();
 	if (oLexer.peek(1) == '(') {
 		//
@@ -87,8 +87,8 @@ cKindTest.parse	= function (oLexer, oResolver) {
 };
 
 // Public members
-cKindTest.prototype.test	= function (oNode) {
-	var nType	= cXPath2.DOMAdapter.isNode(oNode) ? cXPath2.DOMAdapter.getProperty(oNode, "nodeType") : 0;
+cKindTest.prototype.test	= function (oContext, oNode) {
+	var nType	= oContext.staticContext.DOMAdapter.isNode(oNode) ? oContext.staticContext.DOMAdapter.getProperty(oNode, "nodeType") : 0;
 	switch (this.name) {
 		// Node type test
 		case "node":			return !!nType;

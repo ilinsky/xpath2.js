@@ -20,10 +20,10 @@ cVarRef.prototype.localName		= null;
 cVarRef.prototype.namespaceURI	= null;
 
 // Static members
-cVarRef.parse	= function (oLexer, oResolver) {
+cVarRef.parse	= function (oLexer, oStaticContext) {
 	var aMatch	= oLexer.peek().match(cVarRef.RegExp);
 	if (aMatch) {
-		var oVarRef	= new cVarRef(aMatch[1] || null, aMatch[2], aMatch[1] ? oResolver(aMatch[1]) : null);
+		var oVarRef	= new cVarRef(aMatch[1] || null, aMatch[2], aMatch[1] ? oStaticContext.getURIForPrefix(aMatch[1]) : null);
 		oLexer.next();
 		return oVarRef;
 	}

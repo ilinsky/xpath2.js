@@ -15,17 +15,17 @@ function cCastExpr(oExpr, oType) {
 cCastExpr.prototype.expression	= null;
 cCastExpr.prototype.type		= null;
 
-cCastExpr.parse	= function(oLexer, oResolver) {
+cCastExpr.parse	= function(oLexer, oStaticContext) {
 	var oExpr,
 		oType;
-	if (oLexer.eof() ||!(oExpr = cUnaryExpr.parse(oLexer, oResolver)))
+	if (oLexer.eof() ||!(oExpr = cUnaryExpr.parse(oLexer, oStaticContext)))
 		return;
 
 	if (!(oLexer.peek() == "cast" && oLexer.peek(1) == "as"))
 		return oExpr;
 
 	oLexer.next(2);
-	if (oLexer.eof() ||!(oType = cSingleType.parse(oLexer, oResolver)))
+	if (oLexer.eof() ||!(oType = cSingleType.parse(oLexer, oStaticContext)))
 		throw "CastExpr.parse: Expected expression operand";
 
 	return new cCastExpr(oExpr, oType);
@@ -51,5 +51,5 @@ cCastExpr.prototype.evaluate	= function(oContext) {
 		);
 
 	//
-	return new cXPath2Sequence(this.type.itemType.cast(cXPath2Sequence.atomizeItem(oSequence1.items[0])));
+	return new cXPath2Sequence(this.type.itemType.cast(cXPath2Sequence.atomizeItem(oSequence1.items[0], oContext)));
 };

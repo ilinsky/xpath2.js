@@ -16,14 +16,14 @@ cForExpr.prototype.bindings		= null;
 cForExpr.prototype.returnExpr	= null;
 
 // Static members
-cForExpr.parse	= function (oLexer, oResolver) {
+cForExpr.parse	= function (oLexer, oStaticContext) {
 	if (oLexer.peek() == "for" && oLexer.peek(1).substr(0, 1) == '$') {
 		oLexer.next();
 
 		var oForExpr	= new cForExpr,
 			oExpr;
 		do {
-			oForExpr.bindings.push(cSimpleForBinding.parse(oLexer, oResolver));
+			oForExpr.bindings.push(cSimpleForBinding.parse(oLexer, oStaticContext));
 		}
 		while (oLexer.peek() == ',' && oLexer.next());
 
@@ -31,7 +31,7 @@ cForExpr.parse	= function (oLexer, oResolver) {
 			throw "ForExpr.parse: Expected 'return' token";
 
 		oLexer.next();
-		if (oLexer.eof() ||!(oExpr = cExprSingle.parse(oLexer, oResolver)))
+		if (oLexer.eof() ||!(oExpr = cExprSingle.parse(oLexer, oStaticContext)))
 			throw "ForExpr.parse: expected 'return' statement operand";
 
 		oForExpr.returnExpr	= oExpr;
@@ -76,11 +76,11 @@ cSimpleForBinding.prototype.inExpr		= null;
 
 cSimpleForBinding.RegExp	= /^\$(?:(?![0-9-])([\w-]+)\:)?(?![0-9-])([\w-]+)$/;
 
-cSimpleForBinding.parse	= function(oLexer, oResolver) {
+cSimpleForBinding.parse	= function(oLexer, oStaticContext) {
 	var aMatch	= oLexer.peek().match(cSimpleForBinding.RegExp);
 	if (aMatch && oLexer.peek(1) == "in") {
 		oLexer.next(2);
-		return new cSimpleForBinding(aMatch[1] || null, aMatch[2], aMatch[1] ? oResolver(aMatch[1]) : null, cExprSingle.parse(oLexer, oResolver));
+		return new cSimpleForBinding(aMatch[1] || null, aMatch[2], aMatch[1] ? oStaticContext.getURIForPrefix(aMatch[1]) : null, cExprSingle.parse(oLexer, oStaticContext));
 	}
 	else
 		throw "Not SimpleForBinding expression";

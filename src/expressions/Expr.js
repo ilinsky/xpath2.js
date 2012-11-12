@@ -14,12 +14,12 @@ function cExpr() {
 cExpr.prototype.items	= null;
 
 // Static members
-cExpr.parse	= function(oLexer, oResolver) {
+cExpr.parse	= function(oLexer, oStaticContext) {
 	//
 	var oExpr	= new cExpr,
 		oItem;
 	do {
-		if (oLexer.eof() ||!(oItem = cExprSingle.parse(oLexer, oResolver)))
+		if (oLexer.eof() ||!(oItem = cExprSingle.parse(oLexer, oStaticContext)))
 			throw "Expr.parse: expected ExprSingle expression";
 		oExpr.items.push(oItem);
 	}
@@ -36,6 +36,6 @@ cExpr.parse	= function(oLexer, oResolver) {
 cExpr.prototype.evaluate	= function(oContext) {
 	var oSequence	= new cXPath2Sequence;
 	for (var nIndex = 0, nLength = this.items.length; nIndex < nLength; nIndex++)
-		oSequence	= cFunctionCall.operators["concatenate"](oSequence, this.items[nIndex].evaluate(oContext));
+		oSequence	= cFunctionCall.operators["concatenate"].call(oContext, oSequence, this.items[nIndex].evaluate(oContext));
 	return oSequence;
 };

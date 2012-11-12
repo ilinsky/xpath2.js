@@ -8,35 +8,17 @@
  */
 
 function cXPath2Evaluator() {
-
+	this.cache	= {};
+	this.defaultStaticContext	= new cXPath2StaticContext;
 };
 
-cXPath2Evaluator.prototype.baseURI	= null;
-cXPath2Evaluator.prototype.functionMap	= null;
-cXPath2Evaluator.prototype.collationMap	= null;
-cXPath2Evaluator.prototype.defaultCollationName	= null;
-cXPath2Evaluator.prototype.defaultElementNamespace	= null;
-cXPath2Evaluator.prototype.defaultFunctionNamespace	= null;
+cXPath2Evaluator.prototype.cache	= null;
+cXPath2Evaluator.prototype.defaultStaticContext	= null;
 
-// throws XPath2ExpressionException
-cXPath2Evaluator.prototype.compile	= function(sExpression, fResolver) {
-	return oExpression;
+cXPath2Evaluator.prototype.compile	= function(sExpression, oStaticContext) {
+	return this.cache[sExpression] || (this.cache[sExpression] = new cXPath2Expression(sExpression, oStaticContext || this.defaultStaticContext));
 };
 
-// throws XPath2ExpressionException
-cXPath2Evaluator.prototype.resolve	= function(sExpression, oContext, oScope) {
-
-};
-
-cXPath2Evaluator.prototype.reset	= function() {
-
-};
-
-// XPath2Evaluator own members
-cXPath2Evaluator.prototype.setStaticContext	= function(oStaticContext) {
-	this.staticContext	= oStaticContext;
-};
-
-cXPath2Evaluator.prototype.getStaticContext	= function() {
-	return this.staticContext;
+cXPath2Evaluator.prototype.evaluate	= function(sExpression, vItem, oStaticContext, oScope) {
+	return this.compile(sExpression, oStaticContext || this.defaultStaticContext).evaluate(vItem, oScope).items;
 };

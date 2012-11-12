@@ -7,10 +7,13 @@
  *
  */
 
-function cXPath2DynamicContext(vItem, nPosition, nSize, oScope) {
+function cXPath2DynamicContext(oStaticContext, vItem, oScope) {
+	//
+	this.staticContext	= oStaticContext;
+	//
 	this.item		= vItem;
-	this.position	= nPosition || 1;
-	this.size		= nSize || 1;
+	this.position	= 1;
+	this.size		= 1;
 	//
 	this.scope		= oScope || {};
 	this.stack		= {};
@@ -30,7 +33,10 @@ cXPath2DynamicContext.prototype.stack		= null;	// Variables stack
 //
 cXPath2DynamicContext.prototype.dateTime	= null;
 cXPath2DynamicContext.prototype.timezone	= null;
+//
+cXPath2DynamicContext.prototype.staticContext	= null;
 
+// Stack management
 cXPath2DynamicContext.prototype.pushVariable	= function(sName, vValue) {
 	if (!this.stack.hasOwnProperty(sName))
 		this.stack[sName]	= [];

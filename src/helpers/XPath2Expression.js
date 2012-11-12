@@ -7,13 +7,20 @@
  *
  */
 
-// Implements javax.xml.xpath.XPathExpression
-function cXPath2Expression() {
-	// TODO: throw if not called from cXPath2Evaluator
+function cXPath2Expression(sExpression, oStaticContext) {
+	var oLexer	= new cXPath2Lexer(sExpression),
+		oExpr	= cExpr.parse(oLexer, oStaticContext);
+	//
+	if (!oLexer.eof())
+		throw "Expr.parse: Junk at the end of expression";
+	//
+	this.staticContext	= oStaticContext;
+	this.internalExpression	= oExpr;
 };
 
+cXPath2Expression.prototype.staticContext	= null;
 cXPath2Expression.prototype.internalExpression	= null;
 
-cXPath2Expression.prototype.evaluate	= function(oNode/*[*/, nType/*]*/) {
-
+cXPath2Expression.prototype.evaluate	= function(vItem, oScope) {
+	return this.internalExpression.evaluate(new cXPath2DynamicContext(this.staticContext, vItem, oScope));
 };

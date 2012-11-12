@@ -22,21 +22,21 @@ cNameTest.prototype.localName		= null;
 cNameTest.prototype.namespaceURI	= null;
 
 // Static members
-cNameTest.parse	= function (oLexer, oResolver) {
+cNameTest.parse	= function (oLexer, oStaticContext) {
 	var aMatch	= oLexer.peek().match(cNameTest.RegExp);
 	if (aMatch) {
 		if (aMatch[1] == '*' && aMatch[2] == '*')
 			throw "NameTest.parse: illegal wildcard value";
 		oLexer.next();
-		return new cNameTest(aMatch[1] || null, aMatch[2], aMatch[1] ? aMatch[1] == '*' ? '*' : oResolver(aMatch[1]) || null : null);
+		return new cNameTest(aMatch[1] || null, aMatch[2], aMatch[1] ? aMatch[1] == '*' ? '*' : oStaticContext.getURIForPrefix(aMatch[1]) || null : null);
 	}
 };
 
 // Public members
-cNameTest.prototype.test	= function (oNode) {
-	var nType	= cXPath2.DOMAdapter.getProperty(oNode, "nodeType"),
-		sLocalName		= cXPath2.DOMAdapter.getProperty(oNode, "localName"),
-		sNameSpaceURI	= cXPath2.DOMAdapter.getProperty(oNode, "namespaceURI");
+cNameTest.prototype.test	= function (oContext, oNode) {
+	var nType	= oContext.staticContext.DOMAdapter.getProperty(oNode, "nodeType"),
+		sLocalName		= oContext.staticContext.DOMAdapter.getProperty(oNode, "localName"),
+		sNameSpaceURI	= oContext.staticContext.DOMAdapter.getProperty(oNode, "namespaceURI");
 	return nType == 1 ?
 				(this.localName == '*' || sLocalName == this.localName)
 					&& (this.namespaceURI == '*' ||(this.namespaceURI ? sNameSpaceURI == this.namespaceURI : true))

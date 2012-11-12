@@ -19,17 +19,17 @@ cAtomicType.prototype.prefix		= null;
 cAtomicType.prototype.localName		= null;
 cAtomicType.prototype.namespaceURI	= null;
 
-cAtomicType.parse	= function(oLexer, oResolver) {
+cAtomicType.parse	= function(oLexer, oStaticContext) {
 	var aMatch	= oLexer.peek().match(cAtomicType.RegExp);
 	if (aMatch) {
 		if (aMatch[1] == '*' || aMatch[2] == '*')
 			throw "AtomicType.parse: illegal wildcard value";
 		oLexer.next();
-		return new cAtomicType(aMatch[1] || null, aMatch[2], aMatch[1] ? oResolver(aMatch[1]) : null);
+		return new cAtomicType(aMatch[1] || null, aMatch[2], aMatch[1] ? oStaticContext.getURIForPrefix(aMatch[1]) : null);
 	}
 };
 
-cAtomicType.prototype.test	= function(vItem) {
+cAtomicType.prototype.test	= function(oContext, vItem) {
 	// Test
 	var cTestType	= cFunctionCall.dataTypes[/*'{' + this.namespaceURI + '}' + */this.localName],
 		cItemType	= cXSAnyAtomicType.typeOf(vItem);

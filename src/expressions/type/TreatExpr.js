@@ -15,17 +15,17 @@ function cTreatExpr(oExpr, oType) {
 cTreatExpr.prototype.expression	= null;
 cTreatExpr.prototype.type		= null;
 
-cTreatExpr.parse	= function(oLexer, oResolver) {
+cTreatExpr.parse	= function(oLexer, oStaticContext) {
 	var oExpr,
 		oType;
-	if (oLexer.eof() ||!(oExpr = cCastableExpr.parse(oLexer, oResolver)))
+	if (oLexer.eof() ||!(oExpr = cCastableExpr.parse(oLexer, oStaticContext)))
 		return;
 
 	if (!(oLexer.peek() == "treat" && oLexer.peek(1) == "as"))
 		return oExpr;
 
 	oLexer.next(2);
-	if (oLexer.eof() ||!(oType = cSequenceType.parse(oLexer, oResolver)))
+	if (oLexer.eof() ||!(oType = cSequenceType.parse(oLexer, oStaticContext)))
 		throw "TreatExpr.parse: Expected expression operand";
 
 	return new cTreatExpr(oExpr, oType);

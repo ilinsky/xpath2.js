@@ -48,7 +48,7 @@
 // 15.1 General Functions and Operators on Sequences
 // fn:boolean($arg as item()*) as xs:boolean
 fFunctionCall_defineSystemFunction("boolean",	[[cXTItem, '*']],	function(oSequence1) {
-	return oSequence1.toBoolean();
+	return oSequence1.toBoolean(this);
 });
 
 // fn:index-of($seqParam as xs:anyAtomicType*, $srchParam as xs:anyAtomicType) as xs:integer*
@@ -218,9 +218,9 @@ fFunctionCall_defineSystemFunction("avg",	[[cXSAnyAtomicType, '*']],	function(oS
 			vRight	= oSequence1.items[nIndex];
 			if (vRight instanceof cXSUntypedAtomic)
 				vRight	= cXSDouble.cast(vRight);
-			vValue	= cAdditiveExpr.operators['+'](vValue, vRight);
+			vValue	= cAdditiveExpr.operators['+'](vValue, vRight, this);
 		}
-		return cMultiplicativeExpr.operators['div'](vValue, nLength);
+		return cMultiplicativeExpr.operators['div'](vValue, nLength, this);
 	}
 	catch (e) {
 		// XPTY0004: Arithmetic operator is not defined for provided arguments
@@ -244,7 +244,7 @@ fFunctionCall_defineSystemFunction("max",	[[cXSAnyAtomicType, '*'], [cXSString, 
 	try {
 		var vValue	= oSequence1.items[0];
 		for (var nIndex = 1, nLength = oSequence1.items.length; nIndex < nLength; nIndex++)
-			if (cComparisonExpr.ValueComp.operators['ge'](oSequence1.items[nIndex], vValue))
+			if (cComparisonExpr.ValueComp.operators['ge'](oSequence1.items[nIndex], vValue, this))
 				vValue	= oSequence1.items[nIndex];
 		return vValue;
 	}
@@ -270,7 +270,7 @@ fFunctionCall_defineSystemFunction("min",	[[cXSAnyAtomicType, '*'], [cXSString, 
 	try {
 		var vValue	= oSequence1.items[0];
 		for (var nIndex = 1, nLength = oSequence1.items.length; nIndex < nLength; nIndex++)
-			if (cComparisonExpr.ValueComp.operators['le'](oSequence1.items[nIndex], vValue))
+			if (cComparisonExpr.ValueComp.operators['le'](oSequence1.items[nIndex], vValue, this))
 				vValue	= oSequence1.items[nIndex];
 		return vValue;
 	}
@@ -309,7 +309,7 @@ fFunctionCall_defineSystemFunction("sum",	[[cXSAnyAtomicType, '*'], [cXSAnyAtomi
 			vRight	= oSequence1.items[nIndex];
 			if (vRight instanceof cXSUntypedAtomic)
 				vRight	= cXSDouble.cast(vRight);
-			vValue	= cAdditiveExpr.operators['+'](vValue, vRight);
+			vValue	= cAdditiveExpr.operators['+'](vValue, vRight, this);
 		}
 		return vValue;
 	}
@@ -329,7 +329,7 @@ fFunctionCall_defineSystemFunction("sum",	[[cXSAnyAtomicType, '*'], [cXSAnyAtomi
 // fn:id($arg as xs:string*, $node as node()) as element()*
 fFunctionCall_defineSystemFunction("id",	[[cXSString, '*'], [cXTNode, '', true]],	function(oSequence1, oSequence2) {
 	if (arguments.length < 2) {
-		if (!cXPath2.DOMAdapter.isNode(this.item))
+		if (!this.staticContext.DOMAdapter.isNode(this.item))
 			throw new cXPath2Error("XPTY0004"
 //->Debug
 					, "id() function called when the context item is not a node"
@@ -343,7 +343,7 @@ fFunctionCall_defineSystemFunction("id",	[[cXSString, '*'], [cXTNode, '', true]]
 
 	// Get root node and check if it is Document
 	var oDocument	= cFunctionCall.functions["root"].call(this, new cXPath2Sequence(oNode));
-	if (cXPath2.DOMAdapter.getProperty(oDocument, "nodeType") != 9)
+	if (this.staticContext.DOMAdapter.getProperty(oDocument, "nodeType") != 9)
 		throw new cXPath2Error("FODC0001");
 
 	// Search for elements
@@ -353,7 +353,7 @@ fFunctionCall_defineSystemFunction("id",	[[cXSString, '*'], [cXTNode, '', true]]
 			if ((oNode = cDOMAdapter.getElementById(oDocument, aValue[nRightIndex])) && oSequence.indexOf(oNode) ==-1)
 				oSequence.add(oNode);
 	//
-	return cXPath2Sequence.order(oSequence);
+	return cXPath2Sequence.order(oSequence, this);
 });
 
 // fn:idref($arg as xs:string*) as node()*

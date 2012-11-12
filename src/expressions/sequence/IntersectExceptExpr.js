@@ -19,17 +19,17 @@ cIntersectExceptExpr.prototype.items	= null;
 cIntersectExceptExpr.operators	={};
 
 // Operator mappings
-cIntersectExceptExpr.operators["intersect"]	= function(oLeft, oRight) {
-	return cFunctionCall.operators["intersect"](oLeft, oRight);
+cIntersectExceptExpr.operators["intersect"]	= function(oLeft, oRight, oContext) {
+	return cFunctionCall.operators["intersect"].call(oContext, oLeft, oRight);
 };
-cIntersectExceptExpr.operators["except"]	= function(oLeft, oRight) {
-	return cFunctionCall.operators["except"](oLeft, oRight);
+cIntersectExceptExpr.operators["except"]	= function(oLeft, oRight, oContext) {
+	return cFunctionCall.operators["except"].call(oContext, oLeft, oRight);
 };
 
 // Static members
-cIntersectExceptExpr.parse	= function (oLexer, oResolver) {
+cIntersectExceptExpr.parse	= function (oLexer, oStaticContext) {
 	var oExpr;
-	if (oLexer.eof() ||!(oExpr = cInstanceofExpr.parse(oLexer, oResolver)))
+	if (oLexer.eof() ||!(oExpr = cInstanceofExpr.parse(oLexer, oStaticContext)))
 		return;
 	if (!(oLexer.peek() in cIntersectExceptExpr.operators))
 		return oExpr;
@@ -39,7 +39,7 @@ cIntersectExceptExpr.parse	= function (oLexer, oResolver) {
 		sOperator;
 	while ((sOperator = oLexer.peek()) in cIntersectExceptExpr.operators) {
 		oLexer.next();
-		if (oLexer.eof() ||!(oExpr = cInstanceofExpr.parse(oLexer, oResolver)))
+		if (oLexer.eof() ||!(oExpr = cInstanceofExpr.parse(oLexer, oStaticContext)))
 			throw "IntersectExceptExpr.parse: right operand missing";
 		oIntersectExceptExpr.items.push([sOperator, oExpr]);
 	}
@@ -50,6 +50,6 @@ cIntersectExceptExpr.parse	= function (oLexer, oResolver) {
 cIntersectExceptExpr.prototype.evaluate	= function (oContext) {
 	var oSequence	= this.left.evaluate(oContext);
 	for (var nIndex = 0, nLength = this.items.length, oItem; nIndex < nLength; nIndex++)
-		oSequence	= cIntersectExceptExpr.operators[(oItem = this.items[nIndex])[0]](oSequence, oItem[1].evaluate(oContext));
+		oSequence	= cIntersectExceptExpr.operators[(oItem = this.items[nIndex])[0]](oSequence, oItem[1].evaluate(oContext), oContext);
 	return oSequence;
 };

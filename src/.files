@@ -4,9 +4,11 @@ import.js
 helpers/DOMAdapter.js
 helpers/XPath2Error.js
 helpers/XPath2Lexer.js
-helpers/XPath2Parser.js
-helpers/XPath2DynamicContext.js
 helpers/XPath2Sequence.js
+helpers/XPath2DynamicContext.js
+helpers/XPath2StaticContext.js
+helpers/XPath2Expression.js
+helpers/XPath2Evaluator.js
 #
 expressions/Expr.js
 expressions/ExprSingle.js

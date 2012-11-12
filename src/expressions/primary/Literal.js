@@ -12,10 +12,10 @@ function cLiteral() {
 };
 
 // Static members
-cLiteral.parse	= function (oLexer, oResolver) {
+cLiteral.parse	= function (oLexer, oStaticContext) {
 	if (!oLexer.eof())
-		return cNumericLiteral.parse(oLexer, oResolver)
-			|| cStringLiteral.parse(oLexer, oResolver);
+		return cNumericLiteral.parse(oLexer, oStaticContext)
+			|| cStringLiteral.parse(oLexer, oStaticContext);
 };
 
 // Public members

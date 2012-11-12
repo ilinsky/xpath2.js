@@ -23,7 +23,7 @@
 // fn:name($arg as node()?) as xs:string
 fFunctionCall_defineSystemFunction("name",	[[cXTNode, '?', true]],	function(oSequence1) {
 	if (!arguments.length) {
-		if (!cXPath2.DOMAdapter.isNode(this.item))
+		if (!this.staticContext.DOMAdapter.isNode(this.item))
 			throw new cXPath2Error("XPTY0004"
 //->Debug
 					, "name() function called when the context item is not a node"
@@ -36,14 +36,14 @@ fFunctionCall_defineSystemFunction("name",	[[cXTNode, '?', true]],	function(oSeq
 		return '';
 	//
 	var vValue	= cFunctionCall.functions["node-name"].call(this, oSequence1);
-	return vValue === null ? '' : vValue.toString();
+	return vValue === null ? '' : vValue.toString(this);
 });
 
 // fn:local-name() as xs:string
 // fn:local-name($arg as node()?) as xs:string
 fFunctionCall_defineSystemFunction("local-name",	[[cXTNode, '?', true]],	function(oSequence1) {
 	if (!arguments.length) {
-		if (!cXPath2.DOMAdapter.isNode(this.item))
+		if (!this.staticContext.DOMAdapter.isNode(this.item))
 			throw new cXPath2Error("XPTY0004"
 //->Debug
 					, "local-name() function called when the context item is not a node"
@@ -55,14 +55,14 @@ fFunctionCall_defineSystemFunction("local-name",	[[cXTNode, '?', true]],	functio
 	if (oSequence1.isEmpty())
 		return '';
 	//
-	return cXPath2.DOMAdapter.getProperty(oSequence1.items[0], "localName") || '';
+	return this.staticContext.DOMAdapter.getProperty(oSequence1.items[0], "localName") || '';
 });
 
 // fn:namespace-uri() as xs:anyURI
 // fn:namespace-uri($arg as node()?) as xs:anyURI
 fFunctionCall_defineSystemFunction("namespace-uri",	[[cXTNode, '?', true]],	function(oSequence1) {
 	if (!arguments.length) {
-		if (!cXPath2.DOMAdapter.isNode(this.item))
+		if (!this.staticContext.DOMAdapter.isNode(this.item))
 			throw new cXPath2Error("XPTY0004"
 //->Debug
 					, "namespace-uri() function called when the context item is not a node"
@@ -74,7 +74,7 @@ fFunctionCall_defineSystemFunction("namespace-uri",	[[cXTNode, '?', true]],	func
 	if (oSequence1.isEmpty())
 		return '';
 	//
-	return cXPath2.DOMAdapter.getProperty(oSequence1.items[0], "namespaceURI") || '';
+	return this.staticContext.DOMAdapter.getProperty(oSequence1.items[0], "namespaceURI") || '';
 });
 
 // fn:number() as xs:double
@@ -106,7 +106,7 @@ fFunctionCall_defineSystemFunction("lang",	[[cXSString, '?'], [cXTNode, '?', tru
 // fn:root($arg as node()?) as node()?
 fFunctionCall_defineSystemFunction("root",	[[cXTNode, '?', true]],	function(oSequence1) {
 	if (!arguments.length) {
-		if (!cXPath2.DOMAdapter.isNode(this.item))
+		if (!this.staticContext.DOMAdapter.isNode(this.item))
 			throw new cXPath2Error("XPTY0004"
 //->Debug
 					, "root() function called when the context item is not a node"
@@ -121,10 +121,10 @@ fFunctionCall_defineSystemFunction("root",	[[cXTNode, '?', true]],	function(oSeq
 	var oParent	= oSequence1.items[0];
 
 	// If context node is Attribute
-	if (cXPath2.DOMAdapter.getProperty(oParent, "nodeType") == 2)
-		oParent	= cXPath2.DOMAdapter.getProperty(oParent, "ownerElement");
+	if (this.staticContext.DOMAdapter.getProperty(oParent, "nodeType") == 2)
+		oParent	= this.staticContext.DOMAdapter.getProperty(oParent, "ownerElement");
 
-	for (var oNode = oParent; oNode; oNode = cXPath2.DOMAdapter.getProperty(oParent, "parentNode"))
+	for (var oNode = oParent; oNode; oNode = this.staticContext.DOMAdapter.getProperty(oParent, "parentNode"))
 		oParent	= oNode;
 
 	return oParent;

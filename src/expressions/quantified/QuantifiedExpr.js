@@ -18,7 +18,7 @@ cQuantifiedExpr.prototype.quantifier	= null;
 cQuantifiedExpr.prototype.satisfiesExpr	= null;
 
 // Static members
-cQuantifiedExpr.parse	= function (oLexer, oResolver) {
+cQuantifiedExpr.parse	= function (oLexer, oStaticContext) {
 	var sQuantifier	= oLexer.peek();
 	if ((sQuantifier == "some" || sQuantifier == "every") && oLexer.peek(1).substr(0, 1) == '$') {
 		oLexer.next();
@@ -26,7 +26,7 @@ cQuantifiedExpr.parse	= function (oLexer, oResolver) {
 		var oQuantifiedExpr	= new cQuantifiedExpr(sQuantifier),
 			oExpr;
 		do {
-			oQuantifiedExpr.bindings.push(cSimpleQuantifiedBinding.parse(oLexer, oResolver));
+			oQuantifiedExpr.bindings.push(cSimpleQuantifiedBinding.parse(oLexer, oStaticContext));
 		}
 		while (oLexer.peek() == ',' && oLexer.next());
 
@@ -34,7 +34,7 @@ cQuantifiedExpr.parse	= function (oLexer, oResolver) {
 			throw "QuantifiedExpr.parse: Expected 'satisfies' token";
 
 		oLexer.next();
-		if (oLexer.eof() ||!(oExpr = cExprSingle.parse(oLexer, oResolver)))
+		if (oLexer.eof() ||!(oExpr = cExprSingle.parse(oLexer, oStaticContext)))
 			throw "QuantifiedExpr.parse: expected 'satisfies' statement operand";
 
 		oQuantifiedExpr.satisfiesExpr	= oExpr;
@@ -56,7 +56,7 @@ cQuantifiedExpr.prototype.evaluate	= function (oContext) {
 			if (nBinding < oSelf.bindings.length)
 				arguments.callee(oSelf, nBinding);
 			else
-				bResult	= oSelf.satisfiesExpr.evaluate(oContext).toBoolean();
+				bResult	= oSelf.satisfiesExpr.evaluate(oContext).toBoolean(oContext);
 			oContext.popVariable(sUri);
 		}
 	})(this, 0);
@@ -81,11 +81,11 @@ cSimpleQuantifiedBinding.prototype.inExpr	= null;
 
 cSimpleQuantifiedBinding.RegExp	= /^\$(?:(?![0-9-])([\w-]+)\:)?(?![0-9-])([\w-]+)$/;
 
-cSimpleQuantifiedBinding.parse	= function(oLexer, oResolver) {
+cSimpleQuantifiedBinding.parse	= function(oLexer, oStaticContext) {
 	var aMatch	= oLexer.peek().match(cSimpleQuantifiedBinding.RegExp);
 	if (aMatch && oLexer.peek(1) == "in") {
 		oLexer.next(2);
-		return new cSimpleQuantifiedBinding(aMatch[1] || null, aMatch[2], aMatch[1] ? oResolver(aMatch[1]) : null, cExprSingle.parse(oLexer, oResolver));
+		return new cSimpleQuantifiedBinding(aMatch[1] || null, aMatch[2], aMatch[1] ? oStaticContext.getURIForPrefix(aMatch[1]) : null, cExprSingle.parse(oLexer, oStaticContext));
 	}
 	else
 		throw "Not SimpleQuantifiedBinding expression";

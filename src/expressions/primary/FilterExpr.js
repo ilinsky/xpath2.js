@@ -16,14 +16,14 @@ cFilterExpr.prototype.expression	= null;
 cFilterExpr.prototype.predicates	= null;
 
 // Static members
-cFilterExpr.parse	= function (oLexer, oResolver) {
+cFilterExpr.parse	= function (oLexer, oStaticContext) {
 	var oExpr;
-	if (oLexer.eof() ||!(oExpr = cPrimaryExpr.parse(oLexer, oResolver)))
+	if (oLexer.eof() ||!(oExpr = cPrimaryExpr.parse(oLexer, oStaticContext)))
 		return;
 
 	var oFilterExpr	= new cFilterExpr(oExpr);
 	// Parse predicates
-	cStepExpr.parsePredicates(oLexer, oResolver, oFilterExpr);
+	cStepExpr.parsePredicates(oLexer, oStaticContext, oFilterExpr);
 
 	// If no predicates found
 	if (oFilterExpr.predicates.length == 0)

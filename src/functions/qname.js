@@ -32,7 +32,7 @@ fFunctionCall_defineSystemFunction("resolve-QName",	[[cXSString, '?'], [cXTEleme
 	if (oSequence2.isEmpty())
 		return null;
 
-	return new cXSQName(sPrefix, sLocalName, cXPath2.DOMAdapter.lookupNamespaceURI(oSequence2.items[0], sPrefix || ""));
+	return new cXSQName(sPrefix, sLocalName, this.staticContext.DOMAdapter.lookupNamespaceURI(oSequence2.items[0], sPrefix || ""));
 });
 
 // fn:QName($paramURI as xs:string?, $paramQName as xs:string) as xs:QName
@@ -78,7 +78,7 @@ fFunctionCall_defineSystemFunction("namespace-uri-for-prefix",	[[cXSString, '?']
 	if (oSequence2.isEmpty())
 		return null;
 
-	return cXPath2.DOMAdapter.lookupNamespaceURI(oSequence2.items[0], sPrefix || "");
+	return this.staticContext.DOMAdapter.lookupNamespaceURI(oSequence2.items[0], sPrefix || "");
 });
 
 // fn:in-scope-prefixes($element as element()) as xs:string*

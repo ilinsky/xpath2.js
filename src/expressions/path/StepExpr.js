@@ -12,19 +12,19 @@ function cStepExpr() {
 };
 
 // Static members
-cStepExpr.parse	= function (oLexer, oResolver) {
+cStepExpr.parse	= function (oLexer, oStaticContext) {
 	if (!oLexer.eof())
-		return cFilterExpr.parse(oLexer, oResolver)
-			|| cAxisStep.parse(oLexer, oResolver);
+		return cFilterExpr.parse(oLexer, oStaticContext)
+			|| cAxisStep.parse(oLexer, oStaticContext);
 };
 
-cStepExpr.parsePredicates	= function (oLexer, oResolver, oStep) {
+cStepExpr.parsePredicates	= function (oLexer, oStaticContext, oStep) {
 	var oExpr;
 	// Parse predicates
 	while (oLexer.peek() == '[') {
 		oLexer.next();
 
-		if (oLexer.eof() ||!(oExpr = cExpr.parse(oLexer, oResolver)))
+		if (oLexer.eof() ||!(oExpr = cExpr.parse(oLexer, oStaticContext)))
 			throw "StepExpr.parsePredicates: expected Expr expression";
 
 		oStep.predicates.push(oExpr);
@@ -58,7 +58,7 @@ cStepExpr.prototype.applyPredicates	= function(oContext, oSequence) {
 					oSequence.add(oSequence1.items[nIndex]);
 			}
 			else
-			if (oSequence2.toBoolean())
+			if (oSequence2.toBoolean(oContext))
 				oSequence.add(oSequence1.items[nIndex]);
 		}
 	}

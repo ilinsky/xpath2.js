@@ -28,22 +28,22 @@ cFunctionCall.dataTypes	= {};
 // http://www.w3.org/2005/xpath-functions
 
 // Static members
-cFunctionCall.parse	= function (oLexer, oResolver) {
+cFunctionCall.parse	= function (oLexer, oStaticContext) {
 	var aMatch	= oLexer.peek().match(cFunctionCall.RegExp);
 	if (aMatch && oLexer.peek(1) == '(') {
 		// Reserved "functions"
 		if (!aMatch[1] && (aMatch[2] in cKindTest.names))
-			return cAxisStep.parse(oLexer);
+			return cAxisStep.parse(oLexer, oStaticContext);
 		// Other functions
 		if (aMatch[1] == '*' || aMatch[2] == '*')
 			throw "FunctionCall.parse: illegal use of wildcard in function name";
-		var oFunctionCallExpr	= new cFunctionCall(aMatch[1] || null, aMatch[2], aMatch[1] ? oResolver(aMatch[1]) || null : "http://www.w3.org/2005/xpath-functions"),
+		var oFunctionCallExpr	= new cFunctionCall(aMatch[1] || null, aMatch[2], aMatch[1] ? oStaticContext.getURIForPrefix(aMatch[1]) || null : "http://www.w3.org/2005/xpath-functions"),
 			oExpr;
 		oLexer.next(2);
 		//
 		if (oLexer.peek() != ')') {
 			do {
-				if (oLexer.eof() ||!(oExpr = cExprSingle.parse(oLexer, oResolver)))
+				if (oLexer.eof() ||!(oExpr = cExprSingle.parse(oLexer, oStaticContext)))
 					throw "FunctionCall.parse: expected ExprSingle expression";
 				oFunctionCallExpr.args.push(oExpr);
 			}
@@ -72,7 +72,7 @@ cFunctionCall.prototype.evaluate	= function (oContext) {
 		if (fFunction = cFunctionCall.functions[this.localName]) {
 			// Validate/Cast arguments
 			if (aParameters = fFunction.parameters)
-				fFunctionCall_prepare(this.localName, aParameters, fFunction, aArguments);
+				fFunctionCall_prepare(this.localName, aParameters, fFunction, aArguments, oContext);
 			//
 			var vResult	= fFunction.apply(oContext, aArguments);
 			//
@@ -87,7 +87,7 @@ cFunctionCall.prototype.evaluate	= function (oContext) {
 	if (this.namespaceURI == "http://www.w3.org/2001/XMLSchema") {
 		if (fFunction = cFunctionCall.dataTypes[this.localName]) {
 			//
-			fFunctionCall_prepare(this.localName, [[cXSAnyAtomicType]], fFunction, aArguments);
+			fFunctionCall_prepare(this.localName, [[cXSAnyAtomicType]], fFunction, aArguments, oContext);
 			//
 			return new cXPath2Sequence(fFunction.cast(aArguments[0].items[0]));
 		}
@@ -109,7 +109,7 @@ cFunctionCall.prototype.evaluate	= function (oContext) {
 };
 
 var aFunctionCall_numbers	= ["first", "second", "third", "fourth", "fifth"];
-function fFunctionCall_prepare(sName, aParameters, fFunction, aArguments) {
+function fFunctionCall_prepare(sName, aParameters, fFunction, aArguments, oContext) {
 	var oArgument,
 		nArgumentsLength	= aArguments.length,
 		oParameter,
@@ -165,7 +165,7 @@ function fFunctionCall_prepare(sName, aParameters, fFunction, aArguments) {
 				// Node types
 				if (cItemType == cXTNode || cItemType.prototype instanceof cXTNode) {
 					// Check if is node
-					if (!cXPath2.DOMAdapter.isNode(vItem))
+					if (!oContext.staticContext.DOMAdapter.isNode(vItem))
 						throw new cXPath2Error("XPTY0004"
 //->Debug
 								, "Required item type of " + aFunctionCall_numbers[nIndex] + " argument of " + sName + "() is " + cItemType
@@ -174,7 +174,7 @@ function fFunctionCall_prepare(sName, aParameters, fFunction, aArguments) {
 
 					// Check node type
 					if (cItemType != cXTNode) {
-						nNodeType	= cXPath2.DOMAdapter.getProperty(vItem, "nodeType");
+						nNodeType	= oContext.staticContext.DOMAdapter.getProperty(vItem, "nodeType");
 						if ([null, cXTElement, cXTAttribute, cXTText, cXTText, null, null, cXTProcessingInstruction, cXTComment, cXTDocument, null, null, null][nNodeType] != cItemType)
 							throw new cXPath2Error("XPTY0004"
 //->Debug
@@ -187,7 +187,7 @@ function fFunctionCall_prepare(sName, aParameters, fFunction, aArguments) {
 				// Atomic types
 				if (cItemType == cXSAnyAtomicType || cItemType.prototype instanceof cXSAnyAtomicType || cItemType == cXTNumeric) {
 					// Atomize item
-					vItem	= cXPath2Sequence.atomizeItem(vItem);
+					vItem	= cXPath2Sequence.atomizeItem(vItem, oContext);
 					// Cast if item type is xs:untypedAtomic
 					if (cItemType != cXSAnyAtomicType && vItem instanceof cXSUntypedAtomic)
 						vItem	=(cItemType != cXTNumeric ? cItemType : cXSDecimal).cast(vItem);

@@ -18,26 +18,26 @@ cMultiplicativeExpr.prototype.items	= null;
 //
 cMultiplicativeExpr.operators	={};
 
-cMultiplicativeExpr.operators['*']		= function (oLeft, oRight) {
+cMultiplicativeExpr.operators['*']		= function (oLeft, oRight, oContext) {
 	var cLeft	= cXSAnyAtomicType.typeOf(oLeft),
 		cRight	= cXSAnyAtomicType.typeOf(oRight);
 	if (cXSAnyAtomicType.isNumeric(cLeft)) {
 		if (cXSAnyAtomicType.isNumeric(cRight))
-			return cFunctionCall.operators["numeric-multiply"](oLeft, oRight);
+			return cFunctionCall.operators["numeric-multiply"].call(oContext, oLeft, oRight);
 		if (cRight == cXSYearMonthDuration)
-			return cFunctionCall.operators["multiply-yearMonthDuration"](oRight, oLeft);
+			return cFunctionCall.operators["multiply-yearMonthDuration"].call(oContext, oRight, oLeft);
 		if (cRight == cXSDayTimeDuration)
-			return cFunctionCall.operators["multiply-dayTimeDuration"](oRight, oLeft);
+			return cFunctionCall.operators["multiply-dayTimeDuration"].call(oContext, oRight, oLeft);
 	}
 	else {
 		if (cLeft == cXSYearMonthDuration) {
 			if (cXSAnyAtomicType.isNumeric(cRight))
-				return cFunctionCall.operators["multiply-yearMonthDuration"](oLeft, oRight);
+				return cFunctionCall.operators["multiply-yearMonthDuration"].call(oContext, oLeft, oRight);
 		}
 		else
 		if (cLeft == cXSDayTimeDuration) {
 			if (cXSAnyAtomicType.isNumeric(cRight))
-				return cFunctionCall.operators["multiply-dayTimeDuration"](oLeft, oRight);
+				return cFunctionCall.operators["multiply-dayTimeDuration"].call(oContext, oLeft, oRight);
 		}
 	}
 	//
@@ -47,26 +47,26 @@ cMultiplicativeExpr.operators['*']		= function (oLeft, oRight) {
 //<-Debug
 	);	// Arithmetic operator is not defined for arguments of types ({type1}, {type2})
 };
-cMultiplicativeExpr.operators['div']	= function (oLeft, oRight) {
+cMultiplicativeExpr.operators['div']	= function (oLeft, oRight, oContext) {
 	var cLeft	= cXSAnyAtomicType.typeOf(oLeft),
 		cRight	= cXSAnyAtomicType.typeOf(oRight);
 	if (cXSAnyAtomicType.isNumeric(cLeft)) {
 		if (cXSAnyAtomicType.isNumeric(cRight))
-			return cFunctionCall.operators["numeric-divide"](oLeft, oRight);
+			return cFunctionCall.operators["numeric-divide"].call(oContext, oLeft, oRight);
 	}
 	else
 	if (cLeft == cXSYearMonthDuration) {
 		if (cXSAnyAtomicType.isNumeric(cRight))
-			return cFunctionCall.operators["divide-yearMonthDuration"](oLeft, oRight);
+			return cFunctionCall.operators["divide-yearMonthDuration"].call(oContext, oLeft, oRight);
 		if (cRight == cXSYearMonthDuration)
-			return cFunctionCall.operators["divide-yearMonthDuration-by-yearMonthDuration"](oLeft, oRight);
+			return cFunctionCall.operators["divide-yearMonthDuration-by-yearMonthDuration"].call(oContext, oLeft, oRight);
 	}
 	else
 	if (cLeft == cXSDayTimeDuration) {
 		if (cXSAnyAtomicType.isNumeric(cRight))
-			return cFunctionCall.operators["divide-dayTimeDuration"](oLeft, oRight);
+			return cFunctionCall.operators["divide-dayTimeDuration"].call(oContext, oLeft, oRight);
 		if (cRight == cXSDayTimeDuration)
-			return cFunctionCall.operators["divide-dayTimeDuration-by-dayTimeDuration"](oLeft, oRight);
+			return cFunctionCall.operators["divide-dayTimeDuration-by-dayTimeDuration"].call(oContext, oLeft, oRight);
 	}
 	//
 	throw new cXPath2Error("XPTY0004"
@@ -75,11 +75,11 @@ cMultiplicativeExpr.operators['div']	= function (oLeft, oRight) {
 //<-Debug
 	);	// Arithmetic operator is not defined for arguments of types ({type1}, {type2})
 };
-cMultiplicativeExpr.operators['idiv']	= function (oLeft, oRight) {
+cMultiplicativeExpr.operators['idiv']	= function (oLeft, oRight, oContext) {
 	var cLeft	= cXSAnyAtomicType.typeOf(oLeft),
 		cRight	= cXSAnyAtomicType.typeOf(oRight);
 	if (cXSAnyAtomicType.isNumeric(cLeft) && cXSAnyAtomicType.isNumeric(cRight))
-		return cFunctionCall.operators["numeric-integer-divide"](oLeft, oRight);
+		return cFunctionCall.operators["numeric-integer-divide"].call(oContext, oLeft, oRight);
 	//
 	throw new cXPath2Error("XPTY0004"
 //->Debug
@@ -87,11 +87,11 @@ cMultiplicativeExpr.operators['idiv']	= function (oLeft, oRight) {
 //<-Debug
 	);	// Arithmetic operator is not defined for arguments of types ({type1}, {type2})
 };
-cMultiplicativeExpr.operators['mod']	= function (oLeft, oRight) {
+cMultiplicativeExpr.operators['mod']	= function (oLeft, oRight, oContext) {
 	var cLeft	= cXSAnyAtomicType.typeOf(oLeft),
 		cRight	= cXSAnyAtomicType.typeOf(oRight);
 	if (cXSAnyAtomicType.isNumeric(cLeft) && cXSAnyAtomicType.isNumeric(cRight))
-		return cFunctionCall.operators["numeric-mod"](oLeft, oRight);
+		return cFunctionCall.operators["numeric-mod"].call(oContext, oLeft, oRight);
 	//
 	throw new cXPath2Error("XPTY0004"
 //->Debug
@@ -101,9 +101,9 @@ cMultiplicativeExpr.operators['mod']	= function (oLeft, oRight) {
 };
 
 // Static members
-cMultiplicativeExpr.parse	= function (oLexer, oResolver) {
+cMultiplicativeExpr.parse	= function (oLexer, oStaticContext) {
 	var oExpr;
-	if (oLexer.eof() ||!(oExpr = cUnionExpr.parse(oLexer, oResolver)))
+	if (oLexer.eof() ||!(oExpr = cUnionExpr.parse(oLexer, oStaticContext)))
 		return;
 	if (!(oLexer.peek() in cMultiplicativeExpr.operators))
 		return oExpr;
@@ -113,7 +113,7 @@ cMultiplicativeExpr.parse	= function (oLexer, oResolver) {
 		sOperator;
 	while ((sOperator = oLexer.peek()) in cMultiplicativeExpr.operators) {
 		oLexer.next();
-		if (oLexer.eof() ||!(oExpr = cUnionExpr.parse(oLexer, oResolver)))
+		if (oLexer.eof() ||!(oExpr = cUnionExpr.parse(oLexer, oStaticContext)))
 			throw "MultiplicativeExpr.parse: right operand missing";
 		oMultiplicativeExpr.items.push([sOperator, oExpr]);
 	}
@@ -122,7 +122,7 @@ cMultiplicativeExpr.parse	= function (oLexer, oResolver) {
 
 // Public members
 cMultiplicativeExpr.prototype.evaluate	= function (oContext) {
-	var oLeft	= cXPath2Sequence.atomize(this.left.evaluate(oContext));
+	var oLeft	= cXPath2Sequence.atomize(this.left.evaluate(oContext), oContext);
 
 	//
 	if (oLeft.isEmpty())
@@ -139,7 +139,7 @@ cMultiplicativeExpr.prototype.evaluate	= function (oContext) {
 		vLeft	= cXSDouble.cast(vLeft);	// cast to xs:double
 
 	for (var nIndex = 0, nLength = this.items.length, oRight, vRight; nIndex < nLength; nIndex++) {
-		oRight	= cXPath2Sequence.atomize(this.items[nIndex][1].evaluate(oContext));
+		oRight	= cXPath2Sequence.atomize(this.items[nIndex][1].evaluate(oContext), oContext);
 
 		if (oRight.isEmpty())
 			return new cXPath2Sequence;
@@ -154,7 +154,7 @@ cMultiplicativeExpr.prototype.evaluate	= function (oContext) {
 		if (vRight instanceof cXSUntypedAtomic)
 			vRight	= cXSDouble.cast(vRight);	// cast to xs:double
 
-		vLeft	= cMultiplicativeExpr.operators[this.items[nIndex][0]](vLeft, vRight);
+		vLeft	= cMultiplicativeExpr.operators[this.items[nIndex][0]](vLeft, vRight, oContext);
 	}
 	return new cXPath2Sequence(vLeft);
 };

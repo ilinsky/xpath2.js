@@ -15,17 +15,17 @@ function cCastableExpr(oExpr, oType) {
 cCastableExpr.prototype.expression	= null;
 cCastableExpr.prototype.type		= null;
 
-cCastableExpr.parse	= function(oLexer, oResolver) {
+cCastableExpr.parse	= function(oLexer, oStaticContext) {
 	var oExpr,
 		oType;
-	if (oLexer.eof() ||!(oExpr = cCastExpr.parse(oLexer, oResolver)))
+	if (oLexer.eof() ||!(oExpr = cCastExpr.parse(oLexer, oStaticContext)))
 		return;
 
 	if (!(oLexer.peek() == "castable" && oLexer.peek(1) == "as"))
 		return oExpr;
 
 	oLexer.next(2);
-	if (oLexer.eof() ||!(oType = cSingleType.parse(oLexer, oResolver)))
+	if (oLexer.eof() ||!(oType = cSingleType.parse(oLexer, oStaticContext)))
 		throw "CastableExpr.parse: Expected expression operand";
 
 	return new cCastableExpr(oExpr, oType);

@@ -18,26 +18,26 @@ cIfExpr.prototype.thenExpr	= null;
 cIfExpr.prototype.elseExpr	= null;
 
 // Static members
-cIfExpr.parse	= function (oLexer, oResolver) {
+cIfExpr.parse	= function (oLexer, oStaticContext) {
 	var oCondExpr,
 		oThenExpr,
 		oElseExpr;
 	if (oLexer.peek() == "if" && oLexer.peek(1) == "(") {
 		oLexer.next(2);
 		//
-		if (oLexer.eof() ||!(oCondExpr = cExpr.parse(oLexer, oResolver)))
+		if (oLexer.eof() ||!(oCondExpr = cExpr.parse(oLexer, oStaticContext)))
 			throw "IfExpr.parse: expected Expr expression";
 		//
 		if (oLexer.peek() == ")") {
 			oLexer.next();
 			if (oLexer.peek() == "then") {
 				oLexer.next();
-				if (oLexer.eof() ||!(oThenExpr = cExprSingle.parse(oLexer, oResolver)))
+				if (oLexer.eof() ||!(oThenExpr = cExprSingle.parse(oLexer, oStaticContext)))
 					throw "IfExpr.parse: expected 'then' statement operand";
 
 				if (oLexer.peek() == "else") {
 					oLexer.next();
-					if (oLexer.eof() ||!(oElseExpr = cExprSingle.parse(oLexer, oResolver)))
+					if (oLexer.eof() ||!(oElseExpr = cExprSingle.parse(oLexer, oStaticContext)))
 						throw "IfExpr.parse: expected 'else' statement operand";
 					//
 					return new cIfExpr(oCondExpr, oThenExpr, oElseExpr);
@@ -58,5 +58,5 @@ cIfExpr.parse	= function (oLexer, oResolver) {
 
 // Public members
 cIfExpr.prototype.evaluate	= function (oContext) {
-	return this[this.condExpr.evaluate(oContext).toBoolean() ? "thenExpr" : "elseExpr"].evaluate(oContext);
+	return this[this.condExpr.evaluate(oContext).toBoolean(oContext) ? "thenExpr" : "elseExpr"].evaluate(oContext);
 };

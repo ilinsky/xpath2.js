@@ -49,14 +49,14 @@ fFunctionCall_defineSystemFunction("round-half-to-even",	[[cXTNumeric, '?'], [cX
 	//
 	if (nPrecision < 0) {
 		var nPower	= cMath.pow(10,-nPrecision),
-			nRounded= cMath.round(cFunctionCall.operators["numeric-divide"](nValue, nPower)),
-			nDecimal= cMath.abs(cFunctionCall.operators["numeric-subtract"](nRounded, cFunctionCall.operators["numeric-divide"](nValue, nPower)));
-		return cFunctionCall.operators["numeric-multiply"](cFunctionCall.operators["numeric-add"](nRounded, (nDecimal == 0.5 && nRounded % 2 ?-1 : 0)), nPower);
+			nRounded= cMath.round(cFunctionCall.operators["numeric-divide"].call(this, nValue, nPower)),
+			nDecimal= cMath.abs(cFunctionCall.operators["numeric-subtract"].call(this, nRounded, cFunctionCall.operators["numeric-divide"].call(this, nValue, nPower)));
+		return cFunctionCall.operators["numeric-multiply"].call(this, cFunctionCall.operators["numeric-add"].call(this, nRounded, (nDecimal == 0.5 && nRounded % 2 ?-1 : 0)), nPower);
 	}
 	else {
 		var nPower	= cMath.pow(10, nPrecision),
-			nRounded= cMath.round(cFunctionCall.operators["numeric-multiply"](nValue, nPower)),
-			nDecimal= cMath.abs(cFunctionCall.operators["numeric-subtract"](nRounded, cFunctionCall.operators["numeric-multiply"](nValue, nPower)));
-		return cFunctionCall.operators["numeric-divide"](cFunctionCall.operators["numeric-add"](nRounded, (nDecimal == 0.5 && nRounded % 2 ?-1 : 0)), nPower);
+			nRounded= cMath.round(cFunctionCall.operators["numeric-multiply"].call(this, nValue, nPower)),
+			nDecimal= cMath.abs(cFunctionCall.operators["numeric-subtract"].call(this, nRounded, cFunctionCall.operators["numeric-multiply"].call(this, nValue, nPower)));
+		return cFunctionCall.operators["numeric-divide"].call(this, cFunctionCall.operators["numeric-add"].call(this, nRounded, (nDecimal == 0.5 && nRounded % 2 ?-1 : 0)), nPower);
 	}
 });

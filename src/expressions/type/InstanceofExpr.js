@@ -15,17 +15,17 @@ function cInstanceofExpr(oExpr, oType) {
 cInstanceofExpr.prototype.expression	= null;
 cInstanceofExpr.prototype.type			= null;
 
-cInstanceofExpr.parse	= function(oLexer, oResolver) {
+cInstanceofExpr.parse	= function(oLexer, oStaticContext) {
 	var oExpr,
 		oType;
-	if (oLexer.eof() ||!(oExpr = cTreatExpr.parse(oLexer, oResolver)))
+	if (oLexer.eof() ||!(oExpr = cTreatExpr.parse(oLexer, oStaticContext)))
 		return;
 
 	if (!(oLexer.peek() == "instance" && oLexer.peek(1) == "of"))
 		return oExpr;
 
 	oLexer.next(2);
-	if (oLexer.eof() ||!(oType = cSequenceType.parse(oLexer, oResolver)))
+	if (oLexer.eof() ||!(oType = cSequenceType.parse(oLexer, oStaticContext)))
 		throw "TreatExpr.parse: Expected expression operand";
 
 	return new cInstanceofExpr(oExpr, oType);
@@ -50,7 +50,7 @@ cInstanceofExpr.prototype.evaluate	= function(oContext) {
 
 	var bValue	= true;
 	for (var nIndex = 0, nLength = oSequence1.items.length; (nIndex < nLength) && bValue; nIndex++)
-		bValue	= oType.test.test(oSequence1.items[nIndex]);
+		bValue	= oType.test.test(oContext, oSequence1.items[nIndex]);
 	//
 	return new cXPath2Sequence(bValue);
 };

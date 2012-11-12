@@ -37,14 +37,14 @@ cAxisStep.axises["preceding"]			= {};
 cAxisStep.axises["preceding-sibling"]	= {};
 
 // Static members
-cAxisStep.parse	= function (oLexer, oResolver) {
+cAxisStep.parse	= function (oLexer, oStaticContext) {
 	var sAxis	= oLexer.peek(),
 		oExpr,
 		oStep;
 	if (oLexer.peek(1) == "::") {
 		if (sAxis in cAxisStep.axises) {
 			oLexer.next(2);
-			if (oLexer.eof() ||!(oExpr = cNodeTest.parse(oLexer, oResolver)))
+			if (oLexer.eof() ||!(oExpr = cNodeTest.parse(oLexer, oStaticContext)))
 				throw "AxisStep.parse: expected NodeTest expression";
 			oStep	= new cAxisStep(sAxis, oExpr);
 		}
@@ -59,17 +59,17 @@ cAxisStep.parse	= function (oLexer, oResolver) {
 	else
 	if (sAxis == "@") {
 		oLexer.next();
-		if (oLexer.eof() ||!(oExpr = cNodeTest.parse(oLexer, oResolver)))
+		if (oLexer.eof() ||!(oExpr = cNodeTest.parse(oLexer, oStaticContext)))
 			throw "AxisStep.parse: expected NodeTest expression";
 		oStep	= new cAxisStep("attribute", oExpr);
 	}
 	else {
-		if (oLexer.eof() ||!(oExpr = cNodeTest.parse(oLexer, oResolver)))
+		if (oLexer.eof() ||!(oExpr = cNodeTest.parse(oLexer, oStaticContext)))
 			return;
 		oStep	= new cAxisStep(oExpr instanceof cKindTest && oExpr.name == "attribute" ? "attribute" : "child", oExpr);
 	}
 	//
-	cStepExpr.parsePredicates(oLexer, oResolver, oStep);
+	cStepExpr.parsePredicates(oLexer, oStaticContext, oStep);
 
 	return oStep;
 };
@@ -78,21 +78,21 @@ cAxisStep.parse	= function (oLexer, oResolver) {
 cAxisStep.prototype.evaluate	= function (oContext) {
 	var oItem	= oContext.item;
 
-	if (!cXPath2.DOMAdapter.isNode(oItem))
+	if (!oContext.staticContext.DOMAdapter.isNode(oItem))
 		throw new cXPath2Error("XPTY0020");
 
-	var nType	= cXPath2.DOMAdapter.getProperty(oItem, "nodeType");
+	var nType	= oContext.staticContext.DOMAdapter.getProperty(oItem, "nodeType");
 	var oSequence	= new cXPath2Sequence;
 	switch (this.axis) {
 		// Forward axis
 		case "attribute":
 			if (nType == 1)
-				for (var aAttributes = cXPath2.DOMAdapter.getProperty(oItem, "attributes"), nIndex = 0, nLength = aAttributes.length; nIndex < nLength; nIndex++)
+				for (var aAttributes = oContext.staticContext.DOMAdapter.getProperty(oItem, "attributes"), nIndex = 0, nLength = aAttributes.length; nIndex < nLength; nIndex++)
 					oSequence.add(aAttributes[nIndex]);
 			break;
 
 		case "child":
-			for (var oNode = cXPath2.DOMAdapter.getProperty(oItem, "firstChild"); oNode; oNode = cXPath2.DOMAdapter.getProperty(oNode, "nextSibling"))
+			for (var oNode = oContext.staticContext.DOMAdapter.getProperty(oItem, "firstChild"); oNode; oNode = oContext.staticContext.DOMAdapter.getProperty(oNode, "nextSibling"))
 				oSequence.add(oNode);
 			break;
 
@@ -100,18 +100,18 @@ cAxisStep.prototype.evaluate	= function (oContext) {
 			oSequence.add(oItem);
 			// No break left intentionally
 		case "descendant":
-			fAxisStep_getChildrenForward(cXPath2.DOMAdapter.getProperty(oItem, "firstChild"), oSequence);
+			fAxisStep_getChildrenForward(oContext, oContext.staticContext.DOMAdapter.getProperty(oItem, "firstChild"), oSequence);
 			break;
 
 		case "following":
 			// TODO: Attribute node context
-			for (var oParent = oItem, oSibling; oParent; oParent = cXPath2.DOMAdapter.getProperty(oParent, "parentNode"))
-				if (oSibling = cXPath2.DOMAdapter.getProperty(oParent, "nextSibling"))
-					fAxisStep_getChildrenForward(oSibling, oSequence);
+			for (var oParent = oItem, oSibling; oParent; oParent = oContext.staticContext.DOMAdapter.getProperty(oParent, "parentNode"))
+				if (oSibling = oContext.staticContext.DOMAdapter.getProperty(oParent, "nextSibling"))
+					fAxisStep_getChildrenForward(oContext, oSibling, oSequence);
 			break;
 
 		case "following-sibling":
-			for (var oNode = oItem; oNode = cXPath2.DOMAdapter.getProperty(oNode, "nextSibling");)
+			for (var oNode = oItem; oNode = oContext.staticContext.DOMAdapter.getProperty(oNode, "nextSibling");)
 				oSequence.add(oNode);
 			break;
 
@@ -124,25 +124,25 @@ cAxisStep.prototype.evaluate	= function (oContext) {
 			oSequence.add(oItem);
 			// No break left intentionally
 		case "ancestor":
-			for (var oNode = nType == 2 ? cXPath2.DOMAdapter.getProperty(oItem, "ownerElement") : oItem; oNode = cXPath2.DOMAdapter.getProperty(oNode, "parentNode");)
+			for (var oNode = nType == 2 ? oContext.staticContext.DOMAdapter.getProperty(oItem, "ownerElement") : oItem; oNode = oContext.staticContext.DOMAdapter.getProperty(oNode, "parentNode");)
 				oSequence.add(oNode);
 			break;
 
 		case "parent":
-			var oParent	= nType == 2 ? cXPath2.DOMAdapter.getProperty(oItem, "ownerElement") : cXPath2.DOMAdapter.getProperty(oItem, "parentNode");
+			var oParent	= nType == 2 ? oContext.staticContext.DOMAdapter.getProperty(oItem, "ownerElement") : oContext.staticContext.DOMAdapter.getProperty(oItem, "parentNode");
 			if (oParent)
 				oSequence.add(oParent);
 			break;
 
 		case "preceding":
 			// TODO: Attribute node context
-			for (var oParent = oItem, oSibling; oParent; oParent = cXPath2.DOMAdapter.getProperty(oParent, "parentNode"))
-				if (oSibling = cXPath2.DOMAdapter.getProperty(oParent, "previousSibling"))
-					fAxisStep_getChildrenBackward(oSibling, oSequence);
+			for (var oParent = oItem, oSibling; oParent; oParent = oContext.staticContext.DOMAdapter.getProperty(oParent, "parentNode"))
+				if (oSibling = oContext.staticContext.DOMAdapter.getProperty(oParent, "previousSibling"))
+					fAxisStep_getChildrenBackward(oContext, oSibling, oSequence);
 			break;
 
 		case "preceding-sibling":
-			for (var oNode = oItem; oNode = cXPath2.DOMAdapter.getProperty(oNode, "previousSibling");)
+			for (var oNode = oItem; oNode = oContext.staticContext.DOMAdapter.getProperty(oNode, "previousSibling");)
 				oSequence.add(oNode);
 			break;
 	}
@@ -152,7 +152,7 @@ cAxisStep.prototype.evaluate	= function (oContext) {
 		var oSequence1	= oSequence;
 		oSequence	= new cXPath2Sequence;
 		for (var nIndex = 0, nLength = oSequence1.items.length; nIndex < nLength; nIndex++) {
-			if (this.test.test(oSequence1.items[nIndex]))
+			if (this.test.test(oContext, oSequence1.items[nIndex]))
 				oSequence.add(oSequence1.items[nIndex]);
 		}
 	}
@@ -175,18 +175,18 @@ cAxisStep.prototype.evaluate	= function (oContext) {
 };
 
 //
-function fAxisStep_getChildrenForward(oNode, oSequence) {
-	for (var oChild; oNode; oNode = cXPath2.DOMAdapter.getProperty(oNode, "nextSibling")) {
+function fAxisStep_getChildrenForward(oContext, oNode, oSequence) {
+	for (var oChild; oNode; oNode = oContext.staticContext.DOMAdapter.getProperty(oNode, "nextSibling")) {
 		oSequence.add(oNode);
-		if (oChild = cXPath2.DOMAdapter.getProperty(oNode, "firstChild"))
-			fAxisStep_getChildrenForward(oChild, oSequence);
+		if (oChild = oContext.staticContext.DOMAdapter.getProperty(oNode, "firstChild"))
+			fAxisStep_getChildrenForward(oContext, oChild, oSequence);
 	}
 };
 
-function fAxisStep_getChildrenBackward(oNode, oSequence) {
-	for (var oChild; oNode; oNode = cXPath2.DOMAdapter.getProperty(oNode, "previousSibling")) {
-		if (oChild = cXPath2.DOMAdapter.getProperty(oNode, "lastChild"))
-			fAxisStep_getChildrenBackward(oChild, oSequence);
+function fAxisStep_getChildrenBackward(oContext, oNode, oSequence) {
+	for (var oChild; oNode; oNode = oContext.staticContext.DOMAdapter.getProperty(oNode, "previousSibling")) {
+		if (oChild = oContext.staticContext.DOMAdapter.getProperty(oNode, "lastChild"))
+			fAxisStep_getChildrenBackward(oContext, oChild, oSequence);
 		oSequence.add(oNode);
 	}
 };

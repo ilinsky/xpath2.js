@@ -18,10 +18,10 @@ cXPath2Sequence.prototype.items	= null;
 // Static members
 
 // Orders items in sequence in document order
-cXPath2Sequence.order		= function(oSequence1) {
+cXPath2Sequence.order		= function(oSequence1, oContext) {
 	var oSequence	= new cXPath2Sequence(oSequence1);
 	oSequence.items.sort(function(oNode, oNode2) {
-		var nPosition	= cXPath2.DOMAdapter.compareDocumentPosition(oNode, oNode2);
+		var nPosition	= oContext.staticContext.DOMAdapter.compareDocumentPosition(oNode, oNode2);
 		return nPosition & 2 ? 1 : nPosition & 4 ?-1 : 0;
 	});
 	return oSequence;
@@ -33,39 +33,39 @@ cXPath2Sequence.reverse	= function(oSequence1) {
 	return oSequence;
 };
 
-cXPath2Sequence.atomize		= function(oSequence1) {
+cXPath2Sequence.atomize		= function(oSequence1, oContext) {
 	var oSequence	= new cXPath2Sequence;
 	for (var nIndex = 0, nLength = oSequence1.items.length, vValue; nIndex < nLength; nIndex++)
-		if ((vValue = cXPath2Sequence.atomizeItem(oSequence1.items[nIndex])) !== null)
+		if ((vValue = cXPath2Sequence.atomizeItem(oSequence1.items[nIndex], oContext)) !== null)
 			oSequence.add(vValue);
 	return oSequence;
 };
 
-cXPath2Sequence.atomizeItem		= function(oItem) {
+cXPath2Sequence.atomizeItem		= function(oItem, oContext) {
 	// Untyped
 	if (oItem === null || typeof oItem == "undefined")
 		return null;
 
 	// Node type
-	if (cXPath2.DOMAdapter.isNode(oItem)) {
-		switch (cXPath2.DOMAdapter.getProperty(oItem, "nodeType")) {
+	if (oContext.staticContext.DOMAdapter.isNode(oItem)) {
+		switch (oContext.staticContext.DOMAdapter.getProperty(oItem, "nodeType")) {
 			case 1:	// ELEMENT_NODE
-				return new cXSUntypedAtomic(cXPath2.DOMAdapter.getProperty(oItem, "textContent"));
+				return new cXSUntypedAtomic(oContext.staticContext.DOMAdapter.getProperty(oItem, "textContent"));
 
 			case 2:	// ATTRIBUTE_NODE
-				return new cXSUntypedAtomic(cXPath2.DOMAdapter.getProperty(oItem, "value"));
+				return new cXSUntypedAtomic(oContext.staticContext.DOMAdapter.getProperty(oItem, "value"));
 
 			case 3:	// TEXT_NODE
 			case 4:	// CDATA_SECTION_NODE
 			case 8:	// COMMENT_NODE
-				return new cXSUntypedAtomic(cXPath2.DOMAdapter.getProperty(oItem, "data"));
+				return new cXSUntypedAtomic(oContext.staticContext.DOMAdapter.getProperty(oItem, "data"));
 
 			case 7:	// PROCESSING_INSTRUCTION_NODE
-				return new cXSUntypedAtomic(cXPath2.DOMAdapter.getProperty(oItem, "data"));
+				return new cXSUntypedAtomic(oContext.staticContext.DOMAdapter.getProperty(oItem, "data"));
 
 			case 9:	// DOCUMENT_NODE
-				var oNode	= cXPath2.DOMAdapter.getProperty(oItem, "documentElement");
-				return new cXSUntypedAtomic(oNode ? cXPath2.DOMAdapter.getProperty(oNode, "textContent") : '');
+				var oNode	= oContext.staticContext.DOMAdapter.getProperty(oItem, "documentElement");
+				return new cXSUntypedAtomic(oNode ? oContext.staticContext.DOMAdapter.getProperty(oNode, "textContent") : '');
 		}
 	}
 
@@ -95,12 +95,12 @@ cXPath2Sequence.prototype.isSingleton	= function() {
 };
 
 // EBV calculation (fn:boolean())
-cXPath2Sequence.prototype.toBoolean	= function() {
+cXPath2Sequence.prototype.toBoolean	= function(oContext) {
 	if (!this.items.length)
 		return false;
 
 	var oItem	= this.items[0];
-	if (cXPath2.DOMAdapter.isNode(oItem))
+	if (oContext.staticContext.DOMAdapter.isNode(oItem))
 		return true;
 
 	if (this.items.length == 1) {
@@ -128,9 +128,9 @@ cXPath2Sequence.prototype.toBoolean	= function() {
 };
 
 // fn:string()
-cXPath2Sequence.prototype.toString	= function() {
+cXPath2Sequence.prototype.toString	= function(oContext) {
 	var oItem;
-	return this.items.length && (oItem = cXPath2Sequence.atomizeItem(this.items[0])) !== null ? '' + oItem : '';
+	return this.items.length && (oItem = cXPath2Sequence.atomizeItem(this.items[0], oContext)) !== null ? '' + oItem : '';
 };
 
 cXPath2Sequence.prototype.indexOf	= function(oItem) {

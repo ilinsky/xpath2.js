@@ -30,5 +30,5 @@ fFunctionCall_defineSystemFunction("false",	[],	function() {
 // 9.3 Functions on Boolean Values
 // fn:not($arg as item()*) as xs:boolean
 fFunctionCall_defineSystemFunction("not",	[[cXTItem, '*']],	function(oSequence1) {
-	return !oSequence1.toBoolean();
+	return !oSequence1.toBoolean(this);
 });

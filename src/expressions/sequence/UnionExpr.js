@@ -16,14 +16,14 @@ cUnionExpr.prototype.left	= null;
 cUnionExpr.prototype.items	= null;
 
 cUnionExpr.operators	= {};
-cUnionExpr.operators["union"]	= function(oLeft, oRight) {
-	return cFunctionCall.operators["union"](oLeft, oRight);
+cUnionExpr.operators["union"]	= function(oLeft, oRight, oContext) {
+	return cFunctionCall.operators["union"].call(oContext, oLeft, oRight);
 };
 
 // Static members
-cUnionExpr.parse	= function (oLexer, oResolver) {
+cUnionExpr.parse	= function (oLexer, oStaticContext) {
 	var oExpr;
-	if (oLexer.eof() ||!(oExpr = cIntersectExceptExpr.parse(oLexer, oResolver)))
+	if (oLexer.eof() ||!(oExpr = cIntersectExceptExpr.parse(oLexer, oStaticContext)))
 		return;
 	if (!(oLexer.peek() == '|' || oLexer.peek() == "union"))
 		return oExpr;
@@ -32,7 +32,7 @@ cUnionExpr.parse	= function (oLexer, oResolver) {
 	var oUnionExpr	= new cUnionExpr(oExpr);
 	while (oLexer.peek() == '|' || oLexer.peek() == "union") {
 		oLexer.next();
-		if (oLexer.eof() ||!(oExpr = cIntersectExceptExpr.parse(oLexer, oResolver)))
+		if (oLexer.eof() ||!(oExpr = cIntersectExceptExpr.parse(oLexer, oStaticContext)))
 			throw "UnionExpr.parse: right operand missing";
 		oUnionExpr.items.push(oExpr);
 	}
@@ -43,6 +43,6 @@ cUnionExpr.parse	= function (oLexer, oResolver) {
 cUnionExpr.prototype.evaluate	= function (oContext) {
 	var oSequence	= this.left.evaluate(oContext);
 	for (var nIndex = 0, nLength = this.items.length; nIndex < nLength; nIndex++)
-		oSequence	= cUnionExpr.operators["union"](oSequence, this.items[nIndex].evaluate(oContext));
+		oSequence	= cUnionExpr.operators["union"](oSequence, this.items[nIndex].evaluate(oContext), oContext);
 	return oSequence;
 };
