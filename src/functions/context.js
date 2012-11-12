@@ -56,5 +56,5 @@ fFunctionCall_defineSystemFunction("default-collation",	[],	 function() {
 
 // fn:static-base-uri() as xs:anyURI?
 fFunctionCall_defineSystemFunction("static-base-uri",	[],	function() {
-	throw "Function '" + "static-base-uri" + "' not implemented";
+	return this.staticContext.baseURI;
 });
