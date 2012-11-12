@@ -22,5 +22,5 @@ cXPath2Expression.prototype.staticContext	= null;
 cXPath2Expression.prototype.internalExpression	= null;
 
 cXPath2Expression.prototype.evaluate	= function(vItem, oScope) {
-	return this.internalExpression.evaluate(new cXPath2DynamicContext(this.staticContext, vItem, oScope));
+	return this.internalExpression.evaluate(new cXPath2DynamicContext(this.staticContext, vItem, oScope)).items;
 };

@@ -20,5 +20,5 @@ cXPath2Evaluator.prototype.compile	= function(sExpression, oStaticContext) {
 };
 
 cXPath2Evaluator.prototype.evaluate	= function(sExpression, vItem, oStaticContext, oScope) {
-	return this.compile(sExpression, oStaticContext || this.defaultStaticContext).evaluate(vItem, oScope).items;
+	return this.compile(sExpression, oStaticContext || this.defaultStaticContext).evaluate(vItem, oScope);
 };
