@@ -252,12 +252,22 @@ cFunctionCall.operators["subtract-dayTimeDuration-from-date"]	= function(oLeft, 
 
 // op:add-dayTimeDuration-to-time($arg1 as xs:time, $arg2  as xs:dayTimeDuration) as xs:time
 cFunctionCall.operators["add-dayTimeDuration-to-time"]	= function(oLeft, oRight) {
-	return fXSTime_fromSeconds(fXSTime_toSeconds(oLeft) + fXSDayTimeDuration_toSeconds(oRight));
+	var oValue	= new cXSTime(oLeft.hours, oLeft.minutes, oLeft.seconds, oLeft.timezone);
+	oValue.hours	+= oRight.hours;
+	oValue.minutes	+= oRight.minutes;
+	oValue.seconds	+= oRight.seconds;
+	//
+	return fXSTime_normalize(oValue);
 };
 
 // op:subtract-dayTimeDuration-from-time($arg1 as xs:time, $arg2  as xs:dayTimeDuration) as xs:time
 cFunctionCall.operators["subtract-dayTimeDuration-from-time"]	= function(oLeft, oRight) {
-	return fXSTime_fromSeconds(fXSTime_toSeconds(oLeft) - fXSDayTimeDuration_toSeconds(oRight));
+	var oValue	= new cXSTime(oLeft.hours, oLeft.minutes, oLeft.seconds, oLeft.timezone);
+	oValue.hours	-= oRight.hours;
+	oValue.minutes	-= oRight.minutes;
+	oValue.seconds	-= oRight.seconds;
+	//
+	return fXSTime_normalize(oValue);
 };
 
 function fFunctionCall_operators_compareDateTime(oLeft, oRight, sComparator) {
