@@ -43,11 +43,11 @@
 			function testCast_Cardinality() {
 				// Cardinality tests
 				assertArrayEquals([1],
-						evaluateXPath('true() cast as xs:decimal'));
+						evaluateXPath('fn:true() cast as xs:decimal'));
 				assertArrayEquals([1],
-						evaluateXPath('(true()) cast as xs:decimal'));
+						evaluateXPath('(fn:true()) cast as xs:decimal'));
 				assertArrayEquals([1],
-						evaluateXPath('true() cast as xs:decimal?'));
+						evaluateXPath('fn:true() cast as xs:decimal?'));
 				assertArrayEquals([],
 						evaluateXPath('() cast as xs:decimal?'));
 			}
@@ -60,7 +60,7 @@
 			function testInstanceof() {
 				// Atomic types
 				assertArrayEquals([true],
-						evaluateXPath('true() instance of xs:boolean'));
+						evaluateXPath('fn:true() instance of xs:boolean'));
 				assertArrayEquals([false],
 						evaluateXPath('1 instance of xs:boolean'));
 				assertArrayEquals([true],
@@ -132,7 +132,7 @@
 
 			function testTreat() {
 				assertArrayEquals([true],
-						evaluateXPath('true() treat as xs:boolean'));
+						evaluateXPath('fn:true() treat as xs:boolean'));
 			}
 		</script>
 	</head>

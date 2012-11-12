@@ -29,49 +29,49 @@
 			// Tests
 			function testIsSameNode() {
 				assertEquals(true,
-						evaluateXPathSingle('id("test") is id("test_3")/parent::element()'));
+						evaluateXPathSingle('fn:id("test") is fn:id("test_3")/parent::element()'));
 				assertEquals(false,
-						evaluateXPathSingle('id("test") is id("test_3")'));
+						evaluateXPathSingle('fn:id("test") is fn:id("test_3")'));
 			}
 
 			function testNodeBefore() {
 				// Before
 				assertEquals(true,
-						evaluateXPathSingle('id("test_1") << id("test_3")'));
+						evaluateXPathSingle('fn:id("test_1") << fn:id("test_3")'));
 				assertEquals(true,
-						evaluateXPathSingle('id("test_1") << id("test_2")'));
+						evaluateXPathSingle('fn:id("test_1") << fn:id("test_2")'));
 				assertEquals(true,
-						evaluateXPathSingle('id("test_2") << id("test_3")'));
+						evaluateXPathSingle('fn:id("test_2") << fn:id("test_3")'));
 				// Equals
 				assertEquals(false,
-						evaluateXPathSingle('id("test_3") << id("test_3")'));
+						evaluateXPathSingle('fn:id("test_3") << fn:id("test_3")'));
 				// After
 				assertEquals(false,
-						evaluateXPathSingle('id("test_3") << id("test_1")'));
+						evaluateXPathSingle('fn:id("test_3") << fn:id("test_1")'));
 				assertEquals(false,
-						evaluateXPathSingle('id("test_2") << id("test_1")'));
+						evaluateXPathSingle('fn:id("test_2") << fn:id("test_1")'));
 				assertEquals(false,
-						evaluateXPathSingle('id("test_3") << id("test_2")'));
+						evaluateXPathSingle('fn:id("test_3") << fn:id("test_2")'));
 			}
 
 			function testNodeAfter() {
 				// Before
 				assertEquals(false,
-						evaluateXPathSingle('id("test_1") >> id("test_3")'));
+						evaluateXPathSingle('fn:id("test_1") >> fn:id("test_3")'));
 				assertEquals(false,
-						evaluateXPathSingle('id("test_1") >> id("test_2")'));
+						evaluateXPathSingle('fn:id("test_1") >> fn:id("test_2")'));
 				assertEquals(false,
-						evaluateXPathSingle('id("test_2") >> id("test_3")'));
+						evaluateXPathSingle('fn:id("test_2") >> fn:id("test_3")'));
 				// Equals
 				assertEquals(false,
-						evaluateXPathSingle('id("test_3") >> id("test_3")'));
+						evaluateXPathSingle('fn:id("test_3") >> fn:id("test_3")'));
 				// After
 				assertEquals(true,
-						evaluateXPathSingle('id("test_3") >> id("test_1")'));
+						evaluateXPathSingle('fn:id("test_3") >> fn:id("test_1")'));
 				assertEquals(true,
-						evaluateXPathSingle('id("test_2") >> id("test_1")'));
+						evaluateXPathSingle('fn:id("test_2") >> fn:id("test_1")'));
 				assertEquals(true,
-						evaluateXPathSingle('id("test_3") >> id("test_2")'));
+						evaluateXPathSingle('fn:id("test_3") >> fn:id("test_2")'));
 			}
 		</script>
 	</head>

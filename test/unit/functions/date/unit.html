@@ -154,9 +154,9 @@
 
 			function testTimezoneFromDateTime() {
 				assertEquals("-PT5H",
-						evaluateXPathSingle('string(fn:timezone-from-dateTime(xs:dateTime("1999-05-31T13:20:00-05:00")))'));
+						evaluateXPathSingle('fn:string(fn:timezone-from-dateTime(xs:dateTime("1999-05-31T13:20:00-05:00")))'));
 				assertEquals("PT0S",
-						evaluateXPathSingle('string(fn:timezone-from-dateTime(xs:dateTime("2000-06-12T13:20:00Z")))'));
+						evaluateXPathSingle('fn:string(fn:timezone-from-dateTime(xs:dateTime("2000-06-12T13:20:00Z")))'));
 				assertEquals(0,
 						evaluateXPath('fn:timezone-from-dateTime(xs:dateTime("2004-08-27T00:00:00"))').length);
 			}
@@ -185,9 +185,9 @@
 
 			function testTimezoneFromDate() {
 				assertEquals("-PT5H",
-						evaluateXPathSingle('string(fn:timezone-from-date(xs:date("1999-05-31-05:00")))'));
+						evaluateXPathSingle('fn:string(fn:timezone-from-date(xs:date("1999-05-31-05:00")))'));
 				assertEquals("PT0S",
-						evaluateXPathSingle('string(fn:timezone-from-date(xs:date("2000-06-12Z")))'));
+						evaluateXPathSingle('fn:string(fn:timezone-from-date(xs:date("2000-06-12Z")))'));
 			}
 
 			// From time
@@ -223,111 +223,111 @@
 
 			function testTimezoneFromTime() {
 				assertEquals("-PT5H",
-						evaluateXPathSingle('string(fn:timezone-from-time(xs:time("13:20:00-05:00")))'));
+						evaluateXPathSingle('fn:string(fn:timezone-from-time(xs:time("13:20:00-05:00")))'));
 				assertEquals(0,
 						evaluateXPath('fn:timezone-from-time(xs:time("13:20:00"))').length);
 				// Not W3C test
 				assertEquals("PT0S",
-						evaluateXPathSingle('string(fn:timezone-from-time(xs:time("13:20:00Z")))'));
+						evaluateXPathSingle('fn:string(fn:timezone-from-time(xs:time("13:20:00Z")))'));
 			}
 
 			// 10.7 Timezone Adjustment Functions on Dates and Time Values
 			function testAdjustDateTimeToTimezone() {
 				// Assume the dynamic context provides an implicit timezone of -05:00 (-PT5H0M).
 //				assertEquals("2002-03-07T10:00:00-05:00",
-//						evaluateXPathSingle('string(fn:adjust-dateTime-to-timezone(xs:dateTime("2002-03-07T10:00:00")))'));
+//						evaluateXPathSingle('fn:string(fn:adjust-dateTime-to-timezone(xs:dateTime("2002-03-07T10:00:00")))'));
 //				assertEquals("2002-03-07T12:00:00-05:00",
-//						evaluateXPathSingle('string(fn:adjust-dateTime-to-timezone(xs:dateTime("2002-03-07T10:00:00-07:00")))'));
+//						evaluateXPathSingle('fn:string(fn:adjust-dateTime-to-timezone(xs:dateTime("2002-03-07T10:00:00-07:00")))'));
 				assertEquals("2002-03-07T10:00:00-10:00",
-						evaluateXPathSingle('string(fn:adjust-dateTime-to-timezone(xs:dateTime("2002-03-07T10:00:00"), xs:dayTimeDuration("-PT10H")))'));
+						evaluateXPathSingle('fn:string(fn:adjust-dateTime-to-timezone(xs:dateTime("2002-03-07T10:00:00"), xs:dayTimeDuration("-PT10H")))'));
 				assertEquals("2002-03-08T03:00:00+10:00",
-						evaluateXPathSingle('string(fn:adjust-dateTime-to-timezone(xs:dateTime("2002-03-07T10:00:00-07:00"), xs:dayTimeDuration("PT10H")))'));
+						evaluateXPathSingle('fn:string(fn:adjust-dateTime-to-timezone(xs:dateTime("2002-03-07T10:00:00-07:00"), xs:dayTimeDuration("PT10H")))'));
 				assertEquals("2002-03-06T15:00:00-08:00",
-						evaluateXPathSingle('string(fn:adjust-dateTime-to-timezone(xs:dateTime("2002-03-07T00:00:00+01:00"), xs:dayTimeDuration("-PT8H")))'));
+						evaluateXPathSingle('fn:string(fn:adjust-dateTime-to-timezone(xs:dateTime("2002-03-07T00:00:00+01:00"), xs:dayTimeDuration("-PT8H")))'));
 				assertEquals("2002-03-07T10:00:00",
-						evaluateXPathSingle('string(fn:adjust-dateTime-to-timezone(xs:dateTime("2002-03-07T10:00:00"), ()))'));
+						evaluateXPathSingle('fn:string(fn:adjust-dateTime-to-timezone(xs:dateTime("2002-03-07T10:00:00"), ()))'));
 				assertEquals("2002-03-07T10:00:00",
-						evaluateXPathSingle('string(fn:adjust-dateTime-to-timezone(xs:dateTime("2002-03-07T10:00:00-07:00"), ()))'));
+						evaluateXPathSingle('fn:string(fn:adjust-dateTime-to-timezone(xs:dateTime("2002-03-07T10:00:00-07:00"), ()))'));
 			}
 			function testAdjustDateTimeToTimezone_Z() {
 				// Not W3C tests
 				assertEquals("2002-03-07T11:00:00Z",
-						evaluateXPathSingle('string(fn:adjust-dateTime-to-timezone(xs:dateTime("2002-03-07T22:00:00+11:00"), xs:dayTimeDuration("PT0S")))'));
+						evaluateXPathSingle('fn:string(fn:adjust-dateTime-to-timezone(xs:dateTime("2002-03-07T22:00:00+11:00"), xs:dayTimeDuration("PT0S")))'));
 				assertEquals("2002-03-06T23:00:00Z",
-						evaluateXPathSingle('string(fn:adjust-dateTime-to-timezone(xs:dateTime("2002-03-07T10:00:00+11:00"), xs:dayTimeDuration("PT0S")))'));
+						evaluateXPathSingle('fn:string(fn:adjust-dateTime-to-timezone(xs:dateTime("2002-03-07T10:00:00+11:00"), xs:dayTimeDuration("PT0S")))'));
 				assertEquals("2002-03-08T09:00:00Z",
-						evaluateXPathSingle('string(fn:adjust-dateTime-to-timezone(xs:dateTime("2002-03-07T22:00:00-11:00"), xs:dayTimeDuration("PT0S")))'));
+						evaluateXPathSingle('fn:string(fn:adjust-dateTime-to-timezone(xs:dateTime("2002-03-07T22:00:00-11:00"), xs:dayTimeDuration("PT0S")))'));
 				assertEquals("2002-03-07T21:00:00Z",
-						evaluateXPathSingle('string(fn:adjust-dateTime-to-timezone(xs:dateTime("2002-03-07T10:00:00-11:00"), xs:dayTimeDuration("PT0S")))'));
+						evaluateXPathSingle('fn:string(fn:adjust-dateTime-to-timezone(xs:dateTime("2002-03-07T10:00:00-11:00"), xs:dayTimeDuration("PT0S")))'));
 			}
 
 			function testAdjustDateToTimezone() {
 				// Assume the dynamic context provides an implicit timezone of -05:00 (-PT5H0M).
 //				assertEquals("2002-03-07-05:00",
-//						evaluateXPathSingle('string(fn:adjust-date-to-timezone(xs:date("2002-03-07")))'));
+//						evaluateXPathSingle('fn:string(fn:adjust-date-to-timezone(xs:date("2002-03-07")))'));
 //				assertEquals("2002-03-07-05:00",
-//						evaluateXPathSingle('string(fn:adjust-date-to-timezone(xs:date("2002-03-07-07:00")))'));
+//						evaluateXPathSingle('fn:string(fn:adjust-date-to-timezone(xs:date("2002-03-07-07:00")))'));
 				assertEquals("2002-03-07-10:00",
-						evaluateXPathSingle('string(fn:adjust-date-to-timezone(xs:date("2002-03-07"), xs:dayTimeDuration("-PT10H")))'));
+						evaluateXPathSingle('fn:string(fn:adjust-date-to-timezone(xs:date("2002-03-07"), xs:dayTimeDuration("-PT10H")))'));
 				assertEquals("2002-03-06-10:00",
-						evaluateXPathSingle('string(fn:adjust-date-to-timezone(xs:date("2002-03-07-07:00"), xs:dayTimeDuration("-PT10H")))'));
+						evaluateXPathSingle('fn:string(fn:adjust-date-to-timezone(xs:date("2002-03-07-07:00"), xs:dayTimeDuration("-PT10H")))'));
 				assertEquals("2002-03-07",
-						evaluateXPathSingle('string(fn:adjust-date-to-timezone(xs:date("2002-03-07"), ()))'));
+						evaluateXPathSingle('fn:string(fn:adjust-date-to-timezone(xs:date("2002-03-07"), ()))'));
 				assertEquals("2002-03-07",
-						evaluateXPathSingle('string(fn:adjust-date-to-timezone(xs:date("2002-03-07-07:00"), ()))'));
+						evaluateXPathSingle('fn:string(fn:adjust-date-to-timezone(xs:date("2002-03-07-07:00"), ()))'));
 				// Not W3C tests
 				assertEquals("2002-03-06+10:00",
-						evaluateXPathSingle('string(fn:adjust-date-to-timezone(xs:date("2002-03-07+11:00"), xs:dayTimeDuration("PT10H")))'));
+						evaluateXPathSingle('fn:string(fn:adjust-date-to-timezone(xs:date("2002-03-07+11:00"), xs:dayTimeDuration("PT10H")))'));
 				assertEquals("2002-03-07+12:00",
-						evaluateXPathSingle('string(fn:adjust-date-to-timezone(xs:date("2002-03-07+11:00"), xs:dayTimeDuration("PT12H")))'));
+						evaluateXPathSingle('fn:string(fn:adjust-date-to-timezone(xs:date("2002-03-07+11:00"), xs:dayTimeDuration("PT12H")))'));
 				assertEquals("2002-03-07+10:00",
-						evaluateXPathSingle('string(fn:adjust-date-to-timezone(xs:date("2002-03-07-11:00"), xs:dayTimeDuration("PT10H")))'));
+						evaluateXPathSingle('fn:string(fn:adjust-date-to-timezone(xs:date("2002-03-07-11:00"), xs:dayTimeDuration("PT10H")))'));
 				assertEquals("2002-03-07+12:00",
-						evaluateXPathSingle('string(fn:adjust-date-to-timezone(xs:date("2002-03-07-11:00"), xs:dayTimeDuration("PT12H")))'));
+						evaluateXPathSingle('fn:string(fn:adjust-date-to-timezone(xs:date("2002-03-07-11:00"), xs:dayTimeDuration("PT12H")))'));
 				assertEquals("2002-03-06-10:00",
-						evaluateXPathSingle('string(fn:adjust-date-to-timezone(xs:date("2002-03-07+11:00"), xs:dayTimeDuration("-PT10H")))'));
+						evaluateXPathSingle('fn:string(fn:adjust-date-to-timezone(xs:date("2002-03-07+11:00"), xs:dayTimeDuration("-PT10H")))'));
 				assertEquals("2002-03-06-12:00",
-						evaluateXPathSingle('string(fn:adjust-date-to-timezone(xs:date("2002-03-07+11:00"), xs:dayTimeDuration("-PT12H")))'));
+						evaluateXPathSingle('fn:string(fn:adjust-date-to-timezone(xs:date("2002-03-07+11:00"), xs:dayTimeDuration("-PT12H")))'));
 				assertEquals("2002-03-07-10:00",
-						evaluateXPathSingle('string(fn:adjust-date-to-timezone(xs:date("2002-03-07-11:00"), xs:dayTimeDuration("-PT10H")))'));
+						evaluateXPathSingle('fn:string(fn:adjust-date-to-timezone(xs:date("2002-03-07-11:00"), xs:dayTimeDuration("-PT10H")))'));
 				assertEquals("2002-03-06-12:00",
-						evaluateXPathSingle('string(fn:adjust-date-to-timezone(xs:date("2002-03-07-11:00"), xs:dayTimeDuration("-PT12H")))'));
+						evaluateXPathSingle('fn:string(fn:adjust-date-to-timezone(xs:date("2002-03-07-11:00"), xs:dayTimeDuration("-PT12H")))'));
 			}
 			function testAdjustDateToTimezone_Z() {
 				// Not W3C tests
 				assertEquals("2002-03-06Z",
-						evaluateXPathSingle('string(fn:adjust-date-to-timezone(xs:date("2002-03-07+11:00"), xs:dayTimeDuration("PT0S")))'));
+						evaluateXPathSingle('fn:string(fn:adjust-date-to-timezone(xs:date("2002-03-07+11:00"), xs:dayTimeDuration("PT0S")))'));
 				assertEquals("2002-03-07Z",
-						evaluateXPathSingle('string(fn:adjust-date-to-timezone(xs:date("2002-03-07-11:00"), xs:dayTimeDuration("PT0S")))'));
+						evaluateXPathSingle('fn:string(fn:adjust-date-to-timezone(xs:date("2002-03-07-11:00"), xs:dayTimeDuration("PT0S")))'));
 			}
 
 			function testAdjustTimeToTimezone() {
 				// Assume the dynamic context provides an implicit timezone of -05:00 (-PT5H0M).
 //				assertEquals("10:00:00-05:00",
-//						evaluateXPathSingle('string(fn:adjust-time-to-timezone(xs:time("10:00:00")))'));
+//						evaluateXPathSingle('fn:string(fn:adjust-time-to-timezone(xs:time("10:00:00")))'));
 //				assertEquals("12:00:00-05:00",
-//						evaluateXPathSingle('string(fn:adjust-time-to-timezone(xs:time("10:00:00-07:00")))'));
+//						evaluateXPathSingle('fn:string(fn:adjust-time-to-timezone(xs:time("10:00:00-07:00")))'));
 				assertEquals("10:00:00-10:00",
-						evaluateXPathSingle('string(fn:adjust-time-to-timezone(xs:time("10:00:00"), xs:dayTimeDuration("-PT10H")))'));
+						evaluateXPathSingle('fn:string(fn:adjust-time-to-timezone(xs:time("10:00:00"), xs:dayTimeDuration("-PT10H")))'));
 				assertEquals("07:00:00-10:00",
-						evaluateXPathSingle('string(fn:adjust-time-to-timezone(xs:time("10:00:00-07:00"), xs:dayTimeDuration("-PT10H")))'));
+						evaluateXPathSingle('fn:string(fn:adjust-time-to-timezone(xs:time("10:00:00-07:00"), xs:dayTimeDuration("-PT10H")))'));
 				assertEquals("10:00:00",
-						evaluateXPathSingle('string(fn:adjust-time-to-timezone(xs:time("10:00:00"), ()))'));
+						evaluateXPathSingle('fn:string(fn:adjust-time-to-timezone(xs:time("10:00:00"), ()))'));
 				assertEquals("10:00:00",
-						evaluateXPathSingle('string(fn:adjust-time-to-timezone(xs:time("10:00:00-07:00"), ()))'));
+						evaluateXPathSingle('fn:string(fn:adjust-time-to-timezone(xs:time("10:00:00-07:00"), ()))'));
 				assertEquals("03:00:00+10:00",
-						evaluateXPathSingle('string(fn:adjust-time-to-timezone(xs:time("10:00:00-07:00"), xs:dayTimeDuration("PT10H")))'));
+						evaluateXPathSingle('fn:string(fn:adjust-time-to-timezone(xs:time("10:00:00-07:00"), xs:dayTimeDuration("PT10H")))'));
 			}
 			function testAdjustTimeToTimezone_Z() {
 				// Not W3C tests
 				assertEquals("11:00:00Z",
-						evaluateXPathSingle('string(fn:adjust-time-to-timezone(xs:time("22:00:00+11:00"), xs:dayTimeDuration("PT0S")))'));
+						evaluateXPathSingle('fn:string(fn:adjust-time-to-timezone(xs:time("22:00:00+11:00"), xs:dayTimeDuration("PT0S")))'));
 				assertEquals("23:00:00Z",
-						evaluateXPathSingle('string(fn:adjust-time-to-timezone(xs:time("10:00:00+11:00"), xs:dayTimeDuration("PT0S")))'));
+						evaluateXPathSingle('fn:string(fn:adjust-time-to-timezone(xs:time("10:00:00+11:00"), xs:dayTimeDuration("PT0S")))'));
 				assertEquals("09:00:00Z",
-						evaluateXPathSingle('string(fn:adjust-time-to-timezone(xs:time("22:00:00-11:00"), xs:dayTimeDuration("PT0S")))'));
+						evaluateXPathSingle('fn:string(fn:adjust-time-to-timezone(xs:time("22:00:00-11:00"), xs:dayTimeDuration("PT0S")))'));
 				assertEquals("21:00:00Z",
-						evaluateXPathSingle('string(fn:adjust-time-to-timezone(xs:time("10:00:00-11:00"), xs:dayTimeDuration("PT0S")))'));
+						evaluateXPathSingle('fn:string(fn:adjust-time-to-timezone(xs:time("10:00:00-11:00"), xs:dayTimeDuration("PT0S")))'));
 			}
 		</script>
 	</head>

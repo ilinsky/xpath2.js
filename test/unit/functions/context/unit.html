@@ -30,21 +30,21 @@
 			function testPosition() {
 				// Not W3C tests
 				assertArrayEquals([2],
-						evaluateXPath('(1, 2, 3)[position() = 2]'));
+						evaluateXPath('(1, 2, 3)[fn:position() = 2]'));
 			}
 
 			function testLast() {
 				// Not W3C tests
 				assertArrayEquals([3],
-						evaluateXPath('(1, 2, 3)[last()]'));
+						evaluateXPath('(1, 2, 3)[fn:last()]'));
 			}
 
 			function testCurrentDateTime() {
 				// Not W3C tests
 				assertEquals(true,
-						evaluateXPathSingle('current-dateTime() cast as xs:date eq current-date()'));
+						evaluateXPathSingle('fn:current-dateTime() cast as xs:date eq fn:current-date()'));
 				assertEquals(true,
-						evaluateXPathSingle('current-dateTime() cast as xs:time eq current-time()'));
+						evaluateXPathSingle('fn:current-dateTime() cast as xs:time eq fn:current-time()'));
 			}
 /*
 			function testCurrentDate() {
@@ -63,19 +63,19 @@
 
 				// Not W3C tests
 				assertEquals((sign ? '' : '-') + "PT" + (hours ? hours + "H" : '') + (minutes ? minutes + "M" : '') + (hours || minutes ? '' : "0S"),
-						evaluateXPathSingle('string(implicit-timezone())'));
+						evaluateXPathSingle('fn:string(fn:implicit-timezone())'));
 			}
 
 			function testDefaultCollation() {
 				// Not W3C tests
 				assertEquals("http://www.w3.org/2005/xpath-functions/collation/codepoint",
-						evaluateXPathSingle('default-collation()'));
+						evaluateXPathSingle('fn:default-collation()'));
 			}
 
 			function testStaticBaseUri() {
 				// Not W3C tests
 				assertNotUndefined(
-						evaluateXPathSingle('static-base-uri()'));
+						evaluateXPathSingle('fn:static-base-uri()'));
 			}
 		</script>
 	</head>

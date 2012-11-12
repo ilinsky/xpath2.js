@@ -90,7 +90,7 @@
 				assertArrayEquals([5, 4, 3, 2, 1],
 						evaluateXPath('fn:distinct-values((5, 4, 5, 3, 2, 3, 2, 1))'));
 				assertArrayEquals(["", true, 1, 0, false],
-						evaluateXPath('fn:distinct-values(("", true(), 1, true(), 0, false(), 1, "", 0, false()))'));
+						evaluateXPath('fn:distinct-values(("", fn:true(), 1, fn:true(), 0, fn:false(), 1, "", 0, fn:false()))'));
 			}
 
 			function testDistinctValues_Collation() {
@@ -125,7 +125,7 @@
 				assertArrayEquals(["c", "b", "a"],
 						evaluateXPath('fn:reverse(("a", "b", "c"))'));
 				assertArrayEquals(["hello"],
-						evaluateXPath('reverse(("hello"))'));
+						evaluateXPath('fn:reverse(("hello"))'));
 				assertArrayEquals([],
 						evaluateXPath('fn:reverse(())'));
 			}
@@ -176,7 +176,7 @@
 			function testCount() {
 				// Not W3C tests
 				assertEquals(3,
-						evaluateXPathSingle('fn:count((true(), 2, "3"))'));
+						evaluateXPathSingle('fn:count((fn:true(), 2, "3"))'));
 				assertEquals(0,
 						evaluateXPathSingle('fn:count(())'));
 			}
@@ -185,13 +185,13 @@
 				assertEquals(4,
 						evaluateXPathSingle('fn:avg((3, 4, 5))'));
 				assertEquals("P10Y5M",
-						evaluateXPathSingle('string(fn:avg((xs:yearMonthDuration("P20Y"), xs:yearMonthDuration("P10M"))))'));
+						evaluateXPathSingle('fn:string(fn:avg((xs:yearMonthDuration("P20Y"), xs:yearMonthDuration("P10M"))))'));
 				assertArrayEquals([],
 						evaluateXPath('fn:avg(())'));
 				assertEquals("NaN",
-						evaluateXPathSingle("string(fn:avg((xs:float('INF'), xs:float('-INF'))))"));
+						evaluateXPathSingle("fn:string(fn:avg((xs:float('INF'), xs:float('-INF'))))"));
 				assertEquals("NaN",
-						evaluateXPathSingle("string(fn:avg(((3, 4, 5), xs:float('NaN'))))"));
+						evaluateXPathSingle("fn:string(fn:avg(((3, 4, 5), xs:float('NaN'))))"));
 			}
 
 			function testAvg_mixedSequenceType() {

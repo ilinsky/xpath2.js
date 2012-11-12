@@ -27,91 +27,91 @@
 			}
 
 			// Tests
-			// name()
+			// fn:name()
 			function testName_Document() {
 				// Not W3C tests
 				assertArrayEquals([""],
-						evaluateXPath('name(.)'));
+						evaluateXPath('fn:name(.)'));
 			}
 			function testName_Element() {
 				// Not W3C tests
 				assertArrayEquals(["html"],
-						evaluateXPath('name(child::element())'));
+						evaluateXPath('fn:name(child::element())'));
 			}
 			function testName_Attribute() {
 				// Not W3C tests
 				assertArrayEquals(["class"],
-						evaluateXPath('name(child::element()/@class)'));
+						evaluateXPath('fn:name(child::element()/@class)'));
 			}
 
-			// local-name()
+			// fn:local-name()
 			function testLocalName_Document() {
 				// Not W3C tests
 				assertArrayEquals([""],
-						evaluateXPath('local-name(.)'));
+						evaluateXPath('fn:local-name(.)'));
 			}
 			function testLocalName_Element() {
 				// Not W3C tests
 				assertArrayEquals(["html"],
-						evaluateXPath('local-name(child::element())'));
+						evaluateXPath('fn:local-name(child::element())'));
 			}
 			function testLocalName_Attribute() {
 				// Not W3C tests
 				assertArrayEquals(["class"],
-						evaluateXPath('local-name(child::element()/@class)'));
+						evaluateXPath('fn:local-name(child::element()/@class)'));
 			}
 
-			// namespace-uri()
+			// fn:namespace-uri()
 			function testNamespaceUri_Document() {
 				// Not W3C tests
 				assertArrayEquals([""],
-						evaluateXPath('namespace-uri(.)'));
+						evaluateXPath('fn:namespace-uri(.)'));
 			}
 			function testNamespaceUri_Element() {
 				// Not W3C tests
 				assertArrayEquals(["http://www.w3.org/1999/xhtml"],
-						evaluateXPath('namespace-uri(child::element())'));
+						evaluateXPath('fn:namespace-uri(child::element())'));
 			}
 			function testNamespaceUri_Attribute() {
 				// Not W3C tests
 				assertArrayEquals([""],
-						evaluateXPath('namespace-uri(child::element()/@class)'));
+						evaluateXPath('fn:namespace-uri(child::element()/@class)'));
 			}
 
 			// number()
 			function testNumber() {
 				// Not W3C tests
 				assertArrayEquals([12.12],
-						evaluateXPath('number("12.12")'));
+						evaluateXPath('fn:number("12.12")'));
 				assertArrayEquals([1],
-						evaluateXPath('number(true())'));
+						evaluateXPath('fn:number(fn:true())'));
 				// Negative tests
 				assertNaN(
-						evaluateXPathSingle('number(())'));
+						evaluateXPathSingle('fn:number(())'));
 				assertNaN(
-						evaluateXPathSingle('number("")'));
+						evaluateXPathSingle('fn:number("")'));
 			}
 
 			function testLang() {
 				// Not W3C tests
 				assertArrayEquals([true],
-						evaluateXPath('lang("en")'));
+						evaluateXPath('fn:lang("en")'));
 				assertArrayEquals([false],
-						evaluateXPath('lang("fr")'));
+						evaluateXPath('fn:lang("fr")'));
 				assertArrayEquals([true],
-						evaluateXPath('lang("en", child::element())'));
+						evaluateXPath('fn:lang("en", child::element())'));
 				assertArrayEquals([false],
-						evaluateXPath('lang("fr", child::element())'));
+						evaluateXPath('fn:lang("fr", child::element())'));
 				assertArrayEquals([true],
-						evaluateXPath('lang("en", child::element()/@class)'));
+						evaluateXPath('fn:lang("en", child::element()/@class)'));
 			}
 
 			function testRoot() {
 				// Not W3C tests
 				assertArrayEquals([document],
-						evaluateXPath('root()'));
+						evaluateXPath('fn:root()'));
 				assertArrayEquals([document],
-						evaluateXPath('root(child::element())'));
+						evaluateXPath('fn:root(child::element())'));
 			}
 		</script>
 	</head>

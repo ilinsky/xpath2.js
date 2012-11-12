@@ -152,9 +152,9 @@
 				assertEquals("http%3A%2F%2Fwww.example.com%2F00%2FWeather%2FCA%2FLos%2520Angeles%23ocean",
 						evaluateXPathSingle('fn:encode-for-uri("http://www.example.com/00/Weather/CA/Los%20Angeles#ocean")'));
 				assertEquals("http://www.example.com/~b%C3%A9b%C3%A9",
-						evaluateXPathSingle('concat("http://www.example.com/", encode-for-uri("~bébé"))'));
+						evaluateXPathSingle('fn:concat("http://www.example.com/", fn:encode-for-uri("~bébé"))'));
 				assertEquals("http://www.example.com/100%25%20organic",
-						evaluateXPathSingle('concat("http://www.example.com/", encode-for-uri("100% organic"))'));
+						evaluateXPathSingle('fn:concat("http://www.example.com/", fn:encode-for-uri("100% organic"))'));
 			}
 
 			function testIriToUri() {
@@ -310,23 +310,23 @@
 
 			function testReplace() {
 				assertEquals("a*cada*",
-						evaluateXPathSingle('replace("abracadabra", "bra", "*")'));
+						evaluateXPathSingle('fn:replace("abracadabra", "bra", "*")'));
 				assertEquals("*",
-						evaluateXPathSingle('replace("abracadabra", "a.*a", "*")'));
+						evaluateXPathSingle('fn:replace("abracadabra", "a.*a", "*")'));
 				assertEquals("*c*bra",
-						evaluateXPathSingle('replace("abracadabra", "a.*?a", "*")'));
+						evaluateXPathSingle('fn:replace("abracadabra", "a.*?a", "*")'));
 				assertEquals("brcdbr",
-						evaluateXPathSingle('replace("abracadabra", "a", "")'));
+						evaluateXPathSingle('fn:replace("abracadabra", "a", "")'));
 				assertEquals("abbraccaddabbra",
-						evaluateXPathSingle('replace("abracadabra", "a(.)", "a$1$1")'));
+						evaluateXPathSingle('fn:replace("abracadabra", "a(.)", "a$1$1")'));
 //				assertEquals("",
-//						evaluateXPathSingle('replace("abracadabra", ".*?", "$1")'));	// must raise an error, because the pattern matches the zero-length string
+//						evaluateXPathSingle('fn:replace("abracadabra", ".*?", "$1")'));	// must raise an error, because the pattern matches the zero-length string
 				assertEquals("b",
-						evaluateXPathSingle('replace("AAAA", "A+", "b")'));
+						evaluateXPathSingle('fn:replace("AAAA", "A+", "b")'));
 				assertEquals("bbbb",
-						evaluateXPathSingle('replace("AAAA", "A+?", "b")'));
+						evaluateXPathSingle('fn:replace("AAAA", "A+?", "b")'));
 				assertEquals("carted",
-						evaluateXPathSingle('replace("darted", "^(.*?)d(.*)$", "$1c$2")'));
+						evaluateXPathSingle('fn:replace("darted", "^(.*?)d(.*)$", "$1c$2")'));
 			}
 
 			function testTokenize() {

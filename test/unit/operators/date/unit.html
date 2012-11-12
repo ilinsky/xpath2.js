@@ -231,23 +231,23 @@
 			function testAddYearMonthDurations() {
 				// Not W3C tests
 				assertEquals("P5Y5M",
-						evaluateXPathSingle('string(xs:yearMonthDuration("P3Y3M") + xs:yearMonthDuration("P2Y2M"))'));
+						evaluateXPathSingle('fn:string(xs:yearMonthDuration("P3Y3M") + xs:yearMonthDuration("P2Y2M"))'));
 			}
 
 			function testSubtractYearMonthDurations() {
 				// Not W3C tests
 				assertEquals("P1Y1M",
-						evaluateXPathSingle('string(xs:yearMonthDuration("P3Y3M") - xs:yearMonthDuration("P2Y2M"))'));
+						evaluateXPathSingle('fn:string(xs:yearMonthDuration("P3Y3M") - xs:yearMonthDuration("P2Y2M"))'));
 			}
 
 			function testMultiplyYearMonthDuration() {
 				assertEquals("P6Y9M",
-						evaluateXPathSingle('string(xs:yearMonthDuration("P2Y11M") * 2.3)'));
+						evaluateXPathSingle('fn:string(xs:yearMonthDuration("P2Y11M") * 2.3)'));
 			}
 
 			function testDivideYearMonthDuration() {
 				assertEquals("P1Y11M",
-						evaluateXPathSingle('string(xs:yearMonthDuration("P2Y11M") div 1.5)'));
+						evaluateXPathSingle('fn:string(xs:yearMonthDuration("P2Y11M") div 1.5)'));
 			}
 
 			function testDivideYearMonthDurationByYearMonthDuration() {
@@ -257,22 +257,22 @@
 
 			function testAddDayTimeDurations() {
 				assertEquals("P8DT5M",
-						evaluateXPathSingle('string(xs:dayTimeDuration("P2DT12H5M") + xs:dayTimeDuration("P5DT12H"))'));
+						evaluateXPathSingle('fn:string(xs:dayTimeDuration("P2DT12H5M") + xs:dayTimeDuration("P5DT12H"))'));
 			}
 
 			function testSubtractDayTimeDurations() {
 				assertEquals("P1DT1H30M",
-						evaluateXPathSingle('string(xs:dayTimeDuration("P2DT12H") - xs:dayTimeDuration("P1DT10H30M"))'));
+						evaluateXPathSingle('fn:string(xs:dayTimeDuration("P2DT12H") - xs:dayTimeDuration("P1DT10H30M"))'));
 			}
 
 			function testMultiplyDayTimeDuration() {
 				assertEquals("PT4H33M",
-						evaluateXPathSingle('string(xs:dayTimeDuration("PT2H10M") * 2.1)'));
+						evaluateXPathSingle('fn:string(xs:dayTimeDuration("PT2H10M") * 2.1)'));
 			}
 
 			function testDivideDayTimeDuration() {
 				assertEquals("PT17H40M7S",
-						evaluateXPathSingle('string(xs:dayTimeDuration("P1DT2H30M10.5S") div 1.5)'));
+						evaluateXPathSingle('fn:string(xs:dayTimeDuration("P1DT2H30M10.5S") div 1.5)'));
 			}
 
 			function testDivideDayTimeDurationByDayTimeDuration() {
@@ -283,95 +283,95 @@
 			// 10.8 Arithmetic Operators on Durations, Dates and Times
 			function testSubtractDateTimes() {
 				assertEquals("P337DT2H12M",
-						evaluateXPathSingle('string(xs:dateTime("2000-10-30T06:12:00") - xs:dateTime("1999-11-28T09:00:00Z"))'));
+						evaluateXPathSingle('fn:string(xs:dateTime("2000-10-30T06:12:00") - xs:dateTime("1999-11-28T09:00:00Z"))'));
 			}
 
 			function testSubtractDates() {
 				assertEquals("P5DT7H",
-						evaluateXPathSingle('string(xs:date("2000-10-15-05:00") - xs:date("2000-10-10+02:00"))'));
+						evaluateXPathSingle('fn:string(xs:date("2000-10-15-05:00") - xs:date("2000-10-10+02:00"))'));
 			}
 
 			function testSubtractTimes() {
 //				assertEquals("PT2H12M",	// Depends on implicit timezone
-//						evaluateXPathSingle('string(xs:time("11:12:00Z") - xs:time("04:00:00"))'));
+//						evaluateXPathSingle('fn:string(xs:time("11:12:00Z") - xs:time("04:00:00"))'));
 				assertEquals("PT0S",
-						evaluateXPathSingle('string(xs:time("11:00:00-05:00") - xs:time("21:30:00+05:30"))'));
+						evaluateXPathSingle('fn:string(xs:time("11:00:00-05:00") - xs:time("21:30:00+05:30"))'));
 				assertEquals("P1D",
-						evaluateXPathSingle('string(xs:time("17:00:00-06:00") - xs:time("08:00:00+09:00"))'));
+						evaluateXPathSingle('fn:string(xs:time("17:00:00-06:00") - xs:time("08:00:00+09:00"))'));
 				assertEquals("-PT23H59M59S",
-						evaluateXPathSingle('string(xs:time("24:00:00") - xs:time("23:59:59"))'));
+						evaluateXPathSingle('fn:string(xs:time("24:00:00") - xs:time("23:59:59"))'));
 			}
 
 			function testAddYearMonthDurationToDateTime() {
 				assertEquals("2001-12-30T11:12:00",
-						evaluateXPathSingle('string(xs:dateTime("2000-10-30T11:12:00") + xs:yearMonthDuration("P1Y2M"))'));
+						evaluateXPathSingle('fn:string(xs:dateTime("2000-10-30T11:12:00") + xs:yearMonthDuration("P1Y2M"))'));
 			}
 
 			function testAddDayTimeDurationToDateTime() {
 				assertEquals("2000-11-02T12:27:00",
-						evaluateXPathSingle('string(xs:dateTime("2000-10-30T11:12:00") + xs:dayTimeDuration("P3DT1H15M"))'));
+						evaluateXPathSingle('fn:string(xs:dateTime("2000-10-30T11:12:00") + xs:dayTimeDuration("P3DT1H15M"))'));
 			}
 
 			function testSubtractYearMonthDurationFromDateTime() {
 				assertEquals("1999-08-30T11:12:00",
-						evaluateXPathSingle('string(xs:dateTime("2000-10-30T11:12:00") - xs:yearMonthDuration("P1Y2M"))'));
+						evaluateXPathSingle('fn:string(xs:dateTime("2000-10-30T11:12:00") - xs:yearMonthDuration("P1Y2M"))'));
 			}
 
 			function testSubtractDayTimeDurationFromDateTime() {
 				assertEquals("2000-10-27T09:57:00",
-						evaluateXPathSingle('string(xs:dateTime("2000-10-30T11:12:00") - xs:dayTimeDuration("P3DT1H15M"))'));
+						evaluateXPathSingle('fn:string(xs:dateTime("2000-10-30T11:12:00") - xs:dayTimeDuration("P3DT1H15M"))'));
 			}
 
 			function testAddYearMonthDurationToDate() {
 				assertEquals("2001-12-30",
-						evaluateXPathSingle('string(xs:date("2000-10-30") + xs:yearMonthDuration("P1Y2M"))'));
+						evaluateXPathSingle('fn:string(xs:date("2000-10-30") + xs:yearMonthDuration("P1Y2M"))'));
 			}
 			function testAddYearMonthDurationToDate_leap() {
 				assertEquals("2001-02-28Z",
-						evaluateXPathSingle('string(xs:date("2000-02-29Z") + xs:yearMonthDuration("P1Y"))'));
+						evaluateXPathSingle('fn:string(xs:date("2000-02-29Z") + xs:yearMonthDuration("P1Y"))'));
 				assertEquals("2000-02-29Z",
-						evaluateXPathSingle('string(xs:date("2000-01-31Z") + xs:yearMonthDuration("P1M"))'));
+						evaluateXPathSingle('fn:string(xs:date("2000-01-31Z") + xs:yearMonthDuration("P1M"))'));
 				assertEquals("2000-02-29Z",
-						evaluateXPathSingle('string(xs:date("2000-01-30Z") + xs:yearMonthDuration("P1M"))'));
+						evaluateXPathSingle('fn:string(xs:date("2000-01-30Z") + xs:yearMonthDuration("P1M"))'));
 			}
 
 			function testAddDayTimeDurationToDate() {
 				assertEquals("2004-11-01Z",
-						evaluateXPathSingle('string(xs:date("2004-10-30Z") + xs:dayTimeDuration("P2DT2H30M0S"))'));
+						evaluateXPathSingle('fn:string(xs:date("2004-10-30Z") + xs:dayTimeDuration("P2DT2H30M0S"))'));
 			}
 
 			function testSubtractYearMonthDurationFromDate() {
 				assertEquals("1999-08-30",
-						evaluateXPathSingle('string(xs:date("2000-10-30") - xs:yearMonthDuration("P1Y2M"))'));
+						evaluateXPathSingle('fn:string(xs:date("2000-10-30") - xs:yearMonthDuration("P1Y2M"))'));
 				assertEquals("1999-09-30-05:00",
-						evaluateXPathSingle('string(xs:date("2000-10-31-05:00") - xs:yearMonthDuration("P1Y1M"))'));
+						evaluateXPathSingle('fn:string(xs:date("2000-10-31-05:00") - xs:yearMonthDuration("P1Y1M"))'));
 			}
 			function testSubtractYearMonthDurationFromDate_leap() {
 				assertEquals("1999-02-28Z",
-						evaluateXPathSingle('string(xs:date("2000-02-29Z") - xs:yearMonthDuration("P1Y"))'));
+						evaluateXPathSingle('fn:string(xs:date("2000-02-29Z") - xs:yearMonthDuration("P1Y"))'));
 				assertEquals("2000-02-29Z",
-						evaluateXPathSingle('string(xs:date("2000-03-31Z") - xs:yearMonthDuration("P1M"))'));
+						evaluateXPathSingle('fn:string(xs:date("2000-03-31Z") - xs:yearMonthDuration("P1M"))'));
 				assertEquals("2000-02-29Z",
-						evaluateXPathSingle('string(xs:date("2000-03-30Z") - xs:yearMonthDuration("P1M"))'));
+						evaluateXPathSingle('fn:string(xs:date("2000-03-30Z") - xs:yearMonthDuration("P1M"))'));
 			}
 
 			function testSubtractDayTimeDurationFromDate() {
 				assertEquals("2000-10-26",
-						evaluateXPathSingle('string(xs:date("2000-10-30") - xs:dayTimeDuration("P3DT1H15M"))'));
+						evaluateXPathSingle('fn:string(xs:date("2000-10-30") - xs:dayTimeDuration("P3DT1H15M"))'));
 			}
 
 			function testAddDayTimeDurationToTime() {
 				assertEquals("12:27:00",
-						evaluateXPathSingle('string(xs:time("11:12:00") + xs:dayTimeDuration("P3DT1H15M"))'));
+						evaluateXPathSingle('fn:string(xs:time("11:12:00") + xs:dayTimeDuration("P3DT1H15M"))'));
 				assertEquals("02:27:00+03:00",
-						evaluateXPathSingle('string(xs:time("23:12:00+03:00") + xs:dayTimeDuration("P1DT3H15M"))'));
+						evaluateXPathSingle('fn:string(xs:time("23:12:00+03:00") + xs:dayTimeDuration("P1DT3H15M"))'));
 			}
 
 			function testSubtractDayTimeDurationFromTime() {
 				assertEquals("09:57:00",
-						evaluateXPathSingle('string(xs:time("11:12:00") - xs:dayTimeDuration("P3DT1H15M"))'));
+						evaluateXPathSingle('fn:string(xs:time("11:12:00") - xs:dayTimeDuration("P3DT1H15M"))'));
 				assertEquals("22:10:00-05:00",
-						evaluateXPathSingle('string(xs:time("08:20:00-05:00") - xs:dayTimeDuration("P23DT10H10M"))'));
+						evaluateXPathSingle('fn:string(xs:time("08:20:00-05:00") - xs:dayTimeDuration("P23DT10H10M"))'));
 			}
 
 		</script>

@@ -30,9 +30,9 @@
 			function testAnd() {
 				// Not W3C tests
 				assertEquals(false,
-						evaluateXPathSingle('1 and false()'));
+						evaluateXPathSingle('1 and fn:false()'));
 				assertEquals(true,
-						evaluateXPathSingle('1 and true()'));
+						evaluateXPathSingle('1 and fn:true()'));
 				assertEquals(false,
 						evaluateXPathSingle('1 and 0'));
 				assertEquals(true,
@@ -46,14 +46,14 @@
 				assertEquals(false,
 						evaluateXPathSingle('1 and ()'));
 				assertEquals(false,
-						evaluateXPathSingle('false() and ()'));
+						evaluateXPathSingle('fn:false() and ()'));
 				assertEquals(false,
 						evaluateXPathSingle('0 and ""'));
 
 				assertEquals(false,
-						evaluateXPathSingle('false() and 1'));
+						evaluateXPathSingle('fn:false() and 1'));
 				assertEquals(true,
-						evaluateXPathSingle('true() and 1'));
+						evaluateXPathSingle('fn:true() and 1'));
 				assertEquals(false,
 						evaluateXPathSingle('0 and 1'));
 				assertEquals(true,
@@ -67,7 +67,7 @@
 				assertEquals(false,
 						evaluateXPathSingle('() and 1'));
 				assertEquals(false,
-						evaluateXPathSingle('() and false()'));
+						evaluateXPathSingle('() and fn:false()'));
 				assertEquals(false,
 						evaluateXPathSingle('"" and 0'));
 			}
@@ -75,21 +75,21 @@
 			function testAndDouble() {
 				// Not W3C tests
 				assertEquals(false,
-						evaluateXPathSingle('0 and false() and ""'));
+						evaluateXPathSingle('0 and fn:false() and ""'));
 				assertEquals(false,
-						evaluateXPathSingle('0 and false() and "string"'));
+						evaluateXPathSingle('0 and fn:false() and "string"'));
 				assertEquals(false,
-						evaluateXPathSingle('0 and true() and ""'));
+						evaluateXPathSingle('0 and fn:true() and ""'));
 				assertEquals(true,
-						evaluateXPathSingle('1 and true() and "string"'));
+						evaluateXPathSingle('1 and fn:true() and "string"'));
 			}
 
 			function testOr() {
 				// Not W3C tests
 				assertEquals(true,
-						evaluateXPathSingle('1 or false()'));
+						evaluateXPathSingle('1 or fn:false()'));
 				assertEquals(true,
-						evaluateXPathSingle('1 or true()'));
+						evaluateXPathSingle('1 or fn:true()'));
 				assertEquals(true,
 						evaluateXPathSingle('1 or 0'));
 				assertEquals(true,
@@ -103,14 +103,14 @@
 				assertEquals(true,
 						evaluateXPathSingle('1 or ()'));
 				assertEquals(false,
-						evaluateXPathSingle('false() or ()'));
+						evaluateXPathSingle('fn:false() or ()'));
 				assertEquals(false,
 						evaluateXPathSingle('0 or ""'));
 
 				assertEquals(true,
-						evaluateXPathSingle('false() or 1'));
+						evaluateXPathSingle('fn:false() or 1'));
 				assertEquals(true,
-						evaluateXPathSingle('true() or 1'));
+						evaluateXPathSingle('fn:true() or 1'));
 				assertEquals(true,
 						evaluateXPathSingle('0 or 1'));
 				assertEquals(true,
@@ -124,7 +124,7 @@
 				assertEquals(true,
 						evaluateXPathSingle('() or 1'));
 				assertEquals(false,
-						evaluateXPathSingle('() or false()'));
+						evaluateXPathSingle('() or fn:false()'));
 				assertEquals(false,
 						evaluateXPathSingle('"" or 0'));
 			}
@@ -132,13 +132,13 @@
 			function testOrDouble() {
 				// Not W3C tests
 				assertEquals(false,
-						evaluateXPathSingle('0 or false() or ""'));
+						evaluateXPathSingle('0 or fn:false() or ""'));
 				assertEquals(true,
-						evaluateXPathSingle('0 or false() or "string"'));
+						evaluateXPathSingle('0 or fn:false() or "string"'));
 				assertEquals(true,
-						evaluateXPathSingle('0 or true() or ""'));
+						evaluateXPathSingle('0 or fn:true() or ""'));
 				assertEquals(true,
-						evaluateXPathSingle('1 or true() or "string"'));
+						evaluateXPathSingle('1 or fn:true() or "string"'));
 			}
 
 		</script>

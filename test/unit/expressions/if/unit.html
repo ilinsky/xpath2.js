@@ -46,12 +46,12 @@
 
 			function testIf_BooleanInClause_Positive() {
 				assertArrayEquals([3],
-						evaluateXPath('if (true()) then 3 else 4'));
+						evaluateXPath('if (fn:true()) then 3 else 4'));
 			}
 
 			function testIf_BooleanInClause_Negative() {
 				assertArrayEquals([4],
-						evaluateXPath('if (false()) then 3 else 4'));
+						evaluateXPath('if (fn:false()) then 3 else 4'));
 			}
 
 			function testIf_StringInClause_Positive() {

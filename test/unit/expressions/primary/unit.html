@@ -57,9 +57,9 @@
 				assertArrayEquals([],
 						evaluateXPath("(1, 2, 3)[. eq 4]"));
 				assertArrayEquals([1],
-						evaluateXPath("1[true()]"));
+						evaluateXPath("1[fn:true()]"));
 				assertArrayEquals([],
-						evaluateXPath("1[false()]"));
+						evaluateXPath("1[fn:false()]"));
 				assertArrayEquals([1],
 						evaluateXPath("1[1]"));
 				assertArrayEquals([],
@@ -68,9 +68,9 @@
 
 			function testFunctionCall() {
 				assertArrayEquals([true],
-						evaluateXPath("true()"));
+						evaluateXPath("fn:true()"));
 				assertArrayEquals([false],
-						evaluateXPath("not(true())"));
+						evaluateXPath("fn:not(fn:true())"));
 			}
 
 			function testNumericLiteral() {

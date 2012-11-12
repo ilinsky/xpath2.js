@@ -40,15 +40,15 @@
 					test_2	= document.getElementById("test_2"),
 					test_3	= document.getElementById("test_3");
 				assertArrayEquals([test_1, test_2, test_3],
-						evaluateXPath('(id("test_3"), id("test_2"), id("test_1")) intersect (id("test_2"), id("test_1"), id("test_3"))', document));
+						evaluateXPath('(fn:id("test_3"), fn:id("test_2"), fn:id("test_1")) intersect (fn:id("test_2"), fn:id("test_1"), fn:id("test_3"))', document));
 				assertArrayEquals([],
-						evaluateXPath('(id("test_3"), id("test_2"), id("test_1")) intersect ()', document));
+						evaluateXPath('(fn:id("test_3"), fn:id("test_2"), fn:id("test_1")) intersect ()', document));
 				assertArrayEquals([],
-						evaluateXPath('() intersect (id("test_2"), id("test_1"), id("test_3"))', document));
+						evaluateXPath('() intersect (fn:id("test_2"), fn:id("test_1"), fn:id("test_3"))', document));
 				assertArrayEquals([test_1, test_2],
-						evaluateXPath('(id("test_3"), id("test_2"), id("test_1")) intersect (id("test_2"), id("test_1"), id("test_0"))', document));
+						evaluateXPath('(fn:id("test_3"), fn:id("test_2"), fn:id("test_1")) intersect (fn:id("test_2"), fn:id("test_1"), fn:id("test_0"))', document));
 				assertArrayEquals([],
-						evaluateXPath('(id("test_3"), id("test_2")) intersect (id("test_1"), id("test_0"))', document));
+						evaluateXPath('(fn:id("test_3"), fn:id("test_2")) intersect (fn:id("test_1"), fn:id("test_0"))', document));
 			}
 
 			function testExcept() {
@@ -57,15 +57,15 @@
 					test_2	= document.getElementById("test_2"),
 					test_3	= document.getElementById("test_3");
 				assertArrayEquals([],
-						evaluateXPath('(id("test_3"), id("test_2"), id("test_1")) except (id("test_2"), id("test_1"), id("test_3"))', document));
+						evaluateXPath('(fn:id("test_3"), fn:id("test_2"), fn:id("test_1")) except (fn:id("test_2"), fn:id("test_1"), fn:id("test_3"))', document));
 				assertArrayEquals([test_1, test_2, test_3],
-						evaluateXPath('(id("test_3"), id("test_2"), id("test_1")) except ()', document));
+						evaluateXPath('(fn:id("test_3"), fn:id("test_2"), fn:id("test_1")) except ()', document));
 				assertArrayEquals([],
-						evaluateXPath('() except (id("test_2"), id("test_1"), id("test_3"))', document));
+						evaluateXPath('() except (fn:id("test_2"), fn:id("test_1"), fn:id("test_3"))', document));
 				assertArrayEquals([test_3],
-						evaluateXPath('(id("test_3"), id("test_2"), id("test_1")) except (id("test_2"), id("test_1"), id("test_0"))', document));
+						evaluateXPath('(fn:id("test_3"), fn:id("test_2"), fn:id("test_1")) except (fn:id("test_2"), fn:id("test_1"), fn:id("test_0"))', document));
 				assertArrayEquals([test_2, test_3],
-						evaluateXPath('(id("test_3"), id("test_2")) except (id("test_1"), id("test_0"))', document));
+						evaluateXPath('(fn:id("test_3"), fn:id("test_2")) except (fn:id("test_1"), fn:id("test_0"))', document));
 			}
 
 			function testRange() {
@@ -86,15 +86,15 @@
 					test_2	= document.getElementById("test_2"),
 					test_3	= document.getElementById("test_3");
 				assertArrayEquals([test_1, test_2, test_3],
-						evaluateXPath('(id("test_3"), id("test_2"), id("test_1")) union (id("test_2"), id("test_1"), id("test_3"))', document));
+						evaluateXPath('(fn:id("test_3"), fn:id("test_2"), fn:id("test_1")) union (fn:id("test_2"), fn:id("test_1"), fn:id("test_3"))', document));
 				assertArrayEquals([test_1, test_2, test_3],
-						evaluateXPath('(id("test_3"), id("test_2"), id("test_1")) union ()', document));
+						evaluateXPath('(fn:id("test_3"), fn:id("test_2"), fn:id("test_1")) union ()', document));
 				assertArrayEquals([test_1, test_2, test_3],
-						evaluateXPath('() union (id("test_2"), id("test_1"), id("test_3"))', document));
+						evaluateXPath('() union (fn:id("test_2"), fn:id("test_1"), fn:id("test_3"))', document));
 				assertArrayEquals([test_0, test_1, test_2, test_3],
-						evaluateXPath('(id("test_3"), id("test_2"), id("test_1")) union (id("test_2"), id("test_1"), id("test_0"))', document));
+						evaluateXPath('(fn:id("test_3"), fn:id("test_2"), fn:id("test_1")) union (fn:id("test_2"), fn:id("test_1"), fn:id("test_0"))', document));
 				assertArrayEquals([test_0, test_1, test_2, test_3],
-						evaluateXPath('(id("test_3"), id("test_2")) union (id("test_1"), id("test_0"))', document));
+						evaluateXPath('(fn:id("test_3"), fn:id("test_2")) union (fn:id("test_1"), fn:id("test_0"))', document));
 			}
 
 			function testUnion_short() {
@@ -103,15 +103,15 @@
 					test_2	= document.getElementById("test_2"),
 					test_3	= document.getElementById("test_3");
 				assertArrayEquals([test_1, test_2, test_3],
-						evaluateXPath('(id("test_3"), id("test_2"), id("test_1")) | (id("test_2"), id("test_1"), id("test_3"))', document));
+						evaluateXPath('(fn:id("test_3"), fn:id("test_2"), fn:id("test_1")) | (fn:id("test_2"), fn:id("test_1"), fn:id("test_3"))', document));
 				assertArrayEquals([test_1, test_2, test_3],
-						evaluateXPath('(id("test_3"), id("test_2"), id("test_1")) | ()', document));
+						evaluateXPath('(fn:id("test_3"), fn:id("test_2"), fn:id("test_1")) | ()', document));
 				assertArrayEquals([test_1, test_2, test_3],
-						evaluateXPath('() | (id("test_2"), id("test_1"), id("test_3"))', document));
+						evaluateXPath('() | (fn:id("test_2"), fn:id("test_1"), fn:id("test_3"))', document));
 				assertArrayEquals([test_0, test_1, test_2, test_3],
-						evaluateXPath('(id("test_3"), id("test_2"), id("test_1")) | (id("test_2"), id("test_1"), id("test_0"))', document));
+						evaluateXPath('(fn:id("test_3"), fn:id("test_2"), fn:id("test_1")) | (fn:id("test_2"), fn:id("test_1"), fn:id("test_0"))', document));
 				assertArrayEquals([test_0, test_1, test_2, test_3],
-						evaluateXPath('(id("test_3"), id("test_2")) | (id("test_1"), id("test_0"))', document));
+						evaluateXPath('(fn:id("test_3"), fn:id("test_2")) | (fn:id("test_1"), fn:id("test_0"))', document));
 			}
 
 		</script>
