@@ -39,8 +39,16 @@ cRangeExpr.prototype.evaluate	= function (oContext) {
 	if (oLeft.isEmpty() || oRight.isEmpty())
 		return new cXPath2Sequence;
 
-	if (typeof oLeft.items[0] == "number" && ~~oLeft.items[0] == oLeft.items[0] && typeof oRight.items[0] == "number" && ~~oRight.items[0] == oRight.items[0])
-		return cFunctionCall.operators["to"](oLeft.items[0], oRight.items[0]);
+	var vLeft	= cXPath2Sequence.atomizeItem(oLeft.items[0]),
+		vRight	= cXPath2Sequence.atomizeItem(oRight.items[0]);
+
+	if (vLeft instanceof cXSUntypedAtomic)
+		vLeft	= cXSInteger.cast(vLeft);
+	if (vRight instanceof cXSUntypedAtomic)
+		vRight	= cXSInteger.cast(vRight);
+
+	if (typeof vLeft == "number" && ~~vLeft == vLeft && typeof vRight == "number" && ~~vRight == vRight)
+		return cFunctionCall.operators["to"](vLeft, vRight);
 	//
 	throw new cXPath2Error("XPTY0004"
 //->Debug
