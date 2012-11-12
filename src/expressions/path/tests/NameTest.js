@@ -28,7 +28,7 @@ cNameTest.parse	= function (oLexer, oStaticContext) {
 		if (aMatch[1] == '*' && aMatch[2] == '*')
 			throw "NameTest.parse: illegal wildcard value";
 		oLexer.next();
-		return new cNameTest(aMatch[1] || null, aMatch[2], aMatch[1] ? aMatch[1] == '*' ? '*' : oStaticContext.getURIForPrefix(aMatch[1]) || null : null);
+		return new cNameTest(aMatch[1] || null, aMatch[2], aMatch[1] ? aMatch[1] == '*' ? '*' : oStaticContext.getURIForPrefix(aMatch[1]) || null : oStaticContext.defaultElementNamespace);
 	}
 };
 
