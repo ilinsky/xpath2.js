@@ -49,19 +49,6 @@ cXSDayTimeDuration.cast	= function(vValue) {
 cFunctionCall.dataTypes["dayTimeDuration"]	= cXSDayTimeDuration;
 
 // Utilities
-function fXSDayTimeDuration_toSeconds(oDuration) {
-	return (((oDuration.day * 24 + oDuration.hours) * 60 + oDuration.minutes) * 60 + oDuration.seconds) * (oDuration.negative ? -1 : 1);
-};
-
-function fXSDayTimeDuration_fromSeconds(nValue) {
-	var bNegative	=(nValue = cMath.round(nValue)) < 0,
-		nDays	= ~~((nValue = cMath.abs(nValue)) / 86400),
-		nHours	= ~~((nValue -= nDays * 3600 * 24) / 3600),
-		nMinutes= ~~((nValue -= nHours * 3600) / 60),
-		nSeconds	= nValue -= nMinutes * 60;
-	return new cXSDayTimeDuration(nDays, nHours, nMinutes, nSeconds, bNegative);
-};
-
 function fXSDayTimeDuration_normalize(oDuration) {
 	if (oDuration.seconds >= 60) {
 		oDuration.minutes	+= ~~(oDuration.seconds / 60);

@@ -48,17 +48,6 @@ cXSYearMonthDuration.cast	= function(vValue) {
 cFunctionCall.dataTypes["yearMonthDuration"]	= cXSYearMonthDuration;
 
 //
-function fXSYearMonthDuration_toMonths(oDuration) {
-	return (oDuration.year * 12 + oDuration.month) * (oDuration.negative ? -1 : 1);
-};
-
-function fXSYearMonthDuration_fromMonths(nValue) {
-	var nNegative	=(nValue = cMath.round(nValue)) < 0,
-		nYears	= ~~((nValue = cMath.abs(nValue)) / 12),
-		nMonths		= nValue -= nYears * 12;
-	return new cXSYearMonthDuration(nYears, nMonths, nNegative);
-};
-
 function fXSYearMonthDuration_normalize(oDuration) {
 	if (oDuration.month >= 12) {
 		oDuration.year	+= ~~(oDuration.month / 12);

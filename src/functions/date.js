@@ -227,7 +227,7 @@ function fFunctionCall_dateTime_adjustTimezone(oDateTime, oTimezone) {
 	if (oTimezone == null)
 		oValue.timezone	= null;
 	else {
-		var nTimezone	= fXSDayTimeDuration_toSeconds(oTimezone) / 60;
+		var nTimezone	= fFunctionCall_operators_dayTimeDuration_toSeconds(oTimezone) / 60;
 		if (oDateTime.timezone !== null) {
 			var nDiff	= nTimezone - oDateTime.timezone;
 			if (oDateTime instanceof cXSDate) {
