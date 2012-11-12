@@ -83,21 +83,6 @@ cAxisStep.prototype.evaluate	= function (oContext) {
 
 	var nType	= cXPath2.DOMAdapter.getProperty(oItem, "nodeType");
 	var oSequence	= new cXPath2Sequence;
-
-	var fGetChildrenForward	= function(oNode) {
-		for (var oChild; oNode; oNode = cXPath2.DOMAdapter.getProperty(oNode, "nextSibling")) {
-			oSequence.add(oNode);
-			if (oChild = cXPath2.DOMAdapter.getProperty(oNode, "firstChild"))
-				fGetChildrenForward(oChild);
-		}
-	};
-	var fGetChildrenBackward	= function(oNode) {
-		for (var oChild; oNode; oNode = cXPath2.DOMAdapter.getProperty(oNode, "previousSibling")) {
-			if (oChild = cXPath2.DOMAdapter.getProperty(oNode, "lastChild"))
-				fGetChildrenBackward(oChild);
-			oSequence.add(oNode);
-		}
-	};
 	switch (this.axis) {
 		// Forward axis
 		case "attribute":
@@ -115,14 +100,14 @@ cAxisStep.prototype.evaluate	= function (oContext) {
 			oSequence.add(oItem);
 			// No break left intentionally
 		case "descendant":
-			fGetChildrenForward(cXPath2.DOMAdapter.getProperty(oItem, "firstChild"));
+			fAxisStep_getChildrenForward(cXPath2.DOMAdapter.getProperty(oItem, "firstChild"), oSequence);
 			break;
 
 		case "following":
 			// TODO: Attribute node context
 			for (var oParent = oItem, oSibling; oParent; oParent = cXPath2.DOMAdapter.getProperty(oParent, "parentNode"))
 				if (oSibling = cXPath2.DOMAdapter.getProperty(oParent, "nextSibling"))
-					fGetChildrenForward(oSibling);
+					fAxisStep_getChildrenForward(oSibling, oSequence);
 			break;
 
 		case "following-sibling":
@@ -153,7 +138,7 @@ cAxisStep.prototype.evaluate	= function (oContext) {
 			// TODO: Attribute node context
 			for (var oParent = oItem, oSibling; oParent; oParent = cXPath2.DOMAdapter.getProperty(oParent, "parentNode"))
 				if (oSibling = cXPath2.DOMAdapter.getProperty(oParent, "previousSibling"))
-					fGetChildrenBackward(oSibling);
+					fAxisStep_getChildrenBackward(oSibling, oSequence);
 			break;
 
 		case "preceding-sibling":
@@ -187,4 +172,21 @@ cAxisStep.prototype.evaluate	= function (oContext) {
 	}
 
 	return oSequence;
+};
+
+//
+function fAxisStep_getChildrenForward(oNode, oSequence) {
+	for (var oChild; oNode; oNode = cXPath2.DOMAdapter.getProperty(oNode, "nextSibling")) {
+		oSequence.add(oNode);
+		if (oChild = cXPath2.DOMAdapter.getProperty(oNode, "firstChild"))
+			fAxisStep_getChildrenForward(oChild, oSequence);
+	}
+};
+
+function fAxisStep_getChildrenBackward(oNode, oSequence) {
+	for (var oChild; oNode; oNode = cXPath2.DOMAdapter.getProperty(oNode, "previousSibling")) {
+		if (oChild = cXPath2.DOMAdapter.getProperty(oNode, "lastChild"))
+			fAxisStep_getChildrenBackward(oChild, oSequence);
+		oSequence.add(oNode);
+	}
 };
