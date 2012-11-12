@@ -36,7 +36,7 @@ fFunctionCall_defineSystemFunction("name",	[[cXTNode, '?', true]],	function(oSeq
 		return '';
 	//
 	var vValue	= cFunctionCall.functions["node-name"].call(this, oSequence1);
-	return vValue === null ? '' : vValue.toString(this);
+	return vValue === null ? '' : vValue.toString();
 });
 
 // fn:local-name() as xs:string

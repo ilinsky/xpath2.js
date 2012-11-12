@@ -74,5 +74,5 @@ fFunctionCall_defineSystemFunction("resolve-uri",	[[cXSString, '?'], [cXSString,
 		}
 	}
 
-	return oUri.toString(this);
+	return oUri.toString();
 });
