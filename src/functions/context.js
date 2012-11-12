@@ -51,7 +51,7 @@ fFunctionCall_defineSystemFunction("implicit-timezone",	[],	function() {
 
 // fn:default-collation() as xs:string
 fFunctionCall_defineSystemFunction("default-collation",	[],	 function() {
-	throw "Function '" + "default-collation" + "' not implemented";
+	return this.staticContext.defaultCollationName;
 });
 
 // fn:static-base-uri() as xs:anyURI?
