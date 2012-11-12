@@ -37,7 +37,7 @@ cFunctionCall.parse	= function (oLexer, oStaticContext) {
 		// Other functions
 		if (aMatch[1] == '*' || aMatch[2] == '*')
 			throw "FunctionCall.parse: illegal use of wildcard in function name";
-		var oFunctionCallExpr	= new cFunctionCall(aMatch[1] || null, aMatch[2], aMatch[1] ? oStaticContext.getURIForPrefix(aMatch[1]) || null : "http://www.w3.org/2005/xpath-functions"),
+		var oFunctionCallExpr	= new cFunctionCall(aMatch[1] || null, aMatch[2], aMatch[1] ? oStaticContext.getURIForPrefix(aMatch[1]) || null : oStaticContext.defaultFunctionNamespace),
 			oExpr;
 		oLexer.next(2);
 		//
