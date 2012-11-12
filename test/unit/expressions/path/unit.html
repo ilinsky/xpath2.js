@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<?pi-target pi-data?>
+<html dec="10.10" int="10" boo="true">
+	<head>
+		<title>JsUnit testing page</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+		<!-- JsUnitClient driver -->
+		<script type="text/javascript" src="../../jsUnitClient.js"></script>
+
+		<!-- Library -->
+		<script type="text/javascript" src="../../../../xpath2.js"></script>
+
+		<!-- Suite definition -->
+		<script type="text/javascript">
+			// Helper function
+			function evaluateXPath(sXPath, oContext) {
+				return XPath2.evaluate(sXPath, oContext);
+			}
+
+			function evaluateXPathWithDocument(sXPath) {
+				return XPath2.evaluate(sXPath, document);
+			}
+
+			// Kind Tests
+			function testKindTest_Node() {
+				assertArrayEquals([document.doctype, document.childNodes[1], document.documentElement],
+						evaluateXPathWithDocument("node()"));
+			}
+
+			function testKindTest_DocumentNode() {
+				assertArrayEquals([document],
+						evaluateXPathWithDocument("self::document-node()"));
+			}
+
+			function testKindTest_Element() {
+				assertArrayEquals([document.documentElement],
+						evaluateXPathWithDocument("element()"));
+			}
+
+			function testKindTest_Attribute() {
+				var context	= document.documentElement;
+
+				var attributes	= context.attributes;
+				assertArrayEquals([attributes[0], attributes[1], attributes[2]],
+						evaluateXPath("attribute()", context));
+			}
+
+			function testKindTest_ProcessingInstruction() {
+				assertArrayEquals([document.childNodes[1]],
+						evaluateXPathWithDocument("processing-instruction()"));
+				assertArrayEquals([document.childNodes[1]],
+						evaluateXPathWithDocument("processing-instruction('pi-target')"));
+				assertArrayEquals([],
+						evaluateXPathWithDocument("processing-instruction('pi-target2')"));
+			}
+
+			function testKindTest_Comment() {
+				var context	= document.getElementById("_ele221");
+				assertArrayEquals([context.firstChild],
+						evaluateXPath("comment()", context));
+			}
+
+			function testKindTest_Text() {
+				var context	= document.getElementById("_ele221");
+				assertArrayEquals([context.lastChild],
+						evaluateXPath("text()", context));
+			}
+
+			function testKindTest_SchemaAttribute() {
+				// TODO: Implement
+			}
+
+			function testKindTest_SchemaElement() {
+				// TODO: Implement
+			}
+
+			// Name tests
+			function testElementNameTest_Star() {
+				var context	= document.getElementById("_ele2"),
+					ele21	= document.getElementById("_ele21"),
+					ele22	= document.getElementById("_ele22"),
+					ele23	= document.getElementById("_ele23");
+
+				assertArrayEquals([ele21, ele22, ele23],
+						evaluateXPath("*", context));
+			}
+
+			function testElementNameTest_AnyNamespaceStar() {
+				// TODO
+			}
+
+			function testElementNameTest_StarAnyName() {
+				// TODO
+			}
+
+			function testElementNameTest_Name() {
+				var context	= document.getElementById("_ele2"),
+					ele21	= document.getElementById("_ele21"),
+					ele23	= document.getElementById("_ele23");
+
+				assertArrayEquals([ele21, ele23],
+						evaluateXPath("div", context));
+			}
+
+			function testElementNameTest_NameNamespace() {
+				// TODO
+			}
+
+			function testAttributeNameTest_Star() {
+				var context	= document.documentElement;
+
+				assertArrayEquals([context.getAttributeNode("dec"), context.getAttributeNode("int"), context.getAttributeNode("boo")],
+						evaluateXPath("attribute::*", context));
+			}
+
+			function testAttributeNameTest_AnyNamespaceStar() {
+				// TODO
+			}
+
+			function testAttributeNameTest_StarAnyName() {
+				// TODO
+			}
+
+			function testAttributeNameTest_Name() {
+				var context	= document.documentElement;
+
+				assertArrayEquals([context.getAttributeNode("boo")],
+						evaluateXPath("attribute::boo", context));
+			}
+
+			function testAttributeNameTest_NameNamespace() {
+				// TODO
+			}
+
+			// Steps
+			function testPathSlash() {
+				assertArrayEquals([document],
+						evaluateXPath("/", document.documentElement));
+			}
+
+			function testPathSlashSlashStar() {
+				// TODO
+			}
+
+			function testPathSlashStar() {
+				assertArrayEquals([document.documentElement],
+						evaluateXPath("/*", document.documentElement));
+			}
+
+			// Axises
+			// - Forward
+			function testAxisAttribute() {
+				var context	= document.documentElement;
+
+				assertArrayEquals([context.getAttributeNode("boo")],
+						evaluateXPath("attribute::boo", context));
+			}
+
+			function testAxisAttribute_Abbreviated() {
+				var context	= document.documentElement;
+
+				assertArrayEquals([context.getAttributeNode("boo")],
+						evaluateXPath("@boo", context));
+			}
+
+			function testAxisChild() {
+				var context	= document.getElementById("_ele2"),
+					ele21	= document.getElementById("_ele21"),
+					ele23	= document.getElementById("_ele23");
+
+				assertArrayEquals([ele21, ele23],
+						evaluateXPath("child::div", context));
+			}
+
+			function testAxisDescendant() {
+				var context	= document.getElementById("_ele2"),
+					ele21	= document.getElementById("_ele21"),
+					ele221	= document.getElementById("_ele221"),
+					ele23	= document.getElementById("_ele23");
+
+				assertArrayEquals([ele21, ele221, ele23],
+						evaluateXPath("descendant::div", context));
+			}
+
+			function testAxisDescendantOrSelf() {
+				var context	= document.getElementById("_ele2"),
+					ele21	= document.getElementById("_ele21"),
+					ele221	= document.getElementById("_ele221"),
+					ele23	= document.getElementById("_ele23");
+
+				assertArrayEquals([context, ele21, ele221, ele23],
+						evaluateXPath("descendant-or-self::div", context));
+			}
+
+			function testAxisFollowing() {
+				var context	= document.getElementById("_ele12"),
+					ele13	= document.getElementById("_ele13"),
+					ele2	= document.getElementById("_ele2"),
+					ele21	= document.getElementById("_ele21"),
+					ele221	= document.getElementById("_ele221"),
+					ele23	= document.getElementById("_ele23"),
+					root_after	= document.getElementById("_root_after");
+
+				assertArrayEquals([ele13, ele2, ele21, ele221, ele23, root_after],
+						evaluateXPath("following::div", context));
+			}
+
+			function testAxisFollowingSibling() {
+				var context	= document.getElementById("_ele0"),
+					ele1	= document.getElementById("_ele1"),
+					ele2	= document.getElementById("_ele2");
+
+				assertArrayEquals([ele1, ele2],
+						evaluateXPath("following-sibling::div", context));
+			}
+
+			function testAxisSelf() {
+				var context	= document.getElementById("_ele2");
+
+				assertArrayEquals([context],
+						evaluateXPath("self::node()", context));
+			}
+
+			// - Reverse
+			function testAxisAncestor() {
+				var context	= document.getElementById("_ele2"),
+					root	= document.getElementById("_root");
+
+				assertArrayEquals([document.documentElement, document.body, root],
+						evaluateXPath("ancestor::*", context));
+			}
+
+			function testAxisAncestorOrSelf() {
+				var context	= document.getElementById("_ele2"),
+					root	= document.getElementById("_root");
+
+				assertArrayEquals([document.documentElement, document.body, root, context],
+						evaluateXPath("ancestor-or-self::*", context));
+			}
+
+			function testAxisParent() {
+				var context	= document.getElementById("_ele2"),
+					root	= document.getElementById("_root");
+
+				assertArrayEquals([root],
+						evaluateXPath("parent::*", context));
+			}
+
+			function testAxisParent_Abbreviated() {
+				var context	= document.getElementById("_ele2"),
+					root	= document.getElementById("_root");
+
+				assertArrayEquals([root],
+						evaluateXPath("..", context));
+			}
+
+			function testAxisPreceding() {
+				var context	= document.getElementById("_ele12"),
+					root_before	= document.getElementById("_root_before"),
+					ele0	= document.getElementById("_ele0"),
+					ele01	= document.getElementById("_ele01"),
+					ele02	= document.getElementById("_ele02"),
+					ele11	= document.getElementById("_ele11");
+
+				assertArrayEquals([root_before, ele0, ele01, ele02, ele11],
+						evaluateXPath("preceding::div", context));
+			}
+
+			function testAxisPrecedingSibling() {
+				var context	= document.getElementById("_ele2"),
+					ele0	= document.getElementById("_ele0"),
+					ele1	= document.getElementById("_ele1");
+
+				assertArrayEquals([ele0, ele1],
+						evaluateXPath("preceding-sibling::div", context));
+			}
+		</script>
+	</head>
+	<body>
+		<div id="_root_before"></div>
+		<div id="_root">
+			<div id="_ele0">
+				<div id="_ele01">1</div>
+				<div id="_ele02">2</div>
+			</div>
+			<div id="_ele1">
+				<div id="_ele11"></div>
+				<div id="_ele12">
+					<div id="_ele121"></div>
+					<div id="_ele122"></div>
+				</div>
+				<div id="_ele13"></div>
+			</div>
+			<div id="_ele2">
+				<div id="_ele21"></div>
+				<blockquote id="_ele22">
+					<div id="_ele221"><!--Comment-->Text</div>
+				</blockquote>
+				<div id="_ele23"></div>
+			</div>
+		</div>
+		<div id="_root_after"></div>
+	</body>
+</html>
