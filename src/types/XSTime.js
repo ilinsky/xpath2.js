@@ -59,11 +59,7 @@ cXSTime.cast	= function(vValue) {
 //
 cFunctionCall.dataTypes["time"]	= cXSTime;
 
-// Utilities
-function fXSTime_toSeconds(oTime) {
-	return oTime.seconds + (oTime.minutes - (oTime.timezone !== null ? oTime.timezone % 60 : 0) + (oTime.hours - (oTime.timezone !== null ? ~~(oTime.timezone / 60) : 0)) * 60) * 60;
-};
-
+//
 function fXSTime_normalize(oValue) {
 	//
 	if (oValue.seconds >= 60 || oValue.seconds < 0) {

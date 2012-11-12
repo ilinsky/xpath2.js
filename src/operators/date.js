@@ -119,17 +119,17 @@ cFunctionCall.operators["date-greater-than"]	= function(oLeft, oRight) {
 
 // op:time-equal($arg1 as xs:time, $arg2 as xs:time) as xs:boolean
 cFunctionCall.operators["time-equal"]	= function(oLeft, oRight) {
-	return fXSTime_toSeconds(oLeft) == fXSTime_toSeconds(oRight);
+	return fFunctionCall_operators_time_toSeconds(oLeft) == fFunctionCall_operators_time_toSeconds(oRight);
 };
 
 // op:time-less-than($arg1 as xs:time, $arg2 as xs:time) as xs:boolean
 cFunctionCall.operators["time-less-than"]	= function(oLeft, oRight) {
-	return fXSTime_toSeconds(oLeft) < fXSTime_toSeconds(oRight);
+	return fFunctionCall_operators_time_toSeconds(oLeft) < fFunctionCall_operators_time_toSeconds(oRight);
 };
 
 // op:time-greater-than($arg1 as xs:time, $arg2 as xs:time) as xs:boolean
 cFunctionCall.operators["time-greater-than"]	= function(oLeft, oRight) {
-	return fXSTime_toSeconds(oLeft) > fXSTime_toSeconds(oRight);
+	return fFunctionCall_operators_time_toSeconds(oLeft) > fFunctionCall_operators_time_toSeconds(oRight);
 };
 
 // op:gYearMonth-equal
@@ -207,7 +207,7 @@ cFunctionCall.operators["subtract-dates"]	= function(oLeft, oRight) {
 
 // op:subtract-times($arg1 as xs:time, $arg2 as xs:time) as xs:dayTimeDuration
 cFunctionCall.operators["subtract-times"]	= function(oLeft, oRight) {
-	return fFunctionCall_operators_dayTimeDuration_fromSeconds(fXSTime_toSeconds(oLeft) - fXSTime_toSeconds(oRight));
+	return fFunctionCall_operators_dayTimeDuration_fromSeconds(fFunctionCall_operators_time_toSeconds(oLeft) - fFunctionCall_operators_time_toSeconds(oRight));
 };
 
 // op:add-yearMonthDuration-to-dateTime($arg1 as xs:dateTime, $arg2 as xs:yearMonthDuration) as xs:dateTime
@@ -317,7 +317,11 @@ function fFunctionCall_operators_addDayTimeDurationToDateTime(oLeft, oRight, sOp
 	return oValue;
 };
 
-//
+// xs:dayTimeDuration to/from seconds
+function fFunctionCall_operators_dayTimeDuration_toSeconds(oDuration) {
+	return (((oDuration.day * 24 + oDuration.hours) * 60 + oDuration.minutes) * 60 + oDuration.seconds) * (oDuration.negative ? -1 : 1);
+};
+
 function fFunctionCall_operators_dayTimeDuration_fromSeconds(nValue) {
 	var bNegative	=(nValue = cMath.round(nValue)) < 0,
 		nDays	= ~~((nValue = cMath.abs(nValue)) / 86400),
@@ -327,11 +331,7 @@ function fFunctionCall_operators_dayTimeDuration_fromSeconds(nValue) {
 	return new cXSDayTimeDuration(nDays, nHours, nMinutes, nSeconds, bNegative);
 };
 
-function fFunctionCall_operators_dayTimeDuration_toSeconds(oDuration) {
-	return (((oDuration.day * 24 + oDuration.hours) * 60 + oDuration.minutes) * 60 + oDuration.seconds) * (oDuration.negative ? -1 : 1);
-};
-
-//
+// xs:yearMonthDuration to/from months
 function fFunctionCall_operators_yearMonthDuration_toMonths(oDuration) {
 	return (oDuration.year * 12 + oDuration.month) * (oDuration.negative ? -1 : 1);
 };
@@ -341,4 +341,9 @@ function fFunctionCall_operators_yearMonthDuration_fromMonths(nValue) {
 		nYears	= ~~((nValue = cMath.abs(nValue)) / 12),
 		nMonths		= nValue -= nYears * 12;
 	return new cXSYearMonthDuration(nYears, nMonths, nNegative);
+};
+
+// xs:time to seconds
+function fFunctionCall_operators_time_toSeconds(oTime) {
+	return oTime.seconds + (oTime.minutes - (oTime.timezone !== null ? oTime.timezone % 60 : 0) + (oTime.hours - (oTime.timezone !== null ? ~~(oTime.timezone / 60) : 0)) * 60) * 60;
 };
