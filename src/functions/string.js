@@ -109,12 +109,9 @@ fXPath2StaticContext_defineSystemFunction("concat",	null,	function(oSequence1, o
 
 	var aValue	= [];
 	for (var nIndex = 0, nLength = arguments.length; nIndex < nLength; nIndex++) {
-		if (arguments[nIndex].items.length > 1)
-			throw new cXPath2Error("XPTY0004"
-//->Debug
-					, "Required cardinality of each argument of concat() is one or zero"
-//<-Debug
-			);
+		// Assert cardinality
+		fFunctionCall_assertSequenceCardinality(arguments[nIndex], '?', "each argument of concat()", this);
+		//
 		aValue[aValue.length]	= arguments[nIndex].toString(this);
 	}
 

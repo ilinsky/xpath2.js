@@ -127,12 +127,8 @@ cMultiplicativeExpr.prototype.evaluate	= function (oContext) {
 	//
 	if (oLeft.isEmpty())
 		return new cXPath2Sequence;
-	if (!oLeft.isSingleton())
-		throw new cXPath2Error("XPTY0004"
-//->Debug
-				, "Required cardinality of first operand of '" + this.items[0][0] + "' is zero or one; supplied value has cardinality one or more"
-//<-Debug
-		);
+	// Assert cardinality
+	fFunctionCall_assertSequenceCardinality(oLeft, '?', "first operand of '" + this.items[0][0] + "'", oContext);
 
 	var vLeft	= oLeft.items[0];
 	if (vLeft instanceof cXSUntypedAtomic)
@@ -143,12 +139,8 @@ cMultiplicativeExpr.prototype.evaluate	= function (oContext) {
 
 		if (oRight.isEmpty())
 			return new cXPath2Sequence;
-		if (!oRight.isSingleton())
-			throw new cXPath2Error("XPTY0004"
-//->Debug
-					, "Required cardinality of second operand of '" + this.items[nIndex][0] + "' is zero or one; supplied value has cardinality one or more"
-//<-Debug
-			);
+		// Assert cardinality
+		fFunctionCall_assertSequenceCardinality(oRight, '?', "second operand of '" + this.items[nIndex][0] + "'", oContext);
 
 		vRight	= oRight.items[0];
 		if (vRight instanceof cXSUntypedAtomic)

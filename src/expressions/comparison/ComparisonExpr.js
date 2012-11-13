@@ -99,24 +99,14 @@ cComparisonExpr.ValueComp	= function(oExpr, oContext) {
 	var oLeft	= cXPath2Sequence.atomize(oExpr.left.evaluate(oContext), oContext);
 	if (oLeft.isEmpty())
 		return null;
-
-	if (!oLeft.isSingleton())		// Must be singleton
-		throw new cXPath2Error("XPTY0004"
-//->Debug
-				, "Required cardinality of first operand of '" + oExpr.operator + "' is zero or one; supplied value has cardinality one or more"
-//<-Debug
-		);
+	// Assert cardinality
+	fFunctionCall_assertSequenceCardinality(oLeft, '?', "first operand of '" + oExpr.operator + "'", oContext);
 
 	var oRight	= cXPath2Sequence.atomize(oExpr.right.evaluate(oContext), oContext);
 	if (oRight.isEmpty())
 		return null;
-
-	if (!oRight.isSingleton())	// Must be singleton
-		throw new cXPath2Error("XPTY0004"
-//->Debug
-				, "Required cardinality of second operand of '" + oExpr.operator + "' is zero or one; supplied value has cardinality one or more"
-//<-Debug
-		);
+	// Assert cardinality
+	fFunctionCall_assertSequenceCardinality(oRight, '?', "second operand of '" + oExpr.operator + "'", oContext);
 
 	var vLeft	= oLeft.items[0],
 		vRight	= oRight.items[0];
@@ -336,36 +326,18 @@ cComparisonExpr.NodeComp	= function(oExpr, oContext) {
 	var oLeft	= oExpr.left.evaluate(oContext);
 	if (oLeft.isEmpty())
 		return null;
-
-	if (!oLeft.isSingleton())	// Must be singleton (A sequence of more than one item is not allowed as the first operand of '{operator}')
-		throw new cXPath2Error("XPTY0004"
-//->Debug
-				, "Required cardinality of first operand of '" + oExpr.operator + "' is zero or one; supplied value has cardinality one or more"
-//<-Debug
-		);
-	if (!oContext.DOMAdapter.isNode(oLeft.items[0]))
-		throw new cXPath2Error("XPTY0004"
-//->Debug
-				, "Required item type of first operand of '" + oExpr.operator + "' is node()"
-//<-Debug
-		);	// Required item type of first operand of '{operator}' is node(); supplied value has item type {type2}
+	// Assert cardinality
+	fFunctionCall_assertSequenceCardinality(oLeft, '?', "first operand of '" + oExpr.operator + "'", oContext);
+	// Assert item type
+	fFunctionCall_assertSequenceItemType(oLeft, cXTNode, "first operand of '" + oExpr.operator + "'", oContext);
 
 	var oRight	= oExpr.right.evaluate(oContext);
 	if (oRight.isEmpty())
 		return null;
-
-	if (!oRight.isSingleton())	// Must be singleton (A sequence of more than one item is not allowed as the first operand of '{operator}')
-		throw new cXPath2Error("XPTY0004"
-//->Debug
-				, "Required cardinality of second operand of '" + oExpr.operator + "' is zero or one; supplied value has cardinality one or more"
-//<-Debug
-		);
-	if (!oContext.DOMAdapter.isNode(oRight.items[0]))
-		throw new cXPath2Error("XPTY0004"
-//->Debug
-				, "Required item type of second operand of '" + oExpr.operator + "' is node()"
-//<-Debug
-		);	// Required item type of first operand of '{operator}' is node(); supplied value has item type {type2}
+	// Assert cardinality
+	fFunctionCall_assertSequenceCardinality(oRight, '?', "second operand of '" + oExpr.operator + "'", oContext);
+	// Assert item type
+	fFunctionCall_assertSequenceItemType(oRight, cXTNode, "second operand of '" + oExpr.operator + "'", oContext);
 
 	return cComparisonExpr.NodeComp.operators[oExpr.operator](oLeft.items[0], oRight.items[0], oContext);
 };

@@ -34,22 +34,10 @@ cCastExpr.parse	= function(oLexer, oStaticContext) {
 cCastExpr.prototype.evaluate	= function(oContext) {
 	var oSequence1	= this.expression.evaluate(oContext);
 	// Validate cardinality
-	if (oSequence1.isEmpty()) {
-		if (this.type.occurence != '?')
-			throw new cXPath2Error("XPTY0004"
-//->Debug
-					, "An empty sequence is not allowed as the value in 'cast as' expression"
-//<-Debug
-			);
+	fFunctionCall_assertSequenceCardinality(oSequence1, this.type.occurence, "'cast as' expression operand", oContext);
+	//
+	if (oSequence1.isEmpty())
 		return new cXPath2Sequence;
-	}
-	if (!oSequence1.isSingleton())
-		throw new cXPath2Error("XPTY0004"
-//->Debug
-				, "Required cardinality of value in 'cast as' expression is exactly one; supplied value has cardinality one or more"
-//<-Debug
-		);
-
 	//
 	return new cXPath2Sequence(this.type.itemType.cast(cXPath2Sequence.atomizeItem(oSequence1.items[0], oContext), oContext));
 };

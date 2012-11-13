@@ -67,12 +67,8 @@ cUnaryExpr.prototype.evaluate	= function (oContext) {
 	//
 	if (oRight.isEmpty())
 		return new cXPath2Sequence;
-	if (!oRight.isSingleton())
-		throw new cXPath2Error("XPTY0004"
-//->Debug
-				, "Required cardinality of second operand of '" + this.operator + "' is zero or one; supplied value has cardinality one or more"
-//<-Debug
-		);
+	// Assert cardinality
+	fFunctionCall_assertSequenceCardinality(oRight, '?', "second operand of '" + this.operator + "'", oContext);
 
 	var vRight	= oRight.items[0];
 	if (vRight instanceof cXSUntypedAtomic)
