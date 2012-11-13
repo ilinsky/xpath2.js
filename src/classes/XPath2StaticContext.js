@@ -11,7 +11,6 @@ function cXPath2StaticContext() {
 	this.dataTypes	= {};
 	this.documents	= {};
 	this.functions	= {};
-	this.signatures	= {};
 	this.collations	= {};
 	this.collections= {};
 };
@@ -22,7 +21,6 @@ cXPath2StaticContext.prototype.dataTypes	= null;
 cXPath2StaticContext.prototype.documents	= null;
 //
 cXPath2StaticContext.prototype.functions	= null;
-cXPath2StaticContext.prototype.signatures	= null;
 cXPath2StaticContext.prototype.defaultFunctionNamespace	= null;
 //
 cXPath2StaticContext.prototype.collations	= null;
@@ -41,7 +39,7 @@ cXPath2StaticContext.prototype.setDataType		= function(sUri, fFunction) {
 };
 
 cXPath2StaticContext.prototype.getDataType		= function(sUri) {
-	return hXPath2StaticContext_dataTypes[sUri] || this.dataTypes[sUri];
+	return this.dataTypes[sUri];
 };
 
 cXPath2StaticContext.prototype.setDocument		= function(sUri, fFunction) {
@@ -54,10 +52,6 @@ cXPath2StaticContext.prototype.setFunction		= function(sUri, fFunction) {
 
 cXPath2StaticContext.prototype.getFunction		= function(sUri) {
 	return this.functions[sUri];
-};
-
-cXPath2StaticContext.prototype.getSignature		= function(sUri) {
-	return hXPath2StaticContext_signatures[sUri] || this.signatures[sUri];
 };
 
 cXPath2StaticContext.prototype.setCollation		= function(sUri, fFunction) {
