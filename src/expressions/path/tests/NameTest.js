@@ -42,6 +42,6 @@ cNameTest.prototype.test	= function (oNode, oContext) {
 					&& (this.namespaceURI == '*' ||(this.namespaceURI ? sNameSpaceURI == this.namespaceURI : true))
 				: nType == 2 ?
 					(this.localName == '*' || sLocalName == this.localName)
-						&& (this.namespaceURI == '*' ||(this.namespaceURI ? sNameSpaceURI == this.namespaceURI : true))
+						&& (!this.prefix || this.namespaceURI == '*' ||(this.namespaceURI ? sNameSpaceURI == this.namespaceURI : true))
 					: false;
 };
