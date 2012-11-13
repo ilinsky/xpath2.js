@@ -165,7 +165,7 @@ function fFunctionCall_prepare(sName, aParameters, fFunction, aArguments, oConte
 				// Node types
 				if (cItemType == cXTNode || cItemType.prototype instanceof cXTNode) {
 					// Check if is node
-					if (!oContext.staticContext.DOMAdapter.isNode(vItem))
+					if (!oContext.DOMAdapter.isNode(vItem))
 						throw new cXPath2Error("XPTY0004"
 //->Debug
 								, "Required item type of " + aFunctionCall_numbers[nIndex] + " argument of " + sName + "() is " + cItemType
@@ -174,7 +174,7 @@ function fFunctionCall_prepare(sName, aParameters, fFunction, aArguments, oConte
 
 					// Check node type
 					if (cItemType != cXTNode) {
-						nNodeType	= oContext.staticContext.DOMAdapter.getProperty(vItem, "nodeType");
+						nNodeType	= oContext.DOMAdapter.getProperty(vItem, "nodeType");
 						if ([null, cXTElement, cXTAttribute, cXTText, cXTText, null, null, cXTProcessingInstruction, cXTComment, cXTDocument, null, null, null][nNodeType] != cItemType)
 							throw new cXPath2Error("XPTY0004"
 //->Debug

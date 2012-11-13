@@ -25,9 +25,19 @@ cXPathExpression.prototype.evaluate	= function(oNode, nType, oResult) {
 };
 
 function fXPathExpression_evaluate(oExpression, oNode, nType, oResult) {
-	var oSequence;
+	var oSequence,
+		oDOMAdapter	= null;
+	// Determine which DOMAdapter to use based on browser and DOM type
+	if (oNode && oNode.ownerDocument) {
+		if (bOldMS)
+			oDOMAdapter	= oNode.selectSingleNode ? oMSXMLDOMAdapter : oMSHTMLDOMAdapter;
+		else
+		if (bOldW3)
+			oDOMAdapter	= oW3HTMLDOMAdapter;
+	}
+	//
 	try {
-		oSequence	= oExpression.expression.resolve(oNode);
+		oSequence	= oExpression.expression.resolve(oNode, null, oDOMAdapter);
 	}
 	catch (e) {
 		throw new cXPathException(cXPathException.TYPE_ERR);

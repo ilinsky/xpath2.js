@@ -343,7 +343,7 @@ cComparisonExpr.NodeComp	= function(oExpr, oContext) {
 				, "Required cardinality of first operand of '" + oExpr.operator + "' is zero or one; supplied value has cardinality one or more"
 //<-Debug
 		);
-	if (!oContext.staticContext.DOMAdapter.isNode(oLeft.items[0]))
+	if (!oContext.DOMAdapter.isNode(oLeft.items[0]))
 		throw new cXPath2Error("XPTY0004"
 //->Debug
 				, "Required item type of first operand of '" + oExpr.operator + "' is node()"
@@ -360,7 +360,7 @@ cComparisonExpr.NodeComp	= function(oExpr, oContext) {
 				, "Required cardinality of second operand of '" + oExpr.operator + "' is zero or one; supplied value has cardinality one or more"
 //<-Debug
 		);
-	if (!oContext.staticContext.DOMAdapter.isNode(oRight.items[0]))
+	if (!oContext.DOMAdapter.isNode(oRight.items[0]))
 		throw new cXPath2Error("XPTY0004"
 //->Debug
 				, "Required item type of second operand of '" + oExpr.operator + "' is node()"

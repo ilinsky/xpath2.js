@@ -7,37 +7,36 @@
  *
  */
 
-function cXPath2DOMAdapter() {
-
-};
-
+var oW3HTMLDOMAdapter	= new cXPath2.classes.DOMAdapter;
+/*
 // Custom members
-cXPath2DOMAdapter.prototype.isNode		= function(oNode) {
+oW3HTMLDOMAdapter.isNode		= function(oNode) {
 	return oNode &&!!oNode.nodeType;
 };
 
-cXPath2DOMAdapter.prototype.getProperty	= function(oNode, sName) {
+oW3HTMLDOMAdapter.getProperty	= function(oNode, sName) {
 	return oNode[sName];
 };
 
 // Standard members
-cXPath2DOMAdapter.prototype.isSameNode	= function(oNode, oNode2) {
+oW3HTMLDOMAdapter.isSameNode	= function(oNode, oNode2) {
 	return oNode.isSameNode(oNode2);
 };
 
-cXPath2DOMAdapter.prototype.compareDocumentPosition	= function(oNode, oNode2) {
+oW3HTMLDOMAdapter.compareDocumentPosition	= function(oNode, oNode2) {
 	return oNode.compareDocumentPosition(oNode2);
 };
 
-cXPath2DOMAdapter.prototype.lookupPrefix	= function(oNode, sNameSpaceURI) {
+oW3HTMLDOMAdapter.lookupPrefix	= function(oNode, sNameSpaceURI) {
 	return oNode.lookupPrefix(sNameSpaceURI);
 };
 
-cXPath2DOMAdapter.prototype.lookupNamespaceURI	= function(oNode, sPrefix) {
+oW3HTMLDOMAdapter.lookupNamespaceURI	= function(oNode, sPrefix) {
 	return oNode.lookupNamespaceURI(sPrefix);
 };
 
 // Document object members
-cXPath2DOMAdapter.prototype.getElementById	= function(oNode, sId) {
+oW3HTMLDOMAdapter.getElementById	= function(oNode, sId) {
 	return oNode.getElementById(sId);
 };
+*/

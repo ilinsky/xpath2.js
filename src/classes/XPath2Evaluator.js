@@ -17,6 +17,6 @@ cXPath2Evaluator.prototype.compile	= function(sExpression, oStaticContext) {
 	return new cXPath2Expression(sExpression, oStaticContext || this.defaultStaticContext);
 };
 
-cXPath2Evaluator.prototype.resolve	= function(sExpression, vItem, oStaticContext, oScope) {
-	return this.compile(sExpression, oStaticContext || this.defaultStaticContext).resolve(vItem, oScope);
+cXPath2Evaluator.prototype.resolve	= function(sExpression, vItem, oStaticContext, oScope, oDOMAdapter) {
+	return this.compile(sExpression, oStaticContext || this.defaultStaticContext).resolve(vItem, oScope, oDOMAdapter);
 };

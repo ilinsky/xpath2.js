@@ -24,18 +24,18 @@ fXPath2StaticContext_defineSystemFunction("node-name",		[[cXTNode, '?']],	functi
 		return null;
 	//
 	var oNode	= oSequence1.items[0];
-	switch (this.staticContext.DOMAdapter.getProperty(oNode, "nodeType")) {
+	switch (this.DOMAdapter.getProperty(oNode, "nodeType")) {
 		case 1:	// ELEMENT_NAME
 		case 2:	// ATTRIBUTE_NODE
-			return new cXSQName(this.staticContext.DOMAdapter.getProperty(oNode, "prefix"), this.staticContext.DOMAdapter.getProperty(oNode, "localName"), this.staticContext.DOMAdapter.getProperty(oNode, "namespaceURI"));
+			return new cXSQName(this.DOMAdapter.getProperty(oNode, "prefix"), this.DOMAdapter.getProperty(oNode, "localName"), this.DOMAdapter.getProperty(oNode, "namespaceURI"));
 		case 5:	// ENTITY_REFERENCE_NODE
 			throw "Not implemented";
 		case 6:	// ENTITY_NODE
 			throw "Not implemented";
 		case 7:	// PROCESSING_INSTRUCTION_NODE
-			return new cXSQName(null, this.staticContext.DOMAdapter.getProperty(oNode, "target"), null);
+			return new cXSQName(null, this.DOMAdapter.getProperty(oNode, "target"), null);
 		case 10:// DOCUMENT_TYPE_NODE
-			return new cXSQName(null, this.staticContext.DOMAdapter.getProperty(oNode, "name"), null);
+			return new cXSQName(null, this.DOMAdapter.getProperty(oNode, "name"), null);
 	}
 	//
 	return null;
@@ -47,7 +47,7 @@ fXPath2StaticContext_defineSystemFunction("nilled",	[[cXTNode, '?']],	function(o
 		return null;
 
 	var oNode	= oSequence1.items[0];
-	if (this.staticContext.DOMAdapter.getProperty(oNode, "nodeType") == 1)
+	if (this.DOMAdapter.getProperty(oNode, "nodeType") == 1)
 		return false;	// TODO: Determine if node is nilled
 
 	return null;
@@ -70,7 +70,7 @@ fXPath2StaticContext_defineSystemFunction("data",	[[cXTItem, '*']],		function(oS
 // fn:base-uri($arg as node()?) as xs:anyURI?
 fXPath2StaticContext_defineSystemFunction("base-uri",	[[cXTNode, '?', true]],	function(oSequence1) {
 	if (!arguments.length) {
-		if (!this.staticContext.DOMAdapter.isNode(this.item))
+		if (!this.DOMAdapter.isNode(this.item))
 			throw new cXPath2Error("XPTY0004"
 //->Debug
 					, "base-uri() function called when the context item is not a node"
@@ -82,7 +82,7 @@ fXPath2StaticContext_defineSystemFunction("base-uri",	[[cXTNode, '?', true]],	fu
 	if (oSequence1.isEmpty())
 		return null;
 	//
-	return this.staticContext.DOMAdapter.getProperty(oSequence1.items[0], "baseURI");
+	return this.DOMAdapter.getProperty(oSequence1.items[0], "baseURI");
 });
 
 // fn:document-uri($arg as node()?) as xs:anyURI?
@@ -91,8 +91,8 @@ fXPath2StaticContext_defineSystemFunction("document-uri",	[[cXTNode, '?']],	func
 		return null;
 	//
 	var oNode	= oSequence1.items[0];
-	if (this.staticContext.DOMAdapter.getProperty(oNode, "nodeType") == 9)
-		return this.staticContext.DOMAdapter.getProperty(oNode, "documentURI");
+	if (this.DOMAdapter.getProperty(oNode, "nodeType") == 9)
+		return this.DOMAdapter.getProperty(oNode, "documentURI");
 	//
 	return null;
 });

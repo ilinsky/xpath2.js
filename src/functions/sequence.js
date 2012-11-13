@@ -329,7 +329,7 @@ fXPath2StaticContext_defineSystemFunction("sum",	[[cXSAnyAtomicType, '*'], [cXSA
 // fn:id($arg as xs:string*, $node as node()) as element()*
 fXPath2StaticContext_defineSystemFunction("id",	[[cXSString, '*'], [cXTNode, '', true]],	function(oSequence1, oSequence2) {
 	if (arguments.length < 2) {
-		if (!this.staticContext.DOMAdapter.isNode(this.item))
+		if (!this.DOMAdapter.isNode(this.item))
 			throw new cXPath2Error("XPTY0004"
 //->Debug
 					, "id() function called when the context item is not a node"
@@ -343,14 +343,14 @@ fXPath2StaticContext_defineSystemFunction("id",	[[cXSString, '*'], [cXTNode, '',
 
 	// Get root node and check if it is Document
 	var oDocument	= hXPath2StaticContext_functions['{' + "http://www.w3.org/2005/xpath-functions" + '}' + "root"].call(this, new cXPath2Sequence(oNode));
-	if (this.staticContext.DOMAdapter.getProperty(oDocument, "nodeType") != 9)
+	if (this.DOMAdapter.getProperty(oDocument, "nodeType") != 9)
 		throw new cXPath2Error("FODC0001");
 
 	// Search for elements
 	var oSequence	= new cXPath2Sequence;
 	for (var nIndex = 0; nIndex < oSequence1.items.length; nIndex++)
 		for (var nRightIndex = 0, aValue = fString_trim.call(oSequence1.items[nIndex]).split(/\s+/), nRightLength = aValue.length; nRightIndex < nRightLength; nRightIndex++)
-			if ((oNode = this.staticContext.DOMAdapter.getElementById(oDocument, aValue[nRightIndex])) && oSequence.indexOf(oNode) ==-1)
+			if ((oNode = this.DOMAdapter.getElementById(oDocument, aValue[nRightIndex])) && oSequence.indexOf(oNode) ==-1)
 				oSequence.add(oNode);
 	//
 	return cXPath2Sequence.order(oSequence, this);

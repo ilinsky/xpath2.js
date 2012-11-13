@@ -23,7 +23,7 @@
 // fn:name($arg as node()?) as xs:string
 fXPath2StaticContext_defineSystemFunction("name",	[[cXTNode, '?', true]],	function(oSequence1) {
 	if (!arguments.length) {
-		if (!this.staticContext.DOMAdapter.isNode(this.item))
+		if (!this.DOMAdapter.isNode(this.item))
 			throw new cXPath2Error("XPTY0004"
 //->Debug
 					, "name() function called when the context item is not a node"
@@ -43,7 +43,7 @@ fXPath2StaticContext_defineSystemFunction("name",	[[cXTNode, '?', true]],	functi
 // fn:local-name($arg as node()?) as xs:string
 fXPath2StaticContext_defineSystemFunction("local-name",	[[cXTNode, '?', true]],	function(oSequence1) {
 	if (!arguments.length) {
-		if (!this.staticContext.DOMAdapter.isNode(this.item))
+		if (!this.DOMAdapter.isNode(this.item))
 			throw new cXPath2Error("XPTY0004"
 //->Debug
 					, "local-name() function called when the context item is not a node"
@@ -55,14 +55,14 @@ fXPath2StaticContext_defineSystemFunction("local-name",	[[cXTNode, '?', true]],	
 	if (oSequence1.isEmpty())
 		return '';
 	//
-	return this.staticContext.DOMAdapter.getProperty(oSequence1.items[0], "localName") || '';
+	return this.DOMAdapter.getProperty(oSequence1.items[0], "localName") || '';
 });
 
 // fn:namespace-uri() as xs:anyURI
 // fn:namespace-uri($arg as node()?) as xs:anyURI
 fXPath2StaticContext_defineSystemFunction("namespace-uri",	[[cXTNode, '?', true]],	function(oSequence1) {
 	if (!arguments.length) {
-		if (!this.staticContext.DOMAdapter.isNode(this.item))
+		if (!this.DOMAdapter.isNode(this.item))
 			throw new cXPath2Error("XPTY0004"
 //->Debug
 					, "namespace-uri() function called when the context item is not a node"
@@ -74,7 +74,7 @@ fXPath2StaticContext_defineSystemFunction("namespace-uri",	[[cXTNode, '?', true]
 	if (oSequence1.isEmpty())
 		return '';
 	//
-	return this.staticContext.DOMAdapter.getProperty(oSequence1.items[0], "namespaceURI") || '';
+	return this.DOMAdapter.getProperty(oSequence1.items[0], "namespaceURI") || '';
 });
 
 // fn:number() as xs:double
@@ -106,7 +106,7 @@ fXPath2StaticContext_defineSystemFunction("lang",	[[cXSString, '?'], [cXTNode, '
 // fn:root($arg as node()?) as node()?
 fXPath2StaticContext_defineSystemFunction("root",	[[cXTNode, '?', true]],	function(oSequence1) {
 	if (!arguments.length) {
-		if (!this.staticContext.DOMAdapter.isNode(this.item))
+		if (!this.DOMAdapter.isNode(this.item))
 			throw new cXPath2Error("XPTY0004"
 //->Debug
 					, "root() function called when the context item is not a node"
@@ -121,10 +121,10 @@ fXPath2StaticContext_defineSystemFunction("root",	[[cXTNode, '?', true]],	functi
 	var oParent	= oSequence1.items[0];
 
 	// If context node is Attribute
-	if (this.staticContext.DOMAdapter.getProperty(oParent, "nodeType") == 2)
-		oParent	= this.staticContext.DOMAdapter.getProperty(oParent, "ownerElement");
+	if (this.DOMAdapter.getProperty(oParent, "nodeType") == 2)
+		oParent	= this.DOMAdapter.getProperty(oParent, "ownerElement");
 
-	for (var oNode = oParent; oNode; oNode = this.staticContext.DOMAdapter.getProperty(oParent, "parentNode"))
+	for (var oNode = oParent; oNode; oNode = this.DOMAdapter.getProperty(oParent, "parentNode"))
 		oParent	= oNode;
 
 	return oParent;

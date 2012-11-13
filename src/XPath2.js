@@ -12,4 +12,5 @@ var cXPath2	= new cXPath2Evaluator;
 //
 cXPath2.classes	= {};
 cXPath2.classes.Evaluator		= cXPath2Evaluator;
+cXPath2.classes.DOMAdapter		= cXPath2DOMAdapter;
 cXPath2.classes.StaticContext	= cXPath2StaticContext;

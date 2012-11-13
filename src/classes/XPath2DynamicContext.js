@@ -7,7 +7,7 @@
  *
  */
 
-function cXPath2DynamicContext(oStaticContext, vItem, oScope) {
+function cXPath2DynamicContext(oStaticContext, vItem, oScope, oDOMAdapter) {
 	//
 	this.staticContext	= oStaticContext;
 	//
@@ -17,6 +17,8 @@ function cXPath2DynamicContext(oStaticContext, vItem, oScope) {
 	//
 	this.scope		= oScope || {};
 	this.stack		= {};
+	//
+	this.DOMAdapter	= oDOMAdapter || new cXPath2DOMAdapter;
 	//
 	var oDate	= new cDate,
 		nOffset	= oDate.getTimezoneOffset();

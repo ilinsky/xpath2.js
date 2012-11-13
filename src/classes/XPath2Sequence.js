@@ -21,7 +21,7 @@ cXPath2Sequence.prototype.items	= null;
 cXPath2Sequence.order		= function(oSequence1, oContext) {
 	var oSequence	= new cXPath2Sequence(oSequence1);
 	oSequence.items.sort(function(oNode, oNode2) {
-		var nPosition	= oContext.staticContext.DOMAdapter.compareDocumentPosition(oNode, oNode2);
+		var nPosition	= oContext.DOMAdapter.compareDocumentPosition(oNode, oNode2);
 		return nPosition & 2 ? 1 : nPosition & 4 ?-1 : 0;
 	});
 	return oSequence;
@@ -47,25 +47,25 @@ cXPath2Sequence.atomizeItem		= function(oItem, oContext) {
 		return null;
 
 	// Node type
-	if (oContext.staticContext.DOMAdapter.isNode(oItem)) {
-		switch (oContext.staticContext.DOMAdapter.getProperty(oItem, "nodeType")) {
+	if (oContext.DOMAdapter.isNode(oItem)) {
+		switch (oContext.DOMAdapter.getProperty(oItem, "nodeType")) {
 			case 1:	// ELEMENT_NODE
-				return new cXSUntypedAtomic(oContext.staticContext.DOMAdapter.getProperty(oItem, "textContent"));
+				return new cXSUntypedAtomic(oContext.DOMAdapter.getProperty(oItem, "textContent"));
 
 			case 2:	// ATTRIBUTE_NODE
-				return new cXSUntypedAtomic(oContext.staticContext.DOMAdapter.getProperty(oItem, "value"));
+				return new cXSUntypedAtomic(oContext.DOMAdapter.getProperty(oItem, "value"));
 
 			case 3:	// TEXT_NODE
 			case 4:	// CDATA_SECTION_NODE
 			case 8:	// COMMENT_NODE
-				return new cXSUntypedAtomic(oContext.staticContext.DOMAdapter.getProperty(oItem, "data"));
+				return new cXSUntypedAtomic(oContext.DOMAdapter.getProperty(oItem, "data"));
 
 			case 7:	// PROCESSING_INSTRUCTION_NODE
-				return new cXSUntypedAtomic(oContext.staticContext.DOMAdapter.getProperty(oItem, "data"));
+				return new cXSUntypedAtomic(oContext.DOMAdapter.getProperty(oItem, "data"));
 
 			case 9:	// DOCUMENT_NODE
-				var oNode	= oContext.staticContext.DOMAdapter.getProperty(oItem, "documentElement");
-				return new cXSUntypedAtomic(oNode ? oContext.staticContext.DOMAdapter.getProperty(oNode, "textContent") : '');
+				var oNode	= oContext.DOMAdapter.getProperty(oItem, "documentElement");
+				return new cXSUntypedAtomic(oNode ? oContext.DOMAdapter.getProperty(oNode, "textContent") : '');
 		}
 	}
 
@@ -100,7 +100,7 @@ cXPath2Sequence.prototype.toBoolean	= function(oContext) {
 		return false;
 
 	var oItem	= this.items[0];
-	if (oContext.staticContext.DOMAdapter.isNode(oItem))
+	if (oContext.DOMAdapter.isNode(oItem))
 		return true;
 
 	if (this.items.length == 1) {

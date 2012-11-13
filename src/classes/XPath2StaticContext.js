@@ -30,8 +30,6 @@ cXPath2StaticContext.prototype.collections	= null;
 //
 cXPath2StaticContext.prototype.namespaceResolver	= null;
 cXPath2StaticContext.prototype.defaultElementNamespace	= null;
-//
-cXPath2StaticContext.prototype.DOMAdapter	= cXPath2DOMAdapter;
 
 //
 cXPath2StaticContext.prototype.setDataType		= function(sUri, fFunction) {
