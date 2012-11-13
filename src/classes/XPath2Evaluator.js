@@ -8,15 +8,13 @@
  */
 
 function cXPath2Evaluator() {
-	this.cache	= {};
 	this.defaultStaticContext	= new cXPath2StaticContext;
 };
 
-cXPath2Evaluator.prototype.cache	= null;
 cXPath2Evaluator.prototype.defaultStaticContext	= null;
 
 cXPath2Evaluator.prototype.compile	= function(sExpression, oStaticContext) {
-	return this.cache[sExpression] || (this.cache[sExpression] = new cXPath2Expression(sExpression, oStaticContext || this.defaultStaticContext));
+	return new cXPath2Expression(sExpression, oStaticContext || this.defaultStaticContext);
 };
 
 cXPath2Evaluator.prototype.resolve	= function(sExpression, vItem, oStaticContext, oScope) {
