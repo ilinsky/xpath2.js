@@ -8,11 +8,8 @@
  */
 
 function cXPathExpression(sExpression, oResolver) {
-	try {
-		this.expression	= XPath2.compile(sExpression, oResolver);
-	} catch (e) {
-		throw new cXPathException(cXPathException.INVALID_EXPRESSION_ERR);
-	}
+	cXPathEvaluator.staticContext.namespaceResolver	= oResolver;
+	this.expression	= cXPathEvaluator.evaluator.compile(sExpression, cXPathEvaluator.staticContext);
 };
 
 cXPathExpression.prototype.evaluate	= function(oNode, nType, oResult) {
@@ -28,13 +25,18 @@ cXPathExpression.prototype.evaluate	= function(oNode, nType, oResult) {
 };
 
 function fXPathExpression_evaluate(oExpression, oNode, nType, oResult) {
-	var oContext	= new XPath2.Context(oNode),
-		oSequence	= oExpression.expression.evaluate(oContext);
+	var oSequence;
+	try {
+		oSequence	= oExpression.expression.resolve(oNode);
+	}
+	catch (e) {
+		throw new cXPathException(cXPathException.TYPE_ERR);
+	}
 	// Determine type if not specified
 	if (!nType) {
 		nType	= 4;	// Default: XPathResult.UNORDERED_NODE_ITERATOR_TYPE
-		if (!oSequence.isEmpty()) {
-			var sType	= typeof oSequence.items[0];
+		if (oSequence.length) {
+			var sType	= typeof oSequence[0];
 			if (sType == "number")
 				nType	= 1;	// XPathResult.NUMBER_TYPE
 			else

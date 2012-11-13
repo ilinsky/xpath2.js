@@ -25,6 +25,7 @@ cXPathResult.FIRST_ORDERED_NODE_TYPE		= 9;
 //
 cXPathResult.prototype.resultType		= null;
 cXPathResult.prototype.snapshotLength	= 0;
+cXPathResult.prototype.numberValue		= null;
 cXPathResult.prototype.stringValue		= null;
 cXPathResult.prototype.booleanValue		= null;
 cXPathResult.prototype.singleNodeValue	= null;
@@ -36,7 +37,7 @@ cXPathResult.prototype.current	= 0;
 cXPathResult.prototype.iterateNext	= function() {
 	// Invoke implementation
 	if (this.resultType == 4 || this.resultType == 5) {
-		return this.current < this.sequence.items.length ? this.sequence.items[this.current++] : null;
+		return this.current < this.sequence.length ? this.sequence[this.current++] : null;
 	}
 	else
 		throw new cXPathException(cXPathException.TYPE_ERR);
@@ -52,7 +53,7 @@ cXPathResult.prototype.snapshotItem	= function(nIndex) {
 	if (this.resultType == 6 || this.resultType == 7) {
 		if (arguments.length == 0)
 			nIndex	= 0;
-		return nIndex < this.sequence.items.length && nIndex >-1 ? this.sequence.items[nIndex] : null;
+		return nIndex < this.sequence.length && nIndex >-1 ? this.sequence[nIndex] : null;
 	}
 	else
 		throw new cXPathException(cXPathException.TYPE_ERR);
@@ -68,15 +69,15 @@ function fXPathResult_init(oResult, nType, oSequence) {
 	//
 	switch (nType) {
 		case 1:	// XPathResult.NUMBER_TYPE
-			oResult.numberValue		= oSequence.items[0];
+			oResult.numberValue		= oSequence[0];
 			break;
 
 		case 2:	// XPathResult.STRING_TYPE
-			oResult.stringValue		= oSequence.items[0];
+			oResult.stringValue		= oSequence[0];
 			break;
 
 		case 3:	// XPathResult.BOOLEAN_TYPE
-			oResult.booleanValue	= oSequence.items[0];
+			oResult.booleanValue	= oSequence[0];
 			break;
 
 		case 4:	// XPathResult.UNORDERED_NODE_ITERATOR_TYPE
@@ -86,13 +87,13 @@ function fXPathResult_init(oResult, nType, oSequence) {
 
 		case 6:	// XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE
 		case 7:	// XPathResult.ORDERED_NODE_SNAPSHOT_TYPE
-			oResult.snapshotLength	= oSequence.items.length;
+			oResult.snapshotLength	= oSequence.length;
 			oResult.sequence	= oSequence;
 			break;
 
 		case 8:	// XPathResult.ANY_UNORDERED_NODE_TYPE
 		case 9:	// XPathResult.FIRST_ORDERED_NODE_TYPE
-			oResult.singleNodeValue	= oSequence.items[0];
+			oResult.singleNodeValue	= oSequence[0];
 			break;
 	}
 
@@ -102,6 +103,7 @@ function fXPathResult_init(oResult, nType, oSequence) {
 function fXPathResult_clear(oResult) {
 	oResult.resultType		= null;
 	oResult.snapshotLength	= 0;
+	oResult.numberValue		= null;
 	oResult.stringValue		= null;
 	oResult.booleanValue	= null;
 	oResult.singleNodeValue	= null;
