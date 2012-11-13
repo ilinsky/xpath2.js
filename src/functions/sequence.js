@@ -350,7 +350,7 @@ fXPath2StaticContext_defineSystemFunction("id",	[[cXSString, '*'], [cXTNode, '',
 	var oSequence	= new cXPath2Sequence;
 	for (var nIndex = 0; nIndex < oSequence1.items.length; nIndex++)
 		for (var nRightIndex = 0, aValue = fString_trim.call(oSequence1.items[nIndex]).split(/\s+/), nRightLength = aValue.length; nRightIndex < nRightLength; nRightIndex++)
-			if ((oNode = cDOMAdapter.getElementById(oDocument, aValue[nRightIndex])) && oSequence.indexOf(oNode) ==-1)
+			if ((oNode = this.staticContext.DOMAdapter.getElementById(oDocument, aValue[nRightIndex])) && oSequence.indexOf(oNode) ==-1)
 				oSequence.add(oNode);
 	//
 	return cXPath2Sequence.order(oSequence, this);
