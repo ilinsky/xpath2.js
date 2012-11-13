@@ -14,7 +14,7 @@
 		<script type="text/javascript">
 			// Helper function
 			function evaluateXPath(sXPath) {
-				return XPath2.evaluate(sXPath, document);
+				return XPath2.resolve(sXPath, document);
 			}
 
 			function evaluateXPathSingle(sXPath) {

@@ -15,11 +15,11 @@
 		<script type="text/javascript">
 			// Helper function
 			function evaluateXPath(sXPath, oContext) {
-				return XPath2.evaluate(sXPath, oContext);
+				return XPath2.resolve(sXPath, oContext);
 			}
 
 			function evaluateXPathWithDocument(sXPath) {
-				return XPath2.evaluate(sXPath, document);
+				return XPath2.resolve(sXPath, document);
 			}
 
 			// Kind Tests
