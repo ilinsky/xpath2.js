@@ -31,7 +31,7 @@ cAtomicType.parse	= function(oLexer, oStaticContext) {
 
 cAtomicType.prototype.test	= function(vItem, oContext) {
 	// Test
-	var cTestType	= cFunctionCall.dataTypes[/*'{' + this.namespaceURI + '}' + */this.localName],
+	var cTestType	= oContext.staticContext.getDataType((this.namespaceURI ? '{' + this.namespaceURI + '}' : '') + this.localName),
 		cItemType	= cXSAnyAtomicType.typeOf(vItem);
 	if (cTestType)
 		return cTestType == cItemType || cItemType.prototype instanceof cTestType;
@@ -43,9 +43,9 @@ cAtomicType.prototype.test	= function(vItem, oContext) {
 	);
 };
 
-cAtomicType.prototype.cast	= function(vItem) {
+cAtomicType.prototype.cast	= function(vItem, oContext) {
 	// Cast
-	var cCastType	= cFunctionCall.dataTypes[/*'{' + this.namespaceURI + '}' + */this.localName];
+	var cCastType	= oContext.staticContext.getDataType((this.namespaceURI ? '{' + this.namespaceURI + '}' : '') + this.localName);
 	if (cCastType)
 		return cCastType.cast(vItem);
 	//

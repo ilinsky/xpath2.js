@@ -41,4 +41,4 @@ cXSBoolean.cast	= function(vValue) {
 };
 
 //
-cFunctionCall.dataTypes["boolean"]	= cXSBoolean;
+fXPath2StaticContext_defineSystemDataType("boolean",	cXSBoolean);

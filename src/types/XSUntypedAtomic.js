@@ -51,5 +51,6 @@ cXSUntypedAtomic.cast	= function(vValue) {
 //<-Debug
 	);
 };
+
 //
-cFunctionCall.dataTypes["untypedAtomic"]	= cXSUntypedAtomic;
+fXPath2StaticContext_defineSystemDataType("untypedAtomic",	cXSUntypedAtomic);

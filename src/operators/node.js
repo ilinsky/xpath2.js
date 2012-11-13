@@ -16,16 +16,16 @@
 
 // 14 Operators on Nodes
 // op:is-same-node($parameter1 as node(), $parameter2 as node()) as xs:boolean
-cFunctionCall.operators["is-same-node"]	= function(oLeft, oRight) {
+hXPath2StaticContext_operators["is-same-node"]	= function(oLeft, oRight) {
 	return this.staticContext.DOMAdapter.isSameNode(oLeft, oRight);
 };
 
 // op:node-before($parameter1 as node(), $parameter2 as node()) as xs:boolean
-cFunctionCall.operators["node-before"]	= function(oLeft, oRight) {
+hXPath2StaticContext_operators["node-before"]	= function(oLeft, oRight) {
 	return !!(this.staticContext.DOMAdapter.compareDocumentPosition(oLeft, oRight) & 4);
 };
 
 // op:node-after($parameter1 as node(), $parameter2 as node()) as xs:boolean
-cFunctionCall.operators["node-after"]	= function(oLeft, oRight) {
+hXPath2StaticContext_operators["node-after"]	= function(oLeft, oRight) {
 	return !!(this.staticContext.DOMAdapter.compareDocumentPosition(oLeft, oRight) & 2);
 };

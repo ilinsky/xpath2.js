@@ -36,6 +36,6 @@ cExpr.parse	= function(oLexer, oStaticContext) {
 cExpr.prototype.evaluate	= function(oContext) {
 	var oSequence	= new cXPath2Sequence;
 	for (var nIndex = 0, nLength = this.items.length; nIndex < nLength; nIndex++)
-		oSequence	= cFunctionCall.operators["concatenate"].call(oContext, oSequence, this.items[nIndex].evaluate(oContext));
+		oSequence	= hXPath2StaticContext_operators["concatenate"].call(oContext, oSequence, this.items[nIndex].evaluate(oContext));
 	return oSequence;
 };

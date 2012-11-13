@@ -47,13 +47,13 @@
 
 // 15.1 General Functions and Operators on Sequences
 // fn:boolean($arg as item()*) as xs:boolean
-fFunctionCall_defineSystemFunction("boolean",	[[cXTItem, '*']],	function(oSequence1) {
+fXPath2StaticContext_defineSystemFunction("boolean",	[[cXTItem, '*']],	function(oSequence1) {
 	return oSequence1.toBoolean(this);
 });
 
 // fn:index-of($seqParam as xs:anyAtomicType*, $srchParam as xs:anyAtomicType) as xs:integer*
 // fn:index-of($seqParam as xs:anyAtomicType*, $srchParam as xs:anyAtomicType, $collation as xs:string) as xs:integer*
-fFunctionCall_defineSystemFunction("index-of",	[[cXSAnyAtomicType, '*'], [cXSAnyAtomicType], [cXSString, '', true]],	function(oSequence1, oSequence2, oSequence3) {
+fXPath2StaticContext_defineSystemFunction("index-of",	[[cXSAnyAtomicType, '*'], [cXSAnyAtomicType], [cXSString, '', true]],	function(oSequence1, oSequence2, oSequence3) {
 	if (oSequence1.isEmpty() || oSequence2.isEmpty())
 		return new cXPath2Sequence;
 
@@ -68,18 +68,18 @@ fFunctionCall_defineSystemFunction("index-of",	[[cXSAnyAtomicType, '*'], [cXSAny
 });
 
 // fn:empty($arg as item()*) as xs:boolean
-fFunctionCall_defineSystemFunction("empty",	[[cXTItem, '*']],	function(oSequence1) {
+fXPath2StaticContext_defineSystemFunction("empty",	[[cXTItem, '*']],	function(oSequence1) {
 	return oSequence1.isEmpty();
 });
 
 // fn:exists($arg as item()*) as xs:boolean
-fFunctionCall_defineSystemFunction("exists",	[[cXTItem, '*']],	function(oSequence1) {
+fXPath2StaticContext_defineSystemFunction("exists",	[[cXTItem, '*']],	function(oSequence1) {
 	return !oSequence1.isEmpty();
 });
 
 // fn:distinct-values($arg as xs:anyAtomicType*) as xs:anyAtomicType*
 // fn:distinct-values($arg as xs:anyAtomicType*, $collation as xs:string) as xs:anyAtomicType*
-fFunctionCall_defineSystemFunction("distinct-values",	[[cXSAnyAtomicType, '*'], [cXSString, '', true]],	function(oSequence1, oSequence2) {
+fXPath2StaticContext_defineSystemFunction("distinct-values",	[[cXSAnyAtomicType, '*'], [cXSString, '', true]],	function(oSequence1, oSequence2) {
 	if (oSequence1.isEmpty())
 		return null;
 
@@ -92,7 +92,7 @@ fFunctionCall_defineSystemFunction("distinct-values",	[[cXSAnyAtomicType, '*'], 
 });
 
 // fn:insert-before($target as item()*, $position as xs:integer, $inserts as item()*) as item()*
-fFunctionCall_defineSystemFunction("insert-before",	[[cXTItem, '*'], [cXSInteger], [cXTItem, '*']],	function(oSequence1, oSequence2, oSequence3) {
+fXPath2StaticContext_defineSystemFunction("insert-before",	[[cXTItem, '*'], [cXSInteger], [cXTItem, '*']],	function(oSequence1, oSequence2, oSequence3) {
 	if (oSequence1.isEmpty())
 		return oSequence3;
 	if (oSequence3.isEmpty())
@@ -119,7 +119,7 @@ fFunctionCall_defineSystemFunction("insert-before",	[[cXTItem, '*'], [cXSInteger
 });
 
 // fn:remove($target as item()*, $position as xs:integer) as item()*
-fFunctionCall_defineSystemFunction("remove",	[[cXTItem, '*'], [cXSInteger]],	function(oSequence1, oSequence2) {
+fXPath2StaticContext_defineSystemFunction("remove",	[[cXTItem, '*'], [cXSInteger]],	function(oSequence1, oSequence2) {
 	var oSequence	= new cXPath2Sequence;
 	if (oSequence1.isEmpty())
 		return oSequence;
@@ -139,7 +139,7 @@ fFunctionCall_defineSystemFunction("remove",	[[cXTItem, '*'], [cXSInteger]],	fun
 });
 
 // fn:reverse($arg as item()*) as item()*
-fFunctionCall_defineSystemFunction("reverse",	[[cXTItem, '*']],	function(oSequence1) {
+fXPath2StaticContext_defineSystemFunction("reverse",	[[cXTItem, '*']],	function(oSequence1) {
 	oSequence1.items.reverse();
 
 	return oSequence1;
@@ -147,7 +147,7 @@ fFunctionCall_defineSystemFunction("reverse",	[[cXTItem, '*']],	function(oSequen
 
 // fn:subsequence($sourceSeq as item()*, $startingLoc as xs:double) as item()*
 // fn:subsequence($sourceSeq as item()*, $startingLoc as xs:double, $length as xs:double) as item()*
-fFunctionCall_defineSystemFunction("subsequence",	[[cXTItem, '*'], [cXTNumeric, ''], [cXTNumeric, '', true]],	function(oSequence1, oSequence2, oSequence3) {
+fXPath2StaticContext_defineSystemFunction("subsequence",	[[cXTItem, '*'], [cXTNumeric, ''], [cXTNumeric, '', true]],	function(oSequence1, oSequence2, oSequence3) {
 	var nPosition	= cMath.round(oSequence2.items[0]),
 		nLength		= arguments.length > 2 ? cMath.round(oSequence3.items[0]) : oSequence1.items.length - nPosition + 1;
 
@@ -159,14 +159,14 @@ fFunctionCall_defineSystemFunction("subsequence",	[[cXTItem, '*'], [cXTNumeric, 
 });
 
 // fn:unordered($sourceSeq as item()*) as item()*
-fFunctionCall_defineSystemFunction("unordered",	[[cXTItem, '*']],	function(oSequence1) {
+fXPath2StaticContext_defineSystemFunction("unordered",	[[cXTItem, '*']],	function(oSequence1) {
 	return oSequence1;
 });
 
 
 // 15.2 Functions That Test the Cardinality of Sequences
 // fn:zero-or-one($arg as item()*) as item()?
-fFunctionCall_defineSystemFunction("zero-or-one",	[[cXTItem, '*']],	function(oSequence1) {
+fXPath2StaticContext_defineSystemFunction("zero-or-one",	[[cXTItem, '*']],	function(oSequence1) {
 	if (!(oSequence1.isEmpty() || oSequence1.isSingleton()))
 		throw new cXPath2Error("FORG0003");
 
@@ -174,7 +174,7 @@ fFunctionCall_defineSystemFunction("zero-or-one",	[[cXTItem, '*']],	function(oSe
 });
 
 // fn:one-or-more($arg as item()*) as item()+
-fFunctionCall_defineSystemFunction("one-or-more",	[[cXTItem, '*']],	function(oSequence1) {
+fXPath2StaticContext_defineSystemFunction("one-or-more",	[[cXTItem, '*']],	function(oSequence1) {
 	if (oSequence1.isEmpty())
 		throw new cXPath2Error("FORG0004");
 
@@ -182,7 +182,7 @@ fFunctionCall_defineSystemFunction("one-or-more",	[[cXTItem, '*']],	function(oSe
 });
 
 // fn:exactly-one($arg as item()*) as item()
-fFunctionCall_defineSystemFunction("exactly-one",	[[cXTItem, '*']],	function(oSequence1) {
+fXPath2StaticContext_defineSystemFunction("exactly-one",	[[cXTItem, '*']],	function(oSequence1) {
 	if (!oSequence1.isSingleton())
 		throw new cXPath2Error("FORG0005");
 
@@ -193,19 +193,19 @@ fFunctionCall_defineSystemFunction("exactly-one",	[[cXTItem, '*']],	function(oSe
 // 15.3 Equals, Union, Intersection and Except
 // fn:deep-equal($parameter1 as item()*, $parameter2 as item()*) as xs:boolean
 // fn:deep-equal($parameter1 as item()*, $parameter2 as item()*, $collation as string) as xs:boolean
-fFunctionCall_defineSystemFunction("deep-equal",	[[cXTItem, '*'], [cXTItem, '*'], [cXSString, '', true]],	function(oSequence1, oSequence2, oSequence3) {
+fXPath2StaticContext_defineSystemFunction("deep-equal",	[[cXTItem, '*'], [cXTItem, '*'], [cXSString, '', true]],	function(oSequence1, oSequence2, oSequence3) {
 	throw "Function '" + "deep-equal" + "' not implemented";
 });
 
 
 // 15.4 Aggregate Functions
 // fn:count($arg as item()*) as xs:integer
-fFunctionCall_defineSystemFunction("count",	[[cXTItem, '*']],	function(oSequence1) {
+fXPath2StaticContext_defineSystemFunction("count",	[[cXTItem, '*']],	function(oSequence1) {
 	return oSequence1.items.length;
 });
 
 // fn:avg($arg as xs:anyAtomicType*) as xs:anyAtomicType?
-fFunctionCall_defineSystemFunction("avg",	[[cXSAnyAtomicType, '*']],	function(oSequence1) {
+fXPath2StaticContext_defineSystemFunction("avg",	[[cXSAnyAtomicType, '*']],	function(oSequence1) {
 	if (oSequence1.isEmpty())
 		return null;
 
@@ -234,7 +234,7 @@ fFunctionCall_defineSystemFunction("avg",	[[cXSAnyAtomicType, '*']],	function(oS
 
 // fn:max($arg as xs:anyAtomicType*) as xs:anyAtomicType?
 // fn:max($arg as xs:anyAtomicType*, $collation as string) as xs:anyAtomicType?
-fFunctionCall_defineSystemFunction("max",	[[cXSAnyAtomicType, '*'], [cXSString, '', true]],	function(oSequence1, oSequence2) {
+fXPath2StaticContext_defineSystemFunction("max",	[[cXSAnyAtomicType, '*'], [cXSString, '', true]],	function(oSequence1, oSequence2) {
 	if (oSequence1.isEmpty())
 		return null;
 
@@ -260,7 +260,7 @@ fFunctionCall_defineSystemFunction("max",	[[cXSAnyAtomicType, '*'], [cXSString, 
 
 // fn:min($arg as xs:anyAtomicType*) as xs:anyAtomicType?
 // fn:min($arg as xs:anyAtomicType*, $collation as string) as xs:anyAtomicType?
-fFunctionCall_defineSystemFunction("min",	[[cXSAnyAtomicType, '*'], [cXSString, '', true]],	function(oSequence1, oSequence2) {
+fXPath2StaticContext_defineSystemFunction("min",	[[cXSAnyAtomicType, '*'], [cXSString, '', true]],	function(oSequence1, oSequence2) {
 	if (oSequence1.isEmpty())
 		return null;
 
@@ -286,7 +286,7 @@ fFunctionCall_defineSystemFunction("min",	[[cXSAnyAtomicType, '*'], [cXSString, 
 
 // fn:sum($arg as xs:anyAtomicType*) as xs:anyAtomicType
 // fn:sum($arg as xs:anyAtomicType*, $zero as xs:anyAtomicType?) as xs:anyAtomicType?
-fFunctionCall_defineSystemFunction("sum",	[[cXSAnyAtomicType, '*'], [cXSAnyAtomicType, '?', true]],	function(oSequence1, oSequence2) {
+fXPath2StaticContext_defineSystemFunction("sum",	[[cXSAnyAtomicType, '*'], [cXSAnyAtomicType, '?', true]],	function(oSequence1, oSequence2) {
 	if (oSequence1.isEmpty()) {
 		if (arguments.length > 1) {
 			if (oSequence2.length)
@@ -327,7 +327,7 @@ fFunctionCall_defineSystemFunction("sum",	[[cXSAnyAtomicType, '*'], [cXSAnyAtomi
 // 15.5 Functions and Operators that Generate Sequences
 // fn:id($arg as xs:string*) as element()*
 // fn:id($arg as xs:string*, $node as node()) as element()*
-fFunctionCall_defineSystemFunction("id",	[[cXSString, '*'], [cXTNode, '', true]],	function(oSequence1, oSequence2) {
+fXPath2StaticContext_defineSystemFunction("id",	[[cXSString, '*'], [cXTNode, '', true]],	function(oSequence1, oSequence2) {
 	if (arguments.length < 2) {
 		if (!this.staticContext.DOMAdapter.isNode(this.item))
 			throw new cXPath2Error("XPTY0004"
@@ -342,7 +342,7 @@ fFunctionCall_defineSystemFunction("id",	[[cXSString, '*'], [cXTNode, '', true]]
 	var oNode	= oSequence2.items[0];
 
 	// Get root node and check if it is Document
-	var oDocument	= cFunctionCall.functions["root"].call(this, new cXPath2Sequence(oNode));
+	var oDocument	= hXPath2StaticContext_functions['{' + "http://www.w3.org/2005/xpath-functions" + '}' + "root"].call(this, new cXPath2Sequence(oNode));
 	if (this.staticContext.DOMAdapter.getProperty(oDocument, "nodeType") != 9)
 		throw new cXPath2Error("FODC0001");
 
@@ -358,28 +358,28 @@ fFunctionCall_defineSystemFunction("id",	[[cXSString, '*'], [cXTNode, '', true]]
 
 // fn:idref($arg as xs:string*) as node()*
 // fn:idref($arg as xs:string*, $node as node()) as node()*
-fFunctionCall_defineSystemFunction("idref",	[[cXSString, '*'], [cXTNode, '', true]],	function(oSequence1, oSequence2) {
+fXPath2StaticContext_defineSystemFunction("idref",	[[cXSString, '*'], [cXTNode, '', true]],	function(oSequence1, oSequence2) {
 	throw "Function '" + "idref" + "' not implemented";
 });
 
 // fn:doc($uri as xs:string?) as document-node()?
-fFunctionCall_defineSystemFunction("doc",			[[cXSString, '?', true]],	function(oSequence1) {
+fXPath2StaticContext_defineSystemFunction("doc",			[[cXSString, '?', true]],	function(oSequence1) {
 	throw "Function '" + "doc" + "' not implemented";
 });
 
 // fn:doc-available($uri as xs:string?) as xs:boolean
-fFunctionCall_defineSystemFunction("doc-available",	[[cXSString, '?', true]],	function(oSequence1) {
+fXPath2StaticContext_defineSystemFunction("doc-available",	[[cXSString, '?', true]],	function(oSequence1) {
 	throw "Function '" + "doc-available" + "' not implemented";
 });
 
 // fn:collection() as node()*
 // fn:collection($arg as xs:string?) as node()*
-fFunctionCall_defineSystemFunction("collection",	[[cXSString, '?', true]],	function(oSequence1) {
+fXPath2StaticContext_defineSystemFunction("collection",	[[cXSString, '?', true]],	function(oSequence1) {
 	throw "Function '" + "collection" + "' not implemented";
 });
 
 // fn:element-with-id($arg as xs:string*) as element()*
 // fn:element-with-id($arg as xs:string*, $node as node()) as element()*
-fFunctionCall_defineSystemFunction("element-with-id",	[[cXSString, '*'], [cXTNode, '', true]],	function(oSequence1, oSequence2) {
+fXPath2StaticContext_defineSystemFunction("element-with-id",	[[cXSString, '*'], [cXTNode, '', true]],	function(oSequence1, oSequence2) {
 	throw "Function '" + "element-with-id" + "' not implemented";
 });

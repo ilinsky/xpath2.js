@@ -69,9 +69,6 @@ cXSDate.cast	= function(vValue) {
 	);
 };
 
-//
-cFunctionCall.dataTypes["date"]	= cXSDate;
-
 // Utilities
 var aXSDate_days	= [31,28,31,30,31,30,31,31,30,31,30,31];
 function fXSDate_getDaysForYearMonth(nYear, nMonth) {
@@ -128,3 +125,6 @@ function fXSDate_normalize(oValue, bDay) {
 
 	return oValue;
 };
+
+//
+fXPath2StaticContext_defineSystemDataType("date",	cXSDate);

@@ -46,4 +46,4 @@ cXSQName.cast	= function(vValue) {
 };
 
 //
-cFunctionCall.dataTypes["QName"]	= cXSQName;
+fXPath2StaticContext_defineSystemDataType("QName",	cXSQName);

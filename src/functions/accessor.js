@@ -19,7 +19,7 @@
 */
 
 // fn:node-name($arg as node()?) as xs:QName?
-fFunctionCall_defineSystemFunction("node-name",		[[cXTNode, '?']],	function(oSequence1) {
+fXPath2StaticContext_defineSystemFunction("node-name",		[[cXTNode, '?']],	function(oSequence1) {
 	if (oSequence1.isEmpty())
 		return null;
 	//
@@ -42,7 +42,7 @@ fFunctionCall_defineSystemFunction("node-name",		[[cXTNode, '?']],	function(oSeq
 });
 
 // fn:nilled($arg as node()?) as xs:boolean?
-fFunctionCall_defineSystemFunction("nilled",	[[cXTNode, '?']],	function(oSequence1) {
+fXPath2StaticContext_defineSystemFunction("nilled",	[[cXTNode, '?']],	function(oSequence1) {
 	if (oSequence1.isEmpty())
 		return null;
 
@@ -55,20 +55,20 @@ fFunctionCall_defineSystemFunction("nilled",	[[cXTNode, '?']],	function(oSequenc
 
 // fn:string() as xs:string
 // fn:string($arg as item()?) as xs:string
-fFunctionCall_defineSystemFunction("string",	[[cXTItem, '?', true]],	function(/*[*/oSequence1/*]*/) {
+fXPath2StaticContext_defineSystemFunction("string",	[[cXTItem, '?', true]],	function(/*[*/oSequence1/*]*/) {
 	if (!arguments.length)
 		oSequence1	= new cXPath2Sequence(this.item);
 	return oSequence1.toString(this);
 });
 
 // fn:data($arg as item()*) as xs:anyAtomicType*
-fFunctionCall_defineSystemFunction("data",	[[cXTItem, '*']],		function(oSequence1) {
+fXPath2StaticContext_defineSystemFunction("data",	[[cXTItem, '*']],		function(oSequence1) {
 	return cXPath2Sequence.atomize(oSequence1, this);
 });
 
 // fn:base-uri() as xs:anyURI?
 // fn:base-uri($arg as node()?) as xs:anyURI?
-fFunctionCall_defineSystemFunction("base-uri",	[[cXTNode, '?', true]],	function(oSequence1) {
+fXPath2StaticContext_defineSystemFunction("base-uri",	[[cXTNode, '?', true]],	function(oSequence1) {
 	if (!arguments.length) {
 		if (!this.staticContext.DOMAdapter.isNode(this.item))
 			throw new cXPath2Error("XPTY0004"
@@ -86,7 +86,7 @@ fFunctionCall_defineSystemFunction("base-uri",	[[cXTNode, '?', true]],	function(
 });
 
 // fn:document-uri($arg as node()?) as xs:anyURI?
-fFunctionCall_defineSystemFunction("document-uri",	[[cXTNode, '?']],	function(oSequence1) {
+fXPath2StaticContext_defineSystemFunction("document-uri",	[[cXTNode, '?']],	function(oSequence1) {
 	if (oSequence1.isEmpty())
 		return null;
 	//

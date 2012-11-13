@@ -14,7 +14,7 @@
 
 // fn:resolve-uri($relative as xs:string?) as xs:anyURI?
 // fn:resolve-uri($relative as xs:string?, $base as xs:string) as xs:anyURI?
-fFunctionCall_defineSystemFunction("resolve-uri",	[[cXSString, '?'], [cXSString, '', true]],	function(oSequence1, oSequence2) {
+fXPath2StaticContext_defineSystemFunction("resolve-uri",	[[cXSString, '?'], [cXSString, '', true]],	function(oSequence1, oSequence2) {
 	var sBaseUri;
 	if (arguments.length < 2) {
 		if (!this.staticContext.DOMAdapter.isNode(this.item))

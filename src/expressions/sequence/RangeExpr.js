@@ -48,7 +48,7 @@ cRangeExpr.prototype.evaluate	= function (oContext) {
 		vRight	= cXSInteger.cast(vRight);
 
 	if (typeof vLeft == "number" && ~~vLeft == vLeft && typeof vRight == "number" && ~~vRight == vRight)
-		return cFunctionCall.operators["to"].call(oContext, vLeft, vRight);
+		return hXPath2StaticContext_operators["to"].call(oContext, vLeft, vRight);
 	//
 	throw new cXPath2Error("XPTY0004"
 //->Debug

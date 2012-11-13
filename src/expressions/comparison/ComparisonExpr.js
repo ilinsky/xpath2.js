@@ -137,39 +137,39 @@ cComparisonExpr.ValueComp.operators['eq']	= function(oLeft, oRight, oContext) {
 
 	if (cXSAnyAtomicType.isNumeric(cLeft)) {
 		if (cXSAnyAtomicType.isNumeric(cRight))
-			return cFunctionCall.operators["numeric-equal"].call(oContext, oLeft, oRight);
+			return hXPath2StaticContext_operators["numeric-equal"].call(oContext, oLeft, oRight);
 	}
 	else
 	if (cLeft == cRight) {
 		if (cLeft == cXSBoolean)
-			return cFunctionCall.operators["boolean-equal"].call(oContext, oLeft, oRight);
+			return hXPath2StaticContext_operators["boolean-equal"].call(oContext, oLeft, oRight);
 		else
 		if (cLeft == cXSString)
-			return cFunctionCall.operators["numeric-equal"].call(oContext, cFunctionCall.functions["compare"].call(oContext, new cXPath2Sequence(oLeft), new cXPath2Sequence(oRight)), 0);
+			return hXPath2StaticContext_operators["numeric-equal"].call(oContext, hXPath2StaticContext_functions['{' + "http://www.w3.org/2005/xpath-functions" + '}' + "compare"].call(oContext, new cXPath2Sequence(oLeft), new cXPath2Sequence(oRight)), 0);
 		else
 		if (cLeft == cXSDate)
-			return cFunctionCall.operators["date-equal"].call(oContext, oLeft, oRight);
+			return hXPath2StaticContext_operators["date-equal"].call(oContext, oLeft, oRight);
 		else
 		if (cLeft == cXSTime)
-			return cFunctionCall.operators["time-equal"].call(oContext, oLeft, oRight);
+			return hXPath2StaticContext_operators["time-equal"].call(oContext, oLeft, oRight);
 		else
 		if (cLeft == cXSDateTime)
-			return cFunctionCall.operators["dateTime-equal"].call(oContext, oLeft, oRight);
+			return hXPath2StaticContext_operators["dateTime-equal"].call(oContext, oLeft, oRight);
 		else
 		if (cLeft == cXSDuration || cLeft == cXSYearMonthDuration || cLeft == cXSDayTimeDuration)
-			return cFunctionCall.operators["duration-equal"].call(oContext, oLeft, oRight);
+			return hXPath2StaticContext_operators["duration-equal"].call(oContext, oLeft, oRight);
 		// skipped: Gregorian
 		// skipped: xs:hexBinary
 		// skipped: xs:base64Binary
 		// skipped: xs:anyURI (covered by xs:string)
 		else
 		if (cLeft == cXSQName)
-			return cFunctionCall.operators["QName-equal"].call(oContext, oLeft, oRight);
+			return hXPath2StaticContext_operators["QName-equal"].call(oContext, oLeft, oRight);
 	}
 	else	// If types of operands are different but are duration inherited
 	if (cLeft == cXSDuration || cLeft == cXSYearMonthDuration || cLeft == cXSDayTimeDuration) {
 		if (cRight == cXSDuration || cRight == cXSYearMonthDuration || cRight == cXSDayTimeDuration)
-			return cFunctionCall.operators["duration-equal"].call(oContext, oLeft, oRight);
+			return hXPath2StaticContext_operators["duration-equal"].call(oContext, oLeft, oRight);
 	}
 
 	// skipped: xs:NOTATION
@@ -187,30 +187,30 @@ cComparisonExpr.ValueComp.operators['gt']	= function(oLeft, oRight, oContext) {
 		cRight	= cXSAnyAtomicType.typeOf(oRight);
 	if (cXSAnyAtomicType.isNumeric(cLeft)) {
 		if (cXSAnyAtomicType.isNumeric(cRight))
-			return cFunctionCall.operators["numeric-greater-than"].call(oContext, oLeft, oRight);
+			return hXPath2StaticContext_operators["numeric-greater-than"].call(oContext, oLeft, oRight);
 	}
 	else
 	if (cLeft == cRight) {
 		if (cLeft == cXSBoolean)
-			return cFunctionCall.operators["boolean-greater-than"].call(oContext, oLeft, oRight);
+			return hXPath2StaticContext_operators["boolean-greater-than"].call(oContext, oLeft, oRight);
 		else
 		if (cLeft == cXSString)
-			return cFunctionCall.operators["numeric-greater-than"].call(oContext, cFunctionCall.functions["compare"].call(oContext, new cXPath2Sequence(oLeft), new cXPath2Sequence(oRight)), 0);
+			return hXPath2StaticContext_operators["numeric-greater-than"].call(oContext, hXPath2StaticContext_functions['{' + "http://www.w3.org/2005/xpath-functions" + '}' + "compare"].call(oContext, new cXPath2Sequence(oLeft), new cXPath2Sequence(oRight)), 0);
 		else
 		if (cLeft == cXSDate)
-			return cFunctionCall.operators["date-greater-than"].call(oContext, oLeft, oRight);
+			return hXPath2StaticContext_operators["date-greater-than"].call(oContext, oLeft, oRight);
 		else
 		if (cLeft == cXSTime)
-			return cFunctionCall.operators["time-greater-than"].call(oContext, oLeft, oRight);
+			return hXPath2StaticContext_operators["time-greater-than"].call(oContext, oLeft, oRight);
 		else
 		if (cLeft == cXSDateTime)
-			return cFunctionCall.operators["dateTime-greater-than"].call(oContext, oLeft, oRight);
+			return hXPath2StaticContext_operators["dateTime-greater-than"].call(oContext, oLeft, oRight);
 		else
 		if (cLeft == cXSYearMonthDuration)
-			return cFunctionCall.operators["yearMonthDuration-greater-than"].call(oContext, oLeft, oRight);
+			return hXPath2StaticContext_operators["yearMonthDuration-greater-than"].call(oContext, oLeft, oRight);
 		else
 		if (cLeft == cXSDayTimeDuration)
-			return cFunctionCall.operators["dayTimeDuration-greater-than"].call(oContext, oLeft, oRight);
+			return hXPath2StaticContext_operators["dayTimeDuration-greater-than"].call(oContext, oLeft, oRight);
 	}
 	// skipped: xs:anyURI (covered by xs:string)
 	throw new cXPath2Error("XPTY0004"
@@ -224,30 +224,30 @@ cComparisonExpr.ValueComp.operators['lt']	= function(oLeft, oRight, oContext) {
 		cRight	= cXSAnyAtomicType.typeOf(oRight);
 	if (cXSAnyAtomicType.isNumeric(cLeft)) {
 		if (cXSAnyAtomicType.isNumeric(cRight))
-			return cFunctionCall.operators["numeric-less-than"].call(oContext, oLeft, oRight);
+			return hXPath2StaticContext_operators["numeric-less-than"].call(oContext, oLeft, oRight);
 	}
 	else
 	if (cLeft == cRight) {
 		if (cLeft == cXSBoolean)
-			return cFunctionCall.operators["boolean-less-than"].call(oContext, oLeft, oRight);
+			return hXPath2StaticContext_operators["boolean-less-than"].call(oContext, oLeft, oRight);
 		else
 		if (cLeft == cXSBoolean)
-			return cFunctionCall.operators["numeric-less-than"].call(oContext, cFunctionCall.functions["compare"].call(oContext, new cXPath2Sequence(oLeft), new cXPath2Sequence(oRight)), 0);
+			return hXPath2StaticContext_operators["numeric-less-than"].call(oContext, hXPath2StaticContext_functions['{' + "http://www.w3.org/2005/xpath-functions" + '}' + "compare"].call(oContext, new cXPath2Sequence(oLeft), new cXPath2Sequence(oRight)), 0);
 		else
 		if (cLeft == cXSDate)
-			return cFunctionCall.operators["date-less-than"].call(oContext, oLeft, oRight);
+			return hXPath2StaticContext_operators["date-less-than"].call(oContext, oLeft, oRight);
 		else
 		if (cLeft == cXSTime)
-			return cFunctionCall.operators["time-less-than"].call(oContext, oLeft, oRight);
+			return hXPath2StaticContext_operators["time-less-than"].call(oContext, oLeft, oRight);
 		else
 		if (cLeft == cXSDateTime)
-			return cFunctionCall.operators["dateTime-less-than"].call(oContext, oLeft, oRight);
+			return hXPath2StaticContext_operators["dateTime-less-than"].call(oContext, oLeft, oRight);
 		else
 		if (cLeft == cXSYearMonthDuration)
-			return cFunctionCall.operators["yearMonthDuration-less-than"].call(oContext, oLeft, oRight);
+			return hXPath2StaticContext_operators["yearMonthDuration-less-than"].call(oContext, oLeft, oRight);
 		else
 		if (cLeft == cXSDayTimeDuration)
-			return cFunctionCall.operators["dayTimeDuration-less-than"].call(oContext, oLeft, oRight);
+			return hXPath2StaticContext_operators["dayTimeDuration-less-than"].call(oContext, oLeft, oRight);
 	}
 	// skipped: xs:anyURI (covered by xs:string)
 	throw new cXPath2Error("XPTY0004"
@@ -261,30 +261,30 @@ cComparisonExpr.ValueComp.operators['ge']	= function(oLeft, oRight, oContext) {
 		cRight	= cXSAnyAtomicType.typeOf(oRight);
 	if (cXSAnyAtomicType.isNumeric(cLeft)) {
 		if (cXSAnyAtomicType.isNumeric(cRight))
-			return cFunctionCall.operators["numeric-greater-than"].call(oContext, oLeft, oRight) || cFunctionCall.operators["numeric-equal"].call(oContext, oLeft, oRight);
+			return hXPath2StaticContext_operators["numeric-greater-than"].call(oContext, oLeft, oRight) || hXPath2StaticContext_operators["numeric-equal"].call(oContext, oLeft, oRight);
 	}
 	else
 	if (cLeft == cRight) {
 		if (cLeft == cXSBoolean)
-			return !cFunctionCall.operators["boolean-less-than"].call(oContext, oLeft, oRight);
+			return !hXPath2StaticContext_operators["boolean-less-than"].call(oContext, oLeft, oRight);
 		else
 		if (cLeft == cXSString)
-			return cFunctionCall.operators["numeric-greater-than"].call(oContext, cFunctionCall.functions["compare"].call(oContext, new cXPath2Sequence(oLeft), new cXPath2Sequence(oRight)), -1);
+			return hXPath2StaticContext_operators["numeric-greater-than"].call(oContext, hXPath2StaticContext_functions['{' + "http://www.w3.org/2005/xpath-functions" + '}' + "compare"].call(oContext, new cXPath2Sequence(oLeft), new cXPath2Sequence(oRight)), -1);
 		else
 		if (cLeft == cXSDate)
-			return !cFunctionCall.operators["date-less-than"].call(oContext, oLeft, oRight);
+			return !hXPath2StaticContext_operators["date-less-than"].call(oContext, oLeft, oRight);
 		else
 		if (cLeft == cXSTime)
-			return !cFunctionCall.operators["time-less-than"].call(oContext, oLeft, oRight);
+			return !hXPath2StaticContext_operators["time-less-than"].call(oContext, oLeft, oRight);
 		else
 		if (cLeft == cXSDateTime)
-			return !cFunctionCall.operators["dateTime-less-than"].call(oContext, oLeft, oRight);
+			return !hXPath2StaticContext_operators["dateTime-less-than"].call(oContext, oLeft, oRight);
 		else
 		if (cLeft == cXSYearMonthDuration)
-			return !cFunctionCall.operators["yearMonthDuration-less-than"].call(oContext, oLeft, oRight);
+			return !hXPath2StaticContext_operators["yearMonthDuration-less-than"].call(oContext, oLeft, oRight);
 		else
 		if (cLeft == cXSDayTimeDuration)
-			return !cFunctionCall.operators["dayTimeDuration-less-than"].call(oContext, oLeft, oRight);
+			return !hXPath2StaticContext_operators["dayTimeDuration-less-than"].call(oContext, oLeft, oRight);
 	}
 	// skipped: xs:anyURI (covered by xs:string)
 	throw new cXPath2Error("XPTY0004"
@@ -298,30 +298,30 @@ cComparisonExpr.ValueComp.operators['le']	= function(oLeft, oRight, oContext) {
 		cRight	= cXSAnyAtomicType.typeOf(oRight);
 	if (cXSAnyAtomicType.isNumeric(cLeft)) {
 		if (cXSAnyAtomicType.isNumeric(cRight))
-			return cFunctionCall.operators["numeric-less-than"].call(oContext, oLeft, oRight) || cFunctionCall.operators["numeric-equal"].call(oContext, oLeft, oRight);
+			return hXPath2StaticContext_operators["numeric-less-than"].call(oContext, oLeft, oRight) || hXPath2StaticContext_operators["numeric-equal"].call(oContext, oLeft, oRight);
 	}
 	else
 	if (cLeft == cRight) {
 		if (cLeft == cXSBoolean)
-			return !cFunctionCall.operators["boolean-greater-than"].call(oContext, oLeft, oRight);
+			return !hXPath2StaticContext_operators["boolean-greater-than"].call(oContext, oLeft, oRight);
 		else
 		if (cLeft == cXSString)
-			return cFunctionCall.operators["numeric-less-than"].call(oContext, cFunctionCall.functions["compare"].call(oContext, new cXPath2Sequence(oLeft), new cXPath2Sequence(oRight)), 1);
+			return hXPath2StaticContext_operators["numeric-less-than"].call(oContext, hXPath2StaticContext_functions['{' + "http://www.w3.org/2005/xpath-functions" + '}' + "compare"].call(oContext, new cXPath2Sequence(oLeft), new cXPath2Sequence(oRight)), 1);
 		else
 		if (cLeft == cXSDate)
-			return !cFunctionCall.operators["date-greater-than"].call(oContext, oLeft, oRight);
+			return !hXPath2StaticContext_operators["date-greater-than"].call(oContext, oLeft, oRight);
 		else
 		if (cLeft == cXSTime)
-			return !cFunctionCall.operators["time-greater-than"].call(oContext, oLeft, oRight);
+			return !hXPath2StaticContext_operators["time-greater-than"].call(oContext, oLeft, oRight);
 		else
 		if (cLeft == cXSDateTime)
-			return !cFunctionCall.operators["dateTime-greater-than"].call(oContext, oLeft, oRight);
+			return !hXPath2StaticContext_operators["dateTime-greater-than"].call(oContext, oLeft, oRight);
 		else
 		if (cLeft == cXSYearMonthDuration)
-			return !cFunctionCall.operators["yearMonthDuration-greater-than"].call(oContext, oLeft, oRight);
+			return !hXPath2StaticContext_operators["yearMonthDuration-greater-than"].call(oContext, oLeft, oRight);
 		else
 		if (cLeft == cXSDayTimeDuration)
-			return !cFunctionCall.operators["dayTimeDuration-greater-than"].call(oContext, oLeft, oRight);
+			return !hXPath2StaticContext_operators["dayTimeDuration-greater-than"].call(oContext, oLeft, oRight);
 	}
 	// skipped: xs:anyURI (covered by xs:string)
 	throw new cXPath2Error("XPTY0004"
@@ -372,13 +372,13 @@ cComparisonExpr.NodeComp	= function(oExpr, oContext) {
 
 cComparisonExpr.NodeComp.operators	= {};
 cComparisonExpr.NodeComp.operators['is']	= function(oLeft, oRight, oContext) {
-	return cFunctionCall.operators["is-same-node"].call(oContext, oLeft, oRight);
+	return hXPath2StaticContext_operators["is-same-node"].call(oContext, oLeft, oRight);
 };
 cComparisonExpr.NodeComp.operators['>>']	= function(oLeft, oRight, oContext) {
-	return cFunctionCall.operators["node-after"].call(oContext, oLeft, oRight);
+	return hXPath2StaticContext_operators["node-after"].call(oContext, oLeft, oRight);
 };
 cComparisonExpr.NodeComp.operators['<<']	= function(oLeft, oRight, oContext) {
-	return cFunctionCall.operators["node-before"].call(oContext, oLeft, oRight);
+	return hXPath2StaticContext_operators["node-before"].call(oContext, oLeft, oRight);
 };
 
 // Operators

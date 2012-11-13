@@ -81,9 +81,6 @@ cXSDateTime.cast	= function(vValue) {
 	);
 };
 
-//
-cFunctionCall.dataTypes["dateTime"]	= cXSDateTime;
-
 // Utilities
 function fXSDateTime_pad(vValue, nLength) {
 	sValue	= cString(vValue);
@@ -122,3 +119,6 @@ function fXSDateTime_getTimeComponent(oDateTime) {
 function fXSDateTime_normalize(oValue) {
 	return fXSDate_normalize(fXSTime_normalize(oValue));
 };
+
+//
+fXPath2StaticContext_defineSystemDataType("dateTime",	cXSDateTime);

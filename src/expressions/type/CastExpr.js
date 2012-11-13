@@ -51,5 +51,5 @@ cCastExpr.prototype.evaluate	= function(oContext) {
 		);
 
 	//
-	return new cXPath2Sequence(this.type.itemType.cast(cXPath2Sequence.atomizeItem(oSequence1.items[0], oContext)));
+	return new cXPath2Sequence(this.type.itemType.cast(cXPath2Sequence.atomizeItem(oSequence1.items[0], oContext), oContext));
 };

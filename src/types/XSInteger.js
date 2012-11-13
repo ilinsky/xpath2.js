@@ -42,4 +42,4 @@ cXSInteger.cast	= function(vValue) {
 };
 
 //
-cFunctionCall.dataTypes["integer"]	= cXSInteger;
+fXPath2StaticContext_defineSystemDataType("integer",	cXSInteger);

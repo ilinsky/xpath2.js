@@ -17,7 +17,7 @@ cUnionExpr.prototype.items	= null;
 
 cUnionExpr.operators	= {};
 cUnionExpr.operators["union"]	= function(oLeft, oRight, oContext) {
-	return cFunctionCall.operators["union"].call(oContext, oLeft, oRight);
+	return hXPath2StaticContext_operators["union"].call(oContext, oLeft, oRight);
 };
 
 // Static members

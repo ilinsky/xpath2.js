@@ -19,8 +19,6 @@ cXSAnyAtomicType.cast	= function(vValue) {
 	);	//  {http://www.w3.org/2001/XMLSchema}anyAtomicType
 };
 
-cFunctionCall.dataTypes["anyAtomicType"]	= cXSAnyAtomicType;
-
 //
 cXSAnyAtomicType.typeOf	= function(oValue) {
 	if (oValue instanceof cXSUntypedAtomic)
@@ -54,3 +52,6 @@ cXSAnyAtomicType.typeOf	= function(oValue) {
 cXSAnyAtomicType.isNumeric	= function(cType) {
 	return cType == cXSFloat || cType == cXSDouble || cType == cXSDecimal || cType.prototype instanceof cXSDecimal;
 };
+
+//
+fXPath2StaticContext_defineSystemDataType("anyAtomicType",	cXSAnyAtomicType);

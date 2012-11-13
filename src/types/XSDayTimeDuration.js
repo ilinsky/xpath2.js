@@ -45,9 +45,6 @@ cXSDayTimeDuration.cast	= function(vValue) {
 	);
 };
 
-//
-cFunctionCall.dataTypes["dayTimeDuration"]	= cXSDayTimeDuration;
-
 // Utilities
 function fXSDayTimeDuration_normalize(oDuration) {
 	if (oDuration.seconds >= 60) {
@@ -64,3 +61,6 @@ function fXSDayTimeDuration_normalize(oDuration) {
 	}
 	return oDuration;
 };
+
+//
+fXPath2StaticContext_defineSystemDataType("dayTimeDuration",	cXSDayTimeDuration);

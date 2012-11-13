@@ -42,4 +42,4 @@ cXSDecimal.cast	= function(vValue) {
 };
 
 //
-cFunctionCall.dataTypes["decimal"]	= cXSDecimal;
+fXPath2StaticContext_defineSystemDataType("decimal",	cXSDecimal);

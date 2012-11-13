@@ -20,7 +20,7 @@ cUnaryExpr.operators	= {};
 cUnaryExpr.operators['-']	= function(oRight, oContext) {
 	var cRight	= cXSAnyAtomicType.typeOf(oRight);
 	if (cXSAnyAtomicType.isNumeric(cRight))
-		return cFunctionCall.operators["numeric-unary-minus"].call(oContext, oRight);
+		return hXPath2StaticContext_operators["numeric-unary-minus"].call(oContext, oRight);
 	//
 	throw new cXPath2Error("XPTY0004"
 //->Debug
@@ -31,7 +31,7 @@ cUnaryExpr.operators['-']	= function(oRight, oContext) {
 cUnaryExpr.operators['+']	= function(oRight, oContext) {
 	var cRight	= cXSAnyAtomicType.typeOf(oRight);
 	if (cXSAnyAtomicType.isNumeric(cRight))
-		return cFunctionCall.operators["numeric-unary-plus"].call(oContext, oRight);
+		return hXPath2StaticContext_operators["numeric-unary-plus"].call(oContext, oRight);
 	//
 	throw new cXPath2Error("XPTY0004"
 //->Debug

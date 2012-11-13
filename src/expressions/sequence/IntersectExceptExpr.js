@@ -20,10 +20,10 @@ cIntersectExceptExpr.operators	={};
 
 // Operator mappings
 cIntersectExceptExpr.operators["intersect"]	= function(oLeft, oRight, oContext) {
-	return cFunctionCall.operators["intersect"].call(oContext, oLeft, oRight);
+	return hXPath2StaticContext_operators["intersect"].call(oContext, oLeft, oRight);
 };
 cIntersectExceptExpr.operators["except"]	= function(oLeft, oRight, oContext) {
-	return cFunctionCall.operators["except"].call(oContext, oLeft, oRight);
+	return hXPath2StaticContext_operators["except"].call(oContext, oLeft, oRight);
 };
 
 // Static members

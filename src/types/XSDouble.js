@@ -42,4 +42,4 @@ cXSDouble.cast	= function(vValue) {
 };
 
 //
-cFunctionCall.dataTypes["double"]	= cXSDouble;
+fXPath2StaticContext_defineSystemDataType("double",	cXSDouble);

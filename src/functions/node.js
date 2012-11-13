@@ -21,7 +21,7 @@
 // 14 Functions on Nodes
 // fn:name() as xs:string
 // fn:name($arg as node()?) as xs:string
-fFunctionCall_defineSystemFunction("name",	[[cXTNode, '?', true]],	function(oSequence1) {
+fXPath2StaticContext_defineSystemFunction("name",	[[cXTNode, '?', true]],	function(oSequence1) {
 	if (!arguments.length) {
 		if (!this.staticContext.DOMAdapter.isNode(this.item))
 			throw new cXPath2Error("XPTY0004"
@@ -35,13 +35,13 @@ fFunctionCall_defineSystemFunction("name",	[[cXTNode, '?', true]],	function(oSeq
 	if (oSequence1.isEmpty())
 		return '';
 	//
-	var vValue	= cFunctionCall.functions["node-name"].call(this, oSequence1);
+	var vValue	= hXPath2StaticContext_functions['{' + "http://www.w3.org/2005/xpath-functions" + '}' + "node-name"].call(this, oSequence1);
 	return vValue === null ? '' : vValue.toString();
 });
 
 // fn:local-name() as xs:string
 // fn:local-name($arg as node()?) as xs:string
-fFunctionCall_defineSystemFunction("local-name",	[[cXTNode, '?', true]],	function(oSequence1) {
+fXPath2StaticContext_defineSystemFunction("local-name",	[[cXTNode, '?', true]],	function(oSequence1) {
 	if (!arguments.length) {
 		if (!this.staticContext.DOMAdapter.isNode(this.item))
 			throw new cXPath2Error("XPTY0004"
@@ -60,7 +60,7 @@ fFunctionCall_defineSystemFunction("local-name",	[[cXTNode, '?', true]],	functio
 
 // fn:namespace-uri() as xs:anyURI
 // fn:namespace-uri($arg as node()?) as xs:anyURI
-fFunctionCall_defineSystemFunction("namespace-uri",	[[cXTNode, '?', true]],	function(oSequence1) {
+fXPath2StaticContext_defineSystemFunction("namespace-uri",	[[cXTNode, '?', true]],	function(oSequence1) {
 	if (!arguments.length) {
 		if (!this.staticContext.DOMAdapter.isNode(this.item))
 			throw new cXPath2Error("XPTY0004"
@@ -79,7 +79,7 @@ fFunctionCall_defineSystemFunction("namespace-uri",	[[cXTNode, '?', true]],	func
 
 // fn:number() as xs:double
 // fn:number($arg as xs:anyAtomicType?) as xs:double
-fFunctionCall_defineSystemFunction("number",	[[cXSAnyAtomicType, '?', true]],	function(/*[*/oSequence1/*]*/) {
+fXPath2StaticContext_defineSystemFunction("number",	[[cXSAnyAtomicType, '?', true]],	function(/*[*/oSequence1/*]*/) {
 	if (!arguments.length)
 		oSequence1	= new cXPath2Sequence(this.item);
 
@@ -98,13 +98,13 @@ fFunctionCall_defineSystemFunction("number",	[[cXSAnyAtomicType, '?', true]],	fu
 
 // fn:lang($testlang as xs:string?) as xs:boolean
 // fn:lang($testlang as xs:string?, $node as node()) as xs:boolean
-fFunctionCall_defineSystemFunction("lang",	[[cXSString, '?'], [cXTNode, '?', true]],	function(oSequence1) {
+fXPath2StaticContext_defineSystemFunction("lang",	[[cXSString, '?'], [cXTNode, '?', true]],	function(oSequence1) {
 	throw "Funciton '" + "lang" + "' not implemented";
 });
 
 // fn:root() as node()
 // fn:root($arg as node()?) as node()?
-fFunctionCall_defineSystemFunction("root",	[[cXTNode, '?', true]],	function(oSequence1) {
+fXPath2StaticContext_defineSystemFunction("root",	[[cXTNode, '?', true]],	function(oSequence1) {
 	if (!arguments.length) {
 		if (!this.staticContext.DOMAdapter.isNode(this.item))
 			throw new cXPath2Error("XPTY0004"

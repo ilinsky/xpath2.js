@@ -21,12 +21,6 @@ cFunctionCall.prototype.localName		= null;
 cFunctionCall.prototype.namespaceURI	= null;
 cFunctionCall.prototype.args	= null;
 
-cFunctionCall.functions	= {};
-cFunctionCall.operators	= {};
-cFunctionCall.dataTypes	= {};
-
-// http://www.w3.org/2005/xpath-functions
-
 // Static members
 cFunctionCall.parse	= function (oLexer, oStaticContext) {
 	var aMatch	= oLexer.peek().match(cFunctionCall.RegExp);
@@ -67,11 +61,12 @@ cFunctionCall.prototype.evaluate	= function (oContext) {
 	for (var nIndex = 0, nLength = this.args.length; nIndex < nLength; nIndex++)
 		aArguments.push(this.args[nIndex].evaluate(oContext));
 
+	var sUri	= (this.namespaceURI ? '{' + this.namespaceURI + '}' : '') + this.localName;
 	// Call function
 	if (this.namespaceURI == "http://www.w3.org/2005/xpath-functions") {
-		if (fFunction = cFunctionCall.functions[this.localName]) {
+		if (fFunction = hXPath2StaticContext_functions[sUri]) {
 			// Validate/Cast arguments
-			if (aParameters = fFunction.parameters)
+			if (aParameters = hXPath2StaticContext_signatures[sUri])
 				fFunctionCall_prepare(this.localName, aParameters, fFunction, aArguments, oContext);
 			//
 			var vResult	= fFunction.apply(oContext, aArguments);
@@ -80,12 +75,13 @@ cFunctionCall.prototype.evaluate	= function (oContext) {
 		}
 		throw new cXPath2Error("XPST0017"
 //->Debug
-				, "Unknown system function " + this.localName + '()'
+				, "Unknown system function: " + sUri + '()'
 //<-Debug
 		);
 	}
+	else
 	if (this.namespaceURI == "http://www.w3.org/2001/XMLSchema") {
-		if (fFunction = cFunctionCall.dataTypes[this.localName]) {
+		if (fFunction = hXPath2StaticContext_dataTypes[sUri]) {
 			//
 			fFunctionCall_prepare(this.localName, [[cXSAnyAtomicType]], fFunction, aArguments, oContext);
 			//
@@ -93,17 +89,21 @@ cFunctionCall.prototype.evaluate	= function (oContext) {
 		}
 		throw new cXPath2Error("XPST0017"
 //->Debug
-				, "Unknown constructor function: " + '{' + this.namespaceURI + '}' + this.localName
+				, "Unknown type constructor function: " + sUri + '()'
 //<-Debug
 		);
 	}
-	var sUri	= (this.namespaceURI ? this.namespaceURI + '#' : '') + this.localName;
-	if (oContext.scope.hasOwnProperty(sUri) && (fFunction = oContext.scope[sUri]) && typeof fFunction == "function")
-		return fFunction.apply(oContext, aArguments);
+	else
+	if (fFunction = oContext.staticContext.getFunction(sUri)) {
+		//
+		var vResult	= fFunction.apply(oContext, aArguments);
+		//
+		return vResult === null ? new cXPath2Sequence : new cXPath2Sequence(vResult);
+	}
 	//
 	throw new cXPath2Error("XPST0017"
 //->Debug
-			, "Unknown user function: " + '{' + this.namespaceURI + '}' + this.localName
+			, "Unknown user function: " + sUri + '()'
 //<-Debug
 	);
 };
@@ -219,8 +219,4 @@ function fFunctionCall_prepare(sName, aParameters, fFunction, aArguments, oConte
 				, "Function " + sName + "() must have no more than " + nParametersLength + " argument" + (nParametersLength > 1 ? 's' : '')
 //<-Debug
 		);
-};
-
-function fFunctionCall_defineSystemFunction(sName, aParameters, fFunction) {
-	(cFunctionCall.functions[sName]	= fFunction).parameters	= aParameters;
 };

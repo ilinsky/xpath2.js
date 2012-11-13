@@ -45,9 +45,6 @@ cXSYearMonthDuration.cast	= function(vValue) {
 };
 
 //
-cFunctionCall.dataTypes["yearMonthDuration"]	= cXSYearMonthDuration;
-
-//
 function fXSYearMonthDuration_normalize(oDuration) {
 	if (oDuration.month >= 12) {
 		oDuration.year	+= ~~(oDuration.month / 12);
@@ -55,3 +52,6 @@ function fXSYearMonthDuration_normalize(oDuration) {
 	}
 	return oDuration;
 };
+
+//
+fXPath2StaticContext_defineSystemDataType("yearMonthDuration",	cXSYearMonthDuration);

@@ -49,4 +49,4 @@ cXSString.cast	= function(vValue) {
 };
 
 //
-cFunctionCall.dataTypes["string"]	= cXSString;
+fXPath2StaticContext_defineSystemDataType("string",	cXSString);

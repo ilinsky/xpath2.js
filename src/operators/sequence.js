@@ -23,7 +23,7 @@
 
 // 15.1 General Functions and Operators on Sequences
 // op:concatenate($seq1 as item()*, $seq2 as item()*) as item()*
-cFunctionCall.operators["concatenate"]	= function(oSequence1, oSequence2) {
+hXPath2StaticContext_operators["concatenate"]	= function(oSequence1, oSequence2) {
 	var oSequence	= new cXPath2Sequence(oSequence1);
 		oSequence.add(oSequence2);
 	return oSequence;
@@ -31,7 +31,7 @@ cFunctionCall.operators["concatenate"]	= function(oSequence1, oSequence2) {
 
 // 15.3 Equals, Union, Intersection and Except
 // op:union($parameter1 as node()*, $parameter2 as node()*) as node()*
-cFunctionCall.operators["union"]	= function(oSequence1, oSequence2) {
+hXPath2StaticContext_operators["union"]	= function(oSequence1, oSequence2) {
 	var oSequence	= new cXPath2Sequence;
 	// Process first collection
 	for (var nIndex = 0, nLength = oSequence1.items.length, oItem; nIndex < nLength; nIndex++) {
@@ -61,7 +61,7 @@ cFunctionCall.operators["union"]	= function(oSequence1, oSequence2) {
 };
 
 // op:intersect($parameter1 as node()*, $parameter2 as node()*) as node()*
-cFunctionCall.operators["intersect"]	= function(oSequence1, oSequence2) {
+hXPath2StaticContext_operators["intersect"]	= function(oSequence1, oSequence2) {
 	var oSequence	= new cXPath2Sequence;
 	for (var nIndex = 0, nLength = oSequence1.items.length, oItem, bFound; nIndex < nLength; nIndex++) {
 		if (!this.staticContext.DOMAdapter.isNode(oItem = oSequence1.items[nIndex]))
@@ -89,7 +89,7 @@ cFunctionCall.operators["intersect"]	= function(oSequence1, oSequence2) {
 };
 
 // op:except($parameter1 as node()*, $parameter2 as node()*) as node()*
-cFunctionCall.operators["except"]	= function(oSequence1, oSequence2) {
+hXPath2StaticContext_operators["except"]	= function(oSequence1, oSequence2) {
 	var oSequence	= new cXPath2Sequence;
 	for (var nIndex = 0, nLength = oSequence1.items.length, oItem, bFound; nIndex < nLength; nIndex++) {
 		if (!this.staticContext.DOMAdapter.isNode(oItem = oSequence1.items[nIndex]))
@@ -118,7 +118,7 @@ cFunctionCall.operators["except"]	= function(oSequence1, oSequence2) {
 
 // 15.5 Functions and Operators that Generate Sequences
 // op:to($firstval as xs:integer, $lastval as xs:integer) as xs:integer*
-cFunctionCall.operators["to"]	= function(oLeft, oRight) {
+hXPath2StaticContext_operators["to"]	= function(oLeft, oRight) {
 	var oSequence	= new cXPath2Sequence;
 	for (var nIndex = oLeft, nLength = oRight; nIndex <= nLength; nIndex++)
 		oSequence.add(nIndex);

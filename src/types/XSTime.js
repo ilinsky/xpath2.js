@@ -57,9 +57,6 @@ cXSTime.cast	= function(vValue) {
 };
 
 //
-cFunctionCall.dataTypes["time"]	= cXSTime;
-
-//
 function fXSTime_normalize(oValue) {
 	//
 	if (oValue.seconds >= 60 || oValue.seconds < 0) {
@@ -80,3 +77,6 @@ function fXSTime_normalize(oValue) {
 	//
 	return oValue;
 };
+
+//
+fXPath2StaticContext_defineSystemDataType("time",	cXSTime);

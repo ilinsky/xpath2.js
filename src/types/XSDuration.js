@@ -58,9 +58,6 @@ cXSDuration.cast	= function(vValue) {
 	);
 };
 
-//
-cFunctionCall.dataTypes["duration"]	= cXSDuration;
-
 // Utilities
 function fXSDuration_getYearMonthComponent(oDuration) {
 	return (oDuration.year ? oDuration.year + 'Y' : '')
@@ -80,3 +77,6 @@ function fXSDuration_getDayTimeComponent(oDuration) {
 function fXSDuration_normalize(oDuration) {
 	return fXSYearMonthDuration_normalize(fXSDayTimeDuration_normalize(oDuration));
 };
+
+//
+fXPath2StaticContext_defineSystemDataType("duration",	cXSDuration);

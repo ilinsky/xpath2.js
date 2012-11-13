@@ -54,4 +54,4 @@ cXSAnyURI.cast	= function(vValue) {
 };
 
 //
-cFunctionCall.dataTypes["anyURI"]	= cXSAnyURI;
+fXPath2StaticContext_defineSystemDataType("anyURI",	cXSAnyURI);

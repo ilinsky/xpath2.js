@@ -42,4 +42,4 @@ cXSFloat.cast	= function(vValue) {
 };
 
 //
-cFunctionCall.dataTypes["float"]	= cXSFloat;
+fXPath2StaticContext_defineSystemDataType("float",	cXSFloat);
