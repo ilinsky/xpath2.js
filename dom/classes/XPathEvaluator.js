@@ -15,6 +15,7 @@ function cXPathEvaluator() {
 cXPathEvaluator.evaluator	= new XPath2.classes.Evaluator;
 cXPathEvaluator.staticContext	= new XPath2.classes.StaticContext;
 cXPathEvaluator.staticContext.defaultFunctionNamespace	= "http://www.w3.org/2005/xpath-functions";
+cXPathEvaluator.staticContext.baseURI	= document.location.href;
 
 cXPathEvaluator.prototype.createExpression	= function(sExpression, oResolver) {
 	// validate API
