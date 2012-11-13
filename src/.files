@@ -1,10 +1,10 @@
 # Import variables from environment
 import.js
 # Core classes
-classes/DOMAdapter.js
 classes/XPath2Error.js
 classes/XPath2Lexer.js
 classes/XPath2Sequence.js
+classes/XPath2DOMAdapter.js
 classes/XPath2DynamicContext.js
 classes/XPath2StaticContext.js
 classes/XPath2Expression.js

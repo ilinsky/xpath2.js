@@ -7,37 +7,37 @@
  *
  */
 
-function cDOMAdapter() {
+function cXPath2DOMAdapter() {
 	throw "Illegal constructor";
 };
 
 // Custom members
-cDOMAdapter.isNode		= function(oNode) {
+cXPath2DOMAdapter.isNode		= function(oNode) {
 	return oNode &&!!oNode.nodeType;
 };
 
-cDOMAdapter.getProperty	= function(oNode, sName) {
+cXPath2DOMAdapter.getProperty	= function(oNode, sName) {
 	return oNode[sName];
 };
 
 // Standard members
-cDOMAdapter.isSameNode	= function(oNode, oNode2) {
+cXPath2DOMAdapter.isSameNode	= function(oNode, oNode2) {
 	return oNode.isSameNode(oNode2);
 };
 
-cDOMAdapter.compareDocumentPosition	= function(oNode, oNode2) {
+cXPath2DOMAdapter.compareDocumentPosition	= function(oNode, oNode2) {
 	return oNode.compareDocumentPosition(oNode2);
 };
 
-cDOMAdapter.lookupPrefix	= function(oNode, sNameSpaceURI) {
+cXPath2DOMAdapter.lookupPrefix	= function(oNode, sNameSpaceURI) {
 	return oNode.lookupPrefix(sNameSpaceURI);
 };
 
-cDOMAdapter.lookupNamespaceURI	= function(oNode, sPrefix) {
+cXPath2DOMAdapter.lookupNamespaceURI	= function(oNode, sPrefix) {
 	return oNode.lookupNamespaceURI(sPrefix);
 };
 
 // Document object members
-cDOMAdapter.getElementById	= function(oNode, sId) {
+cXPath2DOMAdapter.getElementById	= function(oNode, sId) {
 	return oNode.getElementById(sId);
 };
