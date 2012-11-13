@@ -46,15 +46,17 @@ function fXPathExpression_evaluate(oExpression, oNode, nType, oResult) {
 	if (!nType) {
 		nType	= 4;	// Default: XPathResult.UNORDERED_NODE_ITERATOR_TYPE
 		if (oSequence.length) {
-			var sType	= typeof oSequence[0];
+			var vItem	= oSequence[0],
+				sType	= typeof vItem;
 			if (sType == "number")
 				nType	= 1;	// XPathResult.NUMBER_TYPE
 			else
-			if (sType == "string")
-				nType	= 2;	// XPathResult.STRING_TYPE
-			else
 			if (sType == "boolean")
 				nType	= 3;	// XPathResult.BOOLEAN_TYPE
+			else
+			if (sType == "string" || (sType != "undefined" && !vItem.nodeType))
+				nType	= 2;	// XPathResult.STRING_TYPE
+
 		}
 	}
 	return fXPathResult_init(oResult ? fXPathResult_clear(oResult) : new cXPathResult, nType, oSequence);
