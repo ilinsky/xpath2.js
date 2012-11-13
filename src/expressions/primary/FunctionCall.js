@@ -114,10 +114,7 @@ function fFunctionCall_prepare(sName, aParameters, fFunction, aArguments, oConte
 		nArgumentsLength	= aArguments.length,
 		oParameter,
 		nParametersLength	= aParameters.length,
-		nParametersRequired	= 0,
-		sCardinality,
-		cItemType,
-		cDataType;
+		nParametersRequired	= 0;
 
 	// Determine amount of parameters required
 	while ((nParametersRequired < aParameters.length) && !aParameters[nParametersRequired][2])
@@ -130,7 +127,7 @@ function fFunctionCall_prepare(sName, aParameters, fFunction, aArguments, oConte
 				, "Function " + sName + "() must have " + (nParametersLength ? " no more than " : '') + nParametersLength + " argument" + (nParametersLength > 1 || !nParametersLength ? 's' : '')
 //<-Debug
 		);
-
+	else
 	if (nArgumentsLength < nParametersRequired)
 		throw new cXPath2Error("XPST0017"
 //->Debug
@@ -138,84 +135,89 @@ function fFunctionCall_prepare(sName, aParameters, fFunction, aArguments, oConte
 //<-Debug
 		);
 
-	for (var nIndex = 0, nItemsLength; nIndex < nArgumentsLength; nIndex++) {
+	for (var nIndex = 0; nIndex < nArgumentsLength; nIndex++) {
 		oParameter	= aParameters[nIndex];
-		sCardinality= oParameter[1];
-		cItemType	= oParameter[0];
-		//
 		oArgument	= aArguments[nIndex];
-		nItemsLength= oArgument.items.length;
-		// Check cardinality
-		if (sCardinality == '?') {	// =0 or 1
-			if (nItemsLength > 1)
-				throw new cXPath2Error("XPTY0004"
-//->Debug
-						, "Required cardinality of " + aFunctionCall_numbers[nIndex] + " argument of " + sName + "() is one or zero"
-//<-Debug
-				);
-		}
-		else
-		if (sCardinality == '+') {	// =1+
-			if (nItemsLength < 1)
-				throw new cXPath2Error("XPTY0004"
-//->Debug
-						, "Required cardinality of " + aFunctionCall_numbers[nIndex] + " argument of " + sName + "() is one or more"
-//<-Debug
-				);
-		}
-		else
-		if (sCardinality != '*') {	// =1 ('*' =0+)
-			if (nItemsLength != 1)
-				throw new cXPath2Error("XPTY0004"
-//->Debug
-						, "Required cardinality of " + aFunctionCall_numbers[nIndex] + " argument of " + sName + "() is exactly one"
-//<-Debug
-				);
-		}
-
+		// Check sequence cardinality
+		fFunctionCall_assertSequenceCardinality(oArgument, oParameter[1], aFunctionCall_numbers[nIndex] + " argument of " + sName + "()", oContext);
 		// Check sequence items data types consistency
-		for (var nItemIndex = 0, nNodeType, vItem; nItemIndex < nItemsLength; nItemIndex++) {
-			vItem	= oArgument.items[nItemIndex];
-			// Node types
-			if (cItemType == cXTNode || cItemType.prototype instanceof cXTNode) {
-				// Check if is node
-				if (!oContext.DOMAdapter.isNode(vItem))
-					throw new cXPath2Error("XPTY0004"
-//->Debug
-							, "Required item type of " + aFunctionCall_numbers[nIndex] + " argument of " + sName + "() is " + cItemType
-//<-Debug
-					);
+		fFunctionCall_assertSequenceItemType(oArgument, oParameter[0], aFunctionCall_numbers[nIndex] + " argument of " + sName + "()", oContext);
+	}
+};
 
-				// Check node type
-				if (cItemType != cXTNode) {
-					nNodeType	= oContext.DOMAdapter.getProperty(vItem, "nodeType");
-					if ([null, cXTElement, cXTAttribute, cXTText, cXTText, null, null, cXTProcessingInstruction, cXTComment, cXTDocument, null, null, null][nNodeType] != cItemType)
-						throw new cXPath2Error("XPTY0004"
+function fFunctionCall_assertSequenceItemType(oSequence, cItemType, sSource, oContext) {
+	for (var nIndex = 0, nLength = oSequence.items.length, nNodeType, vItem; nIndex < nLength; nIndex++) {
+		vItem	= oSequence.items[nIndex];
+		// Node types
+		if (cItemType == cXTNode || cItemType.prototype instanceof cXTNode) {
+			// Check if is node
+			if (!oContext.DOMAdapter.isNode(vItem))
+				throw new cXPath2Error("XPTY0004"
 //->Debug
-								, "Required item type of " + aFunctionCall_numbers[nIndex] + " argument of " + sName + "() is " + cItemType
+						, "Required item type of " + sSource + " is " + cItemType
 //<-Debug
-						);
-				}
-			}
-			else
-			// Atomic types
-			if (cItemType == cXSAnyAtomicType || cItemType.prototype instanceof cXSAnyAtomicType || cItemType == cXTNumeric) {
-				// Atomize item
-				vItem	= cXPath2Sequence.atomizeItem(vItem, oContext);
-				// Cast if item type is xs:untypedAtomic
-				if (cItemType != cXSAnyAtomicType && vItem instanceof cXSUntypedAtomic)
-					vItem	=(cItemType != cXTNumeric ? cItemType : cXSDecimal).cast(vItem);
-				// Check type
-				cDataType	= cXSAnyAtomicType.typeOf(vItem);
-				if (cItemType != cXTNumeric ? (cDataType != cItemType && !(cDataType.prototype instanceof cItemType)) : !cXSAnyAtomicType.isNumeric(cDataType))
+				);
+
+			// Check node type
+			if (cItemType != cXTNode) {
+				nNodeType	= oContext.DOMAdapter.getProperty(vItem, "nodeType");
+				if ([null, cXTElement, cXTAttribute, cXTText, cXTText, null, null, cXTProcessingInstruction, cXTComment, cXTDocument, null, null, null][nNodeType] != cItemType)
 					throw new cXPath2Error("XPTY0004"
 //->Debug
-							, "Required item type of " + aFunctionCall_numbers[nIndex] + " argument of " + sName + "() is " + cItemType
+							, "Required item type of " + sSource + " is " + cItemType
 //<-Debug
 					);
-				// Write value back to sequence
-				oArgument.items[nItemIndex]	= vItem;
 			}
 		}
+		else
+		// Atomic types
+		if (cItemType == cXSAnyAtomicType || cItemType.prototype instanceof cXSAnyAtomicType || cItemType == cXTNumeric) {
+			// Atomize item
+			vItem	= cXPath2Sequence.atomizeItem(vItem, oContext);
+			// Cast if item type is xs:untypedAtomic
+			if (cItemType != cXSAnyAtomicType && vItem instanceof cXSUntypedAtomic)
+				vItem	=(cItemType != cXTNumeric ? cItemType : cXSDecimal).cast(vItem);
+			// Check type
+			cDataType	= cXSAnyAtomicType.typeOf(vItem);
+			if (cItemType != cXTNumeric ? (cDataType != cItemType && !(cDataType.prototype instanceof cItemType)) : !cXSAnyAtomicType.isNumeric(cDataType))
+				throw new cXPath2Error("XPTY0004"
+//->Debug
+						, "Required item type of " + sSource + " is " + cItemType
+//<-Debug
+				);
+			// Write value back to sequence
+			oSequence.items[nIndex]	= vItem;
+		}
+	}
+};
+
+function fFunctionCall_assertSequenceCardinality(oSequence, sCardinality, sSource, oContext) {
+	var nLength	= oSequence.items.length;
+	// Check cardinality
+	if (sCardinality == '?') {	// =0 or 1
+		if (nLength > 1)
+			throw new cXPath2Error("XPTY0004"
+//->Debug
+					, "Required cardinality of " + sSource + " is one or zero"
+//<-Debug
+			);
+	}
+	else
+	if (sCardinality == '+') {	// =1+
+		if (nLength < 1)
+			throw new cXPath2Error("XPTY0004"
+//->Debug
+					, "Required cardinality of " + sSource + " is one or more"
+//<-Debug
+			);
+	}
+	else
+	if (sCardinality != '*') {	// =1 ('*' =0+)
+		if (nLength != 1)
+			throw new cXPath2Error("XPTY0004"
+//->Debug
+					, "Required cardinality of " + sSource + " is exactly one"
+//<-Debug
+			);
 	}
 };
