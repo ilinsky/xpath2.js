@@ -216,7 +216,7 @@ function fFunctionCall_prepare(sName, aParameters, fFunction, aArguments, oConte
 	if (nArgumentsLength > nParametersLength)
 		throw new cXPath2Error("XPST0017"
 //->Debug
-				, "Function " + sName + "() must have no more than " + nParametersLength + " argument" + (nParametersLength > 1 ? 's' : '')
+				, "Function " + sName + "() must have " + (nParametersLength ? " no more than " : '') + nParametersLength + " argument" + (nParametersLength > 1 || !nParametersLength ? 's' : '')
 //<-Debug
 		);
 };
