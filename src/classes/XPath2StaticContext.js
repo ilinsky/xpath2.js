@@ -55,8 +55,10 @@ cXPath2StaticContext.prototype.setCollection	= function(sUri, fFunction) {
 };
 
 cXPath2StaticContext.prototype.getURIForPrefix	= function(sPrefix) {
-	var sNameSpaceURI;
-	if (this.namespaceResolver && (sNameSpaceURI = this.namespaceResolver(sPrefix)))
+	var oResolver	= this.namespaceResolver,
+		fResolver	= oResolver && oResolver.lookupNamespaceURI ? oResolver.lookupNamespaceURI : oResolver,
+		sNameSpaceURI;
+	if (fResolver instanceof cFunction && (sNameSpaceURI = fResolver.call(oResolver, sPrefix)))
 		return sNameSpaceURI;
 	if (sPrefix == "fn")
 		return "http://www.w3.org/2005/xpath-functions";
