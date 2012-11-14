@@ -68,7 +68,7 @@ cComparisonExpr.GeneralComp	= function(oExpr, oContext) {
 			bRight	= vRight instanceof cXSUntypedAtomic;
 
 			if (bLeft && bRight) {
-				// Both left and right are untyped
+				// cast xs:untypedAtomic to xs:string
 				vLeft	= cXSString.cast(vLeft);
 				vRight	= cXSString.cast(vRight);
 			}
@@ -78,6 +78,12 @@ cComparisonExpr.GeneralComp	= function(oExpr, oContext) {
 			else
 			if (bRight)
 				vRight	= cXSAnyAtomicType.typeOf(vLeft).cast(vRight);
+
+			// Cast xs:anyURI to xs:string
+			if (vLeft instanceof cXSAnyURI)
+				vLeft	= cXSString.cast(vLeft);
+			if (vRight instanceof cXSAnyURI)
+				vRight	= cXSString.cast(vRight);
 
 			bResult	= cComparisonExpr.ValueComp.operators[cComparisonExpr.GeneralComp.map[oExpr.operator]](vLeft, vRight, oContext);
 		}
@@ -111,10 +117,17 @@ cComparisonExpr.ValueComp	= function(oExpr, oContext) {
 	var vLeft	= oLeft.items[0],
 		vRight	= oRight.items[0];
 
+	// cast xs:untypedAtomic to xs:string
 	if (vLeft instanceof cXSUntypedAtomic)
-		vLeft	= cXSString.cast(vLeft);	// cast to xs:string
+		vLeft	= cXSString.cast(vLeft);
 	if (vRight instanceof cXSUntypedAtomic)
-		vRight	= cXSString.cast(vRight);	// cast to xs:string
+		vRight	= cXSString.cast(vRight);
+
+	// cast xs:anyURI to xs:string
+	if (vLeft instanceof cXSAnyURI)
+		vLeft	= cXSString.cast(vLeft);
+	if (vRight instanceof cXSAnyURI)
+		vRight	= cXSString.cast(vRight);
 
 	//
 	return cComparisonExpr.ValueComp.operators[oExpr.operator](vLeft, vRight, oContext);
