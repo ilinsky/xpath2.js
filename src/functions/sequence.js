@@ -342,7 +342,7 @@ fXPath2StaticContext_defineSystemFunction("id",	[[cXSString, '*'], [cXTNode, '',
 	var oNode	= oSequence2.items[0];
 
 	// Get root node and check if it is Document
-	var oDocument	= hXPath2StaticContext_functions['{' + "http://www.w3.org/2005/xpath-functions" + '}' + "root"].call(this, new cXPath2Sequence(oNode));
+	var oDocument	= hXPath2StaticContext_functions["root"].call(this, new cXPath2Sequence(oNode));
 	if (this.DOMAdapter.getProperty(oDocument, "nodeType") != 9)
 		throw new cXPath2Error("FODC0001");
 

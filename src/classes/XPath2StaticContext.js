@@ -85,15 +85,13 @@ var hXPath2StaticContext_functions	= {},
 	hXPath2StaticContext_operators	= {};
 
 function fXPath2StaticContext_defineSystemFunction(sName, aParameters, fFunction) {
-	var sUri	= '{' + "http://www.w3.org/2005/xpath-functions" + '}' + sName;
 	// Register function
-	hXPath2StaticContext_functions[sUri]	= fFunction;
+	hXPath2StaticContext_functions[sName]	= fFunction;
 	// Register signature
-	hXPath2StaticContext_signatures[sUri]	= aParameters;
+	hXPath2StaticContext_signatures[sName]	= aParameters;
 };
 
 function fXPath2StaticContext_defineSystemDataType(sName, fFunction) {
-	var sUri	= '{' + "http://www.w3.org/2001/XMLSchema" + '}' + sName;
 	// Register dataType
-	hXPath2StaticContext_dataTypes[sUri]	= fFunction;
+	hXPath2StaticContext_dataTypes[sName]	= fFunction;
 };

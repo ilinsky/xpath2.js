@@ -64,9 +64,9 @@ cFunctionCall.prototype.evaluate	= function (oContext) {
 	var sUri	= (this.namespaceURI ? '{' + this.namespaceURI + '}' : '') + this.localName;
 	// Call function
 	if (this.namespaceURI == "http://www.w3.org/2005/xpath-functions") {
-		if (fFunction = hXPath2StaticContext_functions[sUri]) {
+		if (fFunction = hXPath2StaticContext_functions[this.localName]) {
 			// Validate/Cast arguments
-			if (aParameters = hXPath2StaticContext_signatures[sUri])
+			if (aParameters = hXPath2StaticContext_signatures[this.localName])
 				fFunctionCall_prepare(this.localName, aParameters, fFunction, aArguments, oContext);
 			//
 			var vResult	= fFunction.apply(oContext, aArguments);
@@ -81,7 +81,7 @@ cFunctionCall.prototype.evaluate	= function (oContext) {
 	}
 	else
 	if (this.namespaceURI == "http://www.w3.org/2001/XMLSchema") {
-		if (fFunction = hXPath2StaticContext_dataTypes[sUri]) {
+		if (fFunction = hXPath2StaticContext_dataTypes[this.localName]) {
 			//
 			fFunctionCall_prepare(this.localName, [[cXSAnyAtomicType]], fFunction, aArguments, oContext);
 			//

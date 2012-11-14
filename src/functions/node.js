@@ -35,7 +35,7 @@ fXPath2StaticContext_defineSystemFunction("name",	[[cXTNode, '?', true]],	functi
 	if (oSequence1.isEmpty())
 		return '';
 	//
-	var vValue	= hXPath2StaticContext_functions['{' + "http://www.w3.org/2005/xpath-functions" + '}' + "node-name"].call(this, oSequence1);
+	var vValue	= hXPath2StaticContext_functions["node-name"].call(this, oSequence1);
 	return vValue === null ? '' : vValue.toString();
 });
 
