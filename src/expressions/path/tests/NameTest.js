@@ -34,14 +34,13 @@ cNameTest.parse	= function (oLexer, oStaticContext) {
 
 // Public members
 cNameTest.prototype.test	= function (oNode, oContext) {
-	var nType	= oContext.DOMAdapter.getProperty(oNode, "nodeType"),
-		sLocalName		= oContext.DOMAdapter.getProperty(oNode, "localName"),
-		sNameSpaceURI	= oContext.DOMAdapter.getProperty(oNode, "namespaceURI");
-	return nType == 1 ?
-				(this.localName == '*' || sLocalName == this.localName)
-					&& (this.namespaceURI == '*' ||(this.namespaceURI ? sNameSpaceURI == this.namespaceURI : true))
-				: nType == 2 ?
-					(this.localName == '*' || sLocalName == this.localName)
-						&& (this.namespaceURI == '*' ||(this.namespaceURI && this.prefix ? sNameSpaceURI == this.namespaceURI : true))
-					: false;
+	var nType	= oContext.DOMAdapter.getProperty(oNode, "nodeType");
+	if (nType == 1 || nType == 2) {
+		if (this.localName == '*')
+			return !this.prefix || oContext.DOMAdapter.getProperty(oNode, "namespaceURI") == this.namespaceURI;
+		if (this.localName == oContext.DOMAdapter.getProperty(oNode, "localName"))
+			return this.namespaceURI == '*' || (nType == 2 && !this.prefix) || oContext.DOMAdapter.getProperty(oNode, "namespaceURI") == this.namespaceURI;
+	}
+	//
+	return false;
 };
