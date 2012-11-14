@@ -141,7 +141,7 @@ fXPath2StaticContext_defineSystemFunction("substring",	[[cXSString, '?'], [cXTNu
 // fn:string-length($arg as xs:string?) as xs:integer
 fXPath2StaticContext_defineSystemFunction("string-length",	[[cXSString, '?', true]],	function(oSequence1) {
 	if (arguments.length < 1)
-		oSequence1	= new cXPath2Sequence(this.item);
+		oSequence1	= new cXPath2Sequence(cXSString.cast(cXPath2Sequence.atomizeItem(this.item, this)));
 
 	return oSequence1.isEmpty() ? 0 : oSequence1.items[0].length;
 });
@@ -150,7 +150,7 @@ fXPath2StaticContext_defineSystemFunction("string-length",	[[cXSString, '?', tru
 // fn:normalize-space($arg as xs:string?) as xs:string
 fXPath2StaticContext_defineSystemFunction("normalize-space",	[[cXSString, '?', true]],	function(oSequence1) {
 	if (arguments.length < 1)
-		oSequence1	= new cXPath2Sequence(this.item);
+		oSequence1	= new cXPath2Sequence(cXSString.cast(cXPath2Sequence.atomizeItem(this.item, this)));
 
 	return oSequence1.isEmpty() ? '' : fString_trim.call(oSequence1.items[0]).replace(/\s\s+/g, ' ');
 });
