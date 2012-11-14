@@ -174,9 +174,16 @@ function fFunctionCall_assertSequenceItemType(oSequence, cItemType, sSource, oCo
 		if (cItemType == cXSAnyAtomicType || cItemType.prototype instanceof cXSAnyAtomicType || cItemType == cXTNumeric) {
 			// Atomize item
 			vItem	= cXPath2Sequence.atomizeItem(vItem, oContext);
-			// Cast if item type is xs:untypedAtomic
-			if (cItemType != cXSAnyAtomicType && vItem instanceof cXSUntypedAtomic)
-				vItem	=(cItemType != cXTNumeric ? cItemType : cXSDecimal).cast(vItem);
+			//
+			if (cItemType != cXSAnyAtomicType) {
+				// Cast item to expected type if it's type is xs:untypedAtomic
+				if (vItem instanceof cXSUntypedAtomic)
+					vItem	=(cItemType != cXTNumeric ? cItemType : cXSDecimal).cast(vItem);
+				// Cast item to xs:string if it's type is xs:anyURI
+				else
+				if (vItem instanceof cXSAnyURI && cItemType == cXSString)
+					vItem	= cXSString.cast(vItem);
+			}
 			// Check type
 			cDataType	= cXSAnyAtomicType.typeOf(vItem);
 			if (cItemType != cXTNumeric ? (cDataType != cItemType && !(cDataType.prototype instanceof cItemType)) : !cXSAnyAtomicType.isNumeric(cDataType))
