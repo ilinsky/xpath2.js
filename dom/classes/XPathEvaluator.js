@@ -14,6 +14,7 @@ function cXPathEvaluator() {
 // Create new XPath2 evaluator
 cXPathEvaluator.evaluator	= new cXPath2.classes.Evaluator;
 cXPathEvaluator.staticContext	= new cXPath2.classes.StaticContext;
+cXPathEvaluator.staticContext.defaultElementNamespace	= "http://www.w3.org/1999/xhtml";
 cXPathEvaluator.staticContext.defaultFunctionNamespace	= "http://www.w3.org/2005/xpath-functions";
 cXPathEvaluator.staticContext.baseURI	= oDocument.location.href;
 

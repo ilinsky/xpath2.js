@@ -8,23 +8,27 @@
  */
 
 var oMSHTMLDOMAdapter	= new cXPath2.classes.DOMAdapter;
-/*
+
 // Custom members
-oMSHTMLDOMAdapter.isNode		= function(oNode) {
+/*oMSHTMLDOMAdapter.isNode		= function(oNode) {
 	return oNode &&!!oNode.nodeType;
-};
+};*/
 
 oMSHTMLDOMAdapter.getProperty	= function(oNode, sName) {
+	if (sName == "localName")
+		return oNode.nodeName == '' ? '' : oNode.nodeName.toLowerCase();
+	if (sName == "namespaceURI")
+		return "http://www.w3.org/1999/xhtml";
 	return oNode[sName];
 };
 
 // Standard members
 oMSHTMLDOMAdapter.isSameNode	= function(oNode, oNode2) {
-	return oNode.isSameNode(oNode2);
+	return oNode == oNode2;
 };
 
 oMSHTMLDOMAdapter.compareDocumentPosition	= function(oNode, oNode2) {
-	return oNode.compareDocumentPosition(oNode2);
+	return true;//oNode.compareDocumentPosition(oNode2);
 };
 
 oMSHTMLDOMAdapter.lookupPrefix	= function(oNode, sNameSpaceURI) {
@@ -39,4 +43,4 @@ oMSHTMLDOMAdapter.lookupNamespaceURI	= function(oNode, sPrefix) {
 oMSHTMLDOMAdapter.getElementById	= function(oNode, sId) {
 	return oNode.getElementById(sId);
 };
-*/
+

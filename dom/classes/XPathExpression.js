@@ -28,14 +28,21 @@ function fXPathExpression_evaluate(oExpression, oNode, nType, oResult) {
 	var oSequence,
 		oDOMAdapter	= null;
 	// Determine which DOMAdapter to use based on browser and DOM type
-	if (oNode && oNode.ownerDocument) {
-		if (bOldMS)
-			oDOMAdapter	= oNode.selectSingleNode ? oMSXMLDOMAdapter : oMSHTMLDOMAdapter;
+	if (oNode && oNode.nodeType) {
+		if (bOldMS) {
+			if ("selectNodes" in oNode) {
+				oDOMAdapter	= oMSXMLDOMAdapter;
+			}
+			else {
+				oDOMAdapter	= oMSHTMLDOMAdapter;
+				cXPathEvaluator.staticContext.defaultElementNamespace	= null;
+			}
+		}
 		else
 		if (bOldW3)
 			oDOMAdapter	= oW3HTMLDOMAdapter;
 	}
-	//
+	// Evaluate expression
 	try {
 		oSequence	= oExpression.expression.resolve(oNode, null, oDOMAdapter);
 	}
