@@ -149,12 +149,16 @@ cComparisonExpr.ValueComp.operators['eq']	= function(oLeft, oRight, oContext) {
 		if (cLeft == cXSDuration || cLeft == cXSYearMonthDuration || cLeft == cXSDayTimeDuration)
 			return hXPath2StaticContext_operators["duration-equal"].call(oContext, oLeft, oRight);
 		// skipped: Gregorian
-		// skipped: xs:hexBinary
-		// skipped: xs:base64Binary
 		// skipped: xs:anyURI (covered by xs:string)
 		else
 		if (cLeft == cXSQName)
 			return hXPath2StaticContext_operators["QName-equal"].call(oContext, oLeft, oRight);
+		else
+		if (cLeft == cXSHexBinary)
+			return hXPath2StaticContext_operators["hexBinary-equal"].call(oContext, oLeft, oRight);
+		else
+		if (cLeft == cXSBase64Binary)
+			return hXPath2StaticContext_operators["base64Binary-equal"].call(oContext, oLeft, oRight);
 	}
 	else	// If types of operands are different but are duration inherited
 	if (cLeft == cXSDuration || cLeft == cXSYearMonthDuration || cLeft == cXSDayTimeDuration) {

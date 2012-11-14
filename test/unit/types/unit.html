@@ -316,6 +316,26 @@
 				assertEquals("FORG0001", evaluateXPathError('fn:string(xs:QName(""))'));
 				assertEquals("FORG0001", evaluateXPathError('fn:string(xs:QName("pref/name"))'));
 			}
+
+			function testXSHexBinary() {
+				assertEquals("AA",
+						evaluateXPathSingle('fn:string(xs:hexBinary("aa"))'));
+				assertEquals("",
+						evaluateXPathSingle('fn:string(xs:hexBinary(""))'));
+				// Test errors
+				assertEquals("FORG0001", evaluateXPathError('fn:string(xs:hexBinary("a"))'));
+				assertEquals("FORG0001", evaluateXPathError('fn:string(xs:hexBinary("w"))'));
+			}
+
+			function testXSBase64Binary() {
+				assertEquals("qg==",
+						evaluateXPathSingle('fn:string(xs:base64Binary("qg=="))'));
+				assertEquals("",
+						evaluateXPathSingle('fn:string(xs:base64Binary(""))'));
+				// Test errors
+				assertEquals("FORG0001", evaluateXPathError('fn:string(xs:hexBinary("qg=="))'));
+				assertEquals("FORG0001", evaluateXPathError('fn:string(xs:hexBinary("qg=0"))'));
+			}
 		</script>
 	</head>
 	<body>

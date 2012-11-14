@@ -76,6 +76,8 @@ types/XSDouble.js
 types/XSDecimal.js
 types/XSInteger.js
 types/XSFloat.js
+types/XSHexBinary.js
+types/XSBase64Binary.js
 # XPath data types
 types-xpath/XTItem.js
 types-xpath/XTNode.js

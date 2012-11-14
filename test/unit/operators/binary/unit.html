@@ -17,12 +17,33 @@
 				return XPath2.resolve(sXPath);
 			}
 
+			function evaluateXPathSingle(sXPath) {
+				return evaluateXPath(sXPath)[0];
+			}
+
 			// Dummy test
 			function testPage() {
 				assertTrue(true);
 			}
 
 			// Tests
+			function testHexBinaryEqual() {
+				assertEquals(true,
+						evaluateXPathSingle("xs:hexBinary('aaaa') eq xs:hexBinary('AAAA')"))
+				assertEquals(false,
+						evaluateXPathSingle("xs:hexBinary('aaaa') eq xs:hexBinary('AA')"))
+				assertEquals(false,
+						evaluateXPathSingle("xs:hexBinary('aaaa') eq xs:hexBinary('')"))
+			}
+
+			function testBase64BinaryEqual() {
+				assertEquals(true,
+						evaluateXPathSingle("xs:base64Binary('qg==') eq xs:base64Binary('qg==')"))
+				assertEquals(false,
+						evaluateXPathSingle("xs:base64Binary('wg==') eq xs:base64Binary('qg==')"))
+				assertEquals(false,
+						evaluateXPathSingle("xs:base64Binary('qg==') eq xs:base64Binary('')"))
+			}
 
 		</script>
 	</head>

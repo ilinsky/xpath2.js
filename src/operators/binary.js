@@ -12,3 +12,10 @@
 		op:hexBinary-equal
 		op:base64Binary-equal
 */
+hXPath2StaticContext_operators["hexBinary-equal"]	= function(oLeft, oRight) {
+	return oLeft.data == oRight.data;
+};
+
+hXPath2StaticContext_operators["base64Binary-equal"]	= function(oLeft, oRight) {
+	return oLeft.data == oRight.data;
+};

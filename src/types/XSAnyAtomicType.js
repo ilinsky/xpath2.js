@@ -45,6 +45,11 @@ cXSAnyAtomicType.typeOf	= function(oValue) {
 			// Other
 			if (oValue instanceof cXSQName)
 				return cXSQName;
+			// Binary data
+			if (oValue instanceof cXSHexBinary)
+				return cXSHexBinary;
+			if (oValue instanceof cXSBase64Binary)
+				return cXSBase64Binary;
 	}
 	throw "Internal error: Could not identify type of item: " + oValue;
 };
