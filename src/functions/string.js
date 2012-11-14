@@ -55,8 +55,11 @@ fXPath2StaticContext_defineSystemFunction("codepoints-to-string",	[[cXSInteger, 
 
 // fn:string-to-codepoints($arg as xs:string?) as xs:integer*
 fXPath2StaticContext_defineSystemFunction("string-to-codepoints",	[[cXSString, '?']],	function(oSequence1) {
-	var oSequence	= new cXPath2Sequence;
-	var sValue	= oSequence1.toString(this);
+	if (oSequence1.isEmpty())
+		return null;
+
+	var oSequence	= new cXPath2Sequence,
+		sValue	= oSequence1.items[0];
 	if (sValue == '')
 		return oSequence;
 
@@ -73,8 +76,8 @@ fXPath2StaticContext_defineSystemFunction("compare",	[[cXSString, '?'], [cXSStri
 	if (oSequence1.isEmpty() || oSequence2.isEmpty())
 		return null;
 
-	var sValue1	= oSequence1.toString(this),
-		sValue2	= oSequence2.toString(this);
+	var sValue1	= oSequence1.items[0],
+		sValue2	= oSequence2.items[0];
 
 	// TODO: Implement proper comparison, as this is used in operators
 	// TODO: Implement collation handling
@@ -87,8 +90,8 @@ fXPath2StaticContext_defineSystemFunction("codepoint-equal",	[[cXSString, '?'], 
 	if (oSequence1.isEmpty() || oSequence2.isEmpty())
 		return null;
 
-	var sValue1	= oSequence1.toString(this),
-		sValue2	= oSequence2.toString(this);
+	var sValue1	= oSequence1.items[0],
+		sValue2	= oSequence2.items[0];
 
 	// TODO: Check if JS uses 'Unicode code point collation' here
 
@@ -120,13 +123,13 @@ fXPath2StaticContext_defineSystemFunction("concat",	null,	function(oSequence1, o
 
 // fn:string-join($arg1 as xs:string*, $arg2 as xs:string) as xs:string
 fXPath2StaticContext_defineSystemFunction("string-join",	[[cXSString, '*'], [cXSString]],	function(oSequence1, oSequence2) {
-	return oSequence1.items.join(oSequence2.toString(this));
+	return oSequence1.items.join(oSequence2.items[0]);
 });
 
 // fn:substring($sourceString as xs:string?, $startingLoc as xs:double) as xs:string
 // fn:substring($sourceString as xs:string?, $startingLoc as xs:double, $length as xs:double) as xs:string
 fXPath2StaticContext_defineSystemFunction("substring",	[[cXSString, '?'], [cXTNumeric], [cXTNumeric, '', true]],	function(oSequence1, oSequence2, oSequence3) {
-	var sValue	= oSequence1.toString(this),
+	var sValue	= oSequence1.items[0] || '',
 		nStart	= cMath.round(oSequence2.items[0]) - 1,
 		nEnd	= oSequence3 ? nStart + cMath.round(oSequence3.items[0]) : sValue.length;
 
@@ -140,7 +143,7 @@ fXPath2StaticContext_defineSystemFunction("string-length",	[[cXSString, '?', tru
 	if (arguments.length < 1)
 		oSequence1	= new cXPath2Sequence(this.item);
 
-	return oSequence1.isEmpty() ? 0 : oSequence1.toString(this).length;
+	return oSequence1.isEmpty() ? 0 : oSequence1.items[0].length;
 });
 
 // fn:normalize-space() as xs:string
@@ -149,7 +152,7 @@ fXPath2StaticContext_defineSystemFunction("normalize-space",	[[cXSString, '?', t
 	if (arguments.length < 1)
 		oSequence1	= new cXPath2Sequence(this.item);
 
-	return oSequence1.isEmpty() ? '' : fString_trim.call(oSequence1.toString(this)).replace(/\s\s+/g, ' ');
+	return oSequence1.isEmpty() ? '' : fString_trim.call(oSequence1.items[0]).replace(/\s\s+/g, ' ');
 });
 
 // fn:normalize-unicode($arg as xs:string?) as xs:string
@@ -160,19 +163,22 @@ fXPath2StaticContext_defineSystemFunction("normalize-unicode",	[[cXSString, '?']
 
 // fn:upper-case($arg as xs:string?) as xs:string
 fXPath2StaticContext_defineSystemFunction("upper-case",	[[cXSString, '?']],	function(oSequence1) {
-	return oSequence1.toString(this).toUpperCase();
+	return oSequence1.isEmpty() ? '' : oSequence1.items[0].toUpperCase();
 });
 
 // fn:lower-case($arg as xs:string?) as xs:string
 fXPath2StaticContext_defineSystemFunction("lower-case",	[[cXSString, '?']],	function(oSequence1) {
-	return oSequence1.toString(this).toLowerCase();
+	return oSequence1.isEmpty() ? '' : oSequence1.items[0].toLowerCase();
 });
 
 // fn:translate($arg as xs:string?, $mapString as xs:string, $transString as xs:string) as xs:string
 fXPath2StaticContext_defineSystemFunction("translate",	[[cXSString, '?'], [cXSString], [cXSString]],	function(oSequence1, oSequence2, oSequence3) {
-	var aValue	= oSequence1.toString(this).split(''),
-		aMap	= oSequence2.toString(this).split(''),
-		aTranslate	= oSequence3.toString(this).split(''),
+	if (oSequence1.isEmpty())
+		return '';
+
+	var aValue	= oSequence1.items[0].split(''),
+		aMap	= oSequence2.items[0].split(''),
+		aTranslate	= oSequence3.items[0].split(''),
 		nTranslateLength	= aTranslate.length,
 		aReturn	= [];
 	for (var nIndex = 0, nLength = aValue.length, nPosition; nIndex < nLength; nIndex++)
@@ -187,7 +193,7 @@ fXPath2StaticContext_defineSystemFunction("translate",	[[cXSString, '?'], [cXSSt
 
 // fn:encode-for-uri($uri-part as xs:string?) as xs:string
 fXPath2StaticContext_defineSystemFunction("encode-for-uri",	[[cXSString, '?']],	function(oSequence1) {
-	return window.encodeURIComponent(oSequence1.toString(this));
+	return oSequence1.isEmpty() ? '' : window.encodeURIComponent(oSequence1.items[0]);
 });
 
 // fn:iri-to-uri($iri as xs:string?) as xs:string
@@ -205,20 +211,20 @@ fXPath2StaticContext_defineSystemFunction("escape-html-uri",	[[cXSString, '?']],
 // fn:contains($arg1 as xs:string?, $arg2 as xs:string?) as xs:boolean
 // fn:contains($arg1 as xs:string?, $arg2 as xs:string?, $collation as xs:string) as xs:boolean
 fXPath2StaticContext_defineSystemFunction("contains",	[[cXSString, '?'], [cXSString, '?'], [cXSString, '', true]],	function(oSequence1, oSequence2, oSequence3) {
-	return oSequence1.toString(this).indexOf(oSequence2.toString(this)) >= 0;
+	return (oSequence1.items[0] || '').indexOf(oSequence2.items[0] || '') >= 0;
 });
 
 // fn:starts-with($arg1 as xs:string?, $arg2 as xs:string?) as xs:boolean
 // fn:starts-with($arg1 as xs:string?, $arg2 as xs:string?, $collation as xs:string) as xs:boolean
 fXPath2StaticContext_defineSystemFunction("starts-with",	[[cXSString, '?'], [cXSString, '?'], [cXSString, '', true]],	function(oSequence1, oSequence2, oSequence3) {
-	return oSequence1.toString(this).indexOf(oSequence2.toString(this)) == 0;
+	return (oSequence1.items[0] || '').indexOf(oSequence2.items[0] || '') == 0;
 });
 
 // fn:ends-with($arg1 as xs:string?, $arg2 as xs:string?) as xs:boolean
 // fn:ends-with($arg1 as xs:string?, $arg2 as xs:string?, $collation as xs:string) as xs:boolean
 fXPath2StaticContext_defineSystemFunction("ends-with",	[[cXSString, '?'], [cXSString, '?'], [cXSString, '', true]],	function(oSequence1, oSequence2, oSequence3) {
-	var sValue	= oSequence1.toString(this),
-		sSearch	= oSequence2.toString(this);
+	var sValue	= oSequence1.items[0] || '',
+		sSearch	= oSequence2.items[0] || '';
 
 	return sValue.indexOf(sSearch) == sValue.length - sSearch.length;
 });
@@ -226,8 +232,8 @@ fXPath2StaticContext_defineSystemFunction("ends-with",	[[cXSString, '?'], [cXSSt
 // fn:substring-before($arg1 as xs:string?, $arg2 as xs:string?) as xs:string
 // fn:substring-before($arg1 as xs:string?, $arg2 as xs:string?, $collation as xs:string) as xs:string
 fXPath2StaticContext_defineSystemFunction("substring-before",	[[cXSString, '?'], [cXSString, '?'], [cXSString, '', true]],	function(oSequence1, oSequence2, oSequence3) {
-	var sValue	= oSequence1.toString(this),
-		sSearch	= oSequence2.toString(this),
+	var sValue	= oSequence1.items[0] || '',
+		sSearch	= oSequence2.items[0] || '',
 		nPosition;
 
 	return (nPosition = sValue.indexOf(sSearch)) >= 0 ? sValue.substring(0, nPosition) : '';
@@ -236,8 +242,8 @@ fXPath2StaticContext_defineSystemFunction("substring-before",	[[cXSString, '?'],
 // fn:substring-after($arg1 as xs:string?, $arg2 as xs:string?) as xs:string
 // fn:substring-after($arg1 as xs:string?, $arg2 as xs:string?, $collation as xs:string) as xs:string
 fXPath2StaticContext_defineSystemFunction("substring-after",	[[cXSString, '?'], [cXSString, '?'], [cXSString, '', true]],	function(oSequence1, oSequence2, oSequence3) {
-	var sValue	= oSequence1.toString(this),
-		sSearch	= oSequence2.toString(this),
+	var sValue	= oSequence1.items[0] || '',
+		sSearch	= oSequence2.items[0] || '',
 		nPosition;
 
 	return (nPosition = sValue.indexOf(sSearch)) >= 0 ? sValue.substring(nPosition + sSearch.length) : '';
@@ -299,8 +305,8 @@ function fFunctionCall_string_createRegExp(sValue, sFlags) {
 // fn:matches($input as xs:string?, $pattern as xs:string) as xs:boolean
 // fn:matches($input as xs:string?, $pattern as xs:string, $flags as xs:string) as xs:boolean
 fXPath2StaticContext_defineSystemFunction("matches",	[[cXSString, '?'], [cXSString], [cXSString, '', true]],	function(oSequence1, oSequence2, oSequence3) {
-	var sValue	= oSequence1.toString(this),
-		rRegExp	= fFunctionCall_string_createRegExp(oSequence2.toString(this), arguments.length > 2 ? oSequence3.toString(this) : '');
+	var sValue	= oSequence1.items[0] || '',
+		rRegExp	= fFunctionCall_string_createRegExp(oSequence2.items[0], arguments.length > 2 ? oSequence3.items[0] : '');
 
 	return rRegExp.test(sValue);
 });
@@ -308,9 +314,9 @@ fXPath2StaticContext_defineSystemFunction("matches",	[[cXSString, '?'], [cXSStri
 // fn:replace($input as xs:string?, $pattern as xs:string, $replacement as xs:string) as xs:string
 // fn:replace($input as xs:string?, $pattern as xs:string, $replacement as xs:string, $flags as xs:string) as xs:string
 fXPath2StaticContext_defineSystemFunction("replace",	[[cXSString, '?'], [cXSString],  [cXSString], [cXSString, '', true]],	function(oSequence1, oSequence2, oSequence3, oSequence4) {
-	var sValue	= oSequence1.toString(this),
-		rRegExp	= fFunctionCall_string_createRegExp(oSequence2.toString(this), arguments.length > 3 ? oSequence4.toString(this) : ''),
-		sReplacement	= oSequence3.toString(this);
+	var sValue	= oSequence1.items[0] || '',
+		rRegExp	= fFunctionCall_string_createRegExp(oSequence2.items[0], arguments.length > 3 ? oSequence4.items[0] : ''),
+		sReplacement	= oSequence3.items[0];
 
 	return sValue.replace(rRegExp, sReplacement);
 });
@@ -318,8 +324,8 @@ fXPath2StaticContext_defineSystemFunction("replace",	[[cXSString, '?'], [cXSStri
 // fn:tokenize($input as xs:string?, $pattern as xs:string) as xs:string*
 // fn:tokenize($input as xs:string?, $pattern as xs:string, $flags as xs:string) as xs:string*
 fXPath2StaticContext_defineSystemFunction("tokenize",	[[cXSString, '?'], [cXSString], [cXSString, '', true]],	function(oSequence1, oSequence2, oSequence3) {
-	var sValue	= oSequence1.toString(this),
-		rRegExp	= fFunctionCall_string_createRegExp(oSequence2.toString(this), arguments.length > 2 ? oSequence3.toString(this) : '');
+	var sValue	= oSequence1.items[0] || '',
+		rRegExp	= fFunctionCall_string_createRegExp(oSequence2.items[0], arguments.length > 2 ? oSequence3.items[0] : '');
 
 	var oSequence	= new cXPath2Sequence,
 		aValue = sValue.split(rRegExp);
