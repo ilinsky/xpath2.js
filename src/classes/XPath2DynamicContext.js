@@ -49,9 +49,10 @@ cXPath2DynamicContext.prototype.pushVariable	= function(sName, vValue) {
 cXPath2DynamicContext.prototype.popVariable	= function(sName) {
 	if (this.stack.hasOwnProperty(sName)) {
 		this.scope[sName] = this.stack[sName].pop();
-		if (typeof this.scope[sName] == "undefined")
-			delete this.scope[sName];
-		if (!this.stack[sName].length)
+		if (!this.stack[sName].length) {
 			delete this.stack[sName];
+			if (typeof this.scope[sName] == "undefined")
+				delete this.scope[sName];
+		}
 	}
 };
