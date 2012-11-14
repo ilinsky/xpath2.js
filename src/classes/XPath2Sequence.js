@@ -43,7 +43,7 @@ cXPath2Sequence.atomize		= function(oSequence1, oContext) {
 
 cXPath2Sequence.atomizeItem		= function(oItem, oContext) {
 	// Untyped
-	if (oItem === null || typeof oItem == "undefined")
+	if (oItem === null)
 		return null;
 
 	// Node type

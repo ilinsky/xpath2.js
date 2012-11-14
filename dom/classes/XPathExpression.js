@@ -54,7 +54,7 @@ function fXPathExpression_evaluate(oExpression, oNode, nType, oResult) {
 			if (sType == "boolean")
 				nType	= 3;	// XPathResult.BOOLEAN_TYPE
 			else
-			if (sType == "string" || (sType != "undefined" && !vItem.nodeType))
+			if (sType == "string" || !vItem.nodeType)
 				nType	= 2;	// XPathResult.STRING_TYPE
 
 		}
