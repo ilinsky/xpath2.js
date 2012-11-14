@@ -31,7 +31,7 @@ cVarRef.parse	= function (oLexer, oStaticContext) {
 
 // Public members
 cVarRef.prototype.evaluate	= function (oContext) {
-	var sUri	= (this.namespaceURI ? this.namespaceURI + '#' : '') + this.localName;
+	var sUri	= (this.namespaceURI ? '{' + this.namespaceURI + '}' : '') + this.localName;
 	if (oContext.scope.hasOwnProperty(sUri))
 		return new cXPath2Sequence(oContext.scope[sUri]);
 	//

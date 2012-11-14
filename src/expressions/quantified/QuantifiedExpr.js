@@ -50,7 +50,7 @@ cQuantifiedExpr.prototype.evaluate	= function (oContext) {
 	(function(oSelf, nBinding) {
 		var oBinding	= oSelf.bindings[nBinding++],
 			oSequence1	= oBinding.inExpr.evaluate(oContext),
-			sUri	= (oBinding.namespaceURI ? oBinding.namespaceURI + '#' : '') + oBinding.localName;
+			sUri	= (oBinding.namespaceURI ? '{' + oBinding.namespaceURI + '}' : '') + oBinding.localName;
 		for (var nIndex = 0, nLength = oSequence1.items.length; (nIndex < nLength) && (bEvery ? bResult :!bResult); nIndex++) {
 			oContext.pushVariable(sUri, oSequence1.items[nIndex]);
 			if (nBinding < oSelf.bindings.length)
