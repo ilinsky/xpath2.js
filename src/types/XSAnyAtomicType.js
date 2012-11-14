@@ -45,6 +45,8 @@ cXSAnyAtomicType.typeOf	= function(oValue) {
 			// Other
 			if (oValue instanceof cXSQName)
 				return cXSQName;
+			if (oValue instanceof cXSAnyURI)
+				return cXSAnyURI;
 			// Binary data
 			if (oValue instanceof cXSHexBinary)
 				return cXSHexBinary;
