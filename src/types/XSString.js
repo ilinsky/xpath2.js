@@ -35,7 +35,7 @@ cXSString.cast	= function(vValue) {
 		// TODO: Gregorian
 		//
 		// TODO: Binary
-		// TODO: anyURI
+		case cXSAnyURI:
 		//
 		case cXSQName:
 			//

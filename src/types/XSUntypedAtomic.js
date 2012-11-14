@@ -40,7 +40,7 @@ cXSUntypedAtomic.cast	= function(vValue) {
 		// TODO: Gregorian
 		//
 		// TODO: Binary
-		// TODO: anyURI
+		case cXSAnyURI:
 		//
 		case cXSQName:
 			return new cXSUntypedAtomic(cString(vValue));
