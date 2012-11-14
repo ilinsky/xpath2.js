@@ -43,8 +43,8 @@
 						evaluateXPath(".", false));
 				assertArrayEquals([null],
 						evaluateXPath(".", null));
-				assertUndefined(
-						evaluateXPathSingle("."));
+				assertArrayEquals([null],
+						evaluateXPath("."));
 			}
 
 			function testFilter() {
