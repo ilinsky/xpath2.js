@@ -91,12 +91,11 @@ cKindTest.prototype.test	= function (oNode, oContext) {
 	var nType	= oContext.DOMAdapter.isNode(oNode) ? oContext.DOMAdapter.getProperty(oNode, "nodeType") : 0;
 	switch (this.name) {
 		// Node type test
-		case "node":			if (!nType) return false; if (nType != 2) return true;
-							// pass on to attribute test
-		case "attribute":		return nType == 2 && (oContext.DOMAdapter.getProperty(oNode, "prefix") != "xmlns" && oContext.DOMAdapter.getProperty(oNode, "localName") != "xmlns");
+		case "node":					if (!nType)		return false;	break;
+		case "attribute":				if (nType != 2)	return false;	break;
 		case "document-node":	return nType == 9;
 		case "element":			return nType == 1;
-		case "processing-instruction":	return nType == 7;
+		case "processing-instruction":	if (nType != 7)	return false;	break;
 		case "comment":			return nType == 8;
 		case "text":			return nType == 3 || nType == 4;
 
@@ -108,5 +107,11 @@ cKindTest.prototype.test	= function (oNode, oContext) {
 			throw "KindTest 'schema-element' not implemented";
 	}
 
-	throw "InternalError: KindTest.prototype.test called for inappropriate name";
+	// Additional tests
+	if (nType == 2)
+		return oContext.DOMAdapter.getProperty(oNode, "prefix") != "xmlns" && oContext.DOMAdapter.getProperty(oNode, "localName") != "xmlns";
+	if (nType == 7)
+		return oContext.DOMAdapter.getProperty(oNode, "target") != "xml";
+
+	return true;
 };
