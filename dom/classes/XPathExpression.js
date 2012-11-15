@@ -38,13 +38,13 @@ function fXPathExpression_evaluate(oExpression, oNode, nType, oResult) {
 //				cXPathEvaluator.staticContext.defaultElementNamespace	= null;
 			}
 		}
-		else {
+/*		else {
 			if ((oNode.nodeType == 9 ? oNode : oNode.ownerDocument) instanceof window.HTMLDocument)
 				oDOMAdapter	= oW3HTMLDOMAdapter;
 			else {
 				oDOMAdapter	= oW3XMLDOMAdapter;
 			}
-		}
+		}*/
 	}
 	// Evaluate expression
 //	try {

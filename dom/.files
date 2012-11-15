@@ -7,9 +7,10 @@ classes/XPathExpression.js
 classes/XPathNSResolver.js
 classes/XPathResult.js
 #
-adapters/W3HTMLDOMAdapter.js
-adapters/W3XMLDOMAdapter.js
+adapters/classes/MSDOMAdapter.js
 adapters/MSHTMLDOMAdapter.js
 adapters/MSXMLDOMAdapter.js
+adapters/W3HTMLDOMAdapter.js
+adapters/W3XMLDOMAdapter.js
 #
 export.js
