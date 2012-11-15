@@ -97,7 +97,7 @@ cKindTest.prototype.test	= function (oNode, oContext) {
 		case "attribute":		return nType == 2;
 		case "processing-instruction":	return nType == 7;
 		case "comment":			return nType == 8;
-		case "text":			return nType == 3;
+		case "text":			return nType == 3 || nType == 4;
 
 		// Schema tests
 		case "schema-attribute":
