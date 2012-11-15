@@ -16,7 +16,9 @@ var oMSXMLDOMAdapter	= new cXPath2.classes.DOMAdapter;
 
 oMSXMLDOMAdapter.getProperty	= function(oNode, sName) {
 	if (sName == "localName")
-		return oNode.baseName;
+		return oNode.nodeType == 7 ? null : oNode.baseName;
+	if (sName == "textContent")
+		return oNode.text;
 	return oNode[sName];
 };
 
