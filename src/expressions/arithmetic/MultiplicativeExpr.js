@@ -128,7 +128,11 @@ cMultiplicativeExpr.prototype.evaluate	= function (oContext) {
 	if (oLeft.isEmpty())
 		return new cXPath2Sequence;
 	// Assert cardinality
-	fFunctionCall_assertSequenceCardinality(oLeft, '?', "first operand of '" + this.items[0][0] + "'", oContext);
+	fFunctionCall_assertSequenceCardinality(oContext, oLeft, '?'
+//->Debug
+			, "first operand of '" + this.items[0][0] + "'"
+//<-Debug
+	);
 
 	var vLeft	= oLeft.items[0];
 	if (vLeft instanceof cXSUntypedAtomic)
@@ -140,7 +144,11 @@ cMultiplicativeExpr.prototype.evaluate	= function (oContext) {
 		if (oRight.isEmpty())
 			return new cXPath2Sequence;
 		// Assert cardinality
-		fFunctionCall_assertSequenceCardinality(oRight, '?', "second operand of '" + this.items[nIndex][0] + "'", oContext);
+		fFunctionCall_assertSequenceCardinality(oContext, oRight, '?'
+//->Debug
+				, "second operand of '" + this.items[nIndex][0] + "'"
+//<-Debug
+		);
 
 		vRight	= oRight.items[0];
 		if (vRight instanceof cXSUntypedAtomic)

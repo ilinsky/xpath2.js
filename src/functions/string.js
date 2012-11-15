@@ -113,7 +113,11 @@ fXPath2StaticContext_defineSystemFunction("concat",	null,	function(oSequence1, o
 	var aValue	= [];
 	for (var nIndex = 0, nLength = arguments.length; nIndex < nLength; nIndex++) {
 		// Assert cardinality
-		fFunctionCall_assertSequenceCardinality(arguments[nIndex], '?', "each argument of concat()", this);
+		fFunctionCall_assertSequenceCardinality(this, arguments[nIndex], '?'
+//->Debug
+				, "each argument of concat()"
+//<-Debug
+		);
 		//
 		aValue[aValue.length]	= arguments[nIndex].toString(this);
 	}

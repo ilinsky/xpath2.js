@@ -34,7 +34,11 @@ cCastExpr.parse	= function(oLexer, oStaticContext) {
 cCastExpr.prototype.evaluate	= function(oContext) {
 	var oSequence1	= this.expression.evaluate(oContext);
 	// Validate cardinality
-	fFunctionCall_assertSequenceCardinality(oSequence1, this.type.occurence, "'cast as' expression operand", oContext);
+	fFunctionCall_assertSequenceCardinality(oContext, oSequence1, this.type.occurence
+//->Debug
+			, "'cast as' expression operand"
+//<-Debug
+	);
 	//
 	if (oSequence1.isEmpty())
 		return new cXPath2Sequence;

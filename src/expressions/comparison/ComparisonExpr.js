@@ -106,13 +106,21 @@ cComparisonExpr.ValueComp	= function(oExpr, oContext) {
 	if (oLeft.isEmpty())
 		return null;
 	// Assert cardinality
-	fFunctionCall_assertSequenceCardinality(oLeft, '?', "first operand of '" + oExpr.operator + "'", oContext);
+	fFunctionCall_assertSequenceCardinality(oContext, oLeft, '?'
+//->Debug
+			, "first operand of '" + oExpr.operator + "'"
+//<-Debug
+	);
 
 	var oRight	= cXPath2Sequence.atomize(oExpr.right.evaluate(oContext), oContext);
 	if (oRight.isEmpty())
 		return null;
 	// Assert cardinality
-	fFunctionCall_assertSequenceCardinality(oRight, '?', "second operand of '" + oExpr.operator + "'", oContext);
+	fFunctionCall_assertSequenceCardinality(oContext, oRight, '?'
+//->Debug
+			, "second operand of '" + oExpr.operator + "'"
+//<-Debug
+	);
 
 	var vLeft	= oLeft.items[0],
 		vRight	= oRight.items[0];
@@ -344,17 +352,33 @@ cComparisonExpr.NodeComp	= function(oExpr, oContext) {
 	if (oLeft.isEmpty())
 		return null;
 	// Assert cardinality
-	fFunctionCall_assertSequenceCardinality(oLeft, '?', "first operand of '" + oExpr.operator + "'", oContext);
+	fFunctionCall_assertSequenceCardinality(oContext, oLeft, '?'
+//->Debug
+			, "first operand of '" + oExpr.operator + "'"
+//<-Debug
+	);
 	// Assert item type
-	fFunctionCall_assertSequenceItemType(oLeft, cXTNode, "first operand of '" + oExpr.operator + "'", oContext);
+	fFunctionCall_assertSequenceItemType(oContext, oLeft, cXTNode
+//->Debug
+			, "first operand of '" + oExpr.operator + "'"
+//<-Debug
+	);
 
 	var oRight	= oExpr.right.evaluate(oContext);
 	if (oRight.isEmpty())
 		return null;
 	// Assert cardinality
-	fFunctionCall_assertSequenceCardinality(oRight, '?', "second operand of '" + oExpr.operator + "'", oContext);
+	fFunctionCall_assertSequenceCardinality(oContext, oRight, '?'
+//->Debug
+			, "second operand of '" + oExpr.operator + "'"
+//<-Debug
+	);
 	// Assert item type
-	fFunctionCall_assertSequenceItemType(oRight, cXTNode, "second operand of '" + oExpr.operator + "'", oContext);
+	fFunctionCall_assertSequenceItemType(oContext, oRight, cXTNode
+//->Debug
+			, "second operand of '" + oExpr.operator + "'"
+//<-Debug
+	);
 
 	return cComparisonExpr.NodeComp.operators[oExpr.operator](oLeft.items[0], oRight.items[0], oContext);
 };

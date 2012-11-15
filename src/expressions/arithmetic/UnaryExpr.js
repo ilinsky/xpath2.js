@@ -68,7 +68,11 @@ cUnaryExpr.prototype.evaluate	= function (oContext) {
 	if (oRight.isEmpty())
 		return new cXPath2Sequence;
 	// Assert cardinality
-	fFunctionCall_assertSequenceCardinality(oRight, '?', "second operand of '" + this.operator + "'", oContext);
+	fFunctionCall_assertSequenceCardinality(oContext, oRight, '?'
+//->Debug
+			, "second operand of '" + this.operator + "'"
+//<-Debug
+	);
 
 	var vRight	= oRight.items[0];
 	if (vRight instanceof cXSUntypedAtomic)

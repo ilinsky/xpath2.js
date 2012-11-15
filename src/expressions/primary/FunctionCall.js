@@ -139,13 +139,26 @@ function fFunctionCall_prepare(sName, aParameters, fFunction, aArguments, oConte
 		oParameter	= aParameters[nIndex];
 		oArgument	= aArguments[nIndex];
 		// Check sequence cardinality
-		fFunctionCall_assertSequenceCardinality(oArgument, oParameter[1], aFunctionCall_numbers[nIndex] + " argument of " + sName + "()", oContext);
+		fFunctionCall_assertSequenceCardinality(oContext, oArgument, oParameter[1]
+//->Debug
+				, aFunctionCall_numbers[nIndex] + " argument of " + sName + "()"
+//<-Debug
+		);
 		// Check sequence items data types consistency
-		fFunctionCall_assertSequenceItemType(oArgument, oParameter[0], aFunctionCall_numbers[nIndex] + " argument of " + sName + "()", oContext);
+		fFunctionCall_assertSequenceItemType(oContext, oArgument, oParameter[0]
+//->Debug
+				, aFunctionCall_numbers[nIndex] + " argument of " + sName + "()"
+//<-Debug
+		);
 	}
 };
 
-function fFunctionCall_assertSequenceItemType(oSequence, cItemType, sSource, oContext) {
+function fFunctionCall_assertSequenceItemType(oContext, oSequence, cItemType
+//->Debug
+		, sSource
+//<-Debug
+	) {
+	//
 	for (var nIndex = 0, nLength = oSequence.items.length, nNodeType, vItem; nIndex < nLength; nIndex++) {
 		vItem	= oSequence.items[nIndex];
 		// Node types
@@ -198,7 +211,11 @@ function fFunctionCall_assertSequenceItemType(oSequence, cItemType, sSource, oCo
 	}
 };
 
-function fFunctionCall_assertSequenceCardinality(oSequence, sCardinality, sSource, oContext) {
+function fFunctionCall_assertSequenceCardinality(oContext, oSequence, sCardinality
+//->Debug
+		, sSource
+//<-Debug
+	) {
 	var nLength	= oSequence.items.length;
 	// Check cardinality
 	if (sCardinality == '?') {	// =0 or 1
