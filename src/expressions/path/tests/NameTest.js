@@ -37,7 +37,7 @@ cNameTest.prototype.test	= function (oNode, oContext) {
 	var nType	= oContext.DOMAdapter.getProperty(oNode, "nodeType");
 	if (nType == 1 || nType == 2) {
 		if (this.localName == '*')
-			return !this.prefix || oContext.DOMAdapter.getProperty(oNode, "namespaceURI") == this.namespaceURI;
+			return (nType == 1 || (oContext.DOMAdapter.getProperty(oNode, "prefix") != "xmlns" && oContext.DOMAdapter.getProperty(oNode, "localName") != "xmlns")) && (!this.prefix || oContext.DOMAdapter.getProperty(oNode, "namespaceURI") == this.namespaceURI);
 		if (this.localName == oContext.DOMAdapter.getProperty(oNode, "localName"))
 			return this.namespaceURI == '*' || (nType == 2 && !this.prefix) || oContext.DOMAdapter.getProperty(oNode, "namespaceURI") == this.namespaceURI;
 	}
