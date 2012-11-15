@@ -91,10 +91,10 @@ cKindTest.prototype.test	= function (oNode, oContext) {
 	var nType	= oContext.DOMAdapter.isNode(oNode) ? oContext.DOMAdapter.getProperty(oNode, "nodeType") : 0;
 	switch (this.name) {
 		// Node type test
-		case "node":			return !!nType;
+		case "node":			return !!nType && (nType != 2 || (oContext.DOMAdapter.getProperty(oNode, "prefix") != "xmlns" && oContext.DOMAdapter.getProperty(oNode, "localName") != "xmlns"));
 		case "document-node":	return nType == 9;
 		case "element":			return nType == 1;
-		case "attribute":		return nType == 2 && !(oContext.DOMAdapter.getProperty(oNode, "prefix") == "xmlns" || oContext.DOMAdapter.getProperty(oNode, "localName") == "xmlns");
+		case "attribute":		return nType == 2 && (oContext.DOMAdapter.getProperty(oNode, "prefix") != "xmlns" && oContext.DOMAdapter.getProperty(oNode, "localName") != "xmlns");
 		case "processing-instruction":	return nType == 7;
 		case "comment":			return nType == 8;
 		case "text":			return nType == 3 || nType == 4;
