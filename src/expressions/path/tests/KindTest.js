@@ -94,7 +94,7 @@ cKindTest.prototype.test	= function (oNode, oContext) {
 		case "node":			return !!nType;
 		case "document-node":	return nType == 9;
 		case "element":			return nType == 1;
-		case "attribute":		return nType == 2;
+		case "attribute":		return nType == 2 && !(oContext.DOMAdapter.getProperty(oNode, "prefix") == "xmlns" || oContext.DOMAdapter.getProperty(oNode, "localName") == "xmlns");
 		case "processing-instruction":	return nType == 7;
 		case "comment":			return nType == 8;
 		case "text":			return nType == 3 || nType == 4;
