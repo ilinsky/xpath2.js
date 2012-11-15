@@ -35,20 +35,24 @@ function fXPathExpression_evaluate(oExpression, oNode, nType, oResult) {
 			}
 			else {
 				oDOMAdapter	= oMSHTMLDOMAdapter;
-				cXPathEvaluator.staticContext.defaultElementNamespace	= null;
+//				cXPathEvaluator.staticContext.defaultElementNamespace	= null;
 			}
 		}
-		else
-		if (bOldW3)
-			oDOMAdapter	= oW3HTMLDOMAdapter;
+		else {
+			if ((oNode.nodeType == 9 ? oNode : oNode.ownerDocument) instanceof window.HTMLDocument)
+				oDOMAdapter	= oW3HTMLDOMAdapter;
+			else {
+				oDOMAdapter	= oW3XMLDOMAdapter;
+			}
+		}
 	}
 	// Evaluate expression
-	try {
+//	try {
 		oSequence	= oExpression.expression.resolve(oNode, null, oDOMAdapter);
-	}
-	catch (e) {
-		throw new cXPathException(cXPathException.TYPE_ERR);
-	}
+//	}
+//	catch (e) {
+//		throw new cXPathException(cXPathException.TYPE_ERR);
+//	}
 	// Determine type if not specified
 	if (!nType) {
 		nType	= 4;	// Default: XPathResult.UNORDERED_NODE_ITERATOR_TYPE

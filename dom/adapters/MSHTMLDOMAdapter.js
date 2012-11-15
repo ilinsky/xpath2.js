@@ -28,19 +28,22 @@ oMSHTMLDOMAdapter.isSameNode	= function(oNode, oNode2) {
 };
 
 oMSHTMLDOMAdapter.compareDocumentPosition	= function(oNode, oNode2) {
+	// TODO
 	return true;//oNode.compareDocumentPosition(oNode2);
 };
 
 oMSHTMLDOMAdapter.lookupPrefix	= function(oNode, sNameSpaceURI) {
+	// TODO
 	return oNode.lookupPrefix(sNameSpaceURI);
 };
 
 oMSHTMLDOMAdapter.lookupNamespaceURI	= function(oNode, sPrefix) {
+	// TODO
 	return oNode.lookupNamespaceURI(sPrefix);
 };
 
 // Document object members
-oMSHTMLDOMAdapter.getElementById	= function(oNode, sId) {
+/*oMSHTMLDOMAdapter.getElementById	= function(oNode, sId) {
 	return oNode.getElementById(sId);
-};
+};*/
 
