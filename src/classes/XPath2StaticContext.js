@@ -24,7 +24,7 @@ cXPath2StaticContext.prototype.functions	= null;
 cXPath2StaticContext.prototype.defaultFunctionNamespace	= null;
 //
 cXPath2StaticContext.prototype.collations	= null;
-cXPath2StaticContext.prototype.defaultCollationName		= null;
+cXPath2StaticContext.prototype.defaultCollationName		= "http://www.w3.org/2005/xpath-functions/collation/codepoint";
 //
 cXPath2StaticContext.prototype.collections	= null;
 //
@@ -55,6 +55,11 @@ cXPath2StaticContext.prototype.getFunction		= function(sUri) {
 cXPath2StaticContext.prototype.setCollation		= function(sUri, fFunction) {
 	this.collations[sUri]	= fFunction;
 };
+
+cXPath2StaticContext.prototype.getCollation		= function(sUri) {
+	return this.collations[sUri];
+};
+
 
 cXPath2StaticContext.prototype.setCollection	= function(sUri, fFunction) {
 	this.collections[sUri]	= fFunction;

@@ -9,6 +9,7 @@ classes/XPath2DynamicContext.js
 classes/XPath2StaticContext.js
 classes/XPath2Expression.js
 classes/XPath2Evaluator.js
+classes/XPath2StringCollator.js
 #
 expressions/Expr.js
 expressions/ExprSingle.js
@@ -109,6 +110,8 @@ functions/qname.js
 functions/sequence.js
 functions/string.js
 functions/trace.js
+# Collators
+collators/CodepointStringCollator.js
 # API Object
 XPath2.js
 # Export variables to environment

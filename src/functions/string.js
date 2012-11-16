@@ -76,13 +76,20 @@ fXPath2StaticContext_defineSystemFunction("compare",	[[cXSString, '?'], [cXSStri
 	if (oSequence1.isEmpty() || oSequence2.isEmpty())
 		return null;
 
-	var sValue1	= oSequence1.items[0],
-		sValue2	= oSequence2.items[0];
+	var sCollation	= this.staticContext.defaultCollationName,
+		oCollation;
+	if (arguments.length > 2)
+		sCollation	= oSequence3.items[0];
 
-	// TODO: Implement proper comparison, as this is used in operators
-	// TODO: Implement collation handling
+	oCollation	= sCollation == "http://www.w3.org/2005/xpath-functions/collation/codepoint" ? oCodepointStringCollator : this.staticContext.getCollation(sCollation);
+	if (!oCollation)
+		throw new cXPath2Error("FOCH0002"
+//->Debug
+				, "Unknown collation " + '{' + sCollation + '}'
+//<-Debug
+		);
 
-	return sValue1 == sValue2 ? 0 : sValue1 > sValue2 ? 1 :-1;
+	return oCollation.compare(oSequence1.items[0], oSequence2.items[0]);
 });
 
 // fn:codepoint-equal($comparand1 as xs:string?, $comparand2  as xs:string?) as xs:boolean?
