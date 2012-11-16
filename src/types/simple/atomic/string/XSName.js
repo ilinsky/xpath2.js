@@ -7,8 +7,15 @@
  *
  */
 
-function cXSName() {
-
+function cXSName(sValue) {
+	this.value	= sValue;
 };
 
 cXSName.prototype	= new cXSToken;
+
+cXSName.cast	= function(vValue) {
+	return new cXSName(cString(vValue));
+};
+
+//
+fXPath2StaticContext_defineSystemDataType("Name",	cXSName);

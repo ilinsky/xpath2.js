@@ -7,8 +7,15 @@
  *
  */
 
-function cXSID() {
-
+function cXSID(sValue) {
+	this.value	= sValue;
 };
 
 cXSID.prototype	= new cXSNCName;
+
+cXSID.cast	= function(vValue) {
+	return new cXSID(cString(vValue));
+};
+
+//
+fXPath2StaticContext_defineSystemDataType("ID",	cXSID);

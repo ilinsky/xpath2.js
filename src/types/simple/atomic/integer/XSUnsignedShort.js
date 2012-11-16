@@ -7,8 +7,15 @@
  *
  */
 
-function cXSUnsignedShort() {
-
+function cXSUnsignedShort(nValue) {
+	this.value	= nValue;
 };
 
 cXSUnsignedShort.prototype	= new cXSUnsignedInt;
+
+cXSUnsignedShort.cast	= function(vValue) {
+	return new cXSUnsignedShort(cNumber(vValue));
+};
+
+//
+fXPath2StaticContext_defineSystemDataType("unsignedShort",	cXSUnsignedShort);

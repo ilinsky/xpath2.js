@@ -7,8 +7,15 @@
  *
  */
 
-function cXSByte() {
-
+function cXSByte(nValue) {
+	this.value	= nValue;
 };
 
 cXSByte.prototype	= new cXSShort;
+
+cXSByte.cast	= function(vValue) {
+	return new cXSByte(cNumber(vValue));
+};
+
+//
+fXPath2StaticContext_defineSystemDataType("byte",	cXSByte);

@@ -7,8 +7,15 @@
  *
  */
 
-function cXSShort() {
-
+function cXSShort(nValue) {
+	this.value	= nValue;
 };
 
 cXSShort.prototype	= new cXSInt;
+
+cXSShort.cast	= function(vValue) {
+	return new cXSShort(cNumber(vValue));
+};
+
+//
+fXPath2StaticContext_defineSystemDataType("short",	cXSShort);

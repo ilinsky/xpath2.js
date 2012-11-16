@@ -7,8 +7,15 @@
  *
  */
 
-function cXSLanguage() {
-
+function cXSLanguage(sValue) {
+	this.value	= sValue;
 };
 
 cXSLanguage.prototype	= new cXSToken;
+
+cXSLanguage.cast	= function(vValue) {
+	return new cXSLanguage(cString(vValue));
+};
+
+//
+fXPath2StaticContext_defineSystemDataType("language",	cXSLanguage);

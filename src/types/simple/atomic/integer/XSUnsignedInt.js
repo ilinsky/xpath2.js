@@ -7,8 +7,15 @@
  *
  */
 
-function cXSUnsignedInt() {
-
+function cXSUnsignedInt(nValue) {
+	this.value	= nValue;
 };
 
-cXSUnsignedInt.prototype	= new cXSNonNegativeLongType;
+cXSUnsignedInt.prototype	= new cXSNonNegativeInteger;
+
+cXSUnsignedInt.cast	= function(vValue) {
+	return new cXSUnsignedInt(cNumber(vValue));
+};
+
+//
+fXPath2StaticContext_defineSystemDataType("unsignedInt",	cXSUnsignedInt);

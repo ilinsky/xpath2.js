@@ -12,3 +12,15 @@ function cXSNOTATION() {
 };
 
 cXSNOTATION.prototype	= new cXSAnyAtomicType;
+
+cXSNOTATION.cast	= function(vValue) {
+	throw new cXPath2Error("XPST0017"
+//->Debug
+			, "Abstract type used in constructor function xs:NOTATION"
+//<-Debug
+	);	//  {http://www.w3.org/2001/XMLSchema}NOTATION
+};
+
+//
+fXPath2StaticContext_defineSystemDataType("NOTATION",	cXSNOTATION);
+

@@ -7,13 +7,19 @@
  *
  */
 
-function cXSInteger() {
-
+function cXSInteger(nValue) {
+	this.value	= nValue;
 };
 
 cXSInteger.RegExp	= /^[-+]?[0-9]+$/;
 
 cXSInteger.prototype	= new cXSDecimal;
+
+cXSInteger.prototype.value	= null;
+
+cXSInteger.prototype.toString	= function() {
+	return cString(this.value);
+};
 
 cXSInteger.cast	= function(vValue) {
 	var cType	= cXSAnyAtomicType.typeOf(vValue);

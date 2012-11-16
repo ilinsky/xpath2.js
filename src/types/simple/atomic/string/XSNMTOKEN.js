@@ -7,8 +7,15 @@
  *
  */
 
-function cXSNMTOKEN() {
-
+function cXSNMTOKEN(sValue) {
+	this.value	= sValue;
 };
 
 cXSNMTOKEN.prototype	= new cXSToken;
+
+cXSNMTOKEN.cast	= function(vValue) {
+	return new cXSNMTOKEN(cString(vValue));
+};
+
+//
+fXPath2StaticContext_defineSystemDataType("NMTOKEN",	cXSNMTOKEN);

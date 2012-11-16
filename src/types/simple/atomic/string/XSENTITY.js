@@ -7,8 +7,15 @@
  *
  */
 
-function cXSENTITY() {
-
+function cXSENTITY(sValue) {
+	this.value	= sValue;
 };
 
 cXSENTITY.prototype	= new cXSNCName;
+
+cXSENTITY.cast	= function(vValue) {
+	return new cXSENTITY(cString(vValue));
+};
+
+//
+fXPath2StaticContext_defineSystemDataType("ENTITY",	cXSENTITY);

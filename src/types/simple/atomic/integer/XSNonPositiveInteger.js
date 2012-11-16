@@ -7,8 +7,15 @@
  *
  */
 
-function cXSNonPositiveInteger() {
-
+function cXSNonPositiveInteger(nValue) {
+	this.value	= nValue;
 };
 
-cXSNonPositiveInteger.prototype	= new cXSIntegerType;
+cXSNonPositiveInteger.prototype	= new cXSInteger;
+
+cXSNonPositiveInteger.cast	= function(vValue) {
+	return new cXSNonPositiveInteger(cNumber(vValue));
+};
+
+//
+fXPath2StaticContext_defineSystemDataType("nonPositiveInteger",	cXSNonPositiveInteger);

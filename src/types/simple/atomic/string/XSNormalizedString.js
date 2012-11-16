@@ -7,15 +7,11 @@
  *
  */
 
-function cXSNormalizedString(vValue) {
-	this.value	= vValue;
+function cXSNormalizedString(sValue) {
+	this.value	= sValue;
 };
 
 cXSNormalizedString.prototype	= new cXSString;
-
-cXSNormalizedString.prototype.toString	= function() {
-	return this.value;
-};
 
 cXSNormalizedString.cast	= function(vValue) {
 	return new cXSNormalizedString(cString(vValue));

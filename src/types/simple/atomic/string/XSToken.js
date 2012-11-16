@@ -7,8 +7,15 @@
  *
  */
 
-function cXSToken() {
-
+function cXSToken(sValue) {
+	this.value	= sValue;
 };
 
 cXSToken.prototype	= new cXSNormalizedString;
+
+cXSToken.cast	= function(vValue) {
+	return new cXSToken(cString(vValue));
+};
+
+//
+fXPath2StaticContext_defineSystemDataType("token",	cXSToken);

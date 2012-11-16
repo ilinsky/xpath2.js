@@ -7,8 +7,15 @@
  *
  */
 
-function cXSInt() {
-
+function cXSInt(nValue) {
+	this.value	= nValue;
 };
 
 cXSInt.prototype	= new cXSLong;
+
+cXSInt.cast	= function(vValue) {
+	return new cXSInt(cNumber(vValue));
+};
+
+//
+fXPath2StaticContext_defineSystemDataType("int",	cXSInt);

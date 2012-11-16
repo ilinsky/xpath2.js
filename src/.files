@@ -62,23 +62,53 @@ expressions/type/types/SequenceType.js
 expressions/type/types/SingleType.js
 # XML Schema 1.1 data types
 types/simple/XSAnyAtomicType.js
-types/simple/atomic/XSUntypedAtomic.js
-types/simple/atomic/XSBoolean.js
-types/simple/atomic/XSString.js
+# Primitive atomic types
 types/simple/atomic/XSAnyURI.js
-types/simple/atomic/XSQName.js
-types/simple/atomic/XSDateTime.js
-types/simple/atomic/XSDate.js
-types/simple/atomic/XSTime.js
-types/simple/atomic/XSDuration.js
-types/simple/atomic/XSDouble.js
-types/simple/atomic/XSDecimal.js
-types/simple/atomic/XSFloat.js
-types/simple/atomic/XSHexBinary.js
 types/simple/atomic/XSBase64Binary.js
+types/simple/atomic/XSBoolean.js
+types/simple/atomic/XSDate.js
+types/simple/atomic/XSDateTime.js
+types/simple/atomic/XSDecimal.js
+types/simple/atomic/XSDouble.js
+types/simple/atomic/XSDuration.js
+types/simple/atomic/XSFloat.js
+#types/simple/atomic/XSGDay.js
+#types/simple/atomic/XSGMonth.js
+#types/simple/atomic/XSGMonthDay.js
+#types/simple/atomic/XSGYear.js
+#types/simple/atomic/XSGYearMonth.js
+types/simple/atomic/XSHexBinary.js
+types/simple/atomic/XSNOTATION.js
+types/simple/atomic/XSQName.js
+types/simple/atomic/XSString.js
+types/simple/atomic/XSTime.js
+types/simple/atomic/XSUntypedAtomic.js
+# Other atomic types: duration-based
 types/simple/atomic/duration/XSYearMonthDuration.js
 types/simple/atomic/duration/XSDayTimeDuration.js
+# Other atomic types: integer-based
 types/simple/atomic/integer/XSInteger.js
+types//simple/atomic/integer/XSNonPositiveInteger.js
+types//simple/atomic/integer/XSNegativeInteger.js
+types//simple/atomic/integer/XSLong.js
+types//simple/atomic/integer/XSInt.js
+types//simple/atomic/integer/XSShort.js
+types//simple/atomic/integer/XSByte.js
+types//simple/atomic/integer/XSNonNegativeInteger.js
+types//simple/atomic/integer/XSPositiveInteger.js
+types//simple/atomic/integer/XSUnsignedLong.js
+types//simple/atomic/integer/XSUnsignedInt.js
+types//simple/atomic/integer/XSUnsignedShort.js
+types//simple/atomic/integer/XSUnsignedByte.js
+# Other atomic types: string-based
+types/simple/atomic/string/XSNormalizedString.js
+types/simple/atomic/string/XSToken.js
+types/simple/atomic/string/XSName.js
+types/simple/atomic/string/XSNCName.js
+types/simple/atomic/string/XSENTITY.js
+types/simple/atomic/string/XSID.js
+types/simple/atomic/string/XSLanguage.js
+types/simple/atomic/string/XSNMTOKEN.js
 # XPath data types
 types/XTItem.js
 types/XTNode.js

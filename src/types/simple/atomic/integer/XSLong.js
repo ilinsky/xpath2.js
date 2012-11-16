@@ -7,8 +7,15 @@
  *
  */
 
-function cXSLong() {
-
+function cXSLong(nValue) {
+	this.value	= nValue;
 };
 
-cXSLong.prototype	= new cXSIntegerType;
+cXSLong.prototype	= new cXSInteger;
+
+cXSLong.cast	= function(vValue) {
+	return new cXSLong(cNumber(vValue));
+};
+
+//
+fXPath2StaticContext_defineSystemDataType("long",	cXSLong);

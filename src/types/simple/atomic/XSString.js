@@ -7,11 +7,17 @@
  *
  */
 
-function cXSString() {
-
+function cXSString(sValue) {
+	this.value	= sValue;
 };
 
 cXSString.prototype	= new cXSAnyAtomicType;
+
+cXSString.prototype.value	= null;
+
+cXSString.prototype.toString	= function() {
+	return this.value;
+};
 
 cXSString.cast	= function(vValue) {
 	var cType	= cXSAnyAtomicType.typeOf(vValue);
