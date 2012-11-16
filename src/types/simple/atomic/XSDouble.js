@@ -21,6 +21,10 @@ cXSDouble.prototype.valueOf	= function() {
 	return this.value;
 };
 
+cXSDouble.prototype.toString	= function() {
+	return cString(this.value);
+};
+
 cXSDouble.cast	= function(vValue) {
 	var cType	= cXSAnyAtomicType.typeOf(vValue);
 	switch (cType) {

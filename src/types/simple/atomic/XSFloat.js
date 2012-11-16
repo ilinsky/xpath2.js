@@ -21,6 +21,10 @@ cXSFloat.prototype.valueOf	= function() {
 	return this.value;
 };
 
+cXSFloat.prototype.toString	= function() {
+	return cString(this.value);
+};
+
 cXSFloat.cast	= function(vValue) {
 	var cType	= cXSAnyAtomicType.typeOf(vValue);
 	switch (cType) {

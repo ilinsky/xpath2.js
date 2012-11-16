@@ -21,6 +21,10 @@ cXSBoolean.prototype.valueOf	= function() {
 	return this.value;
 };
 
+cXSBoolean.prototype.toString	= function() {
+	return cString(this.value);
+};
+
 cXSBoolean.cast	= function(vValue) {
 	var cType	= cXSAnyAtomicType.typeOf(vValue);
 	switch (cType) {

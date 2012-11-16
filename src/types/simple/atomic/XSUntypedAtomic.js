@@ -14,7 +14,7 @@ function cXSUntypedAtomic(sValue) {
 cXSUntypedAtomic.prototype	= new cXSAnyAtomicType;
 
 cXSUntypedAtomic.prototype.toString	= function() {
-	return '' + this.value;
+	return cString(this.value);
 };
 
 cXSUntypedAtomic.cast	= function(vValue) {

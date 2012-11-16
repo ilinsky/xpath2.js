@@ -29,7 +29,7 @@ cXSString.cast	= function(vValue) {
 		case cXSString:
 			return vValue;
 		case cXSUntypedAtomic:
-			vValue	= vValue.toString();
+		case cXSBoolean:
 		case cXSFloat:
 		case cXSDouble:
 		case cXSDecimal:
@@ -49,7 +49,7 @@ cXSString.cast	= function(vValue) {
 		//
 		case cXSQName:
 			//
-			return new cXSString(vValue);
+			return new cXSString(cString(vValue));
 	}
 	throw new cXPath2Error("XPTY0004"
 //->Debug
