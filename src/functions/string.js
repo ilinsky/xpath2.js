@@ -59,7 +59,7 @@ fXPath2StaticContext_defineSystemFunction("string-to-codepoints",	[[cXSString, '
 		return null;
 
 	var oSequence	= new cXPath2Sequence,
-		sValue	= oSequence1.items[0];
+		sValue	= oSequence1.items[0].value;
 	if (sValue == '')
 		return oSequence;
 
