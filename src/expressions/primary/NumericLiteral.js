@@ -18,6 +18,14 @@ cNumericLiteral.parse	= function(oLexer, oStaticContext) {
 	var nValue	= +oLexer.peek();
 	if (!fIsNaN(nValue)) {
 		oLexer.next();
-		return new cNumericLiteral(new cXSDecimal(nValue));
+		var oValue;
+		if (cString(nValue).match(cXSInteger.RegExp))
+			oValue	= new cXSInteger(nValue);
+		else
+		if (cString(nValue).match(cXSDecimal.RegExp))
+			oValue	= new cXSDecimal(nValue);
+		else
+			oValue	= new cXSDecimal(nValue);
+		return new cNumericLiteral(oValue);
 	}
 };
