@@ -103,7 +103,7 @@ fXPath2StaticContext_defineSystemFunction("lang",	[[cXSString, '?'], [cXTNode, '
 		if (!this.DOMAdapter.isNode(this.item))
 			throw new cXPath2Error("XPTY0004"
 //->Debug
-					, "namespace-uri() function called when the context item is not a node"
+					, "lang() function called when the context item is not a node"
 //<-Debug
 			);
 		oSequence2	= new cXPath2Sequence(this.item);
