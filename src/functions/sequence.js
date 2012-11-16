@@ -220,7 +220,7 @@ fXPath2StaticContext_defineSystemFunction("avg",	[[cXSAnyAtomicType, '*']],	func
 				vRight	= cXSDouble.cast(vRight);
 			vValue	= cAdditiveExpr.operators['+'](vValue, vRight, this);
 		}
-		return cMultiplicativeExpr.operators['div'](vValue, nLength, this);
+		return cMultiplicativeExpr.operators['div'](vValue, new cXSInteger(nLength), this);
 	}
 	catch (e) {
 		// XPTY0004: Arithmetic operator is not defined for provided arguments
