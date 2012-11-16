@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <?custom href="custom.url" ?>
 <?custom2 href="custom2.url" ?>
-<root id="id-root" xml:lang="en">
+<root id="id-root" xml:lang="en-gb">
 	<ele
 		att="att-no_ns"
 		att2="att2-no_ns"> text </ele><!-- comment -->

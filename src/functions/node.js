@@ -98,8 +98,29 @@ fXPath2StaticContext_defineSystemFunction("number",	[[cXSAnyAtomicType, '?', tru
 
 // fn:lang($testlang as xs:string?) as xs:boolean
 // fn:lang($testlang as xs:string?, $node as node()) as xs:boolean
-fXPath2StaticContext_defineSystemFunction("lang",	[[cXSString, '?'], [cXTNode, '?', true]],	function(oSequence1) {
-	throw "Function '" + "lang" + "' not implemented";
+fXPath2StaticContext_defineSystemFunction("lang",	[[cXSString, '?'], [cXTNode, '', true]],	function(oSequence1, oSequence2) {
+	if (arguments.length < 2) {
+		if (!this.DOMAdapter.isNode(this.item))
+			throw new cXPath2Error("XPTY0004"
+//->Debug
+					, "namespace-uri() function called when the context item is not a node"
+//<-Debug
+			);
+		oSequence2	= new cXPath2Sequence(this.item);
+	}
+
+	var oNode = oSequence2.items[0];
+	if (this.DOMAdapter.getProperty(oNode, "nodeType") == 2)
+		oNode	= this.DOMAdapter.getProperty(oNode, "ownerElement");
+
+	// walk up the tree looking for xml:lang attribute
+	for (var aAttributes; oNode; oNode = this.DOMAdapter.getProperty(oNode, "parentNode"))
+		if (aAttributes = this.DOMAdapter.getProperty(oNode, "attributes"))
+			for (var nIndex = 0, nLength = aAttributes.length; nIndex < nLength; nIndex++)
+				if (this.DOMAdapter.getProperty(aAttributes[nIndex], "nodeName") == "xml:lang")
+					return new cXSBoolean(this.DOMAdapter.getProperty(aAttributes[nIndex], "value").replace(/-.+/, '').toLowerCase() == oSequence1.items[0].value.replace(/-.+/, '').toLowerCase());
+	//
+	return new cXSBoolean(false);
 });
 
 // fn:root() as node()
