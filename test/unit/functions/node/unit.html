@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="value">
+<html class="value" xml:lang="en">
 	<head>
 		<title>JsUnit testing page</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -94,7 +94,7 @@
 
 			function testLang() {
 				// Not W3C tests
-				assertArrayEquals([true],
+				assertArrayEquals([false],
 						evaluateXPath('fn:lang("en")'));
 				assertArrayEquals([false],
 						evaluateXPath('fn:lang("fr")'));
