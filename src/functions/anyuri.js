@@ -23,17 +23,17 @@ fXPath2StaticContext_defineSystemFunction("resolve-uri",	[[cXSString, '?'], [cXS
 					, "resolve-uri() function called when the context item is not a node"
 //<-Debug
 			);
-		sBaseUri	= this.DOMAdapter.getProperty(this.item, "baseURI") || '';
+		sBaseUri	= new cXSString(this.DOMAdapter.getProperty(this.item, "baseURI") || '');
 	}
 	else
-		sBaseUri	= oSequence2.items[0].value;
+		sBaseUri	= oSequence2.items[0];
 
 	if (oSequence1.isEmpty())
 		return null;
 
 	//
-	var sUri	= oSequence1.items[0].value;
-	if (sUri == '' || sUri.charAt(0) == '#')
+	var sUri	= oSequence1.items[0];
+	if (sUri.value == '' || sUri.value.charAt(0) == '#')
 		return cXSAnyURI.cast(sBaseUri);
 
 	var oUri	= cXSAnyURI.cast(sUri);
