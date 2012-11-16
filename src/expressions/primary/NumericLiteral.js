@@ -7,8 +7,8 @@
  *
  */
 
-function cNumericLiteral(nValue) {
-	this.value	= nValue;
+function cNumericLiteral(oValue) {
+	this.value	= oValue;
 };
 
 cNumericLiteral.prototype	= new cLiteral;
@@ -18,6 +18,6 @@ cNumericLiteral.parse	= function(oLexer, oStaticContext) {
 	var nValue	= +oLexer.peek();
 	if (!fIsNaN(nValue)) {
 		oLexer.next();
-		return new cNumericLiteral(nValue);
+		return new cNumericLiteral(new cXSDecimal(nValue));
 	}
 };

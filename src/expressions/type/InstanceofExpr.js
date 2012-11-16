@@ -35,22 +35,22 @@ cInstanceofExpr.prototype.evaluate	= function(oContext) {
 	var oSequence1	= this.expression.evaluate(oContext);
 	// Validate empty-sequence()
 	if (!this.type.itemType)
-		return new cXPath2Sequence(oSequence1.isEmpty());
+		return new cXPath2Sequence(new cXSBoolean(oSequence1.isEmpty()));
 	// Validate cardinality
 	if (oSequence1.isEmpty())
-		return new cXPath2Sequence(this.type.occurence == '?' || this.type.occurence == '*');
+		return new cXPath2Sequence(new cXSBoolean(this.type.occurence == '?' || this.type.occurence == '*'));
 	if (!(oSequence1.isSingleton()))
 		if (!(this.type.occurence == '+' || this.type.occurence == '*'))
-			return new cXPath2Sequence(false);
+			return new cXPath2Sequence(new cXSBoolean(false));
 
 	// Validate type
 	var oType	= this.type.itemType;
 	if (!oType.test)	// item()
-		return new cXPath2Sequence(true);
+		return new cXPath2Sequence(new cXSBoolean(true));
 
 	var bValue	= true;
 	for (var nIndex = 0, nLength = oSequence1.items.length; (nIndex < nLength) && bValue; nIndex++)
 		bValue	= oType.test.test(oSequence1.items[nIndex], oContext);
 	//
-	return new cXPath2Sequence(bValue);
+	return new cXPath2Sequence(new cXSBoolean(bValue));
 };

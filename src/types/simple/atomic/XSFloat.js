@@ -7,13 +7,19 @@
  *
  */
 
-function cXSFloat() {
-
+function cXSFloat(nValue) {
+	this.value	= nValue;
 };
 
 cXSFloat.RegExp	= /^([+\-]?((\d+(\.\d*)?)|(\.\d+))([eE][+\-]?\d+)?|(-?INF)|NaN)$/;
 
 cXSFloat.prototype	= new cXSAnyAtomicType;
+
+cXSFloat.prototype.value	= null;
+
+cXSFloat.prototype.valueOf	= function() {
+	return this.value;
+};
 
 cXSFloat.cast	= function(vValue) {
 	var cType	= cXSAnyAtomicType.typeOf(vValue);
@@ -25,14 +31,14 @@ cXSFloat.cast	= function(vValue) {
 		case cXSString:
 			var aMatch	= fString_trim.call(vValue).match(cXSFloat.RegExp);
 			if (aMatch)
-				return aMatch[7] ? +aMatch[7].replace("INF", "Infinity") : +vValue;
+				return new cXSFloat(aMatch[7] ? +aMatch[7].replace("INF", "Infinity") : +vValue);
 			throw new cXPath2Error("FORG0001");
 		case cXSBoolean:
-			vValue	= vValue * 1;
+			return new cXSFloat(vValue * 1);
 		case cXSDouble:
 		case cXSDecimal:
 		case cXSInteger:
-			return vValue;
+			return new cXSFloat(vValue.value);
 	}
 	throw new cXPath2Error("XPTY0004"
 //->Debug

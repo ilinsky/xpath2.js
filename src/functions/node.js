@@ -33,10 +33,10 @@ fXPath2StaticContext_defineSystemFunction("name",	[[cXTNode, '?', true]],	functi
 	}
 	else
 	if (oSequence1.isEmpty())
-		return '';
+		return new cXSString('');
 	//
 	var vValue	= hXPath2StaticContext_functions["node-name"].call(this, oSequence1);
-	return vValue === null ? '' : vValue.toString();
+	return new cXSString(vValue === null ? '' : vValue.toString());
 });
 
 // fn:local-name() as xs:string
@@ -53,9 +53,9 @@ fXPath2StaticContext_defineSystemFunction("local-name",	[[cXTNode, '?', true]],	
 	}
 	else
 	if (oSequence1.isEmpty())
-		return '';
+		return new cXSString('');
 	//
-	return this.DOMAdapter.getProperty(oSequence1.items[0], "localName") || '';
+	return new cXSString(this.DOMAdapter.getProperty(oSequence1.items[0], "localName") || '');
 });
 
 // fn:namespace-uri() as xs:anyURI
@@ -72,9 +72,9 @@ fXPath2StaticContext_defineSystemFunction("namespace-uri",	[[cXTNode, '?', true]
 	}
 	else
 	if (oSequence1.isEmpty())
-		return '';
+		return cXSAnyURI.cast(new cXSString(''));
 	//
-	return this.DOMAdapter.getProperty(oSequence1.items[0], "namespaceURI") || '';
+	return cXSAnyURI.cast(new cXSString(this.DOMAdapter.getProperty(oSequence1.items[0], "namespaceURI") || ''));
 });
 
 // fn:number() as xs:double
@@ -84,7 +84,7 @@ fXPath2StaticContext_defineSystemFunction("number",	[[cXSAnyAtomicType, '?', tru
 		oSequence1	= new cXPath2Sequence(cXPath2Sequence.atomizeItem(this.item, this));
 
 	// If input item cannot be cast to xs:decimal, a NaN should be returned
-	var vValue	= nNaN;
+	var vValue	= new cXSDouble(nNaN);
 	if (!oSequence1.isEmpty()) {
 		try {
 			vValue	= cXSDouble.cast(oSequence1.items[0]);
@@ -99,7 +99,7 @@ fXPath2StaticContext_defineSystemFunction("number",	[[cXSAnyAtomicType, '?', tru
 // fn:lang($testlang as xs:string?) as xs:boolean
 // fn:lang($testlang as xs:string?, $node as node()) as xs:boolean
 fXPath2StaticContext_defineSystemFunction("lang",	[[cXSString, '?'], [cXTNode, '?', true]],	function(oSequence1) {
-	throw "Funciton '" + "lang" + "' not implemented";
+	throw "Function '" + "lang" + "' not implemented";
 });
 
 // fn:root() as node()

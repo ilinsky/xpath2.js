@@ -19,44 +19,44 @@
 // 6.4 Functions on Numeric Values
 // fn:abs($arg as numeric?) as numeric?
 fXPath2StaticContext_defineSystemFunction("abs",		[[cXTNumeric, '?']],	function(oSequence1) {
-	return cMath.abs(oSequence1.items[0]);
+	return new cXSDecimal(cMath.abs(oSequence1.items[0]));
 });
 
 // fn:ceiling($arg as numeric?) as numeric?
 fXPath2StaticContext_defineSystemFunction("ceiling",	[[cXTNumeric, '?']],	function(oSequence1) {
-	return cMath.ceil(oSequence1.items[0]);
+	return new cXSDecimal(cMath.ceil(oSequence1.items[0]));
 });
 
 // fn:floor($arg as numeric?) as numeric?
 fXPath2StaticContext_defineSystemFunction("floor",		[[cXTNumeric, '?']],	function(oSequence1) {
-	return cMath.floor(oSequence1.items[0]);
+	return new cXSDecimal(cMath.floor(oSequence1.items[0]));
 });
 
 // fn:round($arg as numeric?) as numeric?
 fXPath2StaticContext_defineSystemFunction("round",		[[cXTNumeric, '?']],	function(oSequence1) {
-	return cMath.round(oSequence1.items[0]);
+	return new cXSDecimal(cMath.round(oSequence1.items[0]));
 });
 
 // fn:round-half-to-even($arg as numeric?) as numeric?
 // fn:round-half-to-even($arg as numeric?, $precision as xs:integer) as numeric?
 fXPath2StaticContext_defineSystemFunction("round-half-to-even",	[[cXTNumeric, '?'], [cXSInteger, '', true]],	function(oSequence1, oSequence2) {
-	var nValue	= oSequence1.items[0];
-	var nPrecision	= 0;
+	var oValue	= oSequence1.items[0];
+	var oPrecision	= new cXSInteger(0);
 	if (arguments.length > 1) {
-		nPrecision	= oSequence2.items[0];
+		oPrecision	= oSequence2.items[0];
 	}
 
 	//
-	if (nPrecision < 0) {
-		var nPower	= cMath.pow(10,-nPrecision),
-			nRounded= cMath.round(hXPath2StaticContext_operators["numeric-divide"].call(this, nValue, nPower)),
-			nDecimal= cMath.abs(hXPath2StaticContext_operators["numeric-subtract"].call(this, nRounded, hXPath2StaticContext_operators["numeric-divide"].call(this, nValue, nPower)));
-		return hXPath2StaticContext_operators["numeric-multiply"].call(this, hXPath2StaticContext_operators["numeric-add"].call(this, nRounded, (nDecimal == 0.5 && nRounded % 2 ?-1 : 0)), nPower);
+	if (oPrecision < 0) {
+		var oPower	= new cXSInteger(cMath.pow(10,-oPrecision)),
+			oRounded= cMath.round(hXPath2StaticContext_operators["numeric-divide"].call(this, oValue, oPower)),
+			nDecimal= cMath.abs(hXPath2StaticContext_operators["numeric-subtract"].call(this, nRounded, hXPath2StaticContext_operators["numeric-divide"].call(this, oValue, oPower)));
+		return new cXSDecimal(hXPath2StaticContext_operators["numeric-multiply"].call(this, hXPath2StaticContext_operators["numeric-add"].call(this, nRounded, (nDecimal == 0.5 && nRounded % 2 ?-1 : 0)), oPower));
 	}
 	else {
-		var nPower	= cMath.pow(10, nPrecision),
-			nRounded= cMath.round(hXPath2StaticContext_operators["numeric-multiply"].call(this, nValue, nPower)),
-			nDecimal= cMath.abs(hXPath2StaticContext_operators["numeric-subtract"].call(this, nRounded, hXPath2StaticContext_operators["numeric-multiply"].call(this, nValue, nPower)));
-		return hXPath2StaticContext_operators["numeric-divide"].call(this, hXPath2StaticContext_operators["numeric-add"].call(this, nRounded, (nDecimal == 0.5 && nRounded % 2 ?-1 : 0)), nPower);
+		var oPower	= cMath.pow(10, oPrecision),
+			nRounded= cMath.round(hXPath2StaticContext_operators["numeric-multiply"].call(this, oValue, oPower)),
+			nDecimal= cMath.abs(hXPath2StaticContext_operators["numeric-subtract"].call(this, nRounded, hXPath2StaticContext_operators["numeric-multiply"].call(this, oValue, oPower)));
+		return new cXSDecimal(hXPath2StaticContext_operators["numeric-divide"].call(this, hXPath2StaticContext_operators["numeric-add"].call(this, nRounded, (nDecimal == 0.5 && nRounded % 2 ?-1 : 0)), oPower));
 	}
 });

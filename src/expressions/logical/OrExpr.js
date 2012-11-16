@@ -39,5 +39,5 @@ cOrExpr.prototype.evaluate	= function (oContext) {
 	var bValue	= this.left.evaluate(oContext).toBoolean(oContext);
 	for (var nIndex = 0, nLength = this.items.length; (nIndex < nLength) && !bValue; nIndex++)
 		bValue	= this.items[nIndex].evaluate(oContext).toBoolean(oContext);
-	return new cXPath2Sequence(bValue);
+	return new cXPath2Sequence(new cXSBoolean(bValue));
 };

@@ -15,12 +15,6 @@ cXSInteger.RegExp	= /^[-+]?[0-9]+$/;
 
 cXSInteger.prototype	= new cXSDecimal;
 
-cXSInteger.prototype.value	= null;
-
-cXSInteger.prototype.toString	= function() {
-	return cString(this.value);
-};
-
 cXSInteger.cast	= function(vValue) {
 	var cType	= cXSAnyAtomicType.typeOf(vValue);
 	switch (cType) {
@@ -31,14 +25,14 @@ cXSInteger.cast	= function(vValue) {
 		case cXSString:
 			var aMatch	= fString_trim.call(vValue).match(cXSInteger.RegExp);
 			if (aMatch)
-				return ~~vValue;
+				return new cXSInteger(~~vValue);
 			throw new cXPath2Error("FORG0001");
 		case cXSBoolean:
-			vValue	= vValue * 1;
+			return new cXSInteger(vValue * 1);
 		case cXSFloat:
 		case cXSDouble:
 		case cXSDecimal:
-			return ~~vValue;
+			return new cXSInteger(~~vValue.value);
 	}
 	throw new cXPath2Error("XPTY0004"
 //->Debug

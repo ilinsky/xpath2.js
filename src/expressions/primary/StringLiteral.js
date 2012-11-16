@@ -7,8 +7,8 @@
  *
  */
 
-function cStringLiteral(sValue) {
-	this.value	= sValue;
+function cStringLiteral(oValue) {
+	this.value	= oValue;
 };
 
 cStringLiteral.RegExp	= /^'([^']*(?:''[^']*)*)'|"([^"]*(?:""[^"]*)*)"$/;
@@ -19,6 +19,6 @@ cStringLiteral.parse	= function(oLexer, oStaticContext) {
 	var aMatch	= oLexer.peek().match(cStringLiteral.RegExp);
 	if (aMatch) {
 		oLexer.next();
-		return new cStringLiteral(aMatch[1] ? aMatch[1].replace("''", "'") : aMatch[2] ? aMatch[2].replace('""', '"') : '');
+		return new cStringLiteral(new cXSString(aMatch[1] ? aMatch[1].replace("''", "'") : aMatch[2] ? aMatch[2].replace('""', '"') : ''));
 	}
 };

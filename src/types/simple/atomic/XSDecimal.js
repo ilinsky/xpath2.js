@@ -7,13 +7,23 @@
  *
  */
 
-function cXSDecimal() {
-
+function cXSDecimal(nValue) {
+	this.value	= nValue;
 };
 
 cXSDecimal.RegExp	= /^[+\-]?((\d+(\.\d*)?)|(\.\d+))$/;
 
 cXSDecimal.prototype	= new cXSAnyAtomicType;
+
+cXSDecimal.prototype.value	= null;
+
+cXSDecimal.prototype.valueOf	= function() {
+	return this.value;
+};
+
+cXSDecimal.prototype.toString	= function() {
+	return cString(this.value);
+};
 
 cXSDecimal.cast	= function(vValue) {
 	var cType	= cXSAnyAtomicType.typeOf(vValue);
@@ -25,14 +35,14 @@ cXSDecimal.cast	= function(vValue) {
 		case cXSString:
 			var aMatch	= fString_trim.call(vValue).match(cXSDecimal.RegExp);
 			if (aMatch)
-				return +vValue;
+				return new cXSDecimal(+vValue);
 			throw new cXPath2Error("FORG0001");
 		case cXSBoolean:
-			vValue	= vValue * 1;
+			return new cXSDecimal(vValue * 1);
 		case cXSFloat:
 		case cXSDouble:
 		case cXSInteger:
-			return vValue;
+			return new cXSDecimal(vValue.value);
 	}
 	throw new cXPath2Error("XPTY0004"
 //->Debug

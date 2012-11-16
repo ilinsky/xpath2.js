@@ -70,7 +70,7 @@ cXPath2Sequence.atomizeItem		= function(oItem, oContext) {
 	}
 
 	// Base types
-	if (typeof oItem == "boolean" || typeof oItem == "number" || typeof oItem == "string" || oItem instanceof cXSAnyAtomicType)
+	if (oItem instanceof cXSAnyAtomicType)
 		return oItem;
 
 	// Other types
@@ -104,14 +104,12 @@ cXPath2Sequence.prototype.toBoolean	= function(oContext) {
 		return true;
 
 	if (this.items.length == 1) {
-		if (typeof oItem == "boolean")
-			return oItem;
-		else
-		if (typeof oItem == "string")
-			return !!oItem.length;
-		else
-		if (typeof oItem == "number")
-			return !(fIsNaN(oItem) || oItem == 0);
+		if (oItem instanceof cXSBoolean)
+			return oItem.value;
+		if (oItem instanceof cXSString)
+			return !!oItem.value.length;
+		if (oItem instanceof cXSDecimal || oItem instanceof cXSDouble || oItem instanceof cXSFloat)
+			return !(fIsNaN(oItem.value) || oItem.value == 0);
 
 		throw new cXPath2Error("FORG0006"
 //->Debug

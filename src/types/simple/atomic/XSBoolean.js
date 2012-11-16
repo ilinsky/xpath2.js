@@ -7,13 +7,19 @@
  *
  */
 
-function cXSBoolean() {
-
+function cXSBoolean(bValue) {
+	this.value	= bValue;
 };
 
 cXSBoolean.RegExp	= /^(0|1|true|false)$/;
 
 cXSBoolean.prototype	= new cXSAnyAtomicType;
+
+cXSBoolean.prototype.value	= null;
+
+cXSBoolean.prototype.valueOf	= function() {
+	return this.value;
+};
 
 cXSBoolean.cast	= function(vValue) {
 	var cType	= cXSAnyAtomicType.typeOf(vValue);
@@ -25,13 +31,13 @@ cXSBoolean.cast	= function(vValue) {
 		case cXSString:
 			var aMatch;
 			if (aMatch = fString_trim.call(vValue).match(cXSBoolean.RegExp))
-				return aMatch[1] == "1" || aMatch[1] == "true";
+				return new cXSBoolean(aMatch[1] == "1" || aMatch[1] == "true");
 			throw new cXPath2Error("FORG0001");
 		case cXSFloat:
 		case cXSDouble:
 		case cXSDecimal:
 		case cXSInteger:
-			return vValue != 0;
+			return new cXSBoolean(vValue != 0);
 	}
 	throw new cXPath2Error("XPTY0004"
 //->Debug

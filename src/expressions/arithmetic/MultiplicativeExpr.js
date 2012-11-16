@@ -21,8 +21,8 @@ cMultiplicativeExpr.operators	={};
 cMultiplicativeExpr.operators['*']		= function (oLeft, oRight, oContext) {
 	var cLeft	= cXSAnyAtomicType.typeOf(oLeft),
 		cRight	= cXSAnyAtomicType.typeOf(oRight);
-	if (cXSAnyAtomicType.isNumeric(cLeft)) {
-		if (cXSAnyAtomicType.isNumeric(cRight))
+	if (cXSAnyAtomicType.isNumeric(oLeft)) {
+		if (cXSAnyAtomicType.isNumeric(oRight))
 			return hXPath2StaticContext_operators["numeric-multiply"].call(oContext, oLeft, oRight);
 		if (cRight == cXSYearMonthDuration)
 			return hXPath2StaticContext_operators["multiply-yearMonthDuration"].call(oContext, oRight, oLeft);
@@ -31,12 +31,12 @@ cMultiplicativeExpr.operators['*']		= function (oLeft, oRight, oContext) {
 	}
 	else {
 		if (cLeft == cXSYearMonthDuration) {
-			if (cXSAnyAtomicType.isNumeric(cRight))
+			if (cXSAnyAtomicType.isNumeric(oRight))
 				return hXPath2StaticContext_operators["multiply-yearMonthDuration"].call(oContext, oLeft, oRight);
 		}
 		else
 		if (cLeft == cXSDayTimeDuration) {
-			if (cXSAnyAtomicType.isNumeric(cRight))
+			if (cXSAnyAtomicType.isNumeric(oRight))
 				return hXPath2StaticContext_operators["multiply-dayTimeDuration"].call(oContext, oLeft, oRight);
 		}
 	}
@@ -50,20 +50,20 @@ cMultiplicativeExpr.operators['*']		= function (oLeft, oRight, oContext) {
 cMultiplicativeExpr.operators['div']	= function (oLeft, oRight, oContext) {
 	var cLeft	= cXSAnyAtomicType.typeOf(oLeft),
 		cRight	= cXSAnyAtomicType.typeOf(oRight);
-	if (cXSAnyAtomicType.isNumeric(cLeft)) {
-		if (cXSAnyAtomicType.isNumeric(cRight))
+	if (cXSAnyAtomicType.isNumeric(oLeft)) {
+		if (cXSAnyAtomicType.isNumeric(oRight))
 			return hXPath2StaticContext_operators["numeric-divide"].call(oContext, oLeft, oRight);
 	}
 	else
 	if (cLeft == cXSYearMonthDuration) {
-		if (cXSAnyAtomicType.isNumeric(cRight))
+		if (cXSAnyAtomicType.isNumeric(oRight))
 			return hXPath2StaticContext_operators["divide-yearMonthDuration"].call(oContext, oLeft, oRight);
 		if (cRight == cXSYearMonthDuration)
 			return hXPath2StaticContext_operators["divide-yearMonthDuration-by-yearMonthDuration"].call(oContext, oLeft, oRight);
 	}
 	else
 	if (cLeft == cXSDayTimeDuration) {
-		if (cXSAnyAtomicType.isNumeric(cRight))
+		if (cXSAnyAtomicType.isNumeric(oRight))
 			return hXPath2StaticContext_operators["divide-dayTimeDuration"].call(oContext, oLeft, oRight);
 		if (cRight == cXSDayTimeDuration)
 			return hXPath2StaticContext_operators["divide-dayTimeDuration-by-dayTimeDuration"].call(oContext, oLeft, oRight);
@@ -78,7 +78,7 @@ cMultiplicativeExpr.operators['div']	= function (oLeft, oRight, oContext) {
 cMultiplicativeExpr.operators['idiv']	= function (oLeft, oRight, oContext) {
 	var cLeft	= cXSAnyAtomicType.typeOf(oLeft),
 		cRight	= cXSAnyAtomicType.typeOf(oRight);
-	if (cXSAnyAtomicType.isNumeric(cLeft) && cXSAnyAtomicType.isNumeric(cRight))
+	if (cXSAnyAtomicType.isNumeric(oLeft) && cXSAnyAtomicType.isNumeric(oRight))
 		return hXPath2StaticContext_operators["numeric-integer-divide"].call(oContext, oLeft, oRight);
 	//
 	throw new cXPath2Error("XPTY0004"
@@ -90,7 +90,7 @@ cMultiplicativeExpr.operators['idiv']	= function (oLeft, oRight, oContext) {
 cMultiplicativeExpr.operators['mod']	= function (oLeft, oRight, oContext) {
 	var cLeft	= cXSAnyAtomicType.typeOf(oLeft),
 		cRight	= cXSAnyAtomicType.typeOf(oRight);
-	if (cXSAnyAtomicType.isNumeric(cLeft) && cXSAnyAtomicType.isNumeric(cRight))
+	if (cXSAnyAtomicType.isNumeric(oLeft) && cXSAnyAtomicType.isNumeric(oRight))
 		return hXPath2StaticContext_operators["numeric-mod"].call(oContext, oLeft, oRight);
 	//
 	throw new cXPath2Error("XPTY0004"

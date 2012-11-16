@@ -37,9 +37,9 @@ cComparisonExpr.parse	= function (oLexer, oStaticContext) {
 // Public members
 cComparisonExpr.prototype.evaluate	= function (oContext) {
 	var oSequence	= new cXPath2Sequence,
-		bResult	= cComparisonExpr.operators[this.operator](this, oContext);
-	if (bResult !== null)
-		oSequence.add(bResult);
+		oResult	= cComparisonExpr.operators[this.operator](this, oContext);
+	if (oResult !== null)
+		oSequence.add(oResult);
 	return oSequence;
 };
 
@@ -47,11 +47,11 @@ cComparisonExpr.prototype.evaluate	= function (oContext) {
 cComparisonExpr.GeneralComp	= function(oExpr, oContext) {
 	var oLeft	= cXPath2Sequence.atomize(oExpr.left.evaluate(oContext), oContext);
 	if (oLeft.isEmpty())
-		return false;
+		return new cXSBoolean(false);
 
 	var oRight	= cXPath2Sequence.atomize(oExpr.right.evaluate(oContext), oContext);
 	if (oRight.isEmpty())
-		return false;
+		return new cXSBoolean(false);
 
 	var bResult	= false,
 		bLeft,
@@ -79,16 +79,16 @@ cComparisonExpr.GeneralComp	= function(oExpr, oContext) {
 			if (bRight)
 				vRight	= cXSAnyAtomicType.typeOf(vLeft).cast(vRight);
 
-			// Cast xs:anyURI to xs:string
+			// cast xs:anyURI to xs:string
 			if (vLeft instanceof cXSAnyURI)
 				vLeft	= cXSString.cast(vLeft);
 			if (vRight instanceof cXSAnyURI)
 				vRight	= cXSString.cast(vRight);
 
-			bResult	= cComparisonExpr.ValueComp.operators[cComparisonExpr.GeneralComp.map[oExpr.operator]](vLeft, vRight, oContext);
+			bResult	= cComparisonExpr.ValueComp.operators[cComparisonExpr.GeneralComp.map[oExpr.operator]](vLeft, vRight, oContext).value;
 		}
 	}
-	return bResult;
+	return new cXSBoolean(bResult);
 };
 
 cComparisonExpr.GeneralComp.map	= {
@@ -146,8 +146,8 @@ cComparisonExpr.ValueComp.operators['eq']	= function(oLeft, oRight, oContext) {
 	var cLeft	= cXSAnyAtomicType.typeOf(oLeft),
 		cRight	= cXSAnyAtomicType.typeOf(oRight);
 
-	if (cXSAnyAtomicType.isNumeric(cLeft)) {
-		if (cXSAnyAtomicType.isNumeric(cRight))
+	if (cXSAnyAtomicType.isNumeric(oLeft)) {
+		if (cXSAnyAtomicType.isNumeric(oRight))
 			return hXPath2StaticContext_operators["numeric-equal"].call(oContext, oLeft, oRight);
 	}
 	else
@@ -156,7 +156,7 @@ cComparisonExpr.ValueComp.operators['eq']	= function(oLeft, oRight, oContext) {
 			return hXPath2StaticContext_operators["boolean-equal"].call(oContext, oLeft, oRight);
 		else
 		if (cLeft == cXSString)
-			return hXPath2StaticContext_operators["numeric-equal"].call(oContext, hXPath2StaticContext_functions["compare"].call(oContext, new cXPath2Sequence(oLeft), new cXPath2Sequence(oRight)), 0);
+			return hXPath2StaticContext_operators["numeric-equal"].call(oContext, hXPath2StaticContext_functions["compare"].call(oContext, new cXPath2Sequence(oLeft), new cXPath2Sequence(oRight)), new cXSInteger(0));
 		else
 		if (cLeft == cXSDate)
 			return hXPath2StaticContext_operators["date-equal"].call(oContext, oLeft, oRight);
@@ -195,13 +195,13 @@ cComparisonExpr.ValueComp.operators['eq']	= function(oLeft, oRight, oContext) {
 	);	// Cannot compare {type1} to {type2}
 };
 cComparisonExpr.ValueComp.operators['ne']	= function(oLeft, oRight, oContext) {
-	return !cComparisonExpr.ValueComp.operators['eq'](oLeft, oRight, oContext);
+	return new cXSBoolean(!cComparisonExpr.ValueComp.operators['eq'](oLeft, oRight, oContext).value);
 };
 cComparisonExpr.ValueComp.operators['gt']	= function(oLeft, oRight, oContext) {
 	var cLeft	= cXSAnyAtomicType.typeOf(oLeft),
 		cRight	= cXSAnyAtomicType.typeOf(oRight);
-	if (cXSAnyAtomicType.isNumeric(cLeft)) {
-		if (cXSAnyAtomicType.isNumeric(cRight))
+	if (cXSAnyAtomicType.isNumeric(oLeft)) {
+		if (cXSAnyAtomicType.isNumeric(oRight))
 			return hXPath2StaticContext_operators["numeric-greater-than"].call(oContext, oLeft, oRight);
 	}
 	else
@@ -210,7 +210,7 @@ cComparisonExpr.ValueComp.operators['gt']	= function(oLeft, oRight, oContext) {
 			return hXPath2StaticContext_operators["boolean-greater-than"].call(oContext, oLeft, oRight);
 		else
 		if (cLeft == cXSString)
-			return hXPath2StaticContext_operators["numeric-greater-than"].call(oContext, hXPath2StaticContext_functions["compare"].call(oContext, new cXPath2Sequence(oLeft), new cXPath2Sequence(oRight)), 0);
+			return hXPath2StaticContext_operators["numeric-greater-than"].call(oContext, hXPath2StaticContext_functions["compare"].call(oContext, new cXPath2Sequence(oLeft), new cXPath2Sequence(oRight)), new cXSInteger(0));
 		else
 		if (cLeft == cXSDate)
 			return hXPath2StaticContext_operators["date-greater-than"].call(oContext, oLeft, oRight);
@@ -237,8 +237,8 @@ cComparisonExpr.ValueComp.operators['gt']	= function(oLeft, oRight, oContext) {
 cComparisonExpr.ValueComp.operators['lt']	= function(oLeft, oRight, oContext) {
 	var cLeft	= cXSAnyAtomicType.typeOf(oLeft),
 		cRight	= cXSAnyAtomicType.typeOf(oRight);
-	if (cXSAnyAtomicType.isNumeric(cLeft)) {
-		if (cXSAnyAtomicType.isNumeric(cRight))
+	if (cXSAnyAtomicType.isNumeric(oLeft)) {
+		if (cXSAnyAtomicType.isNumeric(oRight))
 			return hXPath2StaticContext_operators["numeric-less-than"].call(oContext, oLeft, oRight);
 	}
 	else
@@ -247,7 +247,7 @@ cComparisonExpr.ValueComp.operators['lt']	= function(oLeft, oRight, oContext) {
 			return hXPath2StaticContext_operators["boolean-less-than"].call(oContext, oLeft, oRight);
 		else
 		if (cLeft == cXSBoolean)
-			return hXPath2StaticContext_operators["numeric-less-than"].call(oContext, hXPath2StaticContext_functions["compare"].call(oContext, new cXPath2Sequence(oLeft), new cXPath2Sequence(oRight)), 0);
+			return hXPath2StaticContext_operators["numeric-less-than"].call(oContext, hXPath2StaticContext_functions["compare"].call(oContext, new cXPath2Sequence(oLeft), new cXPath2Sequence(oRight)), new cXSInteger(0));
 		else
 		if (cLeft == cXSDate)
 			return hXPath2StaticContext_operators["date-less-than"].call(oContext, oLeft, oRight);
@@ -274,8 +274,8 @@ cComparisonExpr.ValueComp.operators['lt']	= function(oLeft, oRight, oContext) {
 cComparisonExpr.ValueComp.operators['ge']	= function(oLeft, oRight, oContext) {
 	var cLeft	= cXSAnyAtomicType.typeOf(oLeft),
 		cRight	= cXSAnyAtomicType.typeOf(oRight);
-	if (cXSAnyAtomicType.isNumeric(cLeft)) {
-		if (cXSAnyAtomicType.isNumeric(cRight))
+	if (cXSAnyAtomicType.isNumeric(oLeft)) {
+		if (cXSAnyAtomicType.isNumeric(oRight))
 			return hXPath2StaticContext_operators["numeric-greater-than"].call(oContext, oLeft, oRight) || hXPath2StaticContext_operators["numeric-equal"].call(oContext, oLeft, oRight);
 	}
 	else
@@ -284,7 +284,7 @@ cComparisonExpr.ValueComp.operators['ge']	= function(oLeft, oRight, oContext) {
 			return !hXPath2StaticContext_operators["boolean-less-than"].call(oContext, oLeft, oRight);
 		else
 		if (cLeft == cXSString)
-			return hXPath2StaticContext_operators["numeric-greater-than"].call(oContext, hXPath2StaticContext_functions["compare"].call(oContext, new cXPath2Sequence(oLeft), new cXPath2Sequence(oRight)), -1);
+			return hXPath2StaticContext_operators["numeric-greater-than"].call(oContext, hXPath2StaticContext_functions["compare"].call(oContext, new cXPath2Sequence(oLeft), new cXPath2Sequence(oRight)), new cXSInteger(-1));
 		else
 		if (cLeft == cXSDate)
 			return !hXPath2StaticContext_operators["date-less-than"].call(oContext, oLeft, oRight);
@@ -311,8 +311,8 @@ cComparisonExpr.ValueComp.operators['ge']	= function(oLeft, oRight, oContext) {
 cComparisonExpr.ValueComp.operators['le']	= function(oLeft, oRight, oContext) {
 	var cLeft	= cXSAnyAtomicType.typeOf(oLeft),
 		cRight	= cXSAnyAtomicType.typeOf(oRight);
-	if (cXSAnyAtomicType.isNumeric(cLeft)) {
-		if (cXSAnyAtomicType.isNumeric(cRight))
+	if (cXSAnyAtomicType.isNumeric(oLeft)) {
+		if (cXSAnyAtomicType.isNumeric(oRight))
 			return hXPath2StaticContext_operators["numeric-less-than"].call(oContext, oLeft, oRight) || hXPath2StaticContext_operators["numeric-equal"].call(oContext, oLeft, oRight);
 	}
 	else
@@ -321,7 +321,7 @@ cComparisonExpr.ValueComp.operators['le']	= function(oLeft, oRight, oContext) {
 			return !hXPath2StaticContext_operators["boolean-greater-than"].call(oContext, oLeft, oRight);
 		else
 		if (cLeft == cXSString)
-			return hXPath2StaticContext_operators["numeric-less-than"].call(oContext, hXPath2StaticContext_functions["compare"].call(oContext, new cXPath2Sequence(oLeft), new cXPath2Sequence(oRight)), 1);
+			return hXPath2StaticContext_operators["numeric-less-than"].call(oContext, hXPath2StaticContext_functions["compare"].call(oContext, new cXPath2Sequence(oLeft), new cXPath2Sequence(oRight)), new cXSInteger(1));
 		else
 		if (cLeft == cXSDate)
 			return !hXPath2StaticContext_operators["date-greater-than"].call(oContext, oLeft, oRight);

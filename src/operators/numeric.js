@@ -37,37 +37,37 @@ function fFunctionCall_numeric_getPower(a, b) {
 
 // op:numeric-add($arg1 as numeric, $arg2 as numeric) as numeric
 hXPath2StaticContext_operators["numeric-add"]		= function(oLeft, oRight) {
-	var c	= cMath.pow(10, fFunctionCall_numeric_getPower(oLeft, oRight));
-	return ((oLeft * c) + (oRight * c))/c;
+	var c	= cMath.pow(10, fFunctionCall_numeric_getPower(oLeft.value, oRight.value));
+	return new cXSDecimal(((oLeft * c) + (oRight * c))/c);
 };
 
 // op:numeric-subtract($arg1 as numeric, $arg2 as numeric) as numeric
 hXPath2StaticContext_operators["numeric-subtract"]	= function(oLeft, oRight) {
-	var c	= cMath.pow(10, fFunctionCall_numeric_getPower(oLeft, oRight));
-	return ((oLeft * c) - (oRight * c))/c;
+	var c	= cMath.pow(10, fFunctionCall_numeric_getPower(oLeft.value, oRight.value));
+	return new cXSDecimal(((oLeft * c) - (oRight * c))/c);
 };
 
 // op:numeric-multiply($arg1 as numeric, $arg2 as numeric) as numeric
 hXPath2StaticContext_operators["numeric-multiply"]	= function(oLeft, oRight) {
-	var c	= cMath.pow(10, fFunctionCall_numeric_getPower(oLeft, oRight));
-	return ((oLeft * c) * (oRight * c))/(c * c);
+	var c	= cMath.pow(10, fFunctionCall_numeric_getPower(oLeft.value, oRight.value));
+	return new cXSDecimal(((oLeft * c) * (oRight * c))/(c * c));
 };
 
 // op:numeric-divide($arg1 as numeric, $arg2 as numeric) as numeric
 hXPath2StaticContext_operators["numeric-divide"]	= function(oLeft, oRight) {
-	var c	= cMath.pow(10, fFunctionCall_numeric_getPower(oLeft, oRight));
-	return (oLeft * c) / (oRight * c);
+	var c	= cMath.pow(10, fFunctionCall_numeric_getPower(oLeft.value, oRight.value));
+	return new cXSDecimal((oLeft * c) / (oRight * c));
 };
 
 // op:numeric-integer-divide($arg1 as numeric, $arg2 as numeric) as xs:integer
 hXPath2StaticContext_operators["numeric-integer-divide"]	= function(oLeft, oRight) {
-	return ~~(oLeft / oRight);
+	return new cXSInteger(~~(oLeft / oRight));
 };
 
 // op:numeric-mod($arg1 as numeric, $arg2 as numeric) as numeric
 hXPath2StaticContext_operators["numeric-mod"]	= function(oLeft, oRight) {
-	var c	= cMath.pow(10, fFunctionCall_numeric_getPower(oLeft, oRight));
-	return ((oLeft * c) % (oRight * c)) / c;
+	var c	= cMath.pow(10, fFunctionCall_numeric_getPower(oLeft.value, oRight.value));
+	return new cXSDecimal(((oLeft * c) % (oRight * c)) / c);
 };
 
 // op:numeric-unary-plus($arg as numeric) as numeric
@@ -77,22 +77,23 @@ hXPath2StaticContext_operators["numeric-unary-plus"]	= function(oRight) {
 
 // op:numeric-unary-minus($arg as numeric) as numeric
 hXPath2StaticContext_operators["numeric-unary-minus"]	= function(oRight) {
-	return -oRight;
+	oRight.value	*=-1;
+	return oRight;
 };
 
 
 // 6.3 Comparison Operators on Numeric Values
 // op:numeric-equal($arg1 as numeric, $arg2 as numeric) as xs:boolean
 hXPath2StaticContext_operators["numeric-equal"]	= function(oLeft, oRight) {
-	return oLeft == oRight;
+	return new cXSBoolean(oLeft.value == oRight.value);
 };
 
 // op:numeric-less-than($arg1 as numeric, $arg2 as numeric) as xs:boolean
 hXPath2StaticContext_operators["numeric-less-than"]	= function(oLeft, oRight) {
-	return oLeft < oRight;
+	return new cXSBoolean(oLeft.value < oRight.value);
 };
 
 // op:numeric-greater-than($arg1 as numeric, $arg2 as numeric) as xs:boolean
 hXPath2StaticContext_operators["numeric-greater-than"]	= function(oLeft, oRight) {
-	return oLeft > oRight;
+	return new cXSBoolean(oLeft.value > oRight.value);
 };

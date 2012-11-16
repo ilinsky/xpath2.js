@@ -53,7 +53,7 @@ cStepExpr.prototype.applyPredicates	= function(oContext, oSequence) {
 			//
 			oSequence2	= this.predicates[nPredicateIndex].evaluate(oContext);
 			//
-			if (oSequence2.isSingleton() && typeof oSequence2.items[0] == "number") {
+			if (oSequence2.isSingleton() && cXSAnyAtomicType.isNumeric(oSequence2.items[0])) {
 				if (oSequence2.items[0] == nIndex + 1)
 					oSequence.add(oSequence1.items[nIndex]);
 			}

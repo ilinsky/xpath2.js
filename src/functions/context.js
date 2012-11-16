@@ -21,12 +21,12 @@
 */
 // fn:position() as xs:integer
 fXPath2StaticContext_defineSystemFunction("position",	[],	function() {
-	return this.position;
+	return new cXSInteger(this.position);
 });
 
 // fn:last() as xs:integer
 fXPath2StaticContext_defineSystemFunction("last",	[],	function() {
-	return this.size;
+	return new cXSInteger(this.size);
 });
 
 // fn:current-dateTime() as xs:dateTime (2004-05-12T18:17:15.125Z)
@@ -51,10 +51,10 @@ fXPath2StaticContext_defineSystemFunction("implicit-timezone",	[],	function() {
 
 // fn:default-collation() as xs:string
 fXPath2StaticContext_defineSystemFunction("default-collation",	[],	 function() {
-	return this.staticContext.defaultCollationName;
+	return new cXSString(this.staticContext.defaultCollationName);
 });
 
 // fn:static-base-uri() as xs:anyURI?
 fXPath2StaticContext_defineSystemFunction("static-base-uri",	[],	function() {
-	return this.staticContext.baseURI;
+	return cXSAnyURI.cast(new cXSString(this.staticContext.baseURI || ''));
 });

@@ -181,8 +181,9 @@ function fFunctionCall_duration_getComponent(oSequence1, sName) {
 	if (oSequence1.isEmpty())
 		return null;
 
-	var oItem	= oSequence1.items[0];
-	return oItem[sName] * (oItem.negative ?-1 : 1);
+	var oItem	= oSequence1.items[0],
+		nValue	= oItem[sName] * (oItem.negative ?-1 : 1);
+	return sName == "seconds" ? new cXSDecimal(nValue) : new cXSInteger(nValue);
 };
 
 //
@@ -207,7 +208,7 @@ function fFunctionCall_dateTime_getComponent(oSequence1, sName) {
 		}
 		if (cType != cXSTime)
 			nValue	*= oItem.negative ?-1 : 1;
-		return nValue;
+		return sName == "seconds" ? new cXSDecimal(nValue) : new cXSInteger(nValue);
 	}
 };
 

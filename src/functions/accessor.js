@@ -48,7 +48,7 @@ fXPath2StaticContext_defineSystemFunction("nilled",	[[cXTNode, '?']],	function(o
 
 	var oNode	= oSequence1.items[0];
 	if (this.DOMAdapter.getProperty(oNode, "nodeType") == 1)
-		return false;	// TODO: Determine if node is nilled
+		return new cXSBoolean(false);	// TODO: Determine if node is nilled
 
 	return null;
 });
@@ -58,7 +58,7 @@ fXPath2StaticContext_defineSystemFunction("nilled",	[[cXTNode, '?']],	function(o
 fXPath2StaticContext_defineSystemFunction("string",	[[cXTItem, '?', true]],	function(/*[*/oSequence1/*]*/) {
 	if (!arguments.length)
 		oSequence1	= new cXPath2Sequence(this.item);
-	return oSequence1.toString(this);
+	return new cXSString(oSequence1.toString(this));
 });
 
 // fn:data($arg as item()*) as xs:anyAtomicType*
@@ -82,7 +82,7 @@ fXPath2StaticContext_defineSystemFunction("base-uri",	[[cXTNode, '?', true]],	fu
 	if (oSequence1.isEmpty())
 		return null;
 	//
-	return this.DOMAdapter.getProperty(oSequence1.items[0], "baseURI");
+	return cXSAnyURI.cast(new cXSString(this.DOMAdapter.getProperty(oSequence1.items[0], "baseURI") || ''));
 });
 
 // fn:document-uri($arg as node()?) as xs:anyURI?
@@ -92,7 +92,7 @@ fXPath2StaticContext_defineSystemFunction("document-uri",	[[cXTNode, '?']],	func
 	//
 	var oNode	= oSequence1.items[0];
 	if (this.DOMAdapter.getProperty(oNode, "nodeType") == 9)
-		return this.DOMAdapter.getProperty(oNode, "documentURI");
+		return cXSAnyURI.cast(new cXSString(this.DOMAdapter.getProperty(oNode, "documentURI") || ''));
 	//
 	return null;
 });

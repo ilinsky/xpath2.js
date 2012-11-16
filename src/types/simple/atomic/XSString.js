@@ -15,6 +15,10 @@ cXSString.prototype	= new cXSAnyAtomicType;
 
 cXSString.prototype.value	= null;
 
+cXSString.prototype.valueOf		= function() {
+	return this.value;
+};
+
 cXSString.prototype.toString	= function() {
 	return this.value;
 };
@@ -45,7 +49,7 @@ cXSString.cast	= function(vValue) {
 		//
 		case cXSQName:
 			//
-			return cString(vValue);
+			return new cXSString(vValue);
 	}
 	throw new cXPath2Error("XPTY0004"
 //->Debug

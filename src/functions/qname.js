@@ -24,7 +24,7 @@
 // 11.1 Additional Constructor Functions for QNames
 // fn:resolve-QName($qname as xs:string?, $element as element()) as xs:QName?
 fXPath2StaticContext_defineSystemFunction("resolve-QName",	[[cXSString, '?'], [cXTElement]],	function(oSequence1, oSequence2) {
-	var sQName	= oSequence1.items[0] || '',
+	var sQName	= oSequence1.items[0].value || '',
 		aQName	= sQName.split(':'),
 		sLocalName	= aQName.pop(),
 		sPrefix	= aQName.pop() || null;
@@ -37,13 +37,13 @@ fXPath2StaticContext_defineSystemFunction("resolve-QName",	[[cXSString, '?'], [c
 
 // fn:QName($paramURI as xs:string?, $paramQName as xs:string) as xs:QName
 fXPath2StaticContext_defineSystemFunction("QName",		[[cXSString, '?'], [cXSString]],	function(oSequence1, oSequence2) {
-	var sQName	= oSequence2.items[0],
+	var sQName	= oSequence2.items[0].value,
 		aQName	= sQName.split(':'),
 		sLocalName	= aQName.pop(),
 		sPrefix	= aQName.pop() || null;
 
 	// TODO: Implement QName type
-	return new cXSQName(sPrefix, sLocalName, oSequence1.items[0] || '');
+	return new cXSQName(sPrefix, sLocalName, oSequence1.isEmpty() ? '' : oSequence1.items[0].value);
 });
 
 // 11.2 Functions Related to QNames
@@ -53,24 +53,30 @@ fXPath2StaticContext_defineSystemFunction("prefix-from-QName",			[[cXSQName, '?'
 		return null;
 
 	if (oSequence1.items[0].prefix)
-		return oSequence1.items[0].prefix;
+		return new cXSNCName(oSequence1.items[0].prefix);
 
 	return null;
 });
 
 // fn:local-name-from-QName($arg as xs:QName?) as xs:NCName?
 fXPath2StaticContext_defineSystemFunction("local-name-from-QName",		[[cXSQName, '?']],	function(oSequence1) {
-	return oSequence1.items[0].localName;
+	if (oSequence1.isEmpty())
+		return null;
+
+	return new cXSNCName(oSequence1.items[0].localName);
 });
 
 // fn:namespace-uri-from-QName($arg as xs:QName?) as xs:anyURI?
 fXPath2StaticContext_defineSystemFunction("namespace-uri-from-QName",	[[cXSQName, '?']],	function(oSequence1) {
-	return oSequence1.items[0].namespaceURI;
+	if (oSequence1.isEmpty())
+		return null;
+
+	return cXSAnyURI.cast(new cXSString(oSequence1.items[0].namespaceURI || ''));
 });
 
 // fn:namespace-uri-for-prefix($prefix as xs:string?, $element as element()) as xs:anyURI?
 fXPath2StaticContext_defineSystemFunction("namespace-uri-for-prefix",	[[cXSString, '?'], [cXTElement]],	function(oSequence1, oSequence2) {
-	var sQName	= oSequence1.items[0] || '',
+	var sQName	= oSequence1.isEmpty() ? '' : oSequence1.items[0].value,
 		aQName	= sQName.split(':'),
 		sLocalName	= aQName.pop(),
 		sPrefix	= aQName.pop() || null;
@@ -78,7 +84,7 @@ fXPath2StaticContext_defineSystemFunction("namespace-uri-for-prefix",	[[cXSStrin
 	if (oSequence2.isEmpty())
 		return null;
 
-	return this.DOMAdapter.lookupNamespaceURI(oSequence2.items[0], sPrefix || "");
+	return cXSAnyURI.cast(new cXSString(this.DOMAdapter.lookupNamespaceURI(oSequence2.items[0], sPrefix || '')));
 });
 
 // fn:in-scope-prefixes($element as element()) as xs:string*

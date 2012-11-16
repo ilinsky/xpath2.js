@@ -23,22 +23,22 @@ fXPath2StaticContext_defineSystemFunction("resolve-uri",	[[cXSString, '?'], [cXS
 					, "resolve-uri() function called when the context item is not a node"
 //<-Debug
 			);
-		sBaseUri	= this.DOMAdapter.getProperty(this.item, "baseURI");
+		sBaseUri	= this.DOMAdapter.getProperty(this.item, "baseURI") || '';
 	}
 	else
-		sBaseUri	= oSequence2.items[0];
+		sBaseUri	= oSequence2.items[0].value;
 
 	if (oSequence1.isEmpty())
 		return null;
 
 	//
-	var sUri	= oSequence1.items[0];
+	var sUri	= oSequence1.items[0].value;
 	if (sUri == '' || sUri.charAt(0) == '#')
-		return sBaseUri;
+		return cXSAnyURI.cast(sBaseUri);
 
 	var oUri	= cXSAnyURI.cast(sUri);
 	if (oUri.scheme)
-		return sUri;
+		return oUri;
 
 	var oBaseUri	= cXSAnyURI.cast(sBaseUri);
 	oUri.scheme	= oBaseUri.scheme;
@@ -74,5 +74,5 @@ fXPath2StaticContext_defineSystemFunction("resolve-uri",	[[cXSString, '?'], [cXS
 		}
 	}
 
-	return oUri.toString();
+	return oUri;
 });

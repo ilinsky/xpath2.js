@@ -62,32 +62,32 @@
 // 10.4 Comparison Operators on Duration, Date and Time Values
 // op:yearMonthDuration-less-than($arg1 as xs:yearMonthDuration, $arg2 as xs:yearMonthDuration) as xs:boolean
 hXPath2StaticContext_operators["yearMonthDuration-less-than"]	= function(oLeft, oRight) {
-	return fFunctionCall_operators_yearMonthDuration_toMonths(oLeft) < fFunctionCall_operators_yearMonthDuration_toMonths(oRight);
+	return new cXSBoolean(fFunctionCall_operators_yearMonthDuration_toMonths(oLeft) < fFunctionCall_operators_yearMonthDuration_toMonths(oRight));
 };
 
 // op:yearMonthDuration-greater-than($arg1 as xs:yearMonthDuration, $arg2 as xs:yearMonthDuration) as xs:boolean
 hXPath2StaticContext_operators["yearMonthDuration-greater-than"]	= function(oLeft, oRight) {
-	return fFunctionCall_operators_yearMonthDuration_toMonths(oLeft) > fFunctionCall_operators_yearMonthDuration_toMonths(oRight);
+	return new cXSBoolean(fFunctionCall_operators_yearMonthDuration_toMonths(oLeft) > fFunctionCall_operators_yearMonthDuration_toMonths(oRight));
 };
 
 // op:dayTimeDuration-less-than($arg1 as dayTimeDuration, $arg2 as dayTimeDuration) as xs:boolean
 hXPath2StaticContext_operators["dayTimeDuration-less-than"]	= function(oLeft, oRight) {
-	return fFunctionCall_operators_dayTimeDuration_toSeconds(oLeft) < fFunctionCall_operators_dayTimeDuration_toSeconds(oRight);
+	return new cXSBoolean(fFunctionCall_operators_dayTimeDuration_toSeconds(oLeft) < fFunctionCall_operators_dayTimeDuration_toSeconds(oRight));
 };
 
 // op:dayTimeDuration-greater-than($arg1 as dayTimeDuration, $arg2 as dayTimeDuration) as xs:boolean
 hXPath2StaticContext_operators["dayTimeDuration-greater-than"]	= function(oLeft, oRight) {
-	return fFunctionCall_operators_dayTimeDuration_toSeconds(oLeft) > fFunctionCall_operators_dayTimeDuration_toSeconds(oRight);
+	return new cXSBoolean(fFunctionCall_operators_dayTimeDuration_toSeconds(oLeft) > fFunctionCall_operators_dayTimeDuration_toSeconds(oRight));
 };
 
 // op:duration-equal($arg1 as xs:duration, $arg2 as xs:duration) as xs:boolean
 hXPath2StaticContext_operators["duration-equal"]	= function(oLeft, oRight) {
-	return oLeft.negative == oRight.negative
+	return new cXSBoolean(oLeft.negative == oRight.negative
 			&& fFunctionCall_operators_yearMonthDuration_toMonths(oLeft) == fFunctionCall_operators_yearMonthDuration_toMonths(oRight)
-			&& fFunctionCall_operators_dayTimeDuration_toSeconds(oLeft) == fFunctionCall_operators_dayTimeDuration_toSeconds(oRight);
+			&& fFunctionCall_operators_dayTimeDuration_toSeconds(oLeft) == fFunctionCall_operators_dayTimeDuration_toSeconds(oRight));
 };
 
-// op:dateTime-equal($arg1 as xs:dateTime, $arg2 as xs:dateTime)
+// op:dateTime-equal($arg1 as xs:dateTime, $arg2 as xs:dateTime) as xs:boolean
 hXPath2StaticContext_operators["dateTime-equal"]	= function(oLeft, oRight) {
 	return fFunctionCall_operators_compareDateTime(oLeft, oRight, 'eq');
 };
@@ -119,17 +119,17 @@ hXPath2StaticContext_operators["date-greater-than"]	= function(oLeft, oRight) {
 
 // op:time-equal($arg1 as xs:time, $arg2 as xs:time) as xs:boolean
 hXPath2StaticContext_operators["time-equal"]	= function(oLeft, oRight) {
-	return fFunctionCall_operators_time_toSeconds(oLeft) == fFunctionCall_operators_time_toSeconds(oRight);
+	return new cXSBoolean(fFunctionCall_operators_time_toSeconds(oLeft) == fFunctionCall_operators_time_toSeconds(oRight));
 };
 
 // op:time-less-than($arg1 as xs:time, $arg2 as xs:time) as xs:boolean
 hXPath2StaticContext_operators["time-less-than"]	= function(oLeft, oRight) {
-	return fFunctionCall_operators_time_toSeconds(oLeft) < fFunctionCall_operators_time_toSeconds(oRight);
+	return new cXSBoolean(fFunctionCall_operators_time_toSeconds(oLeft) < fFunctionCall_operators_time_toSeconds(oRight));
 };
 
 // op:time-greater-than($arg1 as xs:time, $arg2 as xs:time) as xs:boolean
 hXPath2StaticContext_operators["time-greater-than"]	= function(oLeft, oRight) {
-	return fFunctionCall_operators_time_toSeconds(oLeft) > fFunctionCall_operators_time_toSeconds(oRight);
+	return new cXSBoolean(fFunctionCall_operators_time_toSeconds(oLeft) > fFunctionCall_operators_time_toSeconds(oRight));
 };
 
 // op:gYearMonth-equal
@@ -162,7 +162,7 @@ hXPath2StaticContext_operators["divide-yearMonthDuration"]	= function(oLeft, oRi
 
 // op:divide-yearMonthDuration-by-yearMonthDuration($arg1 as xs:yearMonthDuration, $arg2 as xs:yearMonthDuration) as xs:decimal
 hXPath2StaticContext_operators["divide-yearMonthDuration-by-yearMonthDuration"]	= function(oLeft, oRight) {
-	return fFunctionCall_operators_yearMonthDuration_toMonths(oLeft) / fFunctionCall_operators_yearMonthDuration_toMonths(oRight);
+	return new cXSDecimal(fFunctionCall_operators_yearMonthDuration_toMonths(oLeft) / fFunctionCall_operators_yearMonthDuration_toMonths(oRight));
 };
 
 // op:add-dayTimeDurations($arg1 as xs:dayTimeDuration, $arg2 as xs:dayTimeDuration) as xs:dayTimeDuration
@@ -187,7 +187,7 @@ hXPath2StaticContext_operators["divide-dayTimeDuration"]	= function(oLeft, oRigh
 
 // op:divide-dayTimeDuration-by-dayTimeDuration($arg1 as xs:dayTimeDuration, $arg2 as xs:dayTimeDuration) as xs:decimal
 hXPath2StaticContext_operators["divide-dayTimeDuration-by-dayTimeDuration"]	= function(oLeft, oRight) {
-	return fFunctionCall_operators_dayTimeDuration_toSeconds(oLeft) / fFunctionCall_operators_dayTimeDuration_toSeconds(oRight);
+	return new cXSDecimal(fFunctionCall_operators_dayTimeDuration_toSeconds(oLeft) / fFunctionCall_operators_dayTimeDuration_toSeconds(oRight));
 };
 
 // 10.8 Arithmetic Operators on Durations, Dates and Times
@@ -275,7 +275,7 @@ function fFunctionCall_operators_compareDateTime(oLeft, oRight, sComparator) {
 	var oTimezone	= new cXSDayTimeDuration(0, 0, 0, 0),
 		sLeft	= fFunctionCall_dateTime_adjustTimezone(oLeft, oTimezone).toString(),
 		sRight	= fFunctionCall_dateTime_adjustTimezone(oRight, oTimezone).toString();
-	return sComparator == 'lt' ? sLeft < sRight : sComparator == 'gt' ? sLeft > sRight : sLeft == sRight;
+	return new cXSBoolean(sComparator == 'lt' ? sLeft < sRight : sComparator == 'gt' ? sLeft > sRight : sLeft == sRight);
 };
 
 function fFunctionCall_operators_addYearMonthDurationToDateTime(oLeft, oRight, sOperator) {

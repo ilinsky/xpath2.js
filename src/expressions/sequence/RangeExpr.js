@@ -47,7 +47,7 @@ cRangeExpr.prototype.evaluate	= function (oContext) {
 	if (vRight instanceof cXSUntypedAtomic)
 		vRight	= cXSInteger.cast(vRight);
 
-	if (typeof vLeft == "number" && ~~vLeft == vLeft && typeof vRight == "number" && ~~vRight == vRight)
+	if (vLeft instanceof cXSInteger && vRight instanceof cXSInteger)
 		return hXPath2StaticContext_operators["to"].call(oContext, vLeft, vRight);
 	//
 	throw new cXPath2Error("XPTY0004"

@@ -22,7 +22,7 @@ cXSUntypedAtomic.cast	= function(vValue) {
 	switch (cType) {
 		case cXSUntypedAtomic:
 			return vValue;
-
+		//
 		case cXSString:
 		//
 		case cXSFloat:

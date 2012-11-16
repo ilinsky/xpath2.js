@@ -21,8 +21,8 @@ cAdditiveExpr.operators	={};
 cAdditiveExpr.operators['+']	= function(oLeft, oRight, oContext) {
 	var cLeft	= cXSAnyAtomicType.typeOf(oLeft),
 		cRight	= cXSAnyAtomicType.typeOf(oRight);
-	if (cXSAnyAtomicType.isNumeric(cLeft)) {
-		if (cXSAnyAtomicType.isNumeric(cRight))
+	if (cXSAnyAtomicType.isNumeric(oLeft)) {
+		if (cXSAnyAtomicType.isNumeric(oRight))
 			return hXPath2StaticContext_operators["numeric-add"].call(oContext, oLeft, oRight);
 	}
 	else
@@ -74,8 +74,8 @@ cAdditiveExpr.operators['+']	= function(oLeft, oRight, oContext) {
 cAdditiveExpr.operators['-']	= function (oLeft, oRight, oContext) {
 	var cLeft	= cXSAnyAtomicType.typeOf(oLeft),
 		cRight	= cXSAnyAtomicType.typeOf(oRight);
-	if (cXSAnyAtomicType.isNumeric(cLeft)) {
-		if (cXSAnyAtomicType.isNumeric(cRight))
+	if (cXSAnyAtomicType.isNumeric(oLeft)) {
+		if (cXSAnyAtomicType.isNumeric(oRight))
 			return hXPath2StaticContext_operators["numeric-subtract"].call(oContext, oLeft, oRight);
 	}
 	else

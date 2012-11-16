@@ -48,7 +48,7 @@
 // 15.1 General Functions and Operators on Sequences
 // fn:boolean($arg as item()*) as xs:boolean
 fXPath2StaticContext_defineSystemFunction("boolean",	[[cXTItem, '*']],	function(oSequence1) {
-	return oSequence1.toBoolean(this);
+	return new cXSBoolean(oSequence1.toBoolean(this));
 });
 
 // fn:index-of($seqParam as xs:anyAtomicType*, $srchParam as xs:anyAtomicType) as xs:integer*
@@ -62,19 +62,19 @@ fXPath2StaticContext_defineSystemFunction("index-of",	[[cXSAnyAtomicType, '*'], 
 	var oSequence	= new cXPath2Sequence;
 	for (var nIndex = 0, nLength = oSequence1.items.length, oValue = oSequence2.items[0]; nIndex < nLength; nIndex++)
 		if (oSequence1.items[nIndex] == oValue)
-			oSequence.add(nIndex + 1);
+			oSequence.add(new cXSInteger(nIndex + 1));
 
 	return oSequence;
 });
 
 // fn:empty($arg as item()*) as xs:boolean
 fXPath2StaticContext_defineSystemFunction("empty",	[[cXTItem, '*']],	function(oSequence1) {
-	return oSequence1.isEmpty();
+	return new cXSBoolean(oSequence1.isEmpty());
 });
 
 // fn:exists($arg as item()*) as xs:boolean
 fXPath2StaticContext_defineSystemFunction("exists",	[[cXTItem, '*']],	function(oSequence1) {
-	return !oSequence1.isEmpty();
+	return new cXSBoolean(!oSequence1.isEmpty());
 });
 
 // fn:distinct-values($arg as xs:anyAtomicType*) as xs:anyAtomicType*
@@ -99,7 +99,7 @@ fXPath2StaticContext_defineSystemFunction("insert-before",	[[cXTItem, '*'], [cXS
 		return oSequence1;
 
 	var nLength 	= oSequence1.items.length,
-		nPosition	= oSequence2.items[0];
+		nPosition	= oSequence2.items[0].value;
 	if (nPosition < 1)
 		nPosition	= 1;
 	else
@@ -125,7 +125,7 @@ fXPath2StaticContext_defineSystemFunction("remove",	[[cXTItem, '*'], [cXSInteger
 		return oSequence;
 
 	var nLength 	= oSequence1.items.length,
-		nPosition	= oSequence2.items[0];
+		nPosition	= oSequence2.items[0].value;
 
 	if (nPosition < 1 || nPosition > nLength)
 		return oSequence1;
@@ -201,7 +201,7 @@ fXPath2StaticContext_defineSystemFunction("deep-equal",	[[cXTItem, '*'], [cXTIte
 // 15.4 Aggregate Functions
 // fn:count($arg as item()*) as xs:integer
 fXPath2StaticContext_defineSystemFunction("count",	[[cXTItem, '*']],	function(oSequence1) {
-	return oSequence1.items.length;
+	return new cXSInteger(oSequence1.items.length);
 });
 
 // fn:avg($arg as xs:anyAtomicType*) as xs:anyAtomicType?
@@ -293,7 +293,7 @@ fXPath2StaticContext_defineSystemFunction("sum",	[[cXSAnyAtomicType, '*'], [cXSA
 				return oSequence2.items[0];
 		}
 		else
-			return 0;
+			return new cXSDouble(0);
 
 		return null;
 	}

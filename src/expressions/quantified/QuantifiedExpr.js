@@ -61,7 +61,7 @@ cQuantifiedExpr.prototype.evaluate	= function (oContext) {
 		}
 	})(this, 0);
 
-	return new cXPath2Sequence(bResult);
+	return new cXPath2Sequence(new cXSBoolean(bResult));
 };
 
 

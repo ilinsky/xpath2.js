@@ -73,7 +73,7 @@ function fXPathResult_init(oResult, nType, oSequence) {
 			break;
 
 		case 2:	// XPathResult.STRING_TYPE
-			oResult.stringValue		= oSequence[0].toString();
+			oResult.stringValue		= oSequence[0];
 			break;
 
 		case 3:	// XPathResult.BOOLEAN_TYPE
