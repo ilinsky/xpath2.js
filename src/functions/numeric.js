@@ -47,16 +47,18 @@ fXPath2StaticContext_defineSystemFunction("round-half-to-even",	[[cXTNumeric, '?
 	}
 
 	//
-	if (oPrecision < 0) {
+	if (oPrecision.value < 0) {
 		var oPower	= new cXSInteger(cMath.pow(10,-oPrecision)),
-			oRounded= cMath.round(hXPath2StaticContext_operators["numeric-divide"].call(this, oValue, oPower)),
-			nDecimal= cMath.abs(hXPath2StaticContext_operators["numeric-subtract"].call(this, nRounded, hXPath2StaticContext_operators["numeric-divide"].call(this, oValue, oPower)));
-		return new cXSDecimal(hXPath2StaticContext_operators["numeric-multiply"].call(this, hXPath2StaticContext_operators["numeric-add"].call(this, nRounded, (nDecimal == 0.5 && nRounded % 2 ?-1 : 0)), oPower));
+			nRounded= cMath.round(hXPath2StaticContext_operators["numeric-divide"].call(this, oValue, oPower)),
+			oRounded= new cXSInteger(nRounded);
+			nDecimal= cMath.abs(hXPath2StaticContext_operators["numeric-subtract"].call(this, oRounded, hXPath2StaticContext_operators["numeric-divide"].call(this, oValue, oPower)));
+		return hXPath2StaticContext_operators["numeric-multiply"].call(this, hXPath2StaticContext_operators["numeric-add"].call(this, oRounded, new cXSDecimal(nDecimal == 0.5 && nRounded % 2 ?-1 : 0)), oPower);
 	}
 	else {
-		var oPower	= cMath.pow(10, oPrecision),
+		var oPower	= new cXSInteger(cMath.pow(10, oPrecision)),
 			nRounded= cMath.round(hXPath2StaticContext_operators["numeric-multiply"].call(this, oValue, oPower)),
-			nDecimal= cMath.abs(hXPath2StaticContext_operators["numeric-subtract"].call(this, nRounded, hXPath2StaticContext_operators["numeric-multiply"].call(this, oValue, oPower)));
-		return new cXSDecimal(hXPath2StaticContext_operators["numeric-divide"].call(this, hXPath2StaticContext_operators["numeric-add"].call(this, nRounded, (nDecimal == 0.5 && nRounded % 2 ?-1 : 0)), oPower));
+			oRounded= new cXSInteger(nRounded);
+			nDecimal= cMath.abs(hXPath2StaticContext_operators["numeric-subtract"].call(this, oRounded, hXPath2StaticContext_operators["numeric-multiply"].call(this, oValue, oPower)));
+		return hXPath2StaticContext_operators["numeric-divide"].call(this, hXPath2StaticContext_operators["numeric-add"].call(this, oRounded, new cXSDecimal(nDecimal == 0.5 && nRounded % 2 ?-1 : 0)), oPower);
 	}
 });
