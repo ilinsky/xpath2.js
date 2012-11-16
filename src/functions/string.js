@@ -181,7 +181,7 @@ fXPath2StaticContext_defineSystemFunction("upper-case",	[[cXSString, '?']],	func
 
 // fn:lower-case($arg as xs:string?) as xs:string
 fXPath2StaticContext_defineSystemFunction("lower-case",	[[cXSString, '?']],	function(oSequence1) {
-	return new cXSString(oSequence1.isEmpty() ? '' : oSequence1.items[0].toLowerCase());
+	return new cXSString(oSequence1.isEmpty() ? '' : oSequence1.items[0].value.toLowerCase());
 });
 
 // fn:translate($arg as xs:string?, $mapString as xs:string, $transString as xs:string) as xs:string
@@ -318,7 +318,7 @@ function fFunctionCall_string_createRegExp(sValue, sFlags) {
 // fn:matches($input as xs:string?, $pattern as xs:string) as xs:boolean
 // fn:matches($input as xs:string?, $pattern as xs:string, $flags as xs:string) as xs:boolean
 fXPath2StaticContext_defineSystemFunction("matches",	[[cXSString, '?'], [cXSString], [cXSString, '', true]],	function(oSequence1, oSequence2, oSequence3) {
-	var sValue	= oSequence1.isEmpty() ? '' : oSequence1.items[0],
+	var sValue	= oSequence1.isEmpty() ? '' : oSequence1.items[0].value,
 		rRegExp	= fFunctionCall_string_createRegExp(oSequence2.items[0].value, arguments.length > 2 ? oSequence3.items[0].value : '');
 
 	return new cXSBoolean(rRegExp.test(sValue));
@@ -327,7 +327,7 @@ fXPath2StaticContext_defineSystemFunction("matches",	[[cXSString, '?'], [cXSStri
 // fn:replace($input as xs:string?, $pattern as xs:string, $replacement as xs:string) as xs:string
 // fn:replace($input as xs:string?, $pattern as xs:string, $replacement as xs:string, $flags as xs:string) as xs:string
 fXPath2StaticContext_defineSystemFunction("replace",	[[cXSString, '?'], [cXSString],  [cXSString], [cXSString, '', true]],	function(oSequence1, oSequence2, oSequence3, oSequence4) {
-	var sValue	= oSequence1.isEmpty() ? '' : oSequence1.items[0],
+	var sValue	= oSequence1.isEmpty() ? '' : oSequence1.items[0].value,
 		rRegExp	= fFunctionCall_string_createRegExp(oSequence2.items[0].value, arguments.length > 3 ? oSequence4.items[0].value : ''),
 		sReplacement	= oSequence3.items[0].value;
 
@@ -337,8 +337,8 @@ fXPath2StaticContext_defineSystemFunction("replace",	[[cXSString, '?'], [cXSStri
 // fn:tokenize($input as xs:string?, $pattern as xs:string) as xs:string*
 // fn:tokenize($input as xs:string?, $pattern as xs:string, $flags as xs:string) as xs:string*
 fXPath2StaticContext_defineSystemFunction("tokenize",	[[cXSString, '?'], [cXSString], [cXSString, '', true]],	function(oSequence1, oSequence2, oSequence3) {
-	var sValue	= oSequence1.items[0] || '',
-		rRegExp	= fFunctionCall_string_createRegExp(oSequence2.items[0], arguments.length > 2 ? oSequence3.items[0] : '');
+	var sValue	= oSequence1.isEmpty() ? '' : oSequence1.items[0].value,
+		rRegExp	= fFunctionCall_string_createRegExp(oSequence2.items[0].value, arguments.length > 2 ? oSequence3.items[0].value : '');
 
 	var oSequence	= new cXPath2Sequence,
 		aValue = sValue.split(rRegExp);
