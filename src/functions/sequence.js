@@ -244,7 +244,7 @@ fXPath2StaticContext_defineSystemFunction("max",	[[cXSAnyAtomicType, '*'], [cXSS
 	try {
 		var vValue	= oSequence1.items[0];
 		for (var nIndex = 1, nLength = oSequence1.items.length; nIndex < nLength; nIndex++)
-			if (cComparisonExpr.ValueComp.operators['ge'](oSequence1.items[nIndex], vValue, this))
+			if (cComparisonExpr.ValueComp.operators['ge'](oSequence1.items[nIndex], vValue, this).value)
 				vValue	= oSequence1.items[nIndex];
 		return vValue;
 	}
@@ -270,7 +270,7 @@ fXPath2StaticContext_defineSystemFunction("min",	[[cXSAnyAtomicType, '*'], [cXSS
 	try {
 		var vValue	= oSequence1.items[0];
 		for (var nIndex = 1, nLength = oSequence1.items.length; nIndex < nLength; nIndex++)
-			if (cComparisonExpr.ValueComp.operators['le'](oSequence1.items[nIndex], vValue, this))
+			if (cComparisonExpr.ValueComp.operators['le'](oSequence1.items[nIndex], vValue, this).value)
 				vValue	= oSequence1.items[nIndex];
 		return vValue;
 	}
