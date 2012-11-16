@@ -125,12 +125,6 @@ cXPath2Sequence.prototype.toBoolean	= function(oContext) {
 	);
 };
 
-// fn:string()
-cXPath2Sequence.prototype.toString	= function(oContext) {
-	var oItem;
-	return this.items.length && (oItem = cXPath2Sequence.atomizeItem(this.items[0], oContext)) !== null ? '' + oItem : '';
-};
-
 cXPath2Sequence.prototype.indexOf	= function(oItem) {
 	for (var nIndex = 0, nLength = this.items.length; nIndex < nLength; nIndex++)
 		if (this.items[nIndex] === oItem)

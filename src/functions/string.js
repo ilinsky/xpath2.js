@@ -108,7 +108,7 @@ fXPath2StaticContext_defineSystemFunction("codepoint-equal",	[[cXSString, '?'], 
 
 // 7.4 Functions on String Values
 // fn:concat($arg1 as xs:anyAtomicType?, $arg2 as xs:anyAtomicType?, ...) as xs:string
-fXPath2StaticContext_defineSystemFunction("concat",	null,	function(oSequence1, oSequence2) {
+fXPath2StaticContext_defineSystemFunction("concat",	null,	function() {
 	// check arguments length
 	if (arguments.length < 2)
 		throw new cXPath2Error("XPST0017"
@@ -118,15 +118,17 @@ fXPath2StaticContext_defineSystemFunction("concat",	null,	function(oSequence1, o
 		);
 
 	var aValue	= [];
-	for (var nIndex = 0, nLength = arguments.length; nIndex < nLength; nIndex++) {
+	for (var nIndex = 0, nLength = arguments.length, oSequence; nIndex < nLength; nIndex++) {
+		oSequence	= arguments[nIndex];
 		// Assert cardinality
-		fFunctionCall_assertSequenceCardinality(this, arguments[nIndex], '?'
+		fFunctionCall_assertSequenceCardinality(this, oSequence, '?'
 //->Debug
 				, "each argument of concat()"
 //<-Debug
 		);
 		//
-		aValue[aValue.length]	= arguments[nIndex].toString(this);
+		if (!oSequence.isEmpty())
+			aValue[aValue.length]	= cXSString.cast(cXPath2Sequence.atomizeItem(oSequence.items[0], this)).value;
 	}
 
 	return new cXSString(aValue.join(''));
