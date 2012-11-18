@@ -41,7 +41,7 @@ cXSDecimal.cast	= function(vValue) {
 	//
 	throw new cXPath2Error("XPTY0004"
 //->Debug
-			, "Casting from " + cType + " to xs:decimal can never succeed"
+			, "Casting value '" + vValue + "' to xs:decimal can never succeed"
 //<-Debug
 	);
 };

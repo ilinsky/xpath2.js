@@ -61,7 +61,7 @@ cXSDate.cast	= function(vValue) {
 	//
 	throw new cXPath2Error("XPTY0004"
 //->Debug
-			, "Casting from " + cType + " to xs:date can never succeed"
+			, "Casting value '" + vValue + "' to xs:date can never succeed"
 //<-Debug
 	);
 };

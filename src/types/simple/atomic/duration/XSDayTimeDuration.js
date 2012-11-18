@@ -36,7 +36,7 @@ cXSDayTimeDuration.cast	= function(vValue) {
 	//
 	throw new cXPath2Error("XPTY0004"
 //->Debug
-			, "Casting from " + cType + " to xs:dayTimeDuration can never succeed"
+			, "Casting value '" + vValue + "' to xs:dayTimeDuration can never succeed"
 //<-Debug
 	);
 };

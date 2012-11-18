@@ -39,7 +39,7 @@ cXSBoolean.cast	= function(vValue) {
 	//
 	throw new cXPath2Error("XPTY0004"
 //->Debug
-			, "Casting from " + cType + " to xs:boolean can never succeed"
+			, "Casting value '" + vValue + "' to xs:boolean can never succeed"
 //<-Debug
 	);
 };

@@ -50,7 +50,7 @@ cXSDuration.cast	= function(vValue) {
 	//
 	throw new cXPath2Error("XPTY0004"
 //->Debug
-			, "Casting from " + cType + " to xs:duration can never succeed"
+			, "Casting value '" + vValue + "' to xs:duration can never succeed"
 //<-Debug
 	);
 };

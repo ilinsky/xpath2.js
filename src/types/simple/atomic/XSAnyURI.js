@@ -45,7 +45,7 @@ cXSAnyURI.cast	= function(vValue) {
 	//
 	throw new cXPath2Error("XPTY0004"
 //->Debug
-			, "Casting from " + cType + " to xs:anyURI can never succeed"
+			, "Casting value '" + vValue + "' to xs:anyURI can never succeed"
 //<-Debug
 	);
 };

@@ -31,7 +31,7 @@ cXSInteger.cast	= function(vValue) {
 	//
 	throw new cXPath2Error("XPTY0004"
 //->Debug
-			, "Casting from " + cType + " to xs:integer can never succeed"
+			, "Casting value '" + vValue + "' to xs:integer can never succeed"
 //<-Debug
 	);
 };

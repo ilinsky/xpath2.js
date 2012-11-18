@@ -48,7 +48,7 @@ cXSTime.cast	= function(vValue) {
 	//
 	throw new cXPath2Error("XPTY0004"
 //->Debug
-			, "Casting from " + cType + " to xs:time can never succeed"
+			, "Casting value '" + vValue + "' to xs:time can never succeed"
 //<-Debug
 	);
 };

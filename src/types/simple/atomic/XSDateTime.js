@@ -73,7 +73,7 @@ cXSDateTime.cast	= function(vValue) {
 	//
 	throw new cXPath2Error("XPTY0004"
 //->Debug
-			, "Casting from " + cType + " to xs:dateTime can never succeed"
+			, "Casting value '" + vValue + "' to xs:dateTime can never succeed"
 //<-Debug
 	);
 };
