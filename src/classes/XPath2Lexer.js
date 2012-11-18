@@ -23,7 +23,7 @@ function cXPath2Lexer(sValue) {
 		if (nStack)
 			throw new cXPath2Error("XPST0003"
 //->Debug
-					, "Unclosed XPath comment"
+					, "Unclosed comment"
 //<-Debug
 			);
 	}
