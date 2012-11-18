@@ -25,7 +25,7 @@ cNumericLiteral.parse	= function(oLexer, oStaticContext) {
 		if (cString(nValue).match(cXSDecimal.RegExp))
 			oValue	= new cXSDecimal(nValue);
 		else
-			oValue	= new cXSDecimal(nValue);
+			oValue	= new cXSDouble(nValue);
 		return new cNumericLiteral(oValue);
 	}
 };
