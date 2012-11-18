@@ -26,18 +26,15 @@ cXSQName.prototype.toString	= function() {
 };
 
 cXSQName.cast	= function(vValue) {
-	var cType	= cXSAnyAtomicType.typeOf(vValue);
-	switch (cType) {
-		case cXSQName:
-			return vValue;
-		case cXSUntypedAtomic:
-			vValue	= vValue.toString();
-		case cXSString:
-			var aMatch	= fString_trim.call(vValue).match(cXSQName.RegExp);
-			if (aMatch)
-				return new cXSQName(aMatch[1] || null, aMatch[2], null);
-			throw new cXPath2Error("FORG0001");
+	if (vValue instanceof cXSQName)
+		return vValue;
+	if (vValue instanceof cXSString || vValue instanceof cXSUntypedAtomic) {
+		var aMatch	= fString_trim.call(vValue).match(cXSQName.RegExp);
+		if (aMatch)
+			return new cXSQName(aMatch[1] || null, aMatch[2], null);
+		throw new cXPath2Error("FORG0001");
 	}
+	//
 	throw new cXPath2Error("XPTY0004"
 //->Debug
 			, "Casting from " + cType + " to xs:QName can never succeed"

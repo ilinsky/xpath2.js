@@ -26,23 +26,17 @@ cXSBoolean.prototype.toString	= function() {
 };
 
 cXSBoolean.cast	= function(vValue) {
-	var cType	= cXSAnyAtomicType.typeOf(vValue);
-	switch (cType) {
-		case cXSBoolean:
-			return vValue;
-		case cXSUntypedAtomic:
-			vValue	= vValue.toString();
-		case cXSString:
-			var aMatch;
-			if (aMatch = fString_trim.call(vValue).match(cXSBoolean.RegExp))
-				return new cXSBoolean(aMatch[1] == "1" || aMatch[1] == "true");
-			throw new cXPath2Error("FORG0001");
-		case cXSFloat:
-		case cXSDouble:
-		case cXSDecimal:
-		case cXSInteger:
-			return new cXSBoolean(vValue != 0);
+	if (vValue instanceof cXSBoolean)
+		return vValue;
+	if (vValue instanceof cXSString || vValue instanceof cXSUntypedAtomic) {
+		var aMatch;
+		if (aMatch = fString_trim.call(vValue).match(cXSBoolean.RegExp))
+			return new cXSBoolean(aMatch[1] == "1" || aMatch[1] == "true");
+		throw new cXPath2Error("FORG0001");
 	}
+	if (cXSAnyAtomicType.isNumeric(vValue))
+		return new cXSBoolean(vValue != 0);
+	//
 	throw new cXPath2Error("XPTY0004"
 //->Debug
 			, "Casting from " + cType + " to xs:boolean can never succeed"

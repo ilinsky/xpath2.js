@@ -26,24 +26,19 @@ cXSDecimal.prototype.toString	= function() {
 };
 
 cXSDecimal.cast	= function(vValue) {
-	var cType	= cXSAnyAtomicType.typeOf(vValue);
-	switch (cType) {
-		case cXSDecimal:
-			return vValue;
-		case cXSUntypedAtomic:
-			vValue	= vValue.toString();
-		case cXSString:
-			var aMatch	= fString_trim.call(vValue).match(cXSDecimal.RegExp);
-			if (aMatch)
-				return new cXSDecimal(+vValue);
-			throw new cXPath2Error("FORG0001");
-		case cXSBoolean:
-			return new cXSDecimal(vValue * 1);
-		case cXSFloat:
-		case cXSDouble:
-		case cXSInteger:
-			return new cXSDecimal(vValue.value);
+	if (vValue instanceof cXSDecimal)
+		return vValue;
+	if (vValue instanceof cXSString || vValue instanceof cXSUntypedAtomic) {
+		var aMatch	= fString_trim.call(vValue).match(cXSDecimal.RegExp);
+		if (aMatch)
+			return new cXSDecimal(+vValue);
+		throw new cXPath2Error("FORG0001");
 	}
+	if (vValue instanceof cXSBoolean)
+		return new cXSDecimal(vValue * 1);
+	if (cXSAnyAtomicType.isNumeric(vValue))
+		return new cXSDecimal(vValue.value);
+	//
 	throw new cXPath2Error("XPTY0004"
 //->Debug
 			, "Casting from " + cType + " to xs:decimal can never succeed"

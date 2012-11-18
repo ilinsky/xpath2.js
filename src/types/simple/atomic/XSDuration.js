@@ -35,22 +35,19 @@ cXSDuration.prototype.toString	= function() {
 };
 
 cXSDuration.cast	= function(vValue) {
-	var cType	= cXSAnyAtomicType.typeOf(vValue);
-	switch (cType) {
-		case cXSDuration:
-			return vValue;
-		case cXSUntypedAtomic:
-			vValue	= vValue.toString();
-		case cXSString:
-			var aMatch	= fString_trim.call(vValue).match(cXSDuration.RegExp);
-			if (aMatch)
-				return fXSDuration_normalize(new cXSDuration(+aMatch[2] || 0, +aMatch[3] || 0, +aMatch[4] || 0, +aMatch[5] || 0, +aMatch[6] || 0, +aMatch[7] || 0, aMatch[1] == '-'));
-			throw new cXPath2Error("FORG0001");
-		case cXSYearMonthDuration:
-			return new cXSDuration(vValue.year, vValue.month, 0, 0, 0, 0, vValue.negative);
-		case cXSDayTimeDuration:
-			return new cXSDuration(0, 0, vValue.day, vValue.hours, vValue.minutes, vValue.seconds, vValue.negative);
+	if (vValue instanceof cXSYearMonthDuration)
+		return new cXSDuration(vValue.year, vValue.month, 0, 0, 0, 0, vValue.negative);
+	if (vValue instanceof cXSDayTimeDuration)
+		return new cXSDuration(0, 0, vValue.day, vValue.hours, vValue.minutes, vValue.seconds, vValue.negative);
+	if (vValue instanceof cXSDuration)
+		return vValue;
+	if (vValue instanceof cXSString || vValue instanceof cXSUntypedAtomic) {
+		var aMatch	= fString_trim.call(vValue).match(cXSDuration.RegExp);
+		if (aMatch)
+			return fXSDuration_normalize(new cXSDuration(+aMatch[2] || 0, +aMatch[3] || 0, +aMatch[4] || 0, +aMatch[5] || 0, +aMatch[6] || 0, +aMatch[7] || 0, aMatch[1] == '-'));
+		throw new cXPath2Error("FORG0001");
 	}
+	//
 	throw new cXPath2Error("XPTY0004"
 //->Debug
 			, "Casting from " + cType + " to xs:duration can never succeed"

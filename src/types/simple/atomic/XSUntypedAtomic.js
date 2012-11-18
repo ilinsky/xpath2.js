@@ -18,35 +18,11 @@ cXSUntypedAtomic.prototype.toString	= function() {
 };
 
 cXSUntypedAtomic.cast	= function(vValue) {
-	var cType	= cXSAnyAtomicType.typeOf(vValue);
-	switch (cType) {
-		case cXSUntypedAtomic:
-			return vValue;
-		//
-		case cXSString:
-		//
-		case cXSFloat:
-		case cXSDouble:
-		case cXSDecimal:
-		case cXSInteger:
-		//
-		case cXSDuration:
-		case cXSYearMonthDuration:
-		case cXSDayTimeDuration:
-		//
-		case cXSDateTime:
-		case cXSTime:
-		case cXSDate:
-		// TODO: Gregorian
-		//
-		case cXSHexBinary:
-		case cXSBase64Binary:
-		//
-		case cXSAnyURI:
-		//
-		case cXSQName:
-			return new cXSUntypedAtomic(cString(vValue));
-	}
+	if (vValue instanceof cXSUntypedAtomic)
+		return vValue;
+
+	return new cXSUntypedAtomic(cString(vValue));
+	//
 	throw new cXPath2Error("XPTY0004"
 //->Debug
 			, "Casting from " + cType + " to xs:untypedAtomic can never succeed"

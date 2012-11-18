@@ -24,35 +24,8 @@ cXSString.prototype.toString	= function() {
 };
 
 cXSString.cast	= function(vValue) {
-	var cType	= cXSAnyAtomicType.typeOf(vValue);
-	switch (cType) {
-		case cXSString:
-			return vValue;
-		case cXSUntypedAtomic:
-		case cXSBoolean:
-		case cXSFloat:
-		case cXSDouble:
-		case cXSDecimal:
-		case cXSInteger:
-		//
-		case cXSDuration:
-		case cXSYearMonthDuration:
-		case cXSDayTimeDuration:
-		//
-		case cXSDateTime:
-		case cXSTime:
-		case cXSDate:
-		// TODO: Gregorian
-		//
-		case cXSHexBinary:
-		case cXSBase64Binary:
-			//
-		case cXSAnyURI:
-		//
-		case cXSQName:
-			//
-			return new cXSString(cString(vValue));
-	}
+	return new cXSString(cString(vValue));
+	//
 	throw new cXPath2Error("XPTY0004"
 //->Debug
 			, "Casting from " + cType + " to xs:string can never succeed"

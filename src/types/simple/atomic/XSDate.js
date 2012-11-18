@@ -31,37 +31,34 @@ cXSDate.prototype.toString	= function() {
 };
 
 cXSDate.cast	= function(vValue) {
-	var cType	= cXSAnyAtomicType.typeOf(vValue);
-	switch (cType) {
-		case cXSDate:
-			return vValue;
-		case cXSUntypedAtomic:
-			vValue	= vValue.toString();
-		case cXSString:
-			var aMatch	= fString_trim.call(vValue).match(cXSDate.RegExp);
-			if (aMatch) {
-				var nYear	= +aMatch[2],
-					nMonth	= +aMatch[3],
-					nDay	= +aMatch[4];
-				if (nDay - 1 < fXSDate_getDaysForYearMonth(nYear, nMonth))
-					return new cXSDate( nYear,
-										nMonth,
-										nDay,
-										aMatch[5] ? aMatch[5] == 'Z' ? 0 : (aMatch[6] == '-' ? -1 : 1) * (aMatch[7] * 60 + aMatch[8] * 1) : null,
-										aMatch[1] == '-'
-					);
-				//
-				throw new cXPath2Error("FORG0001"
-//->Debug
-						, "Invalid date '" + vValue + "' (Non-existent date)"
-//<-Debug
+	if (vValue instanceof cXSDate)
+		return vValue;
+	if (vValue instanceof cXSString || vValue instanceof cXSUntypedAtomic) {
+		var aMatch	= fString_trim.call(vValue).match(cXSDate.RegExp);
+		if (aMatch) {
+			var nYear	= +aMatch[2],
+				nMonth	= +aMatch[3],
+				nDay	= +aMatch[4];
+			if (nDay - 1 < fXSDate_getDaysForYearMonth(nYear, nMonth))
+				return new cXSDate( nYear,
+									nMonth,
+									nDay,
+									aMatch[5] ? aMatch[5] == 'Z' ? 0 : (aMatch[6] == '-' ? -1 : 1) * (aMatch[7] * 60 + aMatch[8] * 1) : null,
+									aMatch[1] == '-'
 				);
-			}
-			throw new cXPath2Error("FORG0001");
-			// TODO: Gregorian
-		case cXSDateTime:
-			return new cXSDate(vValue.year, vValue.month, vValue.day, vValue.timezone, vValue.negative);
+			//
+			throw new cXPath2Error("FORG0001"
+//->Debug
+					, "Invalid date '" + vValue + "' (Non-existent date)"
+//<-Debug
+			);
+		}
+		throw new cXPath2Error("FORG0001");
 	}
+	// TODO: Gregorian
+	if (vValue instanceof cXSDateTime)
+		return new cXSDate(vValue.year, vValue.month, vValue.day, vValue.timezone, vValue.negative);
+	//
 	throw new cXPath2Error("XPTY0004"
 //->Debug
 			, "Casting from " + cType + " to xs:date can never succeed"

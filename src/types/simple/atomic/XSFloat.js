@@ -26,24 +26,19 @@ cXSFloat.prototype.toString	= function() {
 };
 
 cXSFloat.cast	= function(vValue) {
-	var cType	= cXSAnyAtomicType.typeOf(vValue);
-	switch (cType) {
-		case cXSFloat:
-			return vValue;
-		case cXSUntypedAtomic:
-			vValue	= vValue.toString();
-		case cXSString:
-			var aMatch	= fString_trim.call(vValue).match(cXSFloat.RegExp);
-			if (aMatch)
-				return new cXSFloat(aMatch[7] ? +aMatch[7].replace("INF", "Infinity") : +vValue);
-			throw new cXPath2Error("FORG0001");
-		case cXSBoolean:
-			return new cXSFloat(vValue * 1);
-		case cXSDouble:
-		case cXSDecimal:
-		case cXSInteger:
-			return new cXSFloat(vValue.value);
+	if (vValue instanceof cXSFloat)
+		return vValue;
+	if (vValue instanceof cXSString || vValue instanceof cXSUntypedAtomic) {
+		var aMatch	= fString_trim.call(vValue).match(cXSFloat.RegExp);
+		if (aMatch)
+			return new cXSFloat(aMatch[7] ? +aMatch[7].replace("INF", "Infinity") : +vValue);
+		throw new cXPath2Error("FORG0001");
 	}
+	if (vValue instanceof cXSBoolean)
+		return new cXSFloat(vValue * 1);
+	if (cXSAnyAtomicType.isNumeric(vValue))
+		return new cXSFloat(vValue.value);
+	//
 	throw new cXPath2Error("XPTY0004"
 //->Debug
 			, "Casting from " + cType + " to xs:float can never succeed"

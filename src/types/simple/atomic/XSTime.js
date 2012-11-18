@@ -29,26 +29,23 @@ cXSTime.prototype.toString	= function() {
 };
 
 cXSTime.cast	= function(vValue) {
-	var cType	= cXSAnyAtomicType.typeOf(vValue);
-	switch (cType) {
-		case cXSTime:
-			return vValue;
-		case cXSUntypedAtomic:
-			vValue	= vValue.toString();
-		case cXSString:
-			var aMatch	= fString_trim.call(vValue).match(cXSTime.RegExp);
-			if (aMatch) {
-				var bValue	= !!aMatch[6];
-				return new cXSTime(bValue ? 0 : +aMatch[2],
-									bValue ? 0 : +aMatch[3],
-									cNumber((bValue ? 0 : aMatch[4]) + '.' + (bValue ? 0 : aMatch[5] || 0)),
-									aMatch[8] ? aMatch[8] == 'Z' ? 0 : (aMatch[9] == '-' ? -1 : 1) * (aMatch[10] * 60 + aMatch[11] * 1) : null
-				);
-			}
-			throw new cXPath2Error("FORG0001");
-		case cXSDateTime:
-			return new cXSTime(vValue.hours, vValue.minutes, vValue.seconds, vValue.timezone);
+	if (vValue instanceof cXSTime)
+		return vValue;
+	if (vValue instanceof cXSString || vValue instanceof cXSUntypedAtomic) {
+		var aMatch	= fString_trim.call(vValue).match(cXSTime.RegExp);
+		if (aMatch) {
+			var bValue	= !!aMatch[6];
+			return new cXSTime(bValue ? 0 : +aMatch[2],
+								bValue ? 0 : +aMatch[3],
+								cNumber((bValue ? 0 : aMatch[4]) + '.' + (bValue ? 0 : aMatch[5] || 0)),
+								aMatch[8] ? aMatch[8] == 'Z' ? 0 : (aMatch[9] == '-' ? -1 : 1) * (aMatch[10] * 60 + aMatch[11] * 1) : null
+			);
+		}
+		throw new cXPath2Error("FORG0001");
 	}
+	if (vValue instanceof cXSDateTime)
+		return new cXSTime(vValue.hours, vValue.minutes, vValue.seconds, vValue.timezone);
+	//
 	throw new cXPath2Error("XPTY0004"
 //->Debug
 			, "Casting from " + cType + " to xs:time can never succeed"

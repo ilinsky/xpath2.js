@@ -39,41 +39,38 @@ cXSDateTime.prototype.toString	= function() {
 };
 
 cXSDateTime.cast	= function(vValue) {
-	var cType	= cXSAnyAtomicType.typeOf(vValue);
-	switch (cType) {
-		case cXSDateTime:
-			return vValue;
-		case cXSUntypedAtomic:
-			vValue	= vValue.toString();
-		case cXSString:
-			var aMatch	= fString_trim.call(vValue).match(cXSDateTime.RegExp);
-			if (aMatch) {
-				var nYear	= +aMatch[2],
-					nMonth	= +aMatch[3],
-					nDay	= +aMatch[4],
-					bValue	= !!aMatch[10];
-				if (nDay - 1 < fXSDate_getDaysForYearMonth(nYear, nMonth))
-					return fXSDateTime_normalize(new cXSDateTime( nYear,
-											nMonth,
-											nDay,
-											bValue ? 24 : +aMatch[6],
-											bValue ? 0 : +aMatch[7],
-											cNumber((bValue ? 0 : aMatch[8]) + '.' + (bValue ? 0 : aMatch[9] || 0)),
-											aMatch[12] ? aMatch[12] == 'Z' ? 0 : (aMatch[13] == '-' ? -1 : 1) * (aMatch[14] * 60 + aMatch[15] * 1) : null,
-											aMatch[1] == '-'
-					));
-				//
-				throw new cXPath2Error("FORG0001"
+	if (vValue instanceof cXSDateTime)
+		return vValue;
+	if (vValue instanceof cXSString || vValue instanceof cXSUntypedAtomic) {
+		var aMatch	= fString_trim.call(vValue).match(cXSDateTime.RegExp);
+		if (aMatch) {
+			var nYear	= +aMatch[2],
+				nMonth	= +aMatch[3],
+				nDay	= +aMatch[4],
+				bValue	= !!aMatch[10];
+			if (nDay - 1 < fXSDate_getDaysForYearMonth(nYear, nMonth))
+				return fXSDateTime_normalize(new cXSDateTime( nYear,
+										nMonth,
+										nDay,
+										bValue ? 24 : +aMatch[6],
+										bValue ? 0 : +aMatch[7],
+										cNumber((bValue ? 0 : aMatch[8]) + '.' + (bValue ? 0 : aMatch[9] || 0)),
+										aMatch[12] ? aMatch[12] == 'Z' ? 0 : (aMatch[13] == '-' ? -1 : 1) * (aMatch[14] * 60 + aMatch[15] * 1) : null,
+										aMatch[1] == '-'
+				));
+			//
+			throw new cXPath2Error("FORG0001"
 //->Debug
-						, "Invalid date '" + vValue + "' (Non-existent date)"
+					, "Invalid date '" + vValue + "' (Non-existent date)"
 //<-Debug
-				);
-			}
-			throw new cXPath2Error("FORG0001");
-			// TODO: Gregorian
-		case cXSDate:
-			return new cXSDateTime(vValue.year, vValue.month, vValue.day, 0, 0, 0, vValue.timezone, vValue.negative);
+			);
+		}
+		throw new cXPath2Error("FORG0001");
 	}
+	// TODO: Gregorian
+	if (vValue instanceof cXSDate)
+		return new cXSDateTime(vValue.year, vValue.month, vValue.day, 0, 0, 0, vValue.timezone, vValue.negative);
+	//
 	throw new cXPath2Error("XPTY0004"
 //->Debug
 			, "Casting from " + cType + " to xs:dateTime can never succeed"

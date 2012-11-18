@@ -22,21 +22,17 @@ cXSHexBinary.prototype.toString	= function() {
 };
 
 cXSHexBinary.cast	= function(vValue) {
-	var cType	= cXSAnyAtomicType.typeOf(vValue);
-	switch (cType) {
-		case cXSHexBinary:
-			return vValue;
-		case cXSUntypedAtomic:
-			vValue	= vValue.toString();
-		case cXSString:
-			var aMatch	= fString_trim.call(vValue).match(cXSHexBinary.RegExp);
-			if (aMatch)
-				return new cXSHexBinary(aMatch[0].toUpperCase());
-			throw new cXPath2Error("FORG0001");
-		case cXSBase64Binary:
-			throw "Not implemented";
-
+	if (vValue instanceof cXSHexBinary)
+		return vValue;
+	if (vValue instanceof cXSString || vValue instanceof cXSUntypedAtomic) {
+		var aMatch	= fString_trim.call(vValue).match(cXSHexBinary.RegExp);
+		if (aMatch)
+			return new cXSHexBinary(aMatch[0].toUpperCase());
+		throw new cXPath2Error("FORG0001");
 	}
+	if (vValue instanceof cXSBase64Binary)
+		throw "Not implemented";
+	//
 	throw new cXPath2Error("XPTY0004"
 //->Debug
 			, "Casting from " + cType + " to xs:hexBinary can never succeed"

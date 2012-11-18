@@ -21,22 +21,19 @@ cXSYearMonthDuration.prototype.toString	= function() {
 };
 
 cXSYearMonthDuration.cast	= function(vValue) {
-	var cType	= cXSAnyAtomicType.typeOf(vValue);
-	switch (cType) {
-		case cXSYearMonthDuration:
-			return vValue;
-		case cXSUntypedAtomic:
-			vValue	= vValue.toString();
-		case cXSString:
-			var aMatch	= fString_trim.call(vValue).match(cXSYearMonthDuration.RegExp);
-			if (aMatch)
-				return fXSYearMonthDuration_normalize(new cXSYearMonthDuration(+aMatch[2] || 0, +aMatch[3] || 0, aMatch[1] == '-'));
-			throw new cXPath2Error("FORG0001");
-		case cXSDuration:
-			return new cXSYearMonthDuration(vValue.year, vValue.month, vValue.negative);
-		case cXSDayTimeDuration:
-			return new cXSYearMonthDuration(0, 0);
+	if (vValue instanceof cXSYearMonthDuration)
+		return vValue;
+	if (vValue instanceof cXSString || vValue instanceof cXSUntypedAtomic) {
+		var aMatch	= fString_trim.call(vValue).match(cXSYearMonthDuration.RegExp);
+		if (aMatch)
+			return fXSYearMonthDuration_normalize(new cXSYearMonthDuration(+aMatch[2] || 0, +aMatch[3] || 0, aMatch[1] == '-'));
+		throw new cXPath2Error("FORG0001");
 	}
+	if (vValue instanceof cXSDayTimeDuration)
+		return new cXSYearMonthDuration(0, 0);
+	if (vValue instanceof cXSDuration)
+		return new cXSYearMonthDuration(vValue.year, vValue.month, vValue.negative);
+	//
 	throw new cXPath2Error("XPTY0004"
 //->Debug
 			, "Casting from " + cType + " to xs:yearMonthDuration can never succeed"

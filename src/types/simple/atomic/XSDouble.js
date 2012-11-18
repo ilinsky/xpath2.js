@@ -26,24 +26,19 @@ cXSDouble.prototype.toString	= function() {
 };
 
 cXSDouble.cast	= function(vValue) {
-	var cType	= cXSAnyAtomicType.typeOf(vValue);
-	switch (cType) {
-		case cXSDouble:
-			return vValue;
-		case cXSUntypedAtomic:
-			vValue	= vValue.toString();
-		case cXSString:
-			var aMatch	= fString_trim.call(vValue).match(cXSDouble.RegExp);
-			if (aMatch)
-				return new cXSDouble(aMatch[7] ? +aMatch[7].replace("INF", "Infinity") : +vValue);
-			throw new cXPath2Error("FORG0001");
-		case cXSBoolean:
-			return new cXSDouble(vValue * 1);
-		case cXSFloat:
-		case cXSDecimal:
-		case cXSInteger:
-			return new cXSDouble(vValue.value);
+	if (vValue instanceof cXSDouble)
+		return vValue;
+	if (vValue instanceof cXSString || vValue instanceof cXSUntypedAtomic) {
+		var aMatch	= fString_trim.call(vValue).match(cXSDouble.RegExp);
+		if (aMatch)
+			return new cXSDouble(aMatch[7] ? +aMatch[7].replace("INF", "Infinity") : +vValue);
+		throw new cXPath2Error("FORG0001");
 	}
+	if (vValue instanceof cXSBoolean)
+		return new cXSDouble(vValue * 1);
+	if (cXSAnyAtomicType.isNumeric(vValue))
+		return new cXSDouble(vValue.value);
+	//
 	throw new cXPath2Error("XPTY0004"
 //->Debug
 			, "Casting from " + cType + " to xs:double can never succeed"

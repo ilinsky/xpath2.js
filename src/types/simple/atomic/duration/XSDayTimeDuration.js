@@ -21,23 +21,19 @@ cXSDayTimeDuration.prototype.toString	= function() {
 };
 
 cXSDayTimeDuration.cast	= function(vValue) {
-	var cType	= cXSAnyAtomicType.typeOf(vValue);
-	switch (cType) {
-		case cXSDayTimeDuration:
-			return vValue;
-		case cXSUntypedAtomic:
-			vValue	= vValue.toString();
-		case cXSString:
-			var aMatch	= fString_trim.call(vValue).match(cXSDayTimeDuration.RegExp);
-			if (aMatch)
-				return fXSDayTimeDuration_normalize(new cXSDayTimeDuration(+aMatch[2] || 0, +aMatch[3] || 0, +aMatch[4] || 0, +aMatch[5] || 0, aMatch[1] == '-'));
-			throw new cXPath2Error("FORG0001");
-		case cXSDuration:
-			return new cXSDayTimeDuration(vValue.day, vValue.hours, vValue.minutes, vValue.seconds, vValue.negative);
-		case cXSYearMonthDuration:
-			return new cXSDayTimeDuration(0, 0, 0, 0);
-
+	if (vValue instanceof cXSDayTimeDuration)
+		return vValue;
+	if (vValue instanceof cXSString || vValue instanceof cXSUntypedAtomic) {
+		var aMatch	= fString_trim.call(vValue).match(cXSDayTimeDuration.RegExp);
+		if (aMatch)
+			return fXSDayTimeDuration_normalize(new cXSDayTimeDuration(+aMatch[2] || 0, +aMatch[3] || 0, +aMatch[4] || 0, +aMatch[5] || 0, aMatch[1] == '-'));
+		throw new cXPath2Error("FORG0001");
 	}
+	if (vValue instanceof cXSYearMonthDuration)
+		return new cXSDayTimeDuration(0, 0, 0, 0);
+	if (vValue instanceof cXSDuration)
+		return new cXSDayTimeDuration(vValue.day, vValue.hours, vValue.minutes, vValue.seconds, vValue.negative);
+	//
 	throw new cXPath2Error("XPTY0004"
 //->Debug
 			, "Casting from " + cType + " to xs:dayTimeDuration can never succeed"

@@ -34,18 +34,15 @@ cXSAnyURI.prototype.toString	= function() {
 };
 
 cXSAnyURI.cast	= function(vValue) {
-	var cType	= cXSAnyAtomicType.typeOf(vValue);
-	switch (cType) {
-		case cXSAnyURI:
-			return vValue;
-		case cXSUntypedAtomic:
-			vValue	= vValue.toString();
-		case cXSString:
-			var aMatch;
-			if (aMatch = fString_trim.call(vValue).match(cXSAnyURI.RegExp))
-				return new cXSAnyURI(aMatch[2], aMatch[4], aMatch[5], aMatch[7], aMatch[9]);
-			throw new cXPath2Error("FORG0001");
+	if (vValue instanceof cXSAnyURI)
+		return vValue;
+	if (vValue instanceof cXSString || vValue instanceof cXSUntypedAtomic) {
+		var aMatch;
+		if (aMatch = fString_trim.call(vValue).match(cXSAnyURI.RegExp))
+			return new cXSAnyURI(aMatch[2], aMatch[4], aMatch[5], aMatch[7], aMatch[9]);
+		throw new cXPath2Error("FORG0001");
 	}
+	//
 	throw new cXPath2Error("XPTY0004"
 //->Debug
 			, "Casting from " + cType + " to xs:anyURI can never succeed"
