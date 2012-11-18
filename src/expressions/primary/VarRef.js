@@ -13,26 +13,26 @@ function cVarRef(sPrefix, sLocalName, sNameSpaceURI) {
 	this.namespaceURI	= sNameSpaceURI;
 };
 
-cVarRef.RegExp	= /^\$(?:(?![0-9-])([\w-]+|\*)\:)?(?![0-9-])([\w-]+|\*)$/;
-
 cVarRef.prototype.prefix		= null;
 cVarRef.prototype.localName		= null;
 cVarRef.prototype.namespaceURI	= null;
 
 // Static members
 cVarRef.parse	= function (oLexer, oStaticContext) {
-	var aMatch	= oLexer.peek().match(cVarRef.RegExp);
-	if (aMatch) {
-		if (aMatch[1] == '*' || aMatch[2] == '*')
-			throw new cXPath2Error("XPST0003"
-//->Debug
-					, "Illegal use of wildcard in var expression variable name"
-//<-Debug
-			);
+	if (oLexer.peek().substr(0, 1) == '$') {
+		var aMatch	= oLexer.peek().substr(1).match(cNameTest.RegExp);
+		if (aMatch) {
+			if (aMatch[1] == '*' || aMatch[2] == '*')
+				throw new cXPath2Error("XPST0003"
+	//->Debug
+						, "Illegal use of wildcard in var expression variable name"
+	//<-Debug
+				);
 
-		var oVarRef	= new cVarRef(aMatch[1] || null, aMatch[2], aMatch[1] ? oStaticContext.getURIForPrefix(aMatch[1]) : null);
-		oLexer.next();
-		return oVarRef;
+			var oVarRef	= new cVarRef(aMatch[1] || null, aMatch[2], aMatch[1] ? oStaticContext.getURIForPrefix(aMatch[1]) : null);
+			oLexer.next();
+			return oVarRef;
+		}
 	}
 };
 

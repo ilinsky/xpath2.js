@@ -82,10 +82,8 @@ cSimpleForBinding.prototype.localName		= null;
 cSimpleForBinding.prototype.namespaceURI	= null;
 cSimpleForBinding.prototype.inExpr		= null;
 
-cSimpleForBinding.RegExp	= /^\$(?:(?![0-9-])([\w-]+|\*)\:)?(?![0-9-])([\w-]+|\*)$/;
-
 cSimpleForBinding.parse	= function(oLexer, oStaticContext) {
-	var aMatch	= oLexer.peek().match(cSimpleForBinding.RegExp);
+	var aMatch	= oLexer.peek().substr(1).match(cNameTest.RegExp);
 	if (!aMatch)
 		throw new cXPath2Error("XPST0003"
 //->Debug

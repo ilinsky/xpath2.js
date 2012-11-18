@@ -13,14 +13,12 @@ function cAtomicType(sPrefix, sLocalName, sNameSpaceURI) {
 	this.namespaceURI	= sNameSpaceURI;
 };
 
-cAtomicType.RegExp	= /^(?:(?![0-9-])([\w-]+|\*)\:)?(?![0-9-])([\w-]+|\*)$/;
-
 cAtomicType.prototype.prefix		= null;
 cAtomicType.prototype.localName		= null;
 cAtomicType.prototype.namespaceURI	= null;
 
 cAtomicType.parse	= function(oLexer, oStaticContext) {
-	var aMatch	= oLexer.peek().match(cAtomicType.RegExp);
+	var aMatch	= oLexer.peek().match(cNameTest.RegExp);
 	if (aMatch) {
 		if (aMatch[1] == '*' || aMatch[2] == '*')
 			throw new cXPath2Error("XPST0003"

@@ -14,8 +14,6 @@ function cFunctionCall(sPrefix, sLocalName, sNameSpaceURI) {
 	this.args	= [];
 };
 
-cFunctionCall.RegExp	= /^(?:(?![0-9-])([\w-]+|\*)\:)?(?![0-9-])([\w-]+|\*)$/;
-
 cFunctionCall.prototype.prefix			= null;
 cFunctionCall.prototype.localName		= null;
 cFunctionCall.prototype.namespaceURI	= null;
@@ -23,7 +21,7 @@ cFunctionCall.prototype.args	= null;
 
 // Static members
 cFunctionCall.parse	= function (oLexer, oStaticContext) {
-	var aMatch	= oLexer.peek().match(cFunctionCall.RegExp);
+	var aMatch	= oLexer.peek().match(cNameTest.RegExp);
 	if (aMatch && oLexer.peek(1) == '(') {
 		// Reserved "functions"
 		if (!aMatch[1] && (aMatch[2] in cKindTest.names))

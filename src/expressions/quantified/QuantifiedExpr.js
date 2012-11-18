@@ -87,10 +87,8 @@ cSimpleQuantifiedBinding.prototype.localName	= null;
 cSimpleQuantifiedBinding.prototype.namespaceURI	= null;
 cSimpleQuantifiedBinding.prototype.inExpr	= null;
 
-cSimpleQuantifiedBinding.RegExp	= /^\$(?:(?![0-9-])([\w-]+|\*)\:)?(?![0-9-])([\w-]+|\*)$/;
-
 cSimpleQuantifiedBinding.parse	= function(oLexer, oStaticContext) {
-	var aMatch	= oLexer.peek().match(cSimpleQuantifiedBinding.RegExp);
+	var aMatch	= oLexer.peek().substr(1).match(cNameTest.RegExp);
 	if (!aMatch)
 		throw new cXPath2Error("XPST0003"
 //->Debug
