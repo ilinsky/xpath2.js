@@ -7,6 +7,7 @@
  *
  */
 
+// TODO: Get rid of this pseudo-type
 function cXTNumeric() {
 
 };
