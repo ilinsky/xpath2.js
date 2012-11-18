@@ -42,14 +42,22 @@ cAxisStep.parse	= function (oLexer, oStaticContext) {
 		oExpr,
 		oStep;
 	if (oLexer.peek(1) == "::") {
-		if (sAxis in cAxisStep.axises) {
-			oLexer.next(2);
-			if (oLexer.eof() ||!(oExpr = cNodeTest.parse(oLexer, oStaticContext)))
-				throw "AxisStep.parse: expected NodeTest expression";
-			oStep	= new cAxisStep(sAxis, oExpr);
-		}
-		else
-			throw "AxisStep.parse: Unknown axis";
+		if (!(sAxis in cAxisStep.axises))
+			throw new cXPath2Error("XPST0003"
+//->Debug
+					, "Unknown axis name: " + sAxis
+//<-Debug
+			);
+
+		oLexer.next(2);
+		if (oLexer.eof() ||!(oExpr = cNodeTest.parse(oLexer, oStaticContext)))
+			throw new cXPath2Error("XPST0003"
+//->Debug
+					, "Expected node test expression in axis step"
+//<-Debug
+			);
+		//
+		oStep	= new cAxisStep(sAxis, oExpr);
 	}
 	else
 	if (sAxis == "..") {
@@ -60,7 +68,12 @@ cAxisStep.parse	= function (oLexer, oStaticContext) {
 	if (sAxis == "@") {
 		oLexer.next();
 		if (oLexer.eof() ||!(oExpr = cNodeTest.parse(oLexer, oStaticContext)))
-			throw "AxisStep.parse: expected NodeTest expression";
+			throw new cXPath2Error("XPST0003"
+//->Debug
+					, "Expected node test expression in axis step"
+//<-Debug
+			);
+		//
 		oStep	= new cAxisStep("attribute", oExpr);
 	}
 	else {

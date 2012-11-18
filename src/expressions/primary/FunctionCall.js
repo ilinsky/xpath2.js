@@ -30,7 +30,11 @@ cFunctionCall.parse	= function (oLexer, oStaticContext) {
 			return cAxisStep.parse(oLexer, oStaticContext);
 		// Other functions
 		if (aMatch[1] == '*' || aMatch[2] == '*')
-			throw "FunctionCall.parse: illegal use of wildcard in function name";
+			throw new cXPath2Error("XPST0003"
+//->Debug
+					, "Illegal use of wildcard in function name"
+//<-Debug
+			);
 		var oFunctionCallExpr	= new cFunctionCall(aMatch[1] || null, aMatch[2], aMatch[1] ? oStaticContext.getURIForPrefix(aMatch[1]) || null : oStaticContext.defaultFunctionNamespace),
 			oExpr;
 		oLexer.next(2);
@@ -38,13 +42,22 @@ cFunctionCall.parse	= function (oLexer, oStaticContext) {
 		if (oLexer.peek() != ')') {
 			do {
 				if (oLexer.eof() ||!(oExpr = cExprSingle.parse(oLexer, oStaticContext)))
-					throw "FunctionCall.parse: expected ExprSingle expression";
+					throw new cXPath2Error("XPST0003"
+//->Debug
+							, "Expected function call argument"
+//<-Debug
+					);
+				//
 				oFunctionCallExpr.args.push(oExpr);
 			}
 			while (oLexer.peek() == ',' && oLexer.next());
 			//
 			if (oLexer.peek() != ')')
-				throw "FunctionCall.parse: Expected ')' token";
+				throw new cXPath2Error("XPST0003"
+//->Debug
+						, "Expected ')' token in function call"
+//<-Debug
+				);
 		}
 		oLexer.next();
 		return oFunctionCallExpr;

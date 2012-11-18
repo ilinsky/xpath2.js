@@ -33,7 +33,11 @@ cUnionExpr.parse	= function (oLexer, oStaticContext) {
 	while (oLexer.peek() == '|' || oLexer.peek() == "union") {
 		oLexer.next();
 		if (oLexer.eof() ||!(oExpr = cIntersectExceptExpr.parse(oLexer, oStaticContext)))
-			throw "UnionExpr.parse: right operand missing";
+			throw new cXPath2Error("XPST0003"
+//->Debug
+					, "Unexpected <eof> token: right operand missing in union expression"
+//<-Debug
+			);
 		oUnionExpr.items.push(oExpr);
 	}
 	return oUnionExpr;

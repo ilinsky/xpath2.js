@@ -22,7 +22,11 @@ cSequenceType.parse	= function(oLexer, oStaticContext) {
 	if (oLexer.peek() == "empty-sequence" && oLexer.peek(1) == '(') {
 		oLexer.next(2);
 		if (oLexer.peek() != ')')
-			throw "SequenceType.parse: Expected ')' token";
+			throw new cXPath2Error("XPST0003"
+//->Debug
+					, "Expected ')' token in sequence type"
+//<-Debug
+			);
 		oLexer.next();
 		return new cSequenceType;	// empty sequence
 	}
@@ -30,7 +34,11 @@ cSequenceType.parse	= function(oLexer, oStaticContext) {
 	var oExpr,
 		sOccurence;
 	if (oLexer.eof() ||!(oExpr = cItemType.parse(oLexer, oStaticContext)))
-		throw "SequenceType.parse: Expected ItemType expression";
+		throw new cXPath2Error("XPST0003"
+//->Debug
+				, "Expected item type in sequence type"
+//<-Debug
+		);
 
 	sOccurence	= oLexer.peek();
 	if (sOccurence == '?' || sOccurence == '*' || sOccurence == '+')

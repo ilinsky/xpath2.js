@@ -30,7 +30,11 @@ cComparisonExpr.parse	= function (oLexer, oStaticContext) {
 	var sOperator	= oLexer.peek();
 	oLexer.next();
 	if (oLexer.eof() ||!(oRight = cRangeExpr.parse(oLexer, oStaticContext)))
-		throw "ComparisonExpr.parse: right operand missing";
+		throw new cXPath2Error("XPST0003"
+//->Debug
+				, "Unexpected <eof> token: right operand missing in comparison expression"
+//<-Debug
+		);
 	return new cComparisonExpr(oExpr, oRight, sOperator);
 };
 

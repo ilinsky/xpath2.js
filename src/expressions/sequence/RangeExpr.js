@@ -27,7 +27,11 @@ cRangeExpr.parse	= function (oLexer, oStaticContext) {
 	// Range expression
 	oLexer.next();
 	if (oLexer.eof() ||!(oRight = cAdditiveExpr.parse(oLexer, oStaticContext)))
-		throw "RangeExpr.parse: expected right operand";
+		throw new cXPath2Error("XPST0003"
+//->Debug
+				, "Unexpected <eof> token: right operand missing in range expression"
+//<-Debug
+		);
 	return new cRangeExpr(oExpr, oRight);
 };
 

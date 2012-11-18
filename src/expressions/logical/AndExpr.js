@@ -28,7 +28,11 @@ cAndExpr.parse	= function (oLexer, oStaticContext) {
 	while (oLexer.peek() == "and") {
 		oLexer.next();
 		if (oLexer.eof() ||!(oExpr = cComparisonExpr.parse(oLexer, oStaticContext)))
-			throw "AndExpr.parse: right operand missing";
+			throw new cXPath2Error("XPST0003"
+//->Debug
+					, "Unexpected <eof> token: right operand missing in logical and expression"
+//<-Debug
+			);
 		oAndExpr.items.push(oExpr);
 	}
 	return oAndExpr;

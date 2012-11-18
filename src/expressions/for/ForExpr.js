@@ -28,11 +28,19 @@ cForExpr.parse	= function (oLexer, oStaticContext) {
 		while (oLexer.peek() == ',' && oLexer.next());
 
 		if (oLexer.peek() != "return")
-			throw "ForExpr.parse: Expected 'return' token";
+			throw new cXPath2Error("XPST0003"
+//->Debug
+					, "Expected 'return' token in for expression"
+//<-Debug
+			);
 
 		oLexer.next();
 		if (oLexer.eof() ||!(oExpr = cExprSingle.parse(oLexer, oStaticContext)))
-			throw "ForExpr.parse: expected 'return' statement operand";
+			throw new cXPath2Error("XPST0003"
+//->Debug
+					, "Expected return statement operand in for expression"
+//<-Debug
+			);
 
 		oForExpr.returnExpr	= oExpr;
 		return oForExpr;
@@ -74,14 +82,40 @@ cSimpleForBinding.prototype.localName		= null;
 cSimpleForBinding.prototype.namespaceURI	= null;
 cSimpleForBinding.prototype.inExpr		= null;
 
-cSimpleForBinding.RegExp	= /^\$(?:(?![0-9-])([\w-]+)\:)?(?![0-9-])([\w-]+)$/;
+cSimpleForBinding.RegExp	= /^\$(?:(?![0-9-])([\w-]+|\*)\:)?(?![0-9-])([\w-]+|\*)$/;
 
 cSimpleForBinding.parse	= function(oLexer, oStaticContext) {
 	var aMatch	= oLexer.peek().match(cSimpleForBinding.RegExp);
-	if (aMatch && oLexer.peek(1) == "in") {
-		oLexer.next(2);
-		return new cSimpleForBinding(aMatch[1] || null, aMatch[2], aMatch[1] ? oStaticContext.getURIForPrefix(aMatch[1]) : null, cExprSingle.parse(oLexer, oStaticContext));
-	}
-	else
-		throw "Not SimpleForBinding expression";
+	if (!aMatch)
+		throw new cXPath2Error("XPST0003"
+//->Debug
+				, "Expected variable declaration in for expression binding"
+//<-Debug
+		);
+
+	if (aMatch[1] == '*' || aMatch[2] == '*')
+		throw new cXPath2Error("XPST0003"
+//->Debug
+				, "Illegal use of wildcard in for expression binding variable name"
+//<-Debug
+		);
+
+	oLexer.next();
+	if (oLexer.peek() != "in")
+		throw new cXPath2Error("XPST0003"
+//->Debug
+				, "Expected 'in' token in for expression binding"
+//<-Debug
+		);
+
+	oLexer.next();
+	var oExpr;
+	if (oLexer.eof() ||!(oExpr = cExprSingle.parse(oLexer, oStaticContext)))
+		throw new cXPath2Error("XPST0003"
+//->Debug
+				, "Expected in statement operand in for expression binding"
+//<-Debug
+		);
+
+	return new cSimpleForBinding(aMatch[1] || null, aMatch[2], aMatch[1] ? oStaticContext.getURIForPrefix(aMatch[1]) : null, oExpr);
 };

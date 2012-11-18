@@ -65,24 +65,38 @@ cKindTest.parse	= function (oLexer, oStaticContext) {
 				}
 			}
 			else {
-				if (sName == "schema-attribute") {
-					throw "KindTest.parse: Expected AttributeDeclaration expression";
-				}
+				if (sName == "schema-attribute")
+					throw new cXPath2Error("XPST0003"
+//->Debug
+							, "Expected attribute declaration in 'schema-attribute' kind test"
+//<-Debug
+					);
 				else
-				if (sName == "schema-element") {
-					throw "KindTest.parse: Expected ElementDeclaration expression";
-				}
+				if (sName == "schema-element")
+					throw new cXPath2Error("XPST0003"
+//->Debug
+							, "Expected element declaration in 'schema-element' kind test"
+//<-Debug
+					);
 			}
 
 			if (oLexer.peek() != ')')
-				throw "KindTest.parse: Expected ')' token";
+				throw new cXPath2Error("XPST0003"
+//->Debug
+						, "Expected ')' token in kind test"
+//<-Debug
+				);
 
 			oLexer.next();
 
 			return oTest;
 		}
 		else
-			throw "KindTest.parse: Unknown kind test";
+			throw new cXPath2Error("XPST0003"
+//->Debug
+					, "Unknown '" + sName + "' kind test"
+//<-Debug
+			);
 	}
 };
 

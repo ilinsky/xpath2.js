@@ -28,7 +28,11 @@ cOrExpr.parse	= function (oLexer, oStaticContext) {
 	while (oLexer.peek() == "or") {
 		oLexer.next();
 		if (oLexer.eof() ||!(oExpr = cAndExpr.parse(oLexer, oStaticContext)))
-			throw "OrExpr.parse: right operand missing";
+			throw new cXPath2Error("XPST0003"
+//->Debug
+					, "Unexpected <eof> token: right operand missing in logical or expression"
+//<-Debug
+			);
 		oOrExpr.items.push(oExpr);
 	}
 	return oOrExpr;

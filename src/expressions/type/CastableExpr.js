@@ -26,7 +26,11 @@ cCastableExpr.parse	= function(oLexer, oStaticContext) {
 
 	oLexer.next(2);
 	if (oLexer.eof() ||!(oType = cSingleType.parse(oLexer, oStaticContext)))
-		throw "CastableExpr.parse: Expected expression operand";
+		throw new cXPath2Error("XPST0003"
+//->Debug
+				, "Unexpected <eof> token: right operand missing in castable expression"
+//<-Debug
+		);
 
 	return new cCastableExpr(oExpr, oType);
 };

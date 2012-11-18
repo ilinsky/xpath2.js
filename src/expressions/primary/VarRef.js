@@ -13,7 +13,7 @@ function cVarRef(sPrefix, sLocalName, sNameSpaceURI) {
 	this.namespaceURI	= sNameSpaceURI;
 };
 
-cVarRef.RegExp	= /^\$(?:(?![0-9-])([\w-]+)\:)?(?![0-9-])([\w-]+)$/;
+cVarRef.RegExp	= /^\$(?:(?![0-9-])([\w-]+|\*)\:)?(?![0-9-])([\w-]+|\*)$/;
 
 cVarRef.prototype.prefix		= null;
 cVarRef.prototype.localName		= null;
@@ -23,6 +23,13 @@ cVarRef.prototype.namespaceURI	= null;
 cVarRef.parse	= function (oLexer, oStaticContext) {
 	var aMatch	= oLexer.peek().match(cVarRef.RegExp);
 	if (aMatch) {
+		if (aMatch[1] == '*' || aMatch[2] == '*')
+			throw new cXPath2Error("XPST0003"
+//->Debug
+					, "Illegal use of wildcard in var name"
+//<-Debug
+			);
+
 		var oVarRef	= new cVarRef(aMatch[1] || null, aMatch[2], aMatch[1] ? oStaticContext.getURIForPrefix(aMatch[1]) : null);
 		oLexer.next();
 		return oVarRef;

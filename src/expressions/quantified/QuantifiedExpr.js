@@ -31,11 +31,19 @@ cQuantifiedExpr.parse	= function (oLexer, oStaticContext) {
 		while (oLexer.peek() == ',' && oLexer.next());
 
 		if (oLexer.peek() != "satisfies")
-			throw "QuantifiedExpr.parse: Expected 'satisfies' token";
+			throw new cXPath2Error("XPST0003"
+//->Debug
+					, "Expected 'satisfies' token in quantified expression"
+//<-Debug
+			);
 
 		oLexer.next();
 		if (oLexer.eof() ||!(oExpr = cExprSingle.parse(oLexer, oStaticContext)))
-			throw "QuantifiedExpr.parse: expected 'satisfies' statement operand";
+			throw new cXPath2Error("XPST0003"
+//->Debug
+					, "Expected satisfies statement operand in quantified expression"
+//<-Debug
+			);
 
 		oQuantifiedExpr.satisfiesExpr	= oExpr;
 		return oQuantifiedExpr;
@@ -79,14 +87,40 @@ cSimpleQuantifiedBinding.prototype.localName	= null;
 cSimpleQuantifiedBinding.prototype.namespaceURI	= null;
 cSimpleQuantifiedBinding.prototype.inExpr	= null;
 
-cSimpleQuantifiedBinding.RegExp	= /^\$(?:(?![0-9-])([\w-]+)\:)?(?![0-9-])([\w-]+)$/;
+cSimpleQuantifiedBinding.RegExp	= /^\$(?:(?![0-9-])([\w-]+|\*)\:)?(?![0-9-])([\w-]+|\*)$/;
 
 cSimpleQuantifiedBinding.parse	= function(oLexer, oStaticContext) {
 	var aMatch	= oLexer.peek().match(cSimpleQuantifiedBinding.RegExp);
-	if (aMatch && oLexer.peek(1) == "in") {
-		oLexer.next(2);
-		return new cSimpleQuantifiedBinding(aMatch[1] || null, aMatch[2], aMatch[1] ? oStaticContext.getURIForPrefix(aMatch[1]) : null, cExprSingle.parse(oLexer, oStaticContext));
-	}
-	else
-		throw "Not SimpleQuantifiedBinding expression";
+	if (!aMatch)
+		throw new cXPath2Error("XPST0003"
+//->Debug
+				, "Expected variable declaration in quantified expression binding"
+//<-Debug
+		);
+
+	if (aMatch[1] == '*' || aMatch[2] == '*')
+		throw new cXPath2Error("XPST0003"
+//->Debug
+				, "Illegal use of wildcard in quantified expression binding variable name"
+//<-Debug
+		);
+
+	oLexer.next();
+	if (oLexer.peek() != "in")
+		throw new cXPath2Error("XPST0003"
+//->Debug
+				, "Expected 'in' token in quantified expression binding"
+//<-Debug
+		);
+
+	oLexer.next();
+	var oExpr;
+	if (oLexer.eof() ||!(oExpr = cExprSingle.parse(oLexer, oStaticContext)))
+		throw new cXPath2Error("XPST0003"
+//->Debug
+				, "Expected in statement operand in quantified expression binding"
+//<-Debug
+		);
+
+	return new cSimpleQuantifiedBinding(aMatch[1] || null, aMatch[2], aMatch[1] ? oStaticContext.getURIForPrefix(aMatch[1]) : null, oExpr);
 };

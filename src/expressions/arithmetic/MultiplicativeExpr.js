@@ -114,7 +114,11 @@ cMultiplicativeExpr.parse	= function (oLexer, oStaticContext) {
 	while ((sOperator = oLexer.peek()) in cMultiplicativeExpr.operators) {
 		oLexer.next();
 		if (oLexer.eof() ||!(oExpr = cUnionExpr.parse(oLexer, oStaticContext)))
-			throw "MultiplicativeExpr.parse: right operand missing";
+			throw new cXPath2Error("XPST0003"
+//->Debug
+					, "Unexpected <eof> token: right operand missing in multiplicative expression"
+//<-Debug
+			);
 		oMultiplicativeExpr.items.push([sOperator, oExpr]);
 	}
 	return oMultiplicativeExpr;

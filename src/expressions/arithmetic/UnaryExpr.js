@@ -57,7 +57,11 @@ cUnaryExpr.parse	= function (oLexer, oStaticContext) {
 		oLexer.next();
 	}
 	if (oLexer.eof() ||!(oExpr = cValueExpr.parse(oLexer, oStaticContext)))
-		throw "UnaryExpr.parse: Expected ValueExpr expression";
+		throw new cXPath2Error("XPST0003"
+//->Debug
+				, "Unexpected <eof> token: left operand missing in additive expression"
+//<-Debug
+		);
 	return new cUnaryExpr(sOperator, oExpr);
 };
 

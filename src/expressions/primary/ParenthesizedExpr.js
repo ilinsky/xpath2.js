@@ -24,7 +24,11 @@ cParenthesizedExpr.parse	= function (oLexer, oStaticContext) {
 		if (oLexer.peek() == ')')
 			oLexer.next();
 		else
-			throw "ParenthesizedExpr.parse: Expected ')' token";
+			throw new cXPath2Error("XPST0003"
+//->Debug
+					, "Expected ')' token in parenthesized expression"
+//<-Debug
+			);
 
 		//
 		return new cParenthesizedExpr(oExpr);

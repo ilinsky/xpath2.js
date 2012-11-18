@@ -12,7 +12,11 @@ function cXPath2Expression(sExpression, oStaticContext) {
 		oExpr	= cExpr.parse(oLexer, oStaticContext);
 	//
 	if (!oLexer.eof())
-		throw "Expr.parse: Junk at the end of expression";
+		throw new cXPath2Error("XPST0003"
+//->Debug
+				, "Unexpected token beyond end of query"
+//<-Debug
+		);
 	//
 	this.staticContext	= oStaticContext;
 	this.internalExpression	= oExpr;

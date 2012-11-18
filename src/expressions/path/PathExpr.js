@@ -37,7 +37,11 @@ cPathExpr.parse	= function (oLexer, oStaticContext) {
 		if (sSlash == sSingleSlash)
 			return oPathExpr.items[0];	// '/' expression
 		//
-		throw "PathExpr.parse: expected AxisStep expression";
+		throw new cXPath2Error("XPST0003"
+//->Debug
+				, "Expected path step expression"
+//<-Debug
+		);
 	}
 	oPathExpr.items.push(oExpr);
 
@@ -48,7 +52,11 @@ cPathExpr.parse	= function (oLexer, oStaticContext) {
 		//
 		oLexer.next();
 		if (oLexer.eof() ||!(oExpr = cStepExpr.parse(oLexer, oStaticContext)))
-			throw "PathExpr.parse: Expected StepExpr expression";
+			throw new cXPath2Error("XPST0003"
+//->Debug
+					, "Expected path step expression"
+//<-Debug
+			);
 		//
 		oPathExpr.items.push(oExpr);
 	}

@@ -20,13 +20,21 @@ cExpr.parse	= function(oLexer, oStaticContext) {
 		oItem;
 	do {
 		if (oLexer.eof() ||!(oItem = cExprSingle.parse(oLexer, oStaticContext)))
-			throw "Expr.parse: expected ExprSingle expression";
+			throw new cXPath2Error("XPST0003"
+//->Debug
+					, "Expected expression"
+//<-Debug
+			);
 		oExpr.items.push(oItem);
 	}
 	while (oLexer.peek() == ',' && oLexer.next());
 	//
 	if (oLexer.peek(-1) == ',')
-		throw "Expr.parse: Expected ExprSingle expression";
+		throw new cXPath2Error("XPST0003"
+//->Debug
+				, "Expected expression"
+//<-Debug
+		);
 
 	//
 	return oExpr;

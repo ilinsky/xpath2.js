@@ -8,7 +8,7 @@
  */
 
 function cXPath2Lexer(sValue) {
-	var aMatch	= sValue.match(/\$(?:(?![0-9-])(?:[\w-]+):)?(?![0-9-])(?:[\w-]+)|(?:(?![0-9-])(?:[\w-]+|\*):)?(?![0-9-])(?:[\w-]+|\*)|\(:|:\)|\/\/|\.\.|::|\d+(?:\.\d*)?(?:[eE][+-]?\d+)?|\.\d+(?:[eE][+-]?\d+)?|"[^"]*(?:""[^"]*)*"|'[^']*(?:''[^']*)*'|<<|>>|[!<>]=|(?![0-9-])[\w-]+:\*|\s+|./g);
+	var aMatch	= sValue.match(/\$(?:(?![0-9-])(?:[\w-]+|\*):)?(?![0-9-])(?:[\w-]+|\*)|(?:(?![0-9-])(?:[\w-]+|\*):)?(?![0-9-])(?:[\w-]+|\*)|\(:|:\)|\/\/|\.\.|::|\d+(?:\.\d*)?(?:[eE][+-]?\d+)?|\.\d+(?:[eE][+-]?\d+)?|"[^"]*(?:""[^"]*)*"|'[^']*(?:''[^']*)*'|<<|>>|[!<>]=|(?![0-9-])[\w-]+:\*|\s+|./g);
 	if (aMatch) {
 		var nStack	= 0;
 		for (var nIndex = 0, nLength = aMatch.length; nIndex < nLength; nIndex++)
@@ -21,7 +21,11 @@ function cXPath2Lexer(sValue) {
 			if (!nStack && !/^\s/.test(aMatch[nIndex]))
 				this[this.length++]	= aMatch[nIndex];
 		if (nStack)
-			throw "XPathLexer: comments not closed";
+			throw new cXPath2Error("XPST0003"
+//->Debug
+					, "Unclosed XPath comment"
+//<-Debug
+			);
 	}
 };
 

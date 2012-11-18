@@ -25,12 +25,20 @@ cStepExpr.parsePredicates	= function (oLexer, oStaticContext, oStep) {
 		oLexer.next();
 
 		if (oLexer.eof() ||!(oExpr = cExpr.parse(oLexer, oStaticContext)))
-			throw "StepExpr.parsePredicates: expected Expr expression";
+			throw new cXPath2Error("XPST0003"
+//->Debug
+					, "Expected expression in predicate"
+//<-Debug
+			);
 
 		oStep.predicates.push(oExpr);
 
 		if (oLexer.peek() != ']')
-			throw "StepExpr.parsePredicates: Expected ']' token";
+			throw new cXPath2Error("XPST0003"
+//->Debug
+					, "Expected ']' token in predicate"
+//<-Debug
+			);
 
 		oLexer.next();
 	}

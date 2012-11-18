@@ -26,7 +26,11 @@ cTreatExpr.parse	= function(oLexer, oStaticContext) {
 
 	oLexer.next(2);
 	if (oLexer.eof() ||!(oType = cSequenceType.parse(oLexer, oStaticContext)))
-		throw "TreatExpr.parse: Expected expression operand";
+		throw new cXPath2Error("XPST0003"
+//->Debug
+				, "Unexpected <eof> token: right operand missing in treat expression"
+//<-Debug
+		);
 
 	return new cTreatExpr(oExpr, oType);
 };
