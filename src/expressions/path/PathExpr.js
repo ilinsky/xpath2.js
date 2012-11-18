@@ -80,6 +80,9 @@ cPathExpr.prototype.evaluate	= function (oContext) {
 			oContext.item	= oSequence.items[nIndex];
 			//
 			for (var nRightIndex = 0, oSequence2 = this.items[nItemIndex].evaluate(oContext), nRightLength = oSequence2.items.length; nRightIndex < nRightLength; nRightIndex++)
+				if ((nItemIndex < nItemLength - 1) && !oContext.DOMAdapter.isNode(oSequence2.items[nRightIndex]))
+					throw new cXPath2Error("XPTY0019");
+				else
 				if (oSequence1.indexOf(oSequence2.items[nRightIndex]) ==-1)
 					oSequence1.add(oSequence2.items[nRightIndex]);
 		}
