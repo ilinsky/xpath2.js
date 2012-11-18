@@ -38,3 +38,5 @@ oXPathError_messages["FORG0006"]	= "Invalid argument type.";
 oXPathError_messages["FODC0001"]	= "No context document.";
 //
 oXPathError_messages["FORX0001"]	= "Invalid regular expression flags.";
+//
+oXPathError_messages["FOCH0002"]	= "Unsupported collation.";
