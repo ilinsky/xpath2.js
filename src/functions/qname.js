@@ -42,7 +42,6 @@ fXPath2StaticContext_defineSystemFunction("QName",		[[cXSString, '?'], [cXSStrin
 		sLocalName	= aQName.pop(),
 		sPrefix	= aQName.pop() || null;
 
-	// TODO: Implement QName type
 	return new cXSQName(sPrefix, sLocalName, oSequence1.isEmpty() ? '' : oSequence1.items[0].valueOf());
 });
 
