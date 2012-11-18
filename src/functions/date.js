@@ -191,8 +191,7 @@ function fFunctionCall_dateTime_getComponent(oSequence1, sName) {
 	if (oSequence1.isEmpty())
 		return null;
 
-	var oItem	= oSequence1.items[0],
-		cType	= cXSAnyAtomicType.typeOf(oItem);
+	var oItem	= oSequence1.items[0];
 	if (sName == "timezone") {
 		var nTimezone	= oItem.timezone;
 		if (nTimezone === null)
@@ -201,12 +200,12 @@ function fFunctionCall_dateTime_getComponent(oSequence1, sName) {
 	}
 	else {
 		var nValue	= oItem[sName];
-		if (cType != cXSDate) {
+		if (!(oItem instanceof cXSDate)) {
 			if (sName == "hours")
 				if (nValue == 24)
 					nValue	= 0;
 		}
-		if (cType != cXSTime)
+		if (!(oItem instanceof cXSTime))
 			nValue	*= oItem.negative ?-1 : 1;
 		return sName == "seconds" ? new cXSDecimal(nValue) : new cXSInteger(nValue);
 	}

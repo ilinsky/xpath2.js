@@ -198,8 +198,7 @@ function fFunctionCall_assertSequenceItemType(oContext, oSequence, cItemType
 					vItem	= cXSString.cast(vItem);
 			}
 			// Check type
-			cDataType	= cXSAnyAtomicType.typeOf(vItem);
-			if (cItemType != cXTNumeric ? (cDataType != cItemType && !(cDataType.prototype instanceof cItemType)) : !cXSAnyAtomicType.isNumeric(vItem))
+			if (cItemType == cXTNumeric ? !cXSAnyAtomicType.isNumeric(vItem) : !(vItem instanceof cItemType))
 				throw new cXPath2Error("XPTY0004"
 //->Debug
 						, "Required item type of " + sSource + " is " + cItemType

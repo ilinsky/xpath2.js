@@ -32,10 +32,9 @@ cAtomicType.parse	= function(oLexer, oStaticContext) {
 cAtomicType.prototype.test	= function(vItem, oContext) {
 	// Test
 	var sUri	= (this.namespaceURI ? '{' + this.namespaceURI + '}' : '') + this.localName,
-		cTestType	= this.namespaceURI == "http://www.w3.org/2001/XMLSchema" ? hXPath2StaticContext_dataTypes[this.localName] : oContext.staticContext.getDataType(sUri),
-		cItemType	= cXSAnyAtomicType.typeOf(vItem);
-	if (cTestType)
-		return cTestType == cItemType || cItemType.prototype instanceof cTestType;
+		cType	= this.namespaceURI == "http://www.w3.org/2001/XMLSchema" ? hXPath2StaticContext_dataTypes[this.localName] : oContext.staticContext.getDataType(sUri);
+	if (cType)
+		return vItem instanceof cType;
 	//
 	throw new cXPath2Error("XPST0051"
 //->Debug
@@ -47,9 +46,9 @@ cAtomicType.prototype.test	= function(vItem, oContext) {
 cAtomicType.prototype.cast	= function(vItem, oContext) {
 	// Cast
 	var sUri	= (this.namespaceURI ? '{' + this.namespaceURI + '}' : '') + this.localName,
-		cCastType	= this.namespaceURI == "http://www.w3.org/2001/XMLSchema" ? hXPath2StaticContext_dataTypes[this.localName] : oContext.staticContext.getDataType(sUri);
-	if (cCastType)
-		return cCastType.cast(vItem);
+		cType	= this.namespaceURI == "http://www.w3.org/2001/XMLSchema" ? hXPath2StaticContext_dataTypes[this.localName] : oContext.staticContext.getDataType(sUri);
+	if (cType)
+		return cType.cast(vItem);
 	//
 	throw new cXPath2Error("XPST0051"
 //->Debug
