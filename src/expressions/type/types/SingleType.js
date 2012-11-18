@@ -22,6 +22,9 @@ cSingleType.parse	= function(oLexer, oStaticContext) {
 		sOccurence	= oLexer.peek();
 		if (sOccurence == '?')
 			oLexer.next();
+		else
+			sOccurence	= null;
+
 		return new cSingleType(oExpr, sOccurence);
 	}
 };
