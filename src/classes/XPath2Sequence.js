@@ -105,11 +105,11 @@ cXPath2Sequence.prototype.toBoolean	= function(oContext) {
 
 	if (this.items.length == 1) {
 		if (oItem instanceof cXSBoolean)
-			return oItem.value;
+			return oItem.value.valueOf();
 		if (oItem instanceof cXSString)
-			return !!oItem.value.length;
+			return !!oItem.valueOf().length;
 		if (oItem instanceof cXSDecimal || oItem instanceof cXSDouble || oItem instanceof cXSFloat)
-			return !(fIsNaN(oItem.value) || oItem.value == 0);
+			return !(fIsNaN(oItem.valueOf()) || oItem.valueOf() == 0);
 
 		throw new cXPath2Error("FORG0006"
 //->Debug

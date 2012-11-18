@@ -33,7 +33,7 @@ fXPath2StaticContext_defineSystemFunction("resolve-uri",	[[cXSString, '?'], [cXS
 
 	//
 	var sUri	= oSequence1.items[0];
-	if (sUri.value == '' || sUri.value.charAt(0) == '#')
+	if (sUri.valueOf() == '' || sUri.valueOf().charAt(0) == '#')
 		return cXSAnyURI.cast(sBaseUri);
 
 	var oUri	= cXSAnyURI.cast(sUri);

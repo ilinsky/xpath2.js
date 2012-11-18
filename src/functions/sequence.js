@@ -99,7 +99,7 @@ fXPath2StaticContext_defineSystemFunction("insert-before",	[[cXTItem, '*'], [cXS
 		return oSequence1;
 
 	var nLength 	= oSequence1.items.length,
-		nPosition	= oSequence2.items[0].value;
+		nPosition	= oSequence2.items[0].valueOf();
 	if (nPosition < 1)
 		nPosition	= 1;
 	else
@@ -125,7 +125,7 @@ fXPath2StaticContext_defineSystemFunction("remove",	[[cXTItem, '*'], [cXSInteger
 		return oSequence;
 
 	var nLength 	= oSequence1.items.length,
-		nPosition	= oSequence2.items[0].value;
+		nPosition	= oSequence2.items[0].valueOf();
 
 	if (nPosition < 1 || nPosition > nLength)
 		return oSequence1;
@@ -244,7 +244,7 @@ fXPath2StaticContext_defineSystemFunction("max",	[[cXSAnyAtomicType, '*'], [cXSS
 	try {
 		var vValue	= oSequence1.items[0];
 		for (var nIndex = 1, nLength = oSequence1.items.length; nIndex < nLength; nIndex++)
-			if (cComparisonExpr.ValueComp.operators['ge'](oSequence1.items[nIndex], vValue, this).value)
+			if (cComparisonExpr.ValueComp.operators['ge'](oSequence1.items[nIndex], vValue, this).valueOf())
 				vValue	= oSequence1.items[nIndex];
 		return vValue;
 	}
@@ -270,7 +270,7 @@ fXPath2StaticContext_defineSystemFunction("min",	[[cXSAnyAtomicType, '*'], [cXSS
 	try {
 		var vValue	= oSequence1.items[0];
 		for (var nIndex = 1, nLength = oSequence1.items.length; nIndex < nLength; nIndex++)
-			if (cComparisonExpr.ValueComp.operators['le'](oSequence1.items[nIndex], vValue, this).value)
+			if (cComparisonExpr.ValueComp.operators['le'](oSequence1.items[nIndex], vValue, this).valueOf())
 				vValue	= oSequence1.items[nIndex];
 		return vValue;
 	}

@@ -85,7 +85,7 @@ cComparisonExpr.GeneralComp	= function(oExpr, oContext) {
 			if (vRight instanceof cXSAnyURI)
 				vRight	= cXSString.cast(vRight);
 
-			bResult	= cComparisonExpr.ValueComp.operators[cComparisonExpr.GeneralComp.map[oExpr.operator]](vLeft, vRight, oContext).value;
+			bResult	= cComparisonExpr.ValueComp.operators[cComparisonExpr.GeneralComp.map[oExpr.operator]](vLeft, vRight, oContext).valueOf();
 		}
 	}
 	return new cXSBoolean(bResult);
@@ -195,7 +195,7 @@ cComparisonExpr.ValueComp.operators['eq']	= function(oLeft, oRight, oContext) {
 	);	// Cannot compare {type1} to {type2}
 };
 cComparisonExpr.ValueComp.operators['ne']	= function(oLeft, oRight, oContext) {
-	return new cXSBoolean(!cComparisonExpr.ValueComp.operators['eq'](oLeft, oRight, oContext).value);
+	return new cXSBoolean(!cComparisonExpr.ValueComp.operators['eq'](oLeft, oRight, oContext).valueOf());
 };
 cComparisonExpr.ValueComp.operators['gt']	= function(oLeft, oRight, oContext) {
 	var cLeft	= cXSAnyAtomicType.typeOf(oLeft),

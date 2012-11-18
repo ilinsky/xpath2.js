@@ -118,7 +118,7 @@ fXPath2StaticContext_defineSystemFunction("lang",	[[cXSString, '?'], [cXTNode, '
 		if (aAttributes = this.DOMAdapter.getProperty(oNode, "attributes"))
 			for (var nIndex = 0, nLength = aAttributes.length; nIndex < nLength; nIndex++)
 				if (this.DOMAdapter.getProperty(aAttributes[nIndex], "nodeName") == "xml:lang")
-					return new cXSBoolean(this.DOMAdapter.getProperty(aAttributes[nIndex], "value").replace(/-.+/, '').toLowerCase() == oSequence1.items[0].value.replace(/-.+/, '').toLowerCase());
+					return new cXSBoolean(this.DOMAdapter.getProperty(aAttributes[nIndex], "value").replace(/-.+/, '').toLowerCase() == oSequence1.items[0].valueOf().replace(/-.+/, '').toLowerCase());
 	//
 	return new cXSBoolean(false);
 });

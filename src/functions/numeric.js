@@ -47,7 +47,7 @@ fXPath2StaticContext_defineSystemFunction("round-half-to-even",	[[cXTNumeric, '?
 	}
 
 	//
-	if (oPrecision.value < 0) {
+	if (oPrecision.valueOf() < 0) {
 		var oPower	= new cXSInteger(cMath.pow(10,-oPrecision)),
 			nRounded= cMath.round(hXPath2StaticContext_operators["numeric-divide"].call(this, oValue, oPower)),
 			oRounded= new cXSInteger(nRounded);

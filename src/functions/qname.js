@@ -24,7 +24,7 @@
 // 11.1 Additional Constructor Functions for QNames
 // fn:resolve-QName($qname as xs:string?, $element as element()) as xs:QName?
 fXPath2StaticContext_defineSystemFunction("resolve-QName",	[[cXSString, '?'], [cXTElement]],	function(oSequence1, oSequence2) {
-	var sQName	= oSequence1.items[0].value || '',
+	var sQName	= oSequence1.items[0].valueOf() || '',
 		aQName	= sQName.split(':'),
 		sLocalName	= aQName.pop(),
 		sPrefix	= aQName.pop() || null;
@@ -37,13 +37,13 @@ fXPath2StaticContext_defineSystemFunction("resolve-QName",	[[cXSString, '?'], [c
 
 // fn:QName($paramURI as xs:string?, $paramQName as xs:string) as xs:QName
 fXPath2StaticContext_defineSystemFunction("QName",		[[cXSString, '?'], [cXSString]],	function(oSequence1, oSequence2) {
-	var sQName	= oSequence2.items[0].value,
+	var sQName	= oSequence2.items[0].valueOf(),
 		aQName	= sQName.split(':'),
 		sLocalName	= aQName.pop(),
 		sPrefix	= aQName.pop() || null;
 
 	// TODO: Implement QName type
-	return new cXSQName(sPrefix, sLocalName, oSequence1.isEmpty() ? '' : oSequence1.items[0].value);
+	return new cXSQName(sPrefix, sLocalName, oSequence1.isEmpty() ? '' : oSequence1.items[0].valueOf());
 });
 
 // 11.2 Functions Related to QNames
@@ -76,7 +76,7 @@ fXPath2StaticContext_defineSystemFunction("namespace-uri-from-QName",	[[cXSQName
 
 // fn:namespace-uri-for-prefix($prefix as xs:string?, $element as element()) as xs:anyURI?
 fXPath2StaticContext_defineSystemFunction("namespace-uri-for-prefix",	[[cXSString, '?'], [cXTElement]],	function(oSequence1, oSequence2) {
-	var sQName	= oSequence1.isEmpty() ? '' : oSequence1.items[0].value,
+	var sQName	= oSequence1.isEmpty() ? '' : oSequence1.items[0].valueOf(),
 		aQName	= sQName.split(':'),
 		sLocalName	= aQName.pop(),
 		sPrefix	= aQName.pop() || null;

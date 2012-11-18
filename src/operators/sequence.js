@@ -120,7 +120,7 @@ hXPath2StaticContext_operators["except"]	= function(oSequence1, oSequence2) {
 // op:to($firstval as xs:integer, $lastval as xs:integer) as xs:integer*
 hXPath2StaticContext_operators["to"]	= function(oLeft, oRight) {
 	var oSequence	= new cXPath2Sequence;
-	for (var nIndex = oLeft.value, nLength = oRight.value; nIndex <= nLength; nIndex++)
+	for (var nIndex = oLeft.valueOf(), nLength = oRight.valueOf(); nIndex <= nLength; nIndex++)
 		oSequence.add(new cXSInteger(nIndex));
 	return oSequence;
 };
