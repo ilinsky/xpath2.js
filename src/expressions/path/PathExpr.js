@@ -11,7 +11,7 @@ function cPathExpr() {
 	this.items	= [];
 };
 
-cPathExpr.prototype.items	= [];
+cPathExpr.prototype.items	= null;
 
 // Static members
 cPathExpr.parse	= function (oLexer, oStaticContext) {
