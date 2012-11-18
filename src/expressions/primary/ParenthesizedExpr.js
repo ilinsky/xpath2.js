@@ -21,14 +21,14 @@ cParenthesizedExpr.parse	= function (oLexer, oStaticContext) {
 			oExpr	= cExpr.parse(oLexer, oStaticContext);
 
 		//
-		if (oLexer.peek() == ')')
-			oLexer.next();
-		else
+		if (oLexer.peek() != ')')
 			throw new cXPath2Error("XPST0003"
 //->Debug
 					, "Expected ')' token in parenthesized expression"
 //<-Debug
 			);
+
+		oLexer.next();
 
 		//
 		return new cParenthesizedExpr(oExpr);
