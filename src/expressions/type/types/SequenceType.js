@@ -33,18 +33,13 @@ cSequenceType.parse	= function(oLexer, oStaticContext) {
 
 	var oExpr,
 		sOccurence;
-	if (oLexer.eof() ||!(oExpr = cItemType.parse(oLexer, oStaticContext)))
-		throw new cXPath2Error("XPST0003"
-//->Debug
-				, "Expected item type in sequence type"
-//<-Debug
-		);
+	if (!oLexer.eof() && (oExpr = cItemType.parse(oLexer, oStaticContext))) {
+		sOccurence	= oLexer.peek();
+		if (sOccurence == '?' || sOccurence == '*' || sOccurence == '+')
+			oLexer.next();
+		else
+			sOccurence	= null;
 
-	sOccurence	= oLexer.peek();
-	if (sOccurence == '?' || sOccurence == '*' || sOccurence == '+')
-		oLexer.next();
-	else
-		sOccurence	= null;
-
-	return new cSequenceType(oExpr, sOccurence);
+		return new cSequenceType(oExpr, sOccurence);
+	}
 };
