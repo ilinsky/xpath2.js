@@ -94,7 +94,7 @@ cSimpleQuantifiedBinding.parse	= function(oLexer, oStaticContext) {
 	if (!aMatch)
 		throw new cXPath2Error("XPST0003"
 //->Debug
-				, "Expected variable declaration in quantified expression binding"
+				, "Expected binding in quantified expression"
 //<-Debug
 		);
 

@@ -137,7 +137,7 @@ cAdditiveExpr.parse	= function (oLexer, oStaticContext) {
 		if (oLexer.eof() ||!(oExpr = cMultiplicativeExpr.parse(oLexer, oStaticContext)))
 			throw new cXPath2Error("XPST0003"
 //->Debug
-					, "Unexpected <eof> token: right operand missing in additive expression"
+					, "Expected right operand in additive expression"
 //<-Debug
 			);
 		oAdditiveExpr.items.push([sOperator, oExpr]);

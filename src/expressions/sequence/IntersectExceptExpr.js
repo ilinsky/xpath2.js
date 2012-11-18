@@ -42,7 +42,7 @@ cIntersectExceptExpr.parse	= function (oLexer, oStaticContext) {
 		if (oLexer.eof() ||!(oExpr = cInstanceofExpr.parse(oLexer, oStaticContext)))
 			throw new cXPath2Error("XPST0003"
 //->Debug
-					, "Unexpected <eof> token: right operand missing in " + sOperator + " expression"
+					, "Expected right operand in " + sOperator + " expression"
 //<-Debug
 			);
 		oIntersectExceptExpr.items.push([sOperator, oExpr]);

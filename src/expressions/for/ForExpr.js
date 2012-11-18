@@ -89,7 +89,7 @@ cSimpleForBinding.parse	= function(oLexer, oStaticContext) {
 	if (!aMatch)
 		throw new cXPath2Error("XPST0003"
 //->Debug
-				, "Expected variable declaration in for expression binding"
+				, "Expected binding in for expression"
 //<-Debug
 		);
 

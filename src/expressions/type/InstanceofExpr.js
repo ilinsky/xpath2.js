@@ -28,7 +28,7 @@ cInstanceofExpr.parse	= function(oLexer, oStaticContext) {
 	if (oLexer.eof() ||!(oType = cSequenceType.parse(oLexer, oStaticContext)))
 		throw new cXPath2Error("XPST0003"
 //->Debug
-				, "Unexpected <eof> token: right operand missing in instanceof expression"
+				, "Expected right operand in instance of expression"
 //<-Debug
 		);
 
