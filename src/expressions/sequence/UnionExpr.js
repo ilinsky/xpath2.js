@@ -31,7 +31,7 @@ cUnionExpr.parse	= function (oLexer, oStaticContext) {
 
 	// Union expression
 	var oUnionExpr	= new cUnionExpr(oExpr);
-	while ((sOperator = oLexer.peek() == '|') || sOperator == "union") {
+	while ((sOperator = oLexer.peek()) == '|' || sOperator == "union") {
 		oLexer.next();
 		if (oLexer.eof() ||!(oExpr = cIntersectExceptExpr.parse(oLexer, oStaticContext)))
 			throw new cXPath2Error("XPST0003"
