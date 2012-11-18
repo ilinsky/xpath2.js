@@ -76,8 +76,6 @@ cMultiplicativeExpr.operators['div']	= function (oLeft, oRight, oContext) {
 	);	// Arithmetic operator is not defined for arguments of types ({type1}, {type2})
 };
 cMultiplicativeExpr.operators['idiv']	= function (oLeft, oRight, oContext) {
-	var cLeft	= cXSAnyAtomicType.typeOf(oLeft),
-		cRight	= cXSAnyAtomicType.typeOf(oRight);
 	if (cXSAnyAtomicType.isNumeric(oLeft) && cXSAnyAtomicType.isNumeric(oRight))
 		return hXPath2StaticContext_operators["numeric-integer-divide"].call(oContext, oLeft, oRight);
 	//
@@ -88,8 +86,6 @@ cMultiplicativeExpr.operators['idiv']	= function (oLeft, oRight, oContext) {
 	);	// Arithmetic operator is not defined for arguments of types ({type1}, {type2})
 };
 cMultiplicativeExpr.operators['mod']	= function (oLeft, oRight, oContext) {
-	var cLeft	= cXSAnyAtomicType.typeOf(oLeft),
-		cRight	= cXSAnyAtomicType.typeOf(oRight);
 	if (cXSAnyAtomicType.isNumeric(oLeft) && cXSAnyAtomicType.isNumeric(oRight))
 		return hXPath2StaticContext_operators["numeric-mod"].call(oContext, oLeft, oRight);
 	//
