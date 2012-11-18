@@ -7,18 +7,22 @@
  *
  */
 
-function cXSBase64Binary(vData) {
-	this.data	= vData;
+function cXSBase64Binary(sValue) {
+	this.value	= sValue;
 };
 
 cXSBase64Binary.RegExp	= /^((([A-Za-z0-9+\/]\s*){4})*(([A-Za-z0-9+\/]\s*){3}[A-Za-z0-9+\/]|([A-Za-z0-9+\/]\s*){2}[AEIMQUYcgkosw048]\s*=|[A-Za-z0-9+\/]\s*[AQgw]\s*=\s*=))?$/;
 
 cXSBase64Binary.prototype	= new cXSAnyAtomicType;
 
-cXSBase64Binary.prototype.data	= null;
+cXSBase64Binary.prototype.value	= null;
+
+cXSBase64Binary.prototype.valueOf	= function() {
+	return this.value;
+};
 
 cXSBase64Binary.prototype.toString	= function() {
-	return this.data;
+	return this.value;
 };
 
 cXSBase64Binary.cast	= function(vValue) {

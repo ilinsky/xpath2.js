@@ -7,18 +7,22 @@
  *
  */
 
-function cXSHexBinary(vData) {
-	this.data	= vData;
+function cXSHexBinary(sValue) {
+	this.value	= sValue;
 };
 
 cXSHexBinary.RegExp	= /^([0-9a-fA-F]{2})*$/;
 
 cXSHexBinary.prototype	= new cXSAnyAtomicType;
 
-cXSHexBinary.prototype.data	= null;
+cXSHexBinary.prototype.value	= null;
+
+cXSHexBinary.prototype.valueOf	= function() {
+	return this.value;
+};
 
 cXSHexBinary.prototype.toString	= function() {
-	return this.data;
+	return this.value;
 };
 
 cXSHexBinary.cast	= function(vValue) {
