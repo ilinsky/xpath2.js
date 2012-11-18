@@ -22,15 +22,16 @@ cUnionExpr.operators["union"]	= function(oLeft, oRight, oContext) {
 
 // Static members
 cUnionExpr.parse	= function (oLexer, oStaticContext) {
-	var oExpr;
+	var oExpr,
+		sOperator;
 	if (oLexer.eof() ||!(oExpr = cIntersectExceptExpr.parse(oLexer, oStaticContext)))
 		return;
-	if (!(oLexer.peek() == '|' || oLexer.peek() == "union"))
+	if (!((sOperator = oLexer.peek()) == '|' || sOperator == "union"))
 		return oExpr;
 
 	// Union expression
 	var oUnionExpr	= new cUnionExpr(oExpr);
-	while (oLexer.peek() == '|' || oLexer.peek() == "union") {
+	while ((sOperator = oLexer.peek() == '|') || sOperator == "union") {
 		oLexer.next();
 		if (oLexer.eof() ||!(oExpr = cIntersectExceptExpr.parse(oLexer, oStaticContext)))
 			throw new cXPath2Error("XPST0003"
