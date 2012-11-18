@@ -36,12 +36,13 @@ cPathExpr.parse	= function (oLexer, oStaticContext) {
 	if (oLexer.eof() ||!(oExpr = cStepExpr.parse(oLexer, oStaticContext))) {
 		if (sSlash == sSingleSlash)
 			return oPathExpr.items[0];	// '/' expression
-		//
-		throw new cXPath2Error("XPST0003"
+		if (sSlash == sDoubleSlash)
+			throw new cXPath2Error("XPST0003"
 //->Debug
-				, "Expected path step expression"
+					, "Expected path step expression"
 //<-Debug
-		);
+			);
+		return;
 	}
 	oPathExpr.items.push(oExpr);
 
