@@ -37,26 +37,5 @@ cRangeExpr.parse	= function (oLexer, oStaticContext) {
 
 // Public members
 cRangeExpr.prototype.evaluate	= function (oContext) {
-	var oLeft	= this.left.evaluate(oContext),
-		oRight	= this.right.evaluate(oContext);
-
-	if (oLeft.isEmpty() || oRight.isEmpty())
-		return new cXPath2Sequence;
-
-	var vLeft	= cXPath2Sequence.atomizeItem(oLeft.items[0], oContext),
-		vRight	= cXPath2Sequence.atomizeItem(oRight.items[0], oContext);
-
-	if (vLeft instanceof cXSUntypedAtomic)
-		vLeft	= cXSInteger.cast(vLeft);
-	if (vRight instanceof cXSUntypedAtomic)
-		vRight	= cXSInteger.cast(vRight);
-
-	if (vLeft instanceof cXSInteger && vRight instanceof cXSInteger)
-		return hXPath2StaticContext_operators["to"].call(oContext, vLeft, vRight);
-	//
-	throw new cXPath2Error("XPTY0004"
-//->Debug
-			, "Required item type of operands of 'to' is xs:integer"
-//<-Debug
-	);	//Required item type of second operand of 'to' is xs:integer; supplied value has item type {type2}
+	return hXPath2StaticContext_operators["to"].call(oContext, this.left.evaluate(oContext), this.right.evaluate(oContext));
 };

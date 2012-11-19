@@ -118,9 +118,22 @@ hXPath2StaticContext_operators["except"]	= function(oSequence1, oSequence2) {
 
 // 15.5 Functions and Operators that Generate Sequences
 // op:to($firstval as xs:integer, $lastval as xs:integer) as xs:integer*
-hXPath2StaticContext_operators["to"]	= function(oLeft, oRight) {
+hXPath2StaticContext_operators["to"]	= function(oSequence1, oSequence2) {
+	//
 	var oSequence	= new cXPath2Sequence;
-	for (var nIndex = oLeft.valueOf(), nLength = oRight.valueOf(); nIndex <= nLength; nIndex++)
+	if (oSequence1.isEmpty() || oSequence2.isEmpty())
+		return oSequence;
+	//
+	var sSource	= " first operand of 'to'";
+	fFunctionCall_assertSequenceCardinality(this, oSequence1, '?', sSource);
+	fFunctionCall_assertSequenceItemType(this, oSequence1, cXSInteger, sSource);
+	//
+	sSource	= " second operand of 'to'";
+	fFunctionCall_assertSequenceCardinality(this, oSequence2, '?', sSource);
+	fFunctionCall_assertSequenceItemType(this, oSequence2, cXSInteger, sSource);
+
+	for (var nIndex = oSequence1.items[0].valueOf(), nLength = oSequence2.items[0].valueOf(); nIndex <= nLength; nIndex++)
 		oSequence.add(new cXSInteger(nIndex));
+	//
 	return oSequence;
 };
