@@ -36,5 +36,44 @@ cTreatExpr.parse	= function(oLexer, oStaticContext) {
 };
 
 cTreatExpr.prototype.evaluate	= function(oContext) {
-	throw "Expression 'treat as' not implemented";
+	var oSequence1	= this.expression.evaluate(oContext);
+	// Validate empty-sequence()
+	if (!this.type.itemType && !oSequence1.isEmpty())
+		throw new cXPath2Error("XPDY0050"
+//->Debug
+				, "The only value allowed for the value in 'treat as' expression is an empty sequence"
+//<-Debug
+		);
+
+	// Validate cardinality
+	if (oSequence1.isEmpty() &&!(this.type.occurence == '?' || this.type.occurence == '*'))
+		throw new cXPath2Error("XPDY0050"
+//->Debug
+				, "An empty sequence is not allowed as the value in 'treat as' expression"
+//<-Debug
+		);
+
+	if (!(oSequence1.isSingleton()) &&!(this.type.occurence == '+' || this.type.occurence == '*'))
+		throw new cXPath2Error("XPDY0050"
+//->Debug
+				, "A sequence of more than one item is not allowed as the value in 'treat as' expression"
+//<-Debug
+		);
+
+	// Validate type
+	var oType	= this.type.itemType;
+	if (!oType.test)	// item()
+		return oSequence1;
+
+	for (var nIndex = 0, nLength = oSequence1.items.length; nIndex < nLength; nIndex++)
+		if (!oType.test.test(oSequence1.items[nIndex], oContext))
+			throw new cXPath2Error("XPDY0050"
+//->Debug
+					, "Required item type of value in 'treat as' expression is xs:boolean"
+					// XPDY0050: Required item type of value in 'treat as' expression is {type1}; supplied value has item type {type2}
+//<-Debug
+			);
+
+	//
+	return oSequence1;
 };
