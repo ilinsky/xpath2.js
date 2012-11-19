@@ -32,7 +32,7 @@ cComparisonExpr.parse	= function (oLexer, oStaticContext) {
 	if (oLexer.eof() ||!(oRight = cRangeExpr.parse(oLexer, oStaticContext)))
 		throw new cXPath2Error("XPST0003"
 //->Debug
-				, "Expected right operand in comparison expression"
+				, "Expected second operand in comparison expression"
 //<-Debug
 		);
 	return new cComparisonExpr(oExpr, oRight, sOperator);

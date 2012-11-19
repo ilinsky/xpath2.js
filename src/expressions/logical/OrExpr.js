@@ -30,7 +30,7 @@ cOrExpr.parse	= function (oLexer, oStaticContext) {
 		if (oLexer.eof() ||!(oExpr = cAndExpr.parse(oLexer, oStaticContext)))
 			throw new cXPath2Error("XPST0003"
 //->Debug
-					, "Expected right operand in logical or expression"
+					, "Expected second operand in logical or expression"
 //<-Debug
 			);
 		oOrExpr.items.push(oExpr);

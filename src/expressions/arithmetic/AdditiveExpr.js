@@ -133,7 +133,7 @@ cAdditiveExpr.parse	= function (oLexer, oStaticContext) {
 		if (oLexer.eof() ||!(oExpr = cMultiplicativeExpr.parse(oLexer, oStaticContext)))
 			throw new cXPath2Error("XPST0003"
 //->Debug
-					, "Expected right operand in additive expression"
+					, "Expected second operand in additive expression"
 //<-Debug
 			);
 		oAdditiveExpr.items.push([sOperator, oExpr]);

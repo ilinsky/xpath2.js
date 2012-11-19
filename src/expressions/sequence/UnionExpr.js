@@ -36,7 +36,7 @@ cUnionExpr.parse	= function (oLexer, oStaticContext) {
 		if (oLexer.eof() ||!(oExpr = cIntersectExceptExpr.parse(oLexer, oStaticContext)))
 			throw new cXPath2Error("XPST0003"
 //->Debug
-					, "Expected right operand in union expression"
+					, "Expected second operand in union expression"
 //<-Debug
 			);
 		oUnionExpr.items.push(oExpr);

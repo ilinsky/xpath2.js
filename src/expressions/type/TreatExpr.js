@@ -28,7 +28,7 @@ cTreatExpr.parse	= function(oLexer, oStaticContext) {
 	if (oLexer.eof() ||!(oType = cSequenceType.parse(oLexer, oStaticContext)))
 		throw new cXPath2Error("XPST0003"
 //->Debug
-				, "Expected right operand in treat expression"
+				, "Expected second operand in treat expression"
 //<-Debug
 		);
 

@@ -57,7 +57,7 @@ cUnaryExpr.parse	= function (oLexer, oStaticContext) {
 	if (oLexer.eof() ||!(oExpr = cValueExpr.parse(oLexer, oStaticContext)))
 		throw new cXPath2Error("XPST0003"
 //->Debug
-				, "Expected left operand in unary expression"
+				, "Expected operand in unary expression"
 //<-Debug
 		);
 	return new cUnaryExpr(sOperator, oExpr);

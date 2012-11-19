@@ -108,7 +108,7 @@ cMultiplicativeExpr.parse	= function (oLexer, oStaticContext) {
 		if (oLexer.eof() ||!(oExpr = cUnionExpr.parse(oLexer, oStaticContext)))
 			throw new cXPath2Error("XPST0003"
 //->Debug
-					, "Expected right operand in multiplicative expression"
+					, "Expected second operand in multiplicative expression"
 //<-Debug
 			);
 		oMultiplicativeExpr.items.push([sOperator, oExpr]);
