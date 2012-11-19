@@ -36,5 +36,5 @@ cCastableExpr.parse	= function(oLexer, oStaticContext) {
 };
 
 cCastableExpr.prototype.evaluate	= function(oContext) {
-	throw "Expression 'cast as' not implemented";
+	throw "Expression 'castable as' not implemented";
 };
