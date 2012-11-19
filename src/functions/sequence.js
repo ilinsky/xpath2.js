@@ -60,12 +60,9 @@ fXPath2StaticContext_defineSystemFunction("index-of",	[[cXSAnyAtomicType, '*'], 
 	// TODO: Implement collation
 
 	var oSequence	= new cXPath2Sequence;
-	for (var nIndex = 0, nLength = oSequence1.items.length, vValue; nIndex < nLength; nIndex++) {
-		vValue = oSequence1.items[nIndex].valueOf();
-		for (var nRightIndex = 0, nRightLength = oSequence2.items.length; nRightIndex < nRightLength; nRightIndex++)
-			if (oSequence2.items[nRightIndex].valueOf() === vValue)
-				oSequence.add(new cXSInteger(nIndex + 1));
-	}
+	for (var nIndex = 0, nLength = oSequence1.items.length, vValue = oSequence2.items[0].valueOf(); nIndex < nLength; nIndex++)
+		if (oSequence1.items[nIndex].valueOf() === vValue)
+			oSequence.add(new cXSInteger(nIndex + 1));
 
 	return oSequence;
 });
