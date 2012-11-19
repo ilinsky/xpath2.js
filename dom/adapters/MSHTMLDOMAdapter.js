@@ -27,3 +27,7 @@ oMSHTMLDOMAdapter.getProperty	= function(oNode, sName) {
 	return oNode[sName];
 };
 
+// Element/Document object members
+oMSHTMLDOMAdapter.getElementsByTagNameNS	= function(oNode, sNameSpaceURI, sLocalName) {
+	return oNode.getElementsByTagNameNS(sNameSpaceURI, sLocalName);
+};

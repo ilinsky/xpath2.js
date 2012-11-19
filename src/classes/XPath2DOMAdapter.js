@@ -37,3 +37,8 @@ cXPath2DOMAdapter.prototype.lookupNamespaceURI	= function(oNode, sPrefix) {
 cXPath2DOMAdapter.prototype.getElementById	= function(oNode, sId) {
 	return oNode.getElementById(sId);
 };
+
+// Element/Document object members
+cXPath2DOMAdapter.prototype.getElementsByTagNameNS	= function(oNode, sNameSpaceURI, sLocalName) {
+	return oNode.getElementsByTagNameNS(sNameSpaceURI, sLocalName);
+};

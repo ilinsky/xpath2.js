@@ -26,3 +26,8 @@ oMSXMLDOMAdapter.getElementById	= function(oDocument, sId) {
 /*oMSXMLDOMAdapter.getElementById	= function(oNode, sId) {
 	return oNode.selectSingleNode('/' + '/' + '*[@id="' + sId + '"]');
 };*/
+
+//Element/Document object members
+oMSXMLDOMAdapter.getElementsByTagNameNS	= function(oNode, sNameSpaceURI, sLocalName) {
+	return oNode.getElementsByTagNameNS(sNameSpaceURI, sLocalName);
+};
