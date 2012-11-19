@@ -78,12 +78,10 @@ fXPath2StaticContext_defineSystemFunction("namespace-uri-for-prefix",	[[cXSStrin
 	var sQName	= oSequence1.isEmpty() ? '' : oSequence1.items[0].valueOf(),
 		aQName	= sQName.split(':'),
 		sLocalName	= aQName.pop(),
-		sPrefix	= aQName.pop() || null;
+		sPrefix		= aQName.pop() || null,
+		sNameSpaceURI	= this.DOMAdapter.lookupNamespaceURI(oSequence2.items[0], sPrefix || null);
 
-	if (oSequence2.isEmpty())
-		return null;
-
-	return cXSAnyURI.cast(new cXSString(this.DOMAdapter.lookupNamespaceURI(oSequence2.items[0], sPrefix || '')));
+	return sNameSpaceURI == null ? null : cXSAnyURI.cast(new cXSString(sNameSpaceURI));
 });
 
 // fn:in-scope-prefixes($element as element()) as xs:string*
