@@ -195,21 +195,28 @@ function fFunctionCall_assertSequenceItemType(oContext, oSequence, cItemType
 		}
 		else
 		// Atomic types
-		if (cItemType == cXSAnyAtomicType || cItemType.prototype instanceof cXSAnyAtomicType || cItemType == cXTNumeric) {
+		if (cItemType == cXSAnyAtomicType || cItemType.prototype instanceof cXSAnyAtomicType) {
 			// Atomize item
 			vItem	= cXPath2Sequence.atomizeItem(vItem, oContext);
-			//
+			// Convert type if necessary
 			if (cItemType != cXSAnyAtomicType) {
 				// Cast item to expected type if it's type is xs:untypedAtomic
 				if (vItem instanceof cXSUntypedAtomic)
-					vItem	=(cItemType != cXTNumeric ? cItemType : cXSDecimal).cast(vItem);
+					vItem	= cItemType.cast(vItem);
 				// Cast item to xs:string if it's type is xs:anyURI
 				else
-				if (vItem instanceof cXSAnyURI && cItemType == cXSString)
-					vItem	= cXSString.cast(vItem);
+				if (cItemType == cXSString/* || cItemType.prototype instanceof cXSString*/) {
+					if (vItem instanceof cXSAnyURI)
+						vItem	= cXSString.cast(vItem);
+				}
+				else
+				if (cItemType == cXSDouble/* || cItemType.prototype instanceof cXSDouble*/) {
+					if (cXSAnyAtomicType.isNumeric(vItem))
+						vItem	= cItemType.cast(vItem);
+				}
 			}
 			// Check type
-			if (cItemType == cXTNumeric ? !cXSAnyAtomicType.isNumeric(vItem) : !(vItem instanceof cItemType))
+			if (!(vItem instanceof cItemType))
 				throw new cXPath2Error("XPTY0004"
 //->Debug
 						, "Required item type of " + sSource + " is " + cItemType

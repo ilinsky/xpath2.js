@@ -18,28 +18,28 @@
 
 // 6.4 Functions on Numeric Values
 // fn:abs($arg as numeric?) as numeric?
-fXPath2StaticContext_defineSystemFunction("abs",		[[cXTNumeric, '?']],	function(oSequence1) {
+fXPath2StaticContext_defineSystemFunction("abs",		[[cXSDouble, '?']],	function(oSequence1) {
 	return new cXSDecimal(cMath.abs(oSequence1.items[0]));
 });
 
 // fn:ceiling($arg as numeric?) as numeric?
-fXPath2StaticContext_defineSystemFunction("ceiling",	[[cXTNumeric, '?']],	function(oSequence1) {
+fXPath2StaticContext_defineSystemFunction("ceiling",	[[cXSDouble, '?']],	function(oSequence1) {
 	return new cXSDecimal(cMath.ceil(oSequence1.items[0]));
 });
 
 // fn:floor($arg as numeric?) as numeric?
-fXPath2StaticContext_defineSystemFunction("floor",		[[cXTNumeric, '?']],	function(oSequence1) {
+fXPath2StaticContext_defineSystemFunction("floor",		[[cXSDouble, '?']],	function(oSequence1) {
 	return new cXSDecimal(cMath.floor(oSequence1.items[0]));
 });
 
 // fn:round($arg as numeric?) as numeric?
-fXPath2StaticContext_defineSystemFunction("round",		[[cXTNumeric, '?']],	function(oSequence1) {
+fXPath2StaticContext_defineSystemFunction("round",		[[cXSDouble, '?']],	function(oSequence1) {
 	return new cXSDecimal(cMath.round(oSequence1.items[0]));
 });
 
 // fn:round-half-to-even($arg as numeric?) as numeric?
 // fn:round-half-to-even($arg as numeric?, $precision as xs:integer) as numeric?
-fXPath2StaticContext_defineSystemFunction("round-half-to-even",	[[cXTNumeric, '?'], [cXSInteger, '', true]],	function(oSequence1, oSequence2) {
+fXPath2StaticContext_defineSystemFunction("round-half-to-even",	[[cXSDouble, '?'], [cXSInteger, '', true]],	function(oSequence1, oSequence2) {
 	var oValue	= oSequence1.items[0];
 	var oPrecision	= new cXSInteger(0);
 	if (arguments.length > 1) {

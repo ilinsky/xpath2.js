@@ -112,7 +112,6 @@ types/simple/atomic/string/XSNMTOKEN.js
 # XPath data types
 types/XTItem.js
 types/XTNode.js
-types/XTNumeric.js
 types/node/XTAttribute.js
 types/node/XTComment.js
 types/node/XTDocument.js
