@@ -36,9 +36,10 @@ cInstanceofExpr.parse	= function(oLexer, oStaticContext) {
 };
 
 cInstanceofExpr.prototype.evaluate	= function(oContext) {
-	var oSequence1	= this.expression.evaluate(oContext);
+	var oSequence1	= this.expression.evaluate(oContext),
+		oItemType	= this.type.itemType;
 	// Validate empty-sequence()
-	if (!this.type.itemType)
+	if (!oItemType)
 		return new cXPath2Sequence(new cXSBoolean(oSequence1.isEmpty()));
 	// Validate cardinality
 	if (oSequence1.isEmpty())
@@ -48,13 +49,12 @@ cInstanceofExpr.prototype.evaluate	= function(oContext) {
 			return new cXPath2Sequence(new cXSBoolean(false));
 
 	// Validate type
-	var oType	= this.type.itemType;
-	if (!oType.test)	// item()
+	if (!oItemType.test)	// item()
 		return new cXPath2Sequence(new cXSBoolean(true));
 
 	var bValue	= true;
 	for (var nIndex = 0, nLength = oSequence1.items.length; (nIndex < nLength) && bValue; nIndex++)
-		bValue	= oType.test.test(oSequence1.items[nIndex], oContext);
+		bValue	= oItemType.test.test(oSequence1.items[nIndex], oContext);
 	//
 	return new cXPath2Sequence(new cXSBoolean(bValue));
 };

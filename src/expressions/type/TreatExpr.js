@@ -36,40 +36,45 @@ cTreatExpr.parse	= function(oLexer, oStaticContext) {
 };
 
 cTreatExpr.prototype.evaluate	= function(oContext) {
-	var oSequence1	= this.expression.evaluate(oContext);
+	var oSequence1	= this.expression.evaluate(oContext),
+		oItemType	= this.type.itemType;
 	// Validate empty-sequence()
-	if (!this.type.itemType && !oSequence1.isEmpty())
-		throw new cXPath2Error("XPDY0050"
+	if (!oItemType) {
+		if (!oSequence1.isEmpty())
+			throw new cXPath2Error("XPDY0050"
 //->Debug
-				, "The only value allowed for the value in 'treat as' expression is an empty sequence"
+					, "The only value allowed for the value in 'treat as' expression is an empty sequence"
 //<-Debug
-		);
+			);
+		return oSequence1;
+	}
 
 	// Validate cardinality
-	if (oSequence1.isEmpty() &&!(this.type.occurence == '?' || this.type.occurence == '*'))
-		throw new cXPath2Error("XPDY0050"
+	if (!(this.type.occurence == '?' || this.type.occurence == '*'))
+		if (oSequence1.isEmpty())
+			throw new cXPath2Error("XPDY0050"
 //->Debug
-				, "An empty sequence is not allowed as the value in 'treat as' expression"
+					, "An empty sequence is not allowed as the value in 'treat as' expression"
 //<-Debug
-		);
+			);
 
-	if (!(oSequence1.isSingleton()) &&!(this.type.occurence == '+' || this.type.occurence == '*'))
-		throw new cXPath2Error("XPDY0050"
+	if (!(this.type.occurence == '+' || this.type.occurence == '*'))
+		if (!oSequence1.isSingleton())
+			throw new cXPath2Error("XPDY0050"
 //->Debug
-				, "A sequence of more than one item is not allowed as the value in 'treat as' expression"
+					, "A sequence of more than one item is not allowed as the value in 'treat as' expression"
 //<-Debug
-		);
+			);
 
 	// Validate type
-	var oType	= this.type.itemType;
-	if (!oType.test)	// item()
+	if (!oItemType.test)	// item()
 		return oSequence1;
 
 	for (var nIndex = 0, nLength = oSequence1.items.length; nIndex < nLength; nIndex++)
-		if (!oType.test.test(oSequence1.items[nIndex], oContext))
+		if (!oItemType.test.test(oSequence1.items[nIndex], oContext))
 			throw new cXPath2Error("XPDY0050"
 //->Debug
-					, "Required item type of value in 'treat as' expression is xs:boolean"
+					, "Required item type of value in 'treat as' expression is " + (oItemType.test.prefix ? oItemType.test.prefix + ':' : '') + oItemType.test.localName
 					// XPDY0050: Required item type of value in 'treat as' expression is {type1}; supplied value has item type {type2}
 //<-Debug
 			);
