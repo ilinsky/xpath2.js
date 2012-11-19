@@ -35,7 +35,7 @@ cXSHexBinary.cast	= function(vValue) {
 		throw new cXPath2Error("FORG0001");
 	}
 	if (vValue instanceof cXSBase64Binary)
-		throw "Not implemented";
+		throw "Casting from 'xs:" + "base64Binary"+ "' to 'xs:" + "hexBinary"+ "' not implemented";
 	//
 	throw new cXPath2Error("XPTY0004"
 //->Debug

@@ -193,16 +193,12 @@ hXPath2StaticContext_operators["divide-dayTimeDuration-by-dayTimeDuration"]	= fu
 // 10.8 Arithmetic Operators on Durations, Dates and Times
 // op:subtract-dateTimes($arg1 as xs:dateTime, $arg2 as xs:dateTime) as xs:dayTimeDuration
 hXPath2StaticContext_operators["subtract-dateTimes"]	= function(oLeft, oRight) {
-	var oZLeft	= oLeft.toZ(),
-		oZRight	= oRight.toZ();
-	throw "Not implemented";
+	throw "Operator function '" + "subtract-dateTimes" + "' not implemented";
 };
 
 // op:subtract-dates($arg1 as xs:date, $arg2 as xs:date) as xs:dayTimeDuration
 hXPath2StaticContext_operators["subtract-dates"]	= function(oLeft, oRight) {
-	var oZLeft	= oLeft.toZ(),
-		oZRight	= oRight.toZ();
-	throw "Not implemented";
+	throw "Operator function '" + "subtract-dates" + "' not implemented";
 };
 
 // op:subtract-times($arg1 as xs:time, $arg2 as xs:time) as xs:dayTimeDuration

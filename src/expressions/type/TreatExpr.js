@@ -36,5 +36,5 @@ cTreatExpr.parse	= function(oLexer, oStaticContext) {
 };
 
 cTreatExpr.prototype.evaluate	= function(oContext) {
-	throw "TreatExpr.prototype.evaluate: Not implemented";
+	throw "Expression 'treat as' not implemented";
 };

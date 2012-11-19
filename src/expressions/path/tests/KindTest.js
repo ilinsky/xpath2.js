@@ -115,10 +115,10 @@ cKindTest.prototype.test	= function (oNode, oContext) {
 
 		// Schema tests
 		case "schema-attribute":
-			throw "KindTest 'schema-attribute' not implemented";
+			throw "KindTest '" + "schema-attribute" + "' not implemented";
 
 		case "schema-element":
-			throw "KindTest 'schema-element' not implemented";
+			throw "KindTest '" + "schema-element" + "' not implemented";
 	}
 
 	// Additional tests
