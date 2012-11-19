@@ -39,4 +39,8 @@ oXPathError_messages["FODC0001"]	= "No context document.";
 //
 oXPathError_messages["FORX0001"]	= "Invalid regular expression flags.";
 //
+oXPathError_messages["FOCA0002"]	= "Invalid lexical value.";
+//
 oXPathError_messages["FOCH0002"]	= "Unsupported collation.";
+
+oXPathError_messages["FONS0004"]	= "No namespace found for prefix.";

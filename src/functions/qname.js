@@ -24,15 +24,34 @@
 // 11.1 Additional Constructor Functions for QNames
 // fn:resolve-QName($qname as xs:string?, $element as element()) as xs:QName?
 fXPath2StaticContext_defineSystemFunction("resolve-QName",	[[cXSString, '?'], [cXTElement]],	function(oSequence1, oSequence2) {
-	var sQName	= oSequence1.items[0].valueOf() || '',
-		aQName	= sQName.split(':'),
-		sLocalName	= aQName.pop(),
-		sPrefix	= aQName.pop() || null;
-
-	if (oSequence2.isEmpty())
+	if (oSequence1.isEmpty())
 		return null;
 
-	return new cXSQName(sPrefix, sLocalName, this.DOMAdapter.lookupNamespaceURI(oSequence2.items[0], sPrefix || ""));
+	var sQName	= oSequence1.items[0].valueOf(),
+		aMatch	= sQName.match(cXSQName.RegExp);
+	if (!aMatch)
+		throw new cXPath2Error("FOCA0002"
+//->Debug
+				, "Invalid QName '" + sQName + "'"
+//<-Debug
+		);
+
+	var sPrefix	= aMatch[1] || null,
+		sLocalName	= aMatch[2],
+		sNameSpaceURI;
+	if (sPrefix == null)
+		sNameSpaceURI = this.DOMAdapter.lookupNamespaceURI(oSequence2.items[0], sPrefix);
+	else {
+		sNameSpaceURI = this.DOMAdapter.lookupNamespaceURI(oSequence2.items[0], sPrefix);
+		if (!sNameSpaceURI)
+			throw new cXPath2Error("FONS0004"
+//->Debug
+					, "Namespace prefix '" + sPrefix + "' has not been declared"
+//<-Debug
+			);
+	}
+
+	return new cXSQName(sPrefix, sLocalName, sNameSpaceURI || null);
 });
 
 // fn:QName($paramURI as xs:string?, $paramQName as xs:string) as xs:QName
