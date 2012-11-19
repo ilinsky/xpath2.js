@@ -152,7 +152,7 @@ fXPath2StaticContext_defineSystemFunction("reverse",	[[cXTItem, '*']],	function(
 
 // fn:subsequence($sourceSeq as item()*, $startingLoc as xs:double) as item()*
 // fn:subsequence($sourceSeq as item()*, $startingLoc as xs:double, $length as xs:double) as item()*
-fXPath2StaticContext_defineSystemFunction("subsequence",	[[cXTItem, '*'], [cXTNumeric, ''], [cXTNumeric, '', true]],	function(oSequence1, oSequence2, oSequence3) {
+fXPath2StaticContext_defineSystemFunction("subsequence",	[[cXTItem, '*'], [cXSDouble, ''], [cXSDouble, '', true]],	function(oSequence1, oSequence2, oSequence3) {
 	var nPosition	= cMath.round(oSequence2.items[0]),
 		nLength		= arguments.length > 2 ? cMath.round(oSequence3.items[0]) : oSequence1.items.length - nPosition + 1;
 
