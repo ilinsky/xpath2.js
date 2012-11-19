@@ -250,7 +250,7 @@ cComparisonExpr.ValueComp.operators['lt']	= function(oLeft, oRight, oContext) {
 		if (cLeft == cXSBoolean)
 			return hXPath2StaticContext_operators["boolean-less-than"].call(oContext, oLeft, oRight);
 		else
-		if (cLeft == cXSBoolean)
+		if (cLeft == cXSString)
 			return hXPath2StaticContext_operators["numeric-less-than"].call(oContext, hXPath2StaticContext_functions["compare"].call(oContext, new cXPath2Sequence(oLeft), new cXPath2Sequence(oRight)), new cXSInteger(0));
 		else
 		if (cLeft == cXSDate)
