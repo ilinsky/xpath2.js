@@ -19,23 +19,21 @@ cMultiplicativeExpr.prototype.items	= null;
 cMultiplicativeExpr.operators	={};
 
 cMultiplicativeExpr.operators['*']		= function (oLeft, oRight, oContext) {
-	var cLeft	= cXSAnyAtomicType.typeOf(oLeft),
-		cRight	= cXSAnyAtomicType.typeOf(oRight);
 	if (cXSAnyAtomicType.isNumeric(oLeft)) {
 		if (cXSAnyAtomicType.isNumeric(oRight))
 			return hXPath2StaticContext_operators["numeric-multiply"].call(oContext, oLeft, oRight);
-		if (cRight == cXSYearMonthDuration)
+		if (oRight instanceof cXSYearMonthDuration)
 			return hXPath2StaticContext_operators["multiply-yearMonthDuration"].call(oContext, oRight, oLeft);
-		if (cRight == cXSDayTimeDuration)
+		if (oRight instanceof cXSDayTimeDuration)
 			return hXPath2StaticContext_operators["multiply-dayTimeDuration"].call(oContext, oRight, oLeft);
 	}
 	else {
-		if (cLeft == cXSYearMonthDuration) {
+		if (oLeft instanceof cXSYearMonthDuration) {
 			if (cXSAnyAtomicType.isNumeric(oRight))
 				return hXPath2StaticContext_operators["multiply-yearMonthDuration"].call(oContext, oLeft, oRight);
 		}
 		else
-		if (cLeft == cXSDayTimeDuration) {
+		if (oLeft instanceof cXSDayTimeDuration) {
 			if (cXSAnyAtomicType.isNumeric(oRight))
 				return hXPath2StaticContext_operators["multiply-dayTimeDuration"].call(oContext, oLeft, oRight);
 		}
@@ -48,24 +46,22 @@ cMultiplicativeExpr.operators['*']		= function (oLeft, oRight, oContext) {
 	);	// Arithmetic operator is not defined for arguments of types ({type1}, {type2})
 };
 cMultiplicativeExpr.operators['div']	= function (oLeft, oRight, oContext) {
-	var cLeft	= cXSAnyAtomicType.typeOf(oLeft),
-		cRight	= cXSAnyAtomicType.typeOf(oRight);
 	if (cXSAnyAtomicType.isNumeric(oLeft)) {
 		if (cXSAnyAtomicType.isNumeric(oRight))
 			return hXPath2StaticContext_operators["numeric-divide"].call(oContext, oLeft, oRight);
 	}
 	else
-	if (cLeft == cXSYearMonthDuration) {
+	if (oLeft instanceof cXSYearMonthDuration) {
 		if (cXSAnyAtomicType.isNumeric(oRight))
 			return hXPath2StaticContext_operators["divide-yearMonthDuration"].call(oContext, oLeft, oRight);
-		if (cRight == cXSYearMonthDuration)
+		if (oRight instanceof cXSYearMonthDuration)
 			return hXPath2StaticContext_operators["divide-yearMonthDuration-by-yearMonthDuration"].call(oContext, oLeft, oRight);
 	}
 	else
-	if (cLeft == cXSDayTimeDuration) {
+	if (oLeft instanceof cXSDayTimeDuration) {
 		if (cXSAnyAtomicType.isNumeric(oRight))
 			return hXPath2StaticContext_operators["divide-dayTimeDuration"].call(oContext, oLeft, oRight);
-		if (cRight == cXSDayTimeDuration)
+		if (oRight instanceof cXSDayTimeDuration)
 			return hXPath2StaticContext_operators["divide-dayTimeDuration-by-dayTimeDuration"].call(oContext, oLeft, oRight);
 	}
 	//

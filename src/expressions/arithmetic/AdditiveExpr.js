@@ -19,49 +19,47 @@ cAdditiveExpr.prototype.items	= null;
 cAdditiveExpr.operators	={};
 
 cAdditiveExpr.operators['+']	= function(oLeft, oRight, oContext) {
-	var cLeft	= cXSAnyAtomicType.typeOf(oLeft),
-		cRight	= cXSAnyAtomicType.typeOf(oRight);
 	if (cXSAnyAtomicType.isNumeric(oLeft)) {
 		if (cXSAnyAtomicType.isNumeric(oRight))
 			return hXPath2StaticContext_operators["numeric-add"].call(oContext, oLeft, oRight);
 	}
 	else
-	if (cLeft == cXSDate) {
-		if (cRight == cXSYearMonthDuration)
+	if (oLeft instanceof cXSDate) {
+		if (oRight instanceof cXSYearMonthDuration)
 			return hXPath2StaticContext_operators["add-yearMonthDuration-to-date"].call(oContext, oLeft, oRight);
-		if (cRight == cXSDayTimeDuration)
+		if (oRight instanceof cXSDayTimeDuration)
 			return hXPath2StaticContext_operators["add-dayTimeDuration-to-date"].call(oContext, oLeft, oRight);
 	}
 	else
-	if (cLeft == cXSYearMonthDuration) {
-		if (cRight == cXSDate)
+	if (oLeft instanceof cXSYearMonthDuration) {
+		if (oRight instanceof cXSDate)
 			return hXPath2StaticContext_operators["add-yearMonthDuration-to-date"].call(oContext, oRight, oLeft);
-		if (cRight == cXSDateTime)
+		if (oRight instanceof cXSDateTime)
 			return hXPath2StaticContext_operators["add-yearMonthDuration-to-dateTime"].call(oContext, oRight, oLeft);
-		if (cRight == cXSYearMonthDuration)
+		if (oRight instanceof cXSYearMonthDuration)
 			return hXPath2StaticContext_operators["add-yearMonthDurations"].call(oContext, oLeft, oRight);
 	}
 	else
-	if (cLeft == cXSDayTimeDuration) {
-		if (cRight == cXSDate)
+	if (oLeft instanceof cXSDayTimeDuration) {
+		if (oRight instanceof cXSDate)
 			return hXPath2StaticContext_operators["add-dayTimeDuration-to-date"].call(oContext, oRight, oLeft);
-		if (cRight == cXSTime)
+		if (oRight instanceof cXSTime)
 			return hXPath2StaticContext_operators["add-dayTimeDuration-to-time"].call(oContext, oRight, oLeft);
-		if (cRight == cXSDateTime)
+		if (oRight instanceof cXSDateTime)
 			return hXPath2StaticContext_operators["add-dayTimeDuration-to-dateTime"].call(oContext, oRight, oLeft);
-		if (cRight == cXSDayTimeDuration)
+		if (oRight instanceof cXSDayTimeDuration)
 			return hXPath2StaticContext_operators["add-dayTimeDurations"].call(oContext, oLeft, oRight);
 	}
 	else
-	if (cLeft == cXSTime) {
-		if (cRight == cXSDayTimeDuration)
+	if (oLeft instanceof cXSTime) {
+		if (oRight instanceof cXSDayTimeDuration)
 			return hXPath2StaticContext_operators["add-dayTimeDuration-to-time"].call(oContext, oLeft, oRight);
 	}
 	else
-	if (cLeft == cXSDateTime) {
-		if (cRight == cXSYearMonthDuration)
+	if (oLeft instanceof cXSDateTime) {
+		if (oRight instanceof cXSYearMonthDuration)
 			return hXPath2StaticContext_operators["add-yearMonthDuration-to-dateTime"].call(oContext, oLeft, oRight);
-		if (cRight == cXSDayTimeDuration)
+		if (oRight instanceof cXSDayTimeDuration)
 			return hXPath2StaticContext_operators["add-dayTimeDuration-to-dateTime"].call(oContext, oLeft, oRight);
 	}
 	//
@@ -72,45 +70,43 @@ cAdditiveExpr.operators['+']	= function(oLeft, oRight, oContext) {
 	);	// Arithmetic operator is not defined for arguments of types ({type1}, {type2})
 };
 cAdditiveExpr.operators['-']	= function (oLeft, oRight, oContext) {
-	var cLeft	= cXSAnyAtomicType.typeOf(oLeft),
-		cRight	= cXSAnyAtomicType.typeOf(oRight);
 	if (cXSAnyAtomicType.isNumeric(oLeft)) {
 		if (cXSAnyAtomicType.isNumeric(oRight))
 			return hXPath2StaticContext_operators["numeric-subtract"].call(oContext, oLeft, oRight);
 	}
 	else
-	if (cLeft == cXSDate) {
-		if (cRight == cXSDate)
+	if (oLeft instanceof cXSDate) {
+		if (oRight instanceof cXSDate)
 			return hXPath2StaticContext_operators["subtract-dates"].call(oContext, oLeft, oRight);
-		if (cRight == cXSYearMonthDuration)
+		if (oRight instanceof cXSYearMonthDuration)
 			return hXPath2StaticContext_operators["subtract-yearMonthDuration-from-date"].call(oContext, oLeft, oRight);
-		if (cRight == cXSDayTimeDuration)
+		if (oRight instanceof cXSDayTimeDuration)
 			return hXPath2StaticContext_operators["subtract-dayTimeDuration-from-date"].call(oContext, oLeft, oRight);
 	}
 	else
-	if (cLeft == cXSTime) {
-		if (cRight == cXSTime)
+	if (oLeft instanceof cXSTime) {
+		if (oRight instanceof cXSTime)
 			return hXPath2StaticContext_operators["subtract-times"].call(oContext, oLeft, oRight);
-		if (cRight == cXSDayTimeDuration)
+		if (oRight instanceof cXSDayTimeDuration)
 			return hXPath2StaticContext_operators["subtract-dayTimeDuration-from-time"].call(oContext, oLeft, oRight);
 	}
 	else
-	if (cLeft == cXSDateTime) {
-		if (cRight == cXSDateTime)
+	if (oLeft instanceof cXSDateTime) {
+		if (oRight instanceof cXSDateTime)
 			return hXPath2StaticContext_operators["subtract-dateTimes"].call(oContext, oLeft, oRight);
-		if (cRight == cXSYearMonthDuration)
+		if (oRight instanceof cXSYearMonthDuration)
 			return hXPath2StaticContext_operators["subtract-yearMonthDuration-from-dateTime"].call(oContext, oLeft, oRight);
-		if (cRight == cXSDayTimeDuration)
+		if (oRight instanceof cXSDayTimeDuration)
 			return hXPath2StaticContext_operators["subtract-dayTimeDuration-from-dateTime"].call(oContext, oLeft, oRight);
 	}
 	else
-	if (cLeft == cXSYearMonthDuration) {
-		if (cRight == cXSYearMonthDuration)
+	if (oLeft instanceof cXSYearMonthDuration) {
+		if (oRight instanceof cXSYearMonthDuration)
 			return hXPath2StaticContext_operators["subtract-yearMonthDurations"].call(oContext, oLeft, oRight);
 	}
 	else
-	if (cLeft == cXSDayTimeDuration) {
-		if (cRight == cXSDayTimeDuration)
+	if (oLeft instanceof cXSDayTimeDuration) {
+		if (oRight instanceof cXSDayTimeDuration)
 			return hXPath2StaticContext_operators["subtract-dayTimeDurations"].call(oContext, oLeft, oRight);
 	}
 	//
