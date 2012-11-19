@@ -21,67 +21,72 @@
 				return evaluateXPath(sXPath)[0];
 			}
 
-			// Dummy test
-			function testPage() {
-				assertTrue(true);
-			}
-
 			// Tests
 			// 11.1 Additional Constructor Functions for QNames
 			function testResolveQName() {
-				var oQName	= evaluateXPathSingle('fn:resolve-QName("hello", /child::element())');
-				assertEquals(null, oQName.prefix);
-				assertEquals("hello", oQName.localName);
-				assertEquals("http://www.w3.org/1999/xhtml", oQName.namespaceURI);
-
-				var oQName	= evaluateXPathSingle('fn:resolve-QName("eg:myFunc", /child::element())');
-				assertEquals(null, oQName.prefix);
-				assertEquals("hello", oQName.localName);
-				assertEquals("http://www.w3.org/1999/xhtml", oQName.namespaceURI);
+				assertArrayEquals([],
+						evaluateXPath('fn:prefix-from-QName(fn:resolve-QName("hello", /child::element()))'));
+				assertArrayEquals(["hello"],
+						evaluateXPath('fn:local-name-from-QName(fn:resolve-QName("hello", /child::element()))'));
+				assertArrayEquals(["http://www.w3.org/1999/xhtml"],
+						evaluateXPath('fn:namespace-uri-from-QName(fn:resolve-QName("hello", /child::element()))'));
+/*
+				assertArrayEquals([],
+						evaluateXPath('fn:prefix-from-QName(fn:resolve-QName("eg:myFunc", /child::element()))'));
+				assertArrayEquals(["hello"],
+						evaluateXPath('fn:local-name-from-QName(fn:resolve-QName("eg:myFunc", /child::element()))'));
+				assertArrayEquals(["http://www.w3.org/1999/xhtml"],
+						evaluateXPath('fn:namespace-uri-from-QName(fn:resolve-QName("eg:myFunc", /child::element()))'));*/
 			}
 
 			function testQName() {
-				var oQName	= evaluateXPathSingle('fn:QName("http://www.example.com/example", "person")');
-				assertEquals(null, oQName.prefix);
-				assertEquals("person", oQName.localName);
-				assertEquals("http://www.example.com/example", oQName.namespaceURI);
-
-				var oQName	= evaluateXPathSingle('fn:QName("http://www.example.com/example", "ht:person")');
-				assertEquals("ht", oQName.prefix);
-				assertEquals("person", oQName.localName);
-				assertEquals("http://www.example.com/example", oQName.namespaceURI);
+				assertArrayEquals([],
+						evaluateXPath('fn:prefix-from-QName(fn:QName("http://www.example.com/example", "person"))'));
+				assertArrayEquals(["person"],
+						evaluateXPath('fn:local-name-from-QName(fn:QName("http://www.example.com/example", "person"))'));
+				assertArrayEquals(["http://www.example.com/example"],
+						evaluateXPath('fn:namespace-uri-from-QName(fn:QName("http://www.example.com/example", "person"))'));
+/*
+				assertArrayEquals(["ht"],
+						evaluateXPath('fn:prefix-from-QName(fn:QName("http://www.example.com/example", "ht:person"))'));
+				assertArrayEquals(["person"],
+						evaluateXPath('fn:local-name-from-QName(fn:QName("http://www.example.com/example", "ht:person"))'));
+				assertArrayEquals(["http://www.example.com/example"],
+						evaluateXPath('fn:namespace-uri-from-QName(fn:QName("http://www.example.com/example", "ht:person"))'));*/
 			}
 
 
 			// 11.2 Functions and Operators Related to QNames
 			function testPrefixFromQName() {
 				// Not W3c test
-				assertEquals("fn",
-						evaluateXPathSingle('fn:prefix-from-QName(fn:QName("http://www.example.com/example", "fn:person"))'));
-				assertUndefined(
-						evaluateXPathSingle('fn:prefix-from-QName(fn:QName("http://www.example.com/example", "person"))'));
+				assertArrayEquals(["fn"],
+						evaluateXPath('fn:prefix-from-QName(fn:QName("http://www.example.com/example", "fn:person"))'));
+				assertArrayEquals([],
+					evaluateXPath('fn:prefix-from-QName(fn:QName("http://www.example.com/example", "person"))'));
 			}
 
 			function testLocalNameFromQName() {
-				assertEquals("person",
-						evaluateXPathSingle('fn:local-name-from-QName(fn:QName("http://www.example.com/example", "person"))'));
+				assertArrayEquals(["person"],
+						evaluateXPath('fn:local-name-from-QName(fn:QName("http://www.example.com/example", "person"))'));
 			}
 
 			function testNamespaceUriFromQName() {
-				assertEquals("http://www.example.com/example",
-						evaluateXPathSingle('fn:namespace-uri-from-QName(fn:QName("http://www.example.com/example", "person"))'));
+				assertArrayEquals(["http://www.example.com/example"],
+						evaluateXPath('fn:namespace-uri-from-QName(fn:QName("http://www.example.com/example", "person"))'));
 			}
 
 			function testNamespaceUriForPrefix() {
 				// Not W3c test
-				assertEquals("http://www.w3.org/1999/xhtml",
-						evaluateXPathSingle("fn:namespace-uri-for-prefix('', /child::element())"));
+				assertArrayEquals(["http://www.w3.org/1999/xhtml"],
+						evaluateXPath("fn:namespace-uri-for-prefix('', /child::element())"));
+				assertArrayEquals(["http://www.w3.org/1999/xhtml"],
+						evaluateXPath("fn:namespace-uri-for-prefix((), /child::element())"));
 			}
 
 			function testInScopePrefixes() {
 				// Not W3c test
-//				assertEquals([],
-//						evaluateXPathSingle("fn:in-scope-prefixes(/child::element())"));
+//				assertArrayEquals([],
+//						evaluateXPath("fn:in-scope-prefixes(/child::element())"));
 			}
 		</script>
 	</head>
