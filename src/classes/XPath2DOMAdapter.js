@@ -29,10 +29,6 @@ cXPath2DOMAdapter.prototype.compareDocumentPosition	= function(oNode, oNode2) {
 	return oNode.compareDocumentPosition(oNode2);
 };
 
-cXPath2DOMAdapter.prototype.lookupPrefix	= function(oNode, sNameSpaceURI) {
-	return oNode.lookupPrefix(sNameSpaceURI);
-};
-
 cXPath2DOMAdapter.prototype.lookupNamespaceURI	= function(oNode, sPrefix) {
 	return oNode.lookupNamespaceURI(sPrefix);
 };

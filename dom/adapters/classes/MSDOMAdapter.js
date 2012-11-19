@@ -49,11 +49,6 @@ cMSDOMAdapter.prototype.compareDocumentPosition	= function(oNode, oChild) {
 	return nLength1 < nLength2 ? 4 /* cNode.DOCUMENT_POSITION_FOLLOWING */ | 16 /* cNode.DOCUMENT_POSITION_CONTAINED_BY */ : 2 /* cNode.DOCUMENT_POSITION_PRECEDING */ | 8 /* cNode.DOCUMENT_POSITION_CONTAINS */;
 };
 
-cMSDOMAdapter.prototype.lookupPrefix	= function(oNode, sNameSpaceURI) {
-	// TODO
-	return oNode.lookupPrefix(sNameSpaceURI);
-};
-
 cMSDOMAdapter.prototype.lookupNamespaceURI	= function(oNode, sPrefix) {
 	// TODO
 	return oNode.lookupNamespaceURI(sPrefix);

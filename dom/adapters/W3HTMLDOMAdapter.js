@@ -27,10 +27,6 @@ oW3HTMLDOMAdapter.compareDocumentPosition	= function(oNode, oNode2) {
 	return oNode.compareDocumentPosition(oNode2);
 };
 
-oW3HTMLDOMAdapter.lookupPrefix	= function(oNode, sNameSpaceURI) {
-	return oNode.lookupPrefix(sNameSpaceURI);
-};
-
 oW3HTMLDOMAdapter.lookupNamespaceURI	= function(oNode, sPrefix) {
 	return oNode.lookupNamespaceURI(sPrefix);
 };
