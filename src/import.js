@@ -25,7 +25,7 @@ var cString		= window.String,
 	fIsNaN		= window.isNaN,
 	fIsFinite	= window.isFinite,
 	fString_trim= cString.prototype.trim || function() {
-		return this.replace(/^\s+|\s+$/g, '');
+		return cString(this).replace(/^\s+|\s+$/g, '');
 	},
 	nNaN		= window.NaN,
 	nInfinity	= window.Infinity;
