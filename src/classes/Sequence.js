@@ -30,7 +30,7 @@ function fSequence_order(oSequence1, oContext) {
 function fSequence_atomize(oSequence1, oContext) {
 	var oSequence	= new cSequence;
 	for (var nIndex = 0, nLength = oSequence1.items.length, vValue; nIndex < nLength; nIndex++)
-		if ((vValue = fXTItem_atomize(oSequence1.items[nIndex], oContext)) !== null)
+		if ((vValue = fXTItem_atomize(oSequence1.items[nIndex], oContext)) != null)
 			oSequence.add(vValue);
 	return oSequence;
 };
@@ -85,7 +85,7 @@ cSequence.prototype.toBoolean	= function(oContext) {
 
 cSequence.prototype.indexOf	= function(oItem) {
 	for (var nIndex = 0, nLength = this.items.length; nIndex < nLength; nIndex++)
-		if (this.items[nIndex] === oItem)
+		if (this.items[nIndex] == oItem)
 			return nIndex;
 	return -1;
 };

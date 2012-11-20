@@ -36,7 +36,7 @@ fStaticContext_defineSystemFunction("name",	[[cXTNode, '?', true]],	function(oSe
 		return new cXSString('');
 	//
 	var vValue	= hStaticContext_functions["node-name"].call(this, oSequence1);
-	return new cXSString(vValue === null ? '' : vValue.toString());
+	return new cXSString(vValue == null ? '' : vValue.toString());
 });
 
 // fn:local-name() as xs:string

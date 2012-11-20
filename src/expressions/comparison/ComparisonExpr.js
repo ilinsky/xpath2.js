@@ -42,7 +42,7 @@ cComparisonExpr.parse	= function (oLexer, oStaticContext) {
 cComparisonExpr.prototype.evaluate	= function (oContext) {
 	var oSequence	= new cSequence,
 		oResult	= hComparisonExpr_operators[this.operator](this, oContext);
-	if (oResult !== null)
+	if (oResult != null)
 		oSequence.add(oResult);
 	return oSequence;
 };

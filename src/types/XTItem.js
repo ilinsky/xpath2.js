@@ -14,7 +14,7 @@ function cXTItem() {
 // Utilities
 function fXTItem_atomize(oItem, oContext) {
 	// Untyped
-	if (oItem === null)
+	if (oItem == null)
 		return null;
 
 	// Node type

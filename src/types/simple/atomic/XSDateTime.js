@@ -88,7 +88,7 @@ function fXSDateTime_pad(vValue, nLength) {
 
 function fXSDateTime_getTZComponent(oDateTime) {
 	var nTimezone	= oDateTime.timezone;
-	return nTimezone === null
+	return nTimezone == null
 			? ''
 			: nTimezone
 				? (nTimezone > 0 ? '+' : '-')

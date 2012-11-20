@@ -194,7 +194,7 @@ function fFunctionCall_dateTime_getComponent(oSequence1, sName) {
 	var oItem	= oSequence1.items[0];
 	if (sName == "timezone") {
 		var nTimezone	= oItem.timezone;
-		if (nTimezone === null)
+		if (nTimezone == null)
 			return null;
 		return new cXSDayTimeDuration(0, cMath.abs(~~(nTimezone / 60)), cMath.abs(nTimezone % 60), 0, nTimezone < 0);
 	}
@@ -228,7 +228,7 @@ function fFunctionCall_dateTime_adjustTimezone(oDateTime, oTimezone) {
 		oValue.timezone	= null;
 	else {
 		var nTimezone	= fFunctionCall_operators_dayTimeDuration_toSeconds(oTimezone) / 60;
-		if (oDateTime.timezone !== null) {
+		if (oDateTime.timezone != null) {
 			var nDiff	= nTimezone - oDateTime.timezone;
 			if (oDateTime instanceof cXSDate) {
 				if (nDiff < 0)

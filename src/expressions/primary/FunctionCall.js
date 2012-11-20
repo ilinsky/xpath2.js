@@ -82,7 +82,7 @@ cFunctionCall.prototype.evaluate	= function (oContext) {
 			//
 			var vResult	= fFunction.apply(oContext, aArguments);
 			//
-			return vResult === null ? new cSequence : new cSequence(vResult);
+			return vResult == null ? new cSequence : new cSequence(vResult);
 		}
 		throw new cException("XPST0017"
 //->Debug
@@ -109,7 +109,7 @@ cFunctionCall.prototype.evaluate	= function (oContext) {
 		//
 		var vResult	= fFunction.apply(oContext, aArguments);
 		//
-		return vResult === null ? new cSequence : new cSequence(vResult);
+		return vResult == null ? new cSequence : new cSequence(vResult);
 	}
 	//
 	throw new cException("XPST0017"

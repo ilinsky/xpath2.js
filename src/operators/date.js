@@ -341,5 +341,5 @@ function fFunctionCall_operators_yearMonthDuration_fromMonths(nValue) {
 
 // xs:time to seconds
 function fFunctionCall_operators_time_toSeconds(oTime) {
-	return oTime.seconds + (oTime.minutes - (oTime.timezone !== null ? oTime.timezone % 60 : 0) + (oTime.hours - (oTime.timezone !== null ? ~~(oTime.timezone / 60) : 0)) * 60) * 60;
+	return oTime.seconds + (oTime.minutes - (oTime.timezone != null ? oTime.timezone % 60 : 0) + (oTime.hours - (oTime.timezone != null ? ~~(oTime.timezone / 60) : 0)) * 60) * 60;
 };
