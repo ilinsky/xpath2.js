@@ -35,69 +35,67 @@ cKindTest.parse	= function (oLexer, oStaticContext) {
 	var sName	= oLexer.peek();
 	if (oLexer.peek(1) == '(') {
 		//
-		if (sName in hKindTest_names) {
-			//
-			oLexer.next(2);
-			//
-			var oTest	= new cKindTest(sName);
-			if (oLexer.peek() != ')') {
-				if (sName == "document-node") {
-					// TODO: parse test further
-				}
-				else
-				if (sName == "element") {
-					// TODO: parse test further
-				}
-				else
-				if (sName == "attribute") {
-					// TODO: parse test further
-				}
-				else
-				if (sName == "processing-instruction") {
-					// TODO: parse test further
-				}
-				else
-				if (sName == "schema-attribute") {
-					// TODO: parse test further
-				}
-				else
-				if (sName == "schema-element") {
-					// TODO: parse test further
-				}
-			}
-			else {
-				if (sName == "schema-attribute")
-					throw new cXPath2Error("XPST0003"
-//->Debug
-							, "Expected attribute declaration in 'schema-attribute' kind test"
-//<-Debug
-					);
-				else
-				if (sName == "schema-element")
-					throw new cXPath2Error("XPST0003"
-//->Debug
-							, "Expected element declaration in 'schema-element' kind test"
-//<-Debug
-					);
-			}
-
-			if (oLexer.peek() != ')')
-				throw new cXPath2Error("XPST0003"
-//->Debug
-						, "Expected ')' token in kind test"
-//<-Debug
-				);
-
-			oLexer.next();
-
-			return oTest;
-		}
-		else
+		if (!(sName in hKindTest_names))
 			throw new cXPath2Error("XPST0003"
 //->Debug
 					, "Unknown '" + sName + "' kind test"
 //<-Debug
 			);
+
+		//
+		oLexer.next(2);
+		//
+		var oTest	= new cKindTest(sName);
+		if (oLexer.peek() != ')') {
+			if (sName == "document-node") {
+				// TODO: parse test further
+			}
+			else
+			if (sName == "element") {
+				// TODO: parse test further
+			}
+			else
+			if (sName == "attribute") {
+				// TODO: parse test further
+			}
+			else
+			if (sName == "processing-instruction") {
+				// TODO: parse test further
+			}
+			else
+			if (sName == "schema-attribute") {
+				// TODO: parse test further
+			}
+			else
+			if (sName == "schema-element") {
+				// TODO: parse test further
+			}
+		}
+		else {
+			if (sName == "schema-attribute")
+				throw new cXPath2Error("XPST0003"
+//->Debug
+						, "Expected attribute declaration in 'schema-attribute' kind test"
+//<-Debug
+				);
+			else
+			if (sName == "schema-element")
+				throw new cXPath2Error("XPST0003"
+//->Debug
+						, "Expected element declaration in 'schema-element' kind test"
+//<-Debug
+				);
+		}
+
+		if (oLexer.peek() != ')')
+			throw new cXPath2Error("XPST0003"
+//->Debug
+					, "Expected ')' token in kind test"
+//<-Debug
+			);
+		oLexer.next();
+
+		return oTest;
 	}
 };
 
