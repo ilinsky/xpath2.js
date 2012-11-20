@@ -58,12 +58,12 @@ fXPath2StaticContext_defineSystemFunction("nilled",	[[cXTNode, '?']],	function(o
 fXPath2StaticContext_defineSystemFunction("string",	[[cXTItem, '?', true]],	function(/*[*/oSequence1/*]*/) {
 	if (!arguments.length)
 		oSequence1	= new cXPath2Sequence(this.item);
-	return oSequence1.isEmpty() ? new cXSString('') : cXSString.cast(cXPath2Sequence.atomizeItem(oSequence1.items[0], this));
+	return oSequence1.isEmpty() ? new cXSString('') : cXSString.cast(fXPath2Sequence_atomizeItem(oSequence1.items[0], this));
 });
 
 // fn:data($arg as item()*) as xs:anyAtomicType*
 fXPath2StaticContext_defineSystemFunction("data",	[[cXTItem, '*']],		function(oSequence1) {
-	return cXPath2Sequence.atomize(oSequence1, this);
+	return fXPath2Sequence_atomize(oSequence1, this);
 });
 
 // fn:base-uri() as xs:anyURI?

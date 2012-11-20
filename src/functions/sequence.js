@@ -358,7 +358,7 @@ fXPath2StaticContext_defineSystemFunction("id",	[[cXSString, '*'], [cXTNode, '',
 			if ((oNode = this.DOMAdapter.getElementById(oDocument, aValue[nRightIndex])) && oSequence.indexOf(oNode) ==-1)
 				oSequence.add(oNode);
 	//
-	return cXPath2Sequence.order(oSequence, this);
+	return fXPath2Sequence_order(oSequence, this);
 });
 
 // fn:idref($arg as xs:string*) as node()*

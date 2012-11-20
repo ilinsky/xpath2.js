@@ -57,7 +57,7 @@ hXPath2StaticContext_operators["union"]	= function(oSequence1, oSequence2) {
 		if (oSequence.indexOf(oItem) ==-1)
 			oSequence.add(oItem);
 	}
-	return cXPath2Sequence.order(oSequence, this);
+	return fXPath2Sequence_order(oSequence, this);
 };
 
 // op:intersect($parameter1 as node()*, $parameter2 as node()*) as node()*
@@ -85,7 +85,7 @@ hXPath2StaticContext_operators["intersect"]	= function(oSequence1, oSequence2) {
 		if (bFound && oSequence.indexOf(oItem) ==-1)
 			oSequence.add(oItem);
 	}
-	return cXPath2Sequence.order(oSequence, this);
+	return fXPath2Sequence_order(oSequence, this);
 };
 
 // op:except($parameter1 as node()*, $parameter2 as node()*) as node()*
@@ -113,7 +113,7 @@ hXPath2StaticContext_operators["except"]	= function(oSequence1, oSequence2) {
 		if (!bFound && oSequence.indexOf(oItem) ==-1)
 			oSequence.add(oItem);
 	}
-	return cXPath2Sequence.order(oSequence, this);
+	return fXPath2Sequence_order(oSequence, this);
 };
 
 // 15.5 Functions and Operators that Generate Sequences

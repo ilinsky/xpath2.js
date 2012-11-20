@@ -18,7 +18,7 @@ cXPath2Sequence.prototype.items	= null;
 // Static members
 
 // Orders items in sequence in document order
-cXPath2Sequence.order		= function(oSequence1, oContext) {
+function fXPath2Sequence_order(oSequence1, oContext) {
 	var oSequence	= new cXPath2Sequence(oSequence1);
 	oSequence.items.sort(function(oNode, oNode2) {
 		var nPosition	= oContext.DOMAdapter.compareDocumentPosition(oNode, oNode2);
@@ -27,21 +27,15 @@ cXPath2Sequence.order		= function(oSequence1, oContext) {
 	return oSequence;
 };
 
-cXPath2Sequence.reverse	= function(oSequence1) {
-	var oSequence	= new cXPath2Sequence(oSequence1);
-	oSequence.items.reverse();
-	return oSequence;
-};
-
-cXPath2Sequence.atomize		= function(oSequence1, oContext) {
+function fXPath2Sequence_atomize(oSequence1, oContext) {
 	var oSequence	= new cXPath2Sequence;
 	for (var nIndex = 0, nLength = oSequence1.items.length, vValue; nIndex < nLength; nIndex++)
-		if ((vValue = cXPath2Sequence.atomizeItem(oSequence1.items[nIndex], oContext)) !== null)
+		if ((vValue = fXPath2Sequence_atomizeItem(oSequence1.items[nIndex], oContext)) !== null)
 			oSequence.add(vValue);
 	return oSequence;
 };
 
-cXPath2Sequence.atomizeItem		= function(oItem, oContext) {
+function fXPath2Sequence_atomizeItem(oItem, oContext) {
 	// Untyped
 	if (oItem === null)
 		return null;

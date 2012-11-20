@@ -92,5 +92,5 @@ cPathExpr.prototype.evaluate	= function (oContext) {
 	// Restore context item
 	oContext.item	= vContextItem;
 	//
-	return cXPath2Sequence.order(oSequence, oContext);
+	return fXPath2Sequence_order(oSequence, oContext);
 };

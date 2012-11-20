@@ -49,11 +49,11 @@ cComparisonExpr.prototype.evaluate	= function (oContext) {
 
 // General comparison
 function fComparisonExpr_GeneralComp(oExpr, oContext) {
-	var oLeft	= cXPath2Sequence.atomize(oExpr.left.evaluate(oContext), oContext);
+	var oLeft	= fXPath2Sequence_atomize(oExpr.left.evaluate(oContext), oContext);
 	if (oLeft.isEmpty())
 		return new cXSBoolean(false);
 
-	var oRight	= cXPath2Sequence.atomize(oExpr.right.evaluate(oContext), oContext);
+	var oRight	= fXPath2Sequence_atomize(oExpr.right.evaluate(oContext), oContext);
 	if (oRight.isEmpty())
 		return new cXSBoolean(false);
 
@@ -106,7 +106,7 @@ var hComparisonExpr_GeneralComp_map	= {
 
 // Value comparison
 function fComparisonExpr_ValueComp(oExpr, oContext) {
-	var oLeft	= cXPath2Sequence.atomize(oExpr.left.evaluate(oContext), oContext);
+	var oLeft	= fXPath2Sequence_atomize(oExpr.left.evaluate(oContext), oContext);
 	if (oLeft.isEmpty())
 		return null;
 	// Assert cardinality
@@ -116,7 +116,7 @@ function fComparisonExpr_ValueComp(oExpr, oContext) {
 //<-Debug
 	);
 
-	var oRight	= cXPath2Sequence.atomize(oExpr.right.evaluate(oContext), oContext);
+	var oRight	= fXPath2Sequence_atomize(oExpr.right.evaluate(oContext), oContext);
 	if (oRight.isEmpty())
 		return null;
 	// Assert cardinality

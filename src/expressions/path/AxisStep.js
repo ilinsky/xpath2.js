@@ -182,7 +182,7 @@ cAxisStep.prototype.evaluate	= function (oContext) {
 		case "parent":
 		case "preceding":
 		case "preceding-sibling":
-			oSequence	= cXPath2Sequence.reverse(oSequence);
+			oSequence.items.reverse();
 	}
 
 	return oSequence;
