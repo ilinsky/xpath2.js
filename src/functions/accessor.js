@@ -25,16 +25,16 @@ fXPath2StaticContext_defineSystemFunction("node-name",		[[cXTNode, '?']],	functi
 	//
 	var oNode	= oSequence1.items[0];
 	switch (this.DOMAdapter.getProperty(oNode, "nodeType")) {
-		case 1:	// ELEMENT_NAME
-		case 2:	// ATTRIBUTE_NODE
+		case 1:		// ELEMENT_NAME
+		case 2:		// ATTRIBUTE_NODE
 			return new cXSQName(this.DOMAdapter.getProperty(oNode, "prefix"), this.DOMAdapter.getProperty(oNode, "localName"), this.DOMAdapter.getProperty(oNode, "namespaceURI"));
-		case 5:	// ENTITY_REFERENCE_NODE
+		case 5:		// ENTITY_REFERENCE_NODE
 			throw "Not implemented";
-		case 6:	// ENTITY_NODE
+		case 6:		// ENTITY_NODE
 			throw "Not implemented";
-		case 7:	// PROCESSING_INSTRUCTION_NODE
+		case 7:		// PROCESSING_INSTRUCTION_NODE
 			return new cXSQName(null, this.DOMAdapter.getProperty(oNode, "target"), null);
-		case 10:// DOCUMENT_TYPE_NODE
+		case 10:	// DOCUMENT_TYPE_NODE
 			return new cXSQName(null, this.DOMAdapter.getProperty(oNode, "name"), null);
 	}
 	//
