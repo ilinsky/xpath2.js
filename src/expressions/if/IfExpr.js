@@ -22,7 +22,7 @@ cIfExpr.parse	= function (oLexer, oStaticContext) {
 	var oCondExpr,
 		oThenExpr,
 		oElseExpr;
-	if (oLexer.peek() == "if" && oLexer.peek(1) == "(") {
+	if (oLexer.peek() == "if" && oLexer.peek(1) == '(') {
 		oLexer.next(2);
 		//
 		if (oLexer.eof() ||!(oCondExpr = cExpr.parse(oLexer, oStaticContext)))
@@ -32,7 +32,7 @@ cIfExpr.parse	= function (oLexer, oStaticContext) {
 //<-Debug
 			);
 		//
-		if (oLexer.peek() != ")")
+		if (oLexer.peek() != ')')
 			throw new cXPath2Error("XPST0003"
 //->Debug
 					, "Expected ')' token in for expression"

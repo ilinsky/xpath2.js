@@ -41,7 +41,7 @@ cAxisStep.parse	= function (oLexer, oStaticContext) {
 	var sAxis	= oLexer.peek(),
 		oExpr,
 		oStep;
-	if (oLexer.peek(1) == "::") {
+	if (oLexer.peek(1) == '::') {
 		if (!(sAxis in cAxisStep.axises))
 			throw new cXPath2Error("XPST0003"
 //->Debug
@@ -60,12 +60,12 @@ cAxisStep.parse	= function (oLexer, oStaticContext) {
 		oStep	= new cAxisStep(sAxis, oExpr);
 	}
 	else
-	if (sAxis == "..") {
+	if (sAxis == '..') {
 		oLexer.next();
 		oStep	= new cAxisStep("parent", new cKindTest("node"));
 	}
 	else
-	if (sAxis == "@") {
+	if (sAxis == '@') {
 		oLexer.next();
 		if (oLexer.eof() ||!(oExpr = cNodeTest.parse(oLexer, oStaticContext)))
 			throw new cXPath2Error("XPST0003"

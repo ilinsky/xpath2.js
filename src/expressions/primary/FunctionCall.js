@@ -142,7 +142,7 @@ function fFunctionCall_prepare(sName, aParameters, fFunction, aArguments, oConte
 	if (nArgumentsLength < nParametersRequired)
 		throw new cXPath2Error("XPST0017"
 //->Debug
-				, "Function " + sName + "() must have " + (nParametersRequired == nParametersLength ? "exactly" : "at least") + " " + nParametersRequired + " argument" + (nParametersLength > 1 ? 's' : '')
+				, "Function " + sName + "() must have " + (nParametersRequired == nParametersLength ? "exactly" : "at least") + ' ' + nParametersRequired + " argument" + (nParametersLength > 1 ? 's' : '')
 //<-Debug
 		);
 
@@ -152,13 +152,13 @@ function fFunctionCall_prepare(sName, aParameters, fFunction, aArguments, oConte
 		// Check sequence cardinality
 		fFunctionCall_assertSequenceCardinality(oContext, oArgument, oParameter[1]
 //->Debug
-				, aFunctionCall_numbers[nIndex] + " argument of " + sName + "()"
+				, aFunctionCall_numbers[nIndex] + " argument of " + sName + '()'
 //<-Debug
 		);
 		// Check sequence items data types consistency
 		fFunctionCall_assertSequenceItemType(oContext, oArgument, oParameter[0]
 //->Debug
-				, aFunctionCall_numbers[nIndex] + " argument of " + sName + "()"
+				, aFunctionCall_numbers[nIndex] + " argument of " + sName + '()'
 //<-Debug
 		);
 	}

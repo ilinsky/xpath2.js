@@ -71,9 +71,9 @@ cXPath2StaticContext.prototype.getURIForPrefix	= function(sPrefix) {
 		sNameSpaceURI;
 	if (fResolver instanceof cFunction && (sNameSpaceURI = fResolver.call(oResolver, sPrefix)))
 		return sNameSpaceURI;
-	if (sPrefix == "fn")
+	if (sPrefix == 'fn')
 		return "http://www.w3.org/2005/xpath-functions";
-	if (sPrefix == "xs")
+	if (sPrefix == 'xs')
 		return "http://www.w3.org/2001/XMLSchema";
 	if (sPrefix == "xml")
 		return "http://www.w3.org/XML/1998/namespace";
