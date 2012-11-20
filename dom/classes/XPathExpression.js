@@ -12,7 +12,7 @@ function cXPathExpression(sExpression) {
 		this.expression	= cXPathEvaluator.evaluator.compile(sExpression, cXPathEvaluator.staticContext);
 	}
 	catch (e) {
-		if (e instanceof cXPath2.classes.Error)
+		if (e instanceof cXPath2.classes.Exception)
 			throw new cXPathException(cXPathException.INVALID_EXPRESSION_ERR
 //->Debug
 					, e.message
@@ -51,7 +51,7 @@ function fXPathExpression_evaluate(oExpression, oNode, nType, oResult) {
 		oSequence	= oExpression.expression.resolve(new cXPath2.classes.DynamicContext(cXPathEvaluator.staticContext, typeof oNode == "undefined" ? null : oNode, null, oDOMAdapter));
 	}
 	catch (e) {
-		if (e instanceof cXPath2.classes.Error)
+		if (e instanceof cXPath2.classes.Exception)
 			throw new cXPathException(cXPathException.TYPE_ERR
 //->Debug
 					, e.message

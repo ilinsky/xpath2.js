@@ -11,8 +11,9 @@ var cXPath2	= new cEvaluator;
 
 //
 cXPath2.classes	= {};
-cXPath2.classes.Error			= cException;
+cXPath2.classes.Exception		= cException;
 cXPath2.classes.Evaluator		= cEvaluator;
+cXPath2.classes.Expression		= cExpression;
 cXPath2.classes.DOMAdapter		= cDOMAdapter;
 cXPath2.classes.StaticContext	= cStaticContext;
 cXPath2.classes.DynamicContext	= cDynamicContext;
