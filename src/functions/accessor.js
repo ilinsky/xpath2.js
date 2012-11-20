@@ -58,7 +58,7 @@ fXPath2StaticContext_defineSystemFunction("nilled",	[[cXTNode, '?']],	function(o
 fXPath2StaticContext_defineSystemFunction("string",	[[cXTItem, '?', true]],	function(/*[*/oSequence1/*]*/) {
 	if (!arguments.length)
 		oSequence1	= new cXPath2Sequence(this.item);
-	return oSequence1.isEmpty() ? new cXSString('') : cXSString.cast(fXPath2Sequence_atomizeItem(oSequence1.items[0], this));
+	return oSequence1.isEmpty() ? new cXSString('') : cXSString.cast(fXTNode_atomize(oSequence1.items[0], this));
 });
 
 // fn:data($arg as item()*) as xs:anyAtomicType*

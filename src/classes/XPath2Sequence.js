@@ -30,45 +30,9 @@ function fXPath2Sequence_order(oSequence1, oContext) {
 function fXPath2Sequence_atomize(oSequence1, oContext) {
 	var oSequence	= new cXPath2Sequence;
 	for (var nIndex = 0, nLength = oSequence1.items.length, vValue; nIndex < nLength; nIndex++)
-		if ((vValue = fXPath2Sequence_atomizeItem(oSequence1.items[nIndex], oContext)) !== null)
+		if ((vValue = fXTNode_atomize(oSequence1.items[nIndex], oContext)) !== null)
 			oSequence.add(vValue);
 	return oSequence;
-};
-
-function fXPath2Sequence_atomizeItem(oItem, oContext) {
-	// Untyped
-	if (oItem === null)
-		return null;
-
-	// Node type
-	if (oContext.DOMAdapter.isNode(oItem)) {
-		switch (oContext.DOMAdapter.getProperty(oItem, "nodeType")) {
-			case 1:	// ELEMENT_NODE
-				return new cXSUntypedAtomic(oContext.DOMAdapter.getProperty(oItem, "textContent"));
-
-			case 2:	// ATTRIBUTE_NODE
-				return new cXSUntypedAtomic(oContext.DOMAdapter.getProperty(oItem, "value"));
-
-			case 3:	// TEXT_NODE
-			case 4:	// CDATA_SECTION_NODE
-			case 8:	// COMMENT_NODE
-				return new cXSUntypedAtomic(oContext.DOMAdapter.getProperty(oItem, "data"));
-
-			case 7:	// PROCESSING_INSTRUCTION_NODE
-				return new cXSUntypedAtomic(oContext.DOMAdapter.getProperty(oItem, "data"));
-
-			case 9:	// DOCUMENT_NODE
-				var oNode	= oContext.DOMAdapter.getProperty(oItem, "documentElement");
-				return new cXSUntypedAtomic(oNode ? oContext.DOMAdapter.getProperty(oNode, "textContent") : '');
-		}
-	}
-
-	// Base types
-	if (oItem instanceof cXSAnyAtomicType)
-		return oItem;
-
-	// Other types
-	return null;
 };
 
 // Public members

@@ -47,5 +47,5 @@ cCastExpr.prototype.evaluate	= function(oContext) {
 	if (oSequence1.isEmpty())
 		return new cXPath2Sequence;
 	//
-	return new cXPath2Sequence(this.type.itemType.cast(fXPath2Sequence_atomizeItem(oSequence1.items[0], oContext), oContext));
+	return new cXPath2Sequence(this.type.itemType.cast(fXTNode_atomize(oSequence1.items[0], oContext), oContext));
 };
