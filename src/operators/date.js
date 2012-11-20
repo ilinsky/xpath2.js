@@ -208,42 +208,42 @@ hXPath2StaticContext_operators["subtract-times"]	= function(oLeft, oRight) {
 
 // op:add-yearMonthDuration-to-dateTime($arg1 as xs:dateTime, $arg2 as xs:yearMonthDuration) as xs:dateTime
 hXPath2StaticContext_operators["add-yearMonthDuration-to-dateTime"]	= function(oLeft, oRight) {
-	return fFunctionCall_operators_addYearMonthDurationToDateTime(oLeft, oRight, '+');
+	return fFunctionCall_operators_addYearMonthDuration2DateTime(oLeft, oRight, '+');
 };
 
 // op:add-dayTimeDuration-to-dateTime($arg1 as xs:dateTime, $arg2 as xs:dayTimeDuration) as xs:dateTime
 hXPath2StaticContext_operators["add-dayTimeDuration-to-dateTime"]	= function(oLeft, oRight) {
-	return fFunctionCall_operators_addDayTimeDurationToDateTime(oLeft, oRight, '+');
+	return fFunctionCall_operators_addDayTimeDuration2DateTime(oLeft, oRight, '+');
 };
 
 // op:subtract-yearMonthDuration-from-dateTime($arg1 as xs:dateTime, $arg2 as xs:yearMonthDuration) as xs:dateTime
 hXPath2StaticContext_operators["subtract-yearMonthDuration-from-dateTime"]	= function(oLeft, oRight) {
-	return fFunctionCall_operators_addYearMonthDurationToDateTime(oLeft, oRight, '-');
+	return fFunctionCall_operators_addYearMonthDuration2DateTime(oLeft, oRight, '-');
 };
 
 // op:subtract-dayTimeDuration-from-dateTime($arg1 as xs:dateTime, $arg2 as xs:dayTimeDuration) as xs:dateTime
 hXPath2StaticContext_operators["subtract-dayTimeDuration-from-dateTime"]	= function(oLeft, oRight) {
-	return fFunctionCall_operators_addDayTimeDurationToDateTime(oLeft, oRight, '-');
+	return fFunctionCall_operators_addDayTimeDuration2DateTime(oLeft, oRight, '-');
 };
 
 // op:add-yearMonthDuration-to-date($arg1 as xs:date, $arg2 as xs:yearMonthDuration) as xs:date
 hXPath2StaticContext_operators["add-yearMonthDuration-to-date"]	= function(oLeft, oRight) {
-	return fFunctionCall_operators_addYearMonthDurationToDateTime(oLeft, oRight, '+');
+	return fFunctionCall_operators_addYearMonthDuration2DateTime(oLeft, oRight, '+');
 };
 
 // op:add-dayTimeDuration-to-date($arg1 as xs:date, $arg2 as xs:dayTimeDuration) as xs:date
 hXPath2StaticContext_operators["add-dayTimeDuration-to-date"]	= function(oLeft, oRight) {
-	return fFunctionCall_operators_addDayTimeDurationToDateTime(oLeft, oRight, '+');
+	return fFunctionCall_operators_addDayTimeDuration2DateTime(oLeft, oRight, '+');
 };
 
 // op:subtract-yearMonthDuration-from-date($arg1 as xs:date, $arg2  as xs:yearMonthDuration) as xs:date
 hXPath2StaticContext_operators["subtract-yearMonthDuration-from-date"]	= function(oLeft, oRight) {
-	return fFunctionCall_operators_addYearMonthDurationToDateTime(oLeft, oRight, '-');
+	return fFunctionCall_operators_addYearMonthDuration2DateTime(oLeft, oRight, '-');
 };
 
 // op:subtract-dayTimeDuration-from-date($arg1 as xs:date, $arg2  as xs:dayTimeDuration) as xs:date
 hXPath2StaticContext_operators["subtract-dayTimeDuration-from-date"]	= function(oLeft, oRight) {
-	return fFunctionCall_operators_addDayTimeDurationToDateTime(oLeft, oRight, '-');
+	return fFunctionCall_operators_addDayTimeDuration2DateTime(oLeft, oRight, '-');
 };
 
 // op:add-dayTimeDuration-to-time($arg1 as xs:time, $arg2  as xs:dayTimeDuration) as xs:time
@@ -274,7 +274,7 @@ function fFunctionCall_operators_compareDateTime(oLeft, oRight, sComparator) {
 	return new cXSBoolean(sComparator == 'lt' ? sLeft < sRight : sComparator == 'gt' ? sLeft > sRight : sLeft == sRight);
 };
 
-function fFunctionCall_operators_addYearMonthDurationToDateTime(oLeft, oRight, sOperator) {
+function fFunctionCall_operators_addYearMonthDuration2DateTime(oLeft, oRight, sOperator) {
 	var oValue;
 	if (oLeft instanceof cXSDate)
 		oValue	= new cXSDate(oLeft.year, oLeft.month, oLeft.day, oLeft.timezone, oLeft.negative);
@@ -294,7 +294,7 @@ function fFunctionCall_operators_addYearMonthDurationToDateTime(oLeft, oRight, s
 	return oValue;
 };
 
-function fFunctionCall_operators_addDayTimeDurationToDateTime(oLeft, oRight, sOperator) {
+function fFunctionCall_operators_addDayTimeDuration2DateTime(oLeft, oRight, sOperator) {
 	var oValue;
 	if (oLeft instanceof cXSDate) {
 		oValue	= new cXSDate(oLeft.year, oLeft.month, oLeft.day, oLeft.timezone, oLeft.negative);
