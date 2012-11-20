@@ -17,24 +17,25 @@ cKindTest.prototype	= new cNodeTest;
 cKindTest.prototype.name	= null;
 cKindTest.prototype.args	= null;
 
-cKindTest.names	= {};
-cKindTest.names["document-node"]	= {};
-cKindTest.names["element"]			= {};
-cKindTest.names["attribute"]		= {};
-cKindTest.names["processing-instruction"]	= {};
-cKindTest.names["comment"]			= {};
-cKindTest.names["text"]				= {};
-cKindTest.names["node"]				= {};
+var hKindTest_names	= {};
 //
-cKindTest.names["schema-element"]	= {};
-cKindTest.names["schema-attribute"]	= {};
+hKindTest_names["document-node"]	= {};
+hKindTest_names["element"]			= {};
+hKindTest_names["attribute"]		= {};
+hKindTest_names["processing-instruction"]	= {};
+hKindTest_names["comment"]			= {};
+hKindTest_names["text"]				= {};
+hKindTest_names["node"]				= {};
+//
+hKindTest_names["schema-element"]	= {};
+hKindTest_names["schema-attribute"]	= {};
 
 // Static members
 cKindTest.parse	= function (oLexer, oStaticContext) {
 	var sName	= oLexer.peek();
 	if (oLexer.peek(1) == '(') {
 		//
-		if (sName in cKindTest.names) {
+		if (sName in hKindTest_names) {
 			//
 			oLexer.next(2);
 			//

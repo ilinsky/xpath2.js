@@ -16,9 +16,8 @@ cMultiplicativeExpr.prototype.left	= null;
 cMultiplicativeExpr.prototype.items	= null;
 
 //
-cMultiplicativeExpr.operators	={};
-
-cMultiplicativeExpr.operators['*']		= function (oLeft, oRight, oContext) {
+var hMultiplicativeExpr_operators	= {};
+hMultiplicativeExpr_operators['*']		= function (oLeft, oRight, oContext) {
 	if (fXSAnyAtomicType_isNumeric(oLeft)) {
 		if (fXSAnyAtomicType_isNumeric(oRight))
 			return hXPath2StaticContext_operators["numeric-multiply"].call(oContext, oLeft, oRight);
@@ -45,7 +44,7 @@ cMultiplicativeExpr.operators['*']		= function (oLeft, oRight, oContext) {
 //<-Debug
 	);	// Arithmetic operator is not defined for arguments of types ({type1}, {type2})
 };
-cMultiplicativeExpr.operators['div']	= function (oLeft, oRight, oContext) {
+hMultiplicativeExpr_operators['div']	= function (oLeft, oRight, oContext) {
 	if (fXSAnyAtomicType_isNumeric(oLeft)) {
 		if (fXSAnyAtomicType_isNumeric(oRight))
 			return hXPath2StaticContext_operators["numeric-divide"].call(oContext, oLeft, oRight);
@@ -71,7 +70,7 @@ cMultiplicativeExpr.operators['div']	= function (oLeft, oRight, oContext) {
 //<-Debug
 	);	// Arithmetic operator is not defined for arguments of types ({type1}, {type2})
 };
-cMultiplicativeExpr.operators['idiv']	= function (oLeft, oRight, oContext) {
+hMultiplicativeExpr_operators['idiv']	= function (oLeft, oRight, oContext) {
 	if (fXSAnyAtomicType_isNumeric(oLeft) && fXSAnyAtomicType_isNumeric(oRight))
 		return hXPath2StaticContext_operators["numeric-integer-divide"].call(oContext, oLeft, oRight);
 	//
@@ -81,7 +80,7 @@ cMultiplicativeExpr.operators['idiv']	= function (oLeft, oRight, oContext) {
 //<-Debug
 	);	// Arithmetic operator is not defined for arguments of types ({type1}, {type2})
 };
-cMultiplicativeExpr.operators['mod']	= function (oLeft, oRight, oContext) {
+hMultiplicativeExpr_operators['mod']	= function (oLeft, oRight, oContext) {
 	if (fXSAnyAtomicType_isNumeric(oLeft) && fXSAnyAtomicType_isNumeric(oRight))
 		return hXPath2StaticContext_operators["numeric-mod"].call(oContext, oLeft, oRight);
 	//
@@ -97,13 +96,13 @@ cMultiplicativeExpr.parse	= function (oLexer, oStaticContext) {
 	var oExpr;
 	if (oLexer.eof() ||!(oExpr = cUnionExpr.parse(oLexer, oStaticContext)))
 		return;
-	if (!(oLexer.peek() in cMultiplicativeExpr.operators))
+	if (!(oLexer.peek() in hMultiplicativeExpr_operators))
 		return oExpr;
 
 	// Additive expression
 	var oMultiplicativeExpr	= new cMultiplicativeExpr(oExpr),
 		sOperator;
-	while ((sOperator = oLexer.peek()) in cMultiplicativeExpr.operators) {
+	while ((sOperator = oLexer.peek()) in hMultiplicativeExpr_operators) {
 		oLexer.next();
 		if (oLexer.eof() ||!(oExpr = cUnionExpr.parse(oLexer, oStaticContext)))
 			throw new cXPath2Error("XPST0003"
@@ -150,7 +149,7 @@ cMultiplicativeExpr.prototype.evaluate	= function (oContext) {
 		if (vRight instanceof cXSUntypedAtomic)
 			vRight	= cXSDouble.cast(vRight);	// cast to xs:double
 
-		vLeft	= cMultiplicativeExpr.operators[this.items[nIndex][0]](vLeft, vRight, oContext);
+		vLeft	= hMultiplicativeExpr_operators[this.items[nIndex][0]](vLeft, vRight, oContext);
 	}
 	return new cXPath2Sequence(vLeft);
 };

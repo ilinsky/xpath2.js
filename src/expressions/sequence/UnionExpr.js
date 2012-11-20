@@ -15,11 +15,6 @@ function cUnionExpr(oExpr) {
 cUnionExpr.prototype.left	= null;
 cUnionExpr.prototype.items	= null;
 
-cUnionExpr.operators	= {};
-cUnionExpr.operators["union"]	= function(oLeft, oRight, oContext) {
-	return hXPath2StaticContext_operators["union"].call(oContext, oLeft, oRight);
-};
-
 // Static members
 cUnionExpr.parse	= function (oLexer, oStaticContext) {
 	var oExpr,
@@ -48,6 +43,6 @@ cUnionExpr.parse	= function (oLexer, oStaticContext) {
 cUnionExpr.prototype.evaluate	= function (oContext) {
 	var oSequence	= this.left.evaluate(oContext);
 	for (var nIndex = 0, nLength = this.items.length; nIndex < nLength; nIndex++)
-		oSequence	= cUnionExpr.operators["union"](oSequence, this.items[nIndex].evaluate(oContext), oContext);
+		oSequence	= hXPath2StaticContext_operators["union"].call(oContext, oSequence, this.items[nIndex].evaluate(oContext));
 	return oSequence;
 };

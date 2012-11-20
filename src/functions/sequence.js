@@ -223,9 +223,9 @@ fXPath2StaticContext_defineSystemFunction("avg",	[[cXSAnyAtomicType, '*']],	func
 			vRight	= oSequence1.items[nIndex];
 			if (vRight instanceof cXSUntypedAtomic)
 				vRight	= cXSDouble.cast(vRight);
-			vValue	= cAdditiveExpr.operators['+'](vValue, vRight, this);
+			vValue	= hAdditiveExpr_operators['+'](vValue, vRight, this);
 		}
-		return cMultiplicativeExpr.operators['div'](vValue, new cXSInteger(nLength), this);
+		return hMultiplicativeExpr_operators['div'](vValue, new cXSInteger(nLength), this);
 	}
 	catch (e) {
 		// XPTY0004: Arithmetic operator is not defined for provided arguments
@@ -249,7 +249,7 @@ fXPath2StaticContext_defineSystemFunction("max",	[[cXSAnyAtomicType, '*'], [cXSS
 	try {
 		var vValue	= oSequence1.items[0];
 		for (var nIndex = 1, nLength = oSequence1.items.length; nIndex < nLength; nIndex++)
-			if (cComparisonExpr.ValueComp.operators['ge'](oSequence1.items[nIndex], vValue, this).valueOf())
+			if (hComparisonExpr_ValueComp_operators['ge'](oSequence1.items[nIndex], vValue, this).valueOf())
 				vValue	= oSequence1.items[nIndex];
 		return vValue;
 	}
@@ -275,7 +275,7 @@ fXPath2StaticContext_defineSystemFunction("min",	[[cXSAnyAtomicType, '*'], [cXSS
 	try {
 		var vValue	= oSequence1.items[0];
 		for (var nIndex = 1, nLength = oSequence1.items.length; nIndex < nLength; nIndex++)
-			if (cComparisonExpr.ValueComp.operators['le'](oSequence1.items[nIndex], vValue, this).valueOf())
+			if (hComparisonExpr_ValueComp_operators['le'](oSequence1.items[nIndex], vValue, this).valueOf())
 				vValue	= oSequence1.items[nIndex];
 		return vValue;
 	}
@@ -314,7 +314,7 @@ fXPath2StaticContext_defineSystemFunction("sum",	[[cXSAnyAtomicType, '*'], [cXSA
 			vRight	= oSequence1.items[nIndex];
 			if (vRight instanceof cXSUntypedAtomic)
 				vRight	= cXSDouble.cast(vRight);
-			vValue	= cAdditiveExpr.operators['+'](vValue, vRight, this);
+			vValue	= hAdditiveExpr_operators['+'](vValue, vRight, this);
 		}
 		return vValue;
 	}

@@ -16,8 +16,8 @@ cUnaryExpr.prototype.operator	= null;
 cUnaryExpr.prototype.expression	= null;
 
 //
-cUnaryExpr.operators	= {};
-cUnaryExpr.operators['-']	= function(oRight, oContext) {
+var hUnaryExpr_operators	= {};
+hUnaryExpr_operators['-']	= function(oRight, oContext) {
 	if (fXSAnyAtomicType_isNumeric(oRight))
 		return hXPath2StaticContext_operators["numeric-unary-minus"].call(oContext, oRight);
 	//
@@ -27,7 +27,7 @@ cUnaryExpr.operators['-']	= function(oRight, oContext) {
 //<-Debug
 	);	// Arithmetic operator is not defined for arguments of types ({type1}, {type2})
 };
-cUnaryExpr.operators['+']	= function(oRight, oContext) {
+hUnaryExpr_operators['+']	= function(oRight, oContext) {
 	if (fXSAnyAtomicType_isNumeric(oRight))
 		return hXPath2StaticContext_operators["numeric-unary-plus"].call(oContext, oRight);
 	//
@@ -43,13 +43,13 @@ cUnaryExpr.operators['+']	= function(oRight, oContext) {
 cUnaryExpr.parse	= function (oLexer, oStaticContext) {
 	if (oLexer.eof())
 		return;
-	if (!(oLexer.peek() in cUnaryExpr.operators))
+	if (!(oLexer.peek() in hUnaryExpr_operators))
 		return cValueExpr.parse(oLexer, oStaticContext);
 
 	// Unary expression
 	var sOperator	= '+',
 		oExpr;
-	while (oLexer.peek() in cUnaryExpr.operators) {
+	while (oLexer.peek() in hUnaryExpr_operators) {
 		if (oLexer.peek() == '-')
 			sOperator	= sOperator == '-' ? '+' : '-';
 		oLexer.next();
@@ -80,5 +80,5 @@ cUnaryExpr.prototype.evaluate	= function (oContext) {
 	if (vRight instanceof cXSUntypedAtomic)
 		vRight	= cXSDouble.cast(vRight);	// cast to xs:double
 
-	return new cXPath2Sequence(cUnaryExpr.operators[this.operator](vRight, oContext));
+	return new cXPath2Sequence(hUnaryExpr_operators[this.operator](vRight, oContext));
 };

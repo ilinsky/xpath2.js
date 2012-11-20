@@ -19,22 +19,23 @@ cAxisStep.prototype.axis		= null;
 cAxisStep.prototype.test		= null;
 cAxisStep.prototype.predicates	= null;
 
-cAxisStep.axises	= {};
+//
+var hAxisStep_axises	= {};
 // Forward axis
-cAxisStep.axises["attribute"]			= {};
-cAxisStep.axises["child"]				= {};
-cAxisStep.axises["descendant"]			= {};
-cAxisStep.axises["descendant-or-self"]	= {};
-cAxisStep.axises["following"]			= {};
-cAxisStep.axises["following-sibling"]	= {};
-cAxisStep.axises["self"]				= {};
-// cAxisStep.axises["namespace"]			= {};	// deprecated in 2.0
+hAxisStep_axises["attribute"]			= {};
+hAxisStep_axises["child"]				= {};
+hAxisStep_axises["descendant"]			= {};
+hAxisStep_axises["descendant-or-self"]	= {};
+hAxisStep_axises["following"]			= {};
+hAxisStep_axises["following-sibling"]	= {};
+hAxisStep_axises["self"]				= {};
+// hAxisStep_axises["namespace"]			= {};	// deprecated in 2.0
 // Reverse axis
-cAxisStep.axises["ancestor"]			= {};
-cAxisStep.axises["ancestor-or-self"]	= {};
-cAxisStep.axises["parent"]				= {};
-cAxisStep.axises["preceding"]			= {};
-cAxisStep.axises["preceding-sibling"]	= {};
+hAxisStep_axises["ancestor"]			= {};
+hAxisStep_axises["ancestor-or-self"]	= {};
+hAxisStep_axises["parent"]				= {};
+hAxisStep_axises["preceding"]			= {};
+hAxisStep_axises["preceding-sibling"]	= {};
 
 // Static members
 cAxisStep.parse	= function (oLexer, oStaticContext) {
@@ -42,7 +43,7 @@ cAxisStep.parse	= function (oLexer, oStaticContext) {
 		oExpr,
 		oStep;
 	if (oLexer.peek(1) == '::') {
-		if (!(sAxis in cAxisStep.axises))
+		if (!(sAxis in hAxisStep_axises))
 			throw new cXPath2Error("XPST0003"
 //->Debug
 					, "Unknown axis name: " + sAxis

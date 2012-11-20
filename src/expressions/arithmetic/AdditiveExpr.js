@@ -16,9 +16,8 @@ cAdditiveExpr.prototype.left	= null;
 cAdditiveExpr.prototype.items	= null;
 
 //
-cAdditiveExpr.operators	={};
-
-cAdditiveExpr.operators['+']	= function(oLeft, oRight, oContext) {
+var hAdditiveExpr_operators	= {};
+hAdditiveExpr_operators['+']	= function(oLeft, oRight, oContext) {
 	if (fXSAnyAtomicType_isNumeric(oLeft)) {
 		if (fXSAnyAtomicType_isNumeric(oRight))
 			return hXPath2StaticContext_operators["numeric-add"].call(oContext, oLeft, oRight);
@@ -69,7 +68,7 @@ cAdditiveExpr.operators['+']	= function(oLeft, oRight, oContext) {
 //<-Debug
 	);	// Arithmetic operator is not defined for arguments of types ({type1}, {type2})
 };
-cAdditiveExpr.operators['-']	= function (oLeft, oRight, oContext) {
+hAdditiveExpr_operators['-']	= function (oLeft, oRight, oContext) {
 	if (fXSAnyAtomicType_isNumeric(oLeft)) {
 		if (fXSAnyAtomicType_isNumeric(oRight))
 			return hXPath2StaticContext_operators["numeric-subtract"].call(oContext, oLeft, oRight);
@@ -122,13 +121,13 @@ cAdditiveExpr.parse	= function (oLexer, oStaticContext) {
 	var oExpr;
 	if (oLexer.eof() ||!(oExpr = cMultiplicativeExpr.parse(oLexer, oStaticContext)))
 		return;
-	if (!(oLexer.peek() in cAdditiveExpr.operators))
+	if (!(oLexer.peek() in hAdditiveExpr_operators))
 		return oExpr;
 
 	// Additive expression
 	var oAdditiveExpr	= new cAdditiveExpr(oExpr),
 		sOperator;
-	while ((sOperator = oLexer.peek()) in cAdditiveExpr.operators) {
+	while ((sOperator = oLexer.peek()) in hAdditiveExpr_operators) {
 		oLexer.next();
 		if (oLexer.eof() ||!(oExpr = cMultiplicativeExpr.parse(oLexer, oStaticContext)))
 			throw new cXPath2Error("XPST0003"
@@ -174,7 +173,7 @@ cAdditiveExpr.prototype.evaluate	= function (oContext) {
 		if (vRight instanceof cXSUntypedAtomic)
 			vRight	= cXSDouble.cast(vRight);	// cast to xs:double
 
-		vLeft	= cAdditiveExpr.operators[this.items[nIndex][0]](vLeft, vRight, oContext);
+		vLeft	= hAdditiveExpr_operators[this.items[nIndex][0]](vLeft, vRight, oContext);
 	}
 	return new cXPath2Sequence(vLeft);
 };

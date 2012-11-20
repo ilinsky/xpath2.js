@@ -23,7 +23,7 @@ cComparisonExpr.parse	= function (oLexer, oStaticContext) {
 		oRight;
 	if (oLexer.eof() ||!(oExpr = cRangeExpr.parse(oLexer, oStaticContext)))
 		return;
-	if (!(oLexer.peek() in cComparisonExpr.operators))
+	if (!(oLexer.peek() in hComparisonExpr_operators))
 		return oExpr;
 
 	// Comparison expression
@@ -41,14 +41,14 @@ cComparisonExpr.parse	= function (oLexer, oStaticContext) {
 // Public members
 cComparisonExpr.prototype.evaluate	= function (oContext) {
 	var oSequence	= new cXPath2Sequence,
-		oResult	= cComparisonExpr.operators[this.operator](this, oContext);
+		oResult	= hComparisonExpr_operators[this.operator](this, oContext);
 	if (oResult !== null)
 		oSequence.add(oResult);
 	return oSequence;
 };
 
 // General comparison
-cComparisonExpr.GeneralComp	= function(oExpr, oContext) {
+function fComparisonExpr_GeneralComp(oExpr, oContext) {
 	var oLeft	= cXPath2Sequence.atomize(oExpr.left.evaluate(oContext), oContext);
 	if (oLeft.isEmpty())
 		return new cXSBoolean(false);
@@ -89,13 +89,13 @@ cComparisonExpr.GeneralComp	= function(oExpr, oContext) {
 			if (vRight instanceof cXSAnyURI)
 				vRight	= cXSString.cast(vRight);
 
-			bResult	= cComparisonExpr.ValueComp.operators[cComparisonExpr.GeneralComp.map[oExpr.operator]](vLeft, vRight, oContext).valueOf();
+			bResult	= hComparisonExpr_ValueComp_operators[hComparisonExpr_GeneralComp_map[oExpr.operator]](vLeft, vRight, oContext).valueOf();
 		}
 	}
 	return new cXSBoolean(bResult);
 };
 
-cComparisonExpr.GeneralComp.map	= {
+var hComparisonExpr_GeneralComp_map	= {
 	'=':	'eq',
 	'!=':	'ne',
 	'>':	'gt',
@@ -105,7 +105,7 @@ cComparisonExpr.GeneralComp.map	= {
 };
 
 // Value comparison
-cComparisonExpr.ValueComp	= function(oExpr, oContext) {
+function fComparisonExpr_ValueComp(oExpr, oContext) {
 	var oLeft	= cXPath2Sequence.atomize(oExpr.left.evaluate(oContext), oContext);
 	if (oLeft.isEmpty())
 		return null;
@@ -142,11 +142,12 @@ cComparisonExpr.ValueComp	= function(oExpr, oContext) {
 		vRight	= cXSString.cast(vRight);
 
 	//
-	return cComparisonExpr.ValueComp.operators[oExpr.operator](vLeft, vRight, oContext);
+	return hComparisonExpr_ValueComp_operators[oExpr.operator](vLeft, vRight, oContext);
 };
 
-cComparisonExpr.ValueComp.operators	= {};
-cComparisonExpr.ValueComp.operators['eq']	= function(oLeft, oRight, oContext) {
+//
+var hComparisonExpr_ValueComp_operators	= {};
+hComparisonExpr_ValueComp_operators['eq']	= function(oLeft, oRight, oContext) {
 	if (fXSAnyAtomicType_isNumeric(oLeft)) {
 		if (fXSAnyAtomicType_isNumeric(oRight))
 			return hXPath2StaticContext_operators["numeric-equal"].call(oContext, oLeft, oRight);
@@ -206,10 +207,10 @@ cComparisonExpr.ValueComp.operators['eq']	= function(oLeft, oRight, oContext) {
 //<-Debug
 	);	// Cannot compare {type1} to {type2}
 };
-cComparisonExpr.ValueComp.operators['ne']	= function(oLeft, oRight, oContext) {
-	return new cXSBoolean(!cComparisonExpr.ValueComp.operators['eq'](oLeft, oRight, oContext).valueOf());
+hComparisonExpr_ValueComp_operators['ne']	= function(oLeft, oRight, oContext) {
+	return new cXSBoolean(!hComparisonExpr_ValueComp_operators['eq'](oLeft, oRight, oContext).valueOf());
 };
-cComparisonExpr.ValueComp.operators['gt']	= function(oLeft, oRight, oContext) {
+hComparisonExpr_ValueComp_operators['gt']	= function(oLeft, oRight, oContext) {
 	if (fXSAnyAtomicType_isNumeric(oLeft)) {
 		if (fXSAnyAtomicType_isNumeric(oRight))
 			return hXPath2StaticContext_operators["numeric-greater-than"].call(oContext, oLeft, oRight);
@@ -257,7 +258,7 @@ cComparisonExpr.ValueComp.operators['gt']	= function(oLeft, oRight, oContext) {
 //<-Debug
 	);	// Cannot compare {type1} to {type2}
 };
-cComparisonExpr.ValueComp.operators['lt']	= function(oLeft, oRight, oContext) {
+hComparisonExpr_ValueComp_operators['lt']	= function(oLeft, oRight, oContext) {
 	if (fXSAnyAtomicType_isNumeric(oLeft)) {
 		if (fXSAnyAtomicType_isNumeric(oRight))
 			return hXPath2StaticContext_operators["numeric-less-than"].call(oContext, oLeft, oRight);
@@ -305,7 +306,7 @@ cComparisonExpr.ValueComp.operators['lt']	= function(oLeft, oRight, oContext) {
 //<-Debug
 	);	// Cannot compare {type1} to {type2}
 };
-cComparisonExpr.ValueComp.operators['ge']	= function(oLeft, oRight, oContext) {
+hComparisonExpr_ValueComp_operators['ge']	= function(oLeft, oRight, oContext) {
 	if (fXSAnyAtomicType_isNumeric(oLeft)) {
 		if (fXSAnyAtomicType_isNumeric(oRight))
 			return hXPath2StaticContext_operators["numeric-greater-than"].call(oContext, oLeft, oRight) || hXPath2StaticContext_operators["numeric-equal"].call(oContext, oLeft, oRight);
@@ -353,7 +354,7 @@ cComparisonExpr.ValueComp.operators['ge']	= function(oLeft, oRight, oContext) {
 //<-Debug
 	);	// Cannot compare {type1} to {type2}
 };
-cComparisonExpr.ValueComp.operators['le']	= function(oLeft, oRight, oContext) {
+hComparisonExpr_ValueComp_operators['le']	= function(oLeft, oRight, oContext) {
 	if (fXSAnyAtomicType_isNumeric(oLeft)) {
 		if (fXSAnyAtomicType_isNumeric(oRight))
 			return hXPath2StaticContext_operators["numeric-less-than"].call(oContext, oLeft, oRight) || hXPath2StaticContext_operators["numeric-equal"].call(oContext, oLeft, oRight);
@@ -403,7 +404,7 @@ cComparisonExpr.ValueComp.operators['le']	= function(oLeft, oRight, oContext) {
 };
 
 // Node comparison
-cComparisonExpr.NodeComp	= function(oExpr, oContext) {
+function fComparisonExpr_NodeComp(oExpr, oContext) {
 	var oLeft	= oExpr.left.evaluate(oContext);
 	if (oLeft.isEmpty())
 		return null;
@@ -436,38 +437,38 @@ cComparisonExpr.NodeComp	= function(oExpr, oContext) {
 //<-Debug
 	);
 
-	return cComparisonExpr.NodeComp.operators[oExpr.operator](oLeft.items[0], oRight.items[0], oContext);
+	return hComparisonExpr_NodeComp_operators[oExpr.operator](oLeft.items[0], oRight.items[0], oContext);
 };
 
-cComparisonExpr.NodeComp.operators	= {};
-cComparisonExpr.NodeComp.operators['is']	= function(oLeft, oRight, oContext) {
+var hComparisonExpr_NodeComp_operators	= {};
+hComparisonExpr_NodeComp_operators['is']	= function(oLeft, oRight, oContext) {
 	return hXPath2StaticContext_operators["is-same-node"].call(oContext, oLeft, oRight);
 };
-cComparisonExpr.NodeComp.operators['>>']	= function(oLeft, oRight, oContext) {
+hComparisonExpr_NodeComp_operators['>>']	= function(oLeft, oRight, oContext) {
 	return hXPath2StaticContext_operators["node-after"].call(oContext, oLeft, oRight);
 };
-cComparisonExpr.NodeComp.operators['<<']	= function(oLeft, oRight, oContext) {
+hComparisonExpr_NodeComp_operators['<<']	= function(oLeft, oRight, oContext) {
 	return hXPath2StaticContext_operators["node-before"].call(oContext, oLeft, oRight);
 };
 
 // Operators
-cComparisonExpr.operators	= {
+var hComparisonExpr_operators	= {
 	// GeneralComp
-	'=':	cComparisonExpr.GeneralComp,
-	'!=':	cComparisonExpr.GeneralComp,
-	'<':	cComparisonExpr.GeneralComp,
-	'<=':	cComparisonExpr.GeneralComp,
-	'>':	cComparisonExpr.GeneralComp,
-	'>=':	cComparisonExpr.GeneralComp,
+	'=':	fComparisonExpr_GeneralComp,
+	'!=':	fComparisonExpr_GeneralComp,
+	'<':	fComparisonExpr_GeneralComp,
+	'<=':	fComparisonExpr_GeneralComp,
+	'>':	fComparisonExpr_GeneralComp,
+	'>=':	fComparisonExpr_GeneralComp,
 	// ValueComp
-	'eq':	cComparisonExpr.ValueComp,
-	'ne':	cComparisonExpr.ValueComp,
-	'lt':	cComparisonExpr.ValueComp,
-	'le':	cComparisonExpr.ValueComp,
-	'gt':	cComparisonExpr.ValueComp,
-	'ge':	cComparisonExpr.ValueComp,
+	'eq':	fComparisonExpr_ValueComp,
+	'ne':	fComparisonExpr_ValueComp,
+	'lt':	fComparisonExpr_ValueComp,
+	'le':	fComparisonExpr_ValueComp,
+	'gt':	fComparisonExpr_ValueComp,
+	'ge':	fComparisonExpr_ValueComp,
 	// NodeComp
-	'is':	cComparisonExpr.NodeComp,
-	'>>':	cComparisonExpr.NodeComp,
-	'<<':	cComparisonExpr.NodeComp
+	'is':	fComparisonExpr_NodeComp,
+	'>>':	fComparisonExpr_NodeComp,
+	'<<':	fComparisonExpr_NodeComp
 };

@@ -24,7 +24,7 @@ cFunctionCall.parse	= function (oLexer, oStaticContext) {
 	var aMatch	= oLexer.peek().match(cNameTest.RegExp);
 	if (aMatch && oLexer.peek(1) == '(') {
 		// Reserved "functions"
-		if (!aMatch[1] && (aMatch[2] in cKindTest.names))
+		if (!aMatch[1] && (aMatch[2] in hKindTest_names))
 			return cAxisStep.parse(oLexer, oStaticContext);
 		// Other functions
 		if (aMatch[1] == '*' || aMatch[2] == '*')
