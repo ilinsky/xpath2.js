@@ -28,7 +28,7 @@ cForExpr.parse	= function (oLexer, oStaticContext) {
 		while (oLexer.peek() == ',' && oLexer.next());
 
 		if (oLexer.peek() != "return")
-			throw new cXPath2Error("XPST0003"
+			throw new cException("XPST0003"
 //->Debug
 					, "Expected 'return' token in for expression"
 //<-Debug
@@ -36,7 +36,7 @@ cForExpr.parse	= function (oLexer, oStaticContext) {
 
 		oLexer.next();
 		if (oLexer.eof() ||!(oExpr = cExprSingle.parse(oLexer, oStaticContext)))
-			throw new cXPath2Error("XPST0003"
+			throw new cException("XPST0003"
 //->Debug
 					, "Expected return statement operand in for expression"
 //<-Debug
@@ -51,7 +51,7 @@ cForExpr.parse	= function (oLexer, oStaticContext) {
 // for $x in X, $y in Y, $z in Z return $x + $y + $z
 // for $x in X return for $y in Y return for $z in Z return $x + $y + $z
 cForExpr.prototype.evaluate	= function (oContext) {
-	var oSequence	= new cXPath2Sequence;
+	var oSequence	= new cSequence;
 	(function(oSelf, nBinding) {
 		var oBinding	= oSelf.bindings[nBinding++],
 			oSequence1	= oBinding.inExpr.evaluate(oContext),
@@ -85,14 +85,14 @@ cSimpleForBinding.prototype.inExpr		= null;
 cSimpleForBinding.parse	= function(oLexer, oStaticContext) {
 	var aMatch	= oLexer.peek().substr(1).match(cNameTest.RegExp);
 	if (!aMatch)
-		throw new cXPath2Error("XPST0003"
+		throw new cException("XPST0003"
 //->Debug
 				, "Expected binding in for expression"
 //<-Debug
 		);
 
 	if (aMatch[1] == '*' || aMatch[2] == '*')
-		throw new cXPath2Error("XPST0003"
+		throw new cException("XPST0003"
 //->Debug
 				, "Illegal use of wildcard in for expression binding variable name"
 //<-Debug
@@ -100,7 +100,7 @@ cSimpleForBinding.parse	= function(oLexer, oStaticContext) {
 
 	oLexer.next();
 	if (oLexer.peek() != "in")
-		throw new cXPath2Error("XPST0003"
+		throw new cException("XPST0003"
 //->Debug
 				, "Expected 'in' token in for expression binding"
 //<-Debug
@@ -109,7 +109,7 @@ cSimpleForBinding.parse	= function(oLexer, oStaticContext) {
 	oLexer.next();
 	var oExpr;
 	if (oLexer.eof() ||!(oExpr = cExprSingle.parse(oLexer, oStaticContext)))
-		throw new cXPath2Error("XPST0003"
+		throw new cException("XPST0003"
 //->Debug
 				, "Expected in statement operand in for expression binding"
 //<-Debug

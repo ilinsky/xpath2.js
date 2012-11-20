@@ -21,5 +21,5 @@ cContextItemExpr.parse	= function (oLexer, oStaticContext) {
 
 // Public members
 cContextItemExpr.prototype.evaluate	= function (oContext) {
-	return new cXPath2Sequence(oContext.item);
+	return new cSequence(oContext.item);
 };

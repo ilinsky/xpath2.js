@@ -18,4 +18,4 @@ cXSUnsignedByte.cast	= function(vValue) {
 };
 
 //
-fXPath2StaticContext_defineSystemDataType("unsignedByte",	cXSUnsignedByte);
+fStaticContext_defineSystemDataType("unsignedByte",	cXSUnsignedByte);

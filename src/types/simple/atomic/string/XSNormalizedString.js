@@ -18,4 +18,4 @@ cXSNormalizedString.cast	= function(vValue) {
 };
 
 //
-fXPath2StaticContext_defineSystemDataType("normalizedString",	cXSNormalizedString);
+fStaticContext_defineSystemDataType("normalizedString",	cXSNormalizedString);

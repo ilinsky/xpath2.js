@@ -22,14 +22,14 @@ cXSInteger.cast	= function(vValue) {
 		var aMatch	= fString_trim.call(vValue).match(cXSInteger.RegExp);
 		if (aMatch)
 			return new cXSInteger(~~vValue);
-		throw new cXPath2Error("FORG0001");
+		throw new cException("FORG0001");
 	}
 	if (vValue instanceof cXSBoolean)
 		return new cXSInteger(vValue * 1);
 	if (fXSAnyAtomicType_isNumeric(vValue))
 		return new cXSInteger(~~vValue.value);
 	//
-	throw new cXPath2Error("XPTY0004"
+	throw new cException("XPTY0004"
 //->Debug
 			, "Casting value '" + vValue + "' to xs:integer can never succeed"
 //<-Debug
@@ -37,4 +37,4 @@ cXSInteger.cast	= function(vValue) {
 };
 
 //
-fXPath2StaticContext_defineSystemDataType("integer",	cXSInteger);
+fStaticContext_defineSystemDataType("integer",	cXSInteger);

@@ -18,4 +18,4 @@ cXSPositiveInteger.cast	= function(vValue) {
 };
 
 //
-fXPath2StaticContext_defineSystemDataType("positiveInteger",	cXSPositiveInteger);
+fStaticContext_defineSystemDataType("positiveInteger",	cXSPositiveInteger);

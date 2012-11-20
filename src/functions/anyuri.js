@@ -14,11 +14,11 @@
 
 // fn:resolve-uri($relative as xs:string?) as xs:anyURI?
 // fn:resolve-uri($relative as xs:string?, $base as xs:string) as xs:anyURI?
-fXPath2StaticContext_defineSystemFunction("resolve-uri",	[[cXSString, '?'], [cXSString, '', true]],	function(oSequence1, oSequence2) {
+fStaticContext_defineSystemFunction("resolve-uri",	[[cXSString, '?'], [cXSString, '', true]],	function(oSequence1, oSequence2) {
 	var sBaseUri;
 	if (arguments.length < 2) {
 		if (!this.DOMAdapter.isNode(this.item))
-			throw new cXPath2Error("XPTY0004"
+			throw new cException("XPTY0004"
 //->Debug
 					, "resolve-uri() function called when the context item is not a node"
 //<-Debug

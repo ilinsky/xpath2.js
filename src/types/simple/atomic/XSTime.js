@@ -41,12 +41,12 @@ cXSTime.cast	= function(vValue) {
 								aMatch[8] ? aMatch[8] == 'Z' ? 0 : (aMatch[9] == '-' ? -1 : 1) * (aMatch[10] * 60 + aMatch[11] * 1) : null
 			);
 		}
-		throw new cXPath2Error("FORG0001");
+		throw new cException("FORG0001");
 	}
 	if (vValue instanceof cXSDateTime)
 		return new cXSTime(vValue.hours, vValue.minutes, vValue.seconds, vValue.timezone);
 	//
-	throw new cXPath2Error("XPTY0004"
+	throw new cException("XPTY0004"
 //->Debug
 			, "Casting value '" + vValue + "' to xs:time can never succeed"
 //<-Debug
@@ -76,4 +76,4 @@ function fXSTime_normalize(oValue) {
 };
 
 //
-fXPath2StaticContext_defineSystemDataType("time",	cXSTime);
+fStaticContext_defineSystemDataType("time",	cXSTime);

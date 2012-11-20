@@ -18,4 +18,4 @@ cXSInt.cast	= function(vValue) {
 };
 
 //
-fXPath2StaticContext_defineSystemDataType("int",	cXSInt);
+fStaticContext_defineSystemDataType("int",	cXSInt);

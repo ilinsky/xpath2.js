@@ -32,12 +32,12 @@ cXSBoolean.cast	= function(vValue) {
 		var aMatch;
 		if (aMatch = fString_trim.call(vValue).match(cXSBoolean.RegExp))
 			return new cXSBoolean(aMatch[1] == "1" || aMatch[1] == "true");
-		throw new cXPath2Error("FORG0001");
+		throw new cException("FORG0001");
 	}
 	if (fXSAnyAtomicType_isNumeric(vValue))
 		return new cXSBoolean(vValue != 0);
 	//
-	throw new cXPath2Error("XPTY0004"
+	throw new cException("XPTY0004"
 //->Debug
 			, "Casting value '" + vValue + "' to xs:boolean can never succeed"
 //<-Debug
@@ -45,4 +45,4 @@ cXSBoolean.cast	= function(vValue) {
 };
 
 //
-fXPath2StaticContext_defineSystemDataType("boolean",	cXSBoolean);
+fStaticContext_defineSystemDataType("boolean",	cXSBoolean);

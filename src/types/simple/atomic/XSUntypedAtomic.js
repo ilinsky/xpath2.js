@@ -23,7 +23,7 @@ cXSUntypedAtomic.cast	= function(vValue) {
 
 	return new cXSUntypedAtomic(cString(vValue));
 	//
-	throw new cXPath2Error("XPTY0004"
+	throw new cException("XPTY0004"
 //->Debug
 			, "Casting value '" + vValue + "' to xs:untypedAtomic can never succeed"
 //<-Debug
@@ -31,4 +31,4 @@ cXSUntypedAtomic.cast	= function(vValue) {
 };
 
 //
-fXPath2StaticContext_defineSystemDataType("untypedAtomic",	cXSUntypedAtomic);
+fStaticContext_defineSystemDataType("untypedAtomic",	cXSUntypedAtomic);

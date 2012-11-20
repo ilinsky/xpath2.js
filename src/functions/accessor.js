@@ -19,7 +19,7 @@
 */
 
 // fn:node-name($arg as node()?) as xs:QName?
-fXPath2StaticContext_defineSystemFunction("node-name",		[[cXTNode, '?']],	function(oSequence1) {
+fStaticContext_defineSystemFunction("node-name",		[[cXTNode, '?']],	function(oSequence1) {
 	if (oSequence1.isEmpty())
 		return null;
 	//
@@ -42,7 +42,7 @@ fXPath2StaticContext_defineSystemFunction("node-name",		[[cXTNode, '?']],	functi
 });
 
 // fn:nilled($arg as node()?) as xs:boolean?
-fXPath2StaticContext_defineSystemFunction("nilled",	[[cXTNode, '?']],	function(oSequence1) {
+fStaticContext_defineSystemFunction("nilled",	[[cXTNode, '?']],	function(oSequence1) {
 	if (oSequence1.isEmpty())
 		return null;
 
@@ -55,28 +55,28 @@ fXPath2StaticContext_defineSystemFunction("nilled",	[[cXTNode, '?']],	function(o
 
 // fn:string() as xs:string
 // fn:string($arg as item()?) as xs:string
-fXPath2StaticContext_defineSystemFunction("string",	[[cXTItem, '?', true]],	function(/*[*/oSequence1/*]*/) {
+fStaticContext_defineSystemFunction("string",	[[cXTItem, '?', true]],	function(/*[*/oSequence1/*]*/) {
 	if (!arguments.length)
-		oSequence1	= new cXPath2Sequence(this.item);
+		oSequence1	= new cSequence(this.item);
 	return oSequence1.isEmpty() ? new cXSString('') : cXSString.cast(fXTNode_atomize(oSequence1.items[0], this));
 });
 
 // fn:data($arg as item()*) as xs:anyAtomicType*
-fXPath2StaticContext_defineSystemFunction("data",	[[cXTItem, '*']],		function(oSequence1) {
-	return fXPath2Sequence_atomize(oSequence1, this);
+fStaticContext_defineSystemFunction("data",	[[cXTItem, '*']],		function(oSequence1) {
+	return fSequence_atomize(oSequence1, this);
 });
 
 // fn:base-uri() as xs:anyURI?
 // fn:base-uri($arg as node()?) as xs:anyURI?
-fXPath2StaticContext_defineSystemFunction("base-uri",	[[cXTNode, '?', true]],	function(oSequence1) {
+fStaticContext_defineSystemFunction("base-uri",	[[cXTNode, '?', true]],	function(oSequence1) {
 	if (!arguments.length) {
 		if (!this.DOMAdapter.isNode(this.item))
-			throw new cXPath2Error("XPTY0004"
+			throw new cException("XPTY0004"
 //->Debug
 					, "base-uri() function called when the context item is not a node"
 //<-Debug
 			);
-		oSequence1	= new cXPath2Sequence(this.item);
+		oSequence1	= new cSequence(this.item);
 	}
 	else
 	if (oSequence1.isEmpty())
@@ -86,7 +86,7 @@ fXPath2StaticContext_defineSystemFunction("base-uri",	[[cXTNode, '?', true]],	fu
 });
 
 // fn:document-uri($arg as node()?) as xs:anyURI?
-fXPath2StaticContext_defineSystemFunction("document-uri",	[[cXTNode, '?']],	function(oSequence1) {
+fStaticContext_defineSystemFunction("document-uri",	[[cXTNode, '?']],	function(oSequence1) {
 	if (oSequence1.isEmpty())
 		return null;
 	//

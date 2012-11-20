@@ -36,7 +36,7 @@ cKindTest.parse	= function (oLexer, oStaticContext) {
 	if (oLexer.peek(1) == '(') {
 		//
 		if (!(sName in hKindTest_names))
-			throw new cXPath2Error("XPST0003"
+			throw new cException("XPST0003"
 //->Debug
 					, "Unknown '" + sName + "' kind test"
 //<-Debug
@@ -73,14 +73,14 @@ cKindTest.parse	= function (oLexer, oStaticContext) {
 		}
 		else {
 			if (sName == "schema-attribute")
-				throw new cXPath2Error("XPST0003"
+				throw new cException("XPST0003"
 //->Debug
 						, "Expected attribute declaration in 'schema-attribute' kind test"
 //<-Debug
 				);
 			else
 			if (sName == "schema-element")
-				throw new cXPath2Error("XPST0003"
+				throw new cException("XPST0003"
 //->Debug
 						, "Expected element declaration in 'schema-element' kind test"
 //<-Debug
@@ -88,7 +88,7 @@ cKindTest.parse	= function (oLexer, oStaticContext) {
 		}
 
 		if (oLexer.peek() != ')')
-			throw new cXPath2Error("XPST0003"
+			throw new cException("XPST0003"
 //->Debug
 					, "Expected ')' token in kind test"
 //<-Debug

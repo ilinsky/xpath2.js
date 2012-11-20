@@ -18,4 +18,4 @@ cXSENTITY.cast	= function(vValue) {
 };
 
 //
-fXPath2StaticContext_defineSystemDataType("ENTITY",	cXSENTITY);
+fStaticContext_defineSystemDataType("ENTITY",	cXSENTITY);

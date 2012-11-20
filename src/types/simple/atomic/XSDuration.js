@@ -45,10 +45,10 @@ cXSDuration.cast	= function(vValue) {
 		var aMatch	= fString_trim.call(vValue).match(cXSDuration.RegExp);
 		if (aMatch)
 			return fXSDuration_normalize(new cXSDuration(+aMatch[2] || 0, +aMatch[3] || 0, +aMatch[4] || 0, +aMatch[5] || 0, +aMatch[6] || 0, +aMatch[7] || 0, aMatch[1] == '-'));
-		throw new cXPath2Error("FORG0001");
+		throw new cException("FORG0001");
 	}
 	//
-	throw new cXPath2Error("XPTY0004"
+	throw new cException("XPTY0004"
 //->Debug
 			, "Casting value '" + vValue + "' to xs:duration can never succeed"
 //<-Debug
@@ -76,4 +76,4 @@ function fXSDuration_normalize(oDuration) {
 };
 
 //
-fXPath2StaticContext_defineSystemDataType("duration",	cXSDuration);
+fStaticContext_defineSystemDataType("duration",	cXSDuration);

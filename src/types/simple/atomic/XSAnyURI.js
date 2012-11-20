@@ -40,10 +40,10 @@ cXSAnyURI.cast	= function(vValue) {
 		var aMatch;
 		if (aMatch = fString_trim.call(vValue).match(cXSAnyURI.RegExp))
 			return new cXSAnyURI(aMatch[2], aMatch[4], aMatch[5], aMatch[7], aMatch[9]);
-		throw new cXPath2Error("FORG0001");
+		throw new cException("FORG0001");
 	}
 	//
-	throw new cXPath2Error("XPTY0004"
+	throw new cException("XPTY0004"
 //->Debug
 			, "Casting value '" + vValue + "' to xs:anyURI can never succeed"
 //<-Debug
@@ -51,4 +51,4 @@ cXSAnyURI.cast	= function(vValue) {
 };
 
 //
-fXPath2StaticContext_defineSystemDataType("anyURI",	cXSAnyURI);
+fStaticContext_defineSystemDataType("anyURI",	cXSAnyURI);

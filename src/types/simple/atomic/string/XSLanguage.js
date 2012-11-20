@@ -18,4 +18,4 @@ cXSLanguage.cast	= function(vValue) {
 };
 
 //
-fXPath2StaticContext_defineSystemDataType("language",	cXSLanguage);
+fStaticContext_defineSystemDataType("language",	cXSLanguage);

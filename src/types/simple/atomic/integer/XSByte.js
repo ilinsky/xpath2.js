@@ -18,4 +18,4 @@ cXSByte.cast	= function(vValue) {
 };
 
 //
-fXPath2StaticContext_defineSystemDataType("byte",	cXSByte);
+fStaticContext_defineSystemDataType("byte",	cXSByte);

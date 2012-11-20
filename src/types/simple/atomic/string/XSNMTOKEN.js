@@ -18,4 +18,4 @@ cXSNMTOKEN.cast	= function(vValue) {
 };
 
 //
-fXPath2StaticContext_defineSystemDataType("NMTOKEN",	cXSNMTOKEN);
+fStaticContext_defineSystemDataType("NMTOKEN",	cXSNMTOKEN);

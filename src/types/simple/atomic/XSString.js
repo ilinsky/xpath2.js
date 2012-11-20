@@ -26,7 +26,7 @@ cXSString.prototype.toString	= function() {
 cXSString.cast	= function(vValue) {
 	return new cXSString(cString(vValue));
 	//
-	throw new cXPath2Error("XPTY0004"
+	throw new cException("XPTY0004"
 //->Debug
 			, "Casting value '" + vValue + "' to xs:string can never succeed"
 //<-Debug
@@ -34,4 +34,4 @@ cXSString.cast	= function(vValue) {
 };
 
 //
-fXPath2StaticContext_defineSystemDataType("string",	cXSString);
+fStaticContext_defineSystemDataType("string",	cXSString);

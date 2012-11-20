@@ -32,10 +32,10 @@ cXSQName.cast	= function(vValue) {
 		var aMatch	= fString_trim.call(vValue).match(cXSQName.RegExp);
 		if (aMatch)
 			return new cXSQName(aMatch[1] || null, aMatch[2], null);
-		throw new cXPath2Error("FORG0001");
+		throw new cException("FORG0001");
 	}
 	//
-	throw new cXPath2Error("XPTY0004"
+	throw new cException("XPTY0004"
 //->Debug
 			, "Casting value '" + vValue + "' to xs:QName can never succeed"
 //<-Debug
@@ -43,4 +43,4 @@ cXSQName.cast	= function(vValue) {
 };
 
 //
-fXPath2StaticContext_defineSystemDataType("QName",	cXSQName);
+fStaticContext_defineSystemDataType("QName",	cXSQName);

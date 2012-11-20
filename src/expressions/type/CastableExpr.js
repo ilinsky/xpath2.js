@@ -26,7 +26,7 @@ cCastableExpr.parse	= function(oLexer, oStaticContext) {
 
 	oLexer.next(2);
 	if (oLexer.eof() ||!(oType = cSingleType.parse(oLexer, oStaticContext)))
-		throw new cXPath2Error("XPST0003"
+		throw new cException("XPST0003"
 //->Debug
 				, "Expected second operand in castable expression"
 //<-Debug

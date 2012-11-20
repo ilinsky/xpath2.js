@@ -44,7 +44,7 @@ cAxisStep.parse	= function (oLexer, oStaticContext) {
 		oStep;
 	if (oLexer.peek(1) == '::') {
 		if (!(sAxis in hAxisStep_axises))
-			throw new cXPath2Error("XPST0003"
+			throw new cException("XPST0003"
 //->Debug
 					, "Unknown axis name: " + sAxis
 //<-Debug
@@ -52,7 +52,7 @@ cAxisStep.parse	= function (oLexer, oStaticContext) {
 
 		oLexer.next(2);
 		if (oLexer.eof() ||!(oExpr = cNodeTest.parse(oLexer, oStaticContext)))
-			throw new cXPath2Error("XPST0003"
+			throw new cException("XPST0003"
 //->Debug
 					, "Expected node test expression in axis step"
 //<-Debug
@@ -69,7 +69,7 @@ cAxisStep.parse	= function (oLexer, oStaticContext) {
 	if (sAxis == '@') {
 		oLexer.next();
 		if (oLexer.eof() ||!(oExpr = cNodeTest.parse(oLexer, oStaticContext)))
-			throw new cXPath2Error("XPST0003"
+			throw new cException("XPST0003"
 //->Debug
 					, "Expected node test expression in axis step"
 //<-Debug
@@ -93,10 +93,10 @@ cAxisStep.prototype.evaluate	= function (oContext) {
 	var oItem	= oContext.item;
 
 	if (!oContext.DOMAdapter.isNode(oItem))
-		throw new cXPath2Error("XPTY0020");
+		throw new cException("XPTY0020");
 
 	var nType	= oContext.DOMAdapter.getProperty(oItem, "nodeType");
-	var oSequence	= new cXPath2Sequence;
+	var oSequence	= new cSequence;
 	switch (this.axis) {
 		// Forward axis
 		case "attribute":
@@ -164,7 +164,7 @@ cAxisStep.prototype.evaluate	= function (oContext) {
 	// Apply test
 	if (!oSequence.isEmpty()) {
 		var oSequence1	= oSequence;
-		oSequence	= new cXPath2Sequence;
+		oSequence	= new cSequence;
 		for (var nIndex = 0, nLength = oSequence1.items.length; nIndex < nLength; nIndex++) {
 			if (this.test.test(oSequence1.items[nIndex], oContext))
 				oSequence.add(oSequence1.items[nIndex]);

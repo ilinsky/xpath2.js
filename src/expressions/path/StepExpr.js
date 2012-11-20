@@ -25,7 +25,7 @@ cStepExpr.parsePredicates	= function (oLexer, oStaticContext, oStep) {
 		oLexer.next();
 
 		if (oLexer.eof() ||!(oExpr = cExpr.parse(oLexer, oStaticContext)))
-			throw new cXPath2Error("XPST0003"
+			throw new cException("XPST0003"
 //->Debug
 					, "Expected expression in predicate"
 //<-Debug
@@ -34,7 +34,7 @@ cStepExpr.parsePredicates	= function (oLexer, oStaticContext, oStep) {
 		oStep.predicates.push(oExpr);
 
 		if (oLexer.peek() != ']')
-			throw new cXPath2Error("XPST0003"
+			throw new cException("XPST0003"
 //->Debug
 					, "Expected ']' token in predicate"
 //<-Debug
@@ -52,7 +52,7 @@ cStepExpr.prototype.applyPredicates	= function(oContext, oSequence) {
 	//
 	for (var nPredicateIndex = 0, oSequence1, nPredicateLength = this.predicates.length; nPredicateIndex < nPredicateLength; nPredicateIndex++) {
 		oSequence1	= oSequence;
-		oSequence	= new cXPath2Sequence;
+		oSequence	= new cSequence;
 		for (var nIndex = 0, oSequence2, nLength = oSequence1.items.length; nIndex < nLength; nIndex++) {
 			// Set new context
 			oContext.item		= oSequence1.items[nIndex];

@@ -19,9 +19,9 @@ cUnaryExpr.prototype.expression	= null;
 var hUnaryExpr_operators	= {};
 hUnaryExpr_operators['-']	= function(oRight, oContext) {
 	if (fXSAnyAtomicType_isNumeric(oRight))
-		return hXPath2StaticContext_operators["numeric-unary-minus"].call(oContext, oRight);
+		return hStaticContext_operators["numeric-unary-minus"].call(oContext, oRight);
 	//
-	throw new cXPath2Error("XPTY0004"
+	throw new cException("XPTY0004"
 //->Debug
 			, "Arithmetic operator is not defined for provided arguments"
 //<-Debug
@@ -29,9 +29,9 @@ hUnaryExpr_operators['-']	= function(oRight, oContext) {
 };
 hUnaryExpr_operators['+']	= function(oRight, oContext) {
 	if (fXSAnyAtomicType_isNumeric(oRight))
-		return hXPath2StaticContext_operators["numeric-unary-plus"].call(oContext, oRight);
+		return hStaticContext_operators["numeric-unary-plus"].call(oContext, oRight);
 	//
-	throw new cXPath2Error("XPTY0004"
+	throw new cException("XPTY0004"
 //->Debug
 			, "Arithmetic operator is not defined for provided arguments"
 //<-Debug
@@ -55,7 +55,7 @@ cUnaryExpr.parse	= function (oLexer, oStaticContext) {
 		oLexer.next();
 	}
 	if (oLexer.eof() ||!(oExpr = cValueExpr.parse(oLexer, oStaticContext)))
-		throw new cXPath2Error("XPST0003"
+		throw new cException("XPST0003"
 //->Debug
 				, "Expected operand in unary expression"
 //<-Debug
@@ -64,11 +64,11 @@ cUnaryExpr.parse	= function (oLexer, oStaticContext) {
 };
 
 cUnaryExpr.prototype.evaluate	= function (oContext) {
-	var oRight	= fXPath2Sequence_atomize(this.expression.evaluate(oContext), oContext);
+	var oRight	= fSequence_atomize(this.expression.evaluate(oContext), oContext);
 
 	//
 	if (oRight.isEmpty())
-		return new cXPath2Sequence;
+		return new cSequence;
 	// Assert cardinality
 	fFunctionCall_assertSequenceCardinality(oContext, oRight, '?'
 //->Debug
@@ -80,5 +80,5 @@ cUnaryExpr.prototype.evaluate	= function (oContext) {
 	if (vRight instanceof cXSUntypedAtomic)
 		vRight	= cXSDouble.cast(vRight);	// cast to xs:double
 
-	return new cXPath2Sequence(hUnaryExpr_operators[this.operator](vRight, oContext));
+	return new cSequence(hUnaryExpr_operators[this.operator](vRight, oContext));
 };

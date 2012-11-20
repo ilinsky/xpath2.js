@@ -32,14 +32,14 @@ cXSFloat.cast	= function(vValue) {
 		var aMatch	= fString_trim.call(vValue).match(cXSFloat.RegExp);
 		if (aMatch)
 			return new cXSFloat(aMatch[7] ? +aMatch[7].replace("INF", "Infinity") : +vValue);
-		throw new cXPath2Error("FORG0001");
+		throw new cException("FORG0001");
 	}
 	if (vValue instanceof cXSBoolean)
 		return new cXSFloat(vValue * 1);
 	if (fXSAnyAtomicType_isNumeric(vValue))
 		return new cXSFloat(vValue.value);
 	//
-	throw new cXPath2Error("XPTY0004"
+	throw new cException("XPTY0004"
 //->Debug
 			, "Casting value '" + vValue + "' to xs:float can never succeed"
 //<-Debug
@@ -47,4 +47,4 @@ cXSFloat.cast	= function(vValue) {
 };
 
 //
-fXPath2StaticContext_defineSystemDataType("float",	cXSFloat);
+fStaticContext_defineSystemDataType("float",	cXSFloat);

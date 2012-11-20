@@ -18,4 +18,4 @@ cXSUnsignedLong.cast	= function(vValue) {
 };
 
 //
-fXPath2StaticContext_defineSystemDataType("unsignedLong",	cXSUnsignedLong);
+fStaticContext_defineSystemDataType("unsignedLong",	cXSUnsignedLong);

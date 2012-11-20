@@ -27,7 +27,7 @@ cRangeExpr.parse	= function (oLexer, oStaticContext) {
 	// Range expression
 	oLexer.next();
 	if (oLexer.eof() ||!(oRight = cAdditiveExpr.parse(oLexer, oStaticContext)))
-		throw new cXPath2Error("XPST0003"
+		throw new cException("XPST0003"
 //->Debug
 				, "Expected second operand in range expression"
 //<-Debug
@@ -37,5 +37,5 @@ cRangeExpr.parse	= function (oLexer, oStaticContext) {
 
 // Public members
 cRangeExpr.prototype.evaluate	= function (oContext) {
-	return hXPath2StaticContext_operators["to"].call(oContext, this.left.evaluate(oContext), this.right.evaluate(oContext));
+	return hStaticContext_operators["to"].call(oContext, this.left.evaluate(oContext), this.right.evaluate(oContext));
 };

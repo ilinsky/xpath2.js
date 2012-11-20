@@ -23,7 +23,7 @@ cVarRef.parse	= function (oLexer, oStaticContext) {
 		var aMatch	= oLexer.peek().substr(1).match(cNameTest.RegExp);
 		if (aMatch) {
 			if (aMatch[1] == '*' || aMatch[2] == '*')
-				throw new cXPath2Error("XPST0003"
+				throw new cException("XPST0003"
 	//->Debug
 						, "Illegal use of wildcard in var expression variable name"
 	//<-Debug
@@ -40,9 +40,9 @@ cVarRef.parse	= function (oLexer, oStaticContext) {
 cVarRef.prototype.evaluate	= function (oContext) {
 	var sUri	= (this.namespaceURI ? '{' + this.namespaceURI + '}' : '') + this.localName;
 	if (oContext.scope.hasOwnProperty(sUri))
-		return new cXPath2Sequence(oContext.scope[sUri]);
+		return new cSequence(oContext.scope[sUri]);
 	//
-	throw new cXPath2Error("XPST0008"
+	throw new cException("XPST0008"
 //->Debug
 			, "Variable $" + (this.prefix ? this.prefix + ':' : '') + this.localName + " has not been declared"
 //<-Debug

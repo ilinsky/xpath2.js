@@ -18,4 +18,4 @@ cXSToken.cast	= function(vValue) {
 };
 
 //
-fXPath2StaticContext_defineSystemDataType("token",	cXSToken);
+fStaticContext_defineSystemDataType("token",	cXSToken);

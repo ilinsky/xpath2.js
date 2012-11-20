@@ -18,4 +18,4 @@ cXSName.cast	= function(vValue) {
 };
 
 //
-fXPath2StaticContext_defineSystemDataType("Name",	cXSName);
+fStaticContext_defineSystemDataType("Name",	cXSName);

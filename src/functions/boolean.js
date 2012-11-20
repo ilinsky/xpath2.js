@@ -18,17 +18,17 @@
 
 // 9.1 Additional Boolean Constructor Functions
 // fn:true() as xs:boolean
-fXPath2StaticContext_defineSystemFunction("true",	[],	function() {
+fStaticContext_defineSystemFunction("true",	[],	function() {
 	return new cXSBoolean(true);
 });
 
 // fn:false() as xs:boolean
-fXPath2StaticContext_defineSystemFunction("false",	[],	function() {
+fStaticContext_defineSystemFunction("false",	[],	function() {
 	return new cXSBoolean(false);
 });
 
 // 9.3 Functions on Boolean Values
 // fn:not($arg as item()*) as xs:boolean
-fXPath2StaticContext_defineSystemFunction("not",	[[cXTItem, '*']],	function(oSequence1) {
+fStaticContext_defineSystemFunction("not",	[[cXTItem, '*']],	function(oSequence1) {
 	return new cXSBoolean(!oSequence1.toBoolean(this));
 });

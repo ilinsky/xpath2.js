@@ -18,4 +18,4 @@ cXSNonPositiveInteger.cast	= function(vValue) {
 };
 
 //
-fXPath2StaticContext_defineSystemDataType("nonPositiveInteger",	cXSNonPositiveInteger);
+fStaticContext_defineSystemDataType("nonPositiveInteger",	cXSNonPositiveInteger);

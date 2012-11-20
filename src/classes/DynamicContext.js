@@ -7,7 +7,7 @@
  *
  */
 
-function cXPath2DynamicContext(oStaticContext, vItem, oScope, oDOMAdapter) {
+function cDynamicContext(oStaticContext, vItem, oScope, oDOMAdapter) {
 	//
 	this.staticContext	= oStaticContext;
 	//
@@ -18,7 +18,7 @@ function cXPath2DynamicContext(oStaticContext, vItem, oScope, oDOMAdapter) {
 	this.scope		= oScope || {};
 	this.stack		= {};
 	//
-	this.DOMAdapter	= oDOMAdapter || new cXPath2DOMAdapter;
+	this.DOMAdapter	= oDOMAdapter || new cDOMAdapter;
 	//
 	var oDate	= new cDate,
 		nOffset	= oDate.getTimezoneOffset();
@@ -26,27 +26,27 @@ function cXPath2DynamicContext(oStaticContext, vItem, oScope, oDOMAdapter) {
 	this.timezone	= new cXSDayTimeDuration(0, cMath.abs(~~(nOffset / 60)), cMath.abs(nOffset % 60), 0, nOffset > 0);
 };
 
-cXPath2DynamicContext.prototype.item		= null;
-cXPath2DynamicContext.prototype.position	= null;
-cXPath2DynamicContext.prototype.size		= null;
+cDynamicContext.prototype.item		= null;
+cDynamicContext.prototype.position	= null;
+cDynamicContext.prototype.size		= null;
 //
-cXPath2DynamicContext.prototype.scope		= null;
-cXPath2DynamicContext.prototype.stack		= null;	// Variables stack
+cDynamicContext.prototype.scope		= null;
+cDynamicContext.prototype.stack		= null;	// Variables stack
 //
-cXPath2DynamicContext.prototype.dateTime	= null;
-cXPath2DynamicContext.prototype.timezone	= null;
+cDynamicContext.prototype.dateTime	= null;
+cDynamicContext.prototype.timezone	= null;
 //
-cXPath2DynamicContext.prototype.staticContext	= null;
+cDynamicContext.prototype.staticContext	= null;
 
 // Stack management
-cXPath2DynamicContext.prototype.pushVariable	= function(sName, vValue) {
+cDynamicContext.prototype.pushVariable	= function(sName, vValue) {
 	if (!this.stack.hasOwnProperty(sName))
 		this.stack[sName]	= [];
 	this.stack[sName].push(this.scope[sName]);
 	this.scope[sName] = vValue;
 };
 
-cXPath2DynamicContext.prototype.popVariable	= function(sName) {
+cDynamicContext.prototype.popVariable	= function(sName) {
 	if (this.stack.hasOwnProperty(sName)) {
 		this.scope[sName] = this.stack[sName].pop();
 		if (!this.stack[sName].length) {

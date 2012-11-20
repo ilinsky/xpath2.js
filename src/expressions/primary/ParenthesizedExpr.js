@@ -22,7 +22,7 @@ cParenthesizedExpr.parse	= function (oLexer, oStaticContext) {
 
 		//
 		if (oLexer.peek() != ')')
-			throw new cXPath2Error("XPST0003"
+			throw new cException("XPST0003"
 //->Debug
 					, "Expected ')' token in parenthesized expression"
 //<-Debug
@@ -37,5 +37,5 @@ cParenthesizedExpr.parse	= function (oLexer, oStaticContext) {
 
 // Public members
 cParenthesizedExpr.prototype.evaluate	= function (oContext) {
-	return this.expression ? this.expression.evaluate(oContext) : new cXPath2Sequence;
+	return this.expression ? this.expression.evaluate(oContext) : new cSequence;
 };

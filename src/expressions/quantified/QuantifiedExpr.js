@@ -31,7 +31,7 @@ cQuantifiedExpr.parse	= function (oLexer, oStaticContext) {
 		while (oLexer.peek() == ',' && oLexer.next());
 
 		if (oLexer.peek() != "satisfies")
-			throw new cXPath2Error("XPST0003"
+			throw new cException("XPST0003"
 //->Debug
 					, "Expected 'satisfies' token in quantified expression"
 //<-Debug
@@ -39,7 +39,7 @@ cQuantifiedExpr.parse	= function (oLexer, oStaticContext) {
 
 		oLexer.next();
 		if (oLexer.eof() ||!(oExpr = cExprSingle.parse(oLexer, oStaticContext)))
-			throw new cXPath2Error("XPST0003"
+			throw new cException("XPST0003"
 //->Debug
 					, "Expected satisfies statement operand in quantified expression"
 //<-Debug
@@ -69,7 +69,7 @@ cQuantifiedExpr.prototype.evaluate	= function (oContext) {
 		}
 	})(this, 0);
 
-	return new cXPath2Sequence(new cXSBoolean(bResult));
+	return new cSequence(new cXSBoolean(bResult));
 };
 
 
@@ -90,14 +90,14 @@ cSimpleQuantifiedBinding.prototype.inExpr	= null;
 cSimpleQuantifiedBinding.parse	= function(oLexer, oStaticContext) {
 	var aMatch	= oLexer.peek().substr(1).match(cNameTest.RegExp);
 	if (!aMatch)
-		throw new cXPath2Error("XPST0003"
+		throw new cException("XPST0003"
 //->Debug
 				, "Expected binding in quantified expression"
 //<-Debug
 		);
 
 	if (aMatch[1] == '*' || aMatch[2] == '*')
-		throw new cXPath2Error("XPST0003"
+		throw new cException("XPST0003"
 //->Debug
 				, "Illegal use of wildcard in quantified expression binding variable name"
 //<-Debug
@@ -105,7 +105,7 @@ cSimpleQuantifiedBinding.parse	= function(oLexer, oStaticContext) {
 
 	oLexer.next();
 	if (oLexer.peek() != "in")
-		throw new cXPath2Error("XPST0003"
+		throw new cException("XPST0003"
 //->Debug
 				, "Expected 'in' token in quantified expression binding"
 //<-Debug
@@ -114,7 +114,7 @@ cSimpleQuantifiedBinding.parse	= function(oLexer, oStaticContext) {
 	oLexer.next();
 	var oExpr;
 	if (oLexer.eof() ||!(oExpr = cExprSingle.parse(oLexer, oStaticContext)))
-		throw new cXPath2Error("XPST0003"
+		throw new cException("XPST0003"
 //->Debug
 				, "Expected in statement operand in quantified expression binding"
 //<-Debug

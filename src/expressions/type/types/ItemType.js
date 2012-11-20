@@ -21,7 +21,7 @@ cItemType.parse	= function(oLexer, oStaticContext) {
 	if (oLexer.peek() == "item" && oLexer.peek(1) == '(') {
 		oLexer.next(2);
 		if (oLexer.peek() != ')')
-			throw new cXPath2Error("XPST0003"
+			throw new cException("XPST0003"
 //->Debug
 					, "Expected ')' token in item type expression"
 //<-Debug

@@ -61,74 +61,74 @@
 
 // 10.4 Comparison Operators on Duration, Date and Time Values
 // op:yearMonthDuration-less-than($arg1 as xs:yearMonthDuration, $arg2 as xs:yearMonthDuration) as xs:boolean
-hXPath2StaticContext_operators["yearMonthDuration-less-than"]	= function(oLeft, oRight) {
+hStaticContext_operators["yearMonthDuration-less-than"]	= function(oLeft, oRight) {
 	return new cXSBoolean(fFunctionCall_operators_yearMonthDuration_toMonths(oLeft) < fFunctionCall_operators_yearMonthDuration_toMonths(oRight));
 };
 
 // op:yearMonthDuration-greater-than($arg1 as xs:yearMonthDuration, $arg2 as xs:yearMonthDuration) as xs:boolean
-hXPath2StaticContext_operators["yearMonthDuration-greater-than"]	= function(oLeft, oRight) {
+hStaticContext_operators["yearMonthDuration-greater-than"]	= function(oLeft, oRight) {
 	return new cXSBoolean(fFunctionCall_operators_yearMonthDuration_toMonths(oLeft) > fFunctionCall_operators_yearMonthDuration_toMonths(oRight));
 };
 
 // op:dayTimeDuration-less-than($arg1 as dayTimeDuration, $arg2 as dayTimeDuration) as xs:boolean
-hXPath2StaticContext_operators["dayTimeDuration-less-than"]	= function(oLeft, oRight) {
+hStaticContext_operators["dayTimeDuration-less-than"]	= function(oLeft, oRight) {
 	return new cXSBoolean(fFunctionCall_operators_dayTimeDuration_toSeconds(oLeft) < fFunctionCall_operators_dayTimeDuration_toSeconds(oRight));
 };
 
 // op:dayTimeDuration-greater-than($arg1 as dayTimeDuration, $arg2 as dayTimeDuration) as xs:boolean
-hXPath2StaticContext_operators["dayTimeDuration-greater-than"]	= function(oLeft, oRight) {
+hStaticContext_operators["dayTimeDuration-greater-than"]	= function(oLeft, oRight) {
 	return new cXSBoolean(fFunctionCall_operators_dayTimeDuration_toSeconds(oLeft) > fFunctionCall_operators_dayTimeDuration_toSeconds(oRight));
 };
 
 // op:duration-equal($arg1 as xs:duration, $arg2 as xs:duration) as xs:boolean
-hXPath2StaticContext_operators["duration-equal"]	= function(oLeft, oRight) {
+hStaticContext_operators["duration-equal"]	= function(oLeft, oRight) {
 	return new cXSBoolean(oLeft.negative == oRight.negative
 			&& fFunctionCall_operators_yearMonthDuration_toMonths(oLeft) == fFunctionCall_operators_yearMonthDuration_toMonths(oRight)
 			&& fFunctionCall_operators_dayTimeDuration_toSeconds(oLeft) == fFunctionCall_operators_dayTimeDuration_toSeconds(oRight));
 };
 
 // op:dateTime-equal($arg1 as xs:dateTime, $arg2 as xs:dateTime) as xs:boolean
-hXPath2StaticContext_operators["dateTime-equal"]	= function(oLeft, oRight) {
+hStaticContext_operators["dateTime-equal"]	= function(oLeft, oRight) {
 	return fFunctionCall_operators_compareDateTime(oLeft, oRight, 'eq');
 };
 
 // op:dateTime-less-than($arg1 as xs:dateTime, $arg2 as xs:dateTime) as xs:boolean
-hXPath2StaticContext_operators["dateTime-less-than"]	= function(oLeft, oRight) {
+hStaticContext_operators["dateTime-less-than"]	= function(oLeft, oRight) {
 	return fFunctionCall_operators_compareDateTime(oLeft, oRight, 'lt');
 };
 
 //op:dateTime-greater-than($arg1 as xs:dateTime, $arg2 as xs:dateTime) as xs:boolean
-hXPath2StaticContext_operators["dateTime-greater-than"]	= function(oLeft, oRight) {
+hStaticContext_operators["dateTime-greater-than"]	= function(oLeft, oRight) {
 	return fFunctionCall_operators_compareDateTime(oLeft, oRight, 'gt');
 };
 
 // op:date-equal($arg1 as xs:date, $arg2 as xs:date) as xs:boolean
-hXPath2StaticContext_operators["date-equal"]	= function(oLeft, oRight) {
+hStaticContext_operators["date-equal"]	= function(oLeft, oRight) {
 	return fFunctionCall_operators_compareDateTime(oLeft, oRight, 'eq');
 };
 
 // op:date-less-than($arg1 as xs:date, $arg2 as xs:date) as xs:boolean
-hXPath2StaticContext_operators["date-less-than"]	= function(oLeft, oRight) {
+hStaticContext_operators["date-less-than"]	= function(oLeft, oRight) {
 	return fFunctionCall_operators_compareDateTime(oLeft, oRight, 'lt');
 };
 
 // op:date-greater-than($arg1 as xs:date, $arg2 as xs:date) as xs:boolean
-hXPath2StaticContext_operators["date-greater-than"]	= function(oLeft, oRight) {
+hStaticContext_operators["date-greater-than"]	= function(oLeft, oRight) {
 	return fFunctionCall_operators_compareDateTime(oLeft, oRight, 'gt');
 };
 
 // op:time-equal($arg1 as xs:time, $arg2 as xs:time) as xs:boolean
-hXPath2StaticContext_operators["time-equal"]	= function(oLeft, oRight) {
+hStaticContext_operators["time-equal"]	= function(oLeft, oRight) {
 	return new cXSBoolean(fFunctionCall_operators_time_toSeconds(oLeft) == fFunctionCall_operators_time_toSeconds(oRight));
 };
 
 // op:time-less-than($arg1 as xs:time, $arg2 as xs:time) as xs:boolean
-hXPath2StaticContext_operators["time-less-than"]	= function(oLeft, oRight) {
+hStaticContext_operators["time-less-than"]	= function(oLeft, oRight) {
 	return new cXSBoolean(fFunctionCall_operators_time_toSeconds(oLeft) < fFunctionCall_operators_time_toSeconds(oRight));
 };
 
 // op:time-greater-than($arg1 as xs:time, $arg2 as xs:time) as xs:boolean
-hXPath2StaticContext_operators["time-greater-than"]	= function(oLeft, oRight) {
+hStaticContext_operators["time-greater-than"]	= function(oLeft, oRight) {
 	return new cXSBoolean(fFunctionCall_operators_time_toSeconds(oLeft) > fFunctionCall_operators_time_toSeconds(oRight));
 };
 
@@ -141,113 +141,113 @@ hXPath2StaticContext_operators["time-greater-than"]	= function(oLeft, oRight) {
 
 // 10.6 Arithmetic Operators on Durations
 // op:add-yearMonthDurations($arg1 as xs:yearMonthDuration, $arg2 as xs:yearMonthDuration) as xs:yearMonthDuration
-hXPath2StaticContext_operators["add-yearMonthDurations"]	= function(oLeft, oRight) {
+hStaticContext_operators["add-yearMonthDurations"]	= function(oLeft, oRight) {
 	return fFunctionCall_operators_yearMonthDuration_fromMonths(fFunctionCall_operators_yearMonthDuration_toMonths(oLeft) + fFunctionCall_operators_yearMonthDuration_toMonths(oRight));
 };
 
 // op:subtract-yearMonthDurations($arg1 as xs:yearMonthDuration, $arg2 as xs:yearMonthDuration) as xs:yearMonthDuration
-hXPath2StaticContext_operators["subtract-yearMonthDurations"]	= function(oLeft, oRight) {
+hStaticContext_operators["subtract-yearMonthDurations"]	= function(oLeft, oRight) {
 	return fFunctionCall_operators_yearMonthDuration_fromMonths(fFunctionCall_operators_yearMonthDuration_toMonths(oLeft) - fFunctionCall_operators_yearMonthDuration_toMonths(oRight));
 };
 
 // op:multiply-yearMonthDuration($arg1 as xs:yearMonthDuration, $arg2 as xs:double) as xs:yearMonthDuration
-hXPath2StaticContext_operators["multiply-yearMonthDuration"]	= function(oLeft, oRight) {
+hStaticContext_operators["multiply-yearMonthDuration"]	= function(oLeft, oRight) {
 	return fFunctionCall_operators_yearMonthDuration_fromMonths(fFunctionCall_operators_yearMonthDuration_toMonths(oLeft) * oRight);
 };
 
 // op:divide-yearMonthDuration($arg1 as xs:yearMonthDuration, $arg2 as xs:double) as xs:yearMonthDuration
-hXPath2StaticContext_operators["divide-yearMonthDuration"]	= function(oLeft, oRight) {
+hStaticContext_operators["divide-yearMonthDuration"]	= function(oLeft, oRight) {
 	return fFunctionCall_operators_yearMonthDuration_fromMonths(fFunctionCall_operators_yearMonthDuration_toMonths(oLeft) / oRight);
 };
 
 // op:divide-yearMonthDuration-by-yearMonthDuration($arg1 as xs:yearMonthDuration, $arg2 as xs:yearMonthDuration) as xs:decimal
-hXPath2StaticContext_operators["divide-yearMonthDuration-by-yearMonthDuration"]	= function(oLeft, oRight) {
+hStaticContext_operators["divide-yearMonthDuration-by-yearMonthDuration"]	= function(oLeft, oRight) {
 	return new cXSDecimal(fFunctionCall_operators_yearMonthDuration_toMonths(oLeft) / fFunctionCall_operators_yearMonthDuration_toMonths(oRight));
 };
 
 // op:add-dayTimeDurations($arg1 as xs:dayTimeDuration, $arg2 as xs:dayTimeDuration) as xs:dayTimeDuration
-hXPath2StaticContext_operators["add-dayTimeDurations"]	= function(oLeft, oRight) {
+hStaticContext_operators["add-dayTimeDurations"]	= function(oLeft, oRight) {
 	return fFunctionCall_operators_dayTimeDuration_fromSeconds(fFunctionCall_operators_dayTimeDuration_toSeconds(oLeft) + fFunctionCall_operators_dayTimeDuration_toSeconds(oRight));
 };
 
 // op:subtract-dayTimeDurations($arg1 as xs:dayTimeDuration, $arg2 as xs:dayTimeDuration) as xs:dayTimeDuration
-hXPath2StaticContext_operators["subtract-dayTimeDurations"]	= function(oLeft, oRight) {
+hStaticContext_operators["subtract-dayTimeDurations"]	= function(oLeft, oRight) {
 	return fFunctionCall_operators_dayTimeDuration_fromSeconds(fFunctionCall_operators_dayTimeDuration_toSeconds(oLeft) - fFunctionCall_operators_dayTimeDuration_toSeconds(oRight));
 };
 
 // op:multiply-dayTimeDurations($arg1 as xs:dayTimeDuration, $arg2 as xs:double) as xs:dayTimeDuration
-hXPath2StaticContext_operators["multiply-dayTimeDuration"]	= function(oLeft, oRight) {
+hStaticContext_operators["multiply-dayTimeDuration"]	= function(oLeft, oRight) {
 	return fFunctionCall_operators_dayTimeDuration_fromSeconds(fFunctionCall_operators_dayTimeDuration_toSeconds(oLeft) * oRight);
 };
 
 // op:divide-dayTimeDurations($arg1 as xs:dayTimeDuration, $arg2 as xs:double) as xs:dayTimeDuration
-hXPath2StaticContext_operators["divide-dayTimeDuration"]	= function(oLeft, oRight) {
+hStaticContext_operators["divide-dayTimeDuration"]	= function(oLeft, oRight) {
 	return fFunctionCall_operators_dayTimeDuration_fromSeconds(fFunctionCall_operators_dayTimeDuration_toSeconds(oLeft) / oRight);
 };
 
 // op:divide-dayTimeDuration-by-dayTimeDuration($arg1 as xs:dayTimeDuration, $arg2 as xs:dayTimeDuration) as xs:decimal
-hXPath2StaticContext_operators["divide-dayTimeDuration-by-dayTimeDuration"]	= function(oLeft, oRight) {
+hStaticContext_operators["divide-dayTimeDuration-by-dayTimeDuration"]	= function(oLeft, oRight) {
 	return new cXSDecimal(fFunctionCall_operators_dayTimeDuration_toSeconds(oLeft) / fFunctionCall_operators_dayTimeDuration_toSeconds(oRight));
 };
 
 // 10.8 Arithmetic Operators on Durations, Dates and Times
 // op:subtract-dateTimes($arg1 as xs:dateTime, $arg2 as xs:dateTime) as xs:dayTimeDuration
-hXPath2StaticContext_operators["subtract-dateTimes"]	= function(oLeft, oRight) {
+hStaticContext_operators["subtract-dateTimes"]	= function(oLeft, oRight) {
 	throw "Operator function '" + "subtract-dateTimes" + "' not implemented";
 };
 
 // op:subtract-dates($arg1 as xs:date, $arg2 as xs:date) as xs:dayTimeDuration
-hXPath2StaticContext_operators["subtract-dates"]	= function(oLeft, oRight) {
+hStaticContext_operators["subtract-dates"]	= function(oLeft, oRight) {
 	throw "Operator function '" + "subtract-dates" + "' not implemented";
 };
 
 // op:subtract-times($arg1 as xs:time, $arg2 as xs:time) as xs:dayTimeDuration
-hXPath2StaticContext_operators["subtract-times"]	= function(oLeft, oRight) {
+hStaticContext_operators["subtract-times"]	= function(oLeft, oRight) {
 	return fFunctionCall_operators_dayTimeDuration_fromSeconds(fFunctionCall_operators_time_toSeconds(oLeft) - fFunctionCall_operators_time_toSeconds(oRight));
 };
 
 // op:add-yearMonthDuration-to-dateTime($arg1 as xs:dateTime, $arg2 as xs:yearMonthDuration) as xs:dateTime
-hXPath2StaticContext_operators["add-yearMonthDuration-to-dateTime"]	= function(oLeft, oRight) {
+hStaticContext_operators["add-yearMonthDuration-to-dateTime"]	= function(oLeft, oRight) {
 	return fFunctionCall_operators_addYearMonthDuration2DateTime(oLeft, oRight, '+');
 };
 
 // op:add-dayTimeDuration-to-dateTime($arg1 as xs:dateTime, $arg2 as xs:dayTimeDuration) as xs:dateTime
-hXPath2StaticContext_operators["add-dayTimeDuration-to-dateTime"]	= function(oLeft, oRight) {
+hStaticContext_operators["add-dayTimeDuration-to-dateTime"]	= function(oLeft, oRight) {
 	return fFunctionCall_operators_addDayTimeDuration2DateTime(oLeft, oRight, '+');
 };
 
 // op:subtract-yearMonthDuration-from-dateTime($arg1 as xs:dateTime, $arg2 as xs:yearMonthDuration) as xs:dateTime
-hXPath2StaticContext_operators["subtract-yearMonthDuration-from-dateTime"]	= function(oLeft, oRight) {
+hStaticContext_operators["subtract-yearMonthDuration-from-dateTime"]	= function(oLeft, oRight) {
 	return fFunctionCall_operators_addYearMonthDuration2DateTime(oLeft, oRight, '-');
 };
 
 // op:subtract-dayTimeDuration-from-dateTime($arg1 as xs:dateTime, $arg2 as xs:dayTimeDuration) as xs:dateTime
-hXPath2StaticContext_operators["subtract-dayTimeDuration-from-dateTime"]	= function(oLeft, oRight) {
+hStaticContext_operators["subtract-dayTimeDuration-from-dateTime"]	= function(oLeft, oRight) {
 	return fFunctionCall_operators_addDayTimeDuration2DateTime(oLeft, oRight, '-');
 };
 
 // op:add-yearMonthDuration-to-date($arg1 as xs:date, $arg2 as xs:yearMonthDuration) as xs:date
-hXPath2StaticContext_operators["add-yearMonthDuration-to-date"]	= function(oLeft, oRight) {
+hStaticContext_operators["add-yearMonthDuration-to-date"]	= function(oLeft, oRight) {
 	return fFunctionCall_operators_addYearMonthDuration2DateTime(oLeft, oRight, '+');
 };
 
 // op:add-dayTimeDuration-to-date($arg1 as xs:date, $arg2 as xs:dayTimeDuration) as xs:date
-hXPath2StaticContext_operators["add-dayTimeDuration-to-date"]	= function(oLeft, oRight) {
+hStaticContext_operators["add-dayTimeDuration-to-date"]	= function(oLeft, oRight) {
 	return fFunctionCall_operators_addDayTimeDuration2DateTime(oLeft, oRight, '+');
 };
 
 // op:subtract-yearMonthDuration-from-date($arg1 as xs:date, $arg2  as xs:yearMonthDuration) as xs:date
-hXPath2StaticContext_operators["subtract-yearMonthDuration-from-date"]	= function(oLeft, oRight) {
+hStaticContext_operators["subtract-yearMonthDuration-from-date"]	= function(oLeft, oRight) {
 	return fFunctionCall_operators_addYearMonthDuration2DateTime(oLeft, oRight, '-');
 };
 
 // op:subtract-dayTimeDuration-from-date($arg1 as xs:date, $arg2  as xs:dayTimeDuration) as xs:date
-hXPath2StaticContext_operators["subtract-dayTimeDuration-from-date"]	= function(oLeft, oRight) {
+hStaticContext_operators["subtract-dayTimeDuration-from-date"]	= function(oLeft, oRight) {
 	return fFunctionCall_operators_addDayTimeDuration2DateTime(oLeft, oRight, '-');
 };
 
 // op:add-dayTimeDuration-to-time($arg1 as xs:time, $arg2  as xs:dayTimeDuration) as xs:time
-hXPath2StaticContext_operators["add-dayTimeDuration-to-time"]	= function(oLeft, oRight) {
+hStaticContext_operators["add-dayTimeDuration-to-time"]	= function(oLeft, oRight) {
 	var oValue	= new cXSTime(oLeft.hours, oLeft.minutes, oLeft.seconds, oLeft.timezone);
 	oValue.hours	+= oRight.hours;
 	oValue.minutes	+= oRight.minutes;
@@ -257,7 +257,7 @@ hXPath2StaticContext_operators["add-dayTimeDuration-to-time"]	= function(oLeft, 
 };
 
 // op:subtract-dayTimeDuration-from-time($arg1 as xs:time, $arg2  as xs:dayTimeDuration) as xs:time
-hXPath2StaticContext_operators["subtract-dayTimeDuration-from-time"]	= function(oLeft, oRight) {
+hStaticContext_operators["subtract-dayTimeDuration-from-time"]	= function(oLeft, oRight) {
 	var oValue	= new cXSTime(oLeft.hours, oLeft.minutes, oLeft.seconds, oLeft.timezone);
 	oValue.hours	-= oRight.hours;
 	oValue.minutes	-= oRight.minutes;

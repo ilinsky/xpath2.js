@@ -28,7 +28,7 @@ cFunctionCall.parse	= function (oLexer, oStaticContext) {
 			return cAxisStep.parse(oLexer, oStaticContext);
 		// Other functions
 		if (aMatch[1] == '*' || aMatch[2] == '*')
-			throw new cXPath2Error("XPST0003"
+			throw new cException("XPST0003"
 //->Debug
 					, "Illegal use of wildcard in function name"
 //<-Debug
@@ -40,7 +40,7 @@ cFunctionCall.parse	= function (oLexer, oStaticContext) {
 		if (oLexer.peek() != ')') {
 			do {
 				if (oLexer.eof() ||!(oExpr = cExprSingle.parse(oLexer, oStaticContext)))
-					throw new cXPath2Error("XPST0003"
+					throw new cException("XPST0003"
 //->Debug
 							, "Expected function call argument"
 //<-Debug
@@ -51,7 +51,7 @@ cFunctionCall.parse	= function (oLexer, oStaticContext) {
 			while (oLexer.peek() == ',' && oLexer.next());
 			//
 			if (oLexer.peek() != ')')
-				throw new cXPath2Error("XPST0003"
+				throw new cException("XPST0003"
 //->Debug
 						, "Expected ')' token in function call"
 //<-Debug
@@ -75,16 +75,16 @@ cFunctionCall.prototype.evaluate	= function (oContext) {
 	var sUri	= (this.namespaceURI ? '{' + this.namespaceURI + '}' : '') + this.localName;
 	// Call function
 	if (this.namespaceURI == "http://www.w3.org/2005/xpath-functions") {
-		if (fFunction = hXPath2StaticContext_functions[this.localName]) {
+		if (fFunction = hStaticContext_functions[this.localName]) {
 			// Validate/Cast arguments
-			if (aParameters = hXPath2StaticContext_signatures[this.localName])
+			if (aParameters = hStaticContext_signatures[this.localName])
 				fFunctionCall_prepare(this.localName, aParameters, fFunction, aArguments, oContext);
 			//
 			var vResult	= fFunction.apply(oContext, aArguments);
 			//
-			return vResult === null ? new cXPath2Sequence : new cXPath2Sequence(vResult);
+			return vResult === null ? new cSequence : new cSequence(vResult);
 		}
-		throw new cXPath2Error("XPST0017"
+		throw new cException("XPST0017"
 //->Debug
 				, "Unknown system function: " + sUri + '()'
 //<-Debug
@@ -92,13 +92,13 @@ cFunctionCall.prototype.evaluate	= function (oContext) {
 	}
 	else
 	if (this.namespaceURI == "http://www.w3.org/2001/XMLSchema") {
-		if (fFunction = hXPath2StaticContext_dataTypes[this.localName]) {
+		if (fFunction = hStaticContext_dataTypes[this.localName]) {
 			//
 			fFunctionCall_prepare(this.localName, [[cXSAnyAtomicType]], fFunction, aArguments, oContext);
 			//
-			return new cXPath2Sequence(fFunction.cast(aArguments[0].items[0]));
+			return new cSequence(fFunction.cast(aArguments[0].items[0]));
 		}
-		throw new cXPath2Error("XPST0017"
+		throw new cException("XPST0017"
 //->Debug
 				, "Unknown type constructor function: " + sUri + '()'
 //<-Debug
@@ -109,10 +109,10 @@ cFunctionCall.prototype.evaluate	= function (oContext) {
 		//
 		var vResult	= fFunction.apply(oContext, aArguments);
 		//
-		return vResult === null ? new cXPath2Sequence : new cXPath2Sequence(vResult);
+		return vResult === null ? new cSequence : new cSequence(vResult);
 	}
 	//
-	throw new cXPath2Error("XPST0017"
+	throw new cException("XPST0017"
 //->Debug
 			, "Unknown user function: " + sUri + '()'
 //<-Debug
@@ -133,14 +133,14 @@ function fFunctionCall_prepare(sName, aParameters, fFunction, aArguments, oConte
 
 	// Validate arguments length
 	if (nArgumentsLength > nParametersLength)
-		throw new cXPath2Error("XPST0017"
+		throw new cException("XPST0017"
 //->Debug
 				, "Function " + sName + "() must have " + (nParametersLength ? " no more than " : '') + nParametersLength + " argument" + (nParametersLength > 1 || !nParametersLength ? 's' : '')
 //<-Debug
 		);
 	else
 	if (nArgumentsLength < nParametersRequired)
-		throw new cXPath2Error("XPST0017"
+		throw new cException("XPST0017"
 //->Debug
 				, "Function " + sName + "() must have " + (nParametersRequired == nParametersLength ? "exactly" : "at least") + ' ' + nParametersRequired + " argument" + (nParametersLength > 1 ? 's' : '')
 //<-Debug
@@ -176,7 +176,7 @@ function fFunctionCall_assertSequenceItemType(oContext, oSequence, cItemType
 		if (cItemType == cXTNode || cItemType.prototype instanceof cXTNode) {
 			// Check if is node
 			if (!oContext.DOMAdapter.isNode(vItem))
-				throw new cXPath2Error("XPTY0004"
+				throw new cException("XPTY0004"
 //->Debug
 						, "Required item type of " + sSource + " is " + cItemType
 //<-Debug
@@ -186,7 +186,7 @@ function fFunctionCall_assertSequenceItemType(oContext, oSequence, cItemType
 			if (cItemType != cXTNode) {
 				nNodeType	= oContext.DOMAdapter.getProperty(vItem, "nodeType");
 				if ([null, cXTElement, cXTAttribute, cXTText, cXTText, null, null, cXTProcessingInstruction, cXTComment, cXTDocument, null, null, null][nNodeType] != cItemType)
-					throw new cXPath2Error("XPTY0004"
+					throw new cException("XPTY0004"
 //->Debug
 							, "Required item type of " + sSource + " is " + cItemType
 //<-Debug
@@ -217,7 +217,7 @@ function fFunctionCall_assertSequenceItemType(oContext, oSequence, cItemType
 			}
 			// Check type
 			if (!(vItem instanceof cItemType))
-				throw new cXPath2Error("XPTY0004"
+				throw new cException("XPTY0004"
 //->Debug
 						, "Required item type of " + sSource + " is " + cItemType
 //<-Debug
@@ -237,7 +237,7 @@ function fFunctionCall_assertSequenceCardinality(oContext, oSequence, sCardinali
 	// Check cardinality
 	if (sCardinality == '?') {	// =0 or 1
 		if (nLength > 1)
-			throw new cXPath2Error("XPTY0004"
+			throw new cException("XPTY0004"
 //->Debug
 					, "Required cardinality of " + sSource + " is one or zero"
 //<-Debug
@@ -246,7 +246,7 @@ function fFunctionCall_assertSequenceCardinality(oContext, oSequence, sCardinali
 	else
 	if (sCardinality == '+') {	// =1+
 		if (nLength < 1)
-			throw new cXPath2Error("XPTY0004"
+			throw new cException("XPTY0004"
 //->Debug
 					, "Required cardinality of " + sSource + " is one or more"
 //<-Debug
@@ -255,7 +255,7 @@ function fFunctionCall_assertSequenceCardinality(oContext, oSequence, sCardinali
 	else
 	if (sCardinality != '*') {	// =1 ('*' =0+)
 		if (nLength != 1)
-			throw new cXPath2Error("XPTY0004"
+			throw new cException("XPTY0004"
 //->Debug
 					, "Required cardinality of " + sSource + " is exactly one"
 //<-Debug

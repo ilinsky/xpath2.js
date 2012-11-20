@@ -20,7 +20,7 @@ cExpr.parse	= function(oLexer, oStaticContext) {
 		oItem;
 	do {
 		if (oLexer.eof() ||!(oItem = cExprSingle.parse(oLexer, oStaticContext)))
-			throw new cXPath2Error("XPST0003"
+			throw new cException("XPST0003"
 //->Debug
 					, "Expected expression"
 //<-Debug
@@ -30,7 +30,7 @@ cExpr.parse	= function(oLexer, oStaticContext) {
 	while (oLexer.peek() == ',' && oLexer.next());
 	//
 	if (oLexer.peek(-1) == ',')
-		throw new cXPath2Error("XPST0003"
+		throw new cException("XPST0003"
 //->Debug
 				, "Expected expression"
 //<-Debug
@@ -42,8 +42,8 @@ cExpr.parse	= function(oLexer, oStaticContext) {
 
 // Public members
 cExpr.prototype.evaluate	= function(oContext) {
-	var oSequence	= new cXPath2Sequence;
+	var oSequence	= new cSequence;
 	for (var nIndex = 0, nLength = this.items.length; nIndex < nLength; nIndex++)
-		oSequence	= hXPath2StaticContext_operators["concatenate"].call(oContext, oSequence, this.items[nIndex].evaluate(oContext));
+		oSequence	= hStaticContext_operators["concatenate"].call(oContext, oSequence, this.items[nIndex].evaluate(oContext));
 	return oSequence;
 };

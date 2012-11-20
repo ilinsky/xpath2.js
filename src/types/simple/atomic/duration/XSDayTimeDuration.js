@@ -27,14 +27,14 @@ cXSDayTimeDuration.cast	= function(vValue) {
 		var aMatch	= fString_trim.call(vValue).match(cXSDayTimeDuration.RegExp);
 		if (aMatch)
 			return fXSDayTimeDuration_normalize(new cXSDayTimeDuration(+aMatch[2] || 0, +aMatch[3] || 0, +aMatch[4] || 0, +aMatch[5] || 0, aMatch[1] == '-'));
-		throw new cXPath2Error("FORG0001");
+		throw new cException("FORG0001");
 	}
 	if (vValue instanceof cXSYearMonthDuration)
 		return new cXSDayTimeDuration(0, 0, 0, 0);
 	if (vValue instanceof cXSDuration)
 		return new cXSDayTimeDuration(vValue.day, vValue.hours, vValue.minutes, vValue.seconds, vValue.negative);
 	//
-	throw new cXPath2Error("XPTY0004"
+	throw new cException("XPTY0004"
 //->Debug
 			, "Casting value '" + vValue + "' to xs:dayTimeDuration can never succeed"
 //<-Debug
@@ -59,4 +59,4 @@ function fXSDayTimeDuration_normalize(oDuration) {
 };
 
 //
-fXPath2StaticContext_defineSystemDataType("dayTimeDuration",	cXSDayTimeDuration);
+fStaticContext_defineSystemDataType("dayTimeDuration",	cXSDayTimeDuration);

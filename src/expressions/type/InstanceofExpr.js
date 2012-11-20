@@ -26,7 +26,7 @@ cInstanceofExpr.parse	= function(oLexer, oStaticContext) {
 
 	oLexer.next(2);
 	if (oLexer.eof() ||!(oType = cSequenceType.parse(oLexer, oStaticContext)))
-		throw new cXPath2Error("XPST0003"
+		throw new cException("XPST0003"
 //->Debug
 				, "Expected second operand in instance of expression"
 //<-Debug
@@ -40,21 +40,21 @@ cInstanceofExpr.prototype.evaluate	= function(oContext) {
 		oItemType	= this.type.itemType;
 	// Validate empty-sequence()
 	if (!oItemType)
-		return new cXPath2Sequence(new cXSBoolean(oSequence1.isEmpty()));
+		return new cSequence(new cXSBoolean(oSequence1.isEmpty()));
 	// Validate cardinality
 	if (oSequence1.isEmpty())
-		return new cXPath2Sequence(new cXSBoolean(this.type.occurence == '?' || this.type.occurence == '*'));
+		return new cSequence(new cXSBoolean(this.type.occurence == '?' || this.type.occurence == '*'));
 	if (!(oSequence1.isSingleton()))
 		if (!(this.type.occurence == '+' || this.type.occurence == '*'))
-			return new cXPath2Sequence(new cXSBoolean(false));
+			return new cSequence(new cXSBoolean(false));
 
 	// Validate type
 	if (!oItemType.test)	// item()
-		return new cXPath2Sequence(new cXSBoolean(true));
+		return new cSequence(new cXSBoolean(true));
 
 	var bValue	= true;
 	for (var nIndex = 0, nLength = oSequence1.items.length; (nIndex < nLength) && bValue; nIndex++)
 		bValue	= oItemType.test.test(oSequence1.items[nIndex], oContext);
 	//
-	return new cXPath2Sequence(new cXSBoolean(bValue));
+	return new cSequence(new cXSBoolean(bValue));
 };

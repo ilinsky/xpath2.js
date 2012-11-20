@@ -28,7 +28,7 @@ cAndExpr.parse	= function (oLexer, oStaticContext) {
 	while (oLexer.peek() == "and") {
 		oLexer.next();
 		if (oLexer.eof() ||!(oExpr = cComparisonExpr.parse(oLexer, oStaticContext)))
-			throw new cXPath2Error("XPST0003"
+			throw new cException("XPST0003"
 //->Debug
 					, "Expected second operand in logical and expression"
 //<-Debug
@@ -43,5 +43,5 @@ cAndExpr.prototype.evaluate	= function (oContext) {
 	var bValue	= this.left.evaluate(oContext).toBoolean(oContext);
 	for (var nIndex = 0, nLength = this.items.length; (nIndex < nLength) && bValue; nIndex++)
 		bValue	= this.items[nIndex].evaluate(oContext).toBoolean(oContext);
-	return new cXPath2Sequence(new cXSBoolean(bValue));
+	return new cSequence(new cXSBoolean(bValue));
 };

@@ -18,4 +18,4 @@ cXSUnsignedShort.cast	= function(vValue) {
 };
 
 //
-fXPath2StaticContext_defineSystemDataType("unsignedShort",	cXSUnsignedShort);
+fStaticContext_defineSystemDataType("unsignedShort",	cXSUnsignedShort);

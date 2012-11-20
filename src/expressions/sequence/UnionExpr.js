@@ -29,7 +29,7 @@ cUnionExpr.parse	= function (oLexer, oStaticContext) {
 	while ((sOperator = oLexer.peek()) == '|' || sOperator == "union") {
 		oLexer.next();
 		if (oLexer.eof() ||!(oExpr = cIntersectExceptExpr.parse(oLexer, oStaticContext)))
-			throw new cXPath2Error("XPST0003"
+			throw new cException("XPST0003"
 //->Debug
 					, "Expected second operand in union expression"
 //<-Debug
@@ -43,6 +43,6 @@ cUnionExpr.parse	= function (oLexer, oStaticContext) {
 cUnionExpr.prototype.evaluate	= function (oContext) {
 	var oSequence	= this.left.evaluate(oContext);
 	for (var nIndex = 0, nLength = this.items.length; nIndex < nLength; nIndex++)
-		oSequence	= hXPath2StaticContext_operators["union"].call(oContext, oSequence, this.items[nIndex].evaluate(oContext));
+		oSequence	= hStaticContext_operators["union"].call(oContext, oSequence, this.items[nIndex].evaluate(oContext));
 	return oSequence;
 };

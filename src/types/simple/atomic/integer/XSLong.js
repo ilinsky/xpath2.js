@@ -18,4 +18,4 @@ cXSLong.cast	= function(vValue) {
 };
 
 //
-fXPath2StaticContext_defineSystemDataType("long",	cXSLong);
+fStaticContext_defineSystemDataType("long",	cXSLong);

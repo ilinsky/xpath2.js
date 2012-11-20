@@ -7,12 +7,12 @@
  *
  */
 
-function cXPath2Error(sCode, sMessage) {
+function cException(sCode, sMessage) {
 	this.code		= sCode;
 	this.message	= sMessage || oXPathError_messages[sCode];
 };
 
-cXPath2Error.prototype	= new cError;
+cException.prototype	= new cError;
 
 // "http://www.w3.org/2005/xqt-errors"
 

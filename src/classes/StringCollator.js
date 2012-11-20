@@ -7,14 +7,14 @@
  *
  */
 
-function cXPath2StringCollator() {
+function cStringCollator() {
 
 };
 
-cXPath2StringCollator.prototype.equals	= function(sValue1, sValue2) {
+cStringCollator.prototype.equals	= function(sValue1, sValue2) {
 	throw "Not implemented";
 };
 
-cXPath2StringCollator.prototype.compare	= function(sValue1, sValue2) {
+cStringCollator.prototype.compare	= function(sValue1, sValue2) {
 	throw "Not implemented";
 };

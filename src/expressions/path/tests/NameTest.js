@@ -26,7 +26,7 @@ cNameTest.parse	= function (oLexer, oStaticContext) {
 	var aMatch	= oLexer.peek().match(cNameTest.RegExp);
 	if (aMatch) {
 		if (aMatch[1] == '*' && aMatch[2] == '*')
-			throw new cXPath2Error("XPST0003"
+			throw new cException("XPST0003"
 //->Debug
 					, "Illegal use of *:* wildcard in name test"
 //<-Debug

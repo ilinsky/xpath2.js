@@ -18,4 +18,4 @@ cXSID.cast	= function(vValue) {
 };
 
 //
-fXPath2StaticContext_defineSystemDataType("ID",	cXSID);
+fStaticContext_defineSystemDataType("ID",	cXSID);

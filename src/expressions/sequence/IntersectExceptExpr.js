@@ -29,7 +29,7 @@ cIntersectExceptExpr.parse	= function (oLexer, oStaticContext) {
 	while ((sOperator = oLexer.peek()) == "intersect" || sOperator == "except") {
 		oLexer.next();
 		if (oLexer.eof() ||!(oExpr = cInstanceofExpr.parse(oLexer, oStaticContext)))
-			throw new cXPath2Error("XPST0003"
+			throw new cException("XPST0003"
 //->Debug
 					, "Expected second operand in " + sOperator + " expression"
 //<-Debug
@@ -43,6 +43,6 @@ cIntersectExceptExpr.parse	= function (oLexer, oStaticContext) {
 cIntersectExceptExpr.prototype.evaluate	= function (oContext) {
 	var oSequence	= this.left.evaluate(oContext);
 	for (var nIndex = 0, nLength = this.items.length, oItem; nIndex < nLength; nIndex++)
-		oSequence	= hXPath2StaticContext_operators[(oItem = this.items[nIndex])[0]].call(oContext, oSequence, oItem[1].evaluate(oContext));
+		oSequence	= hStaticContext_operators[(oItem = this.items[nIndex])[0]].call(oContext, oSequence, oItem[1].evaluate(oContext));
 	return oSequence;
 };

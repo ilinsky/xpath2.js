@@ -7,13 +7,13 @@
  *
  */
 
-var cXPath2	= new cXPath2Evaluator;
+var cXPath2	= new cEvaluator;
 
 //
 cXPath2.classes	= {};
-cXPath2.classes.Error			= cXPath2Error;
-cXPath2.classes.Evaluator		= cXPath2Evaluator;
-cXPath2.classes.DOMAdapter		= cXPath2DOMAdapter;
-cXPath2.classes.StaticContext	= cXPath2StaticContext;
-cXPath2.classes.DynamicContext	= cXPath2DynamicContext;
-cXPath2.classes.StringCollator	= cXPath2StringCollator;
+cXPath2.classes.Error			= cException;
+cXPath2.classes.Evaluator		= cEvaluator;
+cXPath2.classes.DOMAdapter		= cDOMAdapter;
+cXPath2.classes.StaticContext	= cStaticContext;
+cXPath2.classes.DynamicContext	= cDynamicContext;
+cXPath2.classes.StringCollator	= cStringCollator;

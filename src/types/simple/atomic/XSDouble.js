@@ -32,14 +32,14 @@ cXSDouble.cast	= function(vValue) {
 		var aMatch	= fString_trim.call(vValue).match(cXSDouble.RegExp);
 		if (aMatch)
 			return new cXSDouble(aMatch[7] ? +aMatch[7].replace("INF", "Infinity") : +vValue);
-		throw new cXPath2Error("FORG0001");
+		throw new cException("FORG0001");
 	}
 	if (vValue instanceof cXSBoolean)
 		return new cXSDouble(vValue * 1);
 	if (fXSAnyAtomicType_isNumeric(vValue))
 		return new cXSDouble(vValue.value);
 	//
-	throw new cXPath2Error("XPTY0004"
+	throw new cException("XPTY0004"
 //->Debug
 			, "Casting value '" + vValue + "' to xs:double can never succeed"
 //<-Debug
@@ -47,4 +47,4 @@ cXSDouble.cast	= function(vValue) {
 };
 
 //
-fXPath2StaticContext_defineSystemDataType("double",	cXSDouble);
+fStaticContext_defineSystemDataType("double",	cXSDouble);

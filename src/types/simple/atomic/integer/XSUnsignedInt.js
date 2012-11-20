@@ -18,4 +18,4 @@ cXSUnsignedInt.cast	= function(vValue) {
 };
 
 //
-fXPath2StaticContext_defineSystemDataType("unsignedInt",	cXSUnsignedInt);
+fStaticContext_defineSystemDataType("unsignedInt",	cXSUnsignedInt);

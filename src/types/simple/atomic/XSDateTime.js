@@ -59,19 +59,19 @@ cXSDateTime.cast	= function(vValue) {
 										aMatch[1] == '-'
 				));
 			//
-			throw new cXPath2Error("FORG0001"
+			throw new cException("FORG0001"
 //->Debug
 					, "Invalid date '" + vValue + "' (Non-existent date)"
 //<-Debug
 			);
 		}
-		throw new cXPath2Error("FORG0001");
+		throw new cException("FORG0001");
 	}
 	// TODO: Gregorian
 	if (vValue instanceof cXSDate)
 		return new cXSDateTime(vValue.year, vValue.month, vValue.day, 0, 0, 0, vValue.timezone, vValue.negative);
 	//
-	throw new cXPath2Error("XPTY0004"
+	throw new cException("XPTY0004"
 //->Debug
 			, "Casting value '" + vValue + "' to xs:dateTime can never succeed"
 //<-Debug
@@ -118,4 +118,4 @@ function fXSDateTime_normalize(oValue) {
 };
 
 //
-fXPath2StaticContext_defineSystemDataType("dateTime",	cXSDateTime);
+fStaticContext_defineSystemDataType("dateTime",	cXSDateTime);

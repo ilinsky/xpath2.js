@@ -21,7 +21,7 @@ cAtomicType.parse	= function(oLexer, oStaticContext) {
 	var aMatch	= oLexer.peek().match(cNameTest.RegExp);
 	if (aMatch) {
 		if (aMatch[1] == '*' || aMatch[2] == '*')
-			throw new cXPath2Error("XPST0003"
+			throw new cException("XPST0003"
 //->Debug
 					, "Illegal use of wildcard in type name"
 //<-Debug
@@ -34,11 +34,11 @@ cAtomicType.parse	= function(oLexer, oStaticContext) {
 cAtomicType.prototype.test	= function(vItem, oContext) {
 	// Test
 	var sUri	= (this.namespaceURI ? '{' + this.namespaceURI + '}' : '') + this.localName,
-		cType	= this.namespaceURI == "http://www.w3.org/2001/XMLSchema" ? hXPath2StaticContext_dataTypes[this.localName] : oContext.staticContext.getDataType(sUri);
+		cType	= this.namespaceURI == "http://www.w3.org/2001/XMLSchema" ? hStaticContext_dataTypes[this.localName] : oContext.staticContext.getDataType(sUri);
 	if (cType)
 		return vItem instanceof cType;
 	//
-	throw new cXPath2Error("XPST0051"
+	throw new cException("XPST0051"
 //->Debug
 			, "Unknown simple type " + (this.prefix ? this.prefix + ':' : '') + this.localName
 //<-Debug
@@ -48,11 +48,11 @@ cAtomicType.prototype.test	= function(vItem, oContext) {
 cAtomicType.prototype.cast	= function(vItem, oContext) {
 	// Cast
 	var sUri	= (this.namespaceURI ? '{' + this.namespaceURI + '}' : '') + this.localName,
-		cType	= this.namespaceURI == "http://www.w3.org/2001/XMLSchema" ? hXPath2StaticContext_dataTypes[this.localName] : oContext.staticContext.getDataType(sUri);
+		cType	= this.namespaceURI == "http://www.w3.org/2001/XMLSchema" ? hStaticContext_dataTypes[this.localName] : oContext.staticContext.getDataType(sUri);
 	if (cType)
 		return cType.cast(vItem);
 	//
-	throw new cXPath2Error("XPST0051"
+	throw new cException("XPST0051"
 //->Debug
 			, "Unknown simple type " + (this.prefix ? this.prefix + ':' : '') + this.localName
 //<-Debug

@@ -32,14 +32,14 @@ cXSDecimal.cast	= function(vValue) {
 		var aMatch	= fString_trim.call(vValue).match(cXSDecimal.RegExp);
 		if (aMatch)
 			return new cXSDecimal(+vValue);
-		throw new cXPath2Error("FORG0001");
+		throw new cException("FORG0001");
 	}
 	if (vValue instanceof cXSBoolean)
 		return new cXSDecimal(vValue * 1);
 	if (fXSAnyAtomicType_isNumeric(vValue))
 		return new cXSDecimal(vValue.value);
 	//
-	throw new cXPath2Error("XPTY0004"
+	throw new cException("XPTY0004"
 //->Debug
 			, "Casting value '" + vValue + "' to xs:decimal can never succeed"
 //<-Debug
@@ -47,4 +47,4 @@ cXSDecimal.cast	= function(vValue) {
 };
 
 //
-fXPath2StaticContext_defineSystemDataType("decimal",	cXSDecimal);
+fStaticContext_defineSystemDataType("decimal",	cXSDecimal);

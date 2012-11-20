@@ -18,4 +18,4 @@ cXSShort.cast	= function(vValue) {
 };
 
 //
-fXPath2StaticContext_defineSystemDataType("short",	cXSShort);
+fStaticContext_defineSystemDataType("short",	cXSShort);

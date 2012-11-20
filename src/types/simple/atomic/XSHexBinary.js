@@ -32,12 +32,12 @@ cXSHexBinary.cast	= function(vValue) {
 		var aMatch	= fString_trim.call(vValue).match(cXSHexBinary.RegExp);
 		if (aMatch)
 			return new cXSHexBinary(aMatch[0].toUpperCase());
-		throw new cXPath2Error("FORG0001");
+		throw new cException("FORG0001");
 	}
 	if (vValue instanceof cXSBase64Binary)
 		throw "Casting from 'xs:" + "base64Binary"+ "' to 'xs:" + "hexBinary"+ "' not implemented";
 	//
-	throw new cXPath2Error("XPTY0004"
+	throw new cException("XPTY0004"
 //->Debug
 			, "Casting value '" + vValue + "' to xs:hexBinary can never succeed"
 //<-Debug
@@ -45,4 +45,4 @@ cXSHexBinary.cast	= function(vValue) {
 };
 
 //
-fXPath2StaticContext_defineSystemDataType("hexBinary",	cXSHexBinary);
+fStaticContext_defineSystemDataType("hexBinary",	cXSHexBinary);

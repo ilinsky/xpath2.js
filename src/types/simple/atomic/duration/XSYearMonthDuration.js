@@ -27,14 +27,14 @@ cXSYearMonthDuration.cast	= function(vValue) {
 		var aMatch	= fString_trim.call(vValue).match(cXSYearMonthDuration.RegExp);
 		if (aMatch)
 			return fXSYearMonthDuration_normalize(new cXSYearMonthDuration(+aMatch[2] || 0, +aMatch[3] || 0, aMatch[1] == '-'));
-		throw new cXPath2Error("FORG0001");
+		throw new cException("FORG0001");
 	}
 	if (vValue instanceof cXSDayTimeDuration)
 		return new cXSYearMonthDuration(0, 0);
 	if (vValue instanceof cXSDuration)
 		return new cXSYearMonthDuration(vValue.year, vValue.month, vValue.negative);
 	//
-	throw new cXPath2Error("XPTY0004"
+	throw new cException("XPTY0004"
 //->Debug
 			, "Casting value '" + vValue + "' to xs:yearMonthDuration can never succeed"
 //<-Debug
@@ -51,4 +51,4 @@ function fXSYearMonthDuration_normalize(oDuration) {
 };
 
 //
-fXPath2StaticContext_defineSystemDataType("yearMonthDuration",	cXSYearMonthDuration);
+fStaticContext_defineSystemDataType("yearMonthDuration",	cXSYearMonthDuration);

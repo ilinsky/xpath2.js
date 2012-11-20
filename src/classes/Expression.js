@@ -7,12 +7,12 @@
  *
  */
 
-function cXPath2Expression(sExpression, oStaticContext) {
-	var oLexer	= new cXPath2Lexer(sExpression),
+function cExpression(sExpression, oStaticContext) {
+	var oLexer	= new cLexer(sExpression),
 		oExpr	= cExpr.parse(oLexer, oStaticContext);
 	//
 	if (!oLexer.eof())
-		throw new cXPath2Error("XPST0003"
+		throw new cException("XPST0003"
 //->Debug
 				, "Unexpected token beyond end of query"
 //<-Debug
@@ -21,9 +21,9 @@ function cXPath2Expression(sExpression, oStaticContext) {
 	this.internalExpression	= oExpr;
 };
 
-cXPath2Expression.prototype.internalExpression	= null;
+cExpression.prototype.internalExpression	= null;
 
-cXPath2Expression.prototype.resolve	= function(oContext) {
+cExpression.prototype.resolve	= function(oContext) {
 	var oSequence	= this.internalExpression.evaluate(oContext),
 		aReturn	= [];
 	for (var nIndex = 0, nLength = oSequence.items.length, oItem; nIndex < nLength; nIndex++)

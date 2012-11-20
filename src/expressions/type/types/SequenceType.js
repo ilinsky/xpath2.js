@@ -22,7 +22,7 @@ cSequenceType.parse	= function(oLexer, oStaticContext) {
 	if (oLexer.peek() == "empty-sequence" && oLexer.peek(1) == '(') {
 		oLexer.next(2);
 		if (oLexer.peek() != ')')
-			throw new cXPath2Error("XPST0003"
+			throw new cException("XPST0003"
 //->Debug
 					, "Expected ')' token in sequence type"
 //<-Debug

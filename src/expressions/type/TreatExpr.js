@@ -26,7 +26,7 @@ cTreatExpr.parse	= function(oLexer, oStaticContext) {
 
 	oLexer.next(2);
 	if (oLexer.eof() ||!(oType = cSequenceType.parse(oLexer, oStaticContext)))
-		throw new cXPath2Error("XPST0003"
+		throw new cException("XPST0003"
 //->Debug
 				, "Expected second operand in treat expression"
 //<-Debug
@@ -41,7 +41,7 @@ cTreatExpr.prototype.evaluate	= function(oContext) {
 	// Validate empty-sequence()
 	if (!oItemType) {
 		if (!oSequence1.isEmpty())
-			throw new cXPath2Error("XPDY0050"
+			throw new cException("XPDY0050"
 //->Debug
 					, "The only value allowed for the value in 'treat as' expression is an empty sequence"
 //<-Debug
@@ -52,7 +52,7 @@ cTreatExpr.prototype.evaluate	= function(oContext) {
 	// Validate cardinality
 	if (!(this.type.occurence == '?' || this.type.occurence == '*'))
 		if (oSequence1.isEmpty())
-			throw new cXPath2Error("XPDY0050"
+			throw new cException("XPDY0050"
 //->Debug
 					, "An empty sequence is not allowed as the value in 'treat as' expression"
 //<-Debug
@@ -60,7 +60,7 @@ cTreatExpr.prototype.evaluate	= function(oContext) {
 
 	if (!(this.type.occurence == '+' || this.type.occurence == '*'))
 		if (!oSequence1.isSingleton())
-			throw new cXPath2Error("XPDY0050"
+			throw new cException("XPDY0050"
 //->Debug
 					, "A sequence of more than one item is not allowed as the value in 'treat as' expression"
 //<-Debug
@@ -72,7 +72,7 @@ cTreatExpr.prototype.evaluate	= function(oContext) {
 
 	for (var nIndex = 0, nLength = oSequence1.items.length; nIndex < nLength; nIndex++)
 		if (!oItemType.test.test(oSequence1.items[nIndex], oContext))
-			throw new cXPath2Error("XPDY0050"
+			throw new cException("XPDY0050"
 //->Debug
 					, "Required item type of value in 'treat as' expression is " + (oItemType.test.prefix ? oItemType.test.prefix + ':' : '') + oItemType.test.localName
 					// XPDY0050: Required item type of value in 'treat as' expression is {type1}; supplied value has item type {type2}

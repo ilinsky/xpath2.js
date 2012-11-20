@@ -20,49 +20,49 @@ var hAdditiveExpr_operators	= {};
 hAdditiveExpr_operators['+']	= function(oLeft, oRight, oContext) {
 	if (fXSAnyAtomicType_isNumeric(oLeft)) {
 		if (fXSAnyAtomicType_isNumeric(oRight))
-			return hXPath2StaticContext_operators["numeric-add"].call(oContext, oLeft, oRight);
+			return hStaticContext_operators["numeric-add"].call(oContext, oLeft, oRight);
 	}
 	else
 	if (oLeft instanceof cXSDate) {
 		if (oRight instanceof cXSYearMonthDuration)
-			return hXPath2StaticContext_operators["add-yearMonthDuration-to-date"].call(oContext, oLeft, oRight);
+			return hStaticContext_operators["add-yearMonthDuration-to-date"].call(oContext, oLeft, oRight);
 		if (oRight instanceof cXSDayTimeDuration)
-			return hXPath2StaticContext_operators["add-dayTimeDuration-to-date"].call(oContext, oLeft, oRight);
+			return hStaticContext_operators["add-dayTimeDuration-to-date"].call(oContext, oLeft, oRight);
 	}
 	else
 	if (oLeft instanceof cXSYearMonthDuration) {
 		if (oRight instanceof cXSDate)
-			return hXPath2StaticContext_operators["add-yearMonthDuration-to-date"].call(oContext, oRight, oLeft);
+			return hStaticContext_operators["add-yearMonthDuration-to-date"].call(oContext, oRight, oLeft);
 		if (oRight instanceof cXSDateTime)
-			return hXPath2StaticContext_operators["add-yearMonthDuration-to-dateTime"].call(oContext, oRight, oLeft);
+			return hStaticContext_operators["add-yearMonthDuration-to-dateTime"].call(oContext, oRight, oLeft);
 		if (oRight instanceof cXSYearMonthDuration)
-			return hXPath2StaticContext_operators["add-yearMonthDurations"].call(oContext, oLeft, oRight);
+			return hStaticContext_operators["add-yearMonthDurations"].call(oContext, oLeft, oRight);
 	}
 	else
 	if (oLeft instanceof cXSDayTimeDuration) {
 		if (oRight instanceof cXSDate)
-			return hXPath2StaticContext_operators["add-dayTimeDuration-to-date"].call(oContext, oRight, oLeft);
+			return hStaticContext_operators["add-dayTimeDuration-to-date"].call(oContext, oRight, oLeft);
 		if (oRight instanceof cXSTime)
-			return hXPath2StaticContext_operators["add-dayTimeDuration-to-time"].call(oContext, oRight, oLeft);
+			return hStaticContext_operators["add-dayTimeDuration-to-time"].call(oContext, oRight, oLeft);
 		if (oRight instanceof cXSDateTime)
-			return hXPath2StaticContext_operators["add-dayTimeDuration-to-dateTime"].call(oContext, oRight, oLeft);
+			return hStaticContext_operators["add-dayTimeDuration-to-dateTime"].call(oContext, oRight, oLeft);
 		if (oRight instanceof cXSDayTimeDuration)
-			return hXPath2StaticContext_operators["add-dayTimeDurations"].call(oContext, oLeft, oRight);
+			return hStaticContext_operators["add-dayTimeDurations"].call(oContext, oLeft, oRight);
 	}
 	else
 	if (oLeft instanceof cXSTime) {
 		if (oRight instanceof cXSDayTimeDuration)
-			return hXPath2StaticContext_operators["add-dayTimeDuration-to-time"].call(oContext, oLeft, oRight);
+			return hStaticContext_operators["add-dayTimeDuration-to-time"].call(oContext, oLeft, oRight);
 	}
 	else
 	if (oLeft instanceof cXSDateTime) {
 		if (oRight instanceof cXSYearMonthDuration)
-			return hXPath2StaticContext_operators["add-yearMonthDuration-to-dateTime"].call(oContext, oLeft, oRight);
+			return hStaticContext_operators["add-yearMonthDuration-to-dateTime"].call(oContext, oLeft, oRight);
 		if (oRight instanceof cXSDayTimeDuration)
-			return hXPath2StaticContext_operators["add-dayTimeDuration-to-dateTime"].call(oContext, oLeft, oRight);
+			return hStaticContext_operators["add-dayTimeDuration-to-dateTime"].call(oContext, oLeft, oRight);
 	}
 	//
-	throw new cXPath2Error("XPTY0004"
+	throw new cException("XPTY0004"
 //->Debug
 			, "Arithmetic operator is not defined for provided arguments"
 //<-Debug
@@ -71,45 +71,45 @@ hAdditiveExpr_operators['+']	= function(oLeft, oRight, oContext) {
 hAdditiveExpr_operators['-']	= function (oLeft, oRight, oContext) {
 	if (fXSAnyAtomicType_isNumeric(oLeft)) {
 		if (fXSAnyAtomicType_isNumeric(oRight))
-			return hXPath2StaticContext_operators["numeric-subtract"].call(oContext, oLeft, oRight);
+			return hStaticContext_operators["numeric-subtract"].call(oContext, oLeft, oRight);
 	}
 	else
 	if (oLeft instanceof cXSDate) {
 		if (oRight instanceof cXSDate)
-			return hXPath2StaticContext_operators["subtract-dates"].call(oContext, oLeft, oRight);
+			return hStaticContext_operators["subtract-dates"].call(oContext, oLeft, oRight);
 		if (oRight instanceof cXSYearMonthDuration)
-			return hXPath2StaticContext_operators["subtract-yearMonthDuration-from-date"].call(oContext, oLeft, oRight);
+			return hStaticContext_operators["subtract-yearMonthDuration-from-date"].call(oContext, oLeft, oRight);
 		if (oRight instanceof cXSDayTimeDuration)
-			return hXPath2StaticContext_operators["subtract-dayTimeDuration-from-date"].call(oContext, oLeft, oRight);
+			return hStaticContext_operators["subtract-dayTimeDuration-from-date"].call(oContext, oLeft, oRight);
 	}
 	else
 	if (oLeft instanceof cXSTime) {
 		if (oRight instanceof cXSTime)
-			return hXPath2StaticContext_operators["subtract-times"].call(oContext, oLeft, oRight);
+			return hStaticContext_operators["subtract-times"].call(oContext, oLeft, oRight);
 		if (oRight instanceof cXSDayTimeDuration)
-			return hXPath2StaticContext_operators["subtract-dayTimeDuration-from-time"].call(oContext, oLeft, oRight);
+			return hStaticContext_operators["subtract-dayTimeDuration-from-time"].call(oContext, oLeft, oRight);
 	}
 	else
 	if (oLeft instanceof cXSDateTime) {
 		if (oRight instanceof cXSDateTime)
-			return hXPath2StaticContext_operators["subtract-dateTimes"].call(oContext, oLeft, oRight);
+			return hStaticContext_operators["subtract-dateTimes"].call(oContext, oLeft, oRight);
 		if (oRight instanceof cXSYearMonthDuration)
-			return hXPath2StaticContext_operators["subtract-yearMonthDuration-from-dateTime"].call(oContext, oLeft, oRight);
+			return hStaticContext_operators["subtract-yearMonthDuration-from-dateTime"].call(oContext, oLeft, oRight);
 		if (oRight instanceof cXSDayTimeDuration)
-			return hXPath2StaticContext_operators["subtract-dayTimeDuration-from-dateTime"].call(oContext, oLeft, oRight);
+			return hStaticContext_operators["subtract-dayTimeDuration-from-dateTime"].call(oContext, oLeft, oRight);
 	}
 	else
 	if (oLeft instanceof cXSYearMonthDuration) {
 		if (oRight instanceof cXSYearMonthDuration)
-			return hXPath2StaticContext_operators["subtract-yearMonthDurations"].call(oContext, oLeft, oRight);
+			return hStaticContext_operators["subtract-yearMonthDurations"].call(oContext, oLeft, oRight);
 	}
 	else
 	if (oLeft instanceof cXSDayTimeDuration) {
 		if (oRight instanceof cXSDayTimeDuration)
-			return hXPath2StaticContext_operators["subtract-dayTimeDurations"].call(oContext, oLeft, oRight);
+			return hStaticContext_operators["subtract-dayTimeDurations"].call(oContext, oLeft, oRight);
 	}
 	//
-	throw new cXPath2Error("XPTY0004"
+	throw new cException("XPTY0004"
 //->Debug
 			, "Arithmetic operator is not defined for provided arguments"
 //<-Debug
@@ -130,7 +130,7 @@ cAdditiveExpr.parse	= function (oLexer, oStaticContext) {
 	while ((sOperator = oLexer.peek()) in hAdditiveExpr_operators) {
 		oLexer.next();
 		if (oLexer.eof() ||!(oExpr = cMultiplicativeExpr.parse(oLexer, oStaticContext)))
-			throw new cXPath2Error("XPST0003"
+			throw new cException("XPST0003"
 //->Debug
 					, "Expected second operand in additive expression"
 //<-Debug
@@ -142,10 +142,10 @@ cAdditiveExpr.parse	= function (oLexer, oStaticContext) {
 
 // Public members
 cAdditiveExpr.prototype.evaluate	= function (oContext) {
-	var oLeft	= fXPath2Sequence_atomize(this.left.evaluate(oContext), oContext);
+	var oLeft	= fSequence_atomize(this.left.evaluate(oContext), oContext);
 
 	if (oLeft.isEmpty())
-		return new cXPath2Sequence;
+		return new cSequence;
 	// Assert cardinality
 	fFunctionCall_assertSequenceCardinality(oContext, oLeft, '?'
 //->Debug
@@ -158,10 +158,10 @@ cAdditiveExpr.prototype.evaluate	= function (oContext) {
 		vLeft	= cXSDouble.cast(vLeft);	// cast to xs:double
 
 	for (var nIndex = 0, nLength = this.items.length, oRight, vRight; nIndex < nLength; nIndex++) {
-		oRight	= fXPath2Sequence_atomize(this.items[nIndex][1].evaluate(oContext), oContext);
+		oRight	= fSequence_atomize(this.items[nIndex][1].evaluate(oContext), oContext);
 
 		if (oRight.isEmpty())
-			return new cXPath2Sequence;
+			return new cSequence;
 		// Assert cardinality
 		fFunctionCall_assertSequenceCardinality(oContext, oRight, '?'
 //->Debug
@@ -175,5 +175,5 @@ cAdditiveExpr.prototype.evaluate	= function (oContext) {
 
 		vLeft	= hAdditiveExpr_operators[this.items[nIndex][0]](vLeft, vRight, oContext);
 	}
-	return new cXPath2Sequence(vLeft);
+	return new cSequence(vLeft);
 };

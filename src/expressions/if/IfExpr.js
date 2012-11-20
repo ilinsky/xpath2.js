@@ -26,14 +26,14 @@ cIfExpr.parse	= function (oLexer, oStaticContext) {
 		oLexer.next(2);
 		//
 		if (oLexer.eof() ||!(oCondExpr = cExpr.parse(oLexer, oStaticContext)))
-			throw new cXPath2Error("XPST0003"
+			throw new cException("XPST0003"
 //->Debug
 					, "Expected if statement operand in conditional expression"
 //<-Debug
 			);
 		//
 		if (oLexer.peek() != ')')
-			throw new cXPath2Error("XPST0003"
+			throw new cException("XPST0003"
 //->Debug
 					, "Expected ')' token in for expression"
 //<-Debug
@@ -41,7 +41,7 @@ cIfExpr.parse	= function (oLexer, oStaticContext) {
 
 		oLexer.next();
 		if (oLexer.peek() != "then")
-			throw new cXPath2Error("XPST0003"
+			throw new cException("XPST0003"
 //->Debug
 					, "Expected 'then' token in conditional if expression"
 //<-Debug
@@ -49,14 +49,14 @@ cIfExpr.parse	= function (oLexer, oStaticContext) {
 
 		oLexer.next();
 		if (oLexer.eof() ||!(oThenExpr = cExprSingle.parse(oLexer, oStaticContext)))
-			throw new cXPath2Error("XPST0003"
+			throw new cException("XPST0003"
 //->Debug
 					, "Expected then statement operand in condional expression"
 //<-Debug
 			);
 
 		if (oLexer.peek() != "else")
-			throw new cXPath2Error("XPST0003"
+			throw new cException("XPST0003"
 //->Debug
 					, "Expected 'else' token in conditional if expression"
 //<-Debug
@@ -64,7 +64,7 @@ cIfExpr.parse	= function (oLexer, oStaticContext) {
 
 		oLexer.next();
 		if (oLexer.eof() ||!(oElseExpr = cExprSingle.parse(oLexer, oStaticContext)))
-			throw new cXPath2Error("XPST0003"
+			throw new cException("XPST0003"
 //->Debug
 					, "Expected else statement operand in condional expression"
 //<-Debug

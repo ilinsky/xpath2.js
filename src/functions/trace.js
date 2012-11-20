@@ -13,7 +13,7 @@
 */
 
 // fn:trace($value as item()*, $label as xs:string) as item()*
-fXPath2StaticContext_defineSystemFunction("trace",		[[cXTItem, '*'], [cXSString]],	function(oSequence1, oSequence2) {
+fStaticContext_defineSystemFunction("trace",		[[cXTItem, '*'], [cXSString]],	function(oSequence1, oSequence2) {
 	var oConsole	= window.console;
 	if (oConsole && oConsole.log)
 		oConsole.log(oSequence2.items[0].valueOf(), oSequence1.items);

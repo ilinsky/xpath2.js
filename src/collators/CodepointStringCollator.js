@@ -7,7 +7,7 @@
  *
  */
 
-var oCodepointStringCollator	= new cXPath2StringCollator;
+var oCodepointStringCollator	= new cStringCollator;
 
 oCodepointStringCollator.equals	= function(sValue1, sValue2) {
 	return sValue1 == sValue2;

@@ -12,7 +12,7 @@ function cXSAnyAtomicType() {
 };
 
 cXSAnyAtomicType.cast	= function(vValue) {
-	throw new cXPath2Error("XPST0017"
+	throw new cException("XPST0017"
 //->Debug
 			, "Abstract type used in constructor function xs:anyAtomicType"
 //<-Debug
@@ -71,4 +71,4 @@ function fXSAnyAtomicType_isNumeric(vItem) {
 };
 
 //
-fXPath2StaticContext_defineSystemDataType("anyAtomicType",	cXSAnyAtomicType);
+fStaticContext_defineSystemDataType("anyAtomicType",	cXSAnyAtomicType);

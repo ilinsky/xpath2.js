@@ -1,15 +1,15 @@
 # Import variables from environment
 import.js
 # Core classes
-classes/XPath2Error.js
-classes/XPath2Lexer.js
-classes/XPath2Sequence.js
-classes/XPath2DOMAdapter.js
-classes/XPath2DynamicContext.js
-classes/XPath2StaticContext.js
-classes/XPath2Expression.js
-classes/XPath2Evaluator.js
-classes/XPath2StringCollator.js
+classes/Exception.js
+classes/Lexer.js
+classes/Sequence.js
+classes/DOMAdapter.js
+classes/DynamicContext.js
+classes/StaticContext.js
+classes/Expression.js
+classes/Evaluator.js
+classes/StringCollator.js
 #
 expressions/Expr.js
 expressions/ExprSingle.js

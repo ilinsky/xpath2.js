@@ -37,7 +37,7 @@ cPathExpr.parse	= function (oLexer, oStaticContext) {
 		if (sSlash == sSingleSlash)
 			return oPathExpr.items[0];	// '/' expression
 		if (sSlash == sDoubleSlash)
-			throw new cXPath2Error("XPST0003"
+			throw new cException("XPST0003"
 //->Debug
 					, "Expected path step expression"
 //<-Debug
@@ -53,7 +53,7 @@ cPathExpr.parse	= function (oLexer, oStaticContext) {
 		//
 		oLexer.next();
 		if (oLexer.eof() ||!(oExpr = cStepExpr.parse(oLexer, oStaticContext)))
-			throw new cXPath2Error("XPST0003"
+			throw new cException("XPST0003"
 //->Debug
 					, "Expected path step expression"
 //<-Debug
@@ -73,16 +73,16 @@ cPathExpr.parse	= function (oLexer, oStaticContext) {
 cPathExpr.prototype.evaluate	= function (oContext) {
 	var vContextItem	= oContext.item;
 	//
-	var oSequence	= new cXPath2Sequence(vContextItem);
+	var oSequence	= new cSequence(vContextItem);
 	for (var nItemIndex = 0, nItemLength = this.items.length, oSequence1; nItemIndex < nItemLength; nItemIndex++) {
-		oSequence1	= new cXPath2Sequence;
+		oSequence1	= new cSequence;
 		for (var nIndex = 0, nLength = oSequence.items.length; nIndex < nLength; nIndex++) {
 			// Set new context item
 			oContext.item	= oSequence.items[nIndex];
 			//
 			for (var nRightIndex = 0, oSequence2 = this.items[nItemIndex].evaluate(oContext), nRightLength = oSequence2.items.length; nRightIndex < nRightLength; nRightIndex++)
 				if ((nItemIndex < nItemLength - 1) && !oContext.DOMAdapter.isNode(oSequence2.items[nRightIndex]))
-					throw new cXPath2Error("XPTY0019");
+					throw new cException("XPTY0019");
 				else
 				if (oSequence1.indexOf(oSequence2.items[nRightIndex]) ==-1)
 					oSequence1.add(oSequence2.items[nRightIndex]);
@@ -92,5 +92,5 @@ cPathExpr.prototype.evaluate	= function (oContext) {
 	// Restore context item
 	oContext.item	= vContextItem;
 	//
-	return fXPath2Sequence_order(oSequence, oContext);
+	return fSequence_order(oSequence, oContext);
 };

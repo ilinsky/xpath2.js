@@ -12,10 +12,10 @@
 		op:hexBinary-equal
 		op:base64Binary-equal
 */
-hXPath2StaticContext_operators["hexBinary-equal"]	= function(oLeft, oRight) {
+hStaticContext_operators["hexBinary-equal"]	= function(oLeft, oRight) {
 	return new cXSBoolean(oLeft.valueOf() == oRight.valueOf());
 };
 
-hXPath2StaticContext_operators["base64Binary-equal"]	= function(oLeft, oRight) {
+hStaticContext_operators["base64Binary-equal"]	= function(oLeft, oRight) {
 	return new cXSBoolean(oLeft.valueOf() == oRight.valueOf());
 };

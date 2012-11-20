@@ -7,7 +7,7 @@
  *
  */
 
-function cXPath2Lexer(sValue) {
+function cLexer(sValue) {
 	var aMatch	= sValue.match(/\$(?:(?![0-9-])(?:[\w-]+|\*):)?(?![0-9-])(?:[\w-]+|\*)|(?:(?![0-9-])(?:[\w-]+|\*):)?(?![0-9-])(?:[\w-]+|\*)|\(:|:\)|\/\/|\.\.|::|\d+(?:\.\d*)?(?:[eE][+-]?\d+)?|\.\d+(?:[eE][+-]?\d+)?|"[^"]*(?:""[^"]*)*"|'[^']*(?:''[^']*)*'|<<|>>|[!<>]=|(?![0-9-])[\w-]+:\*|\s+|./g);
 	if (aMatch) {
 		var nStack	= 0;
@@ -21,7 +21,7 @@ function cXPath2Lexer(sValue) {
 			if (!nStack && !/^\s/.test(aMatch[nIndex]))
 				this[this.length++]	= aMatch[nIndex];
 		if (nStack)
-			throw new cXPath2Error("XPST0003"
+			throw new cException("XPST0003"
 //->Debug
 					, "Unclosed comment"
 //<-Debug
@@ -29,25 +29,25 @@ function cXPath2Lexer(sValue) {
 	}
 };
 
-cXPath2Lexer.prototype.index		= 0;
-cXPath2Lexer.prototype.length	= 0;
+cLexer.prototype.index		= 0;
+cLexer.prototype.length	= 0;
 
-cXPath2Lexer.prototype.reset	= function() {
+cLexer.prototype.reset	= function() {
 	this.index	= 0;
 };
 
-cXPath2Lexer.prototype.peek	= function(nOffset) {
+cLexer.prototype.peek	= function(nOffset) {
 	return this[this.index +(nOffset || 0)] || '';
 };
 
-cXPath2Lexer.prototype.next	= function(nOffset) {
+cLexer.prototype.next	= function(nOffset) {
 	return(this.index+= nOffset || 1) < this.length;
 };
 
-cXPath2Lexer.prototype.back	= function(nOffset) {
+cLexer.prototype.back	= function(nOffset) {
 	return(this.index-= nOffset || 1) > 0;
 };
 
-cXPath2Lexer.prototype.eof	= function() {
+cLexer.prototype.eof	= function() {
 	return this.index >= this.length;
 };

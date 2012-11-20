@@ -26,7 +26,7 @@ cCastExpr.parse	= function(oLexer, oStaticContext) {
 
 	oLexer.next(2);
 	if (oLexer.eof() ||!(oType = cSingleType.parse(oLexer, oStaticContext)))
-		throw new cXPath2Error("XPST0003"
+		throw new cException("XPST0003"
 //->Debug
 				, "Expected second operand in cast expression"
 //<-Debug
@@ -45,7 +45,7 @@ cCastExpr.prototype.evaluate	= function(oContext) {
 	);
 	//
 	if (oSequence1.isEmpty())
-		return new cXPath2Sequence;
+		return new cSequence;
 	//
-	return new cXPath2Sequence(this.type.itemType.cast(fXTNode_atomize(oSequence1.items[0], oContext), oContext));
+	return new cSequence(this.type.itemType.cast(fXTNode_atomize(oSequence1.items[0], oContext), oContext));
 };

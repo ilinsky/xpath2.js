@@ -20,25 +20,25 @@ var hMultiplicativeExpr_operators	= {};
 hMultiplicativeExpr_operators['*']		= function (oLeft, oRight, oContext) {
 	if (fXSAnyAtomicType_isNumeric(oLeft)) {
 		if (fXSAnyAtomicType_isNumeric(oRight))
-			return hXPath2StaticContext_operators["numeric-multiply"].call(oContext, oLeft, oRight);
+			return hStaticContext_operators["numeric-multiply"].call(oContext, oLeft, oRight);
 		if (oRight instanceof cXSYearMonthDuration)
-			return hXPath2StaticContext_operators["multiply-yearMonthDuration"].call(oContext, oRight, oLeft);
+			return hStaticContext_operators["multiply-yearMonthDuration"].call(oContext, oRight, oLeft);
 		if (oRight instanceof cXSDayTimeDuration)
-			return hXPath2StaticContext_operators["multiply-dayTimeDuration"].call(oContext, oRight, oLeft);
+			return hStaticContext_operators["multiply-dayTimeDuration"].call(oContext, oRight, oLeft);
 	}
 	else {
 		if (oLeft instanceof cXSYearMonthDuration) {
 			if (fXSAnyAtomicType_isNumeric(oRight))
-				return hXPath2StaticContext_operators["multiply-yearMonthDuration"].call(oContext, oLeft, oRight);
+				return hStaticContext_operators["multiply-yearMonthDuration"].call(oContext, oLeft, oRight);
 		}
 		else
 		if (oLeft instanceof cXSDayTimeDuration) {
 			if (fXSAnyAtomicType_isNumeric(oRight))
-				return hXPath2StaticContext_operators["multiply-dayTimeDuration"].call(oContext, oLeft, oRight);
+				return hStaticContext_operators["multiply-dayTimeDuration"].call(oContext, oLeft, oRight);
 		}
 	}
 	//
-	throw new cXPath2Error("XPTY0004"
+	throw new cException("XPTY0004"
 //->Debug
 			, "Arithmetic operator is not defined for provided arguments"
 //<-Debug
@@ -47,24 +47,24 @@ hMultiplicativeExpr_operators['*']		= function (oLeft, oRight, oContext) {
 hMultiplicativeExpr_operators['div']	= function (oLeft, oRight, oContext) {
 	if (fXSAnyAtomicType_isNumeric(oLeft)) {
 		if (fXSAnyAtomicType_isNumeric(oRight))
-			return hXPath2StaticContext_operators["numeric-divide"].call(oContext, oLeft, oRight);
+			return hStaticContext_operators["numeric-divide"].call(oContext, oLeft, oRight);
 	}
 	else
 	if (oLeft instanceof cXSYearMonthDuration) {
 		if (fXSAnyAtomicType_isNumeric(oRight))
-			return hXPath2StaticContext_operators["divide-yearMonthDuration"].call(oContext, oLeft, oRight);
+			return hStaticContext_operators["divide-yearMonthDuration"].call(oContext, oLeft, oRight);
 		if (oRight instanceof cXSYearMonthDuration)
-			return hXPath2StaticContext_operators["divide-yearMonthDuration-by-yearMonthDuration"].call(oContext, oLeft, oRight);
+			return hStaticContext_operators["divide-yearMonthDuration-by-yearMonthDuration"].call(oContext, oLeft, oRight);
 	}
 	else
 	if (oLeft instanceof cXSDayTimeDuration) {
 		if (fXSAnyAtomicType_isNumeric(oRight))
-			return hXPath2StaticContext_operators["divide-dayTimeDuration"].call(oContext, oLeft, oRight);
+			return hStaticContext_operators["divide-dayTimeDuration"].call(oContext, oLeft, oRight);
 		if (oRight instanceof cXSDayTimeDuration)
-			return hXPath2StaticContext_operators["divide-dayTimeDuration-by-dayTimeDuration"].call(oContext, oLeft, oRight);
+			return hStaticContext_operators["divide-dayTimeDuration-by-dayTimeDuration"].call(oContext, oLeft, oRight);
 	}
 	//
-	throw new cXPath2Error("XPTY0004"
+	throw new cException("XPTY0004"
 //->Debug
 			, "Arithmetic operator is not defined for provided arguments"
 //<-Debug
@@ -72,9 +72,9 @@ hMultiplicativeExpr_operators['div']	= function (oLeft, oRight, oContext) {
 };
 hMultiplicativeExpr_operators['idiv']	= function (oLeft, oRight, oContext) {
 	if (fXSAnyAtomicType_isNumeric(oLeft) && fXSAnyAtomicType_isNumeric(oRight))
-		return hXPath2StaticContext_operators["numeric-integer-divide"].call(oContext, oLeft, oRight);
+		return hStaticContext_operators["numeric-integer-divide"].call(oContext, oLeft, oRight);
 	//
-	throw new cXPath2Error("XPTY0004"
+	throw new cException("XPTY0004"
 //->Debug
 			, "Arithmetic operator is not defined for provided arguments"
 //<-Debug
@@ -82,9 +82,9 @@ hMultiplicativeExpr_operators['idiv']	= function (oLeft, oRight, oContext) {
 };
 hMultiplicativeExpr_operators['mod']	= function (oLeft, oRight, oContext) {
 	if (fXSAnyAtomicType_isNumeric(oLeft) && fXSAnyAtomicType_isNumeric(oRight))
-		return hXPath2StaticContext_operators["numeric-mod"].call(oContext, oLeft, oRight);
+		return hStaticContext_operators["numeric-mod"].call(oContext, oLeft, oRight);
 	//
-	throw new cXPath2Error("XPTY0004"
+	throw new cException("XPTY0004"
 //->Debug
 			, "Arithmetic operator is not defined for provided arguments"
 //<-Debug
@@ -105,7 +105,7 @@ cMultiplicativeExpr.parse	= function (oLexer, oStaticContext) {
 	while ((sOperator = oLexer.peek()) in hMultiplicativeExpr_operators) {
 		oLexer.next();
 		if (oLexer.eof() ||!(oExpr = cUnionExpr.parse(oLexer, oStaticContext)))
-			throw new cXPath2Error("XPST0003"
+			throw new cException("XPST0003"
 //->Debug
 					, "Expected second operand in multiplicative expression"
 //<-Debug
@@ -117,11 +117,11 @@ cMultiplicativeExpr.parse	= function (oLexer, oStaticContext) {
 
 // Public members
 cMultiplicativeExpr.prototype.evaluate	= function (oContext) {
-	var oLeft	= fXPath2Sequence_atomize(this.left.evaluate(oContext), oContext);
+	var oLeft	= fSequence_atomize(this.left.evaluate(oContext), oContext);
 
 	//
 	if (oLeft.isEmpty())
-		return new cXPath2Sequence;
+		return new cSequence;
 	// Assert cardinality
 	fFunctionCall_assertSequenceCardinality(oContext, oLeft, '?'
 //->Debug
@@ -134,10 +134,10 @@ cMultiplicativeExpr.prototype.evaluate	= function (oContext) {
 		vLeft	= cXSDouble.cast(vLeft);	// cast to xs:double
 
 	for (var nIndex = 0, nLength = this.items.length, oRight, vRight; nIndex < nLength; nIndex++) {
-		oRight	= fXPath2Sequence_atomize(this.items[nIndex][1].evaluate(oContext), oContext);
+		oRight	= fSequence_atomize(this.items[nIndex][1].evaluate(oContext), oContext);
 
 		if (oRight.isEmpty())
-			return new cXPath2Sequence;
+			return new cSequence;
 		// Assert cardinality
 		fFunctionCall_assertSequenceCardinality(oContext, oRight, '?'
 //->Debug
@@ -151,5 +151,5 @@ cMultiplicativeExpr.prototype.evaluate	= function (oContext) {
 
 		vLeft	= hMultiplicativeExpr_operators[this.items[nIndex][0]](vLeft, vRight, oContext);
 	}
-	return new cXPath2Sequence(vLeft);
+	return new cSequence(vLeft);
 };
