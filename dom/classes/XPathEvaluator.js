@@ -25,8 +25,11 @@ cXPathEvaluator.prototype.createExpression	= function(sExpression, oResolver) {
 //		["resolver",	cObject,	true,	true]
 //	]);
 
+	cXPathEvaluator.staticContext.namespaceResolver	= oResolver;
+	cXPathEvaluator.staticContext.defaultElementNamespace	= this == oDocument ? "http://www.w3.org/1999/xhtml" : null;
+
 	// Invoke implementation
-	return new cXPathExpression(sExpression, oResolver);
+	return new cXPathExpression(sExpression, cXPathEvaluator.staticContext);
 };
 
 cXPathEvaluator.prototype.createNSResolver	= function(oNode) {
@@ -50,5 +53,5 @@ cXPathEvaluator.prototype.evaluate	= function(sExpression, oNode, oResolver, nTy
 //	]);
 
 	// Invoke implementation
-	return fXPathExpression_evaluate(new cXPathExpression(sExpression, oResolver), oNode, nType, oResult);
+	return fXPathExpression_evaluate(cXPathEvaluator.prototype.createExpression.call(this, sExpression, oResolver), oNode, nType, oResult);
 };

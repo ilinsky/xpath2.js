@@ -7,8 +7,7 @@
  *
  */
 
-function cXPathExpression(sExpression, oResolver) {
-	cXPathEvaluator.staticContext.namespaceResolver	= oResolver;
+function cXPathExpression(sExpression) {
 	try {
 		this.expression	= cXPathEvaluator.evaluator.compile(sExpression, cXPathEvaluator.staticContext);
 	}
@@ -49,7 +48,7 @@ function fXPathExpression_evaluate(oExpression, oNode, nType, oResult) {
 	}
 	// Evaluate expression
 	try {
-		oSequence	= oExpression.expression.resolve(oNode, null, oDOMAdapter);
+		oSequence	= oExpression.expression.resolve(new cXPath2.classes.DynamicContext(cXPathEvaluator.staticContext, typeof oNode == "undefined" ? null : oNode, null, oDOMAdapter));
 	}
 	catch (e) {
 		if (e instanceof cXPath2.classes.Error)

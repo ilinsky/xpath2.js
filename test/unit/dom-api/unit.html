@@ -15,7 +15,7 @@
 		<script type="text/javascript">
 			// Helper function
 			function evaluateXPath(sXPath, vContext, nType) {
-				return XPath2Evaluator.prototype.evaluate.call(document, sXPath, vContext, function(prefix) {if (prefix == "ns")return "my_ns";}, nType);
+				return XPath2Evaluator.prototype.evaluate.call(vContext, sXPath, vContext, function(prefix) {if (prefix == "ns")return "my_ns";}, nType);
 			}
 
 			function evaluateXPathNumber(sXPath, vContext) {

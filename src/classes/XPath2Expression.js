@@ -18,20 +18,13 @@ function cXPath2Expression(sExpression, oStaticContext) {
 //<-Debug
 		);
 	//
-	this.staticContext	= oStaticContext;
 	this.internalExpression	= oExpr;
-	//
-	this.expr	= sExpression;
 };
 
-cXPath2Expression.prototype.staticContext	= null;
 cXPath2Expression.prototype.internalExpression	= null;
 
-cXPath2Expression.prototype.resolve	= function(vItem, oScope, oDOMAdapter) {
-	if (typeof vItem == "undefined")
-		vItem	= null;
-	var oContext	= new cXPath2DynamicContext(this.staticContext, vItem, oScope, oDOMAdapter),
-		oSequence	= this.internalExpression.evaluate(oContext),
+cXPath2Expression.prototype.resolve	= function(oContext) {
+	var oSequence	= this.internalExpression.evaluate(oContext),
 		aReturn	= [];
 	for (var nIndex = 0, nLength = oSequence.items.length, oItem; nIndex < nLength; nIndex++)
 		aReturn[aReturn.length]	= oContext.DOMAdapter.isNode(oItem = oSequence.items[nIndex])
