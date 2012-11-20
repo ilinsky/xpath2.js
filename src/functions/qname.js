@@ -38,18 +38,14 @@ fStaticContext_defineSystemFunction("resolve-QName",	[[cXSString, '?'], [cXTElem
 
 	var sPrefix	= aMatch[1] || null,
 		sLocalName	= aMatch[2],
-		sNameSpaceURI;
-	if (sPrefix == null)
 		sNameSpaceURI = this.DOMAdapter.lookupNamespaceURI(oSequence2.items[0], sPrefix);
-	else {
-		sNameSpaceURI = this.DOMAdapter.lookupNamespaceURI(oSequence2.items[0], sPrefix);
-		if (!sNameSpaceURI)
-			throw new cException("FONS0004"
+	//
+	if (sPrefix != null &&!sNameSpaceURI)
+		throw new cException("FONS0004"
 //->Debug
-					, "Namespace prefix '" + sPrefix + "' has not been declared"
+				, "Namespace prefix '" + sPrefix + "' has not been declared"
 //<-Debug
-			);
-	}
+		);
 
 	return new cXSQName(sPrefix, sLocalName, sNameSpaceURI || null);
 });
