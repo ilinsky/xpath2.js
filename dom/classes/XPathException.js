@@ -7,12 +7,14 @@
  *
  */
 
-function cXPathException(nCode) {
+function cXPathException(nCode, sMessage) {
 	this.code	= nCode;
-	this.message= oXPathException_messages[nCode];
+	this.message= sMessage || oXPathException_messages[nCode];
 };
 
-cXPathException.prototype.code	= null;
+cXPathException.prototype	= new cError;
+
+cXPathException.prototype.code		= null;
 cXPathException.prototype.message	= null;
 
 // Constants
@@ -21,4 +23,4 @@ cXPathException.TYPE_ERR				= 52;
 
 var oXPathException_messages	= {};
 oXPathException_messages[cXPathException.INVALID_EXPRESSION_ERR]	= "INVALID_EXPRESSION_ERR: DOM XPath Exception 51";
-oXPathException_messages[cXPathException.TYPE_ERR]	= "TYPE_ERR: DOM XPath Exception 52";
+oXPathException_messages[cXPathException.TYPE_ERR]					= "TYPE_ERR: DOM XPath Exception 52";

@@ -9,7 +9,19 @@
 
 function cXPathExpression(sExpression, oResolver) {
 	cXPathEvaluator.staticContext.namespaceResolver	= oResolver;
-	this.expression	= cXPathEvaluator.evaluator.compile(sExpression, cXPathEvaluator.staticContext);
+	try {
+		this.expression	= cXPathEvaluator.evaluator.compile(sExpression, cXPathEvaluator.staticContext);
+	}
+	catch (e) {
+		if (e instanceof cXPath2.classes.Error)
+			throw new cXPathException(cXPathException.INVALID_EXPRESSION_ERR
+//->Debug
+					, e.message
+//<-Debug
+			);
+		else
+			throw e;
+	}
 };
 
 cXPathExpression.prototype.evaluate	= function(oNode, nType, oResult) {
@@ -40,7 +52,14 @@ function fXPathExpression_evaluate(oExpression, oNode, nType, oResult) {
 		oSequence	= oExpression.expression.resolve(oNode, null, oDOMAdapter);
 	}
 	catch (e) {
-		throw new cXPathException(cXPathException.TYPE_ERR);
+		if (e instanceof cXPath2.classes.Error)
+			throw new cXPathException(cXPathException.TYPE_ERR
+//->Debug
+					, e.message
+//<-Debug
+			);
+		else
+			throw e;
 	}
 	// Determine type if not specified
 	if (!nType) {

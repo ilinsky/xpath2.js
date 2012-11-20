@@ -9,6 +9,7 @@
 
 var cXPath2		= window.XPath2,
 	oDocument	= window.document,
+	cError		= window.Error,
 	cHTMLDocument	= window.HTMLDocument;
 
 var bOldMS	= !!oDocument.namespaces && !oDocument.createElementNS,	// Internet Explorer before 9
