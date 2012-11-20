@@ -124,13 +124,32 @@ hStaticContext_operators["to"]	= function(oSequence1, oSequence2) {
 	if (oSequence1.isEmpty() || oSequence2.isEmpty())
 		return oSequence;
 	//
+//->Debug
 	var sSource	= "first operand of 'to'";
-	fFunctionCall_assertSequenceCardinality(this, oSequence1, '?', sSource);
-	fFunctionCall_assertSequenceItemType(this, oSequence1, cXSInteger, sSource);
+//<-Debug
+
+	fFunctionCall_assertSequenceCardinality(this, oSequence1, '?'
+//->Debug
+			, sSource
+//<-Debug
+	);
+	fFunctionCall_assertSequenceItemType(this, oSequence1, cXSInteger
+//->Debug
+			, sSource
+//<-Debug
+	);
 	//
 	sSource	= "second operand of 'to'";
-	fFunctionCall_assertSequenceCardinality(this, oSequence2, '?', sSource);
-	fFunctionCall_assertSequenceItemType(this, oSequence2, cXSInteger, sSource);
+	fFunctionCall_assertSequenceCardinality(this, oSequence2, '?'
+//->Debug
+			, sSource
+//<-Debug
+	);
+	fFunctionCall_assertSequenceItemType(this, oSequence2, cXSInteger
+//->Debug
+			, sSource
+//<-Debug
+	);
 
 	for (var nIndex = oSequence1.items[0].valueOf(), nLength = oSequence2.items[0].valueOf(); nIndex <= nLength; nIndex++)
 		oSequence.add(new cXSInteger(nIndex));
