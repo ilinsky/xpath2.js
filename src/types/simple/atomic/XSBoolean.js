@@ -34,7 +34,7 @@ cXSBoolean.cast	= function(vValue) {
 			return new cXSBoolean(aMatch[1] == "1" || aMatch[1] == "true");
 		throw new cXPath2Error("FORG0001");
 	}
-	if (cXSAnyAtomicType.isNumeric(vValue))
+	if (fXSAnyAtomicType_isNumeric(vValue))
 		return new cXSBoolean(vValue != 0);
 	//
 	throw new cXPath2Error("XPTY0004"

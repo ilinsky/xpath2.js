@@ -26,7 +26,7 @@ cXSInteger.cast	= function(vValue) {
 	}
 	if (vValue instanceof cXSBoolean)
 		return new cXSInteger(vValue * 1);
-	if (cXSAnyAtomicType.isNumeric(vValue))
+	if (fXSAnyAtomicType_isNumeric(vValue))
 		return new cXSInteger(~~vValue.value);
 	//
 	throw new cXPath2Error("XPTY0004"

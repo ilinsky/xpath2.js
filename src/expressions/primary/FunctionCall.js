@@ -211,7 +211,7 @@ function fFunctionCall_assertSequenceItemType(oContext, oSequence, cItemType
 				}
 				else
 				if (cItemType == cXSDouble/* || cItemType.prototype instanceof cXSDouble*/) {
-					if (cXSAnyAtomicType.isNumeric(vItem))
+					if (fXSAnyAtomicType_isNumeric(vItem))
 						vItem	= cItemType.cast(vItem);
 				}
 			}

@@ -66,7 +66,7 @@ cXSAnyAtomicType.typeOf	= function(oValue) {
 	throw "Internal error: Could not identify type of item: " + oValue;
 };
 
-cXSAnyAtomicType.isNumeric	= function(vItem) {
+function fXSAnyAtomicType_isNumeric(vItem) {
 	return vItem instanceof cXSFloat || vItem instanceof cXSDouble || vItem instanceof cXSDecimal;
 };
 

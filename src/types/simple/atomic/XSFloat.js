@@ -36,7 +36,7 @@ cXSFloat.cast	= function(vValue) {
 	}
 	if (vValue instanceof cXSBoolean)
 		return new cXSFloat(vValue * 1);
-	if (cXSAnyAtomicType.isNumeric(vValue))
+	if (fXSAnyAtomicType_isNumeric(vValue))
 		return new cXSFloat(vValue.value);
 	//
 	throw new cXPath2Error("XPTY0004"

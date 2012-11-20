@@ -147,8 +147,8 @@ cComparisonExpr.ValueComp	= function(oExpr, oContext) {
 
 cComparisonExpr.ValueComp.operators	= {};
 cComparisonExpr.ValueComp.operators['eq']	= function(oLeft, oRight, oContext) {
-	if (cXSAnyAtomicType.isNumeric(oLeft)) {
-		if (cXSAnyAtomicType.isNumeric(oRight))
+	if (fXSAnyAtomicType_isNumeric(oLeft)) {
+		if (fXSAnyAtomicType_isNumeric(oRight))
 			return hXPath2StaticContext_operators["numeric-equal"].call(oContext, oLeft, oRight);
 	}
 	else
@@ -210,8 +210,8 @@ cComparisonExpr.ValueComp.operators['ne']	= function(oLeft, oRight, oContext) {
 	return new cXSBoolean(!cComparisonExpr.ValueComp.operators['eq'](oLeft, oRight, oContext).valueOf());
 };
 cComparisonExpr.ValueComp.operators['gt']	= function(oLeft, oRight, oContext) {
-	if (cXSAnyAtomicType.isNumeric(oLeft)) {
-		if (cXSAnyAtomicType.isNumeric(oRight))
+	if (fXSAnyAtomicType_isNumeric(oLeft)) {
+		if (fXSAnyAtomicType_isNumeric(oRight))
 			return hXPath2StaticContext_operators["numeric-greater-than"].call(oContext, oLeft, oRight);
 	}
 	else
@@ -258,8 +258,8 @@ cComparisonExpr.ValueComp.operators['gt']	= function(oLeft, oRight, oContext) {
 	);	// Cannot compare {type1} to {type2}
 };
 cComparisonExpr.ValueComp.operators['lt']	= function(oLeft, oRight, oContext) {
-	if (cXSAnyAtomicType.isNumeric(oLeft)) {
-		if (cXSAnyAtomicType.isNumeric(oRight))
+	if (fXSAnyAtomicType_isNumeric(oLeft)) {
+		if (fXSAnyAtomicType_isNumeric(oRight))
 			return hXPath2StaticContext_operators["numeric-less-than"].call(oContext, oLeft, oRight);
 	}
 	else
@@ -306,8 +306,8 @@ cComparisonExpr.ValueComp.operators['lt']	= function(oLeft, oRight, oContext) {
 	);	// Cannot compare {type1} to {type2}
 };
 cComparisonExpr.ValueComp.operators['ge']	= function(oLeft, oRight, oContext) {
-	if (cXSAnyAtomicType.isNumeric(oLeft)) {
-		if (cXSAnyAtomicType.isNumeric(oRight))
+	if (fXSAnyAtomicType_isNumeric(oLeft)) {
+		if (fXSAnyAtomicType_isNumeric(oRight))
 			return hXPath2StaticContext_operators["numeric-greater-than"].call(oContext, oLeft, oRight) || hXPath2StaticContext_operators["numeric-equal"].call(oContext, oLeft, oRight);
 	}
 	else
@@ -354,8 +354,8 @@ cComparisonExpr.ValueComp.operators['ge']	= function(oLeft, oRight, oContext) {
 	);	// Cannot compare {type1} to {type2}
 };
 cComparisonExpr.ValueComp.operators['le']	= function(oLeft, oRight, oContext) {
-	if (cXSAnyAtomicType.isNumeric(oLeft)) {
-		if (cXSAnyAtomicType.isNumeric(oRight))
+	if (fXSAnyAtomicType_isNumeric(oLeft)) {
+		if (fXSAnyAtomicType_isNumeric(oRight))
 			return hXPath2StaticContext_operators["numeric-less-than"].call(oContext, oLeft, oRight) || hXPath2StaticContext_operators["numeric-equal"].call(oContext, oLeft, oRight);
 	}
 	else

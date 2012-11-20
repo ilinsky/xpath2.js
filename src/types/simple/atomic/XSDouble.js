@@ -36,7 +36,7 @@ cXSDouble.cast	= function(vValue) {
 	}
 	if (vValue instanceof cXSBoolean)
 		return new cXSDouble(vValue * 1);
-	if (cXSAnyAtomicType.isNumeric(vValue))
+	if (fXSAnyAtomicType_isNumeric(vValue))
 		return new cXSDouble(vValue.value);
 	//
 	throw new cXPath2Error("XPTY0004"

@@ -35,7 +35,7 @@ cXPath2Expression.prototype.resolve	= function(vItem, oScope, oDOMAdapter) {
 		aReturn	= [];
 	for (var nIndex = 0, nLength = oSequence.items.length, oItem; nIndex < nLength; nIndex++)
 		if (!oContext.DOMAdapter.isNode(oItem = oSequence.items[nIndex])) {
-			if (cXSAnyAtomicType.isNumeric(oItem) || oItem instanceof cXSBoolean)
+			if (fXSAnyAtomicType_isNumeric(oItem) || oItem instanceof cXSBoolean)
 				aReturn[aReturn.length]	= oItem.valueOf();
 			else
 				aReturn[aReturn.length]	= oItem.toString();

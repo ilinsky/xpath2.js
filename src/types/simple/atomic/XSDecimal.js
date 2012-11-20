@@ -36,7 +36,7 @@ cXSDecimal.cast	= function(vValue) {
 	}
 	if (vValue instanceof cXSBoolean)
 		return new cXSDecimal(vValue * 1);
-	if (cXSAnyAtomicType.isNumeric(vValue))
+	if (fXSAnyAtomicType_isNumeric(vValue))
 		return new cXSDecimal(vValue.value);
 	//
 	throw new cXPath2Error("XPTY0004"

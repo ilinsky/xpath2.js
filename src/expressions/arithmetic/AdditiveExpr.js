@@ -19,8 +19,8 @@ cAdditiveExpr.prototype.items	= null;
 cAdditiveExpr.operators	={};
 
 cAdditiveExpr.operators['+']	= function(oLeft, oRight, oContext) {
-	if (cXSAnyAtomicType.isNumeric(oLeft)) {
-		if (cXSAnyAtomicType.isNumeric(oRight))
+	if (fXSAnyAtomicType_isNumeric(oLeft)) {
+		if (fXSAnyAtomicType_isNumeric(oRight))
 			return hXPath2StaticContext_operators["numeric-add"].call(oContext, oLeft, oRight);
 	}
 	else
@@ -70,8 +70,8 @@ cAdditiveExpr.operators['+']	= function(oLeft, oRight, oContext) {
 	);	// Arithmetic operator is not defined for arguments of types ({type1}, {type2})
 };
 cAdditiveExpr.operators['-']	= function (oLeft, oRight, oContext) {
-	if (cXSAnyAtomicType.isNumeric(oLeft)) {
-		if (cXSAnyAtomicType.isNumeric(oRight))
+	if (fXSAnyAtomicType_isNumeric(oLeft)) {
+		if (fXSAnyAtomicType_isNumeric(oRight))
 			return hXPath2StaticContext_operators["numeric-subtract"].call(oContext, oLeft, oRight);
 	}
 	else

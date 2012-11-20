@@ -18,7 +18,7 @@ cUnaryExpr.prototype.expression	= null;
 //
 cUnaryExpr.operators	= {};
 cUnaryExpr.operators['-']	= function(oRight, oContext) {
-	if (cXSAnyAtomicType.isNumeric(oRight))
+	if (fXSAnyAtomicType_isNumeric(oRight))
 		return hXPath2StaticContext_operators["numeric-unary-minus"].call(oContext, oRight);
 	//
 	throw new cXPath2Error("XPTY0004"
@@ -28,7 +28,7 @@ cUnaryExpr.operators['-']	= function(oRight, oContext) {
 	);	// Arithmetic operator is not defined for arguments of types ({type1}, {type2})
 };
 cUnaryExpr.operators['+']	= function(oRight, oContext) {
-	if (cXSAnyAtomicType.isNumeric(oRight))
+	if (fXSAnyAtomicType_isNumeric(oRight))
 		return hXPath2StaticContext_operators["numeric-unary-plus"].call(oContext, oRight);
 	//
 	throw new cXPath2Error("XPTY0004"
