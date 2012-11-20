@@ -81,7 +81,7 @@ fStaticContext_defineSystemFunction("namespace-uri",	[[cXTNode, '?', true]],	fun
 // fn:number($arg as xs:anyAtomicType?) as xs:double
 fStaticContext_defineSystemFunction("number",	[[cXSAnyAtomicType, '?', true]],	function(/*[*/oSequence1/*]*/) {
 	if (!arguments.length)
-		oSequence1	= new cSequence(fXTNode_atomize(this.item, this));
+		oSequence1	= new cSequence(fXTItem_atomize(this.item, this));
 
 	// If input item cannot be cast to xs:decimal, a NaN should be returned
 	var vValue	= new cXSDouble(nNaN);

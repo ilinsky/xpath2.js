@@ -58,7 +58,7 @@ fStaticContext_defineSystemFunction("nilled",	[[cXTNode, '?']],	function(oSequen
 fStaticContext_defineSystemFunction("string",	[[cXTItem, '?', true]],	function(/*[*/oSequence1/*]*/) {
 	if (!arguments.length)
 		oSequence1	= new cSequence(this.item);
-	return oSequence1.isEmpty() ? new cXSString('') : cXSString.cast(fXTNode_atomize(oSequence1.items[0], this));
+	return oSequence1.isEmpty() ? new cXSString('') : cXSString.cast(fXTItem_atomize(oSequence1.items[0], this));
 });
 
 // fn:data($arg as item()*) as xs:anyAtomicType*

@@ -30,7 +30,7 @@ function fSequence_order(oSequence1, oContext) {
 function fSequence_atomize(oSequence1, oContext) {
 	var oSequence	= new cSequence;
 	for (var nIndex = 0, nLength = oSequence1.items.length, vValue; nIndex < nLength; nIndex++)
-		if ((vValue = fXTNode_atomize(oSequence1.items[nIndex], oContext)) !== null)
+		if ((vValue = fXTItem_atomize(oSequence1.items[nIndex], oContext)) !== null)
 			oSequence.add(vValue);
 	return oSequence;
 };
