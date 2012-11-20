@@ -53,11 +53,16 @@ fStaticContext_defineSystemFunction("resolve-QName",	[[cXSString, '?'], [cXTElem
 // fn:QName($paramURI as xs:string?, $paramQName as xs:string) as xs:QName
 fStaticContext_defineSystemFunction("QName",		[[cXSString, '?'], [cXSString]],	function(oSequence1, oSequence2) {
 	var sQName	= oSequence2.items[0].valueOf(),
-		aQName	= sQName.split(':'),
-		sLocalName	= aQName.pop(),
-		sPrefix	= aQName.pop() || null;
+		aMatch	= sQName.match(cXSQName.RegExp);
 
-	return new cXSQName(sPrefix, sLocalName, oSequence1.isEmpty() ? '' : oSequence1.items[0].valueOf());
+	if (!aMatch)
+		throw new cException("FOCA0002"
+//->Debug
+				, "Invalid QName '" + sQName + "'"
+//<-Debug
+		);
+
+	return new cXSQName(aMatch[1] || null, aMatch[2] || null, oSequence1.isEmpty() ? '' : oSequence1.items[0].valueOf());
 });
 
 // 11.2 Functions Related to QNames
@@ -90,10 +95,7 @@ fStaticContext_defineSystemFunction("namespace-uri-from-QName",	[[cXSQName, '?']
 
 // fn:namespace-uri-for-prefix($prefix as xs:string?, $element as element()) as xs:anyURI?
 fStaticContext_defineSystemFunction("namespace-uri-for-prefix",	[[cXSString, '?'], [cXTElement]],	function(oSequence1, oSequence2) {
-	var sQName	= oSequence1.isEmpty() ? '' : oSequence1.items[0].valueOf(),
-		aQName	= sQName.split(':'),
-		sLocalName	= aQName.pop(),
-		sPrefix		= aQName.pop() || null,
+	var sPrefix	= oSequence1.isEmpty() ? '' : oSequence1.items[0].valueOf(),
 		sNameSpaceURI	= this.DOMAdapter.lookupNamespaceURI(oSequence2.items[0], sPrefix || null);
 
 	return sNameSpaceURI == null ? null : cXSAnyURI.cast(new cXSString(sNameSpaceURI));
