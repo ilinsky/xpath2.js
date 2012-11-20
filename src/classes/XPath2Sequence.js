@@ -108,7 +108,7 @@ cXPath2Sequence.prototype.toBoolean	= function(oContext) {
 			return oItem.value.valueOf();
 		if (oItem instanceof cXSString)
 			return !!oItem.valueOf().length;
-		if (oItem instanceof cXSDecimal || oItem instanceof cXSDouble || oItem instanceof cXSFloat)
+		if (fXSAnyAtomicType_isNumeric(oItem))
 			return !(fIsNaN(oItem.valueOf()) || oItem.valueOf() == 0);
 
 		throw new cXPath2Error("FORG0006"
