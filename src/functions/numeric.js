@@ -42,9 +42,8 @@ fStaticContext_defineSystemFunction("round",		[[cXSDouble, '?']],	function(oSequ
 fStaticContext_defineSystemFunction("round-half-to-even",	[[cXSDouble, '?'], [cXSInteger, '', true]],	function(oSequence1, oSequence2) {
 	var oValue	= oSequence1.items[0];
 	var oPrecision	= new cXSInteger(0);
-	if (arguments.length > 1) {
+	if (arguments.length > 1)
 		oPrecision	= oSequence2.items[0];
-	}
 
 	//
 	if (oPrecision.valueOf() < 0) {
