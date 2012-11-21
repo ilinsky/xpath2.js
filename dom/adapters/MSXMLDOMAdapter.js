@@ -13,6 +13,8 @@ var oMSXMLDOMAdapter	= new cMSDOMAdapter;
 oMSXMLDOMAdapter.getProperty	= function(oNode, sName) {
 	if (sName == "localName")
 		return oNode.nodeType == 7 ? null : oNode.baseName;
+	if (sName == "prefix" || sName == "namespaceURI")
+		return oNode[sName] || null;
 	if (sName == "textContent")
 		return oNode.text;
 	return oNode[sName];

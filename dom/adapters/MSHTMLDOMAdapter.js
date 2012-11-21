@@ -12,9 +12,11 @@ var oMSHTMLDOMAdapter	= new cMSDOMAdapter;
 //
 oMSHTMLDOMAdapter.getProperty	= function(oNode, sName) {
 	if (sName == "localName")
-		return oNode.nodeName == '' ? '' : oNode.nodeName.toLowerCase();
+		return oNode.nodeType == 1 || oNode.nodeType == 2 ? oNode.nodeName.toLowerCase() : null;
+	if (sName == "prefix")
+		return null;
 	if (sName == "namespaceURI")
-		return "http://www.w3.org/1999/xhtml";
+		return oNode.nodeType == 1 ? "http://www.w3.org/1999/xhtml" : null;
 	if (sName == "textContent")
 		return oNode.innerText;
 	if (sName == "attributes") {
