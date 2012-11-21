@@ -84,7 +84,7 @@
 			}
 
 			function testDOMParser_KindTest_Attribute() {
-				assertEquals(12,
+				assertEquals(13,
 						evaluateXPathNumber('count(descendant-or-self::*/attribute())', xml));
 			}
 
@@ -136,7 +136,7 @@
 			}
 
 			function testDOMParser_NameTest_Attribute_LocalNameWC() {
-				assertEquals(12,
+				assertEquals(13,
 						evaluateXPathNumber('count(descendant-or-self::*/@*)', xml));
 			}
 
@@ -156,6 +156,11 @@
 			}
 
 			// Misc
+			function testDOMParser_BaseUri() {
+				assertEquals("http://my_base/",
+						evaluateXPathString('base-uri(descendant-or-self::*[2])', xml));
+			}
+
 			function testDOMParser_FunctionCall_Id() {
 				assertEquals("id-root",
 						evaluateXPathString('string(id("id-root")/@id)', xml));
