@@ -14,6 +14,17 @@ function cMSDOMAdapter() {
 cMSDOMAdapter.prototype	= new cXPath2.classes.DOMAdapter;
 
 // Standard members
+cMSDOMAdapter.prototype.getProperty	= function(oNode, sName) {
+//	if (sName == "baseURI") {
+//		var sBaseURI	= '';
+//		for (var oParent = oNode, sUri; oParent; oParent = oParent.parentNode)
+//			if (oParent.nodeType == 1 /* cNode.ELEMENT_NODE */ && (sUri = oParent.getAttribute("xml:base")))
+//				sBaseURI	= _resolve_uri_(sUri, sBaseURI);
+//		return sBaseURI;
+//	}
+	return oNode[sName];
+};
+
 cMSDOMAdapter.prototype.isSameNode	= function(oNode, oNode2) {
 	return oNode == oNode2;
 };

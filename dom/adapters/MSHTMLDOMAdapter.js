@@ -26,5 +26,6 @@ oMSHTMLDOMAdapter.getProperty	= function(oNode, sName) {
 				aAttributes[aAttributes.length]	= oAttributes[nIndex];
 		return aAttributes;
 	}
-	return oNode[sName];
+	//
+	return cMSDOMAdapter.prototype.getProperty.call(this, oNode, sName);
 };

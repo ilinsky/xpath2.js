@@ -17,7 +17,8 @@ oMSXMLDOMAdapter.getProperty	= function(oNode, sName) {
 		return oNode[sName] || null;
 	if (sName == "textContent")
 		return oNode.text;
-	return oNode[sName];
+	//
+	return cMSDOMAdapter.prototype.getProperty.call(this, oNode, sName);
 };
 
 // Document object members
