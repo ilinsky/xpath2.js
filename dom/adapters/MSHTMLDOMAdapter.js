@@ -28,12 +28,3 @@ oMSHTMLDOMAdapter.getProperty	= function(oNode, sName) {
 	}
 	return oNode[sName];
 };
-
-oMSHTMLDOMAdapter.lookupNamespaceURI	= function(oNode, sPrefix) {
-	return sPrefix == null ? "http://www.w3.org/1999/xhtml" : null;
-};
-
-// Element/Document object members
-oMSHTMLDOMAdapter.getElementsByTagNameNS	= function(oNode, sNameSpaceURI, sLocalName) {
-	return oNode.getElementsByTagNameNS(sNameSpaceURI, sLocalName);
-};

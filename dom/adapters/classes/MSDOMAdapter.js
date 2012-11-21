@@ -48,3 +48,32 @@ cMSDOMAdapter.prototype.compareDocumentPosition	= function(oNode, oChild) {
 	//
 	return nLength1 < nLength2 ? 4 /* cNode.DOCUMENT_POSITION_FOLLOWING */ | 16 /* cNode.DOCUMENT_POSITION_CONTAINED_BY */ : 2 /* cNode.DOCUMENT_POSITION_PRECEDING */ | 8 /* cNode.DOCUMENT_POSITION_CONTAINS */;
 };
+
+cMSDOMAdapter.prototype.lookupNamespaceURI	= function(oNode, sPrefix) {
+	for (; oNode && oNode.nodeType != 9 /* cNode.DOCUMENT_NODE */ ; oNode = oNode.parentNode)
+		if (sPrefix == this.getProperty(oChild, "prefix"))
+			return this.getProperty(oNode, "namespaceURI");
+		else
+		if (oNode.nodeType == 1)	// cNode.ELEMENT_NODE
+			for (var oAttributes = this.getProperty(oNode, "attributes"), nIndex = 0, nLength = oAttributes.length, sName = "xmlns:" + sPrefix; nIndex < nLength; nIndex++)
+				if (this.getProperty(oAttributes[nIndex], "nodeName") == sName)
+					return this.getProperty(oAttributes[nIndex], "value");
+	return null;
+};
+
+// Element/Document object members
+cMSDOMAdapter.prototype.getElementsByTagNameNS	= function(oNode, sNameSpaceURI, sLocalName) {
+	var aElements	= [],
+		bNameSpaceURI	= '*' == sNameSpaceURI,
+		bLocalName		= '*' == sLocalName;
+	(function(oNode) {
+		for (var nIndex = 0, oChild; oChild = oNode.childNodes[nIndex]; nIndex++)
+			if (oChild.nodeType == 1) {	// cNode.ELEMENT_NODE
+				if ((bLocalName || sLocalName == this.getProperty(oChild, "localName")) && (bNameSpaceURI || sNameSpaceURI == this.getProperty(oChild, "namespaceURI")))
+					aElements[aElements.length]	= oChild;
+				if (oChild.firstChild)
+					arguments.callee(oChild);
+			}
+	})(oNode);
+	return aElements;
+};
