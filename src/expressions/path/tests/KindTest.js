@@ -104,7 +104,7 @@ cKindTest.prototype.test	= function (oNode, oContext) {
 	var nType	= oContext.DOMAdapter.isNode(oNode) ? oContext.DOMAdapter.getProperty(oNode, "nodeType") : 0;
 	switch (this.name) {
 		// Node type test
-		case "node":					if (!nType)		return false;	break;
+		case "node":			return !!nType;
 		case "attribute":				if (nType != 2)	return false;	break;
 		case "document-node":	return nType == 9;
 		case "element":			return nType == 1;
