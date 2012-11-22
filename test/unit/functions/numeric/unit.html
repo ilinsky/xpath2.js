@@ -30,9 +30,6 @@
 			function testAbs() {
 				assertEquals(10.5, evaluateXPathSingle("fn:abs(10.5)"));
 				assertEquals(10.5, evaluateXPathSingle("fn:abs(-10.5)"));
-				// Not on W3c site
-				assertEquals(Infinity, evaluateXPathSingle("fn:abs(Infinity)"));
-				assertEquals(Infinity, evaluateXPathSingle("fn:abs(-Infinity)"));
 			}
 
 			function testCeiling() {
