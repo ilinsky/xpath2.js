@@ -14,8 +14,8 @@ function cExprSingle() {
 // Static members
 function fExprSingle_parse (oLexer, oStaticContext) {
 	if (!oLexer.eof())
-		return fForExpr_parse(oLexer, oStaticContext)
+		return fIfExpr_parse(oLexer, oStaticContext)
+			|| fForExpr_parse(oLexer, oStaticContext)
 			|| fQuantifiedExpr_parse(oLexer, oStaticContext)
-			|| fIfExpr_parse(oLexer, oStaticContext)
 			|| fOrExpr_parse(oLexer, oStaticContext);
 };

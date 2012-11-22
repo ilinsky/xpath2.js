@@ -14,9 +14,9 @@ function cPrimaryExpr() {
 // Static members
 function fPrimaryExpr_parse (oLexer, oStaticContext) {
 	if (!oLexer.eof())
-		return fLiteral_parse(oLexer, oStaticContext)
-			|| fVarRef_parse(oLexer, oStaticContext)
+		return fContextItemExpr_parse(oLexer, oStaticContext)
 			|| fParenthesizedExpr_parse(oLexer, oStaticContext)
-			|| fContextItemExpr_parse(oLexer, oStaticContext)
-			|| fFunctionCall_parse(oLexer, oStaticContext);
+			|| fFunctionCall_parse(oLexer, oStaticContext)
+			|| fVarRef_parse(oLexer, oStaticContext)
+			|| fLiteral_parse(oLexer, oStaticContext);
 };
