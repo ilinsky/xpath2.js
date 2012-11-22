@@ -13,16 +13,35 @@ function cLXDOMAdapter() {
 
 cLXDOMAdapter.prototype	= new cXPath2.classes.DOMAdapter;
 
-//Standard members
+// Standard members
 cLXDOMAdapter.prototype.getProperty	= function(oNode, sName) {
-//	if (sName == "baseURI") {
-//		var sBaseURI	= '';
-//		for (var oParent = oNode, sUri; oParent; oParent = oParent.parentNode)
-//			if (oParent.nodeType == 1 /* cNode.ELEMENT_NODE */ && (sUri = oParent.getAttribute("xml:base")))
-//				sBaseURI	= _resolve_uri_(sUri, sBaseURI);
-//		return sBaseURI;
-//	}
-	return oNode[sName];
+	// Run native if there is one
+	if (sName in oNode)
+		return oNode[sName];
+
+	// Otherwise run JS fallback
+	if (sName == "baseURI") {
+		var sBaseURI	= '';
+		for (var oParent = oNode, sUri; oParent; oParent = oParent.parentNode) {
+			if (oParent.nodeType == 1 /* cNode.ELEMENT_NODE */ && (sUri = oParent.getAttribute("xml:base")))
+				return sUri;	// TODO: resolve: sBaseURI	= _resolve_uri_(sUri, sBaseURI);
+		}
+
+		return sBaseURI;
+	}
+	else
+	if (sName == "textContent") {
+		var aText = [];
+		(function(oNode) {
+			for (var nIndex = 0, oChild; oChild = oNode.childNodes[nIndex]; nIndex++)
+				if (oChild.nodeType == 3 /* cNode.TEXT_NODE */ || oChild.nodeType == 4 /* cNode.CDATA_SECTION_NODE */)
+					aText.push(oChild.data);
+				else
+				if (oChild.nodeType == 1 /* cNode.ELEMENT_NODE */ && oChild.firstChild)
+					arguments.callee(oChild);
+		})(oNode);
+		return aText.join('');
+	}
 };
 
 cLXDOMAdapter.prototype.isSameNode	= function(oNode, oNode2) {
