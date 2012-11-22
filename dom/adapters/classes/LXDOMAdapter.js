@@ -21,12 +21,15 @@ cLXDOMAdapter.prototype.getProperty	= function(oNode, sName) {
 
 	// Otherwise run JS fallback
 	if (sName == "baseURI") {
-		var sBaseURI	= '';
-		for (var oParent = oNode, sUri; oParent; oParent = oParent.parentNode) {
-			if (oParent.nodeType == 1 /* cNode.ELEMENT_NODE */ && (sUri = oParent.getAttribute("xml:base")))
-				return sUri;	// TODO: resolve: sBaseURI	= _resolve_uri_(sUri, sBaseURI);
-		}
+		var sBaseURI	= '',
+			cSequence	= cXPath2.classes.Sequence,
+			fResolveUri	= oXPathEvaluator_XMLContext.getFunction('{' + "http://www.w3.org/2005/xpath-functions" + '}' + "resolve-uri"),
+			cXSString	= oXPathEvaluator_XMLContext.getDataType('{' + "http://www.w3.org/2001/XMLSchema" + '}' + "string");
 
+		for (var oParent = oNode, sUri; oParent; oParent = oParent.parentNode)
+			if (oParent.nodeType == 1 /* cNode.ELEMENT_NODE */ && (sUri = oParent.getAttribute("xml:base")))
+				sBaseURI	= fResolveUri(new cSequence(new cXSString(sUri)), new cSequence(new cXSString(sBaseURI))).toString();
+		//
 		return sBaseURI;
 	}
 	else
