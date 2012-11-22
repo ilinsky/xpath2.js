@@ -7,7 +7,7 @@
  *
  */
 
-var oW3XMLDOMAdapter	= new cXPath2.classes.DOMAdapter;
+var oW3XMLDOMAdapter	= new cLXDOMAdapter;
 
 // Document object members
 /*oW3XMLDOMAdapter.getElementById	= function(oDocument, sId) {

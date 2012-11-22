@@ -7,7 +7,7 @@
  *
  */
 
-var oMSHTMLDOMAdapter	= new cMSDOMAdapter;
+var oMSHTMLDOMAdapter	= new cLXDOMAdapter;
 
 //
 oMSHTMLDOMAdapter.getProperty	= function(oNode, sName) {
@@ -27,5 +27,5 @@ oMSHTMLDOMAdapter.getProperty	= function(oNode, sName) {
 		return aAttributes;
 	}
 	//
-	return cMSDOMAdapter.prototype.getProperty.call(this, oNode, sName);
+	return cLXDOMAdapter.prototype.getProperty.call(this, oNode, sName);
 };

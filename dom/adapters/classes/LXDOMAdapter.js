@@ -7,14 +7,14 @@
  *
  */
 
-function cMSDOMAdapter() {
+function cLXDOMAdapter() {
 
 };
 
-cMSDOMAdapter.prototype	= new cXPath2.classes.DOMAdapter;
+cLXDOMAdapter.prototype	= new cXPath2.classes.DOMAdapter;
 
-// Standard members
-cMSDOMAdapter.prototype.getProperty	= function(oNode, sName) {
+//Standard members
+cLXDOMAdapter.prototype.getProperty	= function(oNode, sName) {
 //	if (sName == "baseURI") {
 //		var sBaseURI	= '';
 //		for (var oParent = oNode, sUri; oParent; oParent = oParent.parentNode)
@@ -25,11 +25,21 @@ cMSDOMAdapter.prototype.getProperty	= function(oNode, sName) {
 	return oNode[sName];
 };
 
-cMSDOMAdapter.prototype.isSameNode	= function(oNode, oNode2) {
+cLXDOMAdapter.prototype.isSameNode	= function(oNode, oNode2) {
+	// Run native if there is one
+	if ("isSameNode" in oNode)
+		return oNode.isSameNode(oNode2);
+
+	// Otherwise run JS fallback
 	return oNode == oNode2;
 };
 
-cMSDOMAdapter.prototype.compareDocumentPosition	= function(oNode, oChild) {
+cLXDOMAdapter.prototype.compareDocumentPosition	= function(oNode, oChild) {
+	// Run native if there is one
+	if ("compareDocumentPosition" in oNode)
+		return oNode.compareDocumentPosition(oChild);
+
+	// Otherwise run JS fallback
 	if (oChild == oNode)
 		return 0;
 
@@ -60,7 +70,12 @@ cMSDOMAdapter.prototype.compareDocumentPosition	= function(oNode, oChild) {
 	return nLength1 < nLength2 ? 4 /* cNode.DOCUMENT_POSITION_FOLLOWING */ | 16 /* cNode.DOCUMENT_POSITION_CONTAINED_BY */ : 2 /* cNode.DOCUMENT_POSITION_PRECEDING */ | 8 /* cNode.DOCUMENT_POSITION_CONTAINS */;
 };
 
-cMSDOMAdapter.prototype.lookupNamespaceURI	= function(oNode, sPrefix) {
+cLXDOMAdapter.prototype.lookupNamespaceURI	= function(oNode, sPrefix) {
+	// Run native if there is one
+	if ("lookupNamespaceURI" in oNode)
+		return oNode.lookupNamespaceURI(sPrefix);
+
+	// Otherwise run JS fallback
 	for (; oNode && oNode.nodeType != 9 /* cNode.DOCUMENT_NODE */ ; oNode = oNode.parentNode)
 		if (sPrefix == this.getProperty(oChild, "prefix"))
 			return this.getProperty(oNode, "namespaceURI");
@@ -73,7 +88,12 @@ cMSDOMAdapter.prototype.lookupNamespaceURI	= function(oNode, sPrefix) {
 };
 
 // Element/Document object members
-cMSDOMAdapter.prototype.getElementsByTagNameNS	= function(oNode, sNameSpaceURI, sLocalName) {
+cLXDOMAdapter.prototype.getElementsByTagNameNS	= function(oNode, sNameSpaceURI, sLocalName) {
+	// Run native if there is one
+	if ("getElementsByTagNameNS" in oNode)
+		return oNode.getElementsByTagNameNS(sNameSpaceURI, sLocalName);
+
+	// Otherwise run JS fallback
 	var aElements	= [],
 		bNameSpaceURI	= '*' == sNameSpaceURI,
 		bLocalName		= '*' == sLocalName;

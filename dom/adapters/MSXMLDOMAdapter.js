@@ -7,7 +7,7 @@
  *
  */
 
-var oMSXMLDOMAdapter	= new cMSDOMAdapter;
+var oMSXMLDOMAdapter	= new cLXDOMAdapter;
 
 //
 oMSXMLDOMAdapter.getProperty	= function(oNode, sName) {
@@ -18,7 +18,7 @@ oMSXMLDOMAdapter.getProperty	= function(oNode, sName) {
 	if (sName == "textContent")
 		return oNode.text;
 	//
-	return cMSDOMAdapter.prototype.getProperty.call(this, oNode, sName);
+	return cLXDOMAdapter.prototype.getProperty.call(this, oNode, sName);
 };
 
 // Document object members

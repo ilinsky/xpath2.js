@@ -7,7 +7,7 @@ classes/XPathExpression.js
 classes/XPathNSResolver.js
 classes/XPathResult.js
 #
-adapters/classes/MSDOMAdapter.js
+adapters/classes/LXDOMAdapter.js
 adapters/MSHTMLDOMAdapter.js
 adapters/MSXMLDOMAdapter.js
 adapters/W3HTMLDOMAdapter.js

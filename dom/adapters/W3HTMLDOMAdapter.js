@@ -7,7 +7,7 @@
  *
  */
 
-var oW3HTMLDOMAdapter	= new cXPath2.classes.DOMAdapter;
+var oW3HTMLDOMAdapter	= new cLXDOMAdapter;
 /*
 // Custom members
 oW3HTMLDOMAdapter.isNode		= function(oNode) {
