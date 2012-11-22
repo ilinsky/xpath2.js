@@ -13,19 +13,20 @@ function cNumericLiteral(oValue) {
 
 cNumericLiteral.prototype	= new cLiteral;
 
+cNumericLiteral.RegExp	= /^-?(\d+)?(?:\.(\d*))?(?:[eE]([+-])?(\d+))?$/;
+
 // Integer | Decimal | Double
 function fNumericLiteral_parse (oLexer, oStaticContext) {
-	var nValue	= +oLexer.peek();
-	if (!fIsNaN(nValue)) {
+	var cType	= cXSInteger,
+		sValue	= oLexer.peek(),
+		aMatch	= sValue.match(cNumericLiteral.RegExp);
+	if (aMatch) {
 		oLexer.next();
-		var oValue;
-		if (cString(nValue).match(cXSInteger.RegExp))
-			oValue	= new cXSInteger(nValue);
+		if (typeof aMatch[4] != "undefined")
+			cType	= cXSDouble;
 		else
-		if (cString(nValue).match(cXSDecimal.RegExp))
-			oValue	= new cXSDecimal(nValue);
-		else
-			oValue	= new cXSDouble(nValue);
-		return new cNumericLiteral(oValue);
+		if (typeof aMatch[2] != "undefined")
+			cType	= cXSDecimal;
+		return new cNumericLiteral(new cType(+sValue));
 	}
 };
