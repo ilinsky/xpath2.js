@@ -23,19 +23,20 @@ fStaticContext_defineSystemFunction("node-name",		[[cXTNode, '?']],	function(oSe
 	if (oSequence1.isEmpty())
 		return null;
 	//
-	var oNode	= oSequence1.items[0];
-	switch (this.DOMAdapter.getProperty(oNode, "nodeType")) {
+	var fGetProperty	= this.DOMAdapter.getProperty,
+		oNode	= oSequence1.items[0];
+	switch (fGetProperty(oNode, "nodeType")) {
 		case 1:		// ELEMENT_NAME
 		case 2:		// ATTRIBUTE_NODE
-			return new cXSQName(this.DOMAdapter.getProperty(oNode, "prefix"), this.DOMAdapter.getProperty(oNode, "localName"), this.DOMAdapter.getProperty(oNode, "namespaceURI"));
+			return new cXSQName(fGetProperty(oNode, "prefix"), fGetProperty(oNode, "localName"), fGetProperty(oNode, "namespaceURI"));
 		case 5:		// ENTITY_REFERENCE_NODE
 			throw "Not implemented";
 		case 6:		// ENTITY_NODE
 			throw "Not implemented";
 		case 7:		// PROCESSING_INSTRUCTION_NODE
-			return new cXSQName(null, this.DOMAdapter.getProperty(oNode, "target"), null);
+			return new cXSQName(null, fGetProperty(oNode, "target"), null);
 		case 10:	// DOCUMENT_TYPE_NODE
-			return new cXSQName(null, this.DOMAdapter.getProperty(oNode, "name"), null);
+			return new cXSQName(null, fGetProperty(oNode, "name"), null);
 	}
 	//
 	return null;
@@ -90,9 +91,10 @@ fStaticContext_defineSystemFunction("document-uri",	[[cXTNode, '?']],	function(o
 	if (oSequence1.isEmpty())
 		return null;
 	//
-	var oNode	= oSequence1.items[0];
-	if (this.DOMAdapter.getProperty(oNode, "nodeType") == 9)
-		return cXSAnyURI.cast(new cXSString(this.DOMAdapter.getProperty(oNode, "documentURI") || ''));
+	var fGetProperty	= this.DOMAdapter.getProperty,
+		oNode	= oSequence1.items[0];
+	if (fGetProperty(oNode, "nodeType") == 9)
+		return cXSAnyURI.cast(new cXSString(fGetProperty(oNode, "documentURI") || ''));
 	//
 	return null;
 });

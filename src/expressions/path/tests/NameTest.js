@@ -38,12 +38,13 @@ function fNameTest_parse (oLexer, oStaticContext) {
 
 // Public members
 cNameTest.prototype.test	= function (oNode, oContext) {
-	var nType	= oContext.DOMAdapter.getProperty(oNode, "nodeType");
+	var fGetProperty	= oContext.DOMAdapter.getProperty,
+		nType	= fGetProperty(oNode, "nodeType");
 	if (nType == 1 || nType == 2) {
 		if (this.localName == '*')
-			return (nType == 1 || (oContext.DOMAdapter.getProperty(oNode, "prefix") != "xmlns" && oContext.DOMAdapter.getProperty(oNode, "localName") != "xmlns")) && (!this.prefix || oContext.DOMAdapter.getProperty(oNode, "namespaceURI") == this.namespaceURI);
-		if (this.localName == oContext.DOMAdapter.getProperty(oNode, "localName"))
-			return this.namespaceURI == '*' || (nType == 2 && !this.prefix && !oContext.DOMAdapter.getProperty(oNode, "prefix")) || oContext.DOMAdapter.getProperty(oNode, "namespaceURI") == this.namespaceURI;
+			return (nType == 1 || (fGetProperty(oNode, "prefix") != "xmlns" && fGetProperty(oNode, "localName") != "xmlns")) && (!this.prefix || fGetProperty(oNode, "namespaceURI") == this.namespaceURI);
+		if (this.localName == fGetProperty(oNode, "localName"))
+			return this.namespaceURI == '*' || (nType == 2 && !this.prefix && !fGetProperty(oNode, "prefix")) || fGetProperty(oNode, "namespaceURI") == this.namespaceURI;
 	}
 	//
 	return false;

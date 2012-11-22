@@ -109,16 +109,17 @@ fStaticContext_defineSystemFunction("lang",	[[cXSString, '?'], [cXTNode, '', tru
 		oSequence2	= new cSequence(this.item);
 	}
 
-	var oNode = oSequence2.items[0];
-	if (this.DOMAdapter.getProperty(oNode, "nodeType") == 2)
-		oNode	= this.DOMAdapter.getProperty(oNode, "ownerElement");
+	var fGetProperty	= this.DOMAdapter.getProperty,
+		oNode	= oSequence2.items[0];
+	if (fGetProperty(oNode, "nodeType") == 2)
+		oNode	= fGetProperty(oNode, "ownerElement");
 
 	// walk up the tree looking for xml:lang attribute
-	for (var aAttributes; oNode; oNode = this.DOMAdapter.getProperty(oNode, "parentNode"))
-		if (aAttributes = this.DOMAdapter.getProperty(oNode, "attributes"))
+	for (var aAttributes; oNode; oNode = fGetProperty(oNode, "parentNode"))
+		if (aAttributes = fGetProperty(oNode, "attributes"))
 			for (var nIndex = 0, nLength = aAttributes.length; nIndex < nLength; nIndex++)
-				if (this.DOMAdapter.getProperty(aAttributes[nIndex], "nodeName") == "xml:lang")
-					return new cXSBoolean(this.DOMAdapter.getProperty(aAttributes[nIndex], "value").replace(/-.+/, '').toLowerCase() == oSequence1.items[0].valueOf().replace(/-.+/, '').toLowerCase());
+				if (fGetProperty(aAttributes[nIndex], "nodeName") == "xml:lang")
+					return new cXSBoolean(fGetProperty(aAttributes[nIndex], "value").replace(/-.+/, '').toLowerCase() == oSequence1.items[0].valueOf().replace(/-.+/, '').toLowerCase());
 	//
 	return new cXSBoolean(false);
 });
@@ -139,13 +140,14 @@ fStaticContext_defineSystemFunction("root",	[[cXTNode, '?', true]],	function(oSe
 	if (oSequence1.isEmpty())
 		return null;
 
-	var oParent	= oSequence1.items[0];
+	var fGetProperty	= this.DOMAdapter.getProperty,
+		oParent	= oSequence1.items[0];
 
 	// If context node is Attribute
-	if (this.DOMAdapter.getProperty(oParent, "nodeType") == 2)
-		oParent	= this.DOMAdapter.getProperty(oParent, "ownerElement");
+	if (fGetProperty(oParent, "nodeType") == 2)
+		oParent	= fGetProperty(oParent, "ownerElement");
 
-	for (var oNode = oParent; oNode; oNode = this.DOMAdapter.getProperty(oParent, "parentNode"))
+	for (var oNode = oParent; oNode; oNode = fGetProperty(oParent, "parentNode"))
 		oParent	= oNode;
 
 	return oParent;

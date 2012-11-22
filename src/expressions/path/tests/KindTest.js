@@ -101,7 +101,8 @@ function fKindTest_parse (oLexer, oStaticContext) {
 
 // Public members
 cKindTest.prototype.test	= function (oNode, oContext) {
-	var nType	= oContext.DOMAdapter.isNode(oNode) ? oContext.DOMAdapter.getProperty(oNode, "nodeType") : 0;
+	var fGetProperty	= oContext.DOMAdapter.getProperty,
+		nType	= oContext.DOMAdapter.isNode(oNode) ? fGetProperty(oNode, "nodeType") : 0;
 	switch (this.name) {
 		// Node type test
 		case "node":			return !!nType;
@@ -122,9 +123,9 @@ cKindTest.prototype.test	= function (oNode, oContext) {
 
 	// Additional tests
 	if (nType == 2)
-		return oContext.DOMAdapter.getProperty(oNode, "prefix") != "xmlns" && oContext.DOMAdapter.getProperty(oNode, "localName") != "xmlns";
+		return fGetProperty(oNode, "prefix") != "xmlns" && fGetProperty(oNode, "localName") != "xmlns";
 	if (nType == 7)
-		return oContext.DOMAdapter.getProperty(oNode, "target") != "xml";
+		return fGetProperty(oNode, "target") != "xml";
 
 	return true;
 };
