@@ -12,8 +12,6 @@ function cDynamicContext(oStaticContext, vItem, oScope, oDOMAdapter) {
 	this.staticContext	= oStaticContext;
 	//
 	this.item		= vItem;
-	this.position	= 1;
-	this.size		= 1;
 	//
 	this.scope		= oScope || {};
 	this.stack		= {};
@@ -27,8 +25,8 @@ function cDynamicContext(oStaticContext, vItem, oScope, oDOMAdapter) {
 };
 
 cDynamicContext.prototype.item		= null;
-cDynamicContext.prototype.position	= null;
-cDynamicContext.prototype.size		= null;
+cDynamicContext.prototype.position	= 0;
+cDynamicContext.prototype.size		= 0;
 //
 cDynamicContext.prototype.scope		= null;
 cDynamicContext.prototype.stack		= null;	// Variables stack
