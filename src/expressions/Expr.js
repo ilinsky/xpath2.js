@@ -26,15 +26,12 @@ function fExpr_parse (oLexer, oStaticContext) {
 //<-Debug
 			);
 		oExpr.items.push(oItem);
+		//
+		if (oLexer.peek() != ',')
+			break;
+		oLexer.next();
 	}
-	while (oLexer.peek() == ',' && oLexer.next());
-	//
-	if (oLexer.peek(-1) == ',')
-		throw new cException("XPST0003"
-//->Debug
-				, "Expected expression"
-//<-Debug
-		);
+	while (true);
 
 	//
 	return oExpr;
