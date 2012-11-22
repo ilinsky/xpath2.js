@@ -18,49 +18,74 @@ cAdditiveExpr.prototype.items	= null;
 //
 var hAdditiveExpr_operators	= {};
 hAdditiveExpr_operators['+']	= function(oLeft, oRight, oContext) {
+	var sOperator	= '',
+		bReverse	= false;
+
 	if (fXSAnyAtomicType_isNumeric(oLeft)) {
 		if (fXSAnyAtomicType_isNumeric(oRight))
-			return hStaticContext_operators["numeric-add"].call(oContext, oLeft, oRight);
+			sOperator	= "numeric-add";
 	}
 	else
 	if (oLeft instanceof cXSDate) {
 		if (oRight instanceof cXSYearMonthDuration)
-			return hStaticContext_operators["add-yearMonthDuration-to-date"].call(oContext, oLeft, oRight);
+			sOperator	= "add-yearMonthDuration-to-date";
+		else
 		if (oRight instanceof cXSDayTimeDuration)
-			return hStaticContext_operators["add-dayTimeDuration-to-date"].call(oContext, oLeft, oRight);
+			sOperator	= "add-dayTimeDuration-to-date";
 	}
 	else
 	if (oLeft instanceof cXSYearMonthDuration) {
-		if (oRight instanceof cXSDate)
-			return hStaticContext_operators["add-yearMonthDuration-to-date"].call(oContext, oRight, oLeft);
-		if (oRight instanceof cXSDateTime)
-			return hStaticContext_operators["add-yearMonthDuration-to-dateTime"].call(oContext, oRight, oLeft);
+		if (oRight instanceof cXSDate) {
+			sOperator	= "add-yearMonthDuration-to-date";
+			bReverse	= true;
+		}
+		else
+		if (oRight instanceof cXSDateTime) {
+			sOperator	= "add-yearMonthDuration-to-dateTime";
+			bReverse	= true;
+		}
+		else
 		if (oRight instanceof cXSYearMonthDuration)
-			return hStaticContext_operators["add-yearMonthDurations"].call(oContext, oLeft, oRight);
+			sOperator	= "add-yearMonthDurations";
 	}
 	else
 	if (oLeft instanceof cXSDayTimeDuration) {
-		if (oRight instanceof cXSDate)
-			return hStaticContext_operators["add-dayTimeDuration-to-date"].call(oContext, oRight, oLeft);
-		if (oRight instanceof cXSTime)
-			return hStaticContext_operators["add-dayTimeDuration-to-time"].call(oContext, oRight, oLeft);
-		if (oRight instanceof cXSDateTime)
-			return hStaticContext_operators["add-dayTimeDuration-to-dateTime"].call(oContext, oRight, oLeft);
+		if (oRight instanceof cXSDate) {
+			sOperator	= "add-dayTimeDuration-to-date";
+			bReverse	= true;
+		}
+		else
+		if (oRight instanceof cXSTime) {
+			sOperator	= "add-dayTimeDuration-to-time";
+			bReverse	= true;
+		}
+		else
+		if (oRight instanceof cXSDateTime) {
+			sOperator	= "add-dayTimeDuration-to-dateTime";
+			bReverse	= true;
+		}
+		else
 		if (oRight instanceof cXSDayTimeDuration)
-			return hStaticContext_operators["add-dayTimeDurations"].call(oContext, oLeft, oRight);
+			sOperator	= "add-dayTimeDurations";
 	}
 	else
 	if (oLeft instanceof cXSTime) {
 		if (oRight instanceof cXSDayTimeDuration)
-			return hStaticContext_operators["add-dayTimeDuration-to-time"].call(oContext, oLeft, oRight);
+			sOperator	= "add-dayTimeDuration-to-time";
 	}
 	else
 	if (oLeft instanceof cXSDateTime) {
 		if (oRight instanceof cXSYearMonthDuration)
-			return hStaticContext_operators["add-yearMonthDuration-to-dateTime"].call(oContext, oLeft, oRight);
+			sOperator	= "add-yearMonthDuration-to-dateTime";
+		else
 		if (oRight instanceof cXSDayTimeDuration)
-			return hStaticContext_operators["add-dayTimeDuration-to-dateTime"].call(oContext, oLeft, oRight);
+			sOperator	= "add-dayTimeDuration-to-dateTime";
 	}
+
+	// Call operator function
+	if (sOperator)
+		return hStaticContext_operators[sOperator].call(oContext, bReverse ? oRight : oLeft, bReverse ? oLeft : oRight);
+
 	//
 	throw new cException("XPTY0004"
 //->Debug
@@ -69,45 +94,57 @@ hAdditiveExpr_operators['+']	= function(oLeft, oRight, oContext) {
 	);	// Arithmetic operator is not defined for arguments of types ({type1}, {type2})
 };
 hAdditiveExpr_operators['-']	= function (oLeft, oRight, oContext) {
+	var sOperator	= '';
+
 	if (fXSAnyAtomicType_isNumeric(oLeft)) {
 		if (fXSAnyAtomicType_isNumeric(oRight))
-			return hStaticContext_operators["numeric-subtract"].call(oContext, oLeft, oRight);
+			sOperator	= "numeric-subtract";
 	}
 	else
 	if (oLeft instanceof cXSDate) {
 		if (oRight instanceof cXSDate)
-			return hStaticContext_operators["subtract-dates"].call(oContext, oLeft, oRight);
+			sOperator	= "subtract-dates";
+		else
 		if (oRight instanceof cXSYearMonthDuration)
-			return hStaticContext_operators["subtract-yearMonthDuration-from-date"].call(oContext, oLeft, oRight);
+			sOperator	= "subtract-yearMonthDuration-from-date";
+		else
 		if (oRight instanceof cXSDayTimeDuration)
-			return hStaticContext_operators["subtract-dayTimeDuration-from-date"].call(oContext, oLeft, oRight);
+			sOperator	= "subtract-dayTimeDuration-from-date";
 	}
 	else
 	if (oLeft instanceof cXSTime) {
 		if (oRight instanceof cXSTime)
-			return hStaticContext_operators["subtract-times"].call(oContext, oLeft, oRight);
+			sOperator	= "subtract-times";
+		else
 		if (oRight instanceof cXSDayTimeDuration)
-			return hStaticContext_operators["subtract-dayTimeDuration-from-time"].call(oContext, oLeft, oRight);
+			sOperator	= "subtract-dayTimeDuration-from-time";
 	}
 	else
 	if (oLeft instanceof cXSDateTime) {
 		if (oRight instanceof cXSDateTime)
-			return hStaticContext_operators["subtract-dateTimes"].call(oContext, oLeft, oRight);
+			sOperator	= "subtract-dateTimes";
+		else
 		if (oRight instanceof cXSYearMonthDuration)
-			return hStaticContext_operators["subtract-yearMonthDuration-from-dateTime"].call(oContext, oLeft, oRight);
+			sOperator	= "subtract-yearMonthDuration-from-dateTime";
+		else
 		if (oRight instanceof cXSDayTimeDuration)
-			return hStaticContext_operators["subtract-dayTimeDuration-from-dateTime"].call(oContext, oLeft, oRight);
+			sOperator	= "subtract-dayTimeDuration-from-dateTime";
 	}
 	else
 	if (oLeft instanceof cXSYearMonthDuration) {
 		if (oRight instanceof cXSYearMonthDuration)
-			return hStaticContext_operators["subtract-yearMonthDurations"].call(oContext, oLeft, oRight);
+			sOperator	= "subtract-yearMonthDurations";
 	}
 	else
 	if (oLeft instanceof cXSDayTimeDuration) {
 		if (oRight instanceof cXSDayTimeDuration)
-			return hStaticContext_operators["subtract-dayTimeDurations"].call(oContext, oLeft, oRight);
+			sOperator	= "subtract-dayTimeDurations";
 	}
+
+	// Call operator function
+	if (sOperator)
+		return hStaticContext_operators[sOperator].call(oContext, oLeft, oRight);
+
 	//
 	throw new cException("XPTY0004"
 //->Debug

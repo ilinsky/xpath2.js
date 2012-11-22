@@ -18,25 +18,39 @@ cMultiplicativeExpr.prototype.items	= null;
 //
 var hMultiplicativeExpr_operators	= {};
 hMultiplicativeExpr_operators['*']		= function (oLeft, oRight, oContext) {
+	var sOperator	= '',
+		bReverse	= false;
+
 	if (fXSAnyAtomicType_isNumeric(oLeft)) {
 		if (fXSAnyAtomicType_isNumeric(oRight))
-			return hStaticContext_operators["numeric-multiply"].call(oContext, oLeft, oRight);
-		if (oRight instanceof cXSYearMonthDuration)
-			return hStaticContext_operators["multiply-yearMonthDuration"].call(oContext, oRight, oLeft);
-		if (oRight instanceof cXSDayTimeDuration)
-			return hStaticContext_operators["multiply-dayTimeDuration"].call(oContext, oRight, oLeft);
+			sOperator	= "numeric-multiply";
+		else
+		if (oRight instanceof cXSYearMonthDuration) {
+			sOperator	= "multiply-yearMonthDuration";
+			bReverse	= true;
+		}
+		else
+		if (oRight instanceof cXSDayTimeDuration) {
+			sOperator	= "multiply-dayTimeDuration";
+			bReverse	= true;
+		}
 	}
 	else {
 		if (oLeft instanceof cXSYearMonthDuration) {
 			if (fXSAnyAtomicType_isNumeric(oRight))
-				return hStaticContext_operators["multiply-yearMonthDuration"].call(oContext, oLeft, oRight);
+				sOperator	= "multiply-yearMonthDuration";
 		}
 		else
 		if (oLeft instanceof cXSDayTimeDuration) {
 			if (fXSAnyAtomicType_isNumeric(oRight))
-				return hStaticContext_operators["multiply-dayTimeDuration"].call(oContext, oLeft, oRight);
+				sOperator	= "multiply-dayTimeDuration";
 		}
 	}
+
+	// Call operator function
+	if (sOperator)
+		return hStaticContext_operators[sOperator].call(oContext, bReverse ? oRight : oLeft, bReverse ? oLeft : oRight);
+
 	//
 	throw new cException("XPTY0004"
 //->Debug
@@ -45,24 +59,32 @@ hMultiplicativeExpr_operators['*']		= function (oLeft, oRight, oContext) {
 	);	// Arithmetic operator is not defined for arguments of types ({type1}, {type2})
 };
 hMultiplicativeExpr_operators['div']	= function (oLeft, oRight, oContext) {
+	var sOperator	= '';
+
 	if (fXSAnyAtomicType_isNumeric(oLeft)) {
 		if (fXSAnyAtomicType_isNumeric(oRight))
-			return hStaticContext_operators["numeric-divide"].call(oContext, oLeft, oRight);
+			sOperator	= "numeric-divide";
 	}
 	else
 	if (oLeft instanceof cXSYearMonthDuration) {
 		if (fXSAnyAtomicType_isNumeric(oRight))
-			return hStaticContext_operators["divide-yearMonthDuration"].call(oContext, oLeft, oRight);
+			sOperator	= "divide-yearMonthDuration";
+		else
 		if (oRight instanceof cXSYearMonthDuration)
-			return hStaticContext_operators["divide-yearMonthDuration-by-yearMonthDuration"].call(oContext, oLeft, oRight);
+			sOperator	= "divide-yearMonthDuration-by-yearMonthDuration";
 	}
 	else
 	if (oLeft instanceof cXSDayTimeDuration) {
 		if (fXSAnyAtomicType_isNumeric(oRight))
-			return hStaticContext_operators["divide-dayTimeDuration"].call(oContext, oLeft, oRight);
+			sOperator	= "divide-dayTimeDuration";
+		else
 		if (oRight instanceof cXSDayTimeDuration)
-			return hStaticContext_operators["divide-dayTimeDuration-by-dayTimeDuration"].call(oContext, oLeft, oRight);
+			sOperator	= "divide-dayTimeDuration-by-dayTimeDuration";
 	}
+	// Call operator function
+	if (sOperator)
+		return hStaticContext_operators[sOperator].call(oContext, oLeft, oRight);
+
 	//
 	throw new cException("XPTY0004"
 //->Debug
