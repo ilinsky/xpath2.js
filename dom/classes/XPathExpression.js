@@ -7,9 +7,10 @@
  *
  */
 
-function cXPathExpression(sExpression) {
+function cXPathExpression(sExpression, oStaticContext) {
 	try {
-		this.expression	= cXPathEvaluator.evaluator.compile(sExpression, cXPathEvaluator.staticContext);
+		this.staticContext	= oStaticContext;
+		this.expression	= oXPathEvaluator_evaluator.compile(sExpression, oStaticContext);
 	}
 	catch (e) {
 		if (e instanceof cXPath2.classes.Exception)
@@ -37,14 +38,14 @@ cXPathExpression.prototype.evaluate	= function(oNode, nType, oResult) {
 
 function fXPathExpression_evaluate(oExpression, oNode, nType, oResult) {
 	var oSequence,
-		oDOMAdapter	= cXPathEvaluator.DOMAdapter;
+		oDOMAdapter	= oXPathEvaluator_DOMAdapter;
 	// Determine which DOMAdapter to use based on browser and DOM type
 	if (oNode && oNode.nodeType && bOldMS)
 		oDOMAdapter	= "selectNodes" in oNode ? oMSXMLDOMAdapter : oMSHTMLDOMAdapter;
 
 	// Evaluate expression
 	try {
-		oSequence	= oExpression.expression.resolve(new cXPath2.classes.DynamicContext(cXPathEvaluator.staticContext, typeof oNode == "undefined" ? null : oNode, null, oDOMAdapter));
+		oSequence	= oExpression.expression.resolve(new cXPath2.classes.DynamicContext(oExpression.staticContext, typeof oNode == "undefined" ? null : oNode, null, oDOMAdapter));
 	}
 	catch (e) {
 		if (e instanceof cXPath2.classes.Exception)

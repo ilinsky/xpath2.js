@@ -12,12 +12,18 @@ function cXPathEvaluator() {
 };
 
 // Create new XPath2 evaluator
-cXPathEvaluator.DOMAdapter	= new cLXDOMAdapter;
-cXPathEvaluator.evaluator	= new cXPath2.classes.Evaluator;
-cXPathEvaluator.staticContext	= new cXPath2.classes.StaticContext;
-cXPathEvaluator.staticContext.defaultElementNamespace	= "http://www.w3.org/1999/xhtml";
-cXPathEvaluator.staticContext.defaultFunctionNamespace	= "http://www.w3.org/2005/xpath-functions";
-cXPathEvaluator.staticContext.baseURI	= oDocument.location.href;
+var oXPathEvaluator_DOMAdapter	= new cLXDOMAdapter,
+	oXPathEvaluator_evaluator	= new cXPath2.classes.Evaluator,
+	oXPathEvaluator_HTMLContext	= new cXPath2.classes.StaticContext,
+	oXPathEvaluator_XMLContext	= new cXPath2.classes.StaticContext;
+
+// Initialize HTML context (this has default xhtml namespace)
+oXPathEvaluator_HTMLContext.baseURI	= oDocument.location.href;
+oXPathEvaluator_HTMLContext.defaultFunctionNamespace	= "http://www.w3.org/2005/xpath-functions";
+oXPathEvaluator_HTMLContext.defaultElementNamespace		= "http://www.w3.org/1999/xhtml";
+// Initialize XML context (this has default element null namespace)
+oXPathEvaluator_XMLContext.baseURI	= oXPathEvaluator_HTMLContext.baseURI;
+oXPathEvaluator_XMLContext.defaultFunctionNamespace		= oXPathEvaluator_HTMLContext.defaultFunctionNamespace;
 
 //
 cXPathEvaluator.prototype.createExpression	= function(sExpression, oResolver) {
@@ -27,11 +33,11 @@ cXPathEvaluator.prototype.createExpression	= function(sExpression, oResolver) {
 //		["resolver",	cObject,	true,	true]
 //	]);
 
-	cXPathEvaluator.staticContext.namespaceResolver	= oResolver;
-	cXPathEvaluator.staticContext.defaultElementNamespace	= this == oDocument ? "http://www.w3.org/1999/xhtml" : null;
+	var oStaticContext	= this == oDocument ? oXPathEvaluator_HTMLContext : oXPathEvaluator_XMLContext;
+	oStaticContext.namespaceResolver	= oResolver;
 
 	// Invoke implementation
-	return new cXPathExpression(sExpression, cXPathEvaluator.staticContext);
+	return new cXPathExpression(sExpression, oStaticContext);
 };
 
 cXPathEvaluator.prototype.createNSResolver	= function(oNode) {
