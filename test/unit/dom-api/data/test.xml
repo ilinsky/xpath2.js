@@ -4,7 +4,7 @@
 <root id="id-root" xml:lang="en-gb">
 	<ele
 		att="att-no_ns"
-		att2="att2-no_ns" xml:base="http://my_base"> text </ele><!-- comment -->
+		att2="att2-no_ns" xml:base="http://my_base/"> text </ele><!-- comment -->
 	<ele xmlns:my="my_ns" xmlns="my_ns"
 		att="att-no_ns"
 		att2="att2-no_ns"
