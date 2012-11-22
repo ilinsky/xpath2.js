@@ -24,7 +24,7 @@ cStaticContext.prototype.functions	= null;
 cStaticContext.prototype.defaultFunctionNamespace	= null;
 //
 cStaticContext.prototype.collations	= null;
-cStaticContext.prototype.defaultCollationName		= "http://www.w3.org/2005/xpath-functions/collation/codepoint";
+cStaticContext.prototype.defaultCollationName		= sNS_XPFUNC + "/collation/codepoint";
 //
 cStaticContext.prototype.collections	= null;
 //
@@ -37,14 +37,14 @@ var rStaticContext_uri	= /^(?:\{([^\}]+)\})?(.+)$/;
 cStaticContext.prototype.setDataType		= function(sUri, fFunction) {
 	var aMatch	= sUri.match(rStaticContext_uri);
 	if (aMatch)
-		if (aMatch[1] != "http://www.w3.org/2001/XMLSchema")
+		if (aMatch[1] != sNS_SCHEMA)
 			this.dataTypes[sUri]	= fFunction;
 };
 
 cStaticContext.prototype.getDataType		= function(sUri) {
 	var aMatch	= sUri.match(rStaticContext_uri);
 	if (aMatch)
-		return aMatch[1] == "http://www.w3.org/2001/XMLSchema" ? hStaticContext_dataTypes[cRegExp.$2] : this.dataTypes[sUri];
+		return aMatch[1] == sNS_SCHEMA ? hStaticContext_dataTypes[cRegExp.$2] : this.dataTypes[sUri];
 };
 
 cStaticContext.prototype.setDocument		= function(sUri, fFunction) {
@@ -54,14 +54,14 @@ cStaticContext.prototype.setDocument		= function(sUri, fFunction) {
 cStaticContext.prototype.setFunction		= function(sUri, fFunction) {
 	var aMatch	= sUri.match(rStaticContext_uri);
 	if (aMatch)
-		if (aMatch[1] != "http://www.w3.org/2005/xpath-functions")
+		if (aMatch[1] != sNS_XPFUNC)
 			this.functions[sUri]	= fFunction;
 };
 
 cStaticContext.prototype.getFunction		= function(sUri) {
 	var aMatch	= sUri.match(rStaticContext_uri);
 	if (aMatch)
-		return aMatch[1] == "http://www.w3.org/2005/xpath-functions" ? hStaticContext_functions[cRegExp.$2] : this.functions[sUri];
+		return aMatch[1] == sNS_XPFUNC ? hStaticContext_functions[cRegExp.$2] : this.functions[sUri];
 };
 
 cStaticContext.prototype.setCollation		= function(sUri, fFunction) {
@@ -84,11 +84,11 @@ cStaticContext.prototype.getURIForPrefix	= function(sPrefix) {
 	if (fResolver instanceof cFunction && (sNameSpaceURI = fResolver.call(oResolver, sPrefix)))
 		return sNameSpaceURI;
 	if (sPrefix == 'fn')
-		return "http://www.w3.org/2005/xpath-functions";
+		return sNS_XPFUNC;
 	if (sPrefix == 'xs')
-		return "http://www.w3.org/2001/XMLSchema";
+		return sNS_SCHEMA;
 	if (sPrefix == "xml")
-		return "http://www.w3.org/XML/1998/namespace";
+		return sNS_XMLNS;
 	//
 	throw new cException("XPST0081"
 //->Debug

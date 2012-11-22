@@ -81,7 +81,7 @@ fStaticContext_defineSystemFunction("compare",	[[cXSString, '?'], [cXSString, '?
 	if (arguments.length > 2)
 		sCollation	= oSequence3.items[0].valueOf();
 
-	oCollation	= sCollation == "http://www.w3.org/2005/xpath-functions/collation/codepoint" ? oCodepointStringCollator : this.staticContext.getCollation(sCollation);
+	oCollation	= sCollation == sNS_XPFUNC + "/collation/codepoint" ? oCodepointStringCollator : this.staticContext.getCollation(sCollation);
 	if (!oCollation)
 		throw new cException("FOCH0002"
 //->Debug

@@ -74,7 +74,7 @@ cFunctionCall.prototype.evaluate	= function (oContext) {
 
 	var sUri	= (this.namespaceURI ? '{' + this.namespaceURI + '}' : '') + this.localName;
 	// Call function
-	if (this.namespaceURI == "http://www.w3.org/2005/xpath-functions") {
+	if (this.namespaceURI == sNS_XPFUNC) {
 		if (fFunction = hStaticContext_functions[this.localName]) {
 			// Validate/Cast arguments
 			if (aParameters = hStaticContext_signatures[this.localName])
@@ -91,7 +91,7 @@ cFunctionCall.prototype.evaluate	= function (oContext) {
 		);
 	}
 	else
-	if (this.namespaceURI == "http://www.w3.org/2001/XMLSchema") {
+	if (this.namespaceURI == sNS_SCHEMA) {
 		if (fFunction = hStaticContext_dataTypes[this.localName]) {
 			//
 			fFunctionCall_prepare(this.localName, [[cXSAnyAtomicType]], fFunction, aArguments, oContext);
