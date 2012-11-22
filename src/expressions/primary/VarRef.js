@@ -18,7 +18,7 @@ cVarRef.prototype.localName		= null;
 cVarRef.prototype.namespaceURI	= null;
 
 // Static members
-cVarRef.parse	= function (oLexer, oStaticContext) {
+fVarRef_parse	= function (oLexer, oStaticContext) {
 	if (oLexer.peek().substr(0, 1) == '$') {
 		var aMatch	= oLexer.peek().substr(1).match(cNameTest.RegExp);
 		if (aMatch) {

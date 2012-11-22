@@ -18,7 +18,7 @@ cQuantifiedExpr.prototype.quantifier	= null;
 cQuantifiedExpr.prototype.satisfiesExpr	= null;
 
 // Static members
-cQuantifiedExpr.parse	= function (oLexer, oStaticContext) {
+fQuantifiedExpr_parse	= function (oLexer, oStaticContext) {
 	var sQuantifier	= oLexer.peek();
 	if ((sQuantifier == "some" || sQuantifier == "every") && oLexer.peek(1).substr(0, 1) == '$') {
 		oLexer.next();
@@ -26,7 +26,7 @@ cQuantifiedExpr.parse	= function (oLexer, oStaticContext) {
 		var oQuantifiedExpr	= new cQuantifiedExpr(sQuantifier),
 			oExpr;
 		do {
-			oQuantifiedExpr.bindings.push(cSimpleQuantifiedBinding.parse(oLexer, oStaticContext));
+			oQuantifiedExpr.bindings.push(fSimpleQuantifiedBinding_parse(oLexer, oStaticContext));
 		}
 		while (oLexer.peek() == ',' && oLexer.next());
 
@@ -38,7 +38,7 @@ cQuantifiedExpr.parse	= function (oLexer, oStaticContext) {
 			);
 
 		oLexer.next();
-		if (oLexer.eof() ||!(oExpr = cExprSingle.parse(oLexer, oStaticContext)))
+		if (oLexer.eof() ||!(oExpr = fExprSingle_parse(oLexer, oStaticContext)))
 			throw new cException("XPST0003"
 //->Debug
 					, "Expected satisfies statement operand in quantified expression"
@@ -87,7 +87,7 @@ cSimpleQuantifiedBinding.prototype.localName	= null;
 cSimpleQuantifiedBinding.prototype.namespaceURI	= null;
 cSimpleQuantifiedBinding.prototype.inExpr	= null;
 
-cSimpleQuantifiedBinding.parse	= function(oLexer, oStaticContext) {
+fSimpleQuantifiedBinding_parse	= function(oLexer, oStaticContext) {
 	var aMatch	= oLexer.peek().substr(1).match(cNameTest.RegExp);
 	if (!aMatch)
 		throw new cException("XPST0003"
@@ -113,7 +113,7 @@ cSimpleQuantifiedBinding.parse	= function(oLexer, oStaticContext) {
 
 	oLexer.next();
 	var oExpr;
-	if (oLexer.eof() ||!(oExpr = cExprSingle.parse(oLexer, oStaticContext)))
+	if (oLexer.eof() ||!(oExpr = fExprSingle_parse(oLexer, oStaticContext)))
 		throw new cException("XPST0003"
 //->Debug
 				, "Expected in statement operand in quantified expression binding"

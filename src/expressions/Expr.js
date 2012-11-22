@@ -14,12 +14,12 @@ function cExpr() {
 cExpr.prototype.items	= null;
 
 // Static members
-cExpr.parse	= function(oLexer, oStaticContext) {
+fExpr_parse	= function(oLexer, oStaticContext) {
 	//
 	var oExpr	= new cExpr,
 		oItem;
 	do {
-		if (oLexer.eof() ||!(oItem = cExprSingle.parse(oLexer, oStaticContext)))
+		if (oLexer.eof() ||!(oItem = fExprSingle_parse(oLexer, oStaticContext)))
 			throw new cException("XPST0003"
 //->Debug
 					, "Expected expression"

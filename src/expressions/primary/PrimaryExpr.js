@@ -12,11 +12,11 @@ function cPrimaryExpr() {
 };
 
 // Static members
-cPrimaryExpr.parse	= function (oLexer, oStaticContext) {
+fPrimaryExpr_parse	= function (oLexer, oStaticContext) {
 	if (!oLexer.eof())
-		return cLiteral.parse(oLexer, oStaticContext)
-			|| cVarRef.parse(oLexer, oStaticContext)
-			|| cParenthesizedExpr.parse(oLexer, oStaticContext)
-			|| cContextItemExpr.parse(oLexer, oStaticContext)
-			|| cFunctionCall.parse(oLexer, oStaticContext);
+		return fLiteral_parse(oLexer, oStaticContext)
+			|| fVarRef_parse(oLexer, oStaticContext)
+			|| fParenthesizedExpr_parse(oLexer, oStaticContext)
+			|| fContextItemExpr_parse(oLexer, oStaticContext)
+			|| fFunctionCall_parse(oLexer, oStaticContext);
 };

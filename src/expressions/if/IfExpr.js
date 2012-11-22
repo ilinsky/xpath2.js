@@ -18,14 +18,14 @@ cIfExpr.prototype.thenExpr	= null;
 cIfExpr.prototype.elseExpr	= null;
 
 // Static members
-cIfExpr.parse	= function (oLexer, oStaticContext) {
+fIfExpr_parse	= function (oLexer, oStaticContext) {
 	var oCondExpr,
 		oThenExpr,
 		oElseExpr;
 	if (oLexer.peek() == "if" && oLexer.peek(1) == '(') {
 		oLexer.next(2);
 		//
-		if (oLexer.eof() ||!(oCondExpr = cExpr.parse(oLexer, oStaticContext)))
+		if (oLexer.eof() ||!(oCondExpr = fExpr_parse(oLexer, oStaticContext)))
 			throw new cException("XPST0003"
 //->Debug
 					, "Expected if statement operand in conditional expression"
@@ -48,7 +48,7 @@ cIfExpr.parse	= function (oLexer, oStaticContext) {
 			);
 
 		oLexer.next();
-		if (oLexer.eof() ||!(oThenExpr = cExprSingle.parse(oLexer, oStaticContext)))
+		if (oLexer.eof() ||!(oThenExpr = fExprSingle_parse(oLexer, oStaticContext)))
 			throw new cException("XPST0003"
 //->Debug
 					, "Expected then statement operand in condional expression"
@@ -63,7 +63,7 @@ cIfExpr.parse	= function (oLexer, oStaticContext) {
 			);
 
 		oLexer.next();
-		if (oLexer.eof() ||!(oElseExpr = cExprSingle.parse(oLexer, oStaticContext)))
+		if (oLexer.eof() ||!(oElseExpr = fExprSingle_parse(oLexer, oStaticContext)))
 			throw new cException("XPST0003"
 //->Debug
 					, "Expected else statement operand in condional expression"

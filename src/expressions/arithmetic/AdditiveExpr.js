@@ -154,9 +154,9 @@ hAdditiveExpr_operators['-']	= function (oLeft, oRight, oContext) {
 };
 
 // Static members
-cAdditiveExpr.parse	= function (oLexer, oStaticContext) {
+fAdditiveExpr_parse	= function (oLexer, oStaticContext) {
 	var oExpr;
-	if (oLexer.eof() ||!(oExpr = cMultiplicativeExpr.parse(oLexer, oStaticContext)))
+	if (oLexer.eof() ||!(oExpr = fMultiplicativeExpr_parse(oLexer, oStaticContext)))
 		return;
 	if (!(oLexer.peek() in hAdditiveExpr_operators))
 		return oExpr;
@@ -166,7 +166,7 @@ cAdditiveExpr.parse	= function (oLexer, oStaticContext) {
 		sOperator;
 	while ((sOperator = oLexer.peek()) in hAdditiveExpr_operators) {
 		oLexer.next();
-		if (oLexer.eof() ||!(oExpr = cMultiplicativeExpr.parse(oLexer, oStaticContext)))
+		if (oLexer.eof() ||!(oExpr = fMultiplicativeExpr_parse(oLexer, oStaticContext)))
 			throw new cException("XPST0003"
 //->Debug
 					, "Expected second operand in additive expression"

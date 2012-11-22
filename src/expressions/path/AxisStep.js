@@ -38,7 +38,7 @@ hAxisStep_axises["preceding"]			= {};
 hAxisStep_axises["preceding-sibling"]	= {};
 
 // Static members
-cAxisStep.parse	= function (oLexer, oStaticContext) {
+fAxisStep_parse	= function (oLexer, oStaticContext) {
 	var sAxis	= oLexer.peek(),
 		oExpr,
 		oStep;
@@ -51,7 +51,7 @@ cAxisStep.parse	= function (oLexer, oStaticContext) {
 			);
 
 		oLexer.next(2);
-		if (oLexer.eof() ||!(oExpr = cNodeTest.parse(oLexer, oStaticContext)))
+		if (oLexer.eof() ||!(oExpr = fNodeTest_parse(oLexer, oStaticContext)))
 			throw new cException("XPST0003"
 //->Debug
 					, "Expected node test expression in axis step"
@@ -68,7 +68,7 @@ cAxisStep.parse	= function (oLexer, oStaticContext) {
 	else
 	if (sAxis == '@') {
 		oLexer.next();
-		if (oLexer.eof() ||!(oExpr = cNodeTest.parse(oLexer, oStaticContext)))
+		if (oLexer.eof() ||!(oExpr = fNodeTest_parse(oLexer, oStaticContext)))
 			throw new cException("XPST0003"
 //->Debug
 					, "Expected node test expression in axis step"
@@ -78,12 +78,12 @@ cAxisStep.parse	= function (oLexer, oStaticContext) {
 		oStep	= new cAxisStep("attribute", oExpr);
 	}
 	else {
-		if (oLexer.eof() ||!(oExpr = cNodeTest.parse(oLexer, oStaticContext)))
+		if (oLexer.eof() ||!(oExpr = fNodeTest_parse(oLexer, oStaticContext)))
 			return;
 		oStep	= new cAxisStep(oExpr instanceof cKindTest && oExpr.name == "attribute" ? "attribute" : "child", oExpr);
 	}
 	//
-	cStepExpr.parsePredicates(oLexer, oStaticContext, oStep);
+	fStepExpr_parsePredicates(oLexer, oStaticContext, oStep);
 
 	return oStep;
 };

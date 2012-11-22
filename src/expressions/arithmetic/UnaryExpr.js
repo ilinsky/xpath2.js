@@ -40,11 +40,11 @@ hUnaryExpr_operators['+']	= function(oRight, oContext) {
 
 // Static members
 // UnaryExpr	:= ("-" | "+")* ValueExpr
-cUnaryExpr.parse	= function (oLexer, oStaticContext) {
+fUnaryExpr_parse	= function (oLexer, oStaticContext) {
 	if (oLexer.eof())
 		return;
 	if (!(oLexer.peek() in hUnaryExpr_operators))
-		return cValueExpr.parse(oLexer, oStaticContext);
+		return fValueExpr_parse(oLexer, oStaticContext);
 
 	// Unary expression
 	var sOperator	= '+',
@@ -54,7 +54,7 @@ cUnaryExpr.parse	= function (oLexer, oStaticContext) {
 			sOperator	= sOperator == '-' ? '+' : '-';
 		oLexer.next();
 	}
-	if (oLexer.eof() ||!(oExpr = cValueExpr.parse(oLexer, oStaticContext)))
+	if (oLexer.eof() ||!(oExpr = fValueExpr_parse(oLexer, oStaticContext)))
 		throw new cException("XPST0003"
 //->Debug
 				, "Expected operand in unary expression"

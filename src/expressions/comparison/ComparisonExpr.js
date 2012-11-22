@@ -18,10 +18,10 @@ cComparisonExpr.prototype.right	= null;
 cComparisonExpr.prototype.operator	= null;
 
 // Static members
-cComparisonExpr.parse	= function (oLexer, oStaticContext) {
+fComparisonExpr_parse	= function (oLexer, oStaticContext) {
 	var oExpr,
 		oRight;
-	if (oLexer.eof() ||!(oExpr = cRangeExpr.parse(oLexer, oStaticContext)))
+	if (oLexer.eof() ||!(oExpr = fRangeExpr_parse(oLexer, oStaticContext)))
 		return;
 	if (!(oLexer.peek() in hComparisonExpr_operators))
 		return oExpr;
@@ -29,7 +29,7 @@ cComparisonExpr.parse	= function (oLexer, oStaticContext) {
 	// Comparison expression
 	var sOperator	= oLexer.peek();
 	oLexer.next();
-	if (oLexer.eof() ||!(oRight = cRangeExpr.parse(oLexer, oStaticContext)))
+	if (oLexer.eof() ||!(oRight = fRangeExpr_parse(oLexer, oStaticContext)))
 		throw new cException("XPST0003"
 //->Debug
 				, "Expected second operand in comparison expression"

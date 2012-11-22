@@ -16,10 +16,10 @@ cUnionExpr.prototype.left	= null;
 cUnionExpr.prototype.items	= null;
 
 // Static members
-cUnionExpr.parse	= function (oLexer, oStaticContext) {
+fUnionExpr_parse	= function (oLexer, oStaticContext) {
 	var oExpr,
 		sOperator;
-	if (oLexer.eof() ||!(oExpr = cIntersectExceptExpr.parse(oLexer, oStaticContext)))
+	if (oLexer.eof() ||!(oExpr = fIntersectExceptExpr_parse(oLexer, oStaticContext)))
 		return;
 	if (!((sOperator = oLexer.peek()) == '|' || sOperator == "union"))
 		return oExpr;
@@ -28,7 +28,7 @@ cUnionExpr.parse	= function (oLexer, oStaticContext) {
 	var oUnionExpr	= new cUnionExpr(oExpr);
 	while ((sOperator = oLexer.peek()) == '|' || sOperator == "union") {
 		oLexer.next();
-		if (oLexer.eof() ||!(oExpr = cIntersectExceptExpr.parse(oLexer, oStaticContext)))
+		if (oLexer.eof() ||!(oExpr = fIntersectExceptExpr_parse(oLexer, oStaticContext)))
 			throw new cException("XPST0003"
 //->Debug
 					, "Expected second operand in union expression"

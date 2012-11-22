@@ -15,7 +15,7 @@ function cSequenceType(oItemType, sOccurence) {
 cSequenceType.prototype.itemType	= null;
 cSequenceType.prototype.occurence	= null;
 
-cSequenceType.parse	= function(oLexer, oStaticContext) {
+fSequenceType_parse	= function(oLexer, oStaticContext) {
 	if (oLexer.eof())
 		return;
 
@@ -33,7 +33,7 @@ cSequenceType.parse	= function(oLexer, oStaticContext) {
 
 	var oExpr,
 		sOccurence;
-	if (!oLexer.eof() && (oExpr = cItemType.parse(oLexer, oStaticContext))) {
+	if (!oLexer.eof() && (oExpr = fItemType_parse(oLexer, oStaticContext))) {
 		sOccurence	= oLexer.peek();
 		if (sOccurence == '?' || sOccurence == '*' || sOccurence == '+')
 			oLexer.next();

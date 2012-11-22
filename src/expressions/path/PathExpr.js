@@ -14,7 +14,7 @@ function cPathExpr() {
 cPathExpr.prototype.items	= null;
 
 // Static members
-cPathExpr.parse	= function (oLexer, oStaticContext) {
+fPathExpr_parse	= function (oLexer, oStaticContext) {
 	if (oLexer.eof())
 		return;
 	var sSingleSlash	= '/',
@@ -33,7 +33,7 @@ cPathExpr.parse	= function (oLexer, oStaticContext) {
 	}
 
 	//
-	if (oLexer.eof() ||!(oExpr = cStepExpr.parse(oLexer, oStaticContext))) {
+	if (oLexer.eof() ||!(oExpr = fStepExpr_parse(oLexer, oStaticContext))) {
 		if (sSlash == sSingleSlash)
 			return oPathExpr.items[0];	// '/' expression
 		if (sSlash == sDoubleSlash)
@@ -52,7 +52,7 @@ cPathExpr.parse	= function (oLexer, oStaticContext) {
 			oPathExpr.items.push(new cAxisStep("descendant-or-self", new cKindTest("node")));
 		//
 		oLexer.next();
-		if (oLexer.eof() ||!(oExpr = cStepExpr.parse(oLexer, oStaticContext)))
+		if (oLexer.eof() ||!(oExpr = fStepExpr_parse(oLexer, oStaticContext)))
 			throw new cException("XPST0003"
 //->Debug
 					, "Expected path step expression"

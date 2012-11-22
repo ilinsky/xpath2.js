@@ -16,10 +16,10 @@ cIntersectExceptExpr.prototype.left		= null;
 cIntersectExceptExpr.prototype.items	= null;
 
 // Static members
-cIntersectExceptExpr.parse	= function (oLexer, oStaticContext) {
+fIntersectExceptExpr_parse	= function (oLexer, oStaticContext) {
 	var oExpr,
 		sOperator;
-	if (oLexer.eof() ||!(oExpr = cInstanceofExpr.parse(oLexer, oStaticContext)))
+	if (oLexer.eof() ||!(oExpr = fInstanceofExpr_parse(oLexer, oStaticContext)))
 		return;
 	if (!((sOperator = oLexer.peek()) == "intersect" || sOperator == "except"))
 		return oExpr;
@@ -28,7 +28,7 @@ cIntersectExceptExpr.parse	= function (oLexer, oStaticContext) {
 	var oIntersectExceptExpr	= new cIntersectExceptExpr(oExpr);
 	while ((sOperator = oLexer.peek()) == "intersect" || sOperator == "except") {
 		oLexer.next();
-		if (oLexer.eof() ||!(oExpr = cInstanceofExpr.parse(oLexer, oStaticContext)))
+		if (oLexer.eof() ||!(oExpr = fInstanceofExpr_parse(oLexer, oStaticContext)))
 			throw new cException("XPST0003"
 //->Debug
 					, "Expected second operand in " + sOperator + " expression"

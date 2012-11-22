@@ -9,7 +9,7 @@
 
 function cExpression(sExpression, oStaticContext) {
 	var oLexer	= new cLexer(sExpression),
-		oExpr	= cExpr.parse(oLexer, oStaticContext);
+		oExpr	= fExpr_parse(oLexer, oStaticContext);
 	//
 	if (!oLexer.eof())
 		throw new cException("XPST0003"

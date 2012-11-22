@@ -15,10 +15,10 @@ function cSingleType(oItemType, sOccurence) {
 cSingleType.prototype.itemType	= null;
 cSingleType.prototype.occurence	= null;
 
-cSingleType.parse	= function(oLexer, oStaticContext) {
+fSingleType_parse	= function(oLexer, oStaticContext) {
 	var oExpr,
 		sOccurence;
-	if (!oLexer.eof() && (oExpr = cAtomicType.parse(oLexer, oStaticContext))) {
+	if (!oLexer.eof() && (oExpr = fAtomicType_parse(oLexer, oStaticContext))) {
 		sOccurence	= oLexer.peek();
 		if (sOccurence == '?')
 			oLexer.next();

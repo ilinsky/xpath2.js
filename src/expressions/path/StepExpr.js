@@ -12,19 +12,19 @@ function cStepExpr() {
 };
 
 // Static members
-cStepExpr.parse	= function (oLexer, oStaticContext) {
+fStepExpr_parse	= function (oLexer, oStaticContext) {
 	if (!oLexer.eof())
-		return cFilterExpr.parse(oLexer, oStaticContext)
-			|| cAxisStep.parse(oLexer, oStaticContext);
+		return fFilterExpr_parse(oLexer, oStaticContext)
+			|| fAxisStep_parse(oLexer, oStaticContext);
 };
 
-cStepExpr.parsePredicates	= function (oLexer, oStaticContext, oStep) {
+fStepExpr_parsePredicates	= function (oLexer, oStaticContext, oStep) {
 	var oExpr;
 	// Parse predicates
 	while (oLexer.peek() == '[') {
 		oLexer.next();
 
-		if (oLexer.eof() ||!(oExpr = cExpr.parse(oLexer, oStaticContext)))
+		if (oLexer.eof() ||!(oExpr = fExpr_parse(oLexer, oStaticContext)))
 			throw new cException("XPST0003"
 //->Debug
 					, "Expected expression in predicate"

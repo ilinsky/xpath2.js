@@ -16,14 +16,14 @@ cForExpr.prototype.bindings		= null;
 cForExpr.prototype.returnExpr	= null;
 
 // Static members
-cForExpr.parse	= function (oLexer, oStaticContext) {
+fForExpr_parse	= function (oLexer, oStaticContext) {
 	if (oLexer.peek() == "for" && oLexer.peek(1).substr(0, 1) == '$') {
 		oLexer.next();
 
 		var oForExpr	= new cForExpr,
 			oExpr;
 		do {
-			oForExpr.bindings.push(cSimpleForBinding.parse(oLexer, oStaticContext));
+			oForExpr.bindings.push(fSimpleForBinding_parse(oLexer, oStaticContext));
 		}
 		while (oLexer.peek() == ',' && oLexer.next());
 
@@ -35,7 +35,7 @@ cForExpr.parse	= function (oLexer, oStaticContext) {
 			);
 
 		oLexer.next();
-		if (oLexer.eof() ||!(oExpr = cExprSingle.parse(oLexer, oStaticContext)))
+		if (oLexer.eof() ||!(oExpr = fExprSingle_parse(oLexer, oStaticContext)))
 			throw new cException("XPST0003"
 //->Debug
 					, "Expected return statement operand in for expression"
@@ -82,7 +82,7 @@ cSimpleForBinding.prototype.localName		= null;
 cSimpleForBinding.prototype.namespaceURI	= null;
 cSimpleForBinding.prototype.inExpr		= null;
 
-cSimpleForBinding.parse	= function(oLexer, oStaticContext) {
+fSimpleForBinding_parse	= function(oLexer, oStaticContext) {
 	var aMatch	= oLexer.peek().substr(1).match(cNameTest.RegExp);
 	if (!aMatch)
 		throw new cException("XPST0003"
@@ -108,7 +108,7 @@ cSimpleForBinding.parse	= function(oLexer, oStaticContext) {
 
 	oLexer.next();
 	var oExpr;
-	if (oLexer.eof() ||!(oExpr = cExprSingle.parse(oLexer, oStaticContext)))
+	if (oLexer.eof() ||!(oExpr = fExprSingle_parse(oLexer, oStaticContext)))
 		throw new cException("XPST0003"
 //->Debug
 				, "Expected in statement operand in for expression binding"

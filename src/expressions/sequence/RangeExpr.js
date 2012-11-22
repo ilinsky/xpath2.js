@@ -16,17 +16,17 @@ cRangeExpr.prototype.left	= null;
 cRangeExpr.prototype.right	= null;
 
 // Static members
-cRangeExpr.parse	= function (oLexer, oStaticContext) {
+fRangeExpr_parse	= function (oLexer, oStaticContext) {
 	var oExpr,
 		oRight;
-	if (oLexer.eof() ||!(oExpr = cAdditiveExpr.parse(oLexer, oStaticContext)))
+	if (oLexer.eof() ||!(oExpr = fAdditiveExpr_parse(oLexer, oStaticContext)))
 		return;
 	if (oLexer.peek() != "to")
 		return oExpr;
 
 	// Range expression
 	oLexer.next();
-	if (oLexer.eof() ||!(oRight = cAdditiveExpr.parse(oLexer, oStaticContext)))
+	if (oLexer.eof() ||!(oRight = fAdditiveExpr_parse(oLexer, oStaticContext)))
 		throw new cException("XPST0003"
 //->Debug
 				, "Expected second operand in range expression"

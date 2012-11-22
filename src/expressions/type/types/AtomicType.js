@@ -17,7 +17,7 @@ cAtomicType.prototype.prefix		= null;
 cAtomicType.prototype.localName		= null;
 cAtomicType.prototype.namespaceURI	= null;
 
-cAtomicType.parse	= function(oLexer, oStaticContext) {
+fAtomicType_parse	= function(oLexer, oStaticContext) {
 	var aMatch	= oLexer.peek().match(cNameTest.RegExp);
 	if (aMatch) {
 		if (aMatch[1] == '*' || aMatch[2] == '*')

@@ -16,9 +16,9 @@ cAndExpr.prototype.left		= null;
 cAndExpr.prototype.items	= null;
 
 // Static members
-cAndExpr.parse	= function (oLexer, oStaticContext) {
+fAndExpr_parse	= function (oLexer, oStaticContext) {
 	var oExpr;
-	if (oLexer.eof() ||!(oExpr = cComparisonExpr.parse(oLexer, oStaticContext)))
+	if (oLexer.eof() ||!(oExpr = fComparisonExpr_parse(oLexer, oStaticContext)))
 		return;
 	if (oLexer.peek() != "and")
 		return oExpr;
@@ -27,7 +27,7 @@ cAndExpr.parse	= function (oLexer, oStaticContext) {
 	var oAndExpr	= new cAndExpr(oExpr);
 	while (oLexer.peek() == "and") {
 		oLexer.next();
-		if (oLexer.eof() ||!(oExpr = cComparisonExpr.parse(oLexer, oStaticContext)))
+		if (oLexer.eof() ||!(oExpr = fComparisonExpr_parse(oLexer, oStaticContext)))
 			throw new cException("XPST0003"
 //->Debug
 					, "Expected second operand in logical and expression"

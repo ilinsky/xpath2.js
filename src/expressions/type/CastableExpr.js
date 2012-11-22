@@ -15,17 +15,17 @@ function cCastableExpr(oExpr, oType) {
 cCastableExpr.prototype.expression	= null;
 cCastableExpr.prototype.type		= null;
 
-cCastableExpr.parse	= function(oLexer, oStaticContext) {
+fCastableExpr_parse	= function(oLexer, oStaticContext) {
 	var oExpr,
 		oType;
-	if (oLexer.eof() ||!(oExpr = cCastExpr.parse(oLexer, oStaticContext)))
+	if (oLexer.eof() ||!(oExpr = fCastExpr_parse(oLexer, oStaticContext)))
 		return;
 
 	if (!(oLexer.peek() == "castable" && oLexer.peek(1) == "as"))
 		return oExpr;
 
 	oLexer.next(2);
-	if (oLexer.eof() ||!(oType = cSingleType.parse(oLexer, oStaticContext)))
+	if (oLexer.eof() ||!(oType = fSingleType_parse(oLexer, oStaticContext)))
 		throw new cException("XPST0003"
 //->Debug
 				, "Expected second operand in castable expression"

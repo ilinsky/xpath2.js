@@ -15,17 +15,17 @@ function cCastExpr(oExpr, oType) {
 cCastExpr.prototype.expression	= null;
 cCastExpr.prototype.type		= null;
 
-cCastExpr.parse	= function(oLexer, oStaticContext) {
+fCastExpr_parse	= function(oLexer, oStaticContext) {
 	var oExpr,
 		oType;
-	if (oLexer.eof() ||!(oExpr = cUnaryExpr.parse(oLexer, oStaticContext)))
+	if (oLexer.eof() ||!(oExpr = fUnaryExpr_parse(oLexer, oStaticContext)))
 		return;
 
 	if (!(oLexer.peek() == "cast" && oLexer.peek(1) == "as"))
 		return oExpr;
 
 	oLexer.next(2);
-	if (oLexer.eof() ||!(oType = cSingleType.parse(oLexer, oStaticContext)))
+	if (oLexer.eof() ||!(oType = fSingleType_parse(oLexer, oStaticContext)))
 		throw new cException("XPST0003"
 //->Debug
 				, "Expected second operand in cast expression"

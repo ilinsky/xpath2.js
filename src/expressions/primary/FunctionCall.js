@@ -20,12 +20,12 @@ cFunctionCall.prototype.namespaceURI	= null;
 cFunctionCall.prototype.args	= null;
 
 // Static members
-cFunctionCall.parse	= function (oLexer, oStaticContext) {
+fFunctionCall_parse	= function (oLexer, oStaticContext) {
 	var aMatch	= oLexer.peek().match(cNameTest.RegExp);
 	if (aMatch && oLexer.peek(1) == '(') {
 		// Reserved "functions"
 		if (!aMatch[1] && (aMatch[2] in hKindTest_names))
-			return cAxisStep.parse(oLexer, oStaticContext);
+			return fAxisStep_parse(oLexer, oStaticContext);
 		// Other functions
 		if (aMatch[1] == '*' || aMatch[2] == '*')
 			throw new cException("XPST0003"
@@ -39,7 +39,7 @@ cFunctionCall.parse	= function (oLexer, oStaticContext) {
 		//
 		if (oLexer.peek() != ')') {
 			do {
-				if (oLexer.eof() ||!(oExpr = cExprSingle.parse(oLexer, oStaticContext)))
+				if (oLexer.eof() ||!(oExpr = fExprSingle_parse(oLexer, oStaticContext)))
 					throw new cException("XPST0003"
 //->Debug
 							, "Expected function call argument"

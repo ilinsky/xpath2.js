@@ -12,6 +12,6 @@ function cValueExpr() {
 };
 
 // Static members
-cValueExpr.parse	= function (oLexer, oStaticContext) {
-	return cPathExpr.parse(oLexer, oStaticContext);
+fValueExpr_parse	= function (oLexer, oStaticContext) {
+	return fPathExpr_parse(oLexer, oStaticContext);
 };
