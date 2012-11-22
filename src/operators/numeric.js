@@ -30,7 +30,7 @@ function fFunctionCall_numeric_getPower(oLeft, oRight) {
 		return 0;
 	var aLeft	= cString(oLeft).match(cNumericLiteral.RegExp),
 		aRight	= cString(oRight).match(cNumericLiteral.RegExp),
-		nPower	= cMath.max(1, (aLeft[2] || '').length + (aLeft[4] || 0) * (aLeft[3] == '+' ?-1 : 1), (aRight[2] || '').length + (aRight[4] || 0) * (aRight[3] == '+' ?-1 : 1));
+		nPower	= cMath.max(1, (aLeft[2] || aLeft[3] || '').length + (aLeft[5] || 0) * (aLeft[4] == '+' ?-1 : 1), (aRight[2] || aRight[3] || '').length + (aRight[5] || 0) * (aRight[4] == '+' ?-1 : 1));
 	return nPower + (nPower % 2 ? 0 : 1);
 };
 

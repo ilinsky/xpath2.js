@@ -13,7 +13,7 @@ function cNumericLiteral(oValue) {
 
 cNumericLiteral.prototype	= new cLiteral;
 
-cNumericLiteral.RegExp	= /^-?(\d+)?(?:\.(\d*))?(?:[eE]([+-])?(\d+))?$/;
+cNumericLiteral.RegExp	= /^[+\-]?(?:(?:(\d+)(?:\.(\d*))?)|(?:\.(\d+)))(?:[eE]([+-])?(\d+))?$/;
 
 // Integer | Decimal | Double
 function fNumericLiteral_parse (oLexer, oStaticContext) {
@@ -22,10 +22,10 @@ function fNumericLiteral_parse (oLexer, oStaticContext) {
 		aMatch	= sValue.match(cNumericLiteral.RegExp);
 	if (aMatch) {
 		oLexer.next();
-		if (typeof aMatch[4] != "undefined")
+		if (typeof aMatch[5] != "undefined")
 			cType	= cXSDouble;
 		else
-		if (typeof aMatch[2] != "undefined")
+		if (typeof aMatch[2] != "undefined" || typeof aMatch[3] != "undefined")
 			cType	= cXSDecimal;
 		return new cNumericLiteral(new cType(+sValue));
 	}
