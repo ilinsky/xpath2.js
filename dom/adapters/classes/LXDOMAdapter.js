@@ -44,15 +44,6 @@ cLXDOMAdapter.prototype.getProperty	= function(oNode, sName) {
 	}
 };
 
-cLXDOMAdapter.prototype.isSameNode	= function(oNode, oNode2) {
-	// Run native if there is one
-	if ("isSameNode" in oNode)
-		return oNode.isSameNode(oNode2);
-
-	// Otherwise run JS fallback
-	return oNode == oNode2;
-};
-
 cLXDOMAdapter.prototype.compareDocumentPosition	= function(oNode, oChild) {
 	// Run native if there is one
 	if ("compareDocumentPosition" in oNode)

@@ -22,7 +22,7 @@ cDOMAdapter.prototype.getProperty	= function(oNode, sName) {
 
 // Standard members
 cDOMAdapter.prototype.isSameNode	= function(oNode, oNode2) {
-	return oNode.isSameNode(oNode2);
+	return oNode == oNode2;
 };
 
 cDOMAdapter.prototype.compareDocumentPosition	= function(oNode, oNode2) {
