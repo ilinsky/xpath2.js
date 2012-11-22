@@ -13,7 +13,7 @@ function cItemType(oTest) {
 
 cItemType.prototype.test	= null;
 
-fItemType_parse	= function(oLexer, oStaticContext) {
+function fItemType_parse (oLexer, oStaticContext) {
 	if (oLexer.eof())
 		return;
 

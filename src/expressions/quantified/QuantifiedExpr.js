@@ -18,7 +18,7 @@ cQuantifiedExpr.prototype.quantifier	= null;
 cQuantifiedExpr.prototype.satisfiesExpr	= null;
 
 // Static members
-fQuantifiedExpr_parse	= function (oLexer, oStaticContext) {
+function fQuantifiedExpr_parse (oLexer, oStaticContext) {
 	var sQuantifier	= oLexer.peek();
 	if ((sQuantifier == "some" || sQuantifier == "every") && oLexer.peek(1).substr(0, 1) == '$') {
 		oLexer.next();
@@ -87,7 +87,7 @@ cSimpleQuantifiedBinding.prototype.localName	= null;
 cSimpleQuantifiedBinding.prototype.namespaceURI	= null;
 cSimpleQuantifiedBinding.prototype.inExpr	= null;
 
-fSimpleQuantifiedBinding_parse	= function(oLexer, oStaticContext) {
+function fSimpleQuantifiedBinding_parse (oLexer, oStaticContext) {
 	var aMatch	= oLexer.peek().substr(1).match(cNameTest.RegExp);
 	if (!aMatch)
 		throw new cException("XPST0003"

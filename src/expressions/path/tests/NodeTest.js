@@ -12,7 +12,7 @@ function cNodeTest() {
 };
 
 // Static members
-fNodeTest_parse	= function (oLexer, oStaticContext) {
+function fNodeTest_parse (oLexer, oStaticContext) {
 	if (!oLexer.eof())
 		return fKindTest_parse(oLexer, oStaticContext)
 			|| fNameTest_parse(oLexer, oStaticContext);

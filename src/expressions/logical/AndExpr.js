@@ -16,7 +16,7 @@ cAndExpr.prototype.left		= null;
 cAndExpr.prototype.items	= null;
 
 // Static members
-fAndExpr_parse	= function (oLexer, oStaticContext) {
+function fAndExpr_parse (oLexer, oStaticContext) {
 	var oExpr;
 	if (oLexer.eof() ||!(oExpr = fComparisonExpr_parse(oLexer, oStaticContext)))
 		return;

@@ -14,7 +14,7 @@ function cExpr() {
 cExpr.prototype.items	= null;
 
 // Static members
-fExpr_parse	= function(oLexer, oStaticContext) {
+function fExpr_parse (oLexer, oStaticContext) {
 	//
 	var oExpr	= new cExpr,
 		oItem;

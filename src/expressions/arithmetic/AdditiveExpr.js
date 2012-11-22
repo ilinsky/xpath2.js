@@ -154,7 +154,7 @@ hAdditiveExpr_operators['-']	= function (oLeft, oRight, oContext) {
 };
 
 // Static members
-fAdditiveExpr_parse	= function (oLexer, oStaticContext) {
+function fAdditiveExpr_parse (oLexer, oStaticContext) {
 	var oExpr;
 	if (oLexer.eof() ||!(oExpr = fMultiplicativeExpr_parse(oLexer, oStaticContext)))
 		return;

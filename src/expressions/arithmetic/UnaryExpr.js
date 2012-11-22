@@ -40,7 +40,7 @@ hUnaryExpr_operators['+']	= function(oRight, oContext) {
 
 // Static members
 // UnaryExpr	:= ("-" | "+")* ValueExpr
-fUnaryExpr_parse	= function (oLexer, oStaticContext) {
+function fUnaryExpr_parse (oLexer, oStaticContext) {
 	if (oLexer.eof())
 		return;
 	if (!(oLexer.peek() in hUnaryExpr_operators))

@@ -15,7 +15,7 @@ function cCastExpr(oExpr, oType) {
 cCastExpr.prototype.expression	= null;
 cCastExpr.prototype.type		= null;
 
-fCastExpr_parse	= function(oLexer, oStaticContext) {
+function fCastExpr_parse (oLexer, oStaticContext) {
 	var oExpr,
 		oType;
 	if (oLexer.eof() ||!(oExpr = fUnaryExpr_parse(oLexer, oStaticContext)))

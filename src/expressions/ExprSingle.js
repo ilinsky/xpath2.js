@@ -12,7 +12,7 @@ function cExprSingle() {
 };
 
 // Static members
-fExprSingle_parse	= function (oLexer, oStaticContext) {
+function fExprSingle_parse (oLexer, oStaticContext) {
 	if (!oLexer.eof())
 		return fForExpr_parse(oLexer, oStaticContext)
 			|| fQuantifiedExpr_parse(oLexer, oStaticContext)

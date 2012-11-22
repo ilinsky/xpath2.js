@@ -16,7 +16,7 @@ cForExpr.prototype.bindings		= null;
 cForExpr.prototype.returnExpr	= null;
 
 // Static members
-fForExpr_parse	= function (oLexer, oStaticContext) {
+function fForExpr_parse (oLexer, oStaticContext) {
 	if (oLexer.peek() == "for" && oLexer.peek(1).substr(0, 1) == '$') {
 		oLexer.next();
 
@@ -82,7 +82,7 @@ cSimpleForBinding.prototype.localName		= null;
 cSimpleForBinding.prototype.namespaceURI	= null;
 cSimpleForBinding.prototype.inExpr		= null;
 
-fSimpleForBinding_parse	= function(oLexer, oStaticContext) {
+function fSimpleForBinding_parse (oLexer, oStaticContext) {
 	var aMatch	= oLexer.peek().substr(1).match(cNameTest.RegExp);
 	if (!aMatch)
 		throw new cException("XPST0003"

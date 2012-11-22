@@ -16,7 +16,7 @@ cOrExpr.prototype.left	= null;
 cOrExpr.prototype.items	= null;
 
 // Static members
-fOrExpr_parse	= function (oLexer, oStaticContext) {
+function fOrExpr_parse (oLexer, oStaticContext) {
 	var oExpr;
 	if (oLexer.eof() ||!(oExpr = fAndExpr_parse(oLexer, oStaticContext)))
 		return;

@@ -16,7 +16,7 @@ cRangeExpr.prototype.left	= null;
 cRangeExpr.prototype.right	= null;
 
 // Static members
-fRangeExpr_parse	= function (oLexer, oStaticContext) {
+function fRangeExpr_parse (oLexer, oStaticContext) {
 	var oExpr,
 		oRight;
 	if (oLexer.eof() ||!(oExpr = fAdditiveExpr_parse(oLexer, oStaticContext)))

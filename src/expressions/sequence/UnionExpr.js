@@ -16,7 +16,7 @@ cUnionExpr.prototype.left	= null;
 cUnionExpr.prototype.items	= null;
 
 // Static members
-fUnionExpr_parse	= function (oLexer, oStaticContext) {
+function fUnionExpr_parse (oLexer, oStaticContext) {
 	var oExpr,
 		sOperator;
 	if (oLexer.eof() ||!(oExpr = fIntersectExceptExpr_parse(oLexer, oStaticContext)))

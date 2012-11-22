@@ -12,7 +12,7 @@ function cPrimaryExpr() {
 };
 
 // Static members
-fPrimaryExpr_parse	= function (oLexer, oStaticContext) {
+function fPrimaryExpr_parse (oLexer, oStaticContext) {
 	if (!oLexer.eof())
 		return fLiteral_parse(oLexer, oStaticContext)
 			|| fVarRef_parse(oLexer, oStaticContext)

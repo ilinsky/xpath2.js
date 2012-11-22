@@ -12,7 +12,7 @@ function cContextItemExpr() {
 };
 
 // Static members
-fContextItemExpr_parse	= function (oLexer, oStaticContext) {
+function fContextItemExpr_parse (oLexer, oStaticContext) {
 	if (oLexer.peek() == '.') {
 		oLexer.next();
 		return new cContextItemExpr;

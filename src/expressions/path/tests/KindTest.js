@@ -31,7 +31,7 @@ hKindTest_names["schema-element"]	= {};
 hKindTest_names["schema-attribute"]	= {};
 
 // Static members
-fKindTest_parse	= function (oLexer, oStaticContext) {
+function fKindTest_parse (oLexer, oStaticContext) {
 	var sName	= oLexer.peek();
 	if (oLexer.peek(1) == '(') {
 		//

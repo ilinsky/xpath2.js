@@ -12,7 +12,7 @@ function cLiteral() {
 };
 
 // Static members
-fLiteral_parse	= function (oLexer, oStaticContext) {
+function fLiteral_parse (oLexer, oStaticContext) {
 	if (!oLexer.eof())
 		return fNumericLiteral_parse(oLexer, oStaticContext)
 			|| fStringLiteral_parse(oLexer, oStaticContext);

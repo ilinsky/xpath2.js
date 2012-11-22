@@ -16,7 +16,7 @@ cIntersectExceptExpr.prototype.left		= null;
 cIntersectExceptExpr.prototype.items	= null;
 
 // Static members
-fIntersectExceptExpr_parse	= function (oLexer, oStaticContext) {
+function fIntersectExceptExpr_parse (oLexer, oStaticContext) {
 	var oExpr,
 		sOperator;
 	if (oLexer.eof() ||!(oExpr = fInstanceofExpr_parse(oLexer, oStaticContext)))

@@ -22,7 +22,7 @@ cNameTest.prototype.localName		= null;
 cNameTest.prototype.namespaceURI	= null;
 
 // Static members
-fNameTest_parse	= function (oLexer, oStaticContext) {
+function fNameTest_parse (oLexer, oStaticContext) {
 	var aMatch	= oLexer.peek().match(cNameTest.RegExp);
 	if (aMatch) {
 		if (aMatch[1] == '*' && aMatch[2] == '*')

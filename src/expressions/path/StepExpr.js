@@ -12,13 +12,13 @@ function cStepExpr() {
 };
 
 // Static members
-fStepExpr_parse	= function (oLexer, oStaticContext) {
+function fStepExpr_parse (oLexer, oStaticContext) {
 	if (!oLexer.eof())
 		return fFilterExpr_parse(oLexer, oStaticContext)
 			|| fAxisStep_parse(oLexer, oStaticContext);
 };
 
-fStepExpr_parsePredicates	= function (oLexer, oStaticContext, oStep) {
+function fStepExpr_parsePredicates (oLexer, oStaticContext, oStep) {
 	var oExpr;
 	// Parse predicates
 	while (oLexer.peek() == '[') {

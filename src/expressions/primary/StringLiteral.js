@@ -15,7 +15,7 @@ cStringLiteral.RegExp	= /^'([^']*(?:''[^']*)*)'|"([^"]*(?:""[^"]*)*)"$/;
 
 cStringLiteral.prototype	= new cLiteral;
 
-fStringLiteral_parse	= function(oLexer, oStaticContext) {
+function fStringLiteral_parse (oLexer, oStaticContext) {
 	var aMatch	= oLexer.peek().match(cStringLiteral.RegExp);
 	if (aMatch) {
 		oLexer.next();

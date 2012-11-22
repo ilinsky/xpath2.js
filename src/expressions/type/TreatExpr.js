@@ -15,7 +15,7 @@ function cTreatExpr(oExpr, oType) {
 cTreatExpr.prototype.expression	= null;
 cTreatExpr.prototype.type		= null;
 
-fTreatExpr_parse	= function(oLexer, oStaticContext) {
+function fTreatExpr_parse (oLexer, oStaticContext) {
 	var oExpr,
 		oType;
 	if (oLexer.eof() ||!(oExpr = fCastableExpr_parse(oLexer, oStaticContext)))

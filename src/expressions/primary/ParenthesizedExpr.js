@@ -12,7 +12,7 @@ function cParenthesizedExpr(oExpr) {
 };
 
 // Static members
-fParenthesizedExpr_parse	= function (oLexer, oStaticContext) {
+function fParenthesizedExpr_parse (oLexer, oStaticContext) {
 	if (oLexer.peek() == '(') {
 		oLexer.next();
 		// Check if not empty (allowed)

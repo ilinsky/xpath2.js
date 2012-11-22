@@ -16,7 +16,7 @@ cFilterExpr.prototype.expression	= null;
 cFilterExpr.prototype.predicates	= null;
 
 // Static members
-fFilterExpr_parse	= function (oLexer, oStaticContext) {
+function fFilterExpr_parse (oLexer, oStaticContext) {
 	var oExpr;
 	if (oLexer.eof() ||!(oExpr = fPrimaryExpr_parse(oLexer, oStaticContext)))
 		return;

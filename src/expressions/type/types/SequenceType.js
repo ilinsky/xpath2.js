@@ -15,7 +15,7 @@ function cSequenceType(oItemType, sOccurence) {
 cSequenceType.prototype.itemType	= null;
 cSequenceType.prototype.occurence	= null;
 
-fSequenceType_parse	= function(oLexer, oStaticContext) {
+function fSequenceType_parse (oLexer, oStaticContext) {
 	if (oLexer.eof())
 		return;
 

@@ -18,7 +18,7 @@ cIfExpr.prototype.thenExpr	= null;
 cIfExpr.prototype.elseExpr	= null;
 
 // Static members
-fIfExpr_parse	= function (oLexer, oStaticContext) {
+function fIfExpr_parse (oLexer, oStaticContext) {
 	var oCondExpr,
 		oThenExpr,
 		oElseExpr;

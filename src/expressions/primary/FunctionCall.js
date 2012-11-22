@@ -20,7 +20,7 @@ cFunctionCall.prototype.namespaceURI	= null;
 cFunctionCall.prototype.args	= null;
 
 // Static members
-fFunctionCall_parse	= function (oLexer, oStaticContext) {
+function fFunctionCall_parse (oLexer, oStaticContext) {
 	var aMatch	= oLexer.peek().match(cNameTest.RegExp);
 	if (aMatch && oLexer.peek(1) == '(') {
 		// Reserved "functions"

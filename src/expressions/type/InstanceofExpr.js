@@ -15,7 +15,7 @@ function cInstanceofExpr(oExpr, oType) {
 cInstanceofExpr.prototype.expression	= null;
 cInstanceofExpr.prototype.type			= null;
 
-fInstanceofExpr_parse	= function(oLexer, oStaticContext) {
+function fInstanceofExpr_parse (oLexer, oStaticContext) {
 	var oExpr,
 		oType;
 	if (oLexer.eof() ||!(oExpr = fTreatExpr_parse(oLexer, oStaticContext)))

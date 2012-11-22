@@ -14,7 +14,7 @@ function cPathExpr() {
 cPathExpr.prototype.items	= null;
 
 // Static members
-fPathExpr_parse	= function (oLexer, oStaticContext) {
+function fPathExpr_parse (oLexer, oStaticContext) {
 	if (oLexer.eof())
 		return;
 	var sSingleSlash	= '/',

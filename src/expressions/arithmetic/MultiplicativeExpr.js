@@ -114,7 +114,7 @@ hMultiplicativeExpr_operators['mod']	= function (oLeft, oRight, oContext) {
 };
 
 // Static members
-fMultiplicativeExpr_parse	= function (oLexer, oStaticContext) {
+function fMultiplicativeExpr_parse (oLexer, oStaticContext) {
 	var oExpr;
 	if (oLexer.eof() ||!(oExpr = fUnionExpr_parse(oLexer, oStaticContext)))
 		return;

@@ -15,7 +15,7 @@ function cSingleType(oItemType, sOccurence) {
 cSingleType.prototype.itemType	= null;
 cSingleType.prototype.occurence	= null;
 
-fSingleType_parse	= function(oLexer, oStaticContext) {
+function fSingleType_parse (oLexer, oStaticContext) {
 	var oExpr,
 		sOccurence;
 	if (!oLexer.eof() && (oExpr = fAtomicType_parse(oLexer, oStaticContext))) {

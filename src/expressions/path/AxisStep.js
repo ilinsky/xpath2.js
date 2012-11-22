@@ -38,7 +38,7 @@ hAxisStep_axises["preceding"]			= {};
 hAxisStep_axises["preceding-sibling"]	= {};
 
 // Static members
-fAxisStep_parse	= function (oLexer, oStaticContext) {
+function fAxisStep_parse (oLexer, oStaticContext) {
 	var sAxis	= oLexer.peek(),
 		oExpr,
 		oStep;

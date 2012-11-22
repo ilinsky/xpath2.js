@@ -18,7 +18,7 @@ cComparisonExpr.prototype.right	= null;
 cComparisonExpr.prototype.operator	= null;
 
 // Static members
-fComparisonExpr_parse	= function (oLexer, oStaticContext) {
+function fComparisonExpr_parse (oLexer, oStaticContext) {
 	var oExpr,
 		oRight;
 	if (oLexer.eof() ||!(oExpr = fRangeExpr_parse(oLexer, oStaticContext)))
