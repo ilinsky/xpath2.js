@@ -32,12 +32,19 @@ cStaticContext.prototype.namespaceResolver	= null;
 cStaticContext.prototype.defaultElementNamespace	= null;
 
 //
+var rStaticContext_uri	= /^(?:\{([^\}]+)\})?(.+)$/;
+//
 cStaticContext.prototype.setDataType		= function(sUri, fFunction) {
-	this.dataTypes[sUri]	= fFunction;
+	var aMatch	= sUri.match(rStaticContext_uri);
+	if (aMatch)
+		if (aMatch[1] != "http://www.w3.org/2001/XMLSchema")
+			this.dataTypes[sUri]	= fFunction;
 };
 
 cStaticContext.prototype.getDataType		= function(sUri) {
-	return this.dataTypes[sUri];
+	var aMatch	= sUri.match(rStaticContext_uri);
+	if (aMatch)
+		return aMatch[1] == "http://www.w3.org/2001/XMLSchema" ? hStaticContext_dataTypes[cRegExp.$2] : this.dataTypes[sUri];
 };
 
 cStaticContext.prototype.setDocument		= function(sUri, fFunction) {
@@ -45,11 +52,16 @@ cStaticContext.prototype.setDocument		= function(sUri, fFunction) {
 };
 
 cStaticContext.prototype.setFunction		= function(sUri, fFunction) {
-	this.functions[sUri]	= fFunction;
+	var aMatch	= sUri.match(rStaticContext_uri);
+	if (aMatch)
+		if (aMatch[1] != "http://www.w3.org/2005/xpath-functions")
+			this.functions[sUri]	= fFunction;
 };
 
 cStaticContext.prototype.getFunction		= function(sUri) {
-	return this.functions[sUri];
+	var aMatch	= sUri.match(rStaticContext_uri);
+	if (aMatch)
+		return aMatch[1] == "http://www.w3.org/2005/xpath-functions" ? hStaticContext_functions[cRegExp.$2] : this.functions[sUri];
 };
 
 cStaticContext.prototype.setCollation		= function(sUri, fFunction) {
