@@ -12,5 +12,4 @@ var cXPath2		= window.XPath2,
 	cError		= window.Error,
 	cHTMLDocument	= window.HTMLDocument;
 
-var bOldMS	= !!oDocument.namespaces && !oDocument.createElementNS,	// Internet Explorer before 9
-	bOldW3	= !oDocument.documentElement.namespaceURI;	// other pre-HTML5 browsers
+var bOldMS	= !!oDocument.namespaces && !oDocument.createElementNS;	// Internet Explorer before 9

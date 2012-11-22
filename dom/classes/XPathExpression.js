@@ -37,15 +37,11 @@ cXPathExpression.prototype.evaluate	= function(oNode, nType, oResult) {
 
 function fXPathExpression_evaluate(oExpression, oNode, nType, oResult) {
 	var oSequence,
-		oDOMAdapter	= null;
+		oDOMAdapter	= cXPathEvaluator.DOMAdapter;
 	// Determine which DOMAdapter to use based on browser and DOM type
-	if (oNode && oNode.nodeType) {
-		if (bOldMS)
-			oDOMAdapter	= "selectNodes" in oNode ? oMSXMLDOMAdapter : oMSHTMLDOMAdapter;
-		else
-		if (bOldW3)
-			oDOMAdapter	= (oNode.nodeType == 9 ? oNode : oNode.ownerDocument) instanceof cHTMLDocument ? oW3HTMLDOMAdapter : oW3XMLDOMAdapter;
-	}
+	if (oNode && oNode.nodeType && bOldMS)
+		oDOMAdapter	= "selectNodes" in oNode ? oMSXMLDOMAdapter : oMSHTMLDOMAdapter;
+
 	// Evaluate expression
 	try {
 		oSequence	= oExpression.expression.resolve(new cXPath2.classes.DynamicContext(cXPathEvaluator.staticContext, typeof oNode == "undefined" ? null : oNode, null, oDOMAdapter));
