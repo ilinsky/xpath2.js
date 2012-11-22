@@ -25,13 +25,12 @@
 */
 
 // 6.2 Operators on Numeric Values
-var rFunctionCall_numeric_regExp	= /^-?\d+?(?:\.(\d*))?(?:[eE]([+-])?(\d+))?$/;
 function fFunctionCall_numeric_getPower(oLeft, oRight) {
 	if (fIsNaN(oLeft) || (cMath.abs(oLeft) == nInfinity) || fIsNaN(oRight) || (cMath.abs(oRight) == nInfinity))
 		return 0;
-	var aLeft	= cString(oLeft).match(rFunctionCall_numeric_regExp),
-		aRight	= cString(oRight).match(rFunctionCall_numeric_regExp),
-		nPower	= cMath.max(1, (aLeft[1] || '').length + (aLeft[3] || 0) * (aLeft[2] == '+' ?-1 : 1), (aRight[1] || '').length + (aRight[3] || 0) * (aRight[2] == '+' ?-1 : 1));
+	var aLeft	= cString(oLeft).match(cNumericLiteral.RegExp),
+		aRight	= cString(oRight).match(cNumericLiteral.RegExp),
+		nPower	= cMath.max(1, (aLeft[2] || '').length + (aLeft[4] || 0) * (aLeft[3] == '+' ?-1 : 1), (aRight[2] || '').length + (aRight[4] || 0) * (aRight[3] == '+' ?-1 : 1));
 	return nPower + (nPower % 2 ? 0 : 1);
 };
 
