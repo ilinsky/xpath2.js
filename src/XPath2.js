@@ -11,6 +11,7 @@ var cXPath2	= new cEvaluator;
 
 //
 cXPath2.classes	= {};
+cXPath2.classes.Sequence		= cSequence;
 cXPath2.classes.Exception		= cException;
 cXPath2.classes.Evaluator		= cEvaluator;
 cXPath2.classes.Expression		= cExpression;
