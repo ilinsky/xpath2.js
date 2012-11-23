@@ -15,10 +15,14 @@ cExpr.prototype.items	= null;
 
 // Static members
 function fExpr_parse (oLexer, oStaticContext) {
-	//
-	var oExpr	= new cExpr,
-		oItem;
-	do {
+	var oItem;
+	if (oLexer.eof() ||!(oItem = fExprSingle_parse(oLexer, oStaticContext)))
+		return;
+
+	// Create expression
+	var oExpr	= new cExpr;
+	while (oLexer.peek() == ',') {
+		oLexer.next();
 		if (oLexer.eof() ||!(oItem = fExprSingle_parse(oLexer, oStaticContext)))
 			throw new cException("XPST0003"
 //->Debug
@@ -26,14 +30,7 @@ function fExpr_parse (oLexer, oStaticContext) {
 //<-Debug
 			);
 		oExpr.items.push(oItem);
-		//
-		if (oLexer.peek() != ',')
-			break;
-		oLexer.next();
 	}
-	while (true);
-
-	//
 	return oExpr;
 };
 
