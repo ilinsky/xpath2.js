@@ -21,6 +21,7 @@ function fExpr_parse (oLexer, oStaticContext) {
 
 	// Create expression
 	var oExpr	= new cExpr;
+	oExpr.items.push(oItem);
 	while (oLexer.peek() == ',') {
 		oLexer.next();
 		if (oLexer.eof() ||!(oItem = fExprSingle_parse(oLexer, oStaticContext)))
