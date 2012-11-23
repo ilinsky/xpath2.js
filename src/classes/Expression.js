@@ -11,17 +11,17 @@ function cExpression(sExpression, oStaticContext) {
 	var oLexer	= new cLexer(sExpression),
 		oExpr	= fExpr_parse(oLexer, oStaticContext);
 	//
-	if (!oExpr)
-		throw new cException("XPST0003"
-//->Debug
-				, "Expected expression"
-//<-Debug
-		);
-	//
 	if (!oLexer.eof())
 		throw new cException("XPST0003"
 //->Debug
 				, "Unexpected token beyond end of query"
+//<-Debug
+		);
+	//
+	if (!oExpr)
+		throw new cException("XPST0003"
+//->Debug
+				, "Expected expression"
 //<-Debug
 		);
 	//
