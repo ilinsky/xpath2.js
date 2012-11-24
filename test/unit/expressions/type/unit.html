@@ -64,7 +64,11 @@
 				assertArrayEquals([false],
 						evaluateXPath('1 instance of xs:boolean'));
 				assertArrayEquals([true],
-						evaluateXPath('1 instance of xs:decimal'));
+						evaluateXPath('1 instance of xs:integer'));
+				assertArrayEquals([true],
+						evaluateXPath('1.0 instance of xs:decimal'));
+				assertArrayEquals([true],
+						evaluateXPath('1e2 instance of xs:double'));
 				assertArrayEquals([false],
 						evaluateXPath('1 instance of xs:double'));
 				// Kind tests
