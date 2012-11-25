@@ -30,5 +30,5 @@ fStaticContext_defineSystemFunction("false",	[],	function() {
 // 9.3 Functions on Boolean Values
 // fn:not($arg as item()*) as xs:boolean
 fStaticContext_defineSystemFunction("not",	[[cXTItem, '*']],	function(oSequence1) {
-	return new cXSBoolean(!oSequence1.toBoolean(this));
+	return new cXSBoolean(!fFunction_sequence_toEBV(oSequence1, this));
 });

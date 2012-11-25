@@ -64,7 +64,7 @@ cQuantifiedExpr.prototype.evaluate	= function (oContext) {
 			if (nBinding < oSelf.bindings.length)
 				arguments.callee(oSelf, nBinding);
 			else
-				bResult	= oSelf.satisfiesExpr.evaluate(oContext).toBoolean(oContext);
+				bResult	= fFunction_sequence_toEBV(oSelf.satisfiesExpr.evaluate(oContext), oContext);
 			oContext.popVariable(sUri);
 		}
 	})(this, 0);

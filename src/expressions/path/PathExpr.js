@@ -92,5 +92,5 @@ cPathExpr.prototype.evaluate	= function (oContext) {
 	// Restore context item
 	oContext.item	= vContextItem;
 	//
-	return fSequence_order(oSequence, oContext);
+	return fFunction_sequence_order(oSequence, oContext);
 };

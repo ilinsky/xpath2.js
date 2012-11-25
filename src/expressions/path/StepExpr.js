@@ -66,7 +66,7 @@ cStepExpr.prototype.applyPredicates	= function(oContext, oSequence) {
 					oSequence.add(oSequence1.items[nIndex]);
 			}
 			else
-			if (oSequence2.toBoolean(oContext))
+			if (fFunction_sequence_toEBV(oSequence2, oContext))
 				oSequence.add(oSequence1.items[nIndex]);
 		}
 	}

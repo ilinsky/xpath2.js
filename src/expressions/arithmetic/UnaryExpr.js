@@ -64,7 +64,7 @@ function fUnaryExpr_parse (oLexer, oStaticContext) {
 };
 
 cUnaryExpr.prototype.evaluate	= function (oContext) {
-	var oRight	= fSequence_atomize(this.expression.evaluate(oContext), oContext);
+	var oRight	= fFunction_sequence_atomize(this.expression.evaluate(oContext), oContext);
 
 	//
 	if (oRight.isEmpty())

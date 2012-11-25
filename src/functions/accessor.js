@@ -64,7 +64,7 @@ fStaticContext_defineSystemFunction("string",	[[cXTItem, '?', true]],	function(/
 
 // fn:data($arg as item()*) as xs:anyAtomicType*
 fStaticContext_defineSystemFunction("data",	[[cXTItem, '*']],		function(oSequence1) {
-	return fSequence_atomize(oSequence1, this);
+	return fFunction_sequence_atomize(oSequence1, this);
 });
 
 // fn:base-uri() as xs:anyURI?

@@ -76,5 +76,5 @@ function fIfExpr_parse (oLexer, oStaticContext) {
 
 // Public members
 cIfExpr.prototype.evaluate	= function (oContext) {
-	return this[this.condExpr.evaluate(oContext).toBoolean(oContext) ? "thenExpr" : "elseExpr"].evaluate(oContext);
+	return this[fFunction_sequence_toEBV(this.condExpr.evaluate(oContext), oContext) ? "thenExpr" : "elseExpr"].evaluate(oContext);
 };

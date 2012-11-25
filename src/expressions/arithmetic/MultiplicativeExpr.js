@@ -139,7 +139,7 @@ function fMultiplicativeExpr_parse (oLexer, oStaticContext) {
 
 // Public members
 cMultiplicativeExpr.prototype.evaluate	= function (oContext) {
-	var oLeft	= fSequence_atomize(this.left.evaluate(oContext), oContext);
+	var oLeft	= fFunction_sequence_atomize(this.left.evaluate(oContext), oContext);
 
 	//
 	if (oLeft.isEmpty())
@@ -156,7 +156,7 @@ cMultiplicativeExpr.prototype.evaluate	= function (oContext) {
 		vLeft	= cXSDouble.cast(vLeft);	// cast to xs:double
 
 	for (var nIndex = 0, nLength = this.items.length, oRight, vRight; nIndex < nLength; nIndex++) {
-		oRight	= fSequence_atomize(this.items[nIndex][1].evaluate(oContext), oContext);
+		oRight	= fFunction_sequence_atomize(this.items[nIndex][1].evaluate(oContext), oContext);
 
 		if (oRight.isEmpty())
 			return new cSequence;
