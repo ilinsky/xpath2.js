@@ -62,7 +62,7 @@ fStaticContext_defineSystemFunction("string",	[[cXTItem, '?', true]],	function(/
 			throw new cException("XPDY0002");
 		oSequence1	= new cSequence(this.item);
 	}
-	return oSequence1.length ? cXSString.cast(fXTItem_atomize(oSequence1[0], this)) : new cXSString('');
+	return oSequence1.length ? cXSString.cast(fFunction_sequence_atomize(oSequence1, this)[0]) : new cXSString('');
 });
 
 // fn:data($arg as item()*) as xs:anyAtomicType*

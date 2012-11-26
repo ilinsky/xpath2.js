@@ -197,7 +197,7 @@ function fFunctionCall_assertSequenceItemType(oContext, oSequence, cItemType
 		// Atomic types
 		if (cItemType == cXSAnyAtomicType || cItemType.prototype instanceof cXSAnyAtomicType) {
 			// Atomize item
-			vItem	= fXTItem_atomize(vItem, oContext);
+			vItem	= fFunction_sequence_atomize(new cSequence(vItem), oContext)[0];
 			// Convert type if necessary
 			if (cItemType != cXSAnyAtomicType) {
 				// Cast item to expected type if it's type is xs:untypedAtomic

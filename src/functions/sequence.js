@@ -419,9 +419,47 @@ function fFunction_sequence_toEBV(oSequence1, oContext) {
 
 function fFunction_sequence_atomize(oSequence1, oContext) {
 	var oSequence	= new cSequence;
-	for (var nIndex = 0, nLength = oSequence1.length, vValue; nIndex < nLength; nIndex++)
-		if ((vValue = fXTItem_atomize(oSequence1[nIndex], oContext)) != null)
-			oSequence.push(vValue);
+	for (var nIndex = 0, nLength = oSequence1.length, oItem, vItem; nIndex < nLength; nIndex++) {
+		oItem	= oSequence1[nIndex];
+		vItem	= null;
+		// Untyped
+		if (oItem == null)
+			vItem	= null;
+		// Node type
+		else
+		if (oContext.DOMAdapter.isNode(oItem)) {
+			var fGetProperty	= oContext.DOMAdapter.getProperty;
+			switch (fGetProperty(oItem, "nodeType")) {
+				case 1:	// ELEMENT_NODE
+					vItem	= new cXSUntypedAtomic(fGetProperty(oItem, "textContent"));
+					break;
+				case 2:	// ATTRIBUTE_NODE
+					vItem	= new cXSUntypedAtomic(fGetProperty(oItem, "value"));
+					break;
+				case 3:	// TEXT_NODE
+				case 4:	// CDATA_SECTION_NODE
+				case 8:	// COMMENT_NODE
+					vItem	= new cXSUntypedAtomic(fGetProperty(oItem, "data"));
+					break;
+				case 7:	// PROCESSING_INSTRUCTION_NODE
+					vItem	= new cXSUntypedAtomic(fGetProperty(oItem, "data"));
+					break;
+				case 9:	// DOCUMENT_NODE
+					var oNode	= fGetProperty(oItem, "documentElement");
+					vItem	= new cXSUntypedAtomic(oNode ? fGetProperty(oNode, "textContent") : '');
+					break;
+			}
+		}
+		// Base types
+		else
+		if (oItem instanceof cXSAnyAtomicType)
+			vItem	= oItem;
+
+		//
+		if (vItem != null)
+			oSequence.push(vItem);
+	}
+
 	return oSequence;
 };
 

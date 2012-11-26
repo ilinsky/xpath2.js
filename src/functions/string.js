@@ -128,7 +128,7 @@ fStaticContext_defineSystemFunction("concat",	null,	function() {
 		);
 		//
 		if (oSequence.length)
-			aValue[aValue.length]	= cXSString.cast(fXTItem_atomize(oSequence[0], this)).valueOf();
+			aValue[aValue.length]	= cXSString.cast(fFunction_sequence_atomize(oSequence, this)[0]).valueOf();
 	}
 
 	return new cXSString(aValue.join(''));
@@ -153,18 +153,22 @@ fStaticContext_defineSystemFunction("substring",	[[cXSString, '?'], [cXSDouble],
 // fn:string-length() as xs:integer
 // fn:string-length($arg as xs:string?) as xs:integer
 fStaticContext_defineSystemFunction("string-length",	[[cXSString, '?', true]],	function(oSequence1) {
-	if (arguments.length < 1)
-		oSequence1	= new cSequence(cXSString.cast(fXTItem_atomize(this.item, this)));
-
+	if (!arguments.length) {
+		if (!this.item)
+			throw new cException("XPDY0002");
+		oSequence1	= new cSequence(cXSString.cast(fFunction_sequence_atomize(new cSequence(this.item), this)[0]));
+	}
 	return new cXSInteger(oSequence1.length ? oSequence1[0].valueOf().length : 0);
 });
 
 // fn:normalize-space() as xs:string
 // fn:normalize-space($arg as xs:string?) as xs:string
 fStaticContext_defineSystemFunction("normalize-space",	[[cXSString, '?', true]],	function(oSequence1) {
-	if (arguments.length < 1)
-		oSequence1	= new cSequence(cXSString.cast(fXTItem_atomize(this.item, this)));
-
+	if (!arguments.length) {
+		if (!this.item)
+			throw new cException("XPDY0002");
+		oSequence1	= new cSequence(cXSString.cast(fFunction_sequence_atomize(new cSequence(this.item), this)[0]));
+	}
 	return new cXSString(oSequence1.length ? fString_trim(oSequence1[0]).replace(/\s\s+/g, ' ') : '');
 });
 
