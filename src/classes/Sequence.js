@@ -51,3 +51,12 @@ cSequence.prototype.sort	= function(fCallback) {
 		this[nIndex]	= aValue[nIndex];
 	return this;
 };
+
+cSequence.prototype.reverse	= function() {
+	for (var nIndex = 0, oItem, nLength = this.length / 2; nIndex < nLength; nIndex++) {
+		oItem	= this[this.length - nIndex - 1];
+		this[this.length - nIndex - 1]	= this[nIndex];
+		this[nIndex]	= oItem;
+	}
+	return this;
+};
