@@ -116,40 +116,9 @@ hStaticContext_operators["except"]	= function(oSequence1, oSequence2) {
 
 // 15.5 Functions and Operators that Generate Sequences
 // op:to($firstval as xs:integer, $lastval as xs:integer) as xs:integer*
-hStaticContext_operators["to"]	= function(oSequence1, oSequence2) {
-	//
-	if (!oSequence1.length || !oSequence2.length)
-		return [];
-	//
-//->Debug
-	var sSource	= "first operand of 'to'";
-//<-Debug
-
-	fFunctionCall_assertSequenceCardinality(this, oSequence1, '?'
-//->Debug
-			, sSource
-//<-Debug
-	);
-	fFunctionCall_assertSequenceItemType(this, oSequence1, cXSInteger
-//->Debug
-			, sSource
-//<-Debug
-	);
-	//
-	sSource	= "second operand of 'to'";
-	fFunctionCall_assertSequenceCardinality(this, oSequence2, '?'
-//->Debug
-			, sSource
-//<-Debug
-	);
-	fFunctionCall_assertSequenceItemType(this, oSequence2, cXSInteger
-//->Debug
-			, sSource
-//<-Debug
-	);
-
+hStaticContext_operators["to"]	= function(oLeft, oRight) {
 	var oSequence	= [];
-	for (var nIndex = oSequence1[0].valueOf(), nLength = oSequence2[0].valueOf(); nIndex <= nLength; nIndex++)
+	for (var nIndex = oLeft.valueOf(), nLength = oRight.valueOf(); nIndex <= nLength; nIndex++)
 		oSequence.push(new cXSInteger(nIndex));
 	//
 	return oSequence;

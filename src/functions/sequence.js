@@ -53,14 +53,14 @@ fStaticContext_defineSystemFunction("boolean",	[[cXTItem, '*']],	function(oSeque
 
 // fn:index-of($seqParam as xs:anyAtomicType*, $srchParam as xs:anyAtomicType) as xs:integer*
 // fn:index-of($seqParam as xs:anyAtomicType*, $srchParam as xs:anyAtomicType, $collation as xs:string) as xs:integer*
-fStaticContext_defineSystemFunction("index-of",	[[cXSAnyAtomicType, '*'], [cXSAnyAtomicType], [cXSString, '', true]],	function(oSequence1, oSequence2, oSequence3) {
-	if (!oSequence1.length || !oSequence2.length)
+fStaticContext_defineSystemFunction("index-of",	[[cXSAnyAtomicType, '*'], [cXSAnyAtomicType], [cXSString, '', true]],	function(oSequence1, oSearch, oCollation) {
+	if (!oSequence1.length || oSearch == null)
 		return [];
 
 	// TODO: Implement collation
 
 	var oSequence	= [];
-	for (var nIndex = 0, nLength = oSequence1.length, vValue = oSequence2[0].valueOf(); nIndex < nLength; nIndex++)
+	for (var nIndex = 0, nLength = oSequence1.length, vValue = oSearch.valueOf(); nIndex < nLength; nIndex++)
 		if (oSequence1[nIndex].valueOf() === vValue)
 			oSequence.push(new cXSInteger(nIndex + 1));
 
@@ -79,7 +79,7 @@ fStaticContext_defineSystemFunction("exists",	[[cXTItem, '*']],	function(oSequen
 
 // fn:distinct-values($arg as xs:anyAtomicType*) as xs:anyAtomicType*
 // fn:distinct-values($arg as xs:anyAtomicType*, $collation as xs:string) as xs:anyAtomicType*
-fStaticContext_defineSystemFunction("distinct-values",	[[cXSAnyAtomicType, '*'], [cXSString, '', true]],	function(oSequence1, oSequence2) {
+fStaticContext_defineSystemFunction("distinct-values",	[[cXSAnyAtomicType, '*'], [cXSString, '', true]],	function(oSequence1, oCollation) {
 	if (!oSequence1.length)
 		return null;
 
@@ -97,14 +97,14 @@ fStaticContext_defineSystemFunction("distinct-values",	[[cXSAnyAtomicType, '*'],
 });
 
 // fn:insert-before($target as item()*, $position as xs:integer, $inserts as item()*) as item()*
-fStaticContext_defineSystemFunction("insert-before",	[[cXTItem, '*'], [cXSInteger], [cXTItem, '*']],	function(oSequence1, oSequence2, oSequence3) {
+fStaticContext_defineSystemFunction("insert-before",	[[cXTItem, '*'], [cXSInteger], [cXTItem, '*']],	function(oSequence1, oPosition, oSequence3) {
 	if (!oSequence1.length)
 		return oSequence3;
 	if (!oSequence3.length)
 		return oSequence1;
 
 	var nLength 	= oSequence1.length,
-		nPosition	= oSequence2[0].valueOf();
+		nPosition	= oPosition.valueOf();
 	if (nPosition < 1)
 		nPosition	= 1;
 	else
@@ -124,12 +124,12 @@ fStaticContext_defineSystemFunction("insert-before",	[[cXTItem, '*'], [cXSIntege
 });
 
 // fn:remove($target as item()*, $position as xs:integer) as item()*
-fStaticContext_defineSystemFunction("remove",	[[cXTItem, '*'], [cXSInteger]],	function(oSequence1, oSequence2) {
+fStaticContext_defineSystemFunction("remove",	[[cXTItem, '*'], [cXSInteger]],	function(oSequence1, oPosition) {
 	if (!oSequence1.length)
 		return [];
 
 	var nLength 	= oSequence1.length,
-		nPosition	= oSequence2[0].valueOf();
+		nPosition	= oPosition.valueOf();
 
 	if (nPosition < 1 || nPosition > nLength)
 		return oSequence1;
@@ -151,9 +151,9 @@ fStaticContext_defineSystemFunction("reverse",	[[cXTItem, '*']],	function(oSeque
 
 // fn:subsequence($sourceSeq as item()*, $startingLoc as xs:double) as item()*
 // fn:subsequence($sourceSeq as item()*, $startingLoc as xs:double, $length as xs:double) as item()*
-fStaticContext_defineSystemFunction("subsequence",	[[cXTItem, '*'], [cXSDouble, ''], [cXSDouble, '', true]],	function(oSequence1, oSequence2, oSequence3) {
-	var nPosition	= cMath.round(oSequence2[0]),
-		nLength		= arguments.length > 2 ? cMath.round(oSequence3[0]) : oSequence1.length - nPosition + 1;
+fStaticContext_defineSystemFunction("subsequence",	[[cXTItem, '*'], [cXSDouble, ''], [cXSDouble, '', true]],	function(oSequence1, oStart, oLength) {
+	var nPosition	= cMath.round(oStart),
+		nLength		= arguments.length > 2 ? cMath.round(oLength) : oSequence1.length - nPosition + 1;
 
 	// TODO: Handle out-of-range position and length values
 	return oSequence1.slice(nPosition - 1, nPosition - 1 + nLength);
@@ -194,7 +194,7 @@ fStaticContext_defineSystemFunction("exactly-one",	[[cXTItem, '*']],	function(oS
 // 15.3 Equals, Union, Intersection and Except
 // fn:deep-equal($parameter1 as item()*, $parameter2 as item()*) as xs:boolean
 // fn:deep-equal($parameter1 as item()*, $parameter2 as item()*, $collation as string) as xs:boolean
-fStaticContext_defineSystemFunction("deep-equal",	[[cXTItem, '*'], [cXTItem, '*'], [cXSString, '', true]],	function(oSequence1, oSequence2, oSequence3) {
+fStaticContext_defineSystemFunction("deep-equal",	[[cXTItem, '*'], [cXTItem, '*'], [cXSString, '', true]],	function(oSequence1, oSequence2, oCollation) {
 	throw "Function '" + "deep-equal" + "' not implemented";
 });
 
@@ -235,7 +235,7 @@ fStaticContext_defineSystemFunction("avg",	[[cXSAnyAtomicType, '*']],	function(o
 
 // fn:max($arg as xs:anyAtomicType*) as xs:anyAtomicType?
 // fn:max($arg as xs:anyAtomicType*, $collation as string) as xs:anyAtomicType?
-fStaticContext_defineSystemFunction("max",	[[cXSAnyAtomicType, '*'], [cXSString, '', true]],	function(oSequence1, oSequence2) {
+fStaticContext_defineSystemFunction("max",	[[cXSAnyAtomicType, '*'], [cXSString, '', true]],	function(oSequence1, oCollation) {
 	if (!oSequence1.length)
 		return null;
 
@@ -261,7 +261,7 @@ fStaticContext_defineSystemFunction("max",	[[cXSAnyAtomicType, '*'], [cXSString,
 
 // fn:min($arg as xs:anyAtomicType*) as xs:anyAtomicType?
 // fn:min($arg as xs:anyAtomicType*, $collation as string) as xs:anyAtomicType?
-fStaticContext_defineSystemFunction("min",	[[cXSAnyAtomicType, '*'], [cXSString, '', true]],	function(oSequence1, oSequence2) {
+fStaticContext_defineSystemFunction("min",	[[cXSAnyAtomicType, '*'], [cXSString, '', true]],	function(oSequence1, oCollation) {
 	if (!oSequence1.length)
 		return null;
 
@@ -287,12 +287,10 @@ fStaticContext_defineSystemFunction("min",	[[cXSAnyAtomicType, '*'], [cXSString,
 
 // fn:sum($arg as xs:anyAtomicType*) as xs:anyAtomicType
 // fn:sum($arg as xs:anyAtomicType*, $zero as xs:anyAtomicType?) as xs:anyAtomicType?
-fStaticContext_defineSystemFunction("sum",	[[cXSAnyAtomicType, '*'], [cXSAnyAtomicType, '?', true]],	function(oSequence1, oSequence2) {
+fStaticContext_defineSystemFunction("sum",	[[cXSAnyAtomicType, '*'], [cXSAnyAtomicType, '?', true]],	function(oSequence1, oZero) {
 	if (!oSequence1.length) {
-		if (arguments.length > 1) {
-			if (oSequence2.length)
-				return oSequence2[0];
-		}
+		if (arguments.length > 1)
+			return oZero;
 		else
 			return new cXSDouble(0);
 
@@ -328,7 +326,7 @@ fStaticContext_defineSystemFunction("sum",	[[cXSAnyAtomicType, '*'], [cXSAnyAtom
 // 15.5 Functions and Operators that Generate Sequences
 // fn:id($arg as xs:string*) as element()*
 // fn:id($arg as xs:string*, $node as node()) as element()*
-fStaticContext_defineSystemFunction("id",	[[cXSString, '*'], [cXTNode, '', true]],	function(oSequence1, oSequence2) {
+fStaticContext_defineSystemFunction("id",	[[cXSString, '*'], [cXTNode, '', true]],	function(oSequence1, oNode) {
 	if (arguments.length < 2) {
 		if (!this.DOMAdapter.isNode(this.item))
 			throw new cException("XPTY0004"
@@ -336,14 +334,11 @@ fStaticContext_defineSystemFunction("id",	[[cXSString, '*'], [cXTNode, '', true]
 					, "id() function called when the context item is not a node"
 //<-Debug
 			);
-		oSequence2	= [this.item];
+		oNode	= this.item;
 	}
 
-	// Get context item
-	var oNode	= oSequence2[0];
-
 	// Get root node and check if it is Document
-	var oDocument	= hStaticContext_functions["root"].call(this, [oNode]);
+	var oDocument	= hStaticContext_functions["root"].call(this, oNode);
 	if (this.DOMAdapter.getProperty(oDocument, "nodeType") != 9)
 		throw new cException("FODC0001");
 
@@ -359,29 +354,29 @@ fStaticContext_defineSystemFunction("id",	[[cXSString, '*'], [cXTNode, '', true]
 
 // fn:idref($arg as xs:string*) as node()*
 // fn:idref($arg as xs:string*, $node as node()) as node()*
-fStaticContext_defineSystemFunction("idref",	[[cXSString, '*'], [cXTNode, '', true]],	function(oSequence1, oSequence2) {
+fStaticContext_defineSystemFunction("idref",	[[cXSString, '*'], [cXTNode, '', true]],	function(oSequence1, oNode) {
 	throw "Function '" + "idref" + "' not implemented";
 });
 
 // fn:doc($uri as xs:string?) as document-node()?
-fStaticContext_defineSystemFunction("doc",			[[cXSString, '?', true]],	function(oSequence1) {
+fStaticContext_defineSystemFunction("doc",			[[cXSString, '?', true]],	function(oUri) {
 	throw "Function '" + "doc" + "' not implemented";
 });
 
 // fn:doc-available($uri as xs:string?) as xs:boolean
-fStaticContext_defineSystemFunction("doc-available",	[[cXSString, '?', true]],	function(oSequence1) {
+fStaticContext_defineSystemFunction("doc-available",	[[cXSString, '?', true]],	function(oUri) {
 	throw "Function '" + "doc-available" + "' not implemented";
 });
 
 // fn:collection() as node()*
 // fn:collection($arg as xs:string?) as node()*
-fStaticContext_defineSystemFunction("collection",	[[cXSString, '?', true]],	function(oSequence1) {
+fStaticContext_defineSystemFunction("collection",	[[cXSString, '?', true]],	function(oUri) {
 	throw "Function '" + "collection" + "' not implemented";
 });
 
 // fn:element-with-id($arg as xs:string*) as element()*
 // fn:element-with-id($arg as xs:string*, $node as node()) as element()*
-fStaticContext_defineSystemFunction("element-with-id",	[[cXSString, '*'], [cXTNode, '', true]],	function(oSequence1, oSequence2) {
+fStaticContext_defineSystemFunction("element-with-id",	[[cXSString, '*'], [cXTNode, '', true]],	function(oSequence1, oNode) {
 	throw "Function '" + "element-with-id" + "' not implemented";
 });
 

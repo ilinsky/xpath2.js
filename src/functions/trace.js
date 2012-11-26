@@ -13,9 +13,9 @@
 */
 
 // fn:trace($value as item()*, $label as xs:string) as item()*
-fStaticContext_defineSystemFunction("trace",		[[cXTItem, '*'], [cXSString]],	function(oSequence1, oSequence2) {
+fStaticContext_defineSystemFunction("trace",		[[cXTItem, '*'], [cXSString]],	function(oSequence1, oLabel) {
 	var oConsole	= window.console;
 	if (oConsole && oConsole.log)
-		oConsole.log(oSequence2[0].valueOf(), oSequence1);
+		oConsole.log(oLabel.valueOf(), oSequence1);
 	return oSequence1;
 });

@@ -54,11 +54,11 @@ fStaticContext_defineSystemFunction("codepoints-to-string",	[[cXSInteger, '*']],
 });
 
 // fn:string-to-codepoints($arg as xs:string?) as xs:integer*
-fStaticContext_defineSystemFunction("string-to-codepoints",	[[cXSString, '?']],	function(oSequence1) {
-	if (!oSequence1.length)
+fStaticContext_defineSystemFunction("string-to-codepoints",	[[cXSString, '?']],	function(oValue) {
+	if (oValue == null)
 		return null;
 
-	var sValue	= oSequence1[0].valueOf();
+	var sValue	= oValue.valueOf();
 	if (sValue == '')
 		return [];
 
@@ -72,37 +72,34 @@ fStaticContext_defineSystemFunction("string-to-codepoints",	[[cXSString, '?']],	
 // 7.3 Equality and Comparison of Strings
 // fn:compare($comparand1 as xs:string?, $comparand2 as xs:string?) as xs:integer?
 // fn:compare($comparand1 as xs:string?, $comparand2 as xs:string?, $collation as xs:string) as xs:integer?
-fStaticContext_defineSystemFunction("compare",	[[cXSString, '?'], [cXSString, '?'], [cXSString, '', true]],	function(oSequence1, oSequence2, oSequence3) {
-	if (!oSequence1.length || !oSequence2.length)
+fStaticContext_defineSystemFunction("compare",	[[cXSString, '?'], [cXSString, '?'], [cXSString, '', true]],	function(oValue1, oValue2, oCollation) {
+	if (oValue1 == null || oValue2 == null)
 		return null;
 
 	var sCollation	= this.staticContext.defaultCollationName,
-		oCollation;
+		vCollation;
 	if (arguments.length > 2)
-		sCollation	= oSequence3[0].valueOf();
+		sCollation	= oCollation.valueOf();
 
-	oCollation	= sCollation == sNS_XPFUNC + "/collation/codepoint" ? oCodepointStringCollator : this.staticContext.getCollation(sCollation);
-	if (!oCollation)
+	vCollation	= sCollation == sNS_XPFUNC + "/collation/codepoint" ? oCodepointStringCollator : this.staticContext.getCollation(sCollation);
+	if (!vCollation)
 		throw new cException("FOCH0002"
 //->Debug
 				, "Unknown collation " + '{' + sCollation + '}'
 //<-Debug
 		);
 
-	return new cXSInteger(oCollation.compare(oSequence1[0].valueOf(), oSequence2[0].valueOf()));
+	return new cXSInteger(vCollation.compare(oValue1.valueOf(), oValue2.valueOf()));
 });
 
 // fn:codepoint-equal($comparand1 as xs:string?, $comparand2  as xs:string?) as xs:boolean?
-fStaticContext_defineSystemFunction("codepoint-equal",	[[cXSString, '?'], [cXSString, '?']],	function(oSequence1, oSequence2) {
-	if (!oSequence1.length || !oSequence2.length)
+fStaticContext_defineSystemFunction("codepoint-equal",	[[cXSString, '?'], [cXSString, '?']],	function(oValue1, oValue2) {
+	if (oValue1 == null || oValue2 == null)
 		return null;
-
-	var sValue1	= oSequence1[0],
-		sValue2	= oSequence2[0];
 
 	// TODO: Check if JS uses 'Unicode code point collation' here
 
-	return new cXSBoolean(sValue1.valueOf() == sValue2.valueOf());
+	return new cXSBoolean(oValue1.valueOf() == oValue2.valueOf());
 });
 
 
@@ -135,16 +132,16 @@ fStaticContext_defineSystemFunction("concat",	null,	function() {
 });
 
 // fn:string-join($arg1 as xs:string*, $arg2 as xs:string) as xs:string
-fStaticContext_defineSystemFunction("string-join",	[[cXSString, '*'], [cXSString]],	function(oSequence1, oSequence2) {
-	return new cXSString(oSequence1.join(oSequence2[0]));
+fStaticContext_defineSystemFunction("string-join",	[[cXSString, '*'], [cXSString]],	function(oSequence1, oValue) {
+	return new cXSString(oSequence1.join(oValue));
 });
 
 // fn:substring($sourceString as xs:string?, $startingLoc as xs:double) as xs:string
 // fn:substring($sourceString as xs:string?, $startingLoc as xs:double, $length as xs:double) as xs:string
-fStaticContext_defineSystemFunction("substring",	[[cXSString, '?'], [cXSDouble], [cXSDouble, '', true]],	function(oSequence1, oSequence2, oSequence3) {
-	var sValue	= oSequence1.length ? oSequence1[0].valueOf() : '',
-		nStart	= cMath.round(oSequence2[0]) - 1,
-		nEnd	= oSequence3 ? nStart + cMath.round(oSequence3[0]) : sValue.length;
+fStaticContext_defineSystemFunction("substring",	[[cXSString, '?'], [cXSDouble], [cXSDouble, '', true]],	function(oValue, oStart, oLength) {
+	var sValue	= oValue == null ? '' : oValue.valueOf(),
+		nStart	= cMath.round(oStart) - 1,
+		nEnd	= arguments.length > 2 ? nStart + cMath.round(oLength) : sValue.length;
 
 	// TODO: start can be negative
 	return new cXSString(nEnd > nStart ? sValue.substring(nStart, nEnd) : '');
@@ -152,50 +149,50 @@ fStaticContext_defineSystemFunction("substring",	[[cXSString, '?'], [cXSDouble],
 
 // fn:string-length() as xs:integer
 // fn:string-length($arg as xs:string?) as xs:integer
-fStaticContext_defineSystemFunction("string-length",	[[cXSString, '?', true]],	function(oSequence1) {
+fStaticContext_defineSystemFunction("string-length",	[[cXSString, '?', true]],	function(oValue) {
 	if (!arguments.length) {
 		if (!this.item)
 			throw new cException("XPDY0002");
-		oSequence1	= [cXSString.cast(fFunction_sequence_atomize([this.item], this)[0])];
+		oValue	= cXSString.cast(fFunction_sequence_atomize([this.item], this)[0]);
 	}
-	return new cXSInteger(oSequence1.length ? oSequence1[0].valueOf().length : 0);
+	return new cXSInteger(oValue == null ? 0 : oValue.valueOf().length);
 });
 
 // fn:normalize-space() as xs:string
 // fn:normalize-space($arg as xs:string?) as xs:string
-fStaticContext_defineSystemFunction("normalize-space",	[[cXSString, '?', true]],	function(oSequence1) {
+fStaticContext_defineSystemFunction("normalize-space",	[[cXSString, '?', true]],	function(oValue) {
 	if (!arguments.length) {
 		if (!this.item)
 			throw new cException("XPDY0002");
-		oSequence1	= [cXSString.cast(fFunction_sequence_atomize([this.item], this)[0])];
+		oValue	= cXSString.cast(fFunction_sequence_atomize([this.item], this)[0]);
 	}
-	return new cXSString(oSequence1.length ? fString_trim(oSequence1[0]).replace(/\s\s+/g, ' ') : '');
+	return new cXSString(oValue == null ? '' : fString_trim(oValue).replace(/\s\s+/g, ' '));
 });
 
 // fn:normalize-unicode($arg as xs:string?) as xs:string
 // fn:normalize-unicode($arg as xs:string?, $normalizationForm as xs:string) as xs:string
-fStaticContext_defineSystemFunction("normalize-unicode",	[[cXSString, '?'], [cXSString, '', true]],	function(oSequence1, oSequence2) {
+fStaticContext_defineSystemFunction("normalize-unicode",	[[cXSString, '?'], [cXSString, '', true]],	function(oValue, oNormalization) {
 	throw "Function '" + "normalize-unicode" + "' not implemented";
 });
 
 // fn:upper-case($arg as xs:string?) as xs:string
-fStaticContext_defineSystemFunction("upper-case",	[[cXSString, '?']],	function(oSequence1) {
-	return new cXSString(oSequence1.length ? oSequence1[0].valueOf().toUpperCase() : '');
+fStaticContext_defineSystemFunction("upper-case",	[[cXSString, '?']],	function(oValue) {
+	return new cXSString(oValue == null ? '' : oValue.valueOf().toUpperCase());
 });
 
 // fn:lower-case($arg as xs:string?) as xs:string
-fStaticContext_defineSystemFunction("lower-case",	[[cXSString, '?']],	function(oSequence1) {
-	return new cXSString(oSequence1.length ? oSequence1[0].valueOf().toLowerCase() : '');
+fStaticContext_defineSystemFunction("lower-case",	[[cXSString, '?']],	function(oValue) {
+	return new cXSString(oValue == null ? '' : oValue.valueOf().toLowerCase());
 });
 
 // fn:translate($arg as xs:string?, $mapString as xs:string, $transString as xs:string) as xs:string
-fStaticContext_defineSystemFunction("translate",	[[cXSString, '?'], [cXSString], [cXSString]],	function(oSequence1, oSequence2, oSequence3) {
-	if (!oSequence1.length)
+fStaticContext_defineSystemFunction("translate",	[[cXSString, '?'], [cXSString], [cXSString]],	function(oValue, oMap, oTranslate) {
+	if (oValue == null)
 		return new cXSString('');
 
-	var aValue	= oSequence1.length ? oSequence1[0].valueOf().split('') : [],
-		aMap	= oSequence2[0].valueOf().split(''),
-		aTranslate	= oSequence3[0].valueOf().split(''),
+	var aValue	= oValue.valueOf().split(''),
+		aMap	= oMap.valueOf().split(''),
+		aTranslate	= oTranslate.valueOf().split(''),
 		nTranslateLength	= aTranslate.length,
 		aReturn	= [];
 	for (var nIndex = 0, nLength = aValue.length, nPosition; nIndex < nLength; nIndex++)
@@ -209,17 +206,17 @@ fStaticContext_defineSystemFunction("translate",	[[cXSString, '?'], [cXSString],
 });
 
 // fn:encode-for-uri($uri-part as xs:string?) as xs:string
-fStaticContext_defineSystemFunction("encode-for-uri",	[[cXSString, '?']],	function(oSequence1) {
-	return new cXSString(oSequence1.length ? window.encodeURIComponent(oSequence1[0]) : '');
+fStaticContext_defineSystemFunction("encode-for-uri",	[[cXSString, '?']],	function(oValue) {
+	return new cXSString(oValue == null ? '' : window.encodeURIComponent(oValue));
 });
 
 // fn:iri-to-uri($iri as xs:string?) as xs:string
-fStaticContext_defineSystemFunction("iri-to-uri",		[[cXSString, '?']],	function(oSequence1) {
+fStaticContext_defineSystemFunction("iri-to-uri",		[[cXSString, '?']],	function(oValue) {
 	throw "Function '" + "iri-to-uri" + "' not implemented";
 });
 
 // fn:escape-html-uri($uri as xs:string?) as xs:string
-fStaticContext_defineSystemFunction("escape-html-uri",	[[cXSString, '?']],	function(oSequence1) {
+fStaticContext_defineSystemFunction("escape-html-uri",	[[cXSString, '?']],	function(oValue) {
 	throw "Function '" + "escape-html-uri" + "' not implemented";
 });
 
@@ -227,30 +224,30 @@ fStaticContext_defineSystemFunction("escape-html-uri",	[[cXSString, '?']],	funct
 // 7.5 Functions Based on Substring Matching
 // fn:contains($arg1 as xs:string?, $arg2 as xs:string?) as xs:boolean
 // fn:contains($arg1 as xs:string?, $arg2 as xs:string?, $collation as xs:string) as xs:boolean
-fStaticContext_defineSystemFunction("contains",	[[cXSString, '?'], [cXSString, '?'], [cXSString, '', true]],	function(oSequence1, oSequence2, oSequence3) {
-	return new cXSBoolean((oSequence1.length ? oSequence1[0].valueOf() : '').indexOf(oSequence2.length ? oSequence2[0].valueOf() : '') >= 0);
+fStaticContext_defineSystemFunction("contains",	[[cXSString, '?'], [cXSString, '?'], [cXSString, '', true]],	function(oValue, oSearch, oCollation) {
+	return new cXSBoolean((oValue == null ? '' : oValue.valueOf()).indexOf(oSearch == null ? '' : oSearch.valueOf()) >= 0);
 });
 
 // fn:starts-with($arg1 as xs:string?, $arg2 as xs:string?) as xs:boolean
 // fn:starts-with($arg1 as xs:string?, $arg2 as xs:string?, $collation as xs:string) as xs:boolean
-fStaticContext_defineSystemFunction("starts-with",	[[cXSString, '?'], [cXSString, '?'], [cXSString, '', true]],	function(oSequence1, oSequence2, oSequence3) {
-	return new cXSBoolean((oSequence1.length ? oSequence1[0].valueOf() : '').indexOf(oSequence2.length ? oSequence2[0].valueOf() : '') == 0);
+fStaticContext_defineSystemFunction("starts-with",	[[cXSString, '?'], [cXSString, '?'], [cXSString, '', true]],	function(oValue, oSearch, oCollation) {
+	return new cXSBoolean((oValue == null ? '' : oValue.valueOf()).indexOf(oSearch == null ? '' : oSearch.valueOf()) == 0);
 });
 
 // fn:ends-with($arg1 as xs:string?, $arg2 as xs:string?) as xs:boolean
 // fn:ends-with($arg1 as xs:string?, $arg2 as xs:string?, $collation as xs:string) as xs:boolean
-fStaticContext_defineSystemFunction("ends-with",	[[cXSString, '?'], [cXSString, '?'], [cXSString, '', true]],	function(oSequence1, oSequence2, oSequence3) {
-	var sValue	= oSequence1.length ? oSequence1[0].valueOf() : '',
-		sSearch	= oSequence2.length ? oSequence2[0].valueOf() : '';
+fStaticContext_defineSystemFunction("ends-with",	[[cXSString, '?'], [cXSString, '?'], [cXSString, '', true]],	function(oValue, oSearch, oCollation) {
+	var sValue	= oValue == null ? '' : oValue.valueOf(),
+		sSearch	= oSearch == null ? '' : oSearch.valueOf();
 
 	return new cXSBoolean(sValue.indexOf(sSearch) == sValue.length - sSearch.length);
 });
 
 // fn:substring-before($arg1 as xs:string?, $arg2 as xs:string?) as xs:string
 // fn:substring-before($arg1 as xs:string?, $arg2 as xs:string?, $collation as xs:string) as xs:string
-fStaticContext_defineSystemFunction("substring-before",	[[cXSString, '?'], [cXSString, '?'], [cXSString, '', true]],	function(oSequence1, oSequence2, oSequence3) {
-	var sValue	= oSequence1.length ? oSequence1[0].valueOf() : '',
-		sSearch	= oSequence2.length ? oSequence2[0].valueOf() : '',
+fStaticContext_defineSystemFunction("substring-before",	[[cXSString, '?'], [cXSString, '?'], [cXSString, '', true]],	function(oValue, oSearch, oCollation) {
+	var sValue	= oValue == null ? '' : oValue.valueOf(),
+		sSearch	= oSearch == null ? '' : oSearch.valueOf(),
 		nPosition;
 
 	return new cXSString((nPosition = sValue.indexOf(sSearch)) >= 0 ? sValue.substring(0, nPosition) : '');
@@ -258,9 +255,9 @@ fStaticContext_defineSystemFunction("substring-before",	[[cXSString, '?'], [cXSS
 
 // fn:substring-after($arg1 as xs:string?, $arg2 as xs:string?) as xs:string
 // fn:substring-after($arg1 as xs:string?, $arg2 as xs:string?, $collation as xs:string) as xs:string
-fStaticContext_defineSystemFunction("substring-after",	[[cXSString, '?'], [cXSString, '?'], [cXSString, '', true]],	function(oSequence1, oSequence2, oSequence3) {
-	var sValue	= oSequence1.length ? oSequence1[0].valueOf() : '',
-		sSearch	= oSequence2.length ? oSequence2[0].valueOf() : '',
+fStaticContext_defineSystemFunction("substring-after",	[[cXSString, '?'], [cXSString, '?'], [cXSString, '', true]],	function(oValue, oSearch, oCollation) {
+	var sValue	= oValue == null ? '' : oValue.valueOf(),
+		sSearch	= oSearch == null ? '' : oSearch.valueOf(),
 		nPosition;
 
 	return new cXSString((nPosition = sValue.indexOf(sSearch)) >= 0 ? sValue.substring(nPosition + sSearch.length) : '');
@@ -321,27 +318,27 @@ function fFunction_string_createRegExp(sValue, sFlags) {
 
 // fn:matches($input as xs:string?, $pattern as xs:string) as xs:boolean
 // fn:matches($input as xs:string?, $pattern as xs:string, $flags as xs:string) as xs:boolean
-fStaticContext_defineSystemFunction("matches",	[[cXSString, '?'], [cXSString], [cXSString, '', true]],	function(oSequence1, oSequence2, oSequence3) {
-	var sValue	= oSequence1.length ? oSequence1[0].valueOf() : '',
-		rRegExp	= fFunction_string_createRegExp(oSequence2[0].valueOf(), arguments.length > 2 ? oSequence3[0].valueOf() : '');
+fStaticContext_defineSystemFunction("matches",	[[cXSString, '?'], [cXSString], [cXSString, '', true]],	function(oValue, oPattern, oFlags) {
+	var sValue	= oValue == null ? '' : oValue.valueOf(),
+		rRegExp	= fFunction_string_createRegExp(oPattern.valueOf(), arguments.length > 2 ? oFlags.valueOf() : '');
 
 	return new cXSBoolean(rRegExp.test(sValue));
 });
 
 // fn:replace($input as xs:string?, $pattern as xs:string, $replacement as xs:string) as xs:string
 // fn:replace($input as xs:string?, $pattern as xs:string, $replacement as xs:string, $flags as xs:string) as xs:string
-fStaticContext_defineSystemFunction("replace",	[[cXSString, '?'], [cXSString],  [cXSString], [cXSString, '', true]],	function(oSequence1, oSequence2, oSequence3, oSequence4) {
-	var sValue	= oSequence1.length ? oSequence1[0].valueOf() : '',
-		rRegExp	= fFunction_string_createRegExp(oSequence2[0].valueOf(), arguments.length > 3 ? oSequence4[0].valueOf() : '');
+fStaticContext_defineSystemFunction("replace",	[[cXSString, '?'], [cXSString],  [cXSString], [cXSString, '', true]],	function(oValue, oPattern, oReplacement, oFlags) {
+	var sValue	= oValue == null ? '' : oValue.valueOf(),
+		rRegExp	= fFunction_string_createRegExp(oPattern.valueOf(), arguments.length > 3 ? oFlags.valueOf() : '');
 
-	return new cXSBoolean(sValue.replace(rRegExp, oSequence3[0].valueOf()));
+	return new cXSBoolean(sValue.replace(rRegExp, oReplacement.valueOf()));
 });
 
 // fn:tokenize($input as xs:string?, $pattern as xs:string) as xs:string*
 // fn:tokenize($input as xs:string?, $pattern as xs:string, $flags as xs:string) as xs:string*
-fStaticContext_defineSystemFunction("tokenize",	[[cXSString, '?'], [cXSString], [cXSString, '', true]],	function(oSequence1, oSequence2, oSequence3) {
-	var sValue	= oSequence1.length ? oSequence1[0].valueOf() : '',
-		rRegExp	= fFunction_string_createRegExp(oSequence2[0].valueOf(), arguments.length > 2 ? oSequence3[0].valueOf() : '');
+fStaticContext_defineSystemFunction("tokenize",	[[cXSString, '?'], [cXSString], [cXSString, '', true]],	function(oValue, oPattern, oFlags) {
+	var sValue	= oValue == null ? '' : oValue.valueOf(),
+		rRegExp	= fFunction_string_createRegExp(oPattern.valueOf(), arguments.length > 2 ? oFlags.valueOf() : '');
 
 	var oSequence	= [];
 	for (var nIndex = 0, aValue = sValue.split(rRegExp), nLength = aValue.length; nIndex < nLength; nIndex++)

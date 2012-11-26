@@ -96,7 +96,7 @@ cFunctionCall.prototype.evaluate	= function (oContext) {
 			//
 			fFunctionCall_prepare(this.localName, [[cXSAnyAtomicType]], fFunction, aArguments, oContext);
 			//
-			return [fFunction.cast(aArguments[0][0])];
+			return [fFunction.cast(aArguments[0])];
 		}
 		throw new cException("XPST0017"
 //->Debug
@@ -161,6 +161,8 @@ function fFunctionCall_prepare(sName, aParameters, fFunction, aArguments, oConte
 				, aFunctionCall_numbers[nIndex] + " argument of " + sName + '()'
 //<-Debug
 		);
+		if (oParameter[1] != '+' && oParameter[1] != '*')
+			aArguments[nIndex]	= oArgument.length ? oArgument[0] : null;
 	}
 };
 

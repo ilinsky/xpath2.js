@@ -37,5 +37,42 @@ function fRangeExpr_parse (oLexer, oStaticContext) {
 
 // Public members
 cRangeExpr.prototype.evaluate	= function (oContext) {
-	return hStaticContext_operators["to"].call(oContext, this.left.evaluate(oContext), this.right.evaluate(oContext));
+	//
+	var oLeft	= this.left.evaluate(oContext);
+	if (!oLeft.length)
+		return [];
+	//
+//->Debug
+	var sSource	= "first operand of 'to'";
+//<-Debug
+
+	fFunctionCall_assertSequenceCardinality(oContext, oLeft, '?'
+//->Debug
+			, sSource
+//<-Debug
+	);
+	fFunctionCall_assertSequenceItemType(oContext, oLeft, cXSInteger
+//->Debug
+			, sSource
+//<-Debug
+	);
+
+	var oRight	= this.right.evaluate(oContext);
+	if (!oRight.length)
+		return [];
+
+	//
+	sSource	= "second operand of 'to'";
+	fFunctionCall_assertSequenceCardinality(oContext, oRight, '?'
+//->Debug
+			, sSource
+//<-Debug
+	);
+	fFunctionCall_assertSequenceItemType(oContext, oRight, cXSInteger
+//->Debug
+			, sSource
+//<-Debug
+	);
+
+	return hStaticContext_operators["to"].call(oContext, oLeft[0], oRight[0]);
 };

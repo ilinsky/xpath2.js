@@ -19,50 +19,46 @@
 */
 
 // fn:node-name($arg as node()?) as xs:QName?
-fStaticContext_defineSystemFunction("node-name",		[[cXTNode, '?']],	function(oSequence1) {
-	if (!oSequence1.length)
-		return null;
-	//
-	var fGetProperty	= this.DOMAdapter.getProperty,
-		oNode	= oSequence1[0];
-	switch (fGetProperty(oNode, "nodeType")) {
-		case 1:		// ELEMENT_NAME
-		case 2:		// ATTRIBUTE_NODE
-			return new cXSQName(fGetProperty(oNode, "prefix"), fGetProperty(oNode, "localName"), fGetProperty(oNode, "namespaceURI"));
-		case 5:		// ENTITY_REFERENCE_NODE
-			throw "Not implemented";
-		case 6:		// ENTITY_NODE
-			throw "Not implemented";
-		case 7:		// PROCESSING_INSTRUCTION_NODE
-			return new cXSQName(null, fGetProperty(oNode, "target"), null);
-		case 10:	// DOCUMENT_TYPE_NODE
-			return new cXSQName(null, fGetProperty(oNode, "name"), null);
+fStaticContext_defineSystemFunction("node-name",		[[cXTNode, '?']],	function(oNode) {
+	if (oNode != null) {
+		var fGetProperty	= this.DOMAdapter.getProperty;
+		switch (fGetProperty(oNode, "nodeType")) {
+			case 1:		// ELEMENT_NAME
+			case 2:		// ATTRIBUTE_NODE
+				return new cXSQName(fGetProperty(oNode, "prefix"), fGetProperty(oNode, "localName"), fGetProperty(oNode, "namespaceURI"));
+			case 5:		// ENTITY_REFERENCE_NODE
+				throw "Not implemented";
+			case 6:		// ENTITY_NODE
+				throw "Not implemented";
+			case 7:		// PROCESSING_INSTRUCTION_NODE
+				return new cXSQName(null, fGetProperty(oNode, "target"), null);
+			case 10:	// DOCUMENT_TYPE_NODE
+				return new cXSQName(null, fGetProperty(oNode, "name"), null);
+		}
 	}
 	//
 	return null;
 });
 
 // fn:nilled($arg as node()?) as xs:boolean?
-fStaticContext_defineSystemFunction("nilled",	[[cXTNode, '?']],	function(oSequence1) {
-	if (!oSequence1.length)
-		return null;
-
-	var oNode	= oSequence1[0];
-	if (this.DOMAdapter.getProperty(oNode, "nodeType") == 1)
-		return new cXSBoolean(false);	// TODO: Determine if node is nilled
-
+fStaticContext_defineSystemFunction("nilled",	[[cXTNode, '?']],	function(oNode) {
+	if (oNode != null) {
+		if (this.DOMAdapter.getProperty(oNode, "nodeType") == 1)
+			return new cXSBoolean(false);	// TODO: Determine if node is nilled
+	}
+	//
 	return null;
 });
 
 // fn:string() as xs:string
 // fn:string($arg as item()?) as xs:string
-fStaticContext_defineSystemFunction("string",	[[cXTItem, '?', true]],	function(/*[*/oSequence1/*]*/) {
-	if (!arguments.length) {
+fStaticContext_defineSystemFunction("string",	[[cXTItem, '?', true]],	function(/*[*/oItem/*]*/) {
+	if (oItem == null) {
 		if (!this.item)
 			throw new cException("XPDY0002");
-		oSequence1	= [this.item];
+		oItem	= this.item;
 	}
-	return oSequence1.length ? cXSString.cast(fFunction_sequence_atomize(oSequence1, this)[0]) : new cXSString('');
+	return oItem == null ? new cXSString('') : cXSString.cast(fFunction_sequence_atomize([oItem], this)[0]);
 });
 
 // fn:data($arg as item()*) as xs:anyAtomicType*
@@ -72,32 +68,27 @@ fStaticContext_defineSystemFunction("data",	[[cXTItem, '*']],		function(oSequenc
 
 // fn:base-uri() as xs:anyURI?
 // fn:base-uri($arg as node()?) as xs:anyURI?
-fStaticContext_defineSystemFunction("base-uri",	[[cXTNode, '?', true]],	function(oSequence1) {
-	if (!arguments.length) {
+fStaticContext_defineSystemFunction("base-uri",	[[cXTNode, '?', true]],	function(oNode) {
+	if (oNode == null) {
 		if (!this.DOMAdapter.isNode(this.item))
 			throw new cException("XPTY0004"
 //->Debug
 					, "base-uri() function called when the context item is not a node"
 //<-Debug
 			);
-		oSequence1	= [this.item];
+		oNode	= this.item;
 	}
-	else
-	if (!oSequence1.length)
-		return null;
 	//
-	return cXSAnyURI.cast(new cXSString(this.DOMAdapter.getProperty(oSequence1[0], "baseURI") || ''));
+	return cXSAnyURI.cast(new cXSString(this.DOMAdapter.getProperty(oNode, "baseURI") || ''));
 });
 
 // fn:document-uri($arg as node()?) as xs:anyURI?
-fStaticContext_defineSystemFunction("document-uri",	[[cXTNode, '?']],	function(oSequence1) {
-	if (!oSequence1.length)
-		return null;
-	//
-	var fGetProperty	= this.DOMAdapter.getProperty,
-		oNode	= oSequence1[0];
-	if (fGetProperty(oNode, "nodeType") == 9)
-		return cXSAnyURI.cast(new cXSString(fGetProperty(oNode, "documentURI") || ''));
+fStaticContext_defineSystemFunction("document-uri",	[[cXTNode, '?']],	function(oNode) {
+	if (oNode != null) {
+		var fGetProperty	= this.DOMAdapter.getProperty;
+		if (fGetProperty(oNode, "nodeType") == 9)
+			return cXSAnyURI.cast(new cXSString(fGetProperty(oNode, "documentURI") || ''));
+	}
 	//
 	return null;
 });

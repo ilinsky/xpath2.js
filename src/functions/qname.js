@@ -23,11 +23,11 @@
 
 // 11.1 Additional Constructor Functions for QNames
 // fn:resolve-QName($qname as xs:string?, $element as element()) as xs:QName?
-fStaticContext_defineSystemFunction("resolve-QName",	[[cXSString, '?'], [cXTElement]],	function(oSequence1, oSequence2) {
-	if (!oSequence1.length)
+fStaticContext_defineSystemFunction("resolve-QName",	[[cXSString, '?'], [cXTElement]],	function(oQName, oElement) {
+	if (oQName == null)
 		return null;
 
-	var sQName	= oSequence1[0].valueOf(),
+	var sQName	= oQName.valueOf(),
 		aMatch	= sQName.match(cXSQName.RegExp);
 	if (!aMatch)
 		throw new cException("FOCA0002"
@@ -38,7 +38,7 @@ fStaticContext_defineSystemFunction("resolve-QName",	[[cXSString, '?'], [cXTElem
 
 	var sPrefix	= aMatch[1] || null,
 		sLocalName	= aMatch[2],
-		sNameSpaceURI = this.DOMAdapter.lookupNamespaceURI(oSequence2[0], sPrefix);
+		sNameSpaceURI = this.DOMAdapter.lookupNamespaceURI(oElement, sPrefix);
 	//
 	if (sPrefix != null &&!sNameSpaceURI)
 		throw new cException("FONS0004"
@@ -51,8 +51,8 @@ fStaticContext_defineSystemFunction("resolve-QName",	[[cXSString, '?'], [cXTElem
 });
 
 // fn:QName($paramURI as xs:string?, $paramQName as xs:string) as xs:QName
-fStaticContext_defineSystemFunction("QName",		[[cXSString, '?'], [cXSString]],	function(oSequence1, oSequence2) {
-	var sQName	= oSequence2[0].valueOf(),
+fStaticContext_defineSystemFunction("QName",		[[cXSString, '?'], [cXSString]],	function(oUri, oQName) {
+	var sQName	= oQName.valueOf(),
 		aMatch	= sQName.match(cXSQName.RegExp);
 
 	if (!aMatch)
@@ -62,46 +62,45 @@ fStaticContext_defineSystemFunction("QName",		[[cXSString, '?'], [cXSString]],	f
 //<-Debug
 		);
 
-	return new cXSQName(aMatch[1] || null, aMatch[2] || null, oSequence1.length ? oSequence1[0].valueOf() : '');
+	return new cXSQName(aMatch[1] || null, aMatch[2] || null, oUri == null ? '' : oUri.valueOf());
 });
 
 // 11.2 Functions Related to QNames
 // fn:prefix-from-QName($arg as xs:QName?) as xs:NCName?
-fStaticContext_defineSystemFunction("prefix-from-QName",			[[cXSQName, '?']],	function(oSequence1) {
-	if (!oSequence1.length)
-		return null;
-
-	if (oSequence1[0].prefix)
-		return new cXSNCName(oSequence1[0].prefix);
-
+fStaticContext_defineSystemFunction("prefix-from-QName",			[[cXSQName, '?']],	function(oQName) {
+	if (oQName != null) {
+		if (oQName.prefix)
+			return new cXSNCName(oQName.prefix);
+	}
+	//
 	return null;
 });
 
 // fn:local-name-from-QName($arg as xs:QName?) as xs:NCName?
-fStaticContext_defineSystemFunction("local-name-from-QName",		[[cXSQName, '?']],	function(oSequence1) {
-	if (!oSequence1.length)
+fStaticContext_defineSystemFunction("local-name-from-QName",		[[cXSQName, '?']],	function(oQName) {
+	if (oQName == null)
 		return null;
 
-	return new cXSNCName(oSequence1[0].localName);
+	return new cXSNCName(oQName.localName);
 });
 
 // fn:namespace-uri-from-QName($arg as xs:QName?) as xs:anyURI?
-fStaticContext_defineSystemFunction("namespace-uri-from-QName",	[[cXSQName, '?']],	function(oSequence1) {
-	if (!oSequence1.length)
+fStaticContext_defineSystemFunction("namespace-uri-from-QName",	[[cXSQName, '?']],	function(oQName) {
+	if (oQName == null)
 		return null;
 
-	return cXSAnyURI.cast(new cXSString(oSequence1[0].namespaceURI || ''));
+	return cXSAnyURI.cast(new cXSString(oQName.namespaceURI || ''));
 });
 
 // fn:namespace-uri-for-prefix($prefix as xs:string?, $element as element()) as xs:anyURI?
-fStaticContext_defineSystemFunction("namespace-uri-for-prefix",	[[cXSString, '?'], [cXTElement]],	function(oSequence1, oSequence2) {
-	var sPrefix	= oSequence1.length ? oSequence1[0].valueOf() : '',
-		sNameSpaceURI	= this.DOMAdapter.lookupNamespaceURI(oSequence2[0], sPrefix || null);
+fStaticContext_defineSystemFunction("namespace-uri-for-prefix",	[[cXSString, '?'], [cXTElement]],	function(oPrefix, oElement) {
+	var sPrefix	= oPrefix == null ? '' : oPrefix.valueOf(),
+		sNameSpaceURI	= this.DOMAdapter.lookupNamespaceURI(oElement, sPrefix || null);
 
 	return sNameSpaceURI == null ? null : cXSAnyURI.cast(new cXSString(sNameSpaceURI));
 });
 
 // fn:in-scope-prefixes($element as element()) as xs:string*
-fStaticContext_defineSystemFunction("in-scope-prefixes",	[[cXTElement]],	function(oSequence1) {
+fStaticContext_defineSystemFunction("in-scope-prefixes",	[[cXTElement]],	function(oElement) {
 	throw "Function '" + "in-scope-prefixes" + "' not implemented";
 });
