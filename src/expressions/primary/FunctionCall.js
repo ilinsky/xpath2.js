@@ -82,7 +82,7 @@ cFunctionCall.prototype.evaluate	= function (oContext) {
 			//
 			var vResult	= fFunction.apply(oContext, aArguments);
 			//
-			return vResult == null ? new cSequence : new cSequence(vResult);
+			return vResult == null ? new cSequence : vResult instanceof cSequence ? vResult : new cSequence(vResult);
 		}
 		throw new cException("XPST0017"
 //->Debug
@@ -96,7 +96,7 @@ cFunctionCall.prototype.evaluate	= function (oContext) {
 			//
 			fFunctionCall_prepare(this.localName, [[cXSAnyAtomicType]], fFunction, aArguments, oContext);
 			//
-			return new cSequence(fFunction.cast(aArguments[0].items[0]));
+			return new cSequence(fFunction.cast(aArguments[0][0]));
 		}
 		throw new cException("XPST0017"
 //->Debug
@@ -109,7 +109,7 @@ cFunctionCall.prototype.evaluate	= function (oContext) {
 		//
 		var vResult	= fFunction.apply(oContext, aArguments);
 		//
-		return vResult == null ? new cSequence : new cSequence(vResult);
+		return vResult == null ? new cSequence : vResult instanceof cSequence ? vResult : new cSequence(vResult);
 	}
 	//
 	throw new cException("XPST0017"
@@ -170,8 +170,8 @@ function fFunctionCall_assertSequenceItemType(oContext, oSequence, cItemType
 //<-Debug
 	) {
 	//
-	for (var nIndex = 0, nLength = oSequence.items.length, nNodeType, vItem; nIndex < nLength; nIndex++) {
-		vItem	= oSequence.items[nIndex];
+	for (var nIndex = 0, nLength = oSequence.length, nNodeType, vItem; nIndex < nLength; nIndex++) {
+		vItem	= oSequence[nIndex];
 		// Node types
 		if (cItemType == cXTNode || cItemType.prototype instanceof cXTNode) {
 			// Check if is node
@@ -223,7 +223,7 @@ function fFunctionCall_assertSequenceItemType(oContext, oSequence, cItemType
 //<-Debug
 				);
 			// Write value back to sequence
-			oSequence.items[nIndex]	= vItem;
+			oSequence[nIndex]	= vItem;
 		}
 	}
 };
@@ -233,7 +233,7 @@ function fFunctionCall_assertSequenceCardinality(oContext, oSequence, sCardinali
 		, sSource
 //<-Debug
 	) {
-	var nLength	= oSequence.items.length;
+	var nLength	= oSequence.length;
 	// Check cardinality
 	if (sCardinality == '?') {	// =0 or 1
 		if (nLength > 1)

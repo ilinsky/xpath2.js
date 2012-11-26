@@ -67,7 +67,7 @@ cUnaryExpr.prototype.evaluate	= function (oContext) {
 	var oRight	= fFunction_sequence_atomize(this.expression.evaluate(oContext), oContext);
 
 	//
-	if (!oRight.items.length)
+	if (!oRight.length)
 		return new cSequence;
 	// Assert cardinality
 	fFunctionCall_assertSequenceCardinality(oContext, oRight, '?'
@@ -76,7 +76,7 @@ cUnaryExpr.prototype.evaluate	= function (oContext) {
 //<-Debug
 	);
 
-	var vRight	= oRight.items[0];
+	var vRight	= oRight[0];
 	if (vRight instanceof cXSUntypedAtomic)
 		vRight	= cXSDouble.cast(vRight);	// cast to xs:double
 

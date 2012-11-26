@@ -26,13 +26,13 @@ fStaticContext_defineSystemFunction("resolve-uri",	[[cXSString, '?'], [cXSString
 		sBaseUri	= new cXSString(this.DOMAdapter.getProperty(this.item, "baseURI") || '');
 	}
 	else
-		sBaseUri	= oSequence2.items[0];
+		sBaseUri	= oSequence2[0];
 
-	if (!oSequence1.items.length)
+	if (!oSequence1.length)
 		return null;
 
 	//
-	var sUri	= oSequence1.items[0];
+	var sUri	= oSequence1[0];
 	if (sUri.valueOf() == '' || sUri.valueOf().charAt(0) == '#')
 		return cXSAnyURI.cast(sBaseUri);
 

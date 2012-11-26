@@ -54,43 +54,43 @@ fStaticContext_defineSystemFunction("boolean",	[[cXTItem, '*']],	function(oSeque
 // fn:index-of($seqParam as xs:anyAtomicType*, $srchParam as xs:anyAtomicType) as xs:integer*
 // fn:index-of($seqParam as xs:anyAtomicType*, $srchParam as xs:anyAtomicType, $collation as xs:string) as xs:integer*
 fStaticContext_defineSystemFunction("index-of",	[[cXSAnyAtomicType, '*'], [cXSAnyAtomicType], [cXSString, '', true]],	function(oSequence1, oSequence2, oSequence3) {
-	if (!oSequence1.items.length || !oSequence2.items.length)
+	if (!oSequence1.length || !oSequence2.length)
 		return new cSequence;
 
 	// TODO: Implement collation
 
 	var oSequence	= new cSequence;
-	for (var nIndex = 0, nLength = oSequence1.items.length, vValue = oSequence2.items[0].valueOf(); nIndex < nLength; nIndex++)
-		if (oSequence1.items[nIndex].valueOf() === vValue)
-			oSequence.items.push(new cXSInteger(nIndex + 1));
+	for (var nIndex = 0, nLength = oSequence1.length, vValue = oSequence2[0].valueOf(); nIndex < nLength; nIndex++)
+		if (oSequence1[nIndex].valueOf() === vValue)
+			oSequence.push(new cXSInteger(nIndex + 1));
 
 	return oSequence;
 });
 
 // fn:empty($arg as item()*) as xs:boolean
 fStaticContext_defineSystemFunction("empty",	[[cXTItem, '*']],	function(oSequence1) {
-	return new cXSBoolean(!oSequence1.items.length);
+	return new cXSBoolean(!oSequence1.length);
 });
 
 // fn:exists($arg as item()*) as xs:boolean
 fStaticContext_defineSystemFunction("exists",	[[cXTItem, '*']],	function(oSequence1) {
-	return new cXSBoolean(!!oSequence1.items.length);
+	return new cXSBoolean(!!oSequence1.length);
 });
 
 // fn:distinct-values($arg as xs:anyAtomicType*) as xs:anyAtomicType*
 // fn:distinct-values($arg as xs:anyAtomicType*, $collation as xs:string) as xs:anyAtomicType*
 fStaticContext_defineSystemFunction("distinct-values",	[[cXSAnyAtomicType, '*'], [cXSString, '', true]],	function(oSequence1, oSequence2) {
-	if (!oSequence1.items.length)
+	if (!oSequence1.length)
 		return null;
 
 	var oSequence	= new cSequence;
-	for (var nIndex = 0, nLength = oSequence1.items.length, vValue; nIndex < nLength; nIndex++) {
-		vValue = oSequence1.items[nIndex].valueOf();
-		for (var nRightIndex = 0, nRightLength = oSequence.items.length, bFound = false; (nRightIndex < nRightLength) &&!bFound; nRightIndex++)
-			if (oSequence.items[nRightIndex].valueOf() === vValue)
+	for (var nIndex = 0, nLength = oSequence1.length, vValue; nIndex < nLength; nIndex++) {
+		vValue = oSequence1[nIndex].valueOf();
+		for (var nRightIndex = 0, nRightLength = oSequence.length, bFound = false; (nRightIndex < nRightLength) &&!bFound; nRightIndex++)
+			if (oSequence[nRightIndex].valueOf() === vValue)
 				bFound	= true;
 		if (!bFound)
-			oSequence.items.push(oSequence1.items[nIndex]);
+			oSequence.push(oSequence1[nIndex]);
 	}
 
 	return oSequence;
@@ -98,13 +98,13 @@ fStaticContext_defineSystemFunction("distinct-values",	[[cXSAnyAtomicType, '*'],
 
 // fn:insert-before($target as item()*, $position as xs:integer, $inserts as item()*) as item()*
 fStaticContext_defineSystemFunction("insert-before",	[[cXTItem, '*'], [cXSInteger], [cXTItem, '*']],	function(oSequence1, oSequence2, oSequence3) {
-	if (!oSequence1.items.length)
+	if (!oSequence1.length)
 		return oSequence3;
-	if (!oSequence3.items.length)
+	if (!oSequence3.length)
 		return oSequence1;
 
-	var nLength 	= oSequence1.items.length,
-		nPosition	= oSequence2.items[0].valueOf();
+	var nLength 	= oSequence1.length,
+		nPosition	= oSequence2[0].valueOf();
 	if (nPosition < 1)
 		nPosition	= 1;
 	else
@@ -115,7 +115,7 @@ fStaticContext_defineSystemFunction("insert-before",	[[cXTItem, '*'], [cXSIntege
 	for (var nIndex = 0; nIndex < nLength; nIndex++) {
 		if (nPosition == nIndex + 1)
 			oSequence.add(oSequence3);
-		oSequence.items.push(oSequence1.items[nIndex]);
+		oSequence.push(oSequence1[nIndex]);
 	}
 	if (nPosition == nIndex + 1)
 		oSequence.add(oSequence3);
@@ -126,11 +126,11 @@ fStaticContext_defineSystemFunction("insert-before",	[[cXTItem, '*'], [cXSIntege
 // fn:remove($target as item()*, $position as xs:integer) as item()*
 fStaticContext_defineSystemFunction("remove",	[[cXTItem, '*'], [cXSInteger]],	function(oSequence1, oSequence2) {
 	var oSequence	= new cSequence;
-	if (!oSequence1.items.length)
+	if (!oSequence1.length)
 		return oSequence;
 
-	var nLength 	= oSequence1.items.length,
-		nPosition	= oSequence2.items[0].valueOf();
+	var nLength 	= oSequence1.length,
+		nPosition	= oSequence2[0].valueOf();
 
 	if (nPosition < 1 || nPosition > nLength)
 		return oSequence1;
@@ -138,14 +138,14 @@ fStaticContext_defineSystemFunction("remove",	[[cXTItem, '*'], [cXSInteger]],	fu
 	var oSequence	=  new cSequence;
 	for (var nIndex = 0; nIndex < nLength; nIndex++)
 		if (nPosition != nIndex + 1)
-			oSequence.items.push(oSequence1.items[nIndex]);
+			oSequence.push(oSequence1[nIndex]);
 
 	return oSequence;
 });
 
 // fn:reverse($arg as item()*) as item()*
 fStaticContext_defineSystemFunction("reverse",	[[cXTItem, '*']],	function(oSequence1) {
-	oSequence1.items.reverse();
+	oSequence1.reverse();
 
 	return oSequence1;
 });
@@ -153,12 +153,12 @@ fStaticContext_defineSystemFunction("reverse",	[[cXTItem, '*']],	function(oSeque
 // fn:subsequence($sourceSeq as item()*, $startingLoc as xs:double) as item()*
 // fn:subsequence($sourceSeq as item()*, $startingLoc as xs:double, $length as xs:double) as item()*
 fStaticContext_defineSystemFunction("subsequence",	[[cXTItem, '*'], [cXSDouble, ''], [cXSDouble, '', true]],	function(oSequence1, oSequence2, oSequence3) {
-	var nPosition	= cMath.round(oSequence2.items[0]),
-		nLength		= arguments.length > 2 ? cMath.round(oSequence3.items[0]) : oSequence1.items.length - nPosition + 1;
+	var nPosition	= cMath.round(oSequence2[0]),
+		nLength		= arguments.length > 2 ? cMath.round(oSequence3[0]) : oSequence1.length - nPosition + 1;
 
 	// TODO: Handle out-of-range position and length values
 	var oSequence	= new cSequence(oSequence1);
-	oSequence.items	= oSequence.items.slice(nPosition - 1, nPosition - 1 + nLength);
+	oSequence	= oSequence.slice(nPosition - 1, nPosition - 1 + nLength);
 
 	return oSequence;
 });
@@ -172,7 +172,7 @@ fStaticContext_defineSystemFunction("unordered",	[[cXTItem, '*']],	function(oSeq
 // 15.2 Functions That Test the Cardinality of Sequences
 // fn:zero-or-one($arg as item()*) as item()?
 fStaticContext_defineSystemFunction("zero-or-one",	[[cXTItem, '*']],	function(oSequence1) {
-	if (oSequence1.items.length > 1)
+	if (oSequence1.length > 1)
 		throw new cException("FORG0003");
 
 	return oSequence1;
@@ -180,7 +180,7 @@ fStaticContext_defineSystemFunction("zero-or-one",	[[cXTItem, '*']],	function(oS
 
 // fn:one-or-more($arg as item()*) as item()+
 fStaticContext_defineSystemFunction("one-or-more",	[[cXTItem, '*']],	function(oSequence1) {
-	if (!oSequence1.items.length)
+	if (!oSequence1.length)
 		throw new cException("FORG0004");
 
 	return oSequence1;
@@ -188,7 +188,7 @@ fStaticContext_defineSystemFunction("one-or-more",	[[cXTItem, '*']],	function(oS
 
 // fn:exactly-one($arg as item()*) as item()
 fStaticContext_defineSystemFunction("exactly-one",	[[cXTItem, '*']],	function(oSequence1) {
-	if (oSequence1.items.length != 1)
+	if (oSequence1.length != 1)
 		throw new cException("FORG0005");
 
 	return oSequence1;
@@ -206,21 +206,21 @@ fStaticContext_defineSystemFunction("deep-equal",	[[cXTItem, '*'], [cXTItem, '*'
 // 15.4 Aggregate Functions
 // fn:count($arg as item()*) as xs:integer
 fStaticContext_defineSystemFunction("count",	[[cXTItem, '*']],	function(oSequence1) {
-	return new cXSInteger(oSequence1.items.length);
+	return new cXSInteger(oSequence1.length);
 });
 
 // fn:avg($arg as xs:anyAtomicType*) as xs:anyAtomicType?
 fStaticContext_defineSystemFunction("avg",	[[cXSAnyAtomicType, '*']],	function(oSequence1) {
-	if (!oSequence1.items.length)
+	if (!oSequence1.length)
 		return null;
 
 	//
 	try {
-		var vValue	= oSequence1.items[0];
+		var vValue	= oSequence1[0];
 		if (vValue instanceof cXSUntypedAtomic)
 			vValue	= cXSDouble.cast(vValue);
-		for (var nIndex = 1, nLength = oSequence1.items.length, vRight; nIndex < nLength; nIndex++) {
-			vRight	= oSequence1.items[nIndex];
+		for (var nIndex = 1, nLength = oSequence1.length, vRight; nIndex < nLength; nIndex++) {
+			vRight	= oSequence1[nIndex];
 			if (vRight instanceof cXSUntypedAtomic)
 				vRight	= cXSDouble.cast(vRight);
 			vValue	= hAdditiveExpr_operators['+'](vValue, vRight, this);
@@ -240,17 +240,17 @@ fStaticContext_defineSystemFunction("avg",	[[cXSAnyAtomicType, '*']],	function(o
 // fn:max($arg as xs:anyAtomicType*) as xs:anyAtomicType?
 // fn:max($arg as xs:anyAtomicType*, $collation as string) as xs:anyAtomicType?
 fStaticContext_defineSystemFunction("max",	[[cXSAnyAtomicType, '*'], [cXSString, '', true]],	function(oSequence1, oSequence2) {
-	if (!oSequence1.items.length)
+	if (!oSequence1.length)
 		return null;
 
 	// TODO: Implement collation
 
 	//
 	try {
-		var vValue	= oSequence1.items[0];
-		for (var nIndex = 1, nLength = oSequence1.items.length; nIndex < nLength; nIndex++)
-			if (hComparisonExpr_ValueComp_operators['ge'](oSequence1.items[nIndex], vValue, this).valueOf())
-				vValue	= oSequence1.items[nIndex];
+		var vValue	= oSequence1[0];
+		for (var nIndex = 1, nLength = oSequence1.length; nIndex < nLength; nIndex++)
+			if (hComparisonExpr_ValueComp_operators['ge'](oSequence1[nIndex], vValue, this).valueOf())
+				vValue	= oSequence1[nIndex];
 		return vValue;
 	}
 	catch (e) {
@@ -266,17 +266,17 @@ fStaticContext_defineSystemFunction("max",	[[cXSAnyAtomicType, '*'], [cXSString,
 // fn:min($arg as xs:anyAtomicType*) as xs:anyAtomicType?
 // fn:min($arg as xs:anyAtomicType*, $collation as string) as xs:anyAtomicType?
 fStaticContext_defineSystemFunction("min",	[[cXSAnyAtomicType, '*'], [cXSString, '', true]],	function(oSequence1, oSequence2) {
-	if (!oSequence1.items.length)
+	if (!oSequence1.length)
 		return null;
 
 	// TODO: Implement collation
 
 	//
 	try {
-		var vValue	= oSequence1.items[0];
-		for (var nIndex = 1, nLength = oSequence1.items.length; nIndex < nLength; nIndex++)
-			if (hComparisonExpr_ValueComp_operators['le'](oSequence1.items[nIndex], vValue, this).valueOf())
-				vValue	= oSequence1.items[nIndex];
+		var vValue	= oSequence1[0];
+		for (var nIndex = 1, nLength = oSequence1.length; nIndex < nLength; nIndex++)
+			if (hComparisonExpr_ValueComp_operators['le'](oSequence1[nIndex], vValue, this).valueOf())
+				vValue	= oSequence1[nIndex];
 		return vValue;
 	}
 	catch (e) {
@@ -292,10 +292,10 @@ fStaticContext_defineSystemFunction("min",	[[cXSAnyAtomicType, '*'], [cXSString,
 // fn:sum($arg as xs:anyAtomicType*) as xs:anyAtomicType
 // fn:sum($arg as xs:anyAtomicType*, $zero as xs:anyAtomicType?) as xs:anyAtomicType?
 fStaticContext_defineSystemFunction("sum",	[[cXSAnyAtomicType, '*'], [cXSAnyAtomicType, '?', true]],	function(oSequence1, oSequence2) {
-	if (!oSequence1.items.length) {
+	if (!oSequence1.length) {
 		if (arguments.length > 1) {
-			if (oSequence2.items.length)
-				return oSequence2.items[0];
+			if (oSequence2.length)
+				return oSequence2[0];
 		}
 		else
 			return new cXSDouble(0);
@@ -307,11 +307,11 @@ fStaticContext_defineSystemFunction("sum",	[[cXSAnyAtomicType, '*'], [cXSAnyAtom
 
 	//
 	try {
-		var vValue	= oSequence1.items[0];
+		var vValue	= oSequence1[0];
 		if (vValue instanceof cXSUntypedAtomic)
 			vValue	= cXSDouble.cast(vValue);
-		for (var nIndex = 1, nLength = oSequence1.items.length, vRight; nIndex < nLength; nIndex++) {
-			vRight	= oSequence1.items[nIndex];
+		for (var nIndex = 1, nLength = oSequence1.length, vRight; nIndex < nLength; nIndex++) {
+			vRight	= oSequence1[nIndex];
 			if (vRight instanceof cXSUntypedAtomic)
 				vRight	= cXSDouble.cast(vRight);
 			vValue	= hAdditiveExpr_operators['+'](vValue, vRight, this);
@@ -344,7 +344,7 @@ fStaticContext_defineSystemFunction("id",	[[cXSString, '*'], [cXTNode, '', true]
 	}
 
 	// Get context item
-	var oNode	= oSequence2.items[0];
+	var oNode	= oSequence2[0];
 
 	// Get root node and check if it is Document
 	var oDocument	= hStaticContext_functions["root"].call(this, new cSequence(oNode));
@@ -353,10 +353,10 @@ fStaticContext_defineSystemFunction("id",	[[cXSString, '*'], [cXTNode, '', true]
 
 	// Search for elements
 	var oSequence	= new cSequence;
-	for (var nIndex = 0; nIndex < oSequence1.items.length; nIndex++)
-		for (var nRightIndex = 0, aValue = fString_trim(oSequence1.items[nIndex]).split(/\s+/), nRightLength = aValue.length; nRightIndex < nRightLength; nRightIndex++)
-			if ((oNode = this.DOMAdapter.getElementById(oDocument, aValue[nRightIndex])) && fArray_indexOf(oSequence.items, oNode) ==-1)
-				oSequence.items.push(oNode);
+	for (var nIndex = 0; nIndex < oSequence1.length; nIndex++)
+		for (var nRightIndex = 0, aValue = fString_trim(oSequence1[nIndex]).split(/\s+/), nRightLength = aValue.length; nRightIndex < nRightLength; nRightIndex++)
+			if ((oNode = this.DOMAdapter.getElementById(oDocument, aValue[nRightIndex])) && fArray_indexOf(oSequence, oNode) ==-1)
+				oSequence.push(oNode);
 	//
 	return fFunction_sequence_order(oSequence, this);
 });
@@ -391,14 +391,14 @@ fStaticContext_defineSystemFunction("element-with-id",	[[cXSString, '*'], [cXTNo
 
 // EBV calculation
 function fFunction_sequence_toEBV(oSequence1, oContext) {
-	if (!oSequence1.items.length)
+	if (!oSequence1.length)
 		return false;
 
-	var oItem	= oSequence1.items[0];
+	var oItem	= oSequence1[0];
 	if (oContext.DOMAdapter.isNode(oItem))
 		return true;
 
-	if (oSequence1.items.length == 1) {
+	if (oSequence1.length == 1) {
 		if (oItem instanceof cXSBoolean)
 			return oItem.value.valueOf();
 		if (oItem instanceof cXSString)
@@ -422,18 +422,16 @@ function fFunction_sequence_toEBV(oSequence1, oContext) {
 
 function fFunction_sequence_atomize(oSequence1, oContext) {
 	var oSequence	= new cSequence;
-	for (var nIndex = 0, nLength = oSequence1.items.length, vValue; nIndex < nLength; nIndex++)
-		if ((vValue = fXTItem_atomize(oSequence1.items[nIndex], oContext)) != null)
-			oSequence.items.push(vValue);
+	for (var nIndex = 0, nLength = oSequence1.length, vValue; nIndex < nLength; nIndex++)
+		if ((vValue = fXTItem_atomize(oSequence1[nIndex], oContext)) != null)
+			oSequence.push(vValue);
 	return oSequence;
 };
 
 // Orders items in sequence in document order
 function fFunction_sequence_order(oSequence1, oContext) {
-	var oSequence	= new cSequence(oSequence1);
-	oSequence.items.sort(function(oNode, oNode2) {
+	return oSequence1.sort(function(oNode, oNode2) {
 		var nPosition	= oContext.DOMAdapter.compareDocumentPosition(oNode, oNode2);
 		return nPosition & 2 ? 1 : nPosition & 4 ?-1 : 0;
 	});
-	return oSequence;
 };

@@ -76,16 +76,16 @@ cPathExpr.prototype.evaluate	= function (oContext) {
 	var oSequence	= new cSequence(vContextItem);
 	for (var nItemIndex = 0, nItemLength = this.items.length, oSequence1; nItemIndex < nItemLength; nItemIndex++) {
 		oSequence1	= new cSequence;
-		for (var nIndex = 0, nLength = oSequence.items.length; nIndex < nLength; nIndex++) {
+		for (var nIndex = 0, nLength = oSequence.length; nIndex < nLength; nIndex++) {
 			// Set new context item
-			oContext.item	= oSequence.items[nIndex];
+			oContext.item	= oSequence[nIndex];
 			//
-			for (var nRightIndex = 0, oSequence2 = this.items[nItemIndex].evaluate(oContext), nRightLength = oSequence2.items.length; nRightIndex < nRightLength; nRightIndex++)
-				if ((nItemIndex < nItemLength - 1) && !oContext.DOMAdapter.isNode(oSequence2.items[nRightIndex]))
+			for (var nRightIndex = 0, oSequence2 = this.items[nItemIndex].evaluate(oContext), nRightLength = oSequence2.length; nRightIndex < nRightLength; nRightIndex++)
+				if ((nItemIndex < nItemLength - 1) && !oContext.DOMAdapter.isNode(oSequence2[nRightIndex]))
 					throw new cException("XPTY0019");
 				else
-				if (fArray_indexOf(oSequence1.items, oSequence2.items[nRightIndex]) ==-1)
-					oSequence1.items.push(oSequence2.items[nRightIndex]);
+				if (fArray_indexOf(oSequence1, oSequence2[nRightIndex]) ==-1)
+					oSequence1.push(oSequence2[nRightIndex]);
 		}
 		oSequence	= oSequence1;
 	};

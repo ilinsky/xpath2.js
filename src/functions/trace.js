@@ -16,6 +16,6 @@
 fStaticContext_defineSystemFunction("trace",		[[cXTItem, '*'], [cXSString]],	function(oSequence1, oSequence2) {
 	var oConsole	= window.console;
 	if (oConsole && oConsole.log)
-		oConsole.log(oSequence2.items[0].valueOf(), oSequence1.items);
+		oConsole.log(oSequence2[0].valueOf(), oSequence1);
 	return oSequence1;
 });

@@ -20,11 +20,11 @@
 
 // fn:node-name($arg as node()?) as xs:QName?
 fStaticContext_defineSystemFunction("node-name",		[[cXTNode, '?']],	function(oSequence1) {
-	if (!oSequence1.items.length)
+	if (!oSequence1.length)
 		return null;
 	//
 	var fGetProperty	= this.DOMAdapter.getProperty,
-		oNode	= oSequence1.items[0];
+		oNode	= oSequence1[0];
 	switch (fGetProperty(oNode, "nodeType")) {
 		case 1:		// ELEMENT_NAME
 		case 2:		// ATTRIBUTE_NODE
@@ -44,10 +44,10 @@ fStaticContext_defineSystemFunction("node-name",		[[cXTNode, '?']],	function(oSe
 
 // fn:nilled($arg as node()?) as xs:boolean?
 fStaticContext_defineSystemFunction("nilled",	[[cXTNode, '?']],	function(oSequence1) {
-	if (!oSequence1.items.length)
+	if (!oSequence1.length)
 		return null;
 
-	var oNode	= oSequence1.items[0];
+	var oNode	= oSequence1[0];
 	if (this.DOMAdapter.getProperty(oNode, "nodeType") == 1)
 		return new cXSBoolean(false);	// TODO: Determine if node is nilled
 
@@ -59,7 +59,7 @@ fStaticContext_defineSystemFunction("nilled",	[[cXTNode, '?']],	function(oSequen
 fStaticContext_defineSystemFunction("string",	[[cXTItem, '?', true]],	function(/*[*/oSequence1/*]*/) {
 	if (!arguments.length)
 		oSequence1	= new cSequence(this.item);
-	return oSequence1.items.length ? cXSString.cast(fXTItem_atomize(oSequence1.items[0], this)) : new cXSString('');
+	return oSequence1.length ? cXSString.cast(fXTItem_atomize(oSequence1[0], this)) : new cXSString('');
 });
 
 // fn:data($arg as item()*) as xs:anyAtomicType*
@@ -80,19 +80,19 @@ fStaticContext_defineSystemFunction("base-uri",	[[cXTNode, '?', true]],	function
 		oSequence1	= new cSequence(this.item);
 	}
 	else
-	if (!oSequence1.items.length)
+	if (!oSequence1.length)
 		return null;
 	//
-	return cXSAnyURI.cast(new cXSString(this.DOMAdapter.getProperty(oSequence1.items[0], "baseURI") || ''));
+	return cXSAnyURI.cast(new cXSString(this.DOMAdapter.getProperty(oSequence1[0], "baseURI") || ''));
 });
 
 // fn:document-uri($arg as node()?) as xs:anyURI?
 fStaticContext_defineSystemFunction("document-uri",	[[cXTNode, '?']],	function(oSequence1) {
-	if (!oSequence1.items.length)
+	if (!oSequence1.length)
 		return null;
 	//
 	var fGetProperty	= this.DOMAdapter.getProperty,
-		oNode	= oSequence1.items[0];
+		oNode	= oSequence1[0];
 	if (fGetProperty(oNode, "nodeType") == 9)
 		return cXSAnyURI.cast(new cXSString(fGetProperty(oNode, "documentURI") || ''));
 	//

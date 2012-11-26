@@ -34,28 +34,28 @@ hStaticContext_operators["concatenate"]	= function(oSequence1, oSequence2) {
 hStaticContext_operators["union"]	= function(oSequence1, oSequence2) {
 	var oSequence	= new cSequence;
 	// Process first collection
-	for (var nIndex = 0, nLength = oSequence1.items.length, oItem; nIndex < nLength; nIndex++) {
-		if (!this.DOMAdapter.isNode(oItem = oSequence1.items[nIndex]))
+	for (var nIndex = 0, nLength = oSequence1.length, oItem; nIndex < nLength; nIndex++) {
+		if (!this.DOMAdapter.isNode(oItem = oSequence1[nIndex]))
 			throw new cException("XPTY0004"
 //->Debug
 					, "Required item type of first operand of 'union' is node()"
 //<-Debug
 			);	// Required item type of second operand of 'intersect' is node(); supplied value has item type xs:integer
 		//
-		if (fArray_indexOf(oSequence.items, oItem) ==-1)
-			oSequence.items.push(oItem);
+		if (fArray_indexOf(oSequence, oItem) ==-1)
+			oSequence.push(oItem);
 	}
 	// Process second collection
-	for (var nIndex = 0, nLength = oSequence2.items.length, oItem; nIndex < nLength; nIndex++) {
-		if (!this.DOMAdapter.isNode(oItem = oSequence2.items[nIndex]))
+	for (var nIndex = 0, nLength = oSequence2.length, oItem; nIndex < nLength; nIndex++) {
+		if (!this.DOMAdapter.isNode(oItem = oSequence2[nIndex]))
 			throw new cException("XPTY0004"
 //->Debug
 					, "Required item type of second operand of 'union' is node()"
 //<-Debug
 			);	// Required item type of second operand of 'intersect' is node(); supplied value has item type xs:integer
 		//
-		if (fArray_indexOf(oSequence.items, oItem) ==-1)
-			oSequence.items.push(oItem);
+		if (fArray_indexOf(oSequence, oItem) ==-1)
+			oSequence.push(oItem);
 	}
 	return fFunction_sequence_order(oSequence, this);
 };
@@ -63,8 +63,8 @@ hStaticContext_operators["union"]	= function(oSequence1, oSequence2) {
 // op:intersect($parameter1 as node()*, $parameter2 as node()*) as node()*
 hStaticContext_operators["intersect"]	= function(oSequence1, oSequence2) {
 	var oSequence	= new cSequence;
-	for (var nIndex = 0, nLength = oSequence1.items.length, oItem, bFound; nIndex < nLength; nIndex++) {
-		if (!this.DOMAdapter.isNode(oItem = oSequence1.items[nIndex]))
+	for (var nIndex = 0, nLength = oSequence1.length, oItem, bFound; nIndex < nLength; nIndex++) {
+		if (!this.DOMAdapter.isNode(oItem = oSequence1[nIndex]))
 			throw new cException("XPTY0004"
 //->Debug
 					, "Required item type of second operand of 'intersect' is node()"
@@ -72,18 +72,18 @@ hStaticContext_operators["intersect"]	= function(oSequence1, oSequence2) {
 			);	// Required item type of second operand of 'intersect' is node(); supplied value has item type xs:integer
 		//
 		bFound	= false;
-		for (var nRightIndex = 0, nRightLength = oSequence2.items.length;(nRightIndex < nRightLength) && !bFound; nRightIndex++) {
-			if (!this.DOMAdapter.isNode(oSequence2.items[nRightIndex]))
+		for (var nRightIndex = 0, nRightLength = oSequence2.length;(nRightIndex < nRightLength) && !bFound; nRightIndex++) {
+			if (!this.DOMAdapter.isNode(oSequence2[nRightIndex]))
 				throw new cException("XPTY0004"
 //->Debug
 						, "Required item type of first operand of 'intersect' is node()"
 //<-Debug
 				);
-			bFound = this.DOMAdapter.isSameNode(oSequence2.items[nRightIndex], oItem);
+			bFound = this.DOMAdapter.isSameNode(oSequence2[nRightIndex], oItem);
 		}
 		//
-		if (bFound && fArray_indexOf(oSequence.items, oItem) ==-1)
-			oSequence.items.push(oItem);
+		if (bFound && fArray_indexOf(oSequence, oItem) ==-1)
+			oSequence.push(oItem);
 	}
 	return fFunction_sequence_order(oSequence, this);
 };
@@ -91,8 +91,8 @@ hStaticContext_operators["intersect"]	= function(oSequence1, oSequence2) {
 // op:except($parameter1 as node()*, $parameter2 as node()*) as node()*
 hStaticContext_operators["except"]	= function(oSequence1, oSequence2) {
 	var oSequence	= new cSequence;
-	for (var nIndex = 0, nLength = oSequence1.items.length, oItem, bFound; nIndex < nLength; nIndex++) {
-		if (!this.DOMAdapter.isNode(oItem = oSequence1.items[nIndex]))
+	for (var nIndex = 0, nLength = oSequence1.length, oItem, bFound; nIndex < nLength; nIndex++) {
+		if (!this.DOMAdapter.isNode(oItem = oSequence1[nIndex]))
 			throw new cException("XPTY0004"
 //->Debug
 					, "Required item type of second operand of 'except' is node()"
@@ -100,18 +100,18 @@ hStaticContext_operators["except"]	= function(oSequence1, oSequence2) {
 			);	// Required item type of second operand of 'intersect' is node(); supplied value has item type xs:integer
 		//
 		bFound	= false;
-		for (var nRightIndex = 0, nRightLength = oSequence2.items.length;(nRightIndex < nRightLength) && !bFound; nRightIndex++) {
-			if (!this.DOMAdapter.isNode(oSequence2.items[nRightIndex]))
+		for (var nRightIndex = 0, nRightLength = oSequence2.length;(nRightIndex < nRightLength) && !bFound; nRightIndex++) {
+			if (!this.DOMAdapter.isNode(oSequence2[nRightIndex]))
 				throw new cException("XPTY0004"
 //->Debug
 						, "Required item type of first operand of 'except' is node()"
 //<-Debug
 				);
-			bFound = this.DOMAdapter.isSameNode(oSequence2.items[nRightIndex], oItem);
+			bFound = this.DOMAdapter.isSameNode(oSequence2[nRightIndex], oItem);
 		}
 		//
-		if (!bFound && fArray_indexOf(oSequence.items, oItem) ==-1)
-			oSequence.items.push(oItem);
+		if (!bFound && fArray_indexOf(oSequence, oItem) ==-1)
+			oSequence.push(oItem);
 	}
 	return fFunction_sequence_order(oSequence, this);
 };
@@ -121,7 +121,7 @@ hStaticContext_operators["except"]	= function(oSequence1, oSequence2) {
 hStaticContext_operators["to"]	= function(oSequence1, oSequence2) {
 	//
 	var oSequence	= new cSequence;
-	if (!oSequence1.items.length || !oSequence2.items.length)
+	if (!oSequence1.length || !oSequence2.length)
 		return oSequence;
 	//
 //->Debug
@@ -151,8 +151,8 @@ hStaticContext_operators["to"]	= function(oSequence1, oSequence2) {
 //<-Debug
 	);
 
-	for (var nIndex = oSequence1.items[0].valueOf(), nLength = oSequence2.items[0].valueOf(); nIndex <= nLength; nIndex++)
-		oSequence.items.push(new cXSInteger(nIndex));
+	for (var nIndex = oSequence1[0].valueOf(), nLength = oSequence2[0].valueOf(); nIndex <= nLength; nIndex++)
+		oSequence.push(new cXSInteger(nIndex));
 	//
 	return oSequence;
 };

@@ -43,18 +43,18 @@ cComparisonExpr.prototype.evaluate	= function (oContext) {
 	var oSequence	= new cSequence,
 		oResult	= hComparisonExpr_operators[this.operator](this, oContext);
 	if (oResult != null)
-		oSequence.items.push(oResult);
+		oSequence.push(oResult);
 	return oSequence;
 };
 
 // General comparison
 function fComparisonExpr_GeneralComp(oExpr, oContext) {
 	var oLeft	= fFunction_sequence_atomize(oExpr.left.evaluate(oContext), oContext);
-	if (!oLeft.items.length)
+	if (!oLeft.length)
 		return new cXSBoolean(false);
 
 	var oRight	= fFunction_sequence_atomize(oExpr.right.evaluate(oContext), oContext);
-	if (!oRight.items.length)
+	if (!oRight.length)
 		return new cXSBoolean(false);
 
 	var bResult	= false,
@@ -62,11 +62,11 @@ function fComparisonExpr_GeneralComp(oExpr, oContext) {
 		bRight,
 		vLeft,
 		vRight;
-	for (var nLeftIndex = 0, nLeftLength = oLeft.items.length; (nLeftIndex < nLeftLength) &&!bResult; nLeftIndex++) {
-		for (var nRightIndex = 0, nRightLength = oRight.items.length; (nRightIndex < nRightLength) &&!bResult; nRightIndex++) {
+	for (var nLeftIndex = 0, nLeftLength = oLeft.length; (nLeftIndex < nLeftLength) &&!bResult; nLeftIndex++) {
+		for (var nRightIndex = 0, nRightLength = oRight.length; (nRightIndex < nRightLength) &&!bResult; nRightIndex++) {
 
-			vLeft	= oLeft.items[nLeftIndex];
-			vRight	= oRight.items[nRightIndex];
+			vLeft	= oLeft[nLeftIndex];
+			vRight	= oRight[nRightIndex];
 
 			bLeft	= vLeft instanceof cXSUntypedAtomic;
 			bRight	= vRight instanceof cXSUntypedAtomic;
@@ -107,7 +107,7 @@ var hComparisonExpr_GeneralComp_map	= {
 // Value comparison
 function fComparisonExpr_ValueComp(oExpr, oContext) {
 	var oLeft	= fFunction_sequence_atomize(oExpr.left.evaluate(oContext), oContext);
-	if (!oLeft.items.length)
+	if (!oLeft.length)
 		return null;
 	// Assert cardinality
 	fFunctionCall_assertSequenceCardinality(oContext, oLeft, '?'
@@ -117,7 +117,7 @@ function fComparisonExpr_ValueComp(oExpr, oContext) {
 	);
 
 	var oRight	= fFunction_sequence_atomize(oExpr.right.evaluate(oContext), oContext);
-	if (!oRight.items.length)
+	if (!oRight.length)
 		return null;
 	// Assert cardinality
 	fFunctionCall_assertSequenceCardinality(oContext, oRight, '?'
@@ -126,8 +126,8 @@ function fComparisonExpr_ValueComp(oExpr, oContext) {
 //<-Debug
 	);
 
-	var vLeft	= oLeft.items[0],
-		vRight	= oRight.items[0];
+	var vLeft	= oLeft[0],
+		vRight	= oRight[0];
 
 	// cast xs:untypedAtomic to xs:string
 	if (vLeft instanceof cXSUntypedAtomic)
@@ -436,7 +436,7 @@ hComparisonExpr_ValueComp_operators['le']	= function(oLeft, oRight, oContext) {
 // Node comparison
 function fComparisonExpr_NodeComp(oExpr, oContext) {
 	var oLeft	= oExpr.left.evaluate(oContext);
-	if (!oLeft.items.length)
+	if (!oLeft.length)
 		return null;
 	// Assert cardinality
 	fFunctionCall_assertSequenceCardinality(oContext, oLeft, '?'
@@ -452,7 +452,7 @@ function fComparisonExpr_NodeComp(oExpr, oContext) {
 	);
 
 	var oRight	= oExpr.right.evaluate(oContext);
-	if (!oRight.items.length)
+	if (!oRight.length)
 		return null;
 	// Assert cardinality
 	fFunctionCall_assertSequenceCardinality(oContext, oRight, '?'
@@ -467,7 +467,7 @@ function fComparisonExpr_NodeComp(oExpr, oContext) {
 //<-Debug
 	);
 
-	return hComparisonExpr_NodeComp_operators[oExpr.operator](oLeft.items[0], oRight.items[0], oContext);
+	return hComparisonExpr_NodeComp_operators[oExpr.operator](oLeft[0], oRight[0], oContext);
 };
 
 var hComparisonExpr_NodeComp_operators	= {};

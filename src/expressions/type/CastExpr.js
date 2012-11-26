@@ -44,8 +44,8 @@ cCastExpr.prototype.evaluate	= function(oContext) {
 //<-Debug
 	);
 	//
-	if (!oSequence1.items.length)
+	if (!oSequence1.length)
 		return new cSequence;
 	//
-	return new cSequence(this.type.itemType.cast(fXTItem_atomize(oSequence1.items[0], oContext), oContext));
+	return new cSequence(this.type.itemType.cast(fXTItem_atomize(oSequence1[0], oContext), oContext));
 };

@@ -56,8 +56,8 @@ cForExpr.prototype.evaluate	= function (oContext) {
 		var oBinding	= oSelf.bindings[nBinding++],
 			oSequence1	= oBinding.inExpr.evaluate(oContext),
 			sUri	= (oBinding.namespaceURI ? '{' + oBinding.namespaceURI + '}' : '') + oBinding.localName;
-		for (var nIndex = 0, nLength = oSequence1.items.length; nIndex < nLength; nIndex++) {
-			oContext.pushVariable(sUri, oSequence1.items[nIndex]);
+		for (var nIndex = 0, nLength = oSequence1.length; nIndex < nLength; nIndex++) {
+			oContext.pushVariable(sUri, oSequence1[nIndex]);
 			if (nBinding < oSelf.bindings.length)
 				arguments.callee(oSelf, nBinding);
 			else

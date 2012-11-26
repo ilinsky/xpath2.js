@@ -40,7 +40,7 @@ cTreatExpr.prototype.evaluate	= function(oContext) {
 		oItemType	= this.type.itemType;
 	// Validate empty-sequence()
 	if (!oItemType) {
-		if (oSequence1.items.length)
+		if (oSequence1.length)
 			throw new cException("XPDY0050"
 //->Debug
 					, "The only value allowed for the value in 'treat as' expression is an empty sequence"
@@ -51,7 +51,7 @@ cTreatExpr.prototype.evaluate	= function(oContext) {
 
 	// Validate cardinality
 	if (!(this.type.occurence == '?' || this.type.occurence == '*'))
-		if (!oSequence1.items.length)
+		if (!oSequence1.length)
 			throw new cException("XPDY0050"
 //->Debug
 					, "An empty sequence is not allowed as the value in 'treat as' expression"
@@ -59,7 +59,7 @@ cTreatExpr.prototype.evaluate	= function(oContext) {
 			);
 
 	if (!(this.type.occurence == '+' || this.type.occurence == '*'))
-		if (oSequence1.items.length != 1)
+		if (oSequence1.length != 1)
 			throw new cException("XPDY0050"
 //->Debug
 					, "A sequence of more than one item is not allowed as the value in 'treat as' expression"
@@ -70,8 +70,8 @@ cTreatExpr.prototype.evaluate	= function(oContext) {
 	if (!oItemType.test)	// item()
 		return oSequence1;
 
-	for (var nIndex = 0, nLength = oSequence1.items.length; nIndex < nLength; nIndex++)
-		if (!oItemType.test.test(oSequence1.items[nIndex], oContext))
+	for (var nIndex = 0, nLength = oSequence1.length; nIndex < nLength; nIndex++)
+		if (!oItemType.test.test(oSequence1[nIndex], oContext))
 			throw new cException("XPDY0050"
 //->Debug
 					, "Required item type of value in 'treat as' expression is " + (oItemType.test.prefix ? oItemType.test.prefix + ':' : '') + oItemType.test.localName

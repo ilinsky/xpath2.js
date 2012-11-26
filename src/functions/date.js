@@ -152,46 +152,46 @@ fStaticContext_defineSystemFunction("timezone-from-time",	[[cXSTime, '?']],	func
 // fn:adjust-dateTime-to-timezone($arg as xs:dateTime?) as xs:dateTime?
 // fn:adjust-dateTime-to-timezone($arg as xs:dateTime?, $timezone as xs:dayTimeDuration?) as xs:dateTime?
 fStaticContext_defineSystemFunction("adjust-dateTime-to-timezone",	[[cXSDateTime, '?'], [cXSDayTimeDuration, '?', true]],	function(oSequence1, oSequence2) {
-	if (!oSequence1.items.length)
+	if (!oSequence1.length)
 		return null;
 	//
-	return fFunction_dateTime_adjustTimezone(oSequence1.items[0], arguments.length > 1 && oSequence2.items.length ? arguments.length > 1 ? oSequence2.items[0] : this.timezone : null);
+	return fFunction_dateTime_adjustTimezone(oSequence1[0], arguments.length > 1 && oSequence2.length ? arguments.length > 1 ? oSequence2[0] : this.timezone : null);
 });
 
 // fn:adjust-date-to-timezone($arg as xs:date?) as xs:date?
 // fn:adjust-date-to-timezone($arg as xs:date?, $timezone as xs:dayTimeDuration?) as xs:date?
 fStaticContext_defineSystemFunction("adjust-date-to-timezone",		[[cXSDate, '?'], [cXSDayTimeDuration, '?', true]],	function(oSequence1, oSequence2) {
-	if (!oSequence1.items.length)
+	if (!oSequence1.length)
 		return null;
 	//
-	return fFunction_dateTime_adjustTimezone(oSequence1.items[0], arguments.length > 1 && oSequence2.items.length ? arguments.length > 1 ? oSequence2.items[0] : this.timezone : null);
+	return fFunction_dateTime_adjustTimezone(oSequence1[0], arguments.length > 1 && oSequence2.length ? arguments.length > 1 ? oSequence2[0] : this.timezone : null);
 });
 
 // fn:adjust-time-to-timezone($arg as xs:time?) as xs:time?
 // fn:adjust-time-to-timezone($arg as xs:time?, $timezone as xs:dayTimeDuration?) as xs:time?
 fStaticContext_defineSystemFunction("adjust-time-to-timezone",		[[cXSTime, '?'], [cXSDayTimeDuration, '?', true]],	function(oSequence1, oSequence2) {
-	if (!oSequence1.items.length)
+	if (!oSequence1.length)
 		return null;
 	//
-	return fFunction_dateTime_adjustTimezone(oSequence1.items[0], arguments.length > 1 && oSequence2.items.length ? arguments.length > 1 ? oSequence2.items[0] : this.timezone : null);
+	return fFunction_dateTime_adjustTimezone(oSequence1[0], arguments.length > 1 && oSequence2.length ? arguments.length > 1 ? oSequence2[0] : this.timezone : null);
 });
 
 //
 function fFunction_duration_getComponent(oSequence1, sName) {
-	if (!oSequence1.items.length)
+	if (!oSequence1.length)
 		return null;
 
-	var oItem	= oSequence1.items[0],
+	var oItem	= oSequence1[0],
 		nValue	= oItem[sName] * (oItem.negative ?-1 : 1);
 	return sName == "seconds" ? new cXSDecimal(nValue) : new cXSInteger(nValue);
 };
 
 //
 function fFunction_dateTime_getComponent(oSequence1, sName) {
-	if (!oSequence1.items.length)
+	if (!oSequence1.length)
 		return null;
 
-	var oItem	= oSequence1.items[0];
+	var oItem	= oSequence1[0];
 	if (sName == "timezone") {
 		var nTimezone	= oItem.timezone;
 		if (nTimezone == null)

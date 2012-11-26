@@ -8,17 +8,18 @@
  */
 
 function cSequence(oItem) {
-	this.items	= [];
 	if (arguments.length)
 		this.add(oItem);
 };
 
-cSequence.prototype.items	= null;
+cSequence.prototype	= new cArray;
 
 // Public members
 cSequence.prototype.add	= function(oItem) {
-	if (oItem instanceof cSequence)
-		this.items	= this.items.concat(oItem.items);
+	if (oItem instanceof cSequence) {
+		for (var nIndex = 0; nIndex < oItem.length; nIndex++)
+			this.push(oItem[nIndex]);
+	}
 	else
-		this.items.push(oItem);
+		this.push(oItem);
 };

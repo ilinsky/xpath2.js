@@ -53,21 +53,21 @@ cStepExpr.prototype.applyPredicates	= function(oContext, oSequence) {
 	for (var nPredicateIndex = 0, oSequence1, nPredicateLength = this.predicates.length; nPredicateIndex < nPredicateLength; nPredicateIndex++) {
 		oSequence1	= oSequence;
 		oSequence	= new cSequence;
-		for (var nIndex = 0, oSequence2, nLength = oSequence1.items.length; nIndex < nLength; nIndex++) {
+		for (var nIndex = 0, oSequence2, nLength = oSequence1.length; nIndex < nLength; nIndex++) {
 			// Set new context
-			oContext.item		= oSequence1.items[nIndex];
+			oContext.item		= oSequence1[nIndex];
 			oContext.position	= nIndex + 1;
 			oContext.size		= nLength;
 			//
 			oSequence2	= this.predicates[nPredicateIndex].evaluate(oContext);
 			//
-			if (oSequence2.items.length == 1 && fXSAnyAtomicType_isNumeric(oSequence2.items[0])) {
-				if (oSequence2.items[0] == nIndex + 1)
-					oSequence.items.push(oSequence1.items[nIndex]);
+			if (oSequence2.length == 1 && fXSAnyAtomicType_isNumeric(oSequence2[0])) {
+				if (oSequence2[0] == nIndex + 1)
+					oSequence.push(oSequence1[nIndex]);
 			}
 			else
 			if (fFunction_sequence_toEBV(oSequence2, oContext))
-				oSequence.items.push(oSequence1.items[nIndex]);
+				oSequence.push(oSequence1[nIndex]);
 		}
 	}
 	// Restore context

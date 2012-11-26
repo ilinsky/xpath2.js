@@ -142,7 +142,7 @@ cMultiplicativeExpr.prototype.evaluate	= function (oContext) {
 	var oLeft	= fFunction_sequence_atomize(this.left.evaluate(oContext), oContext);
 
 	//
-	if (!oLeft.items.length)
+	if (!oLeft.length)
 		return new cSequence;
 	// Assert cardinality
 	fFunctionCall_assertSequenceCardinality(oContext, oLeft, '?'
@@ -151,14 +151,14 @@ cMultiplicativeExpr.prototype.evaluate	= function (oContext) {
 //<-Debug
 	);
 
-	var vLeft	= oLeft.items[0];
+	var vLeft	= oLeft[0];
 	if (vLeft instanceof cXSUntypedAtomic)
 		vLeft	= cXSDouble.cast(vLeft);	// cast to xs:double
 
 	for (var nIndex = 0, nLength = this.items.length, oRight, vRight; nIndex < nLength; nIndex++) {
 		oRight	= fFunction_sequence_atomize(this.items[nIndex][1].evaluate(oContext), oContext);
 
-		if (!oRight.items.length)
+		if (!oRight.length)
 			return new cSequence;
 		// Assert cardinality
 		fFunctionCall_assertSequenceCardinality(oContext, oRight, '?'
@@ -167,7 +167,7 @@ cMultiplicativeExpr.prototype.evaluate	= function (oContext) {
 //<-Debug
 		);
 
-		vRight	= oRight.items[0];
+		vRight	= oRight[0];
 		if (vRight instanceof cXSUntypedAtomic)
 			vRight	= cXSDouble.cast(vRight);	// cast to xs:double
 

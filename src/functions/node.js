@@ -32,7 +32,7 @@ fStaticContext_defineSystemFunction("name",	[[cXTNode, '?', true]],	function(oSe
 		oSequence1	= new cSequence(this.item);
 	}
 	else
-	if (!oSequence1.items.length)
+	if (!oSequence1.length)
 		return new cXSString('');
 	//
 	var vValue	= hStaticContext_functions["node-name"].call(this, oSequence1);
@@ -52,10 +52,10 @@ fStaticContext_defineSystemFunction("local-name",	[[cXTNode, '?', true]],	functi
 		oSequence1	= new cSequence(this.item);
 	}
 	else
-	if (!oSequence1.items.length)
+	if (!oSequence1.length)
 		return new cXSString('');
 	//
-	return new cXSString(this.DOMAdapter.getProperty(oSequence1.items[0], "localName") || '');
+	return new cXSString(this.DOMAdapter.getProperty(oSequence1[0], "localName") || '');
 });
 
 // fn:namespace-uri() as xs:anyURI
@@ -71,10 +71,10 @@ fStaticContext_defineSystemFunction("namespace-uri",	[[cXTNode, '?', true]],	fun
 		oSequence1	= new cSequence(this.item);
 	}
 	else
-	if (!oSequence1.items.length)
+	if (!oSequence1.length)
 		return cXSAnyURI.cast(new cXSString(''));
 	//
-	return cXSAnyURI.cast(new cXSString(this.DOMAdapter.getProperty(oSequence1.items[0], "namespaceURI") || ''));
+	return cXSAnyURI.cast(new cXSString(this.DOMAdapter.getProperty(oSequence1[0], "namespaceURI") || ''));
 });
 
 // fn:number() as xs:double
@@ -85,9 +85,9 @@ fStaticContext_defineSystemFunction("number",	[[cXSAnyAtomicType, '?', true]],	f
 
 	// If input item cannot be cast to xs:decimal, a NaN should be returned
 	var vValue	= new cXSDouble(nNaN);
-	if (oSequence1.items.length) {
+	if (oSequence1.length) {
 		try {
-			vValue	= cXSDouble.cast(oSequence1.items[0]);
+			vValue	= cXSDouble.cast(oSequence1[0]);
 		}
 		catch (e) {
 
@@ -110,7 +110,7 @@ fStaticContext_defineSystemFunction("lang",	[[cXSString, '?'], [cXTNode, '', tru
 	}
 
 	var fGetProperty	= this.DOMAdapter.getProperty,
-		oNode	= oSequence2.items[0];
+		oNode	= oSequence2[0];
 	if (fGetProperty(oNode, "nodeType") == 2)
 		oNode	= fGetProperty(oNode, "ownerElement");
 
@@ -119,7 +119,7 @@ fStaticContext_defineSystemFunction("lang",	[[cXSString, '?'], [cXTNode, '', tru
 		if (aAttributes = fGetProperty(oNode, "attributes"))
 			for (var nIndex = 0, nLength = aAttributes.length; nIndex < nLength; nIndex++)
 				if (fGetProperty(aAttributes[nIndex], "nodeName") == "xml:lang")
-					return new cXSBoolean(fGetProperty(aAttributes[nIndex], "value").replace(/-.+/, '').toLowerCase() == oSequence1.items[0].valueOf().replace(/-.+/, '').toLowerCase());
+					return new cXSBoolean(fGetProperty(aAttributes[nIndex], "value").replace(/-.+/, '').toLowerCase() == oSequence1[0].valueOf().replace(/-.+/, '').toLowerCase());
 	//
 	return new cXSBoolean(false);
 });
@@ -137,11 +137,11 @@ fStaticContext_defineSystemFunction("root",	[[cXTNode, '?', true]],	function(oSe
 		oSequence1	= new cSequence(this.item);
 	}
 	else
-	if (!oSequence1.items.length)
+	if (!oSequence1.length)
 		return null;
 
 	var fGetProperty	= this.DOMAdapter.getProperty,
-		oParent	= oSequence1.items[0];
+		oParent	= oSequence1[0];
 
 	// If context node is Attribute
 	if (fGetProperty(oParent, "nodeType") == 2)
