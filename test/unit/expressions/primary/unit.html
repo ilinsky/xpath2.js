@@ -35,15 +35,36 @@
 
 			// Tests
 			function testContextItem() {
+				// node
 				assertArrayEquals([document],
 						evaluateXPath(".", document));
+				// xs:integer
+				assertArrayEquals([0],
+						evaluateXPath(".", 0));
 				assertArrayEquals([23],
 						evaluateXPath(".", 23));
+				// xs:decimal
+				assertArrayEquals([23.5],
+						evaluateXPath(".", 23.5));
+				// xs:double
+				assertArrayEquals([1e-10],
+						evaluateXPath(".", 1e-10));
+				// xs:boolean
+				assertArrayEquals([true],
+						evaluateXPath(".", true));
 				assertArrayEquals([false],
 						evaluateXPath(".", false));
-				assertArrayEquals([null],
+				// xs:string
+				assertArrayEquals([""],
+						evaluateXPath(".", ""));
+				assertArrayEquals(["0"],
+						evaluateXPath(".", "0"));
+				// no context
+				assertArrayEquals([],
 						evaluateXPath(".", null));
-				assertArrayEquals([null],
+				assertArrayEquals([],
+						evaluateXPath(".", undefined));
+				assertArrayEquals([],
 						evaluateXPath("."));
 			}
 
