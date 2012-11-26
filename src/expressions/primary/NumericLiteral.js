@@ -17,16 +17,23 @@ cNumericLiteral.RegExp	= /^[+\-]?(?:(?:(\d+)(?:\.(\d*))?)|(?:\.(\d+)))(?:[eE]([+
 
 // Integer | Decimal | Double
 function fNumericLiteral_parse (oLexer, oStaticContext) {
-	var cType	= cXSInteger,
-		sValue	= oLexer.peek(),
-		aMatch	= sValue.match(cNumericLiteral.RegExp);
-	if (aMatch) {
+	var sValue	= oLexer.peek(),
+		vValue	= fNumericLiteral_parseValue(sValue);
+	if (vValue) {
 		oLexer.next();
+		return new cNumericLiteral(vValue);
+	}
+};
+
+function fNumericLiteral_parseValue(sValue) {
+	var aMatch	= sValue.match(cNumericLiteral.RegExp);
+	if (aMatch) {
+		var cType	= cXSInteger;
 		if (typeof aMatch[5] != "undefined")
 			cType	= cXSDouble;
 		else
 		if (typeof aMatch[2] != "undefined" || typeof aMatch[3] != "undefined")
 			cType	= cXSDecimal;
-		return new cNumericLiteral(new cType(+sValue));
+		return new cType(+sValue);
 	}
 };
