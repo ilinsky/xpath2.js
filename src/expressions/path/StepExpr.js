@@ -61,13 +61,13 @@ cStepExpr.prototype.applyPredicates	= function(oContext, oSequence) {
 			//
 			oSequence2	= this.predicates[nPredicateIndex].evaluate(oContext);
 			//
-			if (oSequence2.isSingleton() && fXSAnyAtomicType_isNumeric(oSequence2.items[0])) {
+			if (oSequence2.items.length == 1 && fXSAnyAtomicType_isNumeric(oSequence2.items[0])) {
 				if (oSequence2.items[0] == nIndex + 1)
-					oSequence.add(oSequence1.items[nIndex]);
+					oSequence.items.push(oSequence1.items[nIndex]);
 			}
 			else
 			if (fFunction_sequence_toEBV(oSequence2, oContext))
-				oSequence.add(oSequence1.items[nIndex]);
+				oSequence.items.push(oSequence1.items[nIndex]);
 		}
 	}
 	// Restore context

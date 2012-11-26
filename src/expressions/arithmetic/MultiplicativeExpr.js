@@ -142,7 +142,7 @@ cMultiplicativeExpr.prototype.evaluate	= function (oContext) {
 	var oLeft	= fFunction_sequence_atomize(this.left.evaluate(oContext), oContext);
 
 	//
-	if (oLeft.isEmpty())
+	if (!oLeft.items.length)
 		return new cSequence;
 	// Assert cardinality
 	fFunctionCall_assertSequenceCardinality(oContext, oLeft, '?'
@@ -158,7 +158,7 @@ cMultiplicativeExpr.prototype.evaluate	= function (oContext) {
 	for (var nIndex = 0, nLength = this.items.length, oRight, vRight; nIndex < nLength; nIndex++) {
 		oRight	= fFunction_sequence_atomize(this.items[nIndex][1].evaluate(oContext), oContext);
 
-		if (oRight.isEmpty())
+		if (!oRight.items.length)
 			return new cSequence;
 		// Assert cardinality
 		fFunctionCall_assertSequenceCardinality(oContext, oRight, '?'

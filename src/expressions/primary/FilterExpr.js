@@ -35,7 +35,7 @@ function fFilterExpr_parse (oLexer, oStaticContext) {
 // Public members
 cFilterExpr.prototype.evaluate	= function (oContext) {
 	var oSequence	= this.expression.evaluate(oContext);
-	if (this.predicates.length && !oSequence.isEmpty())
+	if (this.predicates.length && oSequence.items.length)
 		oSequence	= cStepExpr.prototype.applyPredicates.call(this, oContext, oSequence);
 	return oSequence;
 };

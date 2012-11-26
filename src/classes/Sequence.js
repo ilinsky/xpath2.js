@@ -22,15 +22,3 @@ cSequence.prototype.add	= function(oItem) {
 	else
 		this.items.push(oItem);
 };
-
-cSequence.prototype.isEmpty	= function() {
-	return this.items.length == 0;
-};
-
-cSequence.prototype.isSingleton	= function() {
-	return this.items.length == 1;
-};
-
-cSequence.prototype.indexOf	= function(oItem) {
-	return fArray_indexOf(this.items, oItem);
-};

@@ -20,7 +20,7 @@
 
 // fn:node-name($arg as node()?) as xs:QName?
 fStaticContext_defineSystemFunction("node-name",		[[cXTNode, '?']],	function(oSequence1) {
-	if (oSequence1.isEmpty())
+	if (!oSequence1.items.length)
 		return null;
 	//
 	var fGetProperty	= this.DOMAdapter.getProperty,
@@ -44,7 +44,7 @@ fStaticContext_defineSystemFunction("node-name",		[[cXTNode, '?']],	function(oSe
 
 // fn:nilled($arg as node()?) as xs:boolean?
 fStaticContext_defineSystemFunction("nilled",	[[cXTNode, '?']],	function(oSequence1) {
-	if (oSequence1.isEmpty())
+	if (!oSequence1.items.length)
 		return null;
 
 	var oNode	= oSequence1.items[0];
@@ -59,7 +59,7 @@ fStaticContext_defineSystemFunction("nilled",	[[cXTNode, '?']],	function(oSequen
 fStaticContext_defineSystemFunction("string",	[[cXTItem, '?', true]],	function(/*[*/oSequence1/*]*/) {
 	if (!arguments.length)
 		oSequence1	= new cSequence(this.item);
-	return oSequence1.isEmpty() ? new cXSString('') : cXSString.cast(fXTItem_atomize(oSequence1.items[0], this));
+	return oSequence1.items.length ? cXSString.cast(fXTItem_atomize(oSequence1.items[0], this)) : new cXSString('');
 });
 
 // fn:data($arg as item()*) as xs:anyAtomicType*
@@ -80,7 +80,7 @@ fStaticContext_defineSystemFunction("base-uri",	[[cXTNode, '?', true]],	function
 		oSequence1	= new cSequence(this.item);
 	}
 	else
-	if (oSequence1.isEmpty())
+	if (!oSequence1.items.length)
 		return null;
 	//
 	return cXSAnyURI.cast(new cXSString(this.DOMAdapter.getProperty(oSequence1.items[0], "baseURI") || ''));
@@ -88,7 +88,7 @@ fStaticContext_defineSystemFunction("base-uri",	[[cXTNode, '?', true]],	function
 
 // fn:document-uri($arg as node()?) as xs:anyURI?
 fStaticContext_defineSystemFunction("document-uri",	[[cXTNode, '?']],	function(oSequence1) {
-	if (oSequence1.isEmpty())
+	if (!oSequence1.items.length)
 		return null;
 	//
 	var fGetProperty	= this.DOMAdapter.getProperty,

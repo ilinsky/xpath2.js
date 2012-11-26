@@ -44,7 +44,7 @@ cCastExpr.prototype.evaluate	= function(oContext) {
 //<-Debug
 	);
 	//
-	if (oSequence1.isEmpty())
+	if (!oSequence1.items.length)
 		return new cSequence;
 	//
 	return new cSequence(this.type.itemType.cast(fXTItem_atomize(oSequence1.items[0], oContext), oContext));

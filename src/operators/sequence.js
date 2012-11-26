@@ -43,7 +43,7 @@ hStaticContext_operators["union"]	= function(oSequence1, oSequence2) {
 			);	// Required item type of second operand of 'intersect' is node(); supplied value has item type xs:integer
 		//
 		if (fArray_indexOf(oSequence.items, oItem) ==-1)
-			oSequence.add(oItem);
+			oSequence.items.push(oItem);
 	}
 	// Process second collection
 	for (var nIndex = 0, nLength = oSequence2.items.length, oItem; nIndex < nLength; nIndex++) {
@@ -55,7 +55,7 @@ hStaticContext_operators["union"]	= function(oSequence1, oSequence2) {
 			);	// Required item type of second operand of 'intersect' is node(); supplied value has item type xs:integer
 		//
 		if (fArray_indexOf(oSequence.items, oItem) ==-1)
-			oSequence.add(oItem);
+			oSequence.items.push(oItem);
 	}
 	return fFunction_sequence_order(oSequence, this);
 };
@@ -83,7 +83,7 @@ hStaticContext_operators["intersect"]	= function(oSequence1, oSequence2) {
 		}
 		//
 		if (bFound && fArray_indexOf(oSequence.items, oItem) ==-1)
-			oSequence.add(oItem);
+			oSequence.items.push(oItem);
 	}
 	return fFunction_sequence_order(oSequence, this);
 };
@@ -111,7 +111,7 @@ hStaticContext_operators["except"]	= function(oSequence1, oSequence2) {
 		}
 		//
 		if (!bFound && fArray_indexOf(oSequence.items, oItem) ==-1)
-			oSequence.add(oItem);
+			oSequence.items.push(oItem);
 	}
 	return fFunction_sequence_order(oSequence, this);
 };
@@ -121,7 +121,7 @@ hStaticContext_operators["except"]	= function(oSequence1, oSequence2) {
 hStaticContext_operators["to"]	= function(oSequence1, oSequence2) {
 	//
 	var oSequence	= new cSequence;
-	if (oSequence1.isEmpty() || oSequence2.isEmpty())
+	if (!oSequence1.items.length || !oSequence2.items.length)
 		return oSequence;
 	//
 //->Debug
@@ -152,7 +152,7 @@ hStaticContext_operators["to"]	= function(oSequence1, oSequence2) {
 	);
 
 	for (var nIndex = oSequence1.items[0].valueOf(), nLength = oSequence2.items[0].valueOf(); nIndex <= nLength; nIndex++)
-		oSequence.add(new cXSInteger(nIndex));
+		oSequence.items.push(new cXSInteger(nIndex));
 	//
 	return oSequence;
 };

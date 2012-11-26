@@ -67,7 +67,7 @@ cUnaryExpr.prototype.evaluate	= function (oContext) {
 	var oRight	= fFunction_sequence_atomize(this.expression.evaluate(oContext), oContext);
 
 	//
-	if (oRight.isEmpty())
+	if (!oRight.items.length)
 		return new cSequence;
 	// Assert cardinality
 	fFunctionCall_assertSequenceCardinality(oContext, oRight, '?'

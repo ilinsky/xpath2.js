@@ -85,7 +85,7 @@ cPathExpr.prototype.evaluate	= function (oContext) {
 					throw new cException("XPTY0019");
 				else
 				if (fArray_indexOf(oSequence1.items, oSequence2.items[nRightIndex]) ==-1)
-					oSequence1.add(oSequence2.items[nRightIndex]);
+					oSequence1.items.push(oSequence2.items[nRightIndex]);
 		}
 		oSequence	= oSequence1;
 	};

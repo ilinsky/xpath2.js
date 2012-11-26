@@ -104,16 +104,16 @@ cAxisStep.prototype.evaluate	= function (oContext) {
 		case "attribute":
 			if (nType == 1)
 				for (var aAttributes = fGetProperty(oItem, "attributes"), nIndex = 0, nLength = aAttributes.length; nIndex < nLength; nIndex++)
-					oSequence.add(aAttributes[nIndex]);
+					oSequence.items.push(aAttributes[nIndex]);
 			break;
 
 		case "child":
 			for (var oNode = fGetProperty(oItem, "firstChild"); oNode; oNode = fGetProperty(oNode, "nextSibling"))
-				oSequence.add(oNode);
+				oSequence.items.push(oNode);
 			break;
 
 		case "descendant-or-self":
-			oSequence.add(oItem);
+			oSequence.items.push(oItem);
 			// No break left intentionally
 		case "descendant":
 			fAxisStep_getChildrenForward(fGetProperty(oItem, "firstChild"), oSequence, fGetProperty);
@@ -128,26 +128,26 @@ cAxisStep.prototype.evaluate	= function (oContext) {
 
 		case "following-sibling":
 			for (var oNode = oItem; oNode = fGetProperty(oNode, "nextSibling");)
-				oSequence.add(oNode);
+				oSequence.items.push(oNode);
 			break;
 
 		case "self":
-			oSequence.add(oItem);
+			oSequence.items.push(oItem);
 			break;
 
 		// Reverse axis
 		case "ancestor-or-self":
-			oSequence.add(oItem);
+			oSequence.items.push(oItem);
 			// No break left intentionally
 		case "ancestor":
 			for (var oNode = nType == 2 ? fGetProperty(oItem, "ownerElement") : oItem; oNode = fGetProperty(oNode, "parentNode");)
-				oSequence.add(oNode);
+				oSequence.items.push(oNode);
 			break;
 
 		case "parent":
 			var oParent	= nType == 2 ? fGetProperty(oItem, "ownerElement") : fGetProperty(oItem, "parentNode");
 			if (oParent)
-				oSequence.add(oParent);
+				oSequence.items.push(oParent);
 			break;
 
 		case "preceding":
@@ -159,22 +159,22 @@ cAxisStep.prototype.evaluate	= function (oContext) {
 
 		case "preceding-sibling":
 			for (var oNode = oItem; oNode = fGetProperty(oNode, "previousSibling");)
-				oSequence.add(oNode);
+				oSequence.items.push(oNode);
 			break;
 	}
 
 	// Apply test
-	if (!oSequence.isEmpty() && !(this.test instanceof cKindTest && this.test.name == "node")) {
+	if (oSequence.items.length && !(this.test instanceof cKindTest && this.test.name == "node")) {
 		var oSequence1	= oSequence;
 		oSequence	= new cSequence;
 		for (var nIndex = 0, nLength = oSequence1.items.length; nIndex < nLength; nIndex++) {
 			if (this.test.test(oSequence1.items[nIndex], oContext))
-				oSequence.add(oSequence1.items[nIndex]);
+				oSequence.items.push(oSequence1.items[nIndex]);
 		}
 	}
 
 	// Apply predicates
-	if (!oSequence.isEmpty() && this.predicates.length)
+	if (oSequence.items.length && this.predicates.length)
 		oSequence	= cStepExpr.prototype.applyPredicates.call(this, oContext, oSequence);
 
 	// Reverse results if reverse axis
@@ -193,7 +193,7 @@ cAxisStep.prototype.evaluate	= function (oContext) {
 //
 function fAxisStep_getChildrenForward(oNode, oSequence, fGetProperty) {
 	for (var oChild; oNode; oNode = fGetProperty(oNode, "nextSibling")) {
-		oSequence.add(oNode);
+		oSequence.items.push(oNode);
 		if (oChild = fGetProperty(oNode, "firstChild"))
 			fAxisStep_getChildrenForward(oChild, oSequence, fGetProperty);
 	}
@@ -203,6 +203,6 @@ function fAxisStep_getChildrenBackward(oNode, oSequence, fGetProperty) {
 	for (var oChild; oNode; oNode = fGetProperty(oNode, "previousSibling")) {
 		if (oChild = fGetProperty(oNode, "lastChild"))
 			fAxisStep_getChildrenBackward(oChild, oSequence, fGetProperty);
-		oSequence.add(oNode);
+		oSequence.items.push(oNode);
 	}
 };

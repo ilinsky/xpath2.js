@@ -24,7 +24,7 @@
 // 11.1 Additional Constructor Functions for QNames
 // fn:resolve-QName($qname as xs:string?, $element as element()) as xs:QName?
 fStaticContext_defineSystemFunction("resolve-QName",	[[cXSString, '?'], [cXTElement]],	function(oSequence1, oSequence2) {
-	if (oSequence1.isEmpty())
+	if (!oSequence1.items.length)
 		return null;
 
 	var sQName	= oSequence1.items[0].valueOf(),
@@ -62,13 +62,13 @@ fStaticContext_defineSystemFunction("QName",		[[cXSString, '?'], [cXSString]],	f
 //<-Debug
 		);
 
-	return new cXSQName(aMatch[1] || null, aMatch[2] || null, oSequence1.isEmpty() ? '' : oSequence1.items[0].valueOf());
+	return new cXSQName(aMatch[1] || null, aMatch[2] || null, oSequence1.items.length ? oSequence1.items[0].valueOf() : '');
 });
 
 // 11.2 Functions Related to QNames
 // fn:prefix-from-QName($arg as xs:QName?) as xs:NCName?
 fStaticContext_defineSystemFunction("prefix-from-QName",			[[cXSQName, '?']],	function(oSequence1) {
-	if (oSequence1.isEmpty())
+	if (!oSequence1.items.length)
 		return null;
 
 	if (oSequence1.items[0].prefix)
@@ -79,7 +79,7 @@ fStaticContext_defineSystemFunction("prefix-from-QName",			[[cXSQName, '?']],	fu
 
 // fn:local-name-from-QName($arg as xs:QName?) as xs:NCName?
 fStaticContext_defineSystemFunction("local-name-from-QName",		[[cXSQName, '?']],	function(oSequence1) {
-	if (oSequence1.isEmpty())
+	if (!oSequence1.items.length)
 		return null;
 
 	return new cXSNCName(oSequence1.items[0].localName);
@@ -87,7 +87,7 @@ fStaticContext_defineSystemFunction("local-name-from-QName",		[[cXSQName, '?']],
 
 // fn:namespace-uri-from-QName($arg as xs:QName?) as xs:anyURI?
 fStaticContext_defineSystemFunction("namespace-uri-from-QName",	[[cXSQName, '?']],	function(oSequence1) {
-	if (oSequence1.isEmpty())
+	if (!oSequence1.items.length)
 		return null;
 
 	return cXSAnyURI.cast(new cXSString(oSequence1.items[0].namespaceURI || ''));
@@ -95,7 +95,7 @@ fStaticContext_defineSystemFunction("namespace-uri-from-QName",	[[cXSQName, '?']
 
 // fn:namespace-uri-for-prefix($prefix as xs:string?, $element as element()) as xs:anyURI?
 fStaticContext_defineSystemFunction("namespace-uri-for-prefix",	[[cXSString, '?'], [cXTElement]],	function(oSequence1, oSequence2) {
-	var sPrefix	= oSequence1.isEmpty() ? '' : oSequence1.items[0].valueOf(),
+	var sPrefix	= oSequence1.items.length ? oSequence1.items[0].valueOf() : '',
 		sNameSpaceURI	= this.DOMAdapter.lookupNamespaceURI(oSequence2.items[0], sPrefix || null);
 
 	return sNameSpaceURI == null ? null : cXSAnyURI.cast(new cXSString(sNameSpaceURI));

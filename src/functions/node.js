@@ -32,7 +32,7 @@ fStaticContext_defineSystemFunction("name",	[[cXTNode, '?', true]],	function(oSe
 		oSequence1	= new cSequence(this.item);
 	}
 	else
-	if (oSequence1.isEmpty())
+	if (!oSequence1.items.length)
 		return new cXSString('');
 	//
 	var vValue	= hStaticContext_functions["node-name"].call(this, oSequence1);
@@ -52,7 +52,7 @@ fStaticContext_defineSystemFunction("local-name",	[[cXTNode, '?', true]],	functi
 		oSequence1	= new cSequence(this.item);
 	}
 	else
-	if (oSequence1.isEmpty())
+	if (!oSequence1.items.length)
 		return new cXSString('');
 	//
 	return new cXSString(this.DOMAdapter.getProperty(oSequence1.items[0], "localName") || '');
@@ -71,7 +71,7 @@ fStaticContext_defineSystemFunction("namespace-uri",	[[cXTNode, '?', true]],	fun
 		oSequence1	= new cSequence(this.item);
 	}
 	else
-	if (oSequence1.isEmpty())
+	if (!oSequence1.items.length)
 		return cXSAnyURI.cast(new cXSString(''));
 	//
 	return cXSAnyURI.cast(new cXSString(this.DOMAdapter.getProperty(oSequence1.items[0], "namespaceURI") || ''));
@@ -85,7 +85,7 @@ fStaticContext_defineSystemFunction("number",	[[cXSAnyAtomicType, '?', true]],	f
 
 	// If input item cannot be cast to xs:decimal, a NaN should be returned
 	var vValue	= new cXSDouble(nNaN);
-	if (!oSequence1.isEmpty()) {
+	if (oSequence1.items.length) {
 		try {
 			vValue	= cXSDouble.cast(oSequence1.items[0]);
 		}
@@ -137,7 +137,7 @@ fStaticContext_defineSystemFunction("root",	[[cXTNode, '?', true]],	function(oSe
 		oSequence1	= new cSequence(this.item);
 	}
 	else
-	if (oSequence1.isEmpty())
+	if (!oSequence1.items.length)
 		return null;
 
 	var fGetProperty	= this.DOMAdapter.getProperty,

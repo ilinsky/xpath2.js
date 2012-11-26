@@ -43,18 +43,18 @@ cComparisonExpr.prototype.evaluate	= function (oContext) {
 	var oSequence	= new cSequence,
 		oResult	= hComparisonExpr_operators[this.operator](this, oContext);
 	if (oResult != null)
-		oSequence.add(oResult);
+		oSequence.items.push(oResult);
 	return oSequence;
 };
 
 // General comparison
 function fComparisonExpr_GeneralComp(oExpr, oContext) {
 	var oLeft	= fFunction_sequence_atomize(oExpr.left.evaluate(oContext), oContext);
-	if (oLeft.isEmpty())
+	if (!oLeft.items.length)
 		return new cXSBoolean(false);
 
 	var oRight	= fFunction_sequence_atomize(oExpr.right.evaluate(oContext), oContext);
-	if (oRight.isEmpty())
+	if (!oRight.items.length)
 		return new cXSBoolean(false);
 
 	var bResult	= false,
@@ -107,7 +107,7 @@ var hComparisonExpr_GeneralComp_map	= {
 // Value comparison
 function fComparisonExpr_ValueComp(oExpr, oContext) {
 	var oLeft	= fFunction_sequence_atomize(oExpr.left.evaluate(oContext), oContext);
-	if (oLeft.isEmpty())
+	if (!oLeft.items.length)
 		return null;
 	// Assert cardinality
 	fFunctionCall_assertSequenceCardinality(oContext, oLeft, '?'
@@ -117,7 +117,7 @@ function fComparisonExpr_ValueComp(oExpr, oContext) {
 	);
 
 	var oRight	= fFunction_sequence_atomize(oExpr.right.evaluate(oContext), oContext);
-	if (oRight.isEmpty())
+	if (!oRight.items.length)
 		return null;
 	// Assert cardinality
 	fFunctionCall_assertSequenceCardinality(oContext, oRight, '?'
@@ -436,7 +436,7 @@ hComparisonExpr_ValueComp_operators['le']	= function(oLeft, oRight, oContext) {
 // Node comparison
 function fComparisonExpr_NodeComp(oExpr, oContext) {
 	var oLeft	= oExpr.left.evaluate(oContext);
-	if (oLeft.isEmpty())
+	if (!oLeft.items.length)
 		return null;
 	// Assert cardinality
 	fFunctionCall_assertSequenceCardinality(oContext, oLeft, '?'
@@ -452,7 +452,7 @@ function fComparisonExpr_NodeComp(oExpr, oContext) {
 	);
 
 	var oRight	= oExpr.right.evaluate(oContext);
-	if (oRight.isEmpty())
+	if (!oRight.items.length)
 		return null;
 	// Assert cardinality
 	fFunctionCall_assertSequenceCardinality(oContext, oRight, '?'

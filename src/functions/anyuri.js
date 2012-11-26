@@ -28,7 +28,7 @@ fStaticContext_defineSystemFunction("resolve-uri",	[[cXSString, '?'], [cXSString
 	else
 		sBaseUri	= oSequence2.items[0];
 
-	if (oSequence1.isEmpty())
+	if (!oSequence1.items.length)
 		return null;
 
 	//
