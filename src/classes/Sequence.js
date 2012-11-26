@@ -35,6 +35,13 @@ cSequence.prototype.concat	= function(oSequence1) {
 	return oSequence;
 };
 
+cSequence.prototype.join	= function(sValue) {
+	var aValue	= [];
+	for (var nIndex = 0; nIndex < this.length; nIndex++)
+		aValue.push(this[nIndex]);
+	return aValue.join(sValue);
+};
+
 cSequence.prototype.slice	= function(nStart, nEnd) {
 	var oSequence	= new cSequence;
 	for (var nIndex = nStart; nIndex < nEnd; nIndex++)
