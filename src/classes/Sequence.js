@@ -18,8 +18,7 @@ cSequence.prototype.items	= null;
 // Public members
 cSequence.prototype.add	= function(oItem) {
 	if (oItem instanceof cSequence)
-		for (var nIndex = 0, nLength = oItem.items.length; nIndex < nLength; nIndex++)
-			this.items.push(oItem.items[nIndex]);
+		this.items	= this.items.concat(oItem.items);
 	else
 		this.items.push(oItem);
 };
