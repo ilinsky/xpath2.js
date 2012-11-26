@@ -29,7 +29,7 @@ cXSDouble.cast	= function(vValue) {
 	if (vValue instanceof cXSDouble)
 		return vValue;
 	if (vValue instanceof cXSString || vValue instanceof cXSUntypedAtomic) {
-		var aMatch	= fString_trim.call(vValue).match(cXSDouble.RegExp);
+		var aMatch	= fString_trim(vValue).match(cXSDouble.RegExp);
 		if (aMatch)
 			return new cXSDouble(aMatch[7] ? +aMatch[7].replace("INF", "Infinity") : +vValue);
 		throw new cException("FORG0001");

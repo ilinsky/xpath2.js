@@ -24,11 +24,14 @@ var cString		= window.String,
 //	misc
 	fIsNaN		= window.isNaN,
 	fIsFinite	= window.isFinite,
-	fString_trim= cString.prototype.trim || function() {
-		return cString(this).replace(/^\s+|\s+$/g, '');
-	},
 	nNaN		= window.NaN,
-	nInfinity	= window.Infinity;
+	nInfinity	= window.Infinity,
+	// Functions
+	fString_trim	=(function() {
+		return cString.prototype.trim ? function(sValue) {return cString(sValue).trim();} : function(sValue) {
+			return cString(sValue).replace(/^\s+|\s+$/g, '');
+		};
+	})();
 
 var sNS_SCHEMA	= "http://www.w3.org/2001/XMLSchema",
 	sNS_XPFUNC	= "http://www.w3.org/2005/xpath-functions",

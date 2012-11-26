@@ -38,7 +38,7 @@ cXSAnyURI.cast	= function(vValue) {
 		return vValue;
 	if (vValue instanceof cXSString || vValue instanceof cXSUntypedAtomic) {
 		var aMatch;
-		if (aMatch = fString_trim.call(vValue).match(cXSAnyURI.RegExp))
+		if (aMatch = fString_trim(vValue).match(cXSAnyURI.RegExp))
 			return new cXSAnyURI(aMatch[2], aMatch[4], aMatch[5], aMatch[7], aMatch[9]);
 		throw new cException("FORG0001");
 	}

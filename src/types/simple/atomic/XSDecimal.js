@@ -29,7 +29,7 @@ cXSDecimal.cast	= function(vValue) {
 	if (vValue instanceof cXSDecimal)
 		return vValue;
 	if (vValue instanceof cXSString || vValue instanceof cXSUntypedAtomic) {
-		var aMatch	= fString_trim.call(vValue).match(cXSDecimal.RegExp);
+		var aMatch	= fString_trim(vValue).match(cXSDecimal.RegExp);
 		if (aMatch)
 			return new cXSDecimal(+vValue);
 		throw new cException("FORG0001");

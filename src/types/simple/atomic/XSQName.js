@@ -29,7 +29,7 @@ cXSQName.cast	= function(vValue) {
 	if (vValue instanceof cXSQName)
 		return vValue;
 	if (vValue instanceof cXSString || vValue instanceof cXSUntypedAtomic) {
-		var aMatch	= fString_trim.call(vValue).match(cXSQName.RegExp);
+		var aMatch	= fString_trim(vValue).match(cXSQName.RegExp);
 		if (aMatch)
 			return new cXSQName(aMatch[1] || null, aMatch[2], null);
 		throw new cException("FORG0001");

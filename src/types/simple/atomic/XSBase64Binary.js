@@ -29,7 +29,7 @@ cXSBase64Binary.cast	= function(vValue) {
 	if (vValue instanceof cXSBase64Binary)
 		return vValue;
 	if (vValue instanceof cXSString || vValue instanceof cXSUntypedAtomic) {
-		var aMatch	= fString_trim.call(vValue).match(cXSBase64Binary.RegExp);
+		var aMatch	= fString_trim(vValue).match(cXSBase64Binary.RegExp);
 		if (aMatch)
 			return new cXSBase64Binary(aMatch[0]);
 		throw new cException("FORG0001");

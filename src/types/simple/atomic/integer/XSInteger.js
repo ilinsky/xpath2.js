@@ -19,7 +19,7 @@ cXSInteger.cast	= function(vValue) {
 	if (vValue instanceof cXSInteger)
 		return vValue;
 	if (vValue instanceof cXSString || vValue instanceof cXSUntypedAtomic) {
-		var aMatch	= fString_trim.call(vValue).match(cXSInteger.RegExp);
+		var aMatch	= fString_trim(vValue).match(cXSInteger.RegExp);
 		if (aMatch)
 			return new cXSInteger(~~vValue);
 		throw new cException("FORG0001");

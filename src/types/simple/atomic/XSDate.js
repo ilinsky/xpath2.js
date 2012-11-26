@@ -34,7 +34,7 @@ cXSDate.cast	= function(vValue) {
 	if (vValue instanceof cXSDate)
 		return vValue;
 	if (vValue instanceof cXSString || vValue instanceof cXSUntypedAtomic) {
-		var aMatch	= fString_trim.call(vValue).match(cXSDate.RegExp);
+		var aMatch	= fString_trim(vValue).match(cXSDate.RegExp);
 		if (aMatch) {
 			var nYear	= +aMatch[2],
 				nMonth	= +aMatch[3],

@@ -29,7 +29,7 @@ cXSHexBinary.cast	= function(vValue) {
 	if (vValue instanceof cXSHexBinary)
 		return vValue;
 	if (vValue instanceof cXSString || vValue instanceof cXSUntypedAtomic) {
-		var aMatch	= fString_trim.call(vValue).match(cXSHexBinary.RegExp);
+		var aMatch	= fString_trim(vValue).match(cXSHexBinary.RegExp);
 		if (aMatch)
 			return new cXSHexBinary(aMatch[0].toUpperCase());
 		throw new cException("FORG0001");

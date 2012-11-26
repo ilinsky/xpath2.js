@@ -32,7 +32,7 @@ cXSTime.cast	= function(vValue) {
 	if (vValue instanceof cXSTime)
 		return vValue;
 	if (vValue instanceof cXSString || vValue instanceof cXSUntypedAtomic) {
-		var aMatch	= fString_trim.call(vValue).match(cXSTime.RegExp);
+		var aMatch	= fString_trim(vValue).match(cXSTime.RegExp);
 		if (aMatch) {
 			var bValue	= !!aMatch[6];
 			return new cXSTime(bValue ? 0 : +aMatch[2],

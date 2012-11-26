@@ -165,7 +165,7 @@ fStaticContext_defineSystemFunction("normalize-space",	[[cXSString, '?', true]],
 	if (arguments.length < 1)
 		oSequence1	= new cSequence(cXSString.cast(fXTItem_atomize(this.item, this)));
 
-	return new cXSString(oSequence1.isEmpty() ? '' : fString_trim.call(oSequence1.items[0]).replace(/\s\s+/g, ' '));
+	return new cXSString(oSequence1.isEmpty() ? '' : fString_trim(oSequence1.items[0]).replace(/\s\s+/g, ' '));
 });
 
 // fn:normalize-unicode($arg as xs:string?) as xs:string

@@ -42,7 +42,7 @@ cXSDuration.cast	= function(vValue) {
 	if (vValue instanceof cXSDuration)
 		return vValue;
 	if (vValue instanceof cXSString || vValue instanceof cXSUntypedAtomic) {
-		var aMatch	= fString_trim.call(vValue).match(cXSDuration.RegExp);
+		var aMatch	= fString_trim(vValue).match(cXSDuration.RegExp);
 		if (aMatch)
 			return fXSDuration_normalize(new cXSDuration(+aMatch[2] || 0, +aMatch[3] || 0, +aMatch[4] || 0, +aMatch[5] || 0, +aMatch[6] || 0, +aMatch[7] || 0, aMatch[1] == '-'));
 		throw new cException("FORG0001");

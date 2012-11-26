@@ -30,7 +30,7 @@ cXSBoolean.cast	= function(vValue) {
 		return vValue;
 	if (vValue instanceof cXSString || vValue instanceof cXSUntypedAtomic) {
 		var aMatch;
-		if (aMatch = fString_trim.call(vValue).match(cXSBoolean.RegExp))
+		if (aMatch = fString_trim(vValue).match(cXSBoolean.RegExp))
 			return new cXSBoolean(aMatch[1] == "1" || aMatch[1] == "true");
 		throw new cException("FORG0001");
 	}

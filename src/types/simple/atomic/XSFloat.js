@@ -29,7 +29,7 @@ cXSFloat.cast	= function(vValue) {
 	if (vValue instanceof cXSFloat)
 		return vValue;
 	if (vValue instanceof cXSString || vValue instanceof cXSUntypedAtomic) {
-		var aMatch	= fString_trim.call(vValue).match(cXSFloat.RegExp);
+		var aMatch	= fString_trim(vValue).match(cXSFloat.RegExp);
 		if (aMatch)
 			return new cXSFloat(aMatch[7] ? +aMatch[7].replace("INF", "Infinity") : +vValue);
 		throw new cException("FORG0001");
