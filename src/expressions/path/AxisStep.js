@@ -17,7 +17,6 @@ cAxisStep.prototype	= new cStepExpr;
 
 cAxisStep.prototype.axis		= null;
 cAxisStep.prototype.test		= null;
-cAxisStep.prototype.predicates	= null;
 
 //
 var hAxisStep_axises	= {};

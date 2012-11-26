@@ -11,6 +11,8 @@ function cStepExpr() {
 
 };
 
+cStepExpr.prototype.predicates	= null;
+
 // Static members
 function fStepExpr_parse (oLexer, oStaticContext) {
 	if (!oLexer.eof())

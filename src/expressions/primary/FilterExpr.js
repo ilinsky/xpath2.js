@@ -15,7 +15,6 @@ function cFilterExpr(oPrimary) {
 cFilterExpr.prototype	= new cStepExpr;
 
 cFilterExpr.prototype.expression	= null;
-cFilterExpr.prototype.predicates	= null;
 
 // Static members
 function fFilterExpr_parse (oLexer, oStaticContext) {
