@@ -24,9 +24,7 @@
 // 15.1 General Functions and Operators on Sequences
 // op:concatenate($seq1 as item()*, $seq2 as item()*) as item()*
 hStaticContext_operators["concatenate"]	= function(oSequence1, oSequence2) {
-	var oSequence	= new cSequence(oSequence1);
-		oSequence.add(oSequence2);
-	return oSequence;
+	return oSequence1.concat(oSequence2);
 };
 
 // 15.3 Equals, Union, Intersection and Except

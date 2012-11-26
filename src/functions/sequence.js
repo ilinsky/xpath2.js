@@ -114,11 +114,11 @@ fStaticContext_defineSystemFunction("insert-before",	[[cXTItem, '*'], [cXSIntege
 	var oSequence	=  new cSequence;
 	for (var nIndex = 0; nIndex < nLength; nIndex++) {
 		if (nPosition == nIndex + 1)
-			oSequence.add(oSequence3);
+			oSequence	= oSequence.concat(oSequence3);
 		oSequence.push(oSequence1[nIndex]);
 	}
 	if (nPosition == nIndex + 1)
-		oSequence.add(oSequence3);
+		oSequence	= oSequence.concat(oSequence3);
 
 	return oSequence;
 });
@@ -157,10 +157,7 @@ fStaticContext_defineSystemFunction("subsequence",	[[cXTItem, '*'], [cXSDouble, 
 		nLength		= arguments.length > 2 ? cMath.round(oSequence3[0]) : oSequence1.length - nPosition + 1;
 
 	// TODO: Handle out-of-range position and length values
-	var oSequence	= new cSequence(oSequence1);
-	oSequence	= oSequence.slice(nPosition - 1, nPosition - 1 + nLength);
-
-	return oSequence;
+	return oSequence1.slice(nPosition - 1, nPosition - 1 + nLength);
 });
 
 // fn:unordered($sourceSeq as item()*) as item()*

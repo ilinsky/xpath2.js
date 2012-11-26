@@ -61,7 +61,7 @@ cForExpr.prototype.evaluate	= function (oContext) {
 			if (nBinding < oSelf.bindings.length)
 				arguments.callee(oSelf, nBinding);
 			else
-				oSequence.add(oSelf.returnExpr.evaluate(oContext));
+				oSequence	= oSequence.concat(oSelf.returnExpr.evaluate(oContext));
 			oContext.popVariable(sUri);
 		}
 	})(this, 0);

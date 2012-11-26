@@ -9,17 +9,45 @@
 
 function cSequence(oItem) {
 	if (arguments.length)
-		this.add(oItem);
+		this.push(oItem);
 };
 
-cSequence.prototype	= new cArray;
+cSequence.prototype.length	= 0;
 
 // Public members
-cSequence.prototype.add	= function(oItem) {
-	if (oItem instanceof cSequence) {
-		for (var nIndex = 0; nIndex < oItem.length; nIndex++)
-			this.push(oItem[nIndex]);
-	}
-	else
-		this.push(oItem);
+cSequence.prototype.push	= function(oItem) {
+	this[this.length++]	= oItem;
+};
+
+cSequence.prototype.indexOf	= function(oItem) {
+	for (var nIndex = 0; nIndex < this.length; nIndex++)
+		if (this[nIndex] == oItem)
+			return nIndex;
+	return-1;
+};
+
+cSequence.prototype.concat	= function(oSequence1) {
+	var oSequence	= new cSequence;
+	for (var nIndex = 0; nIndex < this.length; nIndex++)
+		oSequence.push(this[nIndex]);
+	for (var nIndex = 0; nIndex < oSequence1.length; nIndex++)
+		oSequence.push(oSequence1[nIndex]);
+	return oSequence;
+};
+
+cSequence.prototype.slice	= function(nStart, nEnd) {
+	var oSequence	= new cSequence;
+	for (var nIndex = nStart; nIndex < nEnd; nIndex++)
+		oSequence.push(this[nIndex]);
+	return oSequence;
+};
+
+cSequence.prototype.sort	= function(fCallback) {
+	var aValue	= [];
+	for (var nIndex = 0; nIndex < this.length; nIndex++)
+		aValue.push(this[nIndex]);
+	aValue.sort(fCallback);
+	for (var nIndex = 0; nIndex < this.length; nIndex++)
+		this[nIndex]	= aValue[nIndex];
+	return this;
 };
