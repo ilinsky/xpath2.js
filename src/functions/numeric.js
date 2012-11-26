@@ -40,21 +40,19 @@ fStaticContext_defineSystemFunction("round",		[[cXSDouble, '?']],	function(oSequ
 // fn:round-half-to-even($arg as numeric?) as numeric?
 // fn:round-half-to-even($arg as numeric?, $precision as xs:integer) as numeric?
 fStaticContext_defineSystemFunction("round-half-to-even",	[[cXSDouble, '?'], [cXSInteger, '', true]],	function(oSequence1, oSequence2) {
-	var oValue	= oSequence1[0];
-	var oPrecision	= new cXSInteger(0);
-	if (arguments.length > 1)
-		oPrecision	= oSequence2[0];
+	var oValue	= oSequence1[0],
+		nPrecision	= arguments.length > 1 ? oSequence2[0].valueOf() : 0;
 
 	//
-	if (oPrecision.valueOf() < 0) {
-		var oPower	= new cXSInteger(cMath.pow(10,-oPrecision)),
+	if (nPrecision < 0) {
+		var oPower	= new cXSInteger(cMath.pow(10,-nPrecision)),
 			nRounded= cMath.round(hStaticContext_operators["numeric-divide"].call(this, oValue, oPower)),
 			oRounded= new cXSInteger(nRounded);
 			nDecimal= cMath.abs(hStaticContext_operators["numeric-subtract"].call(this, oRounded, hStaticContext_operators["numeric-divide"].call(this, oValue, oPower)));
 		return hStaticContext_operators["numeric-multiply"].call(this, hStaticContext_operators["numeric-add"].call(this, oRounded, new cXSDecimal(nDecimal == 0.5 && nRounded % 2 ?-1 : 0)), oPower);
 	}
 	else {
-		var oPower	= new cXSInteger(cMath.pow(10, oPrecision)),
+		var oPower	= new cXSInteger(cMath.pow(10, nPrecision)),
 			nRounded= cMath.round(hStaticContext_operators["numeric-multiply"].call(this, oValue, oPower)),
 			oRounded= new cXSInteger(nRounded);
 			nDecimal= cMath.abs(hStaticContext_operators["numeric-subtract"].call(this, oRounded, hStaticContext_operators["numeric-multiply"].call(this, oValue, oPower)));
