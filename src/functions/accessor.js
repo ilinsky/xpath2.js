@@ -57,8 +57,11 @@ fStaticContext_defineSystemFunction("nilled",	[[cXTNode, '?']],	function(oSequen
 // fn:string() as xs:string
 // fn:string($arg as item()?) as xs:string
 fStaticContext_defineSystemFunction("string",	[[cXTItem, '?', true]],	function(/*[*/oSequence1/*]*/) {
-	if (!arguments.length)
+	if (!arguments.length) {
+		if (!this.item)
+			throw new cException("XPDY0002");
 		oSequence1	= new cSequence(this.item);
+	}
 	return oSequence1.length ? cXSString.cast(fXTItem_atomize(oSequence1[0], this)) : new cXSString('');
 });
 
