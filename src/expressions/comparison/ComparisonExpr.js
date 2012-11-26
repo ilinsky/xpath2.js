@@ -54,13 +54,9 @@ function fComparisonExpr_GeneralComp(oExpr, oContext) {
 	if (!oRight.length)
 		return new cXSBoolean(false);
 
-	var bResult	= false,
-		bLeft,
-		bRight,
-		vLeft,
-		vRight;
-	for (var nLeftIndex = 0, nLeftLength = oLeft.length; (nLeftIndex < nLeftLength) &&!bResult; nLeftIndex++) {
-		for (var nRightIndex = 0, nRightLength = oRight.length; (nRightIndex < nRightLength) &&!bResult; nRightIndex++) {
+	var bResult	= false;
+	for (var nLeftIndex = 0, nLeftLength = oLeft.length, bLeft, vLeft; (nLeftIndex < nLeftLength) &&!bResult; nLeftIndex++) {
+		for (var nRightIndex = 0, nRightLength = oRight.length, bRight, vRight; (nRightIndex < nRightLength) &&!bResult; nRightIndex++) {
 
 			vLeft	= oLeft[nLeftIndex];
 			vRight	= oRight[nRightIndex];
