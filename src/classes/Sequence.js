@@ -33,8 +33,5 @@ cSequence.prototype.isSingleton	= function() {
 };
 
 cSequence.prototype.indexOf	= function(oItem) {
-	for (var nIndex = 0, nLength = this.items.length; nIndex < nLength; nIndex++)
-		if (this.items[nIndex] == oItem)
-			return nIndex;
-	return -1;
+	return fArray_indexOf(this.items, oItem);
 };

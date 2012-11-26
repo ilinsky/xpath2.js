@@ -42,7 +42,7 @@ hStaticContext_operators["union"]	= function(oSequence1, oSequence2) {
 //<-Debug
 			);	// Required item type of second operand of 'intersect' is node(); supplied value has item type xs:integer
 		//
-		if (oSequence.indexOf(oItem) ==-1)
+		if (fArray_indexOf(oSequence.items, oItem) ==-1)
 			oSequence.add(oItem);
 	}
 	// Process second collection
@@ -54,7 +54,7 @@ hStaticContext_operators["union"]	= function(oSequence1, oSequence2) {
 //<-Debug
 			);	// Required item type of second operand of 'intersect' is node(); supplied value has item type xs:integer
 		//
-		if (oSequence.indexOf(oItem) ==-1)
+		if (fArray_indexOf(oSequence.items, oItem) ==-1)
 			oSequence.add(oItem);
 	}
 	return fFunction_sequence_order(oSequence, this);
@@ -82,7 +82,7 @@ hStaticContext_operators["intersect"]	= function(oSequence1, oSequence2) {
 			bFound = this.DOMAdapter.isSameNode(oSequence2.items[nRightIndex], oItem);
 		}
 		//
-		if (bFound && oSequence.indexOf(oItem) ==-1)
+		if (bFound && fArray_indexOf(oSequence.items, oItem) ==-1)
 			oSequence.add(oItem);
 	}
 	return fFunction_sequence_order(oSequence, this);
@@ -110,7 +110,7 @@ hStaticContext_operators["except"]	= function(oSequence1, oSequence2) {
 			bFound = this.DOMAdapter.isSameNode(oSequence2.items[nRightIndex], oItem);
 		}
 		//
-		if (!bFound && oSequence.indexOf(oItem) ==-1)
+		if (!bFound && fArray_indexOf(oSequence.items, oItem) ==-1)
 			oSequence.add(oItem);
 	}
 	return fFunction_sequence_order(oSequence, this);

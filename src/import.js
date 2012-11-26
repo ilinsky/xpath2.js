@@ -31,6 +31,14 @@ var cString		= window.String,
 		return cString.prototype.trim ? function(sValue) {return cString(sValue).trim();} : function(sValue) {
 			return cString(sValue).replace(/^\s+|\s+$/g, '');
 		};
+	})(),
+	fArray_indexOf	=(function() {
+		return cArray.prototype.indexOf ? function(aValue, vItem) {return aValue.indexOf(vItem);} : function(aValue, vItem) {
+			for (var nIndex = 0, nLength = aValue.length; nIndex < nLength; nIndex++)
+				if (aValue[nIndex] === vItem)
+					return nIndex;
+			return -1;
+		};
 	})();
 
 var sNS_SCHEMA	= "http://www.w3.org/2001/XMLSchema",

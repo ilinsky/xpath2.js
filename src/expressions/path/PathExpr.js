@@ -84,7 +84,7 @@ cPathExpr.prototype.evaluate	= function (oContext) {
 				if ((nItemIndex < nItemLength - 1) && !oContext.DOMAdapter.isNode(oSequence2.items[nRightIndex]))
 					throw new cException("XPTY0019");
 				else
-				if (oSequence1.indexOf(oSequence2.items[nRightIndex]) ==-1)
+				if (fArray_indexOf(oSequence1.items, oSequence2.items[nRightIndex]) ==-1)
 					oSequence1.add(oSequence2.items[nRightIndex]);
 		}
 		oSequence	= oSequence1;
