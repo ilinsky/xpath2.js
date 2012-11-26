@@ -332,10 +332,9 @@ fStaticContext_defineSystemFunction("matches",	[[cXSString, '?'], [cXSString], [
 // fn:replace($input as xs:string?, $pattern as xs:string, $replacement as xs:string, $flags as xs:string) as xs:string
 fStaticContext_defineSystemFunction("replace",	[[cXSString, '?'], [cXSString],  [cXSString], [cXSString, '', true]],	function(oSequence1, oSequence2, oSequence3, oSequence4) {
 	var sValue	= oSequence1.length ? oSequence1[0].valueOf() : '',
-		rRegExp	= fFunction_string_createRegExp(oSequence2[0].valueOf(), arguments.length > 3 ? oSequence4[0].valueOf() : ''),
-		sReplacement	= oSequence3[0].valueOf();
+		rRegExp	= fFunction_string_createRegExp(oSequence2[0].valueOf(), arguments.length > 3 ? oSequence4[0].valueOf() : '');
 
-	return new cXSBoolean(sValue.replace(rRegExp, sReplacement));
+	return new cXSBoolean(sValue.replace(rRegExp, oSequence3[0].valueOf()));
 });
 
 // fn:tokenize($input as xs:string?, $pattern as xs:string) as xs:string*
@@ -344,9 +343,8 @@ fStaticContext_defineSystemFunction("tokenize",	[[cXSString, '?'], [cXSString], 
 	var sValue	= oSequence1.length ? oSequence1[0].valueOf() : '',
 		rRegExp	= fFunction_string_createRegExp(oSequence2[0].valueOf(), arguments.length > 2 ? oSequence3[0].valueOf() : '');
 
-	var oSequence	= [],
-		aValue = sValue.split(rRegExp);
-	for (var nIndex = 0, nLength = aValue.length; nIndex < nLength; nIndex++)
+	var oSequence	= [];
+	for (var nIndex = 0, aValue = sValue.split(rRegExp), nLength = aValue.length; nIndex < nLength; nIndex++)
 		oSequence.push(new cXSString(aValue[nIndex]));
 
 	return oSequence;
