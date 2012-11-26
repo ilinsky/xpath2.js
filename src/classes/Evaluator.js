@@ -20,16 +20,16 @@ cEvaluator.prototype.compile	= function(sExpression, oStaticContext) {
 	//
 	if (!oLexer.eof())
 		throw new cException("XPST0003"
-	//->Debug
+//->Debug
 				, "Unexpected token beyond end of query"
-	//<-Debug
+//<-Debug
 		);
 	//
 	if (!oExpr)
 		throw new cException("XPST0003"
-	//->Debug
+//->Debug
 				, "Expected expression"
-	//<-Debug
+//<-Debug
 		);
 	return oExpr;
 };
