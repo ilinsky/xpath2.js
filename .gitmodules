@@ -1,0 +1,3 @@
+[submodule "guard.js"]
+	path = guard.js
+	url = git://github.com/ilinsky/guard.js.git
