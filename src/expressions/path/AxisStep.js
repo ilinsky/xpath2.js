@@ -13,7 +13,7 @@ function cAxisStep(sAxis, oTest) {
 	this.predicates	= [];
 };
 
-//cAxisStep.prototype	= new cStepExpr;
+cAxisStep.prototype	= new cStepExpr;
 
 cAxisStep.prototype.axis		= null;
 cAxisStep.prototype.test		= null;
@@ -175,7 +175,7 @@ cAxisStep.prototype.evaluate	= function (oContext) {
 
 	// Apply predicates
 	if (oSequence.length && this.predicates.length)
-		oSequence	= cStepExpr.prototype.applyPredicates.call(this, oContext, oSequence);
+		oSequence	= this.applyPredicates(oSequence, oContext);
 
 	// Reverse results if reverse axis
 	switch (this.axis) {

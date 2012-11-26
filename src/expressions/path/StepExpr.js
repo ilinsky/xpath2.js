@@ -45,7 +45,7 @@ function fStepExpr_parsePredicates (oLexer, oStaticContext, oStep) {
 };
 
 // Public members
-cStepExpr.prototype.applyPredicates	= function(oContext, oSequence) {
+cStepExpr.prototype.applyPredicates	= function(oSequence, oContext) {
 	var vContextItem	= oContext.item,
 		nContextPosition= oContext.position,
 		nContextSize	= oContext.size;

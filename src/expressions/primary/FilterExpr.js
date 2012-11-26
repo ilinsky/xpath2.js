@@ -12,6 +12,8 @@ function cFilterExpr(oPrimary) {
 	this.predicates	= [];
 };
 
+cFilterExpr.prototype	= new cStepExpr;
+
 cFilterExpr.prototype.expression	= null;
 cFilterExpr.prototype.predicates	= null;
 
@@ -36,6 +38,6 @@ function fFilterExpr_parse (oLexer, oStaticContext) {
 cFilterExpr.prototype.evaluate	= function (oContext) {
 	var oSequence	= this.expression.evaluate(oContext);
 	if (this.predicates.length && oSequence.length)
-		oSequence	= cStepExpr.prototype.applyPredicates.call(this, oContext, oSequence);
+		oSequence	= this.applyPredicates(oSequence, oContext);
 	return oSequence;
 };
