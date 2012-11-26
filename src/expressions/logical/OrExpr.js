@@ -30,7 +30,7 @@ function fOrExpr_parse (oLexer, oStaticContext) {
 		if (oLexer.eof() ||!(oExpr = fAndExpr_parse(oLexer, oStaticContext)))
 			throw new cException("XPST0003"
 //->Debug
-					, "Expected second operand in logical or expression"
+					, "Expected second operand in logical expression"
 //<-Debug
 			);
 		oOrExpr.items.push(oExpr);
