@@ -62,7 +62,7 @@ cStepExpr.prototype.applyPredicates	= function(oSequence, oContext) {
 			oSequence2	= this.predicates[nPredicateIndex].evaluate(oContext);
 			//
 			if (oSequence2.length == 1 && fXSAnyAtomicType_isNumeric(oSequence2[0])) {
-				if (oSequence2[0] == nIndex + 1)
+				if (oSequence2[0].valueOf() == nIndex + 1)
 					oSequence.push(oSequence1[nIndex]);
 			}
 			else
