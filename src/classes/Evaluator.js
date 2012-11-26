@@ -12,19 +12,54 @@ function cEvaluator() {
 };
 
 cEvaluator.prototype.defaultStaticContext	= new cStaticContext;
+cEvaluator.prototype.defaultDOMAdapter		= new cDOMAdapter;
 
 cEvaluator.prototype.compile	= function(sExpression, oStaticContext) {
-	return new cExpression(sExpression, oStaticContext || this.defaultStaticContext);
+	var oLexer	= new cLexer(sExpression),
+		oExpr	= fExpr_parse(oLexer, oStaticContext || this.defaultStaticContext);
+	//
+	if (!oLexer.eof())
+		throw new cException("XPST0003"
+	//->Debug
+				, "Unexpected token beyond end of query"
+	//<-Debug
+		);
+	//
+	if (!oExpr)
+		throw new cException("XPST0003"
+	//->Debug
+				, "Expected expression"
+	//<-Debug
+		);
+	return oExpr;
 };
 
-cEvaluator.prototype.resolve	= function(sExpression, vItem, oStaticContext, oScope, oDOMAdapter) {
+cEvaluator.prototype.evaluate	= function(sExpression, vItem, oStaticContext, oScope, oDOMAdapter) {
 	//
 	if (!oStaticContext)
 		oStaticContext	= this.defaultStaticContext;
-	// Create item of known type
-	if (typeof vItem == "undefined" || vItem == null)
+	//
+	if (!oDOMAdapter)
+		oDOMAdapter		= this.defaultDOMAdapter;
+
+	if (typeof vItem == "undefined")
 		vItem	= null;
-	else
+
+	// Create dynamic context
+	var oContext	= new cDynamicContext(oStaticContext, vItem == null || oDOMAdapter.isNode(vItem) ? vItem : cEvaluator.js2xsd(vItem), oScope, oDOMAdapter);
+
+	// Evaluate and convert types from XPath 2.0 to JavaScript
+	var oSequence	= this.compile(sExpression, oStaticContext).evaluate(oContext),
+		aReturn		= [];
+	for (var nIndex = 0, nLength = oSequence.length, oItem; nIndex < nLength; nIndex++)
+		aReturn[aReturn.length]	= oDOMAdapter.isNode(oItem = oSequence[nIndex]) ? oItem : cEvaluator.xsd2js(oItem);
+	//
+	return aReturn;
+};
+
+// Converts non-null JavaScript object to XML Schema object
+cEvaluator.js2xsd	= function(vItem) {
+	// Convert types from JavaScript to XPath 2.0
 	if (typeof vItem == "boolean")
 		vItem	= new cXSBoolean(vItem);
 	else
@@ -35,8 +70,20 @@ cEvaluator.prototype.resolve	= function(sExpression, vItem, oStaticContext, oSco
 			vItem	= fNumericLiteral_parseValue(cString(vItem));
 	}
 	else
-	if (!(oDOMAdapter || cDOMAdapter.prototype).isNode(vItem) &&!(vItem instanceof cXSAnyAtomicType))
 		vItem	= new cXSString(cString(vItem));
+	//
+	return vItem;
+};
 
-	return this.compile(sExpression, oStaticContext).resolve(new cDynamicContext(oStaticContext, vItem, oScope, oDOMAdapter));
+// Converts non-null XML Schema object to JavaScript object
+cEvaluator.xsd2js	= function(vItem) {
+	if (fXSAnyAtomicType_isNumeric(vItem))
+		vItem	= vItem.valueOf();
+	else
+	if (vItem instanceof cXSBoolean)
+		vItem	= vItem.valueOf();
+	else
+		vItem	= vItem.toString();
+	//
+	return vItem;
 };

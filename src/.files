@@ -6,7 +6,6 @@ classes/Lexer.js
 classes/DOMAdapter.js
 classes/DynamicContext.js
 classes/StaticContext.js
-classes/Expression.js
 classes/Evaluator.js
 classes/StringCollator.js
 #

@@ -16,11 +16,11 @@
 			XPath2.defaultStaticContext.defaultElementNamespace	= "http://www.w3.org/1999/xhtml";
 			// Helper function
 			function evaluateXPath(sXPath, oContext) {
-				return XPath2.resolve(sXPath, oContext);
+				return XPath2.evaluate(sXPath, oContext);
 			}
 
 			function evaluateXPathWithDocument(sXPath) {
-				return XPath2.resolve(sXPath, document);
+				return XPath2.evaluate(sXPath, document);
 			}
 
 			// Kind Tests

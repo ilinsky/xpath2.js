@@ -37,15 +37,22 @@ cXPathExpression.prototype.evaluate	= function(oNode, nType, oResult) {
 };
 
 function fXPathExpression_evaluate(oExpression, oNode, nType, oResult) {
-	var oSequence,
-		oDOMAdapter	= oXPathEvaluator_DOMAdapter;
+	if (typeof oNode == "undefined")
+		oNode	= null;
+
+	var aSequence,
+		oSequence	= [],
+		oAdapter	= oXPathEvaluator_DOMAdapter;
+
 	// Determine which DOMAdapter to use based on browser and DOM type
 	if (oNode && oNode.nodeType && bOldMS)
-		oDOMAdapter	= "selectNodes" in oNode ? oMSXMLDOMAdapter : oMSHTMLDOMAdapter;
+		oAdapter	= "selectNodes" in oNode ? oMSXMLDOMAdapter : oMSHTMLDOMAdapter;
 
 	// Evaluate expression
 	try {
-		oSequence	= oExpression.expression.resolve(new oXPath2.classes.DynamicContext(oExpression.staticContext, typeof oNode == "undefined" ? null : oNode, null, oDOMAdapter));
+		aSequence	= oExpression.expression.evaluate(new oXPath2.classes.DynamicContext(oExpression.staticContext, oNode, null, oAdapter));
+		for (var nIndex = 0, nLength = aSequence.length, oItem; nIndex < nLength; nIndex++)
+			oSequence[oSequence.length]	= oAdapter.isNode(oItem = aSequence[nIndex]) ? oItem : oXPath2.classes.Evaluator.xsd2js(oItem);
 	}
 	catch (e) {
 		if (e instanceof oXPath2.classes.Exception)
@@ -61,8 +68,7 @@ function fXPathExpression_evaluate(oExpression, oNode, nType, oResult) {
 	if (!nType) {
 		nType	= 4;	// Default: XPathResult.UNORDERED_NODE_ITERATOR_TYPE
 		if (oSequence.length) {
-			var vItem	= oSequence[0],
-				sType	= typeof vItem;
+			var sType	= typeof oSequence[0];
 			if (sType == "number")
 				nType	= 1;	// XPathResult.NUMBER_TYPE
 			else
