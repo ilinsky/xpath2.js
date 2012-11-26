@@ -7,14 +7,14 @@
  *
  */
 
-var cXPath2	= new cEvaluator;
+var oXPath2	= new cEvaluator;
 
 //
-cXPath2.classes	= {};
-cXPath2.classes.Exception		= cException;
-cXPath2.classes.Evaluator		= cEvaluator;
-cXPath2.classes.Expression		= cExpression;
-cXPath2.classes.DOMAdapter		= cDOMAdapter;
-cXPath2.classes.StaticContext	= cStaticContext;
-cXPath2.classes.DynamicContext	= cDynamicContext;
-cXPath2.classes.StringCollator	= cStringCollator;
+oXPath2.classes	= {};
+oXPath2.classes.Exception		= cException;
+oXPath2.classes.Evaluator		= cEvaluator;
+oXPath2.classes.Expression		= cExpression;
+oXPath2.classes.DOMAdapter		= cDOMAdapter;
+oXPath2.classes.StaticContext	= cStaticContext;
+oXPath2.classes.DynamicContext	= cDynamicContext;
+oXPath2.classes.StringCollator	= cStringCollator;

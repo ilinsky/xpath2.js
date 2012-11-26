@@ -13,9 +13,9 @@ function cXPathEvaluator() {
 
 // Create new XPath2 evaluator
 var oXPathEvaluator_DOMAdapter	= new cLXDOMAdapter,
-	oXPathEvaluator_evaluator	= new cXPath2.classes.Evaluator,
-	oXPathEvaluator_HTMLContext	= new cXPath2.classes.StaticContext,
-	oXPathEvaluator_XMLContext	= new cXPath2.classes.StaticContext;
+	oXPathEvaluator_evaluator	= new oXPath2.classes.Evaluator,
+	oXPathEvaluator_HTMLContext	= new oXPath2.classes.StaticContext,
+	oXPathEvaluator_XMLContext	= new oXPath2.classes.StaticContext;
 
 // Initialize HTML context (this has default xhtml namespace)
 oXPathEvaluator_HTMLContext.baseURI	= oDocument.location.href;

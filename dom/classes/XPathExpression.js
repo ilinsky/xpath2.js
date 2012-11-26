@@ -13,7 +13,7 @@ function cXPathExpression(sExpression, oStaticContext) {
 		this.expression	= oXPathEvaluator_evaluator.compile(sExpression, oStaticContext);
 	}
 	catch (e) {
-		if (e instanceof cXPath2.classes.Exception)
+		if (e instanceof oXPath2.classes.Exception)
 			throw new cXPathException(cXPathException.INVALID_EXPRESSION_ERR
 //->Debug
 					, e.message
@@ -45,10 +45,10 @@ function fXPathExpression_evaluate(oExpression, oNode, nType, oResult) {
 
 	// Evaluate expression
 	try {
-		oSequence	= oExpression.expression.resolve(new cXPath2.classes.DynamicContext(oExpression.staticContext, typeof oNode == "undefined" ? null : oNode, null, oDOMAdapter));
+		oSequence	= oExpression.expression.resolve(new oXPath2.classes.DynamicContext(oExpression.staticContext, typeof oNode == "undefined" ? null : oNode, null, oDOMAdapter));
 	}
 	catch (e) {
-		if (e instanceof cXPath2.classes.Exception)
+		if (e instanceof oXPath2.classes.Exception)
 			throw new cXPathException(cXPathException.TYPE_ERR
 //->Debug
 					, e.message
