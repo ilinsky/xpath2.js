@@ -60,7 +60,7 @@ fStaticContext_defineSystemFunction("string",	[[cXTItem, '?', true]],	function(/
 	if (!arguments.length) {
 		if (!this.item)
 			throw new cException("XPDY0002");
-		oSequence1	= new cSequence(this.item);
+		oSequence1	= [this.item];
 	}
 	return oSequence1.length ? cXSString.cast(fFunction_sequence_atomize(oSequence1, this)[0]) : new cXSString('');
 });
@@ -80,7 +80,7 @@ fStaticContext_defineSystemFunction("base-uri",	[[cXTNode, '?', true]],	function
 					, "base-uri() function called when the context item is not a node"
 //<-Debug
 			);
-		oSequence1	= new cSequence(this.item);
+		oSequence1	= [this.item];
 	}
 	else
 	if (!oSequence1.length)

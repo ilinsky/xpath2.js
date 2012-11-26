@@ -69,7 +69,7 @@ cQuantifiedExpr.prototype.evaluate	= function (oContext) {
 		}
 	})(this, 0);
 
-	return new cSequence(new cXSBoolean(bResult));
+	return [new cXSBoolean(bResult)];
 };
 
 

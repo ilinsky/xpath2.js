@@ -58,11 +58,11 @@ fStaticContext_defineSystemFunction("string-to-codepoints",	[[cXSString, '?']],	
 	if (!oSequence1.length)
 		return null;
 
-	var oSequence	= new cSequence,
-		sValue	= oSequence1[0].valueOf();
+	var sValue	= oSequence1[0].valueOf();
 	if (sValue == '')
-		return oSequence;
+		return [];
 
+	var oSequence	= [];
 	for (var nIndex = 0, nLength = sValue.length; nIndex < nLength; nIndex++)
 		oSequence.push(new cXSInteger(sValue.charCodeAt(nIndex)));
 
@@ -156,7 +156,7 @@ fStaticContext_defineSystemFunction("string-length",	[[cXSString, '?', true]],	f
 	if (!arguments.length) {
 		if (!this.item)
 			throw new cException("XPDY0002");
-		oSequence1	= new cSequence(cXSString.cast(fFunction_sequence_atomize(new cSequence(this.item), this)[0]));
+		oSequence1	= [cXSString.cast(fFunction_sequence_atomize([this.item], this)[0])];
 	}
 	return new cXSInteger(oSequence1.length ? oSequence1[0].valueOf().length : 0);
 });
@@ -167,7 +167,7 @@ fStaticContext_defineSystemFunction("normalize-space",	[[cXSString, '?', true]],
 	if (!arguments.length) {
 		if (!this.item)
 			throw new cException("XPDY0002");
-		oSequence1	= new cSequence(cXSString.cast(fFunction_sequence_atomize(new cSequence(this.item), this)[0]));
+		oSequence1	= [cXSString.cast(fFunction_sequence_atomize([this.item], this)[0])];
 	}
 	return new cXSString(oSequence1.length ? fString_trim(oSequence1[0]).replace(/\s\s+/g, ' ') : '');
 });
@@ -344,7 +344,7 @@ fStaticContext_defineSystemFunction("tokenize",	[[cXSString, '?'], [cXSString], 
 	var sValue	= oSequence1.length ? oSequence1[0].valueOf() : '',
 		rRegExp	= fFunction_string_createRegExp(oSequence2[0].valueOf(), arguments.length > 2 ? oSequence3[0].valueOf() : '');
 
-	var oSequence	= new cSequence,
+	var oSequence	= [],
 		aValue = sValue.split(rRegExp);
 	for (var nIndex = 0, nLength = aValue.length; nIndex < nLength; nIndex++)
 		oSequence.push(new cXSString(aValue[nIndex]));

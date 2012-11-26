@@ -37,5 +37,5 @@ function fParenthesizedExpr_parse (oLexer, oStaticContext) {
 
 // Public members
 cParenthesizedExpr.prototype.evaluate	= function (oContext) {
-	return this.expression ? this.expression.evaluate(oContext) : new cSequence;
+	return this.expression ? this.expression.evaluate(oContext) : [];
 };

@@ -45,7 +45,7 @@ cCastExpr.prototype.evaluate	= function(oContext) {
 	);
 	//
 	if (!oSequence1.length)
-		return new cSequence;
+		return [];
 	//
-	return new cSequence(this.type.itemType.cast(fFunction_sequence_atomize(oSequence1, oContext)[0], oContext));
+	return [this.type.itemType.cast(fFunction_sequence_atomize(oSequence1, oContext)[0], oContext)];
 };

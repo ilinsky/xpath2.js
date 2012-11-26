@@ -95,7 +95,7 @@ cAxisStep.prototype.evaluate	= function (oContext) {
 	if (!oContext.DOMAdapter.isNode(oItem))
 		throw new cException("XPTY0020");
 
-	var oSequence	= new cSequence,
+	var oSequence	= [],
 		fGetProperty= oContext.DOMAdapter.getProperty,
 		nType		= fGetProperty(oItem, "nodeType");
 
@@ -166,7 +166,7 @@ cAxisStep.prototype.evaluate	= function (oContext) {
 	// Apply test
 	if (oSequence.length && !(this.test instanceof cKindTest && this.test.name == "node")) {
 		var oSequence1	= oSequence;
-		oSequence	= new cSequence;
+		oSequence	= [];
 		for (var nIndex = 0, nLength = oSequence1.length; nIndex < nLength; nIndex++) {
 			if (this.test.test(oSequence1[nIndex], oContext))
 				oSequence.push(oSequence1[nIndex]);

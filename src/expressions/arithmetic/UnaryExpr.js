@@ -68,7 +68,7 @@ cUnaryExpr.prototype.evaluate	= function (oContext) {
 
 	//
 	if (!oRight.length)
-		return new cSequence;
+		return [];
 	// Assert cardinality
 	fFunctionCall_assertSequenceCardinality(oContext, oRight, '?'
 //->Debug
@@ -80,5 +80,5 @@ cUnaryExpr.prototype.evaluate	= function (oContext) {
 	if (vRight instanceof cXSUntypedAtomic)
 		vRight	= cXSDouble.cast(vRight);	// cast to xs:double
 
-	return new cSequence(hUnaryExpr_operators[this.operator](vRight, oContext));
+	return [hUnaryExpr_operators[this.operator](vRight, oContext)];
 };

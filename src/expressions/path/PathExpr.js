@@ -73,9 +73,9 @@ function fPathExpr_parse (oLexer, oStaticContext) {
 cPathExpr.prototype.evaluate	= function (oContext) {
 	var vContextItem	= oContext.item;
 	//
-	var oSequence	= new cSequence(vContextItem);
+	var oSequence	= [vContextItem];
 	for (var nItemIndex = 0, nItemLength = this.items.length, oSequence1; nItemIndex < nItemLength; nItemIndex++) {
-		oSequence1	= new cSequence;
+		oSequence1	= [];
 		for (var nIndex = 0, nLength = oSequence.length; nIndex < nLength; nIndex++) {
 			// Set new context item
 			oContext.item	= oSequence[nIndex];

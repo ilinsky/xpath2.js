@@ -82,7 +82,7 @@ cFunctionCall.prototype.evaluate	= function (oContext) {
 			//
 			var vResult	= fFunction.apply(oContext, aArguments);
 			//
-			return vResult == null ? new cSequence : vResult instanceof cSequence ? vResult : new cSequence(vResult);
+			return vResult == null ? [] : vResult instanceof cArray ? vResult : [vResult];
 		}
 		throw new cException("XPST0017"
 //->Debug
@@ -96,7 +96,7 @@ cFunctionCall.prototype.evaluate	= function (oContext) {
 			//
 			fFunctionCall_prepare(this.localName, [[cXSAnyAtomicType]], fFunction, aArguments, oContext);
 			//
-			return new cSequence(fFunction.cast(aArguments[0][0]));
+			return [fFunction.cast(aArguments[0][0])];
 		}
 		throw new cException("XPST0017"
 //->Debug
@@ -109,7 +109,7 @@ cFunctionCall.prototype.evaluate	= function (oContext) {
 		//
 		var vResult	= fFunction.apply(oContext, aArguments);
 		//
-		return vResult == null ? new cSequence : vResult instanceof cSequence ? vResult : new cSequence(vResult);
+		return vResult == null ? [] : vResult instanceof cArray ? vResult : [vResult];
 	}
 	//
 	throw new cException("XPST0017"
@@ -197,7 +197,7 @@ function fFunctionCall_assertSequenceItemType(oContext, oSequence, cItemType
 		// Atomic types
 		if (cItemType == cXSAnyAtomicType || cItemType.prototype instanceof cXSAnyAtomicType) {
 			// Atomize item
-			vItem	= fFunction_sequence_atomize(new cSequence(vItem), oContext)[0];
+			vItem	= fFunction_sequence_atomize([vItem], oContext)[0];
 			// Convert type if necessary
 			if (cItemType != cXSAnyAtomicType) {
 				// Cast item to expected type if it's type is xs:untypedAtomic

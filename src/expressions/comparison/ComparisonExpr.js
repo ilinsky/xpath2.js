@@ -40,11 +40,8 @@ function fComparisonExpr_parse (oLexer, oStaticContext) {
 
 // Public members
 cComparisonExpr.prototype.evaluate	= function (oContext) {
-	var oSequence	= new cSequence,
-		oResult	= hComparisonExpr_operators[this.operator](this, oContext);
-	if (oResult != null)
-		oSequence.push(oResult);
-	return oSequence;
+	var oResult	= hComparisonExpr_operators[this.operator](this, oContext);
+	return oResult == null ? [] : [oResult];
 };
 
 // General comparison
@@ -162,7 +159,7 @@ hComparisonExpr_ValueComp_operators['eq']	= function(oLeft, oRight, oContext) {
 	else
 	if (oLeft instanceof cXSString) {
 		if (oRight instanceof cXSString)
-			return hStaticContext_operators["numeric-equal"].call(oContext, hStaticContext_functions["compare"].call(oContext, new cSequence(oLeft), new cSequence(oRight)), new cXSInteger(0));
+			return hStaticContext_operators["numeric-equal"].call(oContext, hStaticContext_functions["compare"].call(oContext, [oLeft], [oRight]), new cXSInteger(0));
 	}
 	else
 	if (oLeft instanceof cXSDate) {
@@ -231,7 +228,7 @@ hComparisonExpr_ValueComp_operators['gt']	= function(oLeft, oRight, oContext) {
 	else
 	if (oLeft instanceof cXSString) {
 		if (oRight instanceof cXSString)
-			return hStaticContext_operators["numeric-greater-than"].call(oContext, hStaticContext_functions["compare"].call(oContext, new cSequence(oLeft), new cSequence(oRight)), new cXSInteger(0));
+			return hStaticContext_operators["numeric-greater-than"].call(oContext, hStaticContext_functions["compare"].call(oContext, [oLeft], [oRight]), new cXSInteger(0));
 	}
 	else
 	if (oLeft instanceof cXSDate) {
@@ -285,7 +282,7 @@ hComparisonExpr_ValueComp_operators['lt']	= function(oLeft, oRight, oContext) {
 	else
 	if (oLeft instanceof cXSString) {
 		if (oRight instanceof cXSString)
-			return hStaticContext_operators["numeric-less-than"].call(oContext, hStaticContext_functions["compare"].call(oContext, new cSequence(oLeft), new cSequence(oRight)), new cXSInteger(0));
+			return hStaticContext_operators["numeric-less-than"].call(oContext, hStaticContext_functions["compare"].call(oContext, [oLeft], [oRight]), new cXSInteger(0));
 	}
 	else
 	if (oLeft instanceof cXSDate) {
@@ -339,7 +336,7 @@ hComparisonExpr_ValueComp_operators['ge']	= function(oLeft, oRight, oContext) {
 	else
 	if (oLeft instanceof cXSString) {
 		if (oRight instanceof cXSString)
-			return hStaticContext_operators["numeric-greater-than"].call(oContext, hStaticContext_functions["compare"].call(oContext, new cSequence(oLeft), new cSequence(oRight)), new cXSInteger(-1));
+			return hStaticContext_operators["numeric-greater-than"].call(oContext, hStaticContext_functions["compare"].call(oContext, [oLeft], [oRight]), new cXSInteger(-1));
 	}
 	else
 	if (oLeft instanceof cXSDate) {
@@ -393,7 +390,7 @@ hComparisonExpr_ValueComp_operators['le']	= function(oLeft, oRight, oContext) {
 	else
 	if (oLeft instanceof cXSString) {
 		if (oRight instanceof cXSString)
-			return hStaticContext_operators["numeric-less-than"].call(oContext, hStaticContext_functions["compare"].call(oContext, new cSequence(oLeft), new cSequence(oRight)), new cXSInteger(1));
+			return hStaticContext_operators["numeric-less-than"].call(oContext, hStaticContext_functions["compare"].call(oContext, [oLeft], [oRight]), new cXSInteger(1));
 	}
 	else
 	if (oLeft instanceof cXSDate) {

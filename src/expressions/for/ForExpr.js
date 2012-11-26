@@ -51,7 +51,7 @@ function fForExpr_parse (oLexer, oStaticContext) {
 // for $x in X, $y in Y, $z in Z return $x + $y + $z
 // for $x in X return for $y in Y return for $z in Z return $x + $y + $z
 cForExpr.prototype.evaluate	= function (oContext) {
-	var oSequence	= new cSequence;
+	var oSequence	= [];
 	(function(oSelf, nBinding) {
 		var oBinding	= oSelf.bindings[nBinding++],
 			oSequence1	= oBinding.inExpr.evaluate(oContext),

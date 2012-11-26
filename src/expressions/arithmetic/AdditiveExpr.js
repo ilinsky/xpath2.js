@@ -182,7 +182,7 @@ cAdditiveExpr.prototype.evaluate	= function (oContext) {
 	var oLeft	= fFunction_sequence_atomize(this.left.evaluate(oContext), oContext);
 
 	if (!oLeft.length)
-		return new cSequence;
+		return [];
 	// Assert cardinality
 	fFunctionCall_assertSequenceCardinality(oContext, oLeft, '?'
 //->Debug
@@ -198,7 +198,7 @@ cAdditiveExpr.prototype.evaluate	= function (oContext) {
 		oRight	= fFunction_sequence_atomize(this.items[nIndex][1].evaluate(oContext), oContext);
 
 		if (!oRight.length)
-			return new cSequence;
+			return [];
 		// Assert cardinality
 		fFunctionCall_assertSequenceCardinality(oContext, oRight, '?'
 //->Debug
@@ -212,5 +212,5 @@ cAdditiveExpr.prototype.evaluate	= function (oContext) {
 
 		vLeft	= hAdditiveExpr_operators[this.items[nIndex][0]](vLeft, vRight, oContext);
 	}
-	return new cSequence(vLeft);
+	return [vLeft];
 };

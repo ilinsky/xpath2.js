@@ -43,5 +43,5 @@ cAndExpr.prototype.evaluate	= function (oContext) {
 	var bValue	= fFunction_sequence_toEBV(this.left.evaluate(oContext), oContext);
 	for (var nIndex = 0, nLength = this.items.length; (nIndex < nLength) && bValue; nIndex++)
 		bValue	= fFunction_sequence_toEBV(this.items[nIndex].evaluate(oContext), oContext);
-	return new cSequence(new cXSBoolean(bValue));
+	return [new cXSBoolean(bValue)];
 };

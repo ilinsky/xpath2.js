@@ -20,5 +20,5 @@ function fLiteral_parse (oLexer, oStaticContext) {
 
 // Public members
 cLiteral.prototype.evaluate	= function (oContext) {
-	return new cSequence(this.value);
+	return [this.value];
 };

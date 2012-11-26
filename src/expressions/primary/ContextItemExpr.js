@@ -21,5 +21,5 @@ function fContextItemExpr_parse (oLexer, oStaticContext) {
 
 // Public members
 cContextItemExpr.prototype.evaluate	= function (oContext) {
-	return oContext.item == null ? new cSequence : new cSequence(oContext.item);
+	return oContext.item == null ? [] : [oContext.item];
 };

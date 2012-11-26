@@ -40,7 +40,7 @@ function fVarRef_parse (oLexer, oStaticContext) {
 cVarRef.prototype.evaluate	= function (oContext) {
 	var sUri	= (this.namespaceURI ? '{' + this.namespaceURI + '}' : '') + this.localName;
 	if (oContext.scope.hasOwnProperty(sUri))
-		return new cSequence(oContext.scope[sUri]);
+		return [oContext.scope[sUri]];
 	//
 	throw new cException("XPST0008"
 //->Debug

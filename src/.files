@@ -3,7 +3,6 @@ import.js
 # Core classes
 classes/Exception.js
 classes/Lexer.js
-classes/Sequence.js
 classes/DOMAdapter.js
 classes/DynamicContext.js
 classes/StaticContext.js

@@ -30,7 +30,7 @@ hStaticContext_operators["concatenate"]	= function(oSequence1, oSequence2) {
 // 15.3 Equals, Union, Intersection and Except
 // op:union($parameter1 as node()*, $parameter2 as node()*) as node()*
 hStaticContext_operators["union"]	= function(oSequence1, oSequence2) {
-	var oSequence	= new cSequence;
+	var oSequence	= [];
 	// Process first collection
 	for (var nIndex = 0, nLength = oSequence1.length, oItem; nIndex < nLength; nIndex++) {
 		if (!this.DOMAdapter.isNode(oItem = oSequence1[nIndex]))
@@ -60,7 +60,7 @@ hStaticContext_operators["union"]	= function(oSequence1, oSequence2) {
 
 // op:intersect($parameter1 as node()*, $parameter2 as node()*) as node()*
 hStaticContext_operators["intersect"]	= function(oSequence1, oSequence2) {
-	var oSequence	= new cSequence;
+	var oSequence	= [];
 	for (var nIndex = 0, nLength = oSequence1.length, oItem, bFound; nIndex < nLength; nIndex++) {
 		if (!this.DOMAdapter.isNode(oItem = oSequence1[nIndex]))
 			throw new cException("XPTY0004"
@@ -88,7 +88,7 @@ hStaticContext_operators["intersect"]	= function(oSequence1, oSequence2) {
 
 // op:except($parameter1 as node()*, $parameter2 as node()*) as node()*
 hStaticContext_operators["except"]	= function(oSequence1, oSequence2) {
-	var oSequence	= new cSequence;
+	var oSequence	= [];
 	for (var nIndex = 0, nLength = oSequence1.length, oItem, bFound; nIndex < nLength; nIndex++) {
 		if (!this.DOMAdapter.isNode(oItem = oSequence1[nIndex]))
 			throw new cException("XPTY0004"
@@ -118,9 +118,8 @@ hStaticContext_operators["except"]	= function(oSequence1, oSequence2) {
 // op:to($firstval as xs:integer, $lastval as xs:integer) as xs:integer*
 hStaticContext_operators["to"]	= function(oSequence1, oSequence2) {
 	//
-	var oSequence	= new cSequence;
 	if (!oSequence1.length || !oSequence2.length)
-		return oSequence;
+		return [];
 	//
 //->Debug
 	var sSource	= "first operand of 'to'";
@@ -149,6 +148,7 @@ hStaticContext_operators["to"]	= function(oSequence1, oSequence2) {
 //<-Debug
 	);
 
+	var oSequence	= [];
 	for (var nIndex = oSequence1[0].valueOf(), nLength = oSequence2[0].valueOf(); nIndex <= nLength; nIndex++)
 		oSequence.push(new cXSInteger(nIndex));
 	//

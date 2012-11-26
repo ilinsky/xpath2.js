@@ -29,7 +29,7 @@ fStaticContext_defineSystemFunction("name",	[[cXTNode, '?', true]],	function(oSe
 					, "name() function called when the context item is not a node"
 //<-Debug
 			);
-		oSequence1	= new cSequence(this.item);
+		oSequence1	= [this.item];
 	}
 	else
 	if (!oSequence1.length)
@@ -49,7 +49,7 @@ fStaticContext_defineSystemFunction("local-name",	[[cXTNode, '?', true]],	functi
 					, "local-name() function called when the context item is not a node"
 //<-Debug
 			);
-		oSequence1	= new cSequence(this.item);
+		oSequence1	= [this.item];
 	}
 	else
 	if (!oSequence1.length)
@@ -68,7 +68,7 @@ fStaticContext_defineSystemFunction("namespace-uri",	[[cXTNode, '?', true]],	fun
 					, "namespace-uri() function called when the context item is not a node"
 //<-Debug
 			);
-		oSequence1	= new cSequence(this.item);
+		oSequence1	= [this.item];
 	}
 	else
 	if (!oSequence1.length)
@@ -83,7 +83,7 @@ fStaticContext_defineSystemFunction("number",	[[cXSAnyAtomicType, '?', true]],	f
 	if (!arguments.length) {
 		if (!this.item)
 			throw new cException("XPDY0002");
-		oSequence1	= new cSequence(fFunction_sequence_atomize(new cSequence(this.item), this)[0]);
+		oSequence1	= [fFunction_sequence_atomize([this.item], this)[0]];
 	}
 
 	// If input item cannot be cast to xs:decimal, a NaN should be returned
@@ -109,7 +109,7 @@ fStaticContext_defineSystemFunction("lang",	[[cXSString, '?'], [cXTNode, '', tru
 					, "lang() function called when the context item is not a node"
 //<-Debug
 			);
-		oSequence2	= new cSequence(this.item);
+		oSequence2	= [this.item];
 	}
 
 	var fGetProperty	= this.DOMAdapter.getProperty,
@@ -137,7 +137,7 @@ fStaticContext_defineSystemFunction("root",	[[cXTNode, '?', true]],	function(oSe
 					, "root() function called when the context item is not a node"
 //<-Debug
 			);
-		oSequence1	= new cSequence(this.item);
+		oSequence1	= [this.item];
 	}
 	else
 	if (!oSequence1.length)

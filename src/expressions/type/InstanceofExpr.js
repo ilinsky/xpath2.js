@@ -40,21 +40,21 @@ cInstanceofExpr.prototype.evaluate	= function(oContext) {
 		oItemType	= this.type.itemType;
 	// Validate empty-sequence()
 	if (!oItemType)
-		return new cSequence(new cXSBoolean(!oSequence1.length));
+		return [new cXSBoolean(!oSequence1.length)];
 	// Validate cardinality
 	if (!oSequence1.length)
-		return new cSequence(new cXSBoolean(this.type.occurence == '?' || this.type.occurence == '*'));
+		return [new cXSBoolean(this.type.occurence == '?' || this.type.occurence == '*')];
 	if (oSequence1.length != 1)
 		if (!(this.type.occurence == '+' || this.type.occurence == '*'))
-			return new cSequence(new cXSBoolean(false));
+			return [new cXSBoolean(false)];
 
 	// Validate type
 	if (!oItemType.test)	// item()
-		return new cSequence(new cXSBoolean(true));
+		return [new cXSBoolean(true)];
 
 	var bValue	= true;
 	for (var nIndex = 0, nLength = oSequence1.length; (nIndex < nLength) && bValue; nIndex++)
 		bValue	= oItemType.test.test(oSequence1[nIndex], oContext);
 	//
-	return new cSequence(new cXSBoolean(bValue));
+	return [new cXSBoolean(bValue)];
 };

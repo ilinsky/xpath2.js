@@ -55,11 +55,11 @@ fStaticContext_defineSystemFunction("boolean",	[[cXTItem, '*']],	function(oSeque
 // fn:index-of($seqParam as xs:anyAtomicType*, $srchParam as xs:anyAtomicType, $collation as xs:string) as xs:integer*
 fStaticContext_defineSystemFunction("index-of",	[[cXSAnyAtomicType, '*'], [cXSAnyAtomicType], [cXSString, '', true]],	function(oSequence1, oSequence2, oSequence3) {
 	if (!oSequence1.length || !oSequence2.length)
-		return new cSequence;
+		return [];
 
 	// TODO: Implement collation
 
-	var oSequence	= new cSequence;
+	var oSequence	= [];
 	for (var nIndex = 0, nLength = oSequence1.length, vValue = oSequence2[0].valueOf(); nIndex < nLength; nIndex++)
 		if (oSequence1[nIndex].valueOf() === vValue)
 			oSequence.push(new cXSInteger(nIndex + 1));
@@ -83,7 +83,7 @@ fStaticContext_defineSystemFunction("distinct-values",	[[cXSAnyAtomicType, '*'],
 	if (!oSequence1.length)
 		return null;
 
-	var oSequence	= new cSequence;
+	var oSequence	= [];
 	for (var nIndex = 0, nLength = oSequence1.length, vValue; nIndex < nLength; nIndex++) {
 		vValue = oSequence1[nIndex].valueOf();
 		for (var nRightIndex = 0, nRightLength = oSequence.length, bFound = false; (nRightIndex < nRightLength) &&!bFound; nRightIndex++)
@@ -111,7 +111,7 @@ fStaticContext_defineSystemFunction("insert-before",	[[cXTItem, '*'], [cXSIntege
 	if (nPosition > nLength)
 		nPosition	= nLength + 1;
 
-	var oSequence	=  new cSequence;
+	var oSequence	=  [];
 	for (var nIndex = 0; nIndex < nLength; nIndex++) {
 		if (nPosition == nIndex + 1)
 			oSequence	= oSequence.concat(oSequence3);
@@ -125,9 +125,8 @@ fStaticContext_defineSystemFunction("insert-before",	[[cXTItem, '*'], [cXSIntege
 
 // fn:remove($target as item()*, $position as xs:integer) as item()*
 fStaticContext_defineSystemFunction("remove",	[[cXTItem, '*'], [cXSInteger]],	function(oSequence1, oSequence2) {
-	var oSequence	= new cSequence;
 	if (!oSequence1.length)
-		return oSequence;
+		return [];
 
 	var nLength 	= oSequence1.length,
 		nPosition	= oSequence2[0].valueOf();
@@ -135,7 +134,7 @@ fStaticContext_defineSystemFunction("remove",	[[cXTItem, '*'], [cXSInteger]],	fu
 	if (nPosition < 1 || nPosition > nLength)
 		return oSequence1;
 
-	var oSequence	=  new cSequence;
+	var oSequence	=  [];
 	for (var nIndex = 0; nIndex < nLength; nIndex++)
 		if (nPosition != nIndex + 1)
 			oSequence.push(oSequence1[nIndex]);
@@ -337,19 +336,19 @@ fStaticContext_defineSystemFunction("id",	[[cXSString, '*'], [cXTNode, '', true]
 					, "id() function called when the context item is not a node"
 //<-Debug
 			);
-		oSequence2	= new cSequence(this.item);
+		oSequence2	= [this.item];
 	}
 
 	// Get context item
 	var oNode	= oSequence2[0];
 
 	// Get root node and check if it is Document
-	var oDocument	= hStaticContext_functions["root"].call(this, new cSequence(oNode));
+	var oDocument	= hStaticContext_functions["root"].call(this, [oNode]);
 	if (this.DOMAdapter.getProperty(oDocument, "nodeType") != 9)
 		throw new cException("FODC0001");
 
 	// Search for elements
-	var oSequence	= new cSequence;
+	var oSequence	= [];
 	for (var nIndex = 0; nIndex < oSequence1.length; nIndex++)
 		for (var nRightIndex = 0, aValue = fString_trim(oSequence1[nIndex]).split(/\s+/), nRightLength = aValue.length; nRightIndex < nRightLength; nRightIndex++)
 			if ((oNode = this.DOMAdapter.getElementById(oDocument, aValue[nRightIndex])) && fArray_indexOf(oSequence, oNode) ==-1)
@@ -418,7 +417,7 @@ function fFunction_sequence_toEBV(oSequence1, oContext) {
 };
 
 function fFunction_sequence_atomize(oSequence1, oContext) {
-	var oSequence	= new cSequence;
+	var oSequence	= [];
 	for (var nIndex = 0, nLength = oSequence1.length, oItem, vItem; nIndex < nLength; nIndex++) {
 		oItem	= oSequence1[nIndex];
 		vItem	= null;

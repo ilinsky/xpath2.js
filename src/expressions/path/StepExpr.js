@@ -52,7 +52,7 @@ cStepExpr.prototype.applyPredicates	= function(oContext, oSequence) {
 	//
 	for (var nPredicateIndex = 0, oSequence1, nPredicateLength = this.predicates.length; nPredicateIndex < nPredicateLength; nPredicateIndex++) {
 		oSequence1	= oSequence;
-		oSequence	= new cSequence;
+		oSequence	= [];
 		for (var nIndex = 0, oSequence2, nLength = oSequence1.length; nIndex < nLength; nIndex++) {
 			// Set new context
 			oContext.item		= oSequence1[nIndex];
