@@ -16,6 +16,7 @@ oXPath2.classes.Lexer			= cLexer;
 oXPath2.classes.Exception		= cException;
 oXPath2.classes.Evaluator		= cEvaluator;
 oXPath2.classes.DOMAdapter		= cDOMAdapter;
+oXPath2.classes.Expression		= cExpression;
 oXPath2.classes.StaticContext	= cStaticContext;
 oXPath2.classes.DynamicContext	= cDynamicContext;
 oXPath2.classes.StringCollator	= cStringCollator;

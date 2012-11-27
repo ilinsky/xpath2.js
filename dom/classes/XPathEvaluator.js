@@ -13,7 +13,6 @@ function cXPathEvaluator() {
 
 // Create new XPath2 evaluator
 var oXPathEvaluator_DOMAdapter	= new cLXDOMAdapter,
-	oXPathEvaluator_evaluator	= new oXPath2.classes.Evaluator,
 	oXPathEvaluator_HTMLContext	= new oXPath2.classes.StaticContext,
 	oXPathEvaluator_XMLContext	= new oXPath2.classes.StaticContext;
 

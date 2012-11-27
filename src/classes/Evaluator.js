@@ -15,23 +15,7 @@ cEvaluator.prototype.defaultStaticContext	= new cStaticContext;
 cEvaluator.prototype.defaultDOMAdapter		= new cDOMAdapter;
 
 cEvaluator.prototype.compile	= function(sExpression, oStaticContext) {
-	var oLexer	= new cLexer(sExpression),
-		oExpr	= fExpr_parse(oLexer, oStaticContext || this.defaultStaticContext);
-	//
-	if (!oLexer.eof())
-		throw new cException("XPST0003"
-//->Debug
-				, "Unexpected token beyond end of query"
-//<-Debug
-		);
-	//
-	if (!oExpr)
-		throw new cException("XPST0003"
-//->Debug
-				, "Expected expression"
-//<-Debug
-		);
-	return oExpr;
+	return new cExpression(sExpression, oStaticContext);
 };
 
 cEvaluator.prototype.evaluate	= function(sExpression, vItem, oStaticContext, oScope, oDOMAdapter) {

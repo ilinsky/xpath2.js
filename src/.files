@@ -7,6 +7,7 @@ classes/DOMAdapter.js
 classes/DynamicContext.js
 classes/StaticContext.js
 classes/Evaluator.js
+classes/Expression.js
 classes/StringCollator.js
 #
 expressions/Expr.js

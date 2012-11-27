@@ -10,7 +10,7 @@
 function cXPathExpression(sExpression, oStaticContext) {
 	try {
 		this.staticContext	= oStaticContext;
-		this.expression	= oXPathEvaluator_evaluator.compile(sExpression, oStaticContext);
+		this.expression	= new oXPath2.classes.Expression(sExpression, oStaticContext);
 	}
 	catch (e) {
 		if (e instanceof oXPath2.classes.Exception)
