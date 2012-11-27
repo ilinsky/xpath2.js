@@ -99,6 +99,38 @@ cStaticContext.prototype.getURIForPrefix	= function(sPrefix) {
 	);
 };
 
+// Static members
+//Converts non-null JavaScript object to XML Schema object
+cStaticContext.js2xs	= function(vItem) {
+	// Convert types from JavaScript to XPath 2.0
+	if (typeof vItem == "boolean")
+		vItem	= new cXSBoolean(vItem);
+	else
+	if (typeof vItem == "number") {
+		if (fIsNaN(vItem) ||!fIsFinite(vItem))
+			vItem	= new cXSDouble(vItem);
+		else
+			vItem	= fNumericLiteral_parseValue(cString(vItem));
+	}
+	else
+		vItem	= new cXSString(cString(vItem));
+	//
+	return vItem;
+};
+
+// Converts non-null XML Schema object to JavaScript object
+cStaticContext.xs2js	= function(vItem) {
+	if (fXSAnyAtomicType_isNumeric(vItem))
+		vItem	= vItem.valueOf();
+	else
+	if (vItem instanceof cXSBoolean)
+		vItem	= vItem.valueOf();
+	else
+		vItem	= vItem.toString();
+	//
+	return vItem;
+};
+
 // System functions with signatures, operators and types
 var hStaticContext_functions	= {},
 	hStaticContext_signatures	= {},

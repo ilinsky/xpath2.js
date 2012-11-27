@@ -52,7 +52,7 @@ function fXPathExpression_evaluate(oExpression, oNode, nType, oResult) {
 	try {
 		aSequence	= oExpression.expression.evaluate(new oXPath2.classes.DynamicContext(oExpression.staticContext, oNode, null, oAdapter));
 		for (var nIndex = 0, nLength = aSequence.length, oItem; nIndex < nLength; nIndex++)
-			oSequence[oSequence.length]	= oAdapter.isNode(oItem = aSequence[nIndex]) ? oItem : oXPath2.classes.Evaluator.xsd2js(oItem);
+			oSequence[oSequence.length]	= oAdapter.isNode(oItem = aSequence[nIndex]) ? oItem : oXPath2.classes.StaticContext.xs2js(oItem);
 	}
 	catch (e) {
 		if (e instanceof oXPath2.classes.Exception)
