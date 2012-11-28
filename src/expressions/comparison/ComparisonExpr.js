@@ -69,18 +69,40 @@ function fComparisonExpr_GeneralComp(oExpr, oContext) {
 				vLeft	= cXSString.cast(vLeft);
 				vRight	= cXSString.cast(vRight);
 			}
-			else
-			if (bLeft)
-				vLeft	= cXSAnyAtomicType.typeOf(vRight).cast(vLeft);
-			else
-			if (bRight)
-				vRight	= cXSAnyAtomicType.typeOf(vLeft).cast(vRight);
+			else {
+				//
+				if (bLeft) {
+					// Special: durations
+					if (vRight instanceof cXSDayTimeDuration)
+						vLeft	= cXSDayTimeDuration.cast(vLeft);
+					else
+					if (vRight instanceof cXSYearMonthDuration)
+						vLeft	= cXSYearMonthDuration.cast(vLeft);
+					else
+					//
+					if (vRight.primitiveKind)
+						vLeft	= hStaticContext_dataTypes[vRight.primitiveKind].cast(vLeft);
+				}
+				else
+				if (bRight) {
+					// Special: durations
+					if (vLeft instanceof cXSDayTimeDuration)
+						vRight	= cXSDayTimeDuration.cast(vRight);
+					else
+					if (vLeft instanceof cXSYearMonthDuration)
+						vRight	= cXSYearMonthDuration.cast(vRight);
+					else
+					//
+					if (vLeft.primitiveKind)
+						vRight	= hStaticContext_dataTypes[vLeft.primitiveKind].cast(vRight);
+				}
 
-			// cast xs:anyURI to xs:string
-			if (vLeft instanceof cXSAnyURI)
-				vLeft	= cXSString.cast(vLeft);
-			if (vRight instanceof cXSAnyURI)
-				vRight	= cXSString.cast(vRight);
+				// cast xs:anyURI to xs:string
+				if (vLeft instanceof cXSAnyURI)
+					vLeft	= cXSString.cast(vLeft);
+				if (vRight instanceof cXSAnyURI)
+					vRight	= cXSString.cast(vRight);
+			}
 
 			bResult	= hComparisonExpr_ValueComp_operators[hComparisonExpr_GeneralComp_map[oExpr.operator]](vLeft, vRight, oContext).valueOf();
 		}
