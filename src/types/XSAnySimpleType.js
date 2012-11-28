@@ -7,8 +7,8 @@
  *
  */
 
-function cXSAnySimplyType() {
+function cXSAnySimpleType() {
 
 };
 
-cXSAnySimplyType.prototype	= new cXSAnyType;
+cXSAnySimpleType.prototype	= new cXSAnyType;

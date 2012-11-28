@@ -11,6 +11,8 @@ function cXSAnyAtomicType() {
 
 };
 
+cXSAnyAtomicType.prototype	= new cXSAnySimpleType;
+
 cXSAnyAtomicType.cast	= function(vValue) {
 	throw new cException("XPST0017"
 //->Debug
