@@ -12,6 +12,7 @@ function cXSUnsignedLong(nValue) {
 };
 
 cXSUnsignedLong.prototype	= new cXSNonNegativeInteger;
+cXSUnsignedLong.prototype.builtInKind	= cXSConstants.UNSIGNEDLONG_DT;
 
 cXSUnsignedLong.cast	= function(vValue) {
 	return new cXSUnsignedLong(cNumber(vValue));

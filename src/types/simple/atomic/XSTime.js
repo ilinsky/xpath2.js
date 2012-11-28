@@ -17,6 +17,7 @@ function cXSTime(nHours, nMinutes, nSeconds, nTimezone) {
 cXSTime.RegExp	= /^(([01]\d|2[0-3]):([0-5]\d):([0-5]\d)(?:\.(\d+))?|(24:00:00)(?:\.(0+))?)(Z|([+\-])(0\d|1[0-4]):([0-5]\d))?$/;
 
 cXSTime.prototype	= new cXSAnyAtomicType;
+cXSTime.prototype.builtInKind	= cXSConstants.TIME_DT;
 cXSTime.prototype.primitiveKind	= cXSAnySimpleType.PRIMITIVE_TIME;
 
 cXSTime.prototype.hours		= null;

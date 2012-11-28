@@ -12,6 +12,7 @@ function cXSNOTATION() {
 };
 
 cXSNOTATION.prototype	= new cXSAnyAtomicType;
+cXSNOTATION.prototype.builtInKind	= cXSConstants.NOTATION_DT;
 cXSNOTATION.prototype.primitiveKind	= cXSAnySimpleType.PRIMITIVE_NOTATION;
 
 cXSNOTATION.cast	= function(vValue) {

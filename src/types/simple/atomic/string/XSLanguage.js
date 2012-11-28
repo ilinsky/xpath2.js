@@ -12,6 +12,7 @@ function cXSLanguage(sValue) {
 };
 
 cXSLanguage.prototype	= new cXSToken;
+cXSLanguage.prototype.builtInKind	= cXSConstants.LANGUAGE_DT;
 
 cXSLanguage.cast	= function(vValue) {
 	return new cXSLanguage(cString(vValue));

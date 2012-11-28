@@ -16,6 +16,7 @@ function cXSQName(sPrefix, sLocalName, sNameSpaceURI) {
 cXSQName.RegExp	= /^(?:(?![0-9-])([\w-]+)\:)?(?![0-9-])([\w-]+)$/;
 
 cXSQName.prototype	= new cXSAnyAtomicType;
+cXSQName.prototype.builtInKind		= cXSConstants.QNAME_DT;
 cXSQName.prototype.primitiveKind	= cXSAnySimpleType.PRIMITIVE_QNAME;
 
 cXSQName.prototype.prefix	= null;

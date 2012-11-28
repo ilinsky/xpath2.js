@@ -12,6 +12,7 @@ function cXSENTITY(sValue) {
 };
 
 cXSENTITY.prototype	= new cXSNCName;
+cXSENTITY.prototype.builtInKind	= cXSConstants.ENTITY_DT;
 
 cXSENTITY.cast	= function(vValue) {
 	return new cXSENTITY(cString(vValue));

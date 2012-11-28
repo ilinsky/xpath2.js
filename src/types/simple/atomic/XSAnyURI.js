@@ -18,6 +18,7 @@ function cXSAnyURI(sScheme, sAuthority, sPath, sQuery, sFragment) {
 cXSAnyURI.RegExp	= /^(([^:\/?#]+):)?(\/\/([^\/?#]*))?([^?#]*)(\?([^#]*))?(#(.*))?/;	// http://tools.ietf.org/html/rfc3986
 
 cXSAnyURI.prototype	= new cXSAnyAtomicType;
+cXSAnyURI.prototype.builtInKind		= cXSConstants.ANYURI_DT;
 cXSAnyURI.prototype.primitiveKind	= cXSAnySimpleType.PRIMITIVE_ANYURI;
 
 cXSAnyURI.prototype.scheme		= null;

@@ -14,6 +14,7 @@ function cXSBase64Binary(sValue) {
 cXSBase64Binary.RegExp	= /^((([A-Za-z0-9+\/]\s*){4})*(([A-Za-z0-9+\/]\s*){3}[A-Za-z0-9+\/]|([A-Za-z0-9+\/]\s*){2}[AEIMQUYcgkosw048]\s*=|[A-Za-z0-9+\/]\s*[AQgw]\s*=\s*=))?$/;
 
 cXSBase64Binary.prototype	= new cXSAnyAtomicType;
+cXSBase64Binary.prototype.builtInKind	= cXSConstants.BASE64BINARY_DT;
 cXSBase64Binary.prototype.primitiveKind	= cXSAnySimpleType.PRIMITIVE_BASE64BINARY;
 
 cXSBase64Binary.prototype.value	= null;

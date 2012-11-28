@@ -12,6 +12,7 @@ function cXSID(sValue) {
 };
 
 cXSID.prototype	= new cXSNCName;
+cXSID.prototype.builtInKind	= cXSConstants.ID_DT;
 
 cXSID.cast	= function(vValue) {
 	return new cXSID(cString(vValue));

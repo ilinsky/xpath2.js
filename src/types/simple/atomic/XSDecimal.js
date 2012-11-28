@@ -14,6 +14,7 @@ function cXSDecimal(nValue) {
 cXSDecimal.RegExp	= /^[+\-]?((\d+(\.\d*)?)|(\.\d+))$/;
 
 cXSDecimal.prototype	= new cXSAnyAtomicType;
+cXSDecimal.prototype.builtInKind	= cXSConstants.DECIMAL_DT;
 cXSDecimal.prototype.primitiveKind	= cXSAnySimpleType.PRIMITIVE_DECIMAL;
 
 cXSDecimal.prototype.value	= null;

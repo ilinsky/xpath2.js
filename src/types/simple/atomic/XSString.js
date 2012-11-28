@@ -14,6 +14,7 @@ function cXSString(sValue) {
 cXSString.prototype	= new cXSAnyAtomicType;
 
 cXSString.prototype.value	= null;
+cXSString.prototype.builtInKind		= cXSConstants.STRING_DT;
 cXSString.prototype.primitiveKind	= cXSAnySimpleType.PRIMITIVE_STRING;
 
 cXSString.prototype.valueOf		= function() {

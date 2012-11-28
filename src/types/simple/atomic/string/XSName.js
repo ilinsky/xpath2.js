@@ -12,6 +12,7 @@ function cXSName(sValue) {
 };
 
 cXSName.prototype	= new cXSToken;
+cXSName.prototype.builtInKind	= cXSConstants.NAME_DT;
 
 cXSName.cast	= function(vValue) {
 	return new cXSName(cString(vValue));

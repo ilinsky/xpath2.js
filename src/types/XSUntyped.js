@@ -12,3 +12,4 @@ function cXSUntyped() {
 };
 
 cXSUntyped.prototype	= new cXSAnyType;
+cXSUntyped.prototype.builtInKind	= cXSConstants.UNAVAILABLE_DT;

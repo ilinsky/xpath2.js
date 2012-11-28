@@ -12,6 +12,7 @@ function cXSUnsignedByte(nValue) {
 };
 
 cXSUnsignedByte.prototype	= new cXSUnsignedShort;
+cXSUnsignedByte.prototype.builtInKind	= cXSConstants.UNSIGNEDBYTE_DT;
 
 cXSUnsignedByte.cast	= function(vValue) {
 	return new cXSUnsignedByte(cNumber(vValue));

@@ -12,6 +12,7 @@ function cXSUnsignedInt(nValue) {
 };
 
 cXSUnsignedInt.prototype	= new cXSNonNegativeInteger;
+cXSUnsignedInt.prototype.builtInKind	= cXSConstants.UNSIGNEDINT_DT;
 
 cXSUnsignedInt.cast	= function(vValue) {
 	return new cXSUnsignedInt(cNumber(vValue));

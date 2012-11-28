@@ -12,6 +12,7 @@ function cXSLong(nValue) {
 };
 
 cXSLong.prototype	= new cXSInteger;
+cXSLong.prototype.builtInKind	= cXSConstants.LONG_DT;
 
 cXSLong.cast	= function(vValue) {
 	return new cXSLong(cNumber(vValue));

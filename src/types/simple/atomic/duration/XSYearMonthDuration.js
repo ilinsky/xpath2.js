@@ -14,6 +14,7 @@ function cXSYearMonthDuration(nYear, nMonth, bNegative) {
 cXSYearMonthDuration.RegExp	= /^(-)?P(?:([0-9]+)Y)?(?:([0-9]+)M)?$/;
 
 cXSYearMonthDuration.prototype	= new cXSDuration;
+cXSYearMonthDuration.prototype.builtInKind	= cXSConstants.XT_YEARMONTHDURATION_DT;
 
 cXSYearMonthDuration.prototype.toString	= function() {
 	return (this.negative ? '-' : '') + 'P'

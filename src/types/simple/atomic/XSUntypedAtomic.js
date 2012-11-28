@@ -12,6 +12,7 @@ function cXSUntypedAtomic(sValue) {
 };
 
 cXSUntypedAtomic.prototype	= new cXSAnyAtomicType;
+cXSUntypedAtomic.prototype.builtInKind	= cXSConstants.XT_UNTYPEDATOMIC_DT;
 
 cXSUntypedAtomic.prototype.toString	= function() {
 	return cString(this.value);

@@ -12,6 +12,7 @@ function cXSToken(sValue) {
 };
 
 cXSToken.prototype	= new cXSNormalizedString;
+cXSToken.prototype.builtInKind	= cXSConstants.TOKEN_DT;
 
 cXSToken.cast	= function(vValue) {
 	return new cXSToken(cString(vValue));

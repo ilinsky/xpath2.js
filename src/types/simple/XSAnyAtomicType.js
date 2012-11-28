@@ -12,6 +12,7 @@ function cXSAnyAtomicType() {
 };
 
 cXSAnyAtomicType.prototype	= new cXSAnySimpleType;
+cXSAnyAtomicType.prototype.builtInKind	= cXSConstants.ANYATOMICTYPE_DT;
 
 cXSAnyAtomicType.cast	= function(vValue) {
 	throw new cException("XPST0017"

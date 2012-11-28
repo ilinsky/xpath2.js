@@ -12,6 +12,7 @@ function cXSShort(nValue) {
 };
 
 cXSShort.prototype	= new cXSInt;
+cXSShort.prototype.builtInKind	= cXSConstants.SHORT_DT;
 
 cXSShort.cast	= function(vValue) {
 	return new cXSShort(cNumber(vValue));

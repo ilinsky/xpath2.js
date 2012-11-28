@@ -12,4 +12,5 @@ function cXSGMonth() {
 };
 
 cXSGMonth.prototype	= new cXSAnyAtomicType;
+cXSGMonth.prototype.builtInKind		= cXSConstants.GMONTH_DT;
 cXSGMonth.prototype.primitiveKind	= cXSAnySimpleType.PRIMITIVE_GMONTH;

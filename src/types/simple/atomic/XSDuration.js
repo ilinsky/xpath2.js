@@ -20,6 +20,7 @@ function cXSDuration(nYear, nMonth, nDay, nHours, nMinutes, nSeconds, bNegative)
 cXSDuration.RegExp	= /^(-)?P(?:([0-9]+)Y)?(?:([0-9]+)M)?(?:([0-9]+)D)?(?:T(?:([0-9]+)H)?(?:([0-9]+)M)?(?:((?:(?:[0-9]+(?:.[0-9]*)?)|(?:.[0-9]+)))S)?)?$/;
 
 cXSDuration.prototype	= new cXSAnyAtomicType;
+cXSDuration.prototype.builtInKind	= cXSConstants.DURATION_DT;
 cXSDuration.prototype.primitiveKind	= cXSAnySimpleType.PRIMITIVE_DURATION;
 
 cXSDuration.prototype.year		= null;

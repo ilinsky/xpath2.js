@@ -13,6 +13,7 @@ function cXSAnySimpleType() {
 
 cXSAnySimpleType.prototype	= new cXSAnyType;
 
+cXSAnySimpleType.prototype.builtInKind	= cXSConstants.ANYSIMPLETYPE_DT;
 cXSAnySimpleType.prototype.primitiveKind= null;
 
 cXSAnySimpleType.PRIMITIVE_ANYURI		= "anyURI";		//18;

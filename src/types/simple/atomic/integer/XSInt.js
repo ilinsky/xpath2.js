@@ -12,6 +12,7 @@ function cXSInt(nValue) {
 };
 
 cXSInt.prototype	= new cXSLong;
+cXSInt.prototype.builtInKind	= cXSConstants.INT_DT;
 
 cXSInt.cast	= function(vValue) {
 	return new cXSInt(cNumber(vValue));

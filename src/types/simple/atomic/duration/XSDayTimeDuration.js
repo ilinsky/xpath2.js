@@ -14,6 +14,7 @@ function cXSDayTimeDuration(nDay, nHours, nMinutes, nSeconds, bNegative) {
 cXSDayTimeDuration.RegExp	= /^(-)?P(?:([0-9]+)D)?(?:T(?:([0-9]+)H)?(?:([0-9]+)M)?(?:((?:(?:[0-9]+(?:.[0-9]*)?)|(?:.[0-9]+)))S)?)?$/;
 
 cXSDayTimeDuration.prototype	= new cXSDuration;
+cXSDayTimeDuration.prototype.builtInKind	= cXSConstants.DAYTIMEDURATION_DT;
 
 cXSDayTimeDuration.prototype.toString	= function() {
 	return (this.negative ? '-' : '') + 'P'

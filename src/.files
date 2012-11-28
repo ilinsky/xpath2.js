@@ -9,6 +9,7 @@ classes/StaticContext.js
 classes/Evaluator.js
 classes/Expression.js
 classes/StringCollator.js
+classes/XSConstants.js
 #
 expressions/Expr.js
 expressions/ExprSingle.js

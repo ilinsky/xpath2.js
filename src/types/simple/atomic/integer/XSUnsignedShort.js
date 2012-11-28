@@ -12,6 +12,7 @@ function cXSUnsignedShort(nValue) {
 };
 
 cXSUnsignedShort.prototype	= new cXSUnsignedInt;
+cXSUnsignedShort.prototype.builtInKind	= cXSConstants.UNSIGNEDSHORT_DT;
 
 cXSUnsignedShort.cast	= function(vValue) {
 	return new cXSUnsignedShort(cNumber(vValue));

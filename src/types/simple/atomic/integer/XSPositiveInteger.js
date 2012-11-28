@@ -12,6 +12,7 @@ function cXSPositiveInteger(nValue) {
 };
 
 cXSPositiveInteger.prototype	= new cXSNonNegativeInteger;
+cXSPositiveInteger.prototype.builtInKind	= cXSConstants.POSITIVEINTEGER_DT;
 
 cXSPositiveInteger.cast	= function(vValue) {
 	return new cXSPositiveInteger(cNumber(vValue));

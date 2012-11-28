@@ -12,6 +12,7 @@ function cXSNCName(sValue) {
 };
 
 cXSNCName.prototype	= new cXSName;
+cXSNCName.prototype.builtInKind	= cXSConstants.NCNAME_DT;
 
 cXSNCName.cast	= function(vValue) {
 	return new cXSNCName(cString(vValue));

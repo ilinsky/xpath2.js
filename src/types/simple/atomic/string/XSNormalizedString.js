@@ -12,6 +12,7 @@ function cXSNormalizedString(sValue) {
 };
 
 cXSNormalizedString.prototype	= new cXSString;
+cXSNormalizedString.prototype.builtInKind	= cXSConstants.NORMALIZEDSTRING_DT;
 
 cXSNormalizedString.cast	= function(vValue) {
 	return new cXSNormalizedString(cString(vValue));

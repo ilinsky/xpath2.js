@@ -14,6 +14,7 @@ function cXSInteger(nValue) {
 cXSInteger.RegExp	= /^[-+]?[0-9]+$/;
 
 cXSInteger.prototype	= new cXSDecimal;
+cXSInteger.prototype.builtInKind	= cXSConstants.INTEGER_DT;
 
 cXSInteger.cast	= function(vValue) {
 	if (vValue instanceof cXSInteger)

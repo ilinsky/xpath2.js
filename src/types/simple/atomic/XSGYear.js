@@ -12,4 +12,5 @@ function cXSGYear() {
 };
 
 cXSGYear.prototype	= new cXSAnyAtomicType;
+cXSGYear.prototype.builtInKind		= cXSConstants.GYEAR_DT;
 cXSGYear.prototype.primitiveKind	= cXSAnySimpleType.PRIMITIVE_GYEAR;

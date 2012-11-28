@@ -12,6 +12,7 @@ function cXSByte(nValue) {
 };
 
 cXSByte.prototype	= new cXSShort;
+cXSByte.prototype.builtInKind	= cXSConstants.BYTE_DT;
 
 cXSByte.cast	= function(vValue) {
 	return new cXSByte(cNumber(vValue));

@@ -12,6 +12,7 @@ function cXSNonNegativeInteger(nValue) {
 };
 
 cXSNonNegativeInteger.prototype	= new cXSInteger;
+cXSNonNegativeInteger.prototype.builtInKind	= cXSConstants.NONNEGATIVEINTEGER_DT;
 
 cXSNonNegativeInteger.cast	= function(vValue) {
 	return new cXSNonNegativeInteger(cNumber(vValue));

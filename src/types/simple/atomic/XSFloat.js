@@ -14,6 +14,7 @@ function cXSFloat(nValue) {
 cXSFloat.RegExp	= /^([+\-]?((\d+(\.\d*)?)|(\.\d+))([eE][+\-]?\d+)?|(-?INF)|NaN)$/;
 
 cXSFloat.prototype	= new cXSAnyAtomicType;
+cXSFloat.prototype.builtInKind		= cXSConstants.FLOAT_DT;
 cXSFloat.prototype.primitiveKind	= cXSAnySimpleType.PRIMITIVE_FLOAT;
 
 cXSFloat.prototype.value	= null;
