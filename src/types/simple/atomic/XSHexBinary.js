@@ -14,6 +14,7 @@ function cXSHexBinary(sValue) {
 cXSHexBinary.RegExp	= /^([0-9a-fA-F]{2})*$/;
 
 cXSHexBinary.prototype	= new cXSAnyAtomicType;
+cXSHexBinary.prototype.primitiveKind	= cXSAnySimpleType.PRIMITIVE_HEXBINARY;
 
 cXSHexBinary.prototype.value	= null;
 

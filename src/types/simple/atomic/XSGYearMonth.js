@@ -12,3 +12,4 @@ function cXSGYearMonth() {
 };
 
 cXSGYearMonth.prototype	= new cXSAnyAtomicType;
+cXSGYearMonth.prototype.primitiveKind	= cXSAnySimpleType.PRIMITIVE_GYEARMONTH;

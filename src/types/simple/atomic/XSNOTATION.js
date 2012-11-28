@@ -12,6 +12,7 @@ function cXSNOTATION() {
 };
 
 cXSNOTATION.prototype	= new cXSAnyAtomicType;
+cXSNOTATION.prototype.primitiveKind	= cXSAnySimpleType.PRIMITIVE_NOTATION;
 
 cXSNOTATION.cast	= function(vValue) {
 	throw new cException("XPST0017"

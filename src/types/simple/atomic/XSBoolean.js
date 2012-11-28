@@ -14,6 +14,7 @@ function cXSBoolean(bValue) {
 cXSBoolean.RegExp	= /^(0|1|true|false)$/;
 
 cXSBoolean.prototype	= new cXSAnyAtomicType;
+cXSBoolean.prototype.primitiveKind	= cXSAnySimpleType.PRIMITIVE_BOOLEAN;
 
 cXSBoolean.prototype.value	= null;
 

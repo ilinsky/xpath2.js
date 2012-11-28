@@ -14,6 +14,7 @@ function cXSDouble(nValue) {
 cXSDouble.RegExp	= /^([+\-]?((\d+(\.\d*)?)|(\.\d+))([eE][+\-]?\d+)?|(-?INF)|NaN)$/;
 
 cXSDouble.prototype	= new cXSAnyAtomicType;
+cXSDouble.prototype.primitiveKind	= cXSAnySimpleType.PRIMITIVE_DOUBLE;
 
 cXSDouble.prototype.value	= null;
 

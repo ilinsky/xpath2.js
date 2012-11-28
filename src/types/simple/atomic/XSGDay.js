@@ -12,3 +12,4 @@ function cXSGDay() {
 };
 
 cXSGDay.prototype	= new cXSAnyAtomicType;
+cXSGDay.prototype.primitiveKind	= cXSAnySimpleType.PRIMITIVE_GDAY;
