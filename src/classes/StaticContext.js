@@ -106,12 +106,8 @@ cStaticContext.js2xs	= function(vItem) {
 	if (typeof vItem == "boolean")
 		vItem	= new cXSBoolean(vItem);
 	else
-	if (typeof vItem == "number") {
-		if (fIsNaN(vItem) ||!fIsFinite(vItem))
-			vItem	= new cXSDouble(vItem);
-		else
-			vItem	= fNumericLiteral_parseValue(cString(vItem));
-	}
+	if (typeof vItem == "number")
+		vItem	=(fIsNaN(vItem) ||!fIsFinite(vItem)) ? new cXSDouble(vItem) : fNumericLiteral_parseValue(cString(vItem));
 	else
 		vItem	= new cXSString(cString(vItem));
 	//
@@ -120,10 +116,10 @@ cStaticContext.js2xs	= function(vItem) {
 
 // Converts non-null XML Schema object to JavaScript object
 cStaticContext.xs2js	= function(vItem) {
-	if (fXSAnyAtomicType_isNumeric(vItem))
+	if (vItem instanceof cXSBoolean)
 		vItem	= vItem.valueOf();
 	else
-	if (vItem instanceof cXSBoolean)
+	if (fXSAnyAtomicType_isNumeric(vItem))
 		vItem	= vItem.valueOf();
 	else
 		vItem	= vItem.toString();
