@@ -53,7 +53,7 @@ fStaticContext_defineSystemFunction("nilled",	[[cXTNode, '?']],	function(oNode) 
 // fn:string() as xs:string
 // fn:string($arg as item()?) as xs:string
 fStaticContext_defineSystemFunction("string",	[[cXTItem, '?', true]],	function(/*[*/oItem/*]*/) {
-	if (oItem == null) {
+	if (!arguments.length) {
 		if (!this.item)
 			throw new cException("XPDY0002");
 		oItem	= this.item;
@@ -69,7 +69,7 @@ fStaticContext_defineSystemFunction("data",	[[cXTItem, '*']],		function(oSequenc
 // fn:base-uri() as xs:anyURI?
 // fn:base-uri($arg as node()?) as xs:anyURI?
 fStaticContext_defineSystemFunction("base-uri",	[[cXTNode, '?', true]],	function(oNode) {
-	if (oNode == null) {
+	if (!arguments.length) {
 		if (!this.DOMAdapter.isNode(this.item))
 			throw new cException("XPTY0004"
 //->Debug
