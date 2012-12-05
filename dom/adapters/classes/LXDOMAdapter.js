@@ -27,7 +27,7 @@ cLXDOMAdapter.prototype.getProperty	= function(oNode, sName) {
 
 		for (var oParent = oNode, sUri; oParent; oParent = oParent.parentNode)
 			if (oParent.nodeType == 1 /* cNode.ELEMENT_NODE */ && (sUri = oParent.getAttribute("xml:base")))
-				sBaseURI	= fResolveUri([new cXSString(sUri)], [new cXSString(sBaseURI)]).toString();
+				sBaseURI	= fResolveUri(new cXSString(sUri), new cXSString(sBaseURI)).toString();
 		//
 		return sBaseURI;
 	}
