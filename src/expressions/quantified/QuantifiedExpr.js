@@ -88,7 +88,7 @@ cSimpleQuantifiedBinding.prototype.namespaceURI	= null;
 cSimpleQuantifiedBinding.prototype.inExpr	= null;
 
 function fSimpleQuantifiedBinding_parse (oLexer, oStaticContext) {
-	var aMatch	= oLexer.peek().substr(1).match(cNameTest.RegExp);
+	var aMatch	= oLexer.peek().substr(1).match(rNameTest);
 	if (!aMatch)
 		throw new cException("XPST0003"
 //->Debug

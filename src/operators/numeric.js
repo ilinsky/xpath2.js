@@ -28,8 +28,8 @@
 function fFunctionCall_numeric_getPower(oLeft, oRight) {
 	if (fIsNaN(oLeft) || (cMath.abs(oLeft) == nInfinity) || fIsNaN(oRight) || (cMath.abs(oRight) == nInfinity))
 		return 0;
-	var aLeft	= cString(oLeft).match(cNumericLiteral.RegExp),
-		aRight	= cString(oRight).match(cNumericLiteral.RegExp),
+	var aLeft	= cString(oLeft).match(rNumericLiteral),
+		aRight	= cString(oRight).match(rNumericLiteral),
 		nPower	= cMath.max(1, (aLeft[2] || aLeft[3] || '').length + (aLeft[5] || 0) * (aLeft[4] == '+' ?-1 : 1), (aRight[2] || aRight[3] || '').length + (aRight[5] || 0) * (aRight[4] == '+' ?-1 : 1));
 	return nPower + (nPower % 2 ? 0 : 1);
 };

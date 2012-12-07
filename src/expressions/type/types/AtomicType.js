@@ -18,7 +18,7 @@ cAtomicType.prototype.localName		= null;
 cAtomicType.prototype.namespaceURI	= null;
 
 function fAtomicType_parse (oLexer, oStaticContext) {
-	var aMatch	= oLexer.peek().match(cNameTest.RegExp);
+	var aMatch	= oLexer.peek().match(rNameTest);
 	if (aMatch) {
 		if (aMatch[1] == '*' || aMatch[2] == '*')
 			throw new cException("XPST0003"

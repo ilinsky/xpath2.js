@@ -28,7 +28,7 @@ fStaticContext_defineSystemFunction("resolve-QName",	[[cXSString, '?'], [cXTElem
 		return null;
 
 	var sQName	= oQName.valueOf(),
-		aMatch	= sQName.match(cXSQName.RegExp);
+		aMatch	= sQName.match(rXSQName);
 	if (!aMatch)
 		throw new cException("FOCA0002"
 //->Debug
@@ -53,7 +53,7 @@ fStaticContext_defineSystemFunction("resolve-QName",	[[cXSString, '?'], [cXTElem
 // fn:QName($paramURI as xs:string?, $paramQName as xs:string) as xs:QName
 fStaticContext_defineSystemFunction("QName",		[[cXSString, '?'], [cXSString]],	function(oUri, oQName) {
 	var sQName	= oQName.valueOf(),
-		aMatch	= sQName.match(cXSQName.RegExp);
+		aMatch	= sQName.match(rXSQName);
 
 	if (!aMatch)
 		throw new cException("FOCA0002"

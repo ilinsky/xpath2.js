@@ -11,8 +11,6 @@ function cXSHexBinary(sValue) {
 	this.value	= sValue;
 };
 
-cXSHexBinary.RegExp	= /^([0-9a-fA-F]{2})*$/;
-
 cXSHexBinary.prototype	= new cXSAnyAtomicType;
 cXSHexBinary.prototype.builtInKind		= cXSConstants.HEXBINARY_DT;
 cXSHexBinary.prototype.primitiveKind	= cXSAnySimpleType.PRIMITIVE_HEXBINARY;
@@ -27,11 +25,12 @@ cXSHexBinary.prototype.toString	= function() {
 	return this.value;
 };
 
+var rXSHexBinary	= /^([0-9a-fA-F]{2})*$/;
 cXSHexBinary.cast	= function(vValue) {
 	if (vValue instanceof cXSHexBinary)
 		return vValue;
 	if (vValue instanceof cXSString || vValue instanceof cXSUntypedAtomic) {
-		var aMatch	= fString_trim(vValue).match(cXSHexBinary.RegExp);
+		var aMatch	= fString_trim(vValue).match(rXSHexBinary);
 		if (aMatch)
 			return new cXSHexBinary(aMatch[0].toUpperCase());
 		throw new cException("FORG0001");

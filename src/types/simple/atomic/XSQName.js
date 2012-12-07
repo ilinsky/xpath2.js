@@ -13,8 +13,6 @@ function cXSQName(sPrefix, sLocalName, sNameSpaceURI) {
 	this.namespaceURI	= sNameSpaceURI;
 };
 
-cXSQName.RegExp	= /^(?:(?![0-9-])([\w-]+)\:)?(?![0-9-])([\w-]+)$/;
-
 cXSQName.prototype	= new cXSAnyAtomicType;
 cXSQName.prototype.builtInKind		= cXSConstants.QNAME_DT;
 cXSQName.prototype.primitiveKind	= cXSAnySimpleType.PRIMITIVE_QNAME;
@@ -27,11 +25,12 @@ cXSQName.prototype.toString	= function() {
 	return (this.prefix ? this.prefix + ':' : '') + this.localName;
 };
 
+var rXSQName	= /^(?:(?![0-9-])([\w-]+)\:)?(?![0-9-])([\w-]+)$/;
 cXSQName.cast	= function(vValue) {
 	if (vValue instanceof cXSQName)
 		return vValue;
 	if (vValue instanceof cXSString || vValue instanceof cXSUntypedAtomic) {
-		var aMatch	= fString_trim(vValue).match(cXSQName.RegExp);
+		var aMatch	= fString_trim(vValue).match(rXSQName);
 		if (aMatch)
 			return new cXSQName(aMatch[1] || null, aMatch[2], null);
 		throw new cException("FORG0001");

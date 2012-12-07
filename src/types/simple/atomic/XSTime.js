@@ -14,8 +14,6 @@ function cXSTime(nHours, nMinutes, nSeconds, nTimezone) {
 	this.timezone	= nTimezone;
 };
 
-cXSTime.RegExp	= /^(([01]\d|2[0-3]):([0-5]\d):([0-5]\d)(?:\.(\d+))?|(24:00:00)(?:\.(0+))?)(Z|([+\-])(0\d|1[0-4]):([0-5]\d))?$/;
-
 cXSTime.prototype	= new cXSAnyAtomicType;
 cXSTime.prototype.builtInKind	= cXSConstants.TIME_DT;
 cXSTime.prototype.primitiveKind	= cXSAnySimpleType.PRIMITIVE_TIME;
@@ -30,11 +28,12 @@ cXSTime.prototype.toString	= function() {
 			+ fXSDateTime_getTZComponent(this);
 };
 
+var rXSTime		= /^(([01]\d|2[0-3]):([0-5]\d):([0-5]\d)(?:\.(\d+))?|(24:00:00)(?:\.(0+))?)(Z|([+\-])(0\d|1[0-4]):([0-5]\d))?$/;
 cXSTime.cast	= function(vValue) {
 	if (vValue instanceof cXSTime)
 		return vValue;
 	if (vValue instanceof cXSString || vValue instanceof cXSUntypedAtomic) {
-		var aMatch	= fString_trim(vValue).match(cXSTime.RegExp);
+		var aMatch	= fString_trim(vValue).match(rXSTime);
 		if (aMatch) {
 			var bValue	= !!aMatch[6];
 			return new cXSTime(bValue ? 0 : +aMatch[2],

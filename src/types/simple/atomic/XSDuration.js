@@ -17,8 +17,6 @@ function cXSDuration(nYear, nMonth, nDay, nHours, nMinutes, nSeconds, bNegative)
 	this.negative	= bNegative;
 };
 
-cXSDuration.RegExp	= /^(-)?P(?:([0-9]+)Y)?(?:([0-9]+)M)?(?:([0-9]+)D)?(?:T(?:([0-9]+)H)?(?:([0-9]+)M)?(?:((?:(?:[0-9]+(?:.[0-9]*)?)|(?:.[0-9]+)))S)?)?$/;
-
 cXSDuration.prototype	= new cXSAnyAtomicType;
 cXSDuration.prototype.builtInKind	= cXSConstants.DURATION_DT;
 cXSDuration.prototype.primitiveKind	= cXSAnySimpleType.PRIMITIVE_DURATION;
@@ -36,6 +34,7 @@ cXSDuration.prototype.toString	= function() {
 			+ ((fXSDuration_getYearMonthComponent(this) + fXSDuration_getDayTimeComponent(this)) || 'T0S');
 };
 
+var rXSDuration		= /^(-)?P(?:([0-9]+)Y)?(?:([0-9]+)M)?(?:([0-9]+)D)?(?:T(?:([0-9]+)H)?(?:([0-9]+)M)?(?:((?:(?:[0-9]+(?:.[0-9]*)?)|(?:.[0-9]+)))S)?)?$/;
 cXSDuration.cast	= function(vValue) {
 	if (vValue instanceof cXSYearMonthDuration)
 		return new cXSDuration(vValue.year, vValue.month, 0, 0, 0, 0, vValue.negative);
@@ -44,7 +43,7 @@ cXSDuration.cast	= function(vValue) {
 	if (vValue instanceof cXSDuration)
 		return vValue;
 	if (vValue instanceof cXSString || vValue instanceof cXSUntypedAtomic) {
-		var aMatch	= fString_trim(vValue).match(cXSDuration.RegExp);
+		var aMatch	= fString_trim(vValue).match(rXSDuration);
 		if (aMatch)
 			return fXSDuration_normalize(new cXSDuration(+aMatch[2] || 0, +aMatch[3] || 0, +aMatch[4] || 0, +aMatch[5] || 0, +aMatch[6] || 0, +aMatch[7] || 0, aMatch[1] == '-'));
 		throw new cException("FORG0001");

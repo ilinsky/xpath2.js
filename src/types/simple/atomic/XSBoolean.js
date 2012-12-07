@@ -11,8 +11,6 @@ function cXSBoolean(bValue) {
 	this.value	= bValue;
 };
 
-cXSBoolean.RegExp	= /^(0|1|true|false)$/;
-
 cXSBoolean.prototype	= new cXSAnyAtomicType;
 cXSBoolean.prototype.builtInKind	= cXSConstants.BOOLEAN_DT;
 cXSBoolean.prototype.primitiveKind	= cXSAnySimpleType.PRIMITIVE_BOOLEAN;
@@ -27,12 +25,13 @@ cXSBoolean.prototype.toString	= function() {
 	return cString(this.value);
 };
 
+var rXSBoolean	= /^(0|1|true|false)$/;
 cXSBoolean.cast	= function(vValue) {
 	if (vValue instanceof cXSBoolean)
 		return vValue;
 	if (vValue instanceof cXSString || vValue instanceof cXSUntypedAtomic) {
 		var aMatch;
-		if (aMatch = fString_trim(vValue).match(cXSBoolean.RegExp))
+		if (aMatch = fString_trim(vValue).match(rXSBoolean))
 			return new cXSBoolean(aMatch[1] == "1" || aMatch[1] == "true");
 		throw new cException("FORG0001");
 	}

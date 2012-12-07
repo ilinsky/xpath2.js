@@ -15,8 +15,6 @@ function cXSDate(nYear, nMonth, nDay, nTimezone, bNegative) {
 	this.negative	= bNegative;
 };
 
-cXSDate.RegExp	= /^(-?)([1-9]\d\d\d+|0\d\d\d)-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])(Z|([+\-])(0\d|1[0-4]):([0-5]\d))?$/;
-
 cXSDate.prototype	= new cXSAnyAtomicType;
 cXSDate.prototype.builtInKind	= cXSConstants.DATE_DT;
 cXSDate.prototype.primitiveKind	= cXSAnySimpleType.PRIMITIVE_DATE;
@@ -32,11 +30,12 @@ cXSDate.prototype.toString	= function() {
 			+ fXSDateTime_getTZComponent(this);
 };
 
+var rXSDate		= /^(-?)([1-9]\d\d\d+|0\d\d\d)-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])(Z|([+\-])(0\d|1[0-4]):([0-5]\d))?$/;
 cXSDate.cast	= function(vValue) {
 	if (vValue instanceof cXSDate)
 		return vValue;
 	if (vValue instanceof cXSString || vValue instanceof cXSUntypedAtomic) {
-		var aMatch	= fString_trim(vValue).match(cXSDate.RegExp);
+		var aMatch	= fString_trim(vValue).match(rXSDate);
 		if (aMatch) {
 			var nYear	= +aMatch[2],
 				nMonth	= +aMatch[3],

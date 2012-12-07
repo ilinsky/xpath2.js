@@ -11,12 +11,11 @@ function cStringLiteral(oValue) {
 	this.value	= oValue;
 };
 
-cStringLiteral.RegExp	= /^'([^']*(?:''[^']*)*)'|"([^"]*(?:""[^"]*)*)"$/;
-
 cStringLiteral.prototype	= new cLiteral;
 
+var rStringLiteral	= /^'([^']*(?:''[^']*)*)'|"([^"]*(?:""[^"]*)*)"$/;
 function fStringLiteral_parse (oLexer, oStaticContext) {
-	var aMatch	= oLexer.peek().match(cStringLiteral.RegExp);
+	var aMatch	= oLexer.peek().match(rStringLiteral);
 	if (aMatch) {
 		oLexer.next();
 		return new cStringLiteral(new cXSString(aMatch[1] ? aMatch[1].replace("''", "'") : aMatch[2] ? aMatch[2].replace('""', '"') : ''));

@@ -18,8 +18,6 @@ function cXSDateTime(nYear, nMonth, nDay, nHours, nMinutes, nSeconds, nTimezone,
 	this.negative	= bNegative;
 };
 
-cXSDateTime.RegExp	= /^(-?)([1-9]\d\d\d+|0\d\d\d)-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])T(([01]\d|2[0-3]):([0-5]\d):([0-5]\d)(?:\.(\d+))?|(24:00:00)(?:\.(0+))?)(Z|([+\-])(0\d|1[0-4]):([0-5]\d))?$/;
-
 cXSDateTime.prototype	= new cXSAnyAtomicType;
 cXSDateTime.prototype.builtInKind	= cXSConstants.DATETIME_DT;
 cXSDateTime.prototype.primitiveKind	= cXSAnySimpleType.PRIMITIVE_DATETIME;
@@ -40,11 +38,12 @@ cXSDateTime.prototype.toString	= function() {
 			+ fXSDateTime_getTZComponent(this);
 };
 
+var rXSDateTime		= /^(-?)([1-9]\d\d\d+|0\d\d\d)-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])T(([01]\d|2[0-3]):([0-5]\d):([0-5]\d)(?:\.(\d+))?|(24:00:00)(?:\.(0+))?)(Z|([+\-])(0\d|1[0-4]):([0-5]\d))?$/;
 cXSDateTime.cast	= function(vValue) {
 	if (vValue instanceof cXSDateTime)
 		return vValue;
 	if (vValue instanceof cXSString || vValue instanceof cXSUntypedAtomic) {
-		var aMatch	= fString_trim(vValue).match(cXSDateTime.RegExp);
+		var aMatch	= fString_trim(vValue).match(rXSDateTime);
 		if (aMatch) {
 			var nYear	= +aMatch[2],
 				nMonth	= +aMatch[3],

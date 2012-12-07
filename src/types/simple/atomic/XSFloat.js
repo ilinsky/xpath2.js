@@ -11,8 +11,6 @@ function cXSFloat(nValue) {
 	this.value	= nValue;
 };
 
-cXSFloat.RegExp	= /^([+\-]?((\d+(\.\d*)?)|(\.\d+))([eE][+\-]?\d+)?|(-?INF)|NaN)$/;
-
 cXSFloat.prototype	= new cXSAnyAtomicType;
 cXSFloat.prototype.builtInKind		= cXSConstants.FLOAT_DT;
 cXSFloat.prototype.primitiveKind	= cXSAnySimpleType.PRIMITIVE_FLOAT;
@@ -27,11 +25,12 @@ cXSFloat.prototype.toString	= function() {
 	return cString(this.value);
 };
 
+var rXSFloat	= /^([+\-]?((\d+(\.\d*)?)|(\.\d+))([eE][+\-]?\d+)?|(-?INF)|NaN)$/;
 cXSFloat.cast	= function(vValue) {
 	if (vValue instanceof cXSFloat)
 		return vValue;
 	if (vValue instanceof cXSString || vValue instanceof cXSUntypedAtomic) {
-		var aMatch	= fString_trim(vValue).match(cXSFloat.RegExp);
+		var aMatch	= fString_trim(vValue).match(rXSFloat);
 		if (aMatch)
 			return new cXSFloat(aMatch[7] ? +aMatch[7].replace("INF", "Infinity") : +vValue);
 		throw new cException("FORG0001");

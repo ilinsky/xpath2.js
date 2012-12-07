@@ -15,8 +15,6 @@ function cXSAnyURI(sScheme, sAuthority, sPath, sQuery, sFragment) {
 	this.fragment	= sFragment;
 };
 
-cXSAnyURI.RegExp	= /^(([^:\/?#]+):)?(\/\/([^\/?#]*))?([^?#]*)(\?([^#]*))?(#(.*))?/;	// http://tools.ietf.org/html/rfc3986
-
 cXSAnyURI.prototype	= new cXSAnyAtomicType;
 cXSAnyURI.prototype.builtInKind		= cXSConstants.ANYURI_DT;
 cXSAnyURI.prototype.primitiveKind	= cXSAnySimpleType.PRIMITIVE_ANYURI;
@@ -35,12 +33,13 @@ cXSAnyURI.prototype.toString	= function() {
 			+ (this.fragment ? '#' + this.fragment : '');
 };
 
+var rXSAnyURI	= /^(([^:\/?#]+):)?(\/\/([^\/?#]*))?([^?#]*)(\?([^#]*))?(#(.*))?/;	// http://tools.ietf.org/html/rfc3986
 cXSAnyURI.cast	= function(vValue) {
 	if (vValue instanceof cXSAnyURI)
 		return vValue;
 	if (vValue instanceof cXSString || vValue instanceof cXSUntypedAtomic) {
 		var aMatch;
-		if (aMatch = fString_trim(vValue).match(cXSAnyURI.RegExp))
+		if (aMatch = fString_trim(vValue).match(rXSAnyURI))
 			return new cXSAnyURI(aMatch[2], aMatch[4], aMatch[5], aMatch[7], aMatch[9]);
 		throw new cException("FORG0001");
 	}

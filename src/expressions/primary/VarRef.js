@@ -20,7 +20,7 @@ cVarRef.prototype.namespaceURI	= null;
 // Static members
 function fVarRef_parse (oLexer, oStaticContext) {
 	if (oLexer.peek().substr(0, 1) == '$') {
-		var aMatch	= oLexer.peek().substr(1).match(cNameTest.RegExp);
+		var aMatch	= oLexer.peek().substr(1).match(rNameTest);
 		if (aMatch) {
 			if (aMatch[1] == '*' || aMatch[2] == '*')
 				throw new cException("XPST0003"

@@ -13,9 +13,8 @@ function cNumericLiteral(oValue) {
 
 cNumericLiteral.prototype	= new cLiteral;
 
-cNumericLiteral.RegExp	= /^[+\-]?(?:(?:(\d+)(?:\.(\d*))?)|(?:\.(\d+)))(?:[eE]([+-])?(\d+))?$/;
-
 // Integer | Decimal | Double
+var rNumericLiteral	= /^[+\-]?(?:(?:(\d+)(?:\.(\d*))?)|(?:\.(\d+)))(?:[eE]([+-])?(\d+))?$/;
 function fNumericLiteral_parse (oLexer, oStaticContext) {
 	var sValue	= oLexer.peek(),
 		vValue	= fNumericLiteral_parseValue(sValue);
@@ -26,7 +25,7 @@ function fNumericLiteral_parse (oLexer, oStaticContext) {
 };
 
 function fNumericLiteral_parseValue(sValue) {
-	var aMatch	= sValue.match(cNumericLiteral.RegExp);
+	var aMatch	= sValue.match(rNumericLiteral);
 	if (aMatch) {
 		var cType	= cXSInteger;
 		if (typeof aMatch[5] != "undefined")

@@ -11,8 +11,6 @@ function cXSDayTimeDuration(nDay, nHours, nMinutes, nSeconds, bNegative) {
 	cXSDuration.call(this, 0, 0, nDay, nHours, nMinutes, nSeconds, bNegative);
 };
 
-cXSDayTimeDuration.RegExp	= /^(-)?P(?:([0-9]+)D)?(?:T(?:([0-9]+)H)?(?:([0-9]+)M)?(?:((?:(?:[0-9]+(?:.[0-9]*)?)|(?:.[0-9]+)))S)?)?$/;
-
 cXSDayTimeDuration.prototype	= new cXSDuration;
 cXSDayTimeDuration.prototype.builtInKind	= cXSConstants.DAYTIMEDURATION_DT;
 
@@ -21,11 +19,12 @@ cXSDayTimeDuration.prototype.toString	= function() {
 			+ (fXSDuration_getDayTimeComponent(this) || 'T0S');
 };
 
+var rXSDayTimeDuration	= /^(-)?P(?:([0-9]+)D)?(?:T(?:([0-9]+)H)?(?:([0-9]+)M)?(?:((?:(?:[0-9]+(?:.[0-9]*)?)|(?:.[0-9]+)))S)?)?$/;
 cXSDayTimeDuration.cast	= function(vValue) {
 	if (vValue instanceof cXSDayTimeDuration)
 		return vValue;
 	if (vValue instanceof cXSString || vValue instanceof cXSUntypedAtomic) {
-		var aMatch	= fString_trim(vValue).match(cXSDayTimeDuration.RegExp);
+		var aMatch	= fString_trim(vValue).match(rXSDayTimeDuration);
 		if (aMatch)
 			return fXSDayTimeDuration_normalize(new cXSDayTimeDuration(+aMatch[2] || 0, +aMatch[3] || 0, +aMatch[4] || 0, +aMatch[5] || 0, aMatch[1] == '-'));
 		throw new cException("FORG0001");

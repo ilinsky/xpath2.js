@@ -11,8 +11,6 @@ function cXSYearMonthDuration(nYear, nMonth, bNegative) {
 	cXSDuration.call(this, nYear, nMonth, 0, 0, 0, 0, bNegative);
 };
 
-cXSYearMonthDuration.RegExp	= /^(-)?P(?:([0-9]+)Y)?(?:([0-9]+)M)?$/;
-
 cXSYearMonthDuration.prototype	= new cXSDuration;
 cXSYearMonthDuration.prototype.builtInKind	= cXSConstants.XT_YEARMONTHDURATION_DT;
 
@@ -21,11 +19,12 @@ cXSYearMonthDuration.prototype.toString	= function() {
 			+ (fXSDuration_getYearMonthComponent(this) || '0M');
 };
 
+var rXSYearMonthDuration	= /^(-)?P(?:([0-9]+)Y)?(?:([0-9]+)M)?$/;
 cXSYearMonthDuration.cast	= function(vValue) {
 	if (vValue instanceof cXSYearMonthDuration)
 		return vValue;
 	if (vValue instanceof cXSString || vValue instanceof cXSUntypedAtomic) {
-		var aMatch	= fString_trim(vValue).match(cXSYearMonthDuration.RegExp);
+		var aMatch	= fString_trim(vValue).match(rXSYearMonthDuration);
 		if (aMatch)
 			return fXSYearMonthDuration_normalize(new cXSYearMonthDuration(+aMatch[2] || 0, +aMatch[3] || 0, aMatch[1] == '-'));
 		throw new cException("FORG0001");

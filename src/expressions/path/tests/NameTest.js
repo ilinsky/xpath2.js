@@ -13,8 +13,6 @@ function cNameTest(sPrefix, sLocalName, sNameSpaceURI) {
 	this.namespaceURI	= sNameSpaceURI;
 };
 
-cNameTest.RegExp	= /^(?:(?![0-9-])([\w-]+|\*)\:)?(?![0-9-])([\w-]+|\*)$/;
-
 cNameTest.prototype	= new cNodeTest;
 
 cNameTest.prototype.prefix			= null;
@@ -22,8 +20,9 @@ cNameTest.prototype.localName		= null;
 cNameTest.prototype.namespaceURI	= null;
 
 // Static members
+var rNameTest	= /^(?:(?![0-9-])([\w-]+|\*)\:)?(?![0-9-])([\w-]+|\*)$/;
 function fNameTest_parse (oLexer, oStaticContext) {
-	var aMatch	= oLexer.peek().match(cNameTest.RegExp);
+	var aMatch	= oLexer.peek().match(rNameTest);
 	if (aMatch) {
 		if (aMatch[1] == '*' && aMatch[2] == '*')
 			throw new cException("XPST0003"
