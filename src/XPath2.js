@@ -11,8 +11,6 @@ var oXPath2	= new cEvaluator;
 
 //
 oXPath2.classes	= {};
-oXPath2.classes.Expr			= cExpr;
-oXPath2.classes.Lexer			= cLexer;
 oXPath2.classes.Exception		= cException;
 oXPath2.classes.Evaluator		= cEvaluator;
 oXPath2.classes.DOMAdapter		= cDOMAdapter;
