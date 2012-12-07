@@ -37,7 +37,8 @@ function fTreatExpr_parse (oLexer, oStaticContext) {
 
 cTreatExpr.prototype.evaluate	= function(oContext) {
 	var oSequence1	= this.expression.evaluate(oContext),
-		oItemType	= this.type.itemType;
+		oItemType	= this.type.itemType,
+		sOccurence	= this.type.occurence;
 	// Validate empty-sequence()
 	if (!oItemType) {
 		if (oSequence1.length)
@@ -50,7 +51,7 @@ cTreatExpr.prototype.evaluate	= function(oContext) {
 	}
 
 	// Validate cardinality
-	if (!(this.type.occurence == '?' || this.type.occurence == '*'))
+	if (!(sOccurence == '?' || sOccurence == '*'))
 		if (!oSequence1.length)
 			throw new cException("XPDY0050"
 //->Debug
@@ -58,7 +59,7 @@ cTreatExpr.prototype.evaluate	= function(oContext) {
 //<-Debug
 			);
 
-	if (!(this.type.occurence == '+' || this.type.occurence == '*'))
+	if (!(sOccurence == '+' || sOccurence == '*'))
 		if (oSequence1.length != 1)
 			throw new cException("XPDY0050"
 //->Debug

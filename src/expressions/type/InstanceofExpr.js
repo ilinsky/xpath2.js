@@ -37,15 +37,16 @@ function fInstanceofExpr_parse (oLexer, oStaticContext) {
 
 cInstanceofExpr.prototype.evaluate	= function(oContext) {
 	var oSequence1	= this.expression.evaluate(oContext),
-		oItemType	= this.type.itemType;
+		oItemType	= this.type.itemType,
+		sOccurence	= this.type.occurence;
 	// Validate empty-sequence()
 	if (!oItemType)
 		return [new cXSBoolean(!oSequence1.length)];
 	// Validate cardinality
 	if (!oSequence1.length)
-		return [new cXSBoolean(this.type.occurence == '?' || this.type.occurence == '*')];
+		return [new cXSBoolean(sOccurence == '?' || sOccurence == '*')];
 	if (oSequence1.length != 1)
-		if (!(this.type.occurence == '+' || this.type.occurence == '*'))
+		if (!(sOccurence == '+' || sOccurence == '*'))
 			return [new cXSBoolean(false)];
 
 	// Validate type
