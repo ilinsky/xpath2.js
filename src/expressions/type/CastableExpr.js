@@ -36,5 +36,32 @@ function fCastableExpr_parse (oLexer, oStaticContext) {
 };
 
 cCastableExpr.prototype.evaluate	= function(oContext) {
-	throw "Expression 'castable as' not implemented";
+	var oSequence1	= this.expression.evaluate(oContext),
+		oItemType	= this.type.itemType,
+		sOccurence	= this.type.occurence;
+
+	if (oSequence1.length > 1)
+		return [new cXSBoolean(false)];
+	else
+	if (!oSequence1.length)
+		return [new cXSBoolean(sOccurence == '?')];
+
+	// Try casting
+	try {
+		oItemType.cast(fFunction_sequence_atomize(oSequence1, oContext)[0]);
+	}
+	catch (e) {
+		if (e.code == "XPST0051")
+			throw e;
+		if (e.code == "XPST0017")
+			throw new cException("XPST0080"
+//->Debug
+					, "No value is castable to " + (oItemType.prefix ? oItemType.prefix + ':' : '') + oItemType.localName
+//<-Debug
+			);
+		//
+		return [new cXSBoolean(false)];
+	}
+
+	return [new cXSBoolean(true)];
 };

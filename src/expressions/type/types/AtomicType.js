@@ -54,7 +54,7 @@ cAtomicType.prototype.cast	= function(vItem, oContext) {
 	//
 	throw new cException("XPST0051"
 //->Debug
-			, "Unknown simple type " + (this.prefix ? this.prefix + ':' : '') + this.localName
+			, "Unknown atomic type " + (this.prefix ? this.prefix + ':' : '') + this.localName
 //<-Debug
 	);
 };
