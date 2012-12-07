@@ -92,7 +92,7 @@ cFunctionCall.prototype.evaluate	= function (oContext) {
 	}
 	else
 	if (this.namespaceURI == sNS_SCHEMA) {
-		if (fFunction = hStaticContext_dataTypes[this.localName]) {
+		if ((fFunction = hStaticContext_dataTypes[this.localName]) && this.localName != "NOTATION" && this.localName != "anyAtomicType") {
 			//
 			fFunctionCall_prepare(this.localName, [[cXSAnyAtomicType]], fFunction, aArguments, oContext);
 			//
