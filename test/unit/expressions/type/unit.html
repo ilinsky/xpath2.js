@@ -57,6 +57,25 @@
 						evaluateXPath('1 castable as xs:boolean'));
 			}
 
+			function testCastable_Cardinality() {
+				assertArrayEquals([false],
+						evaluateXPath('() castable as xs:integer'));
+				assertArrayEquals([true],
+						evaluateXPath('() castable as xs:integer?'));
+			}
+
+			function testCastable_XPST0051() {
+				assertEquals("XPST0051",
+						evaluateXPathError('1 castable as xs:integers'));
+			}
+
+			function testCastable_XPST0080() {
+				assertEquals("XPST0080",
+						evaluateXPathError('1 castable as xs:anyAtomicType'));
+				assertEquals("XPST0080",
+						evaluateXPathError('1 castable as xs:NOTATION'));
+			}
+
 			function testInstanceof() {
 				// Atomic types
 				assertArrayEquals([true],
