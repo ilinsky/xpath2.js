@@ -51,9 +51,9 @@
 	function fGetUriComponents($sUri) {
 		if (!isset($hUriCache[$sUri])) {
 			preg_match("/^(([^:\/?#]+):)?(\/\/([^\/?#]*))?([^?#]*)(\?([^#]*))?(#(.*))?/", $sUri, $match);
-			$hUriCache[sUri]	= array($match[1], $match[3], $match[5], $match[6], $match[8]);
+			$hUriCache[$sUri]	= array($match[1], $match[3], $match[5], $match[6], $match[8]);
 		}
-		return $hUriCache[sUri];
+		return $hUriCache[$sUri];
 	};
 
 	function fResolveUri($sUri, $sBaseUri) {
@@ -79,7 +79,7 @@
 
 				$nBaseUriStart	= $aBaseUriSegments[0] == '' ? 1 : 0;
 				for ($nIndex = 0, $nLength = count($aUriSegments); $nIndex < $nLength; $nIndex++) {
-					if ($aUriSegments[nIndex] == '..') {
+					if ($aUriSegments[$nIndex] == '..') {
 						if ($aBaseUriSegments.length > $nBaseUriStart)
 							array_pop($aBaseUriSegments);
 						else {
