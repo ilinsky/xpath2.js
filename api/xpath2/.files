@@ -9,6 +9,6 @@ import.js
 # API implementation
 classes/Evaluator.js
 #
-XPath2.js
+xpath2.js
 #
 export.js
