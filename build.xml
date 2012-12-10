@@ -234,6 +234,8 @@
 		<concat destfile="${temp.build.dir}/xpath2-api-main-raw.js" fixlastline="yes">
 			<filelist dir="${source.api.main}/" files="
 				import.js"/>
+			<filelist dir="${source.api}/" files="
+				guard.js"/>
 			<filelist dir="${temp.build.dir}/" files="
 				xpath2-core-raw.js"/>
 			<filelist dir="${temp.build.dir}/" files="
@@ -274,6 +276,8 @@
 		<concat destfile="${temp.build.dir}/xpath2-api-dom-raw.js" fixlastline="yes">
 			<filelist dir="${source.api.dom}/" files="
 				import.js"/>
+			<filelist dir="${source.api}/" files="
+				guard.js"/>
 			<filelist dir="${temp.build.dir}/" files="
 				xpath2-core-raw.js"/>
 			<filelist dir="${temp.build.dir}/" files="
@@ -316,6 +320,8 @@
 		<concat destfile="${temp.build.dir}/xpath2-api-jquery-raw.js" fixlastline="yes">
 			<filelist dir="${source.api.jquery}/" files="
 				import.js"/>
+			<filelist dir="${source.api}/" files="
+				guard.js"/>
 			<filelist dir="${temp.build.dir}/" files="
 				xpath2-core-raw.js"/>
 			<filelist dir="${temp.build.dir}/" files="

@@ -7,7 +7,7 @@
  * See: https://github.com/ilinsky/guard.js
  *
  */
-
+//->Guard
 // Validation implementation
 var fGuard	= function(aArguments, aParameters) {
 	// Determining API caller function reference
@@ -126,3 +126,4 @@ function fGuard_format(sMessage, aArguments) {
 		sMessage	= sMessage.replace('%' + nIndex, aArguments[nIndex]);
 	return sMessage;
 };
+//<-Guard
