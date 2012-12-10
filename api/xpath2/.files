@@ -7,6 +7,8 @@ import.js
 ../../adapters/MSHTMLDOMAdapter.js
 ../../adapters/MSXMLDOMAdapter.js
 # API implementation
-xpath2-jquery.js
+classes/Evaluator.js
+#
+XPath2.js
 #
 export.js

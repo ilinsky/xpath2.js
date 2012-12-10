@@ -1,10 +1,12 @@
 # Import variables from environment
 import.js
-#
+# XPath 2 engine
+../../src/.files
+# Browser adapters
 ../../adapters/classes/LXDOMAdapter.js
 ../../adapters/MSHTMLDOMAdapter.js
 ../../adapters/MSXMLDOMAdapter.js
-#
+# API implementation
 classes/XPathEvaluator.js
 classes/XPathException.js
 classes/XPathExpression.js

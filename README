@@ -7,17 +7,18 @@
 
  About:
  ===============
-   XPath2.js is an open-source JavaScript library that implements XPath 2.0
-   It can run against any standard-complient DOM Core Level 3 model,
-   yet it can be easily adjusted for other implementations (check DOMAdapter.js)
+   XPath2.js is an open-source XPath 2.0 implementation in JavaScript.
+   The core engine is DOM-agnostic, it can be used with any DOM via custom
+   DOMAdapter implementation. Internally engine operates XML Schema data types.
 
  Structure:
  ===============
-   src/ - Contains implementation of XPath 2.0 parser and evaluator
-   dom/ - Contains API objects that mimic DOM Level 3 XPath 1
-   test/unit/ - Contains unit.js XPath 2.0 tests
+   api/ - APIs sources
+   src/ - Engine sources
+   adapters/ - Adapters sources
+   test/unit/ - unit.js tests (requires https://github.com/ilinsky/unit.js)
 
  Usage:
  ===============
-   You can link library sources with DOM API to dom/xpath2.js
-   XPath2Evaluator, XPath2Exception and XPath2Result objects available
+   Running on sources: include an API file from the root folder.
+   When no Apache/.htaccess/PHP configured, source files will be loaded by JS.

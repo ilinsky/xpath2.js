@@ -11,7 +11,7 @@ function cLXDOMAdapter() {
 
 };
 
-cLXDOMAdapter.prototype	= new oXPath2.classes.DOMAdapter;
+cLXDOMAdapter.prototype	= new cDOMAdapter;
 
 // Standard members
 cLXDOMAdapter.prototype.getProperty	= function(oNode, sName) {

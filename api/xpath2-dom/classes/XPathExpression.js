@@ -10,10 +10,10 @@
 function cXPathExpression(sExpression, oStaticContext) {
 	try {
 		this.staticContext	= oStaticContext;
-		this.expression	= new oXPath2.classes.Expression(sExpression, oStaticContext);
+		this.expression	= new cExpression(sExpression, oStaticContext);
 	}
 	catch (e) {
-		if (e instanceof oXPath2.classes.Exception)
+		if (e instanceof cException)
 			throw new cXPathException(cXPathException.INVALID_EXPRESSION_ERR
 //->Debug
 					, e.message
@@ -50,12 +50,12 @@ function fXPathExpression_evaluate(oExpression, oNode, nType, oResult) {
 
 	// Evaluate expression
 	try {
-		aSequence	= oExpression.expression.evaluate(new oXPath2.classes.DynamicContext(oExpression.staticContext, oNode, null, oAdapter));
+		aSequence	= oExpression.expression.evaluate(new cDynamicContext(oExpression.staticContext, oNode, null, oAdapter));
 		for (var nIndex = 0, nLength = aSequence.length, oItem; nIndex < nLength; nIndex++)
-			oSequence[oSequence.length]	= oAdapter.isNode(oItem = aSequence[nIndex]) ? oItem : oXPath2.classes.StaticContext.xs2js(oItem);
+			oSequence[oSequence.length]	= oAdapter.isNode(oItem = aSequence[nIndex]) ? oItem : cStaticContext.xs2js(oItem);
 	}
 	catch (e) {
-		if (e instanceof oXPath2.classes.Exception)
+		if (e instanceof cException)
 			throw new cXPathException(cXPathException.TYPE_ERR
 //->Debug
 					, e.message

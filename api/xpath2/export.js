@@ -7,4 +7,4 @@
  *
  */
 
-window.XPath2	= oXPath2;
+window.xpath2	= oXPath2;

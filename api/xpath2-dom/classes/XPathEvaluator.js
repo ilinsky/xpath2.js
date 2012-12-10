@@ -11,10 +11,10 @@ function cXPathEvaluator() {
 
 };
 
-// Create new XPath2 evaluator
+// Create new evaluator
 var oXPathEvaluator_DOMAdapter	= new cLXDOMAdapter,
-	oXPathEvaluator_HTMLContext	= new oXPath2.classes.StaticContext,
-	oXPathEvaluator_XMLContext	= new oXPath2.classes.StaticContext;
+	oXPathEvaluator_HTMLContext	= new cStaticContext,
+	oXPathEvaluator_XMLContext	= new cStaticContext;
 
 // Initialize HTML context (this has default xhtml namespace)
 oXPathEvaluator_HTMLContext.baseURI	= oDocument.location.href;

@@ -7,8 +7,7 @@
  *
  */
 
-var oXPath2		= window.XPath2,
-	oDocument	= window.document,
+var oDocument	= window.document,
 	cError		= window.Error,
 	cHTMLDocument	= window.HTMLDocument;
 
