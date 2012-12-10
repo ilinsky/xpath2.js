@@ -90,7 +90,7 @@ cStaticContext.prototype.getURIForPrefix	= function(sPrefix) {
 	if (sPrefix == "xml")
 		return sNS_XML;
 	if (sPrefix == "xmlns")
-		return sNS_XMLNS;
+		return sNS_XNS;
 	//
 	throw new cException("XPST0081"
 //->Debug
