@@ -13,14 +13,14 @@
 
 		<!-- Suite definition -->
 		<script type="text/javascript">
-			XPath2.defaultStaticContext.defaultElementNamespace	= "http://www.w3.org/1999/xhtml";
+			xpath2.defaultStaticContext.defaultElementNamespace	= "http://www.w3.org/1999/xhtml";
 			// Helper function
 			function evaluateXPath(sXPath, oContext) {
-				return XPath2.evaluate(sXPath, oContext);
+				return xpath2.evaluate(sXPath, oContext);
 			}
 
 			function evaluateXPathWithDocument(sXPath) {
-				return XPath2.evaluate(sXPath, document);
+				return xpath2.evaluate(sXPath, document);
 			}
 
 			// Kind Tests
