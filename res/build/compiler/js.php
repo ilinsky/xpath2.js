@@ -40,6 +40,7 @@
 		echo "Obfuscating contents\n";
 
 		$oCompiler->addOmmitArray(array(
+			"http://www.w3.org/1999/xhtml",
 			"http://www.w3.org/2001/XMLSchema",
 			"http://www.w3.org/2005/xpath-functions",
 			"http://www.w3.org/2000/xmlns/",
