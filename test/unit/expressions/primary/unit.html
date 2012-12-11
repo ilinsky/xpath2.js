@@ -60,12 +60,12 @@
 				assertArrayEquals(["0"],
 						evaluateXPath(".", "0"));
 				// no context
-				assertArrayEquals([],
-						evaluateXPath(".", null));
-				assertArrayEquals([],
-						evaluateXPath(".", undefined));
-				assertArrayEquals([],
-						evaluateXPath("."));
+				assertEquals("XPDY0002",
+						evaluateXPathError(".", null));
+				assertEquals("XPDY0002",
+						evaluateXPathError(".", undefined));
+				assertEquals("XPDY0002",
+						evaluateXPathError("."));
 			}
 
 			function testFilter() {
