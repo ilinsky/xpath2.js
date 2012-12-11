@@ -212,12 +212,19 @@ fStaticContext_defineSystemFunction("encode-for-uri",	[[cXSString, '?']],	functi
 
 // fn:iri-to-uri($iri as xs:string?) as xs:string
 fStaticContext_defineSystemFunction("iri-to-uri",		[[cXSString, '?']],	function(oValue) {
-	throw "Function '" + "iri-to-uri" + "' not implemented";
+	return new cXSString(oValue == null ? '' : window.encodeURI(window.decodeURI(oValue)));
 });
 
 // fn:escape-html-uri($uri as xs:string?) as xs:string
 fStaticContext_defineSystemFunction("escape-html-uri",	[[cXSString, '?']],	function(oValue) {
-	throw "Function '" + "escape-html-uri" + "' not implemented";
+	if (oValue == null || oValue.valueOf() == '')
+		return new cXSString('');
+	// Encode
+	var aValue	= oValue.valueOf().split('');
+	for (var nIndex = 0, nLength = aValue.length, nCode; nIndex < nLength; nIndex++)
+		if ((nCode = aValue[nIndex].charCodeAt(0)) < 32 || nCode > 126)
+			aValue[nIndex]	= window.encodeURIComponent(aValue[nIndex]);
+	return new cXSString(aValue.join(''));
 });
 
 
