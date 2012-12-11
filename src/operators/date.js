@@ -89,47 +89,47 @@ hStaticContext_operators["duration-equal"]	= function(oLeft, oRight) {
 
 // op:dateTime-equal($arg1 as xs:dateTime, $arg2 as xs:dateTime) as xs:boolean
 hStaticContext_operators["dateTime-equal"]	= function(oLeft, oRight) {
-	return fOperator_compareDateTime(oLeft, oRight, 'eq');
+	return fOperator_compareDateTimes(oLeft, oRight, 'eq');
 };
 
 // op:dateTime-less-than($arg1 as xs:dateTime, $arg2 as xs:dateTime) as xs:boolean
 hStaticContext_operators["dateTime-less-than"]	= function(oLeft, oRight) {
-	return fOperator_compareDateTime(oLeft, oRight, 'lt');
+	return fOperator_compareDateTimes(oLeft, oRight, 'lt');
 };
 
 //op:dateTime-greater-than($arg1 as xs:dateTime, $arg2 as xs:dateTime) as xs:boolean
 hStaticContext_operators["dateTime-greater-than"]	= function(oLeft, oRight) {
-	return fOperator_compareDateTime(oLeft, oRight, 'gt');
+	return fOperator_compareDateTimes(oLeft, oRight, 'gt');
 };
 
 // op:date-equal($arg1 as xs:date, $arg2 as xs:date) as xs:boolean
 hStaticContext_operators["date-equal"]	= function(oLeft, oRight) {
-	return fOperator_compareDateTime(oLeft, oRight, 'eq');
+	return fOperator_compareDates(oLeft, oRight, 'eq');
 };
 
 // op:date-less-than($arg1 as xs:date, $arg2 as xs:date) as xs:boolean
 hStaticContext_operators["date-less-than"]	= function(oLeft, oRight) {
-	return fOperator_compareDateTime(oLeft, oRight, 'lt');
+	return fOperator_compareDates(oLeft, oRight, 'lt');
 };
 
 // op:date-greater-than($arg1 as xs:date, $arg2 as xs:date) as xs:boolean
 hStaticContext_operators["date-greater-than"]	= function(oLeft, oRight) {
-	return fOperator_compareDateTime(oLeft, oRight, 'gt');
+	return fOperator_compareDates(oLeft, oRight, 'gt');
 };
 
 // op:time-equal($arg1 as xs:time, $arg2 as xs:time) as xs:boolean
 hStaticContext_operators["time-equal"]	= function(oLeft, oRight) {
-	return new cXSBoolean(fOperator_time_toSeconds(oLeft) == fOperator_time_toSeconds(oRight));
+	return fOperator_compareTimes(oLeft, oRight, 'eq');
 };
 
 // op:time-less-than($arg1 as xs:time, $arg2 as xs:time) as xs:boolean
 hStaticContext_operators["time-less-than"]	= function(oLeft, oRight) {
-	return new cXSBoolean(fOperator_time_toSeconds(oLeft) < fOperator_time_toSeconds(oRight));
+	return fOperator_compareTimes(oLeft, oRight, 'lt');
 };
 
 // op:time-greater-than($arg1 as xs:time, $arg2 as xs:time) as xs:boolean
 hStaticContext_operators["time-greater-than"]	= function(oLeft, oRight) {
-	return new cXSBoolean(fOperator_time_toSeconds(oLeft) > fOperator_time_toSeconds(oRight));
+	return fOperator_compareTimes(oLeft, oRight, 'gt');
 };
 
 // op:gYearMonth-equal
@@ -266,12 +266,17 @@ hStaticContext_operators["subtract-dayTimeDuration-from-time"]	= function(oLeft,
 	return fXSTime_normalize(oValue);
 };
 
-function fOperator_compareDateTime(oLeft, oRight, sComparator) {
-	// Cast to Date to DateTime
-	if (oLeft instanceof cXSDate) {
-		oLeft	= cXSDateTime.cast(oLeft);
-		oRight	= cXSDateTime.cast(oRight);
-	}
+function fOperator_compareTimes(oLeft, oRight, sComparator) {
+	var nLeft	= fOperator_time_toSeconds(oLeft),
+		nRight	= fOperator_time_toSeconds(oRight);
+	return new cXSBoolean(sComparator == 'lt' ? nLeft < nRight : sComparator == 'gt' ? nLeft > nRight : nLeft == nRight);
+};
+
+function fOperator_compareDates(oLeft, oRight, sComparator) {
+	return fOperator_compareDateTimes(cXSDateTime.cast(oLeft), cXSDateTime.cast(oRight), sComparator);
+};
+
+function fOperator_compareDateTimes(oLeft, oRight, sComparator) {
 	// Adjust object time zone to Z and compare as strings
 	var oTimezone	= new cXSDayTimeDuration(0, 0, 0, 0),
 		sLeft	= fFunction_dateTime_adjustTimezone(oLeft, oTimezone).toString(),
