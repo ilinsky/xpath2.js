@@ -199,7 +199,31 @@ hComparisonExpr_ValueComp_operators['eq']	= function(oLeft, oRight, oContext) {
 		if (oRight instanceof cXSDuration)
 			sOperator	= "duration-equal";
 	}
-	// skipped: Gregorian
+	else
+	if (oLeft instanceof cXSGYearMonth) {
+		if (oRight instanceof cXSGYearMonth)
+			sOperator	= "gYearMonth-equal";
+	}
+	else
+	if (oLeft instanceof cXSGYear) {
+		if (oRight instanceof cXSGYear)
+			sOperator	= "gYear-equal";
+	}
+	else
+	if (oLeft instanceof cXSGMonthDay) {
+		if (oRight instanceof cXSGMonthDay)
+			sOperator	= "gMonthDay-equal";
+	}
+	else
+	if (oLeft instanceof cXSGMonth) {
+		if (oRight instanceof cXSGMonth)
+			sOperator	= "gMonth-equal";
+	}
+	else
+	if (oLeft instanceof cXSGDay) {
+		if (oRight instanceof cXSGDay)
+			sOperator	= "gDay-equal";
+	}
 	// skipped: xs:anyURI (covered by xs:string)
 	else
 	if (oLeft instanceof cXSQName) {

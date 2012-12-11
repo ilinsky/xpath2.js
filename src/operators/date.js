@@ -132,12 +132,50 @@ hStaticContext_operators["time-greater-than"]	= function(oLeft, oRight) {
 	return fOperator_compareTimes(oLeft, oRight, 'gt');
 };
 
-// op:gYearMonth-equal
-// op:gYear-equal
-// op:gMonthDay-equal
-// op:gMonth-equal
-// op:gDay-equal
+// op:gYearMonth-equal($arg1 as xs:gYearMonth, $arg2 as xs:gYearMonth) as xs:boolean
+hStaticContext_operators["gYearMonth-equal"]	= function(oLeft, oRight) {
+	return fOperator_compareDateTimes(
+			new cXSDateTime(oLeft.year, oLeft.month, fXSDate_getDaysForYearMonth(oLeft.year, oLeft.month), 0, 0, 0, oLeft.timezone == null ? this.timezone : oLeft.timezone),
+			new cXSDateTime(oRight.year, oRight.month, fXSDate_getDaysForYearMonth(oRight.year, oRight.month), 0, 0, 0, oRight.timezone == null ? this.timezone : oRight.timezone),
+			'eq'
+	);
+};
 
+// op:gYear-equal($arg1 as xs:gYear, $arg2 as xs:gYear) as xs:boolean
+hStaticContext_operators["gYear-equal"]	= function(oLeft, oRight) {
+	return fOperator_compareDateTimes(
+			new cXSDateTime(oLeft.year, 1, 1, 0, 0, 0, oLeft.timezone == null ? this.timezone : oLeft.timezone),
+			new cXSDateTime(oRight.year, 1, 1, 0, 0, 0, oRight.timezone == null ? this.timezone : oRight.timezone),
+			'eq'
+	);
+};
+
+// op:gMonthDay-equal($arg1 as xs:gMonthDay, $arg2 as xs:gMonthDay) as xs:boolean
+hStaticContext_operators["gMonthDay-equal"]	= function(oLeft, oRight) {
+	return fOperator_compareDateTimes(
+			new cXSDateTime(1972, oLeft.month, oLeft.day, 0, 0, 0, oLeft.timezone == null ? this.timezone : oLeft.timezone),
+			new cXSDateTime(1972, oRight.month, oRight.day, 0, 0, 0, oRight.timezone == null ? this.timezone : oRight.timezone),
+			'eq'
+	);
+};
+
+// op:gMonth-equal($arg1 as xs:gMonth, $arg2 as xs:gMonth) as xs:boolean
+hStaticContext_operators["gMonth-equal"]	= function(oLeft, oRight) {
+	return fOperator_compareDateTimes(
+			new cXSDateTime(1972, oLeft.month, fXSDate_getDaysForYearMonth(1972, oRight.month), 0, 0, 0, oLeft.timezone == null ? this.timezone : oLeft.timezone),
+			new cXSDateTime(1972, oRight.month, fXSDate_getDaysForYearMonth(1972, oRight.month), 0, 0, 0, oRight.timezone == null ? this.timezone : oRight.timezone),
+			'eq'
+	);
+};
+
+// op:gDay-equal($arg1 as xs:gDay, $arg2 as xs:gDay) as xs:boolean
+hStaticContext_operators["gDay-equal"]	= function(oLeft, oRight) {
+	return fOperator_compareDateTimes(
+			new cXSDateTime(1972, 12, oLeft.day, 0, 0, 0, oLeft.timezone == null ? this.timezone : oLeft.timezone),
+			new cXSDateTime(1972, 12, oRight.day, 0, 0, 0, oRight.timezone == null ? this.timezone : oRight.timezone),
+			'eq'
+	);
+};
 
 // 10.6 Arithmetic Operators on Durations
 // op:add-yearMonthDurations($arg1 as xs:yearMonthDuration, $arg2 as xs:yearMonthDuration) as xs:yearMonthDuration

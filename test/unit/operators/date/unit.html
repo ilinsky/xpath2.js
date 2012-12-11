@@ -224,8 +224,54 @@
 				assertEquals(true,
 						evaluateXPathSingle('xs:time("23:59:59") gt xs:time("24:00:00")'));
 			}
-			// Gregoran calendar date types not implemented, so not tested for now
 
+			// Gregorian
+			function testGYearMonthEqual() {
+				assertEquals(false,
+						evaluateXPathSingle('xs:gYearMonth("1976-02") eq xs:gYearMonth("1976-03Z")'));
+				assertEquals(false,
+						evaluateXPathSingle('xs:gYearMonth("1976-03") eq xs:gYearMonth("1976-03Z")'));
+				// Not W3C test
+				assertEquals(true,
+						evaluateXPathSingle('xs:gYearMonth("1976-03Z") eq xs:gYearMonth("1976-03Z")'));
+			}
+
+			function testGYearEqual() {
+				assertEquals(true,
+						evaluateXPathSingle('xs:gYear("1976-05:00") eq xs:gYear("1976-05:00")'));
+			}
+
+			function testGYearEqual_12_00() {
+				assertEquals(false,
+						evaluateXPathSingle('xs:gYear("2005-12:00") eq xs:gYear("2005+12:00")'));
+			}
+
+			function testGMonthDayEqual() {
+				assertEquals(true,
+						evaluateXPathSingle('xs:gMonthDay("--12-25-14:00") eq xs:gMonthDay("--12-26+10:00")'));
+				assertEquals(false,
+						evaluateXPathSingle('xs:gMonthDay("--12-25-05:00") eq xs:gMonthDay("--12-26Z")'));
+			}
+
+			function testGMonthEqual() {
+				assertEquals(false,
+						evaluateXPathSingle('xs:gMonth("--12-14:00") eq xs:gMonth("--12+10:00")'));
+				assertEquals(false,
+						evaluateXPathSingle('xs:gMonth("--12") eq xs:gMonth("--12Z")'));
+				// Not W3C test
+				assertEquals(true,
+						evaluateXPathSingle('xs:gMonth("--12+00:00") eq xs:gMonth("--12Z")'));
+			}
+
+			function testGDayEqual() {
+				assertEquals(false,
+						evaluateXPathSingle('xs:gDay("---25-14:00") eq xs:gDay("---25+10:00")'));
+				assertEquals(false,
+						evaluateXPathSingle('xs:gDay("---12") eq xs:gDay("---12Z")'));
+				// Not W3C test
+				assertEquals(true,
+						evaluateXPathSingle('xs:gDay("---12+00:00") eq xs:gDay("---12Z")'));
+			}
 
 			// 10.6 Arithmetic Operators on Durations
 			function testAddYearMonthDurations() {

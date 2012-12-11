@@ -56,7 +56,6 @@ cXSDate.cast	= function(vValue) {
 		}
 		throw new cException("FORG0001");
 	}
-	// TODO: Gregorian
 	if (vValue instanceof cXSDateTime)
 		return new cXSDate(vValue.year, vValue.month, vValue.day, vValue.timezone, vValue.negative);
 	//

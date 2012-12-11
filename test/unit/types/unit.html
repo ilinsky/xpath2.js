@@ -208,6 +208,51 @@
 						evaluateXPathSingle('fn:string(xs:dateTime("2012-10-30T24:00:00.000+02:00"))'));
 			}
 
+			function testXSGYearMonth() {
+				assertEquals("1976-02",
+						evaluateXPathSingle('fn:string(xs:gYearMonth("1976-02"))'));
+				assertEquals("1976-02Z",
+						evaluateXPathSingle('fn:string(xs:gYearMonth("1976-02Z"))'));
+				assertEquals("1976-02+02:00",
+						evaluateXPathSingle('fn:string(xs:gYearMonth("1976-02+02:00"))'));
+			}
+
+			function testXSGYear() {
+				assertEquals("1976",
+						evaluateXPathSingle('fn:string(xs:gYear("1976"))'));
+				assertEquals("1976Z",
+						evaluateXPathSingle('fn:string(xs:gYear("1976Z"))'));
+				assertEquals("1976+02:00",
+						evaluateXPathSingle('fn:string(xs:gYear("1976+02:00"))'));
+			}
+
+			function testXSGMonthDay() {
+				assertEquals("--12-25",
+						evaluateXPathSingle('fn:string(xs:gMonthDay("--12-25"))'));
+				assertEquals("--12-25Z",
+						evaluateXPathSingle('fn:string(xs:gMonthDay("--12-25Z"))'));
+				assertEquals("--12-25+02:00",
+						evaluateXPathSingle('fn:string(xs:gMonthDay("--12-25+02:00"))'));
+			}
+
+			function testXSGMonth() {
+				assertEquals("--12",
+						evaluateXPathSingle('fn:string(xs:gMonth("--12"))'));
+				assertEquals("--12Z",
+						evaluateXPathSingle('fn:string(xs:gMonth("--12Z"))'));
+				assertEquals("--12+02:00",
+						evaluateXPathSingle('fn:string(xs:gMonth("--12+02:00"))'));
+			}
+
+			function testXSGDay() {
+				assertEquals("---12",
+						evaluateXPathSingle('fn:string(xs:gDay("---12"))'));
+				assertEquals("---12Z",
+						evaluateXPathSingle('fn:string(xs:gDay("---12Z"))'));
+				assertEquals("---12+02:00",
+						evaluateXPathSingle('fn:string(xs:gDay("---12+02:00"))'));
+			}
+
 			// durations
 			function testXSYearMonthDuration() {
 				assertEquals("P2Y3M",
