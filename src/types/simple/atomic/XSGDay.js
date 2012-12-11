@@ -37,24 +37,6 @@ cXSGDay.cast	= function(vValue) {
 			return new cXSGDay(	nDay,
 								aMatch[2] ? aMatch[2] == 'Z' ? 0 : (aMatch[3] == '-' ? -1 : 1) * (aMatch[4] * 60 + aMatch[5] * 1) : null
 			);
-			/*
-			var nYear	= +aMatch[2],
-				nMonth	= +aMatch[3],
-				nDay	= +aMatch[4];
-			if (nDay - 1 < fXSDate_getDaysForYearMonth(nYear, nMonth))
-				return new cXSDate( nYear,
-									nMonth,
-									nDay,
-									aMatch[5] ? aMatch[5] == 'Z' ? 0 : (aMatch[6] == '-' ? -1 : 1) * (aMatch[7] * 60 + aMatch[8] * 1) : null,
-									aMatch[1] == '-'
-				);
-			*/
-			//
-			throw new cException("FORG0001"
-//->Debug
-					, "Invalid date '" + vValue + "' (Non-existent date)"
-//<-Debug
-			);
 		}
 		throw new cException("FORG0001");
 	}
