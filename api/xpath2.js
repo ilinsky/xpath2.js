@@ -7,13 +7,16 @@
  *
  */
 
-var oXPath2	= new cEvaluator;
+var oXPath2Evaluator	= new cEvaluator,
+	oXPath2Classes		= oXPath2Evaluator.classes = {};
 
 //
-oXPath2.classes	= {};
-oXPath2.classes.Exception		= cException;
-oXPath2.classes.Expression		= cExpression;
-oXPath2.classes.DOMAdapter		= cDOMAdapter;
-oXPath2.classes.StaticContext	= cStaticContext;
-oXPath2.classes.DynamicContext	= cDynamicContext;
-oXPath2.classes.StringCollator	= cStringCollator;
+oXPath2Classes.Exception		= cException;
+oXPath2Classes.Expression		= cExpression;
+oXPath2Classes.DOMAdapter		= cDOMAdapter;
+oXPath2Classes.StaticContext	= cStaticContext;
+oXPath2Classes.DynamicContext	= cDynamicContext;
+oXPath2Classes.StringCollator	= cStringCollator;
+
+// Publish object
+window.xpath2	= oXPath2Evaluator;
