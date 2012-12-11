@@ -13,12 +13,11 @@
 
  Structure:
  ===============
-   api/ - APIs sources
-   src/ - Engine sources
-   adapters/ - Adapters sources
+   api/ - Sample API sources
+   src/ - XPath 2.0 engine sources
    test/unit/ - unit.js tests (requires https://github.com/ilinsky/unit.js)
 
  Usage:
  ===============
-   Running on sources: include an API file from the root folder.
+   Running on sources: include xpath2.js API file from the root folder.
    When no Apache/.htaccess/PHP configured, source files will be loaded by JS.
