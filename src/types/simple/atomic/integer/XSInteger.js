@@ -26,8 +26,15 @@ cXSInteger.cast	= function(vValue) {
 	}
 	if (vValue instanceof cXSBoolean)
 		return new cXSInteger(vValue * 1);
-	if (fXSAnyAtomicType_isNumeric(vValue))
-		return new cXSInteger(~~vValue.value);
+	if (fXSAnyAtomicType_isNumeric(vValue)) {
+		if (fIsNaN(vValue) || !fIsFinite(vValue))
+			throw new cException("FOCA0002"
+//->Debug
+					, "Cannot convert '" + vValue + "' to xs:integer"
+//<-Debug
+			);
+		return new cXSInteger(~~vValue);
+	}
 	//
 	throw new cException("XPTY0004"
 //->Debug
