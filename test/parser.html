@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<title>XPath 2.0 parse tests</title>
-		<script type="text/javascript" src="../xpath2-dom.js"></script>
+		<script type="text/javascript" src="../xpath2.js"></script>
 		<style>
 			body {
 				font-family: Arial;
@@ -403,6 +403,11 @@
 				["-+5",		true],
 			[""]
 			];
+
+			var oStaticContext	= new xpath2.classes.StaticContext;
+			oStaticContext.defaultElementNamespace	= "http://www.w3.org/1999/xhtml";
+			oStaticContext.namespaceResolver		= fNSResolver;
+
 			var aHtml	= [];
 			for (var n = 0, r1, r2, s1, s2, b1, b2, n1 = 0, n2 = 0, t = 0; n < aParseTests.length; n++) {
 				aHtml.push('<tr>');
@@ -417,7 +422,7 @@
 					b1	= true;
 					s1	= '&nbsp;';
 					try {
-						r1	= XPath2Evaluator.prototype.createExpression.call(document, aParseTests[n][0], fNSResolver);
+						r1	= xpath2.compile(aParseTests[n][0], oStaticContext);
 					}
 					catch (e) {
 						b1	= false;
