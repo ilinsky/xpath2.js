@@ -267,6 +267,11 @@ hStaticContext_operators["subtract-dayTimeDuration-from-time"]	= function(oLeft,
 };
 
 function fOperator_compareDateTime(oLeft, oRight, sComparator) {
+	// Cast to Date to DateTime
+	if (oLeft instanceof cXSDate) {
+		oLeft	= cXSDateTime.cast(oLeft);
+		oRight	= cXSDateTime.cast(oRight);
+	}
 	// Adjust object time zone to Z and compare as strings
 	var oTimezone	= new cXSDayTimeDuration(0, 0, 0, 0),
 		sLeft	= fFunction_dateTime_adjustTimezone(oLeft, oTimezone).toString(),
