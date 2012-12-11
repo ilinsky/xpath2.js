@@ -34,7 +34,7 @@ function fAtomicType_parse (oLexer, oStaticContext) {
 cAtomicType.prototype.test	= function(vItem, oContext) {
 	// Test
 	var sUri	= (this.namespaceURI ? '{' + this.namespaceURI + '}' : '') + this.localName,
-		cType	= this.namespaceURI == sNS_SCHEMA ? hStaticContext_dataTypes[this.localName] : oContext.staticContext.getDataType(sUri);
+		cType	= this.namespaceURI == sNS_XSD ? hStaticContext_dataTypes[this.localName] : oContext.staticContext.getDataType(sUri);
 	if (cType)
 		return vItem instanceof cType;
 	//
@@ -48,7 +48,7 @@ cAtomicType.prototype.test	= function(vItem, oContext) {
 cAtomicType.prototype.cast	= function(vItem, oContext) {
 	// Cast
 	var sUri	= (this.namespaceURI ? '{' + this.namespaceURI + '}' : '') + this.localName,
-		cType	= this.namespaceURI == sNS_SCHEMA ? hStaticContext_dataTypes[this.localName] : oContext.staticContext.getDataType(sUri);
+		cType	= this.namespaceURI == sNS_XSD ? hStaticContext_dataTypes[this.localName] : oContext.staticContext.getDataType(sUri);
 	if (cType)
 		return cType.cast(vItem);
 	//

@@ -41,7 +41,7 @@ var cString		= window.String,
 		};
 	})();
 
-var sNS_SCHEMA	= "http://www.w3.org/2001/XMLSchema",
-	sNS_XPFUNC	= "http://www.w3.org/2005/xpath-functions",
-	sNS_XNS		= "http://www.w3.org/2000/xmlns/",
-	sNS_XML		= "http://www.w3.org/XML/1998/namespace";
+var sNS_XSD	= "http://www.w3.org/2001/XMLSchema",
+	sNS_XPF	= "http://www.w3.org/2005/xpath-functions",
+	sNS_XNS	= "http://www.w3.org/2000/xmlns/",
+	sNS_XML	= "http://www.w3.org/XML/1998/namespace";

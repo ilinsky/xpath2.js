@@ -81,7 +81,7 @@ fStaticContext_defineSystemFunction("compare",	[[cXSString, '?'], [cXSString, '?
 	if (arguments.length > 2)
 		sCollation	= oCollation.valueOf();
 
-	vCollation	= sCollation == sNS_XPFUNC + "/collation/codepoint" ? oCodepointStringCollator : this.staticContext.getCollation(sCollation);
+	vCollation	= sCollation == sNS_XPF + "/collation/codepoint" ? oCodepointStringCollator : this.staticContext.getCollation(sCollation);
 	if (!vCollation)
 		throw new cException("FOCH0002"
 //->Debug

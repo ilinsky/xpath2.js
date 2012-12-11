@@ -24,7 +24,7 @@ cStaticContext.prototype.functions	= null;
 cStaticContext.prototype.defaultFunctionNamespace	= null;
 //
 cStaticContext.prototype.collations	= null;
-cStaticContext.prototype.defaultCollationName		= sNS_XPFUNC + "/collation/codepoint";
+cStaticContext.prototype.defaultCollationName		= sNS_XPF + "/collation/codepoint";
 //
 cStaticContext.prototype.collections	= null;
 //
@@ -37,14 +37,14 @@ var rStaticContext_uri	= /^(?:\{([^\}]+)\})?(.+)$/;
 cStaticContext.prototype.setDataType		= function(sUri, fFunction) {
 	var aMatch	= sUri.match(rStaticContext_uri);
 	if (aMatch)
-		if (aMatch[1] != sNS_SCHEMA)
+		if (aMatch[1] != sNS_XSD)
 			this.dataTypes[sUri]	= fFunction;
 };
 
 cStaticContext.prototype.getDataType		= function(sUri) {
 	var aMatch	= sUri.match(rStaticContext_uri);
 	if (aMatch)
-		return aMatch[1] == sNS_SCHEMA ? hStaticContext_dataTypes[cRegExp.$2] : this.dataTypes[sUri];
+		return aMatch[1] == sNS_XSD ? hStaticContext_dataTypes[cRegExp.$2] : this.dataTypes[sUri];
 };
 
 cStaticContext.prototype.setDocument		= function(sUri, fFunction) {
@@ -54,14 +54,14 @@ cStaticContext.prototype.setDocument		= function(sUri, fFunction) {
 cStaticContext.prototype.setFunction		= function(sUri, fFunction) {
 	var aMatch	= sUri.match(rStaticContext_uri);
 	if (aMatch)
-		if (aMatch[1] != sNS_XPFUNC)
+		if (aMatch[1] != sNS_XPF)
 			this.functions[sUri]	= fFunction;
 };
 
 cStaticContext.prototype.getFunction		= function(sUri) {
 	var aMatch	= sUri.match(rStaticContext_uri);
 	if (aMatch)
-		return aMatch[1] == sNS_XPFUNC ? hStaticContext_functions[cRegExp.$2] : this.functions[sUri];
+		return aMatch[1] == sNS_XPF ? hStaticContext_functions[cRegExp.$2] : this.functions[sUri];
 };
 
 cStaticContext.prototype.setCollation		= function(sUri, fFunction) {
@@ -84,9 +84,9 @@ cStaticContext.prototype.getURIForPrefix	= function(sPrefix) {
 	if (fResolver instanceof cFunction && (sNameSpaceURI = fResolver.call(oResolver, sPrefix)))
 		return sNameSpaceURI;
 	if (sPrefix == 'fn')
-		return sNS_XPFUNC;
+		return sNS_XPF;
 	if (sPrefix == 'xs')
-		return sNS_SCHEMA;
+		return sNS_XSD;
 	if (sPrefix == "xml")
 		return sNS_XML;
 	if (sPrefix == "xmlns")

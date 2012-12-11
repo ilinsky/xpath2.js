@@ -26,7 +26,7 @@ function fPathExpr_parse (oLexer, oStaticContext) {
 	// Parse first step
 	if (sSlash == sDoubleSlash || sSlash == sSingleSlash) {
 		oLexer.next();
-		oPathExpr.items.push(new cFunctionCall(null, "root", sNS_XPFUNC));
+		oPathExpr.items.push(new cFunctionCall(null, "root", sNS_XPF));
 		//
 		if (sSlash == sDoubleSlash)
 			oPathExpr.items.push(new cAxisStep("descendant-or-self", new cKindTest("node")));

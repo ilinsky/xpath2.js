@@ -74,7 +74,7 @@ cFunctionCall.prototype.evaluate	= function (oContext) {
 
 	var sUri	= (this.namespaceURI ? '{' + this.namespaceURI + '}' : '') + this.localName;
 	// Call function
-	if (this.namespaceURI == sNS_XPFUNC) {
+	if (this.namespaceURI == sNS_XPF) {
 		if (fFunction = hStaticContext_functions[this.localName]) {
 			// Validate/Cast arguments
 			if (aParameters = hStaticContext_signatures[this.localName])
@@ -91,7 +91,7 @@ cFunctionCall.prototype.evaluate	= function (oContext) {
 		);
 	}
 	else
-	if (this.namespaceURI == sNS_SCHEMA) {
+	if (this.namespaceURI == sNS_XSD) {
 		if ((fFunction = hStaticContext_dataTypes[this.localName]) && this.localName != "NOTATION" && this.localName != "anyAtomicType") {
 			//
 			fFunctionCall_prepare(this.localName, [[cXSAnyAtomicType]], fFunction, aArguments, oContext);
