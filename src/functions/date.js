@@ -152,27 +152,18 @@ fStaticContext_defineSystemFunction("timezone-from-time",	[[cXSTime, '?']],	func
 // fn:adjust-dateTime-to-timezone($arg as xs:dateTime?) as xs:dateTime?
 // fn:adjust-dateTime-to-timezone($arg as xs:dateTime?, $timezone as xs:dayTimeDuration?) as xs:dateTime?
 fStaticContext_defineSystemFunction("adjust-dateTime-to-timezone",	[[cXSDateTime, '?'], [cXSDayTimeDuration, '?', true]],	function(oDateTime, oDayTimeDuration) {
-	if (oDateTime == null)
-		return null;
-	//
 	return fFunction_dateTime_adjustTimezone(oDateTime, arguments.length > 1 && oDayTimeDuration != null ? arguments.length > 1 ? oDayTimeDuration : this.timezone : null);
 });
 
 // fn:adjust-date-to-timezone($arg as xs:date?) as xs:date?
 // fn:adjust-date-to-timezone($arg as xs:date?, $timezone as xs:dayTimeDuration?) as xs:date?
 fStaticContext_defineSystemFunction("adjust-date-to-timezone",		[[cXSDate, '?'], [cXSDayTimeDuration, '?', true]],	function(oDate, oDayTimeDuration) {
-	if (oDate == null)
-		return null;
-	//
 	return fFunction_dateTime_adjustTimezone(oDate, arguments.length > 1 && oDayTimeDuration != null ? arguments.length > 1 ? oDayTimeDuration : this.timezone : null);
 });
 
 // fn:adjust-time-to-timezone($arg as xs:time?) as xs:time?
 // fn:adjust-time-to-timezone($arg as xs:time?, $timezone as xs:dayTimeDuration?) as xs:time?
 fStaticContext_defineSystemFunction("adjust-time-to-timezone",		[[cXSTime, '?'], [cXSDayTimeDuration, '?', true]],	function(oTime, oDayTimeDuration) {
-	if (oTime == null)
-		return null;
-	//
 	return fFunction_dateTime_adjustTimezone(oTime, arguments.length > 1 && oDayTimeDuration != null ? arguments.length > 1 ? oDayTimeDuration : this.timezone : null);
 });
 
@@ -211,6 +202,9 @@ function fFunction_dateTime_getComponent(oDateTime, sName) {
 
 //
 function fFunction_dateTime_adjustTimezone(oDateTime, oTimezone) {
+	if (oDateTime == null)
+		return null;
+
 	// Create a copy
 	var oValue;
 	if (oDateTime instanceof cXSDate)
