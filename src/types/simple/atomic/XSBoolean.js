@@ -32,7 +32,7 @@ cXSBoolean.cast	= function(vValue) {
 	if (vValue instanceof cXSString || vValue instanceof cXSUntypedAtomic) {
 		var aMatch;
 		if (aMatch = fString_trim(vValue).match(rXSBoolean))
-			return new cXSBoolean(aMatch[1] == "1" || aMatch[1] == "true");
+			return new cXSBoolean(aMatch[1] == '1' || aMatch[1] == "true");
 		throw new cException("FORG0001");
 	}
 	if (fXSAnyAtomicType_isNumeric(vValue))
