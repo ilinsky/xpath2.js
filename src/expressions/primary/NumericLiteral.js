@@ -28,10 +28,10 @@ function fNumericLiteral_parseValue(sValue) {
 	var aMatch	= sValue.match(rNumericLiteral);
 	if (aMatch) {
 		var cType	= cXSInteger;
-		if (typeof aMatch[5] != "undefined")
+		if (aMatch[5])
 			cType	= cXSDouble;
 		else
-		if (typeof aMatch[2] != "undefined" || typeof aMatch[3] != "undefined")
+		if (aMatch[2] || aMatch[3])
 			cType	= cXSDecimal;
 		return new cType(+sValue);
 	}
