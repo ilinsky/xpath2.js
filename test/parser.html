@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<title>XPath 2.0 parse tests</title>
-		<script type="text/javascript" src="../xpath2.js"></script>
+		<script type="text/javascript" src="../xpath.js"></script>
 		<style>
 			body {
 				font-family: Arial;
@@ -404,7 +404,7 @@
 			[""]
 			];
 
-			var oStaticContext	= new xpath2.classes.StaticContext;
+			var oStaticContext	= new xpath.classes.StaticContext;
 			oStaticContext.defaultElementNamespace	= "http://www.w3.org/1999/xhtml";
 			oStaticContext.namespaceResolver		= fNSResolver;
 
@@ -418,11 +418,11 @@
 					t++;
 					aHtml.push(	'<td>' + aParseTests[n][0] + '</td>');
 					aHtml.push(	'<td>' + (aParseTests[n][1] ? '&nbsp' : 'illegal') + '</td>');
-					// XPath2.js
+					// XPath.js
 					b1	= true;
 					s1	= '&nbsp;';
 					try {
-						r1	= xpath2.compile(aParseTests[n][0], oStaticContext);
+						r1	= xpath.compile(aParseTests[n][0], oStaticContext);
 					}
 					catch (e) {
 						b1	= false;
@@ -454,7 +454,7 @@
 									'<tr>' +
 										'<th>Expression</th>' +
 										'<th>Throws</th>' +
-										'<th>XPath2.js</th>' +
+										'<th>XPath.js</th>' +
 										'<th>Exception</th>' +
 										'<th>Native</th>' +
 										'<th>Exception</th>' +

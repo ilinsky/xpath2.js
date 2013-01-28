@@ -1,5 +1,5 @@
  ------------------------------------
- XPath2.js - Pure JavaScript implementation of XPath 2.0 parser and evaluator
+ XPath.js - Pure JavaScript implementation of XPath 2.0 parser and evaluator
  ------------------------------------
  Copyright (c) 2012 Sergey Ilinsky
  Dual licensed under the MIT and GPL
@@ -7,7 +7,7 @@
 
  About:
  ===============
-   XPath2.js is an open-source XPath 2.0 implementation in JavaScript.
+   XPath.js is an open-source XPath 2.0 implementation in JavaScript.
    The core engine is DOM-agnostic, it can be used with any DOM via custom
    DOMAdapter implementation. Internally engine operates XML Schema data types.
 
@@ -19,5 +19,5 @@
 
  Usage:
  ===============
-   Running on sources: include xpath2.js API file from the root folder.
+   Running on sources: include xpath.js API file from the root folder.
    When no Apache/.htaccess/PHP configured, source files will be loaded by JS.

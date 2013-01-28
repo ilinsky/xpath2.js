@@ -8,16 +8,16 @@
 		<script type="text/javascript" src="../../jsUnitClient.js"></script>
 
 		<!-- Library -->
-		<script type="text/javascript" src="../../../../xpath2.js"></script>
+		<script type="text/javascript" src="../../../../xpath.js"></script>
 
 		<!-- Suite definition -->
 		<script type="text/javascript">
-		//	XPath2.DOMAdapter	= BDOMAdapter;
-		//	XPath2.staticContext.setDefaultElementNamespace("http://www.w3.org/1999/xhtml");
-		//	XPath2.staticContext.setTimezoneOffset(-60 * 5);	"-05:00"
+		//	XPath.DOMAdapter	= BDOMAdapter;
+		//	XPath.staticContext.setDefaultElementNamespace("http://www.w3.org/1999/xhtml");
+		//	XPath.staticContext.setTimezoneOffset(-60 * 5);	"-05:00"
 			// Helper function
 			function evaluateXPath(sXPath) {
-				return xpath2.evaluate(sXPath, document);
+				return xpath.evaluate(sXPath, document);
 			}
 
 			function evaluateXPathSingle(sXPath) {
@@ -165,7 +165,7 @@
 		</script>
 	</head>
 	<body>
-		<p>XPath2.js JsUnit unit page</p>
+		<p>XPath.js JsUnit unit page</p>
 		<div id="test_1">
 			<div>
 				<div id="test_2">test_2_text</div>

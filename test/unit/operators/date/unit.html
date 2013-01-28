@@ -8,13 +8,13 @@
 		<script type="text/javascript" src="../../jsUnitClient.js"></script>
 
 		<!-- Library -->
-		<script type="text/javascript" src="../../../../xpath2.js"></script>
+		<script type="text/javascript" src="../../../../xpath.js"></script>
 
 		<!-- Suite definition -->
 		<script type="text/javascript">
 			// Helper function
 			function evaluateXPath(sXPath) {
-				return xpath2.evaluate(sXPath);
+				return xpath.evaluate(sXPath);
 			}
 			function evaluateXPathSingle(sXPath) {
 				return evaluateXPath(sXPath)[0];
@@ -423,6 +423,6 @@
 		</script>
 	</head>
 	<body>
-		<p>XPath2.js JsUnit unit page</p>
+		<p>XPath.js JsUnit unit page</p>
 	</body>
 </html>

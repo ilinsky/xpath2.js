@@ -2,4 +2,4 @@
 RewriteEngine on
 
 ##
-RewriteRule xpath2.js res/assemble.php?path=../api/
+RewriteRule xpath.js res/assemble.php?path=../api/

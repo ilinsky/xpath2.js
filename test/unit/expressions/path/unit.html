@@ -9,18 +9,18 @@
 		<script type="text/javascript" src="../../jsUnitClient.js"></script>
 
 		<!-- Library -->
-		<script type="text/javascript" src="../../../../xpath2.js"></script>
+		<script type="text/javascript" src="../../../../xpath.js"></script>
 
 		<!-- Suite definition -->
 		<script type="text/javascript">
-			xpath2.defaultStaticContext.defaultElementNamespace	= "http://www.w3.org/1999/xhtml";
+			xpath.defaultStaticContext.defaultElementNamespace	= "http://www.w3.org/1999/xhtml";
 			// Helper function
 			function evaluateXPath(sXPath, oContext) {
-				return xpath2.evaluate(sXPath, oContext);
+				return xpath.evaluate(sXPath, oContext);
 			}
 
 			function evaluateXPathWithDocument(sXPath) {
-				return xpath2.evaluate(sXPath, document);
+				return xpath.evaluate(sXPath, document);
 			}
 
 			// Kind Tests

@@ -7,7 +7,7 @@
 var JsUnitClient	= (function() {
 
 	var sBaseUriUnitJs	= '../../../unit.js/';
-	var sBaseUriInclude	= '../../../xpath2.js/';	// Source version
+	var sBaseUriInclude	= '../../../xpath.js/';	// Source version
 
 	function fGetUriComponents(sUri) {
 		var aResult	= sUri.match(/^(([^:\/?#]+):)?(\/\/([^\/?#]*))?([^?#]*)(\\?([^#]*))?(#(.*))?/);

@@ -1,6 +1,6 @@
-# XPath 2 engine
+# XPath engine
 ../src/.files
 # API implementation
 classes/Evaluator.js
 #
-xpath2.js
+xpath.js
