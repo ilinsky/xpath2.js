@@ -60,8 +60,8 @@ fStaticContext_defineSystemFunction("index-of",	[[cXSAnyAtomicType, '*'], [cXSAn
 	// TODO: Implement collation
 
 	var oSequence	= [];
-	for (var nIndex = 0, nLength = oSequence1.length, vValue = oSearch.valueOf(); nIndex < nLength; nIndex++)
-		if (oSequence1[nIndex].valueOf() === vValue)
+	for (var nIndex = 0, nLength = oSequence1.length, vLeft = (oSearch instanceof cXSUntypedAtomic ? cXSString.cast(oSearch) : oSearch).valueOf(); nIndex < nLength; nIndex++)
+		if ((oSequence1[nIndex] instanceof cXSUntypedAtomic ? cXSString.cast(oSequence1[nIndex]) : oSequence1[nIndex]).valueOf() === vLeft)
 			oSequence.push(new cXSInteger(nIndex + 1));
 
 	return oSequence;
@@ -84,10 +84,10 @@ fStaticContext_defineSystemFunction("distinct-values",	[[cXSAnyAtomicType, '*'],
 		return null;
 
 	var oSequence	= [];
-	for (var nIndex = 0, nLength = oSequence1.length, vValue; nIndex < nLength; nIndex++) {
-		vValue = oSequence1[nIndex].valueOf();
+	for (var nIndex = 0, nLength = oSequence1.length, vLeft; nIndex < nLength; nIndex++) {
+		vLeft	= (oSequence1[nIndex] instanceof cXSUntypedAtomic ? cXSString.cast(oSequence1[nIndex]) : oSequence1[nIndex]).valueOf();
 		for (var nRightIndex = 0, nRightLength = oSequence.length, bFound = false; (nRightIndex < nRightLength) &&!bFound; nRightIndex++)
-			if (oSequence[nRightIndex].valueOf() === vValue)
+			if ((oSequence[nRightIndex] instanceof cXSUntypedAtomic ? cXSString.cast(oSequence[nRightIndex]) : oSequence[nRightIndex]).valueOf() === vLeft)
 				bFound	= true;
 		if (!bFound)
 			oSequence.push(oSequence1[nIndex]);
