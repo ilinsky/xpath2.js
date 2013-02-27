@@ -98,13 +98,13 @@ fStaticContext_defineSystemFunction("distinct-values",	[[cXSAnyAtomicType, '*'],
 	for (var nIndex = 0, nLength = oSequence1.length, vLeft; nIndex < nLength; nIndex++) {
 		vLeft	= oSequence1[nIndex];
 		// Cast to XSString if Untyped
-		if (oSequence1[nIndex] instanceof cXSUntypedAtomic)
-			vLeft	= cXSString.cast(oSequence1[nIndex]);
+		if (vLeft instanceof cXSUntypedAtomic)
+			vLeft	= cXSString.cast(vLeft);
 		for (var nRightIndex = 0, nRightLength = oSequence.length, vRight, bFound = false; (nRightIndex < nRightLength) &&!bFound; nRightIndex++) {
 			vRight	= oSequence[nRightIndex];
 			// Cast to XSString if Untyped
-			if (oSequence[nRightIndex] instanceof cXSUntypedAtomic)
-				vRight	= cXSString.cast(oSequence[nRightIndex]);
+			if (vRight instanceof cXSUntypedAtomic)
+				vRight	= cXSString.cast(vRight);
 			//
 			if (vRight.valueOf() === vLeft.valueOf())
 				bFound	= true;
