@@ -59,10 +59,21 @@ fStaticContext_defineSystemFunction("index-of",	[[cXSAnyAtomicType, '*'], [cXSAn
 
 	// TODO: Implement collation
 
+	var vLeft	= oSearch;
+	// Cast to XSString if Untyped
+	if (vLeft instanceof cXSUntypedAtomic)
+		vLeft	= cXSString.cast(vLeft);
+
 	var oSequence	= [];
-	for (var nIndex = 0, nLength = oSequence1.length, vLeft = (oSearch instanceof cXSUntypedAtomic ? cXSString.cast(oSearch) : oSearch).valueOf(); nIndex < nLength; nIndex++)
-		if ((oSequence1[nIndex] instanceof cXSUntypedAtomic ? cXSString.cast(oSequence1[nIndex]) : oSequence1[nIndex]).valueOf() === vLeft)
+	for (var nIndex = 0, nLength = oSequence1.length, vRight; nIndex < nLength; nIndex++) {
+		vRight	= oSequence1[nIndex];
+		// Cast to XSString if Untyped
+		if (vRight instanceof cXSUntypedAtomic)
+			vRight	= cXSString.cast(vRight);
+		//
+		if (vRight.valueOf() === vLeft.valueOf())
 			oSequence.push(new cXSInteger(nIndex + 1));
+	}
 
 	return oSequence;
 });
@@ -85,10 +96,19 @@ fStaticContext_defineSystemFunction("distinct-values",	[[cXSAnyAtomicType, '*'],
 
 	var oSequence	= [];
 	for (var nIndex = 0, nLength = oSequence1.length, vLeft; nIndex < nLength; nIndex++) {
-		vLeft	= (oSequence1[nIndex] instanceof cXSUntypedAtomic ? cXSString.cast(oSequence1[nIndex]) : oSequence1[nIndex]).valueOf();
-		for (var nRightIndex = 0, nRightLength = oSequence.length, bFound = false; (nRightIndex < nRightLength) &&!bFound; nRightIndex++)
-			if ((oSequence[nRightIndex] instanceof cXSUntypedAtomic ? cXSString.cast(oSequence[nRightIndex]) : oSequence[nRightIndex]).valueOf() === vLeft)
+		vLeft	= oSequence1[nIndex];
+		// Cast to XSString if Untyped
+		if (oSequence1[nIndex] instanceof cXSUntypedAtomic)
+			vLeft	= cXSString.cast(oSequence1[nIndex]);
+		for (var nRightIndex = 0, nRightLength = oSequence.length, vRight, bFound = false; (nRightIndex < nRightLength) &&!bFound; nRightIndex++) {
+			vRight	= oSequence[nRightIndex];
+			// Cast to XSString if Untyped
+			if (oSequence[nRightIndex] instanceof cXSUntypedAtomic)
+				vRight	= cXSString.cast(oSequence[nRightIndex]);
+			//
+			if (vRight.valueOf() === vLeft.valueOf())
 				bFound	= true;
+		}
 		if (!bFound)
 			oSequence.push(oSequence1[nIndex]);
 	}
