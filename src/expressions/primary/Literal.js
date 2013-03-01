@@ -11,6 +11,8 @@ function cLiteral() {
 
 };
 
+cLiteral.prototype.value	= null;
+
 // Static members
 function fLiteral_parse (oLexer, oStaticContext) {
 	if (!oLexer.eof())
