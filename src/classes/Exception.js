@@ -7,9 +7,18 @@
  *
  */
 
-function cException(sCode, sMessage) {
+function cException(sCode
+//->Debug
+		, sMessage
+//<-Debug
+	) {
+
 	this.code		= sCode;
-	this.message	= sMessage || oException_messages[sCode];
+	this.message	=
+//->Debug
+					  sMessage ||
+//<-Debug
+					  oException_messages[sCode];
 };
 
 cException.prototype	= new cError;
