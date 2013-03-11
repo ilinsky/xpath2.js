@@ -80,7 +80,7 @@ cXSDateTime.cast	= function(vValue) {
 
 // Utilities
 function fXSDateTime_pad(vValue, nLength) {
-	sValue	= cString(vValue);
+	var sValue	= cString(vValue);
 	if (arguments.length < 2)
 		nLength	= 2;
 	return (sValue.length < nLength + 1 ? new cArray(nLength + 1 - sValue.length).join('0') : '') + sValue;
