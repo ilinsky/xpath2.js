@@ -35,8 +35,15 @@ cXSHexBinary.cast	= function(vValue) {
 			return new cXSHexBinary(aMatch[0].toUpperCase());
 		throw new cException("FORG0001");
 	}
-	if (vValue instanceof cXSBase64Binary)
-		throw "Casting from 'xs:" + "base64Binary"+ "' to 'xs:" + "hexBinary"+ "' not implemented";
+	if (vValue instanceof cXSBase64Binary) {
+		var sValue	= fWindow_atob(vValue.valueOf()),
+			aValue	= [];
+		for (var nIndex = 0, nLength = sValue.length, sLetter; nIndex < nLength; nIndex++) {
+			sLetter = sValue.charCodeAt(nIndex).toString(16);
+			aValue.push(new cArray(3 - sLetter.length).join('0') + sLetter);
+		}
+		return new cXSHexBinary(aValue.join(''));
+	}
 	//
 	throw new cException("XPTY0004"
 //->Debug

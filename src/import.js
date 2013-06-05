@@ -27,6 +27,9 @@ var cString		= window.String,
 	nNaN		= window.NaN,
 	nInfinity	= window.Infinity,
 	// Functions
+	fWindow_btoa	= window.btoa,
+	fWindow_atob	= window.atob,
+	fWindow_parseInt= window.parseInt,
 	fString_trim	=(function() {
 		return cString.prototype.trim ? function(sValue) {return cString(sValue).trim();} : function(sValue) {
 			return cString(sValue).replace(/^\s+|\s+$/g, '');
