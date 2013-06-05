@@ -231,7 +231,7 @@ hStaticContext_operators["divide-dayTimeDuration-by-dayTimeDuration"]	= function
 // 10.8 Arithmetic Operators on Durations, Dates and Times
 // op:subtract-dateTimes($arg1 as xs:dateTime, $arg2 as xs:dateTime) as xs:dayTimeDuration
 hStaticContext_operators["subtract-dateTimes"]	= function(oLeft, oRight) {
-	throw "Operator function '" + "subtract-dateTimes" + "' not implemented";
+    return fOperator_dayTimeDuration_fromSeconds(+new Date(oLeft) - +new Date(oRight));
 };
 
 // op:subtract-dates($arg1 as xs:date, $arg2 as xs:date) as xs:dayTimeDuration
