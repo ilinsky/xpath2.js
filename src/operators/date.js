@@ -345,8 +345,10 @@ function fOperator_addYearMonthDuration2DateTime(oLeft, oRight, sOperator) {
 function fOperator_addDayTimeDuration2DateTime(oLeft, oRight, sOperator) {
 	var oValue;
 	if (oLeft instanceof cXSDate) {
+		var nValue	= (oRight.hours * 60 + oRight.minutes) * 60 + oRight.seconds;
 		oValue	= new cXSDate(oLeft.year, oLeft.month, oLeft.day, oLeft.timezone, oLeft.negative);
-		oValue.day	= oValue.day + oRight.day * (sOperator == '-' ?-1 : 1);
+		oValue.day	= oValue.day + oRight.day * (sOperator == '-' ?-1 : 1) - 1 * (nValue && sOperator == '-');
+		//
 		fXSDate_normalize(oValue);
 	}
 	else
@@ -356,6 +358,7 @@ function fOperator_addDayTimeDuration2DateTime(oLeft, oRight, sOperator) {
 		oValue.minutes	= oValue.minutes + oRight.minutes * (sOperator == '-' ?-1 : 1);
 		oValue.hours	= oValue.hours + oRight.hours * (sOperator == '-' ?-1 : 1);
 		oValue.day		= oValue.day + oRight.day * (sOperator == '-' ?-1 : 1);
+		//
 		fXSDateTime_normalize(oValue);
 	}
 	return oValue;

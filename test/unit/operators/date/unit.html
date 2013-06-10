@@ -404,6 +404,8 @@
 			function testSubtractDayTimeDurationFromDate() {
 				assertEquals("2000-10-26",
 						evaluateXPathSingle('fn:string(xs:date("2000-10-30") - xs:dayTimeDuration("P3DT1H15M"))'));
+				assertEquals("2000-10-27",
+						evaluateXPathSingle('fn:string(xs:date("2000-10-30") - xs:dayTimeDuration("P3D"))'));
 			}
 
 			function testAddDayTimeDurationToTime() {
