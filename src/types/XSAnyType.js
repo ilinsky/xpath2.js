@@ -11,4 +11,4 @@ function cXSAnyType() {
 
 };
 
-cXSAnySimpleType.prototype.builtInKind	= cXSConstants.ANYTYPE_DT;
+cXSAnyType.prototype.builtInKind	= cXSConstants.ANYTYPE_DT;
