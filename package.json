@@ -1,0 +1,33 @@
+{
+    "name": "xpath.js",
+    "title": "XPath2 for NodeJS",
+    "description": "Open source XPath 2.0 implementation in JavaScript (DOM agnostic)",
+    "main": "xpath.js_loader.js",
+    "keywords": [
+        "xpath",
+        "xpath2"
+    ],
+    "version": "0.1.1",
+    "author": {
+        "name": "Sergey Ilinsky",
+        "url": "https://github.com/ilinsky"
+    },
+    "maintainers": [
+        {
+            "name": "Sergey Ilinsky",
+            "email": "sergey@ilinsky.com",
+            "url": "http://www.ilinsky.com"
+        }
+    ],
+    "contributors": [
+      {
+        "name": "Rui Azevedo",
+        "email": "ruihfazevedo@gmail.com",
+        "url": "http://www.r-site.net/"
+      }
+    ],
+    "bugs": "https://github.com/ilinsky/xpath.js/issues",
+    "homepage": "https://github.com/ilinsky/xpath.js",
+    "docs": "https://github.com/ilinsky/xpath.js",
+    "download": "https://github.com/ilinsky/xpath.js"
+}
