@@ -22,8 +22,9 @@
     }
 });*/
 
-/*window={};
-window.extend(global);*/
+if(typeof(global)!="undefined")
+  global.window=global;
+
 var fs=require("fs");
 var vm=require("vm");
 

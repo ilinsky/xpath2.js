@@ -3,9 +3,6 @@
  * Some utility functions and xmldom DOMAdapter
  */
 
-if(typeof(global)!="undefined")
-  global.window=global;
-
 function parentChain(a) {
   var r=[];
   while(a.parentNode||a.ownerElement) r=[a=(a.parentNode||a.ownerElement)].concat(r);
