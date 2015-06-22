@@ -231,12 +231,12 @@ hStaticContext_operators["divide-dayTimeDuration-by-dayTimeDuration"]	= function
 // 10.8 Arithmetic Operators on Durations, Dates and Times
 // op:subtract-dateTimes($arg1 as xs:dateTime, $arg2 as xs:dateTime) as xs:dayTimeDuration
 hStaticContext_operators["subtract-dateTimes"]	= function(oLeft, oRight) {
-	throw "Operator function '" + "subtract-dateTimes" + "' not implemented";
+	return fOperator_dayTimeDuration_fromSeconds(fOperator_dateTime_toSeconds(oLeft) - fOperator_dateTime_toSeconds(oRight));
 };
 
 // op:subtract-dates($arg1 as xs:date, $arg2 as xs:date) as xs:dayTimeDuration
 hStaticContext_operators["subtract-dates"]	= function(oLeft, oRight) {
-	throw "Operator function '" + "subtract-dates" + "' not implemented";
+	return fOperator_dayTimeDuration_fromSeconds(fOperator_dateTime_toSeconds(oLeft) - fOperator_dateTime_toSeconds(oRight));
 };
 
 // op:subtract-times($arg1 as xs:time, $arg2 as xs:time) as xs:dayTimeDuration
@@ -393,4 +393,17 @@ function fOperator_yearMonthDuration_fromMonths(nValue) {
 // xs:time to seconds
 function fOperator_time_toSeconds(oTime) {
 	return oTime.seconds + (oTime.minutes - (oTime.timezone != null ? oTime.timezone % 60 : 0) + (oTime.hours - (oTime.timezone != null ? ~~(oTime.timezone / 60) : 0)) * 60) * 60;
+};
+
+// This function unlike all other date-related functions rely on interpretor's dateTime handling
+function fOperator_dateTime_toSeconds(oValue) {
+	var oDate	= new cDate((oValue.negative ? -1 : 1) * oValue.year, oValue.month, oValue.day, 0, 0, 0, 0);
+	if (oValue instanceof cXSDateTime) {
+		oDate.setHours(oValue.hours);
+		oDate.setMinutes(oValue.minutes);
+		oDate.setSeconds(oValue.seconds);
+	}
+	if (oValue.timezone != null)
+		oDate.setMinutes(oDate.getMinutes() - oValue.timezone);
+	return oDate.getTime() / 1000;
 };

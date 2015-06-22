@@ -328,8 +328,8 @@
 
 			// 10.8 Arithmetic Operators on Durations, Dates and Times
 			function testSubtractDateTimes() {
-				assertEquals("P337DT2H12M",
-						evaluateXPathSingle('fn:string(xs:dateTime("2000-10-30T06:12:00") - xs:dateTime("1999-11-28T09:00:00Z"))'));
+				assertEquals("P337DT21H12M",
+						evaluateXPathSingle('fn:string(xs:dateTime("2000-10-30T06:12:00Z") - xs:dateTime("1999-11-28T09:00:00Z"))'));
 			}
 
 			function testSubtractDates() {
