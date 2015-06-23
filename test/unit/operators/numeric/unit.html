@@ -184,6 +184,30 @@
 				// TODO: operations on INF, NaN
 			}
 
+			function testNumericLessThanOrEqual() {
+				assertEquals(true,
+						evaluateXPathSingle('2 le 2'));
+				assertEquals(true,
+						evaluateXPathSingle('2 le 2e0'));
+				assertEquals(true,
+						evaluateXPathSingle('2 le 3'));
+				assertEquals(false,
+						evaluateXPathSingle('4 le 2'));
+				// TODO: operations on INF, NaN
+			}
+
+			function testNumericGreaterThanOrEqual() {
+				assertEquals(true,
+						evaluateXPathSingle('2 ge 2'));
+				assertEquals(true,
+						evaluateXPathSingle('2 ge 2e0'));
+				assertEquals(false,
+						evaluateXPathSingle('2 ge 3'));
+				assertEquals(true,
+						evaluateXPathSingle('4 ge 2'));
+				// TODO: operations on INF, NaN
+			}
+
 		</script>
 	</head>
 	<body>
