@@ -21,7 +21,7 @@ cXSInteger.cast	= function(vValue) {
 	if (vValue instanceof cXSString || vValue instanceof cXSUntypedAtomic) {
 		var aMatch	= fString_trim(vValue).match(rXSInteger);
 		if (aMatch)
-			return new cXSInteger(~~vValue);
+			return new cXSInteger(+vValue);
 		throw new cException("FORG0001");
 	}
 	if (vValue instanceof cXSBoolean)
@@ -33,7 +33,7 @@ cXSInteger.cast	= function(vValue) {
 					, "Cannot convert '" + vValue + "' to xs:integer"
 //<-Debug
 			);
-		return new cXSInteger(~~vValue);
+		return new cXSInteger(+vValue);
 	}
 	//
 	throw new cException("XPTY0004"
