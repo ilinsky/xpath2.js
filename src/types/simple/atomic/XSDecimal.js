@@ -38,13 +38,13 @@ cXSDecimal.cast	= function(vValue) {
 	if (vValue instanceof cXSBoolean)
 		return new cXSDecimal(vValue * 1);
 	if (fXSAnyAtomicType_isNumeric(vValue)) {
-		if (fIsNaN(vValue) || !fIsFinite(vValue))
-			throw new cException("FOCA0002"
+		if (!fIsNaN(vValue) && fIsFinite(vValue))
+			return new cXSDecimal(+vValue);
+		throw new cException("FOCA0002"
 //->Debug
-					, "Cannot convert '" + vValue + "' to xs:decimal"
+				, "Cannot convert '" + vValue + "' to xs:decimal"
 //<-Debug
-			);
-		return new cXSDecimal(+vValue);
+		);
 	}
 	//
 	throw new cException("XPTY0004"
