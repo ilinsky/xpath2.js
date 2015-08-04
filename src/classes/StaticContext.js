@@ -44,7 +44,7 @@ cStaticContext.prototype.setDataType		= function(sUri, fFunction) {
 cStaticContext.prototype.getDataType		= function(sUri) {
 	var aMatch	= sUri.match(rStaticContext_uri);
 	if (aMatch)
-		return aMatch[1] == sNS_XSD ? hStaticContext_dataTypes[cRegExp.$2] : this.dataTypes[sUri];
+		return aMatch[1] == sNS_XSD ? hStaticContext_dataTypes[aMatch[2]] : this.dataTypes[sUri];
 };
 
 cStaticContext.prototype.setDocument		= function(sUri, fFunction) {
@@ -61,7 +61,7 @@ cStaticContext.prototype.setFunction		= function(sUri, fFunction) {
 cStaticContext.prototype.getFunction		= function(sUri) {
 	var aMatch	= sUri.match(rStaticContext_uri);
 	if (aMatch)
-		return aMatch[1] == sNS_XPF ? hStaticContext_functions[cRegExp.$2] : this.functions[sUri];
+		return aMatch[1] == sNS_XPF ? hStaticContext_functions[aMatch[2]] : this.functions[sUri];
 };
 
 cStaticContext.prototype.setCollation		= function(sUri, fFunction) {
