@@ -172,6 +172,24 @@
 						evaluateXPathError('fn:exactly-one(())'));
 			}
 
+			function testDeepEqual() {
+				// Not W3C tests
+				assertEquals(true,
+						evaluateXPath('fn:deep-equal((), ())'));
+				assertEquals(true,
+						evaluateXPath('fn:deep-equal(1, 1)'));
+				assertEquals(true,
+						evaluateXPath('fn:deep-equal((1, 2, 3), (1, 2, 3))'));
+				assertEquals(false,
+						evaluateXPath('fn:deep-equal((1, 2, 3), (3, 2, 1))'));
+			}
+
+			function testDeepEqual_Collation() {
+				// Not W3C tests
+				assertEquals(true,
+						evaluateXPath('fn:deep-equal("Strasse", "Straße", "deutsch")'));
+			}
+
 			// 15.4 Aggregate Functions
 			function testCount() {
 				// Not W3C tests

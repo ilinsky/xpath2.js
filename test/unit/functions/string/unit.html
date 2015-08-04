@@ -124,11 +124,12 @@
 				assertEquals("",
 						evaluateXPathSingle('fn:normalize-space(())'));
 			}
-/*
+
 			function testNormalizeUnicode() {
-				assertNull("Not implemented normalize-unicode");
+				assertEquals("A",
+						evaluateXPathSingle('fn:normalize-unicode("A")'));
 			}
-*/
+
 			function testUpperCase() {
 				assertEquals("ABCD0",
 						evaluateXPathSingle('fn:upper-case("abCd0")'));
