@@ -94,9 +94,9 @@ cFunctionCall.prototype.evaluate	= function (oContext) {
 	if (this.namespaceURI == sNS_XSD) {
 		if ((fFunction = hStaticContext_dataTypes[this.localName]) && this.localName != "NOTATION" && this.localName != "anyAtomicType") {
 			//
-			fFunctionCall_prepare(this.localName, [[cXSAnyAtomicType]], fFunction, aArguments, oContext);
+			fFunctionCall_prepare(this.localName, [[cXSAnyAtomicType, '?']], fFunction, aArguments, oContext);
 			//
-			return [fFunction.cast(aArguments[0])];
+			return aArguments[0] === null ? [] : [fFunction.cast(aArguments[0])];
 		}
 		throw new cException("XPST0017"
 //->Debug
