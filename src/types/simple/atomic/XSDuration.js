@@ -36,12 +36,12 @@ cXSDuration.prototype.toString	= function() {
 
 var rXSDuration		= /^(-)?P(?:([0-9]+)Y)?(?:([0-9]+)M)?(?:([0-9]+)D)?(?:T(?:([0-9]+)H)?(?:([0-9]+)M)?(?:((?:(?:[0-9]+(?:.[0-9]*)?)|(?:.[0-9]+)))S)?)?$/;
 cXSDuration.cast	= function(vValue) {
+	if (vValue instanceof cXSDuration)
+		return vValue;
 	if (vValue instanceof cXSYearMonthDuration)
 		return new cXSDuration(vValue.year, vValue.month, 0, 0, 0, 0, vValue.negative);
 	if (vValue instanceof cXSDayTimeDuration)
 		return new cXSDuration(0, 0, vValue.day, vValue.hours, vValue.minutes, vValue.seconds, vValue.negative);
-	if (vValue instanceof cXSDuration)
-		return vValue;
 	if (vValue instanceof cXSString || vValue instanceof cXSUntypedAtomic) {
 		var aMatch	= fString_trim(vValue).match(rXSDuration);
 		if (aMatch)
