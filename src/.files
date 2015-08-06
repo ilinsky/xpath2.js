@@ -108,6 +108,7 @@ types/simple/atomic/string/XSName.js
 types/simple/atomic/string/XSNCName.js
 types/simple/atomic/string/XSENTITY.js
 types/simple/atomic/string/XSID.js
+types/simple/atomic/string/XSIDREF.js
 types/simple/atomic/string/XSLanguage.js
 types/simple/atomic/string/XSNMTOKEN.js
 # XPath data types
