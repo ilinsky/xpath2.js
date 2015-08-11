@@ -15,7 +15,6 @@
 // fn:resolve-uri($relative as xs:string?) as xs:anyURI?
 // fn:resolve-uri($relative as xs:string?, $base as xs:string) as xs:anyURI?
 fStaticContext_defineSystemFunction("resolve-uri",	[[cXSString, '?'], [cXSString, '', true]],	function(sUri, sBaseUri) {
-	var sBaseUri;
 	if (arguments.length < 2) {
 		if (!this.DOMAdapter.isNode(this.item))
 			throw new cException("XPTY0004"
