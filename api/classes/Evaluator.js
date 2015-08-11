@@ -29,8 +29,17 @@ cEvaluator.prototype.evaluate	= function(sExpression, vItem, oStaticContext, oSc
 	if (typeof vItem == "undefined")
 		vItem	= null;
 
+	var oXSScope	= {},
+		oValue;
+	if (typeof oScope == "object")
+		for (var sKey in oScope) {
+			oValue	= oScope[sKey];
+			if (oScope.hasOwnProperty(sKey) && oValue != null)
+				oXSScope[sKey]	= oDOMAdapter.isNode(oValue) ? oValue : cStaticContext.js2xs(oValue);
+		}
+
 	// Create dynamic context
-	var oContext	= new cDynamicContext(oStaticContext, vItem == null || oDOMAdapter.isNode(vItem) ? vItem : cStaticContext.js2xs(vItem), oScope, oDOMAdapter);
+	var oContext	= new cDynamicContext(oStaticContext, vItem == null || oDOMAdapter.isNode(vItem) ? vItem : cStaticContext.js2xs(vItem), oXSScope, oDOMAdapter);
 
 	// Evaluate and convert types from XPath 2.0 to JavaScript
 	var oSequence	= this.compile(sExpression, oStaticContext).evaluate(oContext),
