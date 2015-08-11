@@ -8,9 +8,9 @@
 
 ###About:
 
-  - XPath.js is an open-source XPath 2.0 implementation in JavaScript.
-  - The core engine is DOM-agnostic, it can be used with any DOM via custom
-  - DOMAdapter implementation. Internally engine operates XML Schema data types.
+  - XPath.js is a DOM-agnostic open-source XPath 2.0 implementation in JavaScript
+  - Library can be used to query any DOM structure via custom DOMAdapter
+  - Internally engine operates on XML Schema 1.1 data types
 
 ###Structure:
 
@@ -22,16 +22,16 @@
 
   - Running on sources: include xpath.js API file from the root folder.
   - When no Apache/.htaccess/PHP configured, source files will be loaded by JS.
-  
-###NodeJS:
+
+###NodeJS (temporary solution):
   using xpath.js on NodeJS:
   ```js
   //using xmldom as target document (https://github.com/jindw/xmldom)
   var xpath=require("xpath2")(xmldom.domClasses.Document.prototype);
-  
+
   var test=xpath.evaluate("2 to 5");
   ```
-  
+
   a more sofisticated example
   ```js
   var xmldom=require("xmldom");
@@ -50,8 +50,6 @@ xmldom.domClasses.Node.prototype.select=function(e) {
   oStaticContext.namespaceResolver=this.documentElement||this.ownerDocument.documentElement;
   return xpath.evaluate(e,this,oStaticContext);
 };
-
-//var templates=xsl.select(""
 
 var repl = require("repl");
 var r = repl.start("xpath2> ");
