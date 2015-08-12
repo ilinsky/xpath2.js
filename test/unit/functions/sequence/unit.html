@@ -66,7 +66,9 @@
 			}
 
 			function testIndexOf_Collation() {
-				assertNotNull(null);
+				// Not W3C tests
+				assertArrayEquals([1, 4],
+						evaluateXPath('fn:index-of (("a", "sport", "and", "a", "pastime"), "a", "CollationA")'));
 			}
 
 			function testEmpty() {
@@ -94,7 +96,9 @@
 			}
 
 			function testDistinctValues_Collation() {
-				assertNotNull(null);
+				// Not W3C tests
+				assertArrayEquals(["a", "b", "c"],
+						evaluateXPath('fn:distinct-values(("a", "b", "c"), "CollationA")'));
 			}
 
 			function testInsertBefore() {

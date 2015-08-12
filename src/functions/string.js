@@ -232,18 +232,24 @@ fStaticContext_defineSystemFunction("escape-html-uri",	[[cXSString, '?']],	funct
 // fn:contains($arg1 as xs:string?, $arg2 as xs:string?) as xs:boolean
 // fn:contains($arg1 as xs:string?, $arg2 as xs:string?, $collation as xs:string) as xs:boolean
 fStaticContext_defineSystemFunction("contains",	[[cXSString, '?'], [cXSString, '?'], [cXSString, '', true]],	function(oValue, oSearch, oCollation) {
+	if (arguments.length > 2)
+		throw "Collation parameter in function '" + "contains" + "' is not implemented";
 	return new cXSBoolean((oValue == null ? '' : oValue.valueOf()).indexOf(oSearch == null ? '' : oSearch.valueOf()) >= 0);
 });
 
 // fn:starts-with($arg1 as xs:string?, $arg2 as xs:string?) as xs:boolean
 // fn:starts-with($arg1 as xs:string?, $arg2 as xs:string?, $collation as xs:string) as xs:boolean
 fStaticContext_defineSystemFunction("starts-with",	[[cXSString, '?'], [cXSString, '?'], [cXSString, '', true]],	function(oValue, oSearch, oCollation) {
+	if (arguments.length > 2)
+		throw "Collation parameter in function '" + "starts-with" + "' is not implemented";
 	return new cXSBoolean((oValue == null ? '' : oValue.valueOf()).indexOf(oSearch == null ? '' : oSearch.valueOf()) == 0);
 });
 
 // fn:ends-with($arg1 as xs:string?, $arg2 as xs:string?) as xs:boolean
 // fn:ends-with($arg1 as xs:string?, $arg2 as xs:string?, $collation as xs:string) as xs:boolean
 fStaticContext_defineSystemFunction("ends-with",	[[cXSString, '?'], [cXSString, '?'], [cXSString, '', true]],	function(oValue, oSearch, oCollation) {
+	if (arguments.length > 2)
+		throw "Collation parameter in function '" + "ends-with" + "' is not implemented";
 	var sValue	= oValue == null ? '' : oValue.valueOf(),
 		sSearch	= oSearch == null ? '' : oSearch.valueOf();
 
@@ -253,6 +259,9 @@ fStaticContext_defineSystemFunction("ends-with",	[[cXSString, '?'], [cXSString, 
 // fn:substring-before($arg1 as xs:string?, $arg2 as xs:string?) as xs:string
 // fn:substring-before($arg1 as xs:string?, $arg2 as xs:string?, $collation as xs:string) as xs:string
 fStaticContext_defineSystemFunction("substring-before",	[[cXSString, '?'], [cXSString, '?'], [cXSString, '', true]],	function(oValue, oSearch, oCollation) {
+	if (arguments.length > 2)
+		throw "Collation parameter in function '" + "substring-before" + "' is not implemented";
+
 	var sValue	= oValue == null ? '' : oValue.valueOf(),
 		sSearch	= oSearch == null ? '' : oSearch.valueOf(),
 		nPosition;
@@ -263,6 +272,9 @@ fStaticContext_defineSystemFunction("substring-before",	[[cXSString, '?'], [cXSS
 // fn:substring-after($arg1 as xs:string?, $arg2 as xs:string?) as xs:string
 // fn:substring-after($arg1 as xs:string?, $arg2 as xs:string?, $collation as xs:string) as xs:string
 fStaticContext_defineSystemFunction("substring-after",	[[cXSString, '?'], [cXSString, '?'], [cXSString, '', true]],	function(oValue, oSearch, oCollation) {
+	if (arguments.length > 2)
+		throw "Collation parameter in function '" + "substring-after" + "' is not implemented";
+
 	var sValue	= oValue == null ? '' : oValue.valueOf(),
 		sSearch	= oSearch == null ? '' : oSearch.valueOf(),
 		nPosition;

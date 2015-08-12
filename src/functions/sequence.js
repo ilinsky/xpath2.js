@@ -91,6 +91,9 @@ fStaticContext_defineSystemFunction("exists",	[[cXTItem, '*']],	function(oSequen
 // fn:distinct-values($arg as xs:anyAtomicType*) as xs:anyAtomicType*
 // fn:distinct-values($arg as xs:anyAtomicType*, $collation as xs:string) as xs:anyAtomicType*
 fStaticContext_defineSystemFunction("distinct-values",	[[cXSAnyAtomicType, '*'], [cXSString, '', true]],	function(oSequence1, oCollation) {
+	if (arguments.length > 1)
+		throw "Collation parameter in function '" + "distinct-values" + "' is not implemented";
+
 	if (!oSequence1.length)
 		return null;
 
