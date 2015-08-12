@@ -15,7 +15,18 @@ cXSLong.prototype	= new cXSInteger;
 cXSLong.prototype.builtInKind	= cXSConstants.LONG_DT;
 
 cXSLong.cast	= function(vValue) {
-	return new cXSLong(cNumber(vValue));
+	var oValue;
+	try {
+		oValue	= cXSInteger.cast(vValue);
+	}
+	catch (oError) {
+		throw oError;
+	}
+	// facet validation
+	if (oValue.value <= 9223372036854775807 && oValue.value >= -9223372036854775808)
+		return new cXSLong(oValue.value);
+	//
+	throw new cException("FORG0001");
 };
 
 //

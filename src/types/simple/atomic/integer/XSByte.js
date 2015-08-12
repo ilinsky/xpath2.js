@@ -15,7 +15,18 @@ cXSByte.prototype	= new cXSShort;
 cXSByte.prototype.builtInKind	= cXSConstants.BYTE_DT;
 
 cXSByte.cast	= function(vValue) {
-	return new cXSByte(cNumber(vValue));
+	var oValue;
+	try {
+		oValue	= cXSInteger.cast(vValue);
+	}
+	catch (oError) {
+		throw oError;
+	}
+	// facet validation
+	if (oValue.value <= 127 && oValue.value >= -128)
+		return new cXSByte(oValue.value);
+	//
+	throw new cException("FORG0001");
 };
 
 //

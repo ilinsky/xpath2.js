@@ -15,7 +15,18 @@ cXSUnsignedByte.prototype	= new cXSUnsignedShort;
 cXSUnsignedByte.prototype.builtInKind	= cXSConstants.UNSIGNEDBYTE_DT;
 
 cXSUnsignedByte.cast	= function(vValue) {
-	return new cXSUnsignedByte(cNumber(vValue));
+	var oValue;
+	try {
+		oValue	= cXSInteger.cast(vValue);
+	}
+	catch (oError) {
+		throw oError;
+	}
+	// facet validation
+	if (oValue.value >= 1 && oValue.value <= 255)
+		return new cXSUnsignedByte(oValue.value);
+	//
+	throw new cException("FORG0001");
 };
 
 //

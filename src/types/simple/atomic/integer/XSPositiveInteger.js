@@ -15,7 +15,18 @@ cXSPositiveInteger.prototype	= new cXSNonNegativeInteger;
 cXSPositiveInteger.prototype.builtInKind	= cXSConstants.POSITIVEINTEGER_DT;
 
 cXSPositiveInteger.cast	= function(vValue) {
-	return new cXSPositiveInteger(cNumber(vValue));
+	var oValue;
+	try {
+		oValue	= cXSInteger.cast(vValue);
+	}
+	catch (oError) {
+		throw oError;
+	}
+	// facet validation
+	if (oValue.value >= 1)
+		return new cXSPositiveInteger(oValue.value);
+	//
+	throw new cException("FORG0001");
 };
 
 //

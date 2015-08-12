@@ -15,7 +15,18 @@ cXSShort.prototype	= new cXSInt;
 cXSShort.prototype.builtInKind	= cXSConstants.SHORT_DT;
 
 cXSShort.cast	= function(vValue) {
-	return new cXSShort(cNumber(vValue));
+	var oValue;
+	try {
+		oValue	= cXSInteger.cast(vValue);
+	}
+	catch (oError) {
+		throw oError;
+	}
+	// facet validation
+	if (oValue.value <= 32767 && oValue.value >= -32768)
+		return new cXSShort(oValue.value);
+	//
+	throw new cException("FORG0001");
 };
 
 //
