@@ -17,7 +17,7 @@ cXSInteger.prototype.builtInKind	= cXSConstants.INTEGER_DT;
 var rXSInteger	= /^[-+]?[0-9]+$/;
 cXSInteger.cast	= function(vValue) {
 	if (vValue instanceof cXSInteger)
-		return vValue;
+		return new cXSInteger(vValue.value);
 	if (vValue instanceof cXSString || vValue instanceof cXSUntypedAtomic) {
 		var aMatch	= fString_trim(vValue).match(rXSInteger);
 		if (aMatch)
