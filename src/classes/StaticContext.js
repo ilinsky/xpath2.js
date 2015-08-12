@@ -51,6 +51,10 @@ cStaticContext.prototype.setDocument		= function(sUri, fFunction) {
 	this.documents[sUri]	= fFunction;
 };
 
+cStaticContext.prototype.getDocument		= function(sUri) {
+	return this.documents[sUri];
+};
+
 cStaticContext.prototype.setFunction		= function(sUri, fFunction) {
 	var aMatch	= sUri.match(rStaticContext_uri);
 	if (aMatch)
@@ -72,9 +76,12 @@ cStaticContext.prototype.getCollation		= function(sUri) {
 	return this.collations[sUri];
 };
 
-
 cStaticContext.prototype.setCollection	= function(sUri, fFunction) {
 	this.collections[sUri]	= fFunction;
+};
+
+cStaticContext.prototype.getCollection	= function(sUri) {
+	return this.collections[sUri];
 };
 
 cStaticContext.prototype.getURIForPrefix	= function(sPrefix) {
