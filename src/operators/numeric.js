@@ -68,7 +68,7 @@ hStaticContext_operators["numeric-divide"]	= function(oLeft, oRight) {
 
 // op:numeric-integer-divide($arg1 as numeric, $arg2 as numeric) as xs:integer
 hStaticContext_operators["numeric-integer-divide"]	= function(oLeft, oRight) {
-	return new cXSInteger(~~(oLeft / oRight));
+	return new cXSInteger(cMath.floor(oLeft / oRight));
 };
 
 // op:numeric-mod($arg1 as numeric, $arg2 as numeric) as numeric
