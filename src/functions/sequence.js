@@ -267,9 +267,15 @@ fStaticContext_defineSystemFunction("max",	[[cXSAnyAtomicType, '*'], [cXSString,
 	//
 	try {
 		var vValue	= oSequence1[0];
-		for (var nIndex = 1, nLength = oSequence1.length; nIndex < nLength; nIndex++)
-			if (hComparisonExpr_ValueComp_operators['ge'](oSequence1[nIndex], vValue, this).valueOf())
-				vValue	= oSequence1[nIndex];
+		if (vValue instanceof cXSUntypedAtomic)
+			vValue	= cXSDouble.cast(vValue);
+		for (var nIndex = 1, nLength = oSequence1.length, vRight; nIndex < nLength; nIndex++) {
+			vRight	= oSequence1[nIndex];
+			if (vRight instanceof cXSUntypedAtomic)
+				vRight	= cXSDouble.cast(vRight);
+			if (hComparisonExpr_ValueComp_operators['ge'](vRight, vValue, this).valueOf())
+				vValue	= vRight;
+		}
 		return vValue;
 	}
 	catch (e) {
@@ -293,9 +299,15 @@ fStaticContext_defineSystemFunction("min",	[[cXSAnyAtomicType, '*'], [cXSString,
 	//
 	try {
 		var vValue	= oSequence1[0];
-		for (var nIndex = 1, nLength = oSequence1.length; nIndex < nLength; nIndex++)
-			if (hComparisonExpr_ValueComp_operators['le'](oSequence1[nIndex], vValue, this).valueOf())
-				vValue	= oSequence1[nIndex];
+		if (vValue instanceof cXSUntypedAtomic)
+			vValue	= cXSDouble.cast(vValue);
+		for (var nIndex = 1, nLength = oSequence1.length, vRight; nIndex < nLength; nIndex++) {
+			vRight	= oSequence1[nIndex];
+			if (vRight instanceof cXSUntypedAtomic)
+				vRight	= cXSDouble.cast(vRight);
+			if (hComparisonExpr_ValueComp_operators['le'](vRight, vValue, this).valueOf())
+				vValue	= vRight;
+			}
 		return vValue;
 	}
 	catch (e) {
