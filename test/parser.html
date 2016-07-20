@@ -30,6 +30,14 @@
 						return "myns";
 					case "xs":
 						return "somns";
+					// parsing only
+					case "meter.count":
+					case "count.":
+					case "count..":
+					case "meter-count":
+					case "count-":
+					case "count--":
+						return "unknown";
 					default:
 						return null;
 				}
@@ -401,6 +409,36 @@
 				["/ is /",	false],
 				["--5",		true],
 				["-+5",		true],
+				// element, attribute, prefix names
+				["@meter.count", true],
+				["@count.", true],
+				["@count..", true],
+				["@.count", false],
+				["@meter-count", true],
+				["@count-", true],
+				["@count--", true],
+				["@-count", false],
+				["meter.count", true],
+				["count.", true],
+				["count..", true],
+				[".count", false],
+				["meter-count", true],
+				["count-", true],
+				["count--", true],
+				["-count", true],
+				["@meter.count:name", true],
+				["@count.:name", true],
+				["@count..:name", true],
+				["@meter-count:name", true],
+				["@count-:name", true],
+				["@count--:name", true],
+				["count.:name", true],
+				["count..:name", true],
+				[".count:name", false],
+				["meter-count:name", true],
+				["count-:name", true],
+				["count--:name", true],
+				["-count:name", false],
 			[""]
 			];
 

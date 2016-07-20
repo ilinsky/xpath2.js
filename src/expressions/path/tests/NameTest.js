@@ -20,7 +20,7 @@ cNameTest.prototype.localName		= null;
 cNameTest.prototype.namespaceURI	= null;
 
 // Static members
-var rNameTest	= /^(?:(?![0-9-])([\w-]+|\*)\:)?(?![0-9-])([\w-]+|\*)$/;
+var rNameTest	= /^(?:(?![0-9-])(\w[\w.-]*|\*)\:)?(?![0-9-])(\w[\w.-]*|\*)$/;
 function fNameTest_parse (oLexer, oStaticContext) {
 	var aMatch	= oLexer.peek().match(rNameTest);
 	if (aMatch) {
