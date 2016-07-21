@@ -25,7 +25,7 @@ cXSQName.prototype.toString	= function() {
 	return (this.prefix ? this.prefix + ':' : '') + this.localName;
 };
 
-var rXSQName	= /^(?:(?![0-9-])([\w-]+)\:)?(?![0-9-])([\w-]+)$/;
+var rXSQName	= /^(?:(?![0-9-])(\w[\w.-]*)\:)?(?![0-9-])(\w[\w.-]*)$/;
 cXSQName.cast	= function(vValue) {
 	if (vValue instanceof cXSQName)
 		return vValue;
