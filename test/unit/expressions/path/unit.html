@@ -45,11 +45,11 @@
 						evaluateXPath("attribute()", document.documentElement));
 			}
 
-			function testKindTest_ProcessingInstruction() {
+			/*function testKindTest_ProcessingInstruction() {
 				assertArrayEquals([document.childNodes[1]],
 						evaluateXPathWithDocument("processing-instruction()"));
 			}
-/*			function testKindTest_ProcessingInstruction_params() {
+			function testKindTest_ProcessingInstruction_params() {
 				assertArrayEquals([document.childNodes[1]],
 						evaluateXPathWithDocument("processing-instruction('pi-target')"));
 				assertArrayEquals([],

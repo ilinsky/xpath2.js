@@ -95,6 +95,8 @@
 				["selfs::*", false],
 			["Axis + Kind tests"],
 				["self::document-node()",	true],
+				["self::processing-instruction('arg')", true],
+				["self::processing-instruction('a1', 'a2')", false],
 				["self::document()",		false],
 			["Attribute axis shortcut + Name tests"],
 				["@div",	true],

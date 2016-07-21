@@ -32,7 +32,8 @@ hKindTest_names["schema-attribute"]	= {};
 
 // Static members
 function fKindTest_parse (oLexer, oStaticContext) {
-	var sName	= oLexer.peek();
+	var sName	= oLexer.peek(),
+		oValue;
 	if (oLexer.peek(1) == '(') {
 		//
 		if (!(sName in hKindTest_names))
@@ -60,7 +61,12 @@ function fKindTest_parse (oLexer, oStaticContext) {
 			}
 			else
 			if (sName == "processing-instruction") {
-				// TODO: parse test further
+				oValue = fStringLiteral_parse(oLexer, oStaticContext);
+				if (!oValue) {
+					oValue = new cStringLiteral(new cXSString(oLexer.peek()));
+					oLexer.next();
+				}
+				oTest.args.push(oValue);
 			}
 			else
 			if (sName == "schema-attribute") {
@@ -102,7 +108,8 @@ function fKindTest_parse (oLexer, oStaticContext) {
 // Public members
 cKindTest.prototype.test	= function (oNode, oContext) {
 	var fGetProperty	= oContext.DOMAdapter.getProperty,
-		nType	= oContext.DOMAdapter.isNode(oNode) ? fGetProperty(oNode, "nodeType") : 0;
+		nType	= oContext.DOMAdapter.isNode(oNode) ? fGetProperty(oNode, "nodeType") : 0,
+		sTarget;
 	switch (this.name) {
 		// Node type test
 		case "node":			return !!nType;
@@ -124,8 +131,10 @@ cKindTest.prototype.test	= function (oNode, oContext) {
 	// Additional tests
 	if (nType == 2)
 		return fGetProperty(oNode, "prefix") != "xmlns" && fGetProperty(oNode, "localName") != "xmlns";
-	if (nType == 7)
-		return fGetProperty(oNode, "target") != "xml";
+	if (nType == 7) {
+		sTarget = fGetProperty(oNode, "target");
+		return this.args.length ? sTarget == this.args[0].value : sTarget != "xml";
+	}
 
 	return true;
 };
