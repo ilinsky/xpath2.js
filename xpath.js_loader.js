@@ -124,4 +124,3 @@ module.exports=function(doc) {
   if (!doc.xpath) doc.xpath=function(e) {return xpath.evaluate(e,this);}
   return xpath;
 };
-

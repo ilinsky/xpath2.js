@@ -12,4 +12,3 @@ function cXTNode() {
 };
 
 cXTNode.prototype	= new cXTItem;
-

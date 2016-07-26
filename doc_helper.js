@@ -39,7 +39,7 @@ var DOCUMENT_POSITION_IMPLEMENTATION_SPECIFIC=32;
 function compareDocumentPosition(a,b) {
   var vars={};
   if (a===b) return 0;
-  if (a.ownerDocument!==b.ownerDocument) 
+  if (a.ownerDocument!==b.ownerDocument)
     return DOCUMENT_POSITION_DISCONNECTED|DOCUMENT_POSITION_IMPLEMENTATION_SPECIFIC
       |(docGUID(a.ownerDocument)>docGUID(b.ownerDocument)?DOCUMENT_POSITION_FOLLOWING:DOCUMENT_POSITION_PRECEDING);
   vars.aa=parentChain(a);

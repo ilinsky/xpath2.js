@@ -25,4 +25,3 @@ cXSNOTATION.cast	= function(vValue) {
 
 //
 fStaticContext_defineSystemDataType("NOTATION",	cXSNOTATION);
-
