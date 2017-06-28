@@ -6,24 +6,24 @@
     ------------------------------------
 
 
-###About:
+### About:
 
   - XPath.js is a DOM-agnostic open-source XPath 2.0 implementation in JavaScript
   - Library can be used to query any DOM structure via custom DOMAdapter
   - Internally engine operates on XML Schema 1.1 data types
 
-###Structure:
+### Structure:
 
   - api/ - Sample API sources
   - src/ - XPath 2.0 engine sources
   - test/unit/ - unit.js tests (requires [unit.js](https://github.com/ilinsky/unit.js))
 
-###Usage:
+### Usage:
 
   - Running on sources: include xpath.js API file from the root folder.
   - When no Apache/.htaccess/PHP configured, source files will be loaded by JS.
 
-###NodeJS (temporary solution):
+### NodeJS (temporary solution):
   using xpath.js on NodeJS:
   ```js
   //using xmldom as target document (https://github.com/jindw/xmldom)
