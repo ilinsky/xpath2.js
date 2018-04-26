@@ -350,7 +350,7 @@ fStaticContext_defineSystemFunction("replace",	[[cXSString, '?'], [cXSString],  
 	var sValue	= oValue == null ? '' : oValue.valueOf(),
 		rRegExp	= fFunction_string_createRegExp(oPattern.valueOf(), arguments.length > 3 ? oFlags.valueOf() : '');
 
-	return new cXSBoolean(sValue.replace(rRegExp, oReplacement.valueOf()));
+	return new cXSString(sValue.replace(rRegExp, oReplacement.valueOf()));
 });
 
 // fn:tokenize($input as xs:string?, $pattern as xs:string) as xs:string*
