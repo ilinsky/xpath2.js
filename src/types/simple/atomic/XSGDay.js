@@ -7,6 +7,11 @@
  *
  */
 
+var cStaticContext = require('./../../../classes/StaticContext');
+var cXSConstants = require('./../../../classes/XSConstants');
+var cXSAnySimpleType = require('./../../XSAnySimpleType');
+var cXSAnyAtomicType = require('./../XSAnyAtomicType');
+
 function cXSGDay(nDay, nTimezone) {
 	this.day		= nDay;
 	this.timezone	= nTimezone;
@@ -51,4 +56,7 @@ cXSGDay.cast	= function(vValue) {
 };
 
 //
-fStaticContext_defineSystemDataType("gDay",	cXSGDay);
+cStaticContext.defineSystemDataType("gDay",	cXSGDay);
+
+//
+module.exports = cXSGDay;

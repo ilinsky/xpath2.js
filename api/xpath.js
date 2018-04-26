@@ -7,6 +7,15 @@
  *
  */
 
+var cException = require('./../src/classes/Exception');
+var cExpression = require('./../src/classes/Expression');
+var cDOMAdapter = require('./../src/classes/DOMAdapter');
+var cStaticContext = require('./../src/classes/StaticContext');
+var cDynamicContext = require('./../src/classes/DynamicContext');
+var cStringCollator = require('./../src/classes/StringCollator');
+
+var cEvaluator = require('./classes/Evaluator');
+
 var oXPathEvaluator	= new cEvaluator,
 	oXPathClasses	= oXPathEvaluator.classes = {};
 
@@ -19,4 +28,4 @@ oXPathClasses.DynamicContext= cDynamicContext;
 oXPathClasses.StringCollator= cStringCollator;
 
 // Publish object
-window.xpath	= oXPathEvaluator;
+module.exports = oXPathEvaluator;

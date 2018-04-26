@@ -7,6 +7,12 @@
         "xpath",
         "xpath2"
     ],
+    "scripts": {
+      "test": "NODE_ENV=test mocha --recursive test"
+    },
+    "devDependencies": {
+      "mocha": "~2.1.0"
+    },
     "version": "0.1.1",
     "author": {
         "name": "Sergey Ilinsky",

@@ -7,6 +7,16 @@
  *
  */
 
+var cStaticContext = require('./../classes/StaticContext');
+var hTypes = require('./../types');
+
+//
+var fStaticContext_defineSystemFunction = cStaticContext.defineSystemFunction;
+//
+var cXSString = hTypes.XSString;
+//
+var cXTItem = hTypes.XTItem;
+
 /*
 	4 The Trace Function
 		trace

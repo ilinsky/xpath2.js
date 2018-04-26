@@ -7,6 +7,11 @@
  *
  */
 
+var cStaticContext = require('./../../../classes/StaticContext');
+var cXSConstants = require('./../../../classes/XSConstants');
+var cXSAnySimpleType = require('./../../XSAnySimpleType');
+var cXSAnyAtomicType = require('./../XSAnyAtomicType');
+
 function cXSGYear(nYear, nTimezone) {
 	this.year	= nYear;
 	this.timezone	= nTimezone;
@@ -49,4 +54,7 @@ cXSGYear.cast	= function(vValue) {
 };
 
 //
-fStaticContext_defineSystemDataType("gYear",	cXSGYear);
+cStaticContext.defineSystemDataType("gYear",	cXSGYear);
+
+//
+module.exports = cXSGYear;

@@ -7,6 +7,8 @@
  *
  */
 
+var cComparisonExpr = require('./../comparison/ComparisonExpr');
+
 function cAndExpr(oExpr) {
 	this.left	= oExpr;
 	this.items	= [];
@@ -15,29 +17,6 @@ function cAndExpr(oExpr) {
 cAndExpr.prototype.left		= null;
 cAndExpr.prototype.items	= null;
 
-// Static members
-function fAndExpr_parse (oLexer, oStaticContext) {
-	var oExpr;
-	if (oLexer.eof() ||!(oExpr = fComparisonExpr_parse(oLexer, oStaticContext)))
-		return;
-	if (oLexer.peek() != "and")
-		return oExpr;
-
-	// And expression
-	var oAndExpr	= new cAndExpr(oExpr);
-	while (oLexer.peek() == "and") {
-		oLexer.next();
-		if (oLexer.eof() ||!(oExpr = fComparisonExpr_parse(oLexer, oStaticContext)))
-			throw new cException("XPST0003"
-//->Debug
-					, "Expected second operand in logical expression"
-//<-Debug
-			);
-		oAndExpr.items.push(oExpr);
-	}
-	return oAndExpr;
-};
-
 // Public members
 cAndExpr.prototype.evaluate	= function (oContext) {
 	var bValue	= fFunction_sequence_toEBV(this.left.evaluate(oContext), oContext);
@@ -45,3 +24,6 @@ cAndExpr.prototype.evaluate	= function (oContext) {
 		bValue	= fFunction_sequence_toEBV(this.items[nIndex].evaluate(oContext), oContext);
 	return [new cXSBoolean(bValue)];
 };
+
+//
+module.exports = cAndExpr;

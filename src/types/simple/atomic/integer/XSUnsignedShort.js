@@ -7,6 +7,10 @@
  *
  */
 
+var cStaticContext = require('./../../../../classes/StaticContext');
+var cXSConstants = require('./../../../../classes/XSConstants');
+var cXSUnsignedInt = require('./XSUnsignedInt');
+
 function cXSUnsignedShort(nValue) {
 	this.value	= nValue;
 };
@@ -30,4 +34,7 @@ cXSUnsignedShort.cast	= function(vValue) {
 };
 
 //
-fStaticContext_defineSystemDataType("unsignedShort",	cXSUnsignedShort);
+cStaticContext.defineSystemDataType("unsignedShort",	cXSUnsignedShort);
+
+//
+module.exports = cXSUnsignedShort;

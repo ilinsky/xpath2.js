@@ -7,24 +7,27 @@
  *
  */
 
+// FIXME: var cStepExpr = require('./../path/StepExpr');
+var cPrimaryExpr = require('./PrimaryExpr');
+
 function cFilterExpr(oPrimary) {
 	this.expression	= oPrimary;
 	this.predicates	= [];
 };
 
-cFilterExpr.prototype	= new cStepExpr;
+// FIXME: cFilterExpr.prototype	= new cStepExpr;
 
 cFilterExpr.prototype.expression	= null;
 
 // Static members
-function fFilterExpr_parse (oLexer, oStaticContext) {
+cFilterExpr.parse = function(oLexer, oStaticContext) {
 	var oExpr;
-	if (oLexer.eof() ||!(oExpr = fPrimaryExpr_parse(oLexer, oStaticContext)))
+	if (oLexer.eof() ||!(oExpr = cPrimaryExpr.parse(oLexer, oStaticContext)))
 		return;
 
 	var oFilterExpr	= new cFilterExpr(oExpr);
 	// Parse predicates
-	fStepExpr_parsePredicates(oLexer, oStaticContext, oFilterExpr);
+// FIXME:	cStepExpr.parsePredicates(oLexer, oStaticContext, oFilterExpr);
 
 	// If no predicates found
 	if (oFilterExpr.predicates.length == 0)
@@ -40,3 +43,6 @@ cFilterExpr.prototype.evaluate	= function (oContext) {
 		oSequence	= this.applyPredicates(oSequence, oContext);
 	return oSequence;
 };
+
+//
+module.exports = cFilterExpr;

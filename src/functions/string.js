@@ -7,6 +7,16 @@
  *
  */
 
+var cStaticContext = require('./../classes/StaticContext');
+var hTypes = require('./../types');
+
+//
+var fStaticContext_defineSystemFunction = cStaticContext.defineSystemFunction;
+//
+var cXSString = hTypes.XSString;
+var cXSInteger = hTypes.XSInteger;
+var cXSDouble = hTypes.XSDouble;
+
 /*
 	7.2 Functions to Assemble and Disassemble Strings
 		codepoints-to-string

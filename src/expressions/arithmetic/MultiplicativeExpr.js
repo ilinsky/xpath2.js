@@ -7,6 +7,13 @@
  *
  */
 
+var cUnionExpr = require('./../sequence/UnionExpr');
+
+var cStaticContext = require('./../../classes/StaticContext');
+
+//
+var hStaticContext_operators = cStaticContext.operators;
+
 function cMultiplicativeExpr(oExpr) {
 	this.left	= oExpr;
 	this.items	= [];
@@ -114,9 +121,9 @@ hMultiplicativeExpr_operators['mod']	= function (oLeft, oRight, oContext) {
 };
 
 // Static members
-function fMultiplicativeExpr_parse (oLexer, oStaticContext) {
+cMultiplicativeExpr.parse = function(oLexer, oStaticContext) {
 	var oExpr;
-	if (oLexer.eof() ||!(oExpr = fUnionExpr_parse(oLexer, oStaticContext)))
+	if (oLexer.eof() ||!(oExpr = cUnionExpr.parse(oLexer, oStaticContext)))
 		return;
 	if (!(oLexer.peek() in hMultiplicativeExpr_operators))
 		return oExpr;
@@ -126,7 +133,7 @@ function fMultiplicativeExpr_parse (oLexer, oStaticContext) {
 		sOperator;
 	while ((sOperator = oLexer.peek()) in hMultiplicativeExpr_operators) {
 		oLexer.next();
-		if (oLexer.eof() ||!(oExpr = fUnionExpr_parse(oLexer, oStaticContext)))
+		if (oLexer.eof() ||!(oExpr = cUnionExpr.parse(oLexer, oStaticContext)))
 			throw new cException("XPST0003"
 //->Debug
 					, "Expected second operand in multiplicative expression"
@@ -175,3 +182,6 @@ cMultiplicativeExpr.prototype.evaluate	= function (oContext) {
 	}
 	return [vLeft];
 };
+
+//
+module.exports = cMultiplicativeExpr;

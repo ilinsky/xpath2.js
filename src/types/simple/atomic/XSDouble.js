@@ -7,6 +7,11 @@
  *
  */
 
+var cStaticContext = require('./../../../classes/StaticContext');
+var cXSConstants = require('./../../../classes/XSConstants');
+var cXSAnySimpleType = require('./../../XSAnySimpleType');
+var cXSAnyAtomicType = require('./../XSAnyAtomicType');
+
 function cXSDouble(nValue) {
 	this.value	= nValue;
 };
@@ -48,4 +53,7 @@ cXSDouble.cast	= function(vValue) {
 };
 
 //
-fStaticContext_defineSystemDataType("double",	cXSDouble);
+cStaticContext.defineSystemDataType("double",	cXSDouble);
+
+//
+module.exports = cXSDouble;

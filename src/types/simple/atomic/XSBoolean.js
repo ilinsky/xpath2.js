@@ -7,6 +7,11 @@
  *
  */
 
+var cStaticContext = require('./../../../classes/StaticContext');
+var cXSConstants = require('./../../../classes/XSConstants');
+var cXSAnySimpleType = require('./../../XSAnySimpleType');
+var cXSAnyAtomicType = require('./../XSAnyAtomicType');
+
 function cXSBoolean(bValue) {
 	this.value	= bValue;
 };
@@ -46,4 +51,7 @@ cXSBoolean.cast	= function(vValue) {
 };
 
 //
-fStaticContext_defineSystemDataType("boolean",	cXSBoolean);
+cStaticContext.defineSystemDataType("boolean",	cXSBoolean);
+
+//
+module.exports = cXSBoolean;

@@ -7,6 +7,19 @@
  *
  */
 
+var cStaticContext = require('./../classes/StaticContext');
+var hTypes = require('./../types');
+
+//
+var hStaticContext_operators = cStaticContext.operators;
+var cXSBoolean = hTypes.XSBoolean;
+var cXSDateTime = hTypes.XSDateTime;
+var cXSDate = hTypes.XSDate;
+var cXSTime = hTypes.XSTime;
+var cXSDecimal = hTypes.XSDecimal;
+var cXSDayTimeDuration = hTypes.XSDayTimeDuration;
+var cXSYearMonthDuration = hTypes.XSYearMonthDuration;
+
 /*
 	10.4 Comparison Operators on Duration, Date and Time Values
 		op:yearMonthDuration-less-than

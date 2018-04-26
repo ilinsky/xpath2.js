@@ -7,6 +7,10 @@
  *
  */
 
+var cXSConstants = require('./../../classes/XSConstants');
+var cStaticContext = require('./../../classes/StaticContext');
+var cXSAnySimpleType = require('./../XSAnySimpleType');
+
 function cXSAnyAtomicType() {
 
 };
@@ -27,4 +31,7 @@ function fXSAnyAtomicType_isNumeric(vItem) {
 };
 
 //
-fStaticContext_defineSystemDataType("anyAtomicType",	cXSAnyAtomicType);
+cStaticContext.defineSystemDataType("anyAtomicType",	cXSAnyAtomicType);
+
+//
+module.exports = cXSAnyAtomicType;

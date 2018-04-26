@@ -7,6 +7,11 @@
  *
  */
 
+var cStaticContext = require('./../../../classes/StaticContext');
+var cXSConstants = require('./../../../classes/XSConstants');
+var cXSAnySimpleType = require('./../../XSAnySimpleType');
+var cXSAnyAtomicType = require('./../XSAnyAtomicType');
+
 function cXSString(sValue) {
 	this.value	= sValue;
 };
@@ -36,4 +41,7 @@ cXSString.cast	= function(vValue) {
 };
 
 //
-fStaticContext_defineSystemDataType("string",	cXSString);
+cStaticContext.defineSystemDataType("string",	cXSString);
+
+//
+module.exports = cXSString;

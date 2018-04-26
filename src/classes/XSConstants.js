@@ -67,3 +67,6 @@ cXSConstants.ANYTYPE_DT				= 51;
 //
 cXSConstants.XT_YEARMONTHDURATION_DT=-1;
 cXSConstants.XT_UNTYPEDATOMIC_DT	=-2;
+
+//
+module.exports = cXSConstants;

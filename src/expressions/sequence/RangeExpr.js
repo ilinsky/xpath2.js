@@ -7,6 +7,13 @@
  *
  */
 
+var cAdditiveExpr = require('./../arithmetic/AdditiveExpr');
+
+var cStaticContext = require('./../../classes/StaticContext');
+
+//
+var hStaticContext_operators = cStaticContext.operators;
+
 function cRangeExpr(oLeft, oRight) {
 	this.left	= oLeft;
 	this.right	= oRight;
@@ -14,26 +21,6 @@ function cRangeExpr(oLeft, oRight) {
 
 cRangeExpr.prototype.left	= null;
 cRangeExpr.prototype.right	= null;
-
-// Static members
-function fRangeExpr_parse (oLexer, oStaticContext) {
-	var oExpr,
-		oRight;
-	if (oLexer.eof() ||!(oExpr = fAdditiveExpr_parse(oLexer, oStaticContext)))
-		return;
-	if (oLexer.peek() != "to")
-		return oExpr;
-
-	// Range expression
-	oLexer.next();
-	if (oLexer.eof() ||!(oRight = fAdditiveExpr_parse(oLexer, oStaticContext)))
-		throw new cException("XPST0003"
-//->Debug
-				, "Expected second operand in range expression"
-//<-Debug
-		);
-	return new cRangeExpr(oExpr, oRight);
-};
 
 // Public members
 cRangeExpr.prototype.evaluate	= function (oContext) {
@@ -78,3 +65,6 @@ cRangeExpr.prototype.evaluate	= function (oContext) {
 
 	return hStaticContext_operators["to"].call(oContext, oLeft[0], oRight[0]);
 };
+
+//
+module.exports = cRangeExpr;

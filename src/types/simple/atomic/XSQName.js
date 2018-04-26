@@ -7,6 +7,11 @@
  *
  */
 
+var cStaticContext = require('./../../../classes/StaticContext');
+var cXSConstants = require('./../../../classes/XSConstants');
+var cXSAnySimpleType = require('./../../XSAnySimpleType');
+var cXSAnyAtomicType = require('./../XSAnyAtomicType');
+
 function cXSQName(sPrefix, sLocalName, sNameSpaceURI) {
 	this.prefix	= sPrefix;
 	this.localName	= sLocalName;
@@ -44,4 +49,7 @@ cXSQName.cast	= function(vValue) {
 };
 
 //
-fStaticContext_defineSystemDataType("QName",	cXSQName);
+cStaticContext.defineSystemDataType("QName",	cXSQName);
+
+//
+module.exports = cXSQName;

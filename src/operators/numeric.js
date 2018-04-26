@@ -7,6 +7,16 @@
  *
  */
 
+var cStaticContext = require('./../classes/StaticContext');
+var hTypes = require('./../types');
+
+//
+var hStaticContext_operators = cStaticContext.operators;
+//
+var cXSBoolean = hTypes.XSBoolean;
+var cXSInteger = hTypes.XSInteger;
+var cXSDecimal = hTypes.XSDecimal;
+
 /*
 	6.2 Operators on Numeric Values
 		op:numeric-add
@@ -25,20 +35,11 @@
 */
 
 // 6.2 Operators on Numeric Values
-function fFunctionCall_numeric_getPower(oLeft, oRight) {
-	if (fIsNaN(oLeft) || (cMath.abs(oLeft) == nInfinity) || fIsNaN(oRight) || (cMath.abs(oRight) == nInfinity))
-		return 0;
-	var aLeft	= cString(oLeft).match(rNumericLiteral),
-		aRight	= cString(oRight).match(rNumericLiteral),
-		nPower	= cMath.max(1, (aLeft[2] || aLeft[3] || '').length + (aLeft[5] || 0) * (aLeft[4] == '+' ?-1 : 1), (aRight[2] || aRight[3] || '').length + (aRight[5] || 0) * (aRight[4] == '+' ?-1 : 1));
-	return nPower + (nPower % 2 ? 0 : 1);
-};
-
 // op:numeric-add($arg1 as numeric, $arg2 as numeric) as numeric
 hStaticContext_operators["numeric-add"]		= function(oLeft, oRight) {
 	var nLeft	= oLeft.valueOf(),
 		nRight	= oRight.valueOf(),
-		nPower	= cMath.pow(10, fFunctionCall_numeric_getPower(nLeft, nRight));
+		nPower	= cMath.pow(10, fOperator_numeric_getPower(nLeft, nRight));
 	return fOperator_numeric_getResultOfType(oLeft, oRight, ((nLeft * nPower) + (nRight * nPower))/nPower);
 };
 
@@ -46,7 +47,7 @@ hStaticContext_operators["numeric-add"]		= function(oLeft, oRight) {
 hStaticContext_operators["numeric-subtract"]	= function(oLeft, oRight) {
 	var nLeft	= oLeft.valueOf(),
 		nRight	= oRight.valueOf(),
-		nPower	= cMath.pow(10, fFunctionCall_numeric_getPower(nLeft, nRight));
+		nPower	= cMath.pow(10, fOperator_numeric_getPower(nLeft, nRight));
 	return fOperator_numeric_getResultOfType(oLeft, oRight, ((nLeft * nPower) - (nRight * nPower))/nPower);
 };
 
@@ -54,7 +55,7 @@ hStaticContext_operators["numeric-subtract"]	= function(oLeft, oRight) {
 hStaticContext_operators["numeric-multiply"]	= function(oLeft, oRight) {
 	var nLeft	= oLeft.valueOf(),
 		nRight	= oRight.valueOf(),
-		nPower	= cMath.pow(10, fFunctionCall_numeric_getPower(nLeft, nRight));
+		nPower	= cMath.pow(10, fOperator_numeric_getPower(nLeft, nRight));
 	return fOperator_numeric_getResultOfType(oLeft, oRight, ((nLeft * nPower) * (nRight * nPower))/(nPower * nPower));
 };
 
@@ -62,7 +63,7 @@ hStaticContext_operators["numeric-multiply"]	= function(oLeft, oRight) {
 hStaticContext_operators["numeric-divide"]	= function(oLeft, oRight) {
 	var nLeft	= oLeft.valueOf(),
 		nRight	= oRight.valueOf(),
-		nPower	= cMath.pow(10, fFunctionCall_numeric_getPower(nLeft, nRight));
+		nPower	= cMath.pow(10, fOperator_numeric_getPower(nLeft, nRight));
 	return fOperator_numeric_getResultOfType(oLeft, oRight, (oLeft * nPower) / (oRight * nPower));
 };
 
@@ -76,7 +77,7 @@ hStaticContext_operators["numeric-integer-divide"]	= function(oLeft, oRight) {
 hStaticContext_operators["numeric-mod"]	= function(oLeft, oRight) {
 	var nLeft	= oLeft.valueOf(),
 		nRight	= oRight.valueOf(),
-		nPower	= cMath.pow(10, fFunctionCall_numeric_getPower(nLeft, nRight));
+		nPower	= cMath.pow(10, fOperator_numeric_getPower(nLeft, nRight));
 	return fOperator_numeric_getResultOfType(oLeft, oRight, ((nLeft * nPower) % (nRight * nPower)) / nPower);
 };
 
@@ -106,6 +107,15 @@ hStaticContext_operators["numeric-less-than"]	= function(oLeft, oRight) {
 // op:numeric-greater-than($arg1 as numeric, $arg2 as numeric) as xs:boolean
 hStaticContext_operators["numeric-greater-than"]	= function(oLeft, oRight) {
 	return new cXSBoolean(oLeft.valueOf() > oRight.valueOf());
+};
+
+function fOperator_numeric_getPower(oLeft, oRight) {
+	if (fIsNaN(oLeft) || (cMath.abs(oLeft) == nInfinity) || fIsNaN(oRight) || (cMath.abs(oRight) == nInfinity))
+		return 0;
+	var aLeft	= cString(oLeft).match(rNumericLiteral),
+		aRight	= cString(oRight).match(rNumericLiteral),
+		nPower	= cMath.max(1, (aLeft[2] || aLeft[3] || '').length + (aLeft[5] || 0) * (aLeft[4] == '+' ?-1 : 1), (aRight[2] || aRight[3] || '').length + (aRight[5] || 0) * (aRight[4] == '+' ?-1 : 1));
+	return nPower + (nPower % 2 ? 0 : 1);
 };
 
 function fOperator_numeric_getResultOfType(oLeft, oRight, nResult) {

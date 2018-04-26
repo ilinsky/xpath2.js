@@ -7,6 +7,11 @@
  *
  */
 
+var cStaticContext = require('./../../../classes/StaticContext');
+var cXSConstants = require('./../../../classes/XSConstants');
+var cXSAnySimpleType = require('./../../XSAnySimpleType');
+var cXSAnyAtomicType = require('./../XSAnyAtomicType');
+
 function cXSUntypedAtomic(sValue) {
 	this.value	= sValue;
 };
@@ -32,4 +37,7 @@ cXSUntypedAtomic.cast	= function(vValue) {
 };
 
 //
-fStaticContext_defineSystemDataType("untypedAtomic",	cXSUntypedAtomic);
+cStaticContext.defineSystemDataType("untypedAtomic",	cXSUntypedAtomic);
+
+//
+module.exports = cXSUntypedAtomic;

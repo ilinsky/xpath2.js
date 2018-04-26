@@ -7,6 +7,10 @@
  *
  */
 
+var cStaticContext = require('./../../../../classes/StaticContext');
+var cXSConstants = require('./../../../../classes/XSConstants');
+var cXSToken = require('./XSToken');
+
 function cXSLanguage(sValue) {
 	this.value	= sValue;
 };
@@ -19,4 +23,7 @@ cXSLanguage.cast	= function(vValue) {
 };
 
 //
-fStaticContext_defineSystemDataType("language",	cXSLanguage);
+cStaticContext.defineSystemDataType("language",	cXSLanguage);
+
+//
+module.exports = cStaticContext;

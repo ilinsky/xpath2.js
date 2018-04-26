@@ -7,6 +7,11 @@
  *
  */
 
+var cStaticContext = require('./../../classes/StaticContext');
+
+//
+var hStaticContext_operators = cStaticContext.operators;
+
 function cComparisonExpr(oLeft, oRight, sOperator) {
 	this.left	= oLeft;
 	this.right	= oRight;
@@ -17,30 +22,9 @@ cComparisonExpr.prototype.left	= null;
 cComparisonExpr.prototype.right	= null;
 cComparisonExpr.prototype.operator	= null;
 
-// Static members
-function fComparisonExpr_parse (oLexer, oStaticContext) {
-	var oExpr,
-		oRight;
-	if (oLexer.eof() ||!(oExpr = fRangeExpr_parse(oLexer, oStaticContext)))
-		return;
-	if (!(oLexer.peek() in hComparisonExpr_operators))
-		return oExpr;
-
-	// Comparison expression
-	var sOperator	= oLexer.peek();
-	oLexer.next();
-	if (oLexer.eof() ||!(oRight = fRangeExpr_parse(oLexer, oStaticContext)))
-		throw new cException("XPST0003"
-//->Debug
-				, "Expected second operand in comparison expression"
-//<-Debug
-		);
-	return new cComparisonExpr(oExpr, oRight, sOperator);
-};
-
 // Public members
 cComparisonExpr.prototype.evaluate	= function (oContext) {
-	var oResult	= hComparisonExpr_operators[this.operator](this, oContext);
+	var oResult	= cComparisonExpr.operators[this.operator](this, oContext);
 	return oResult == null ? [] : [oResult];
 };
 
@@ -240,12 +224,16 @@ hComparisonExpr_ValueComp_operators['eq']	= function(oLeft, oRight, oContext) {
 		if (oRight instanceof cXSBase64Binary)
 			sOperator	= "base64Binary-equal";
 	}
+	else
+	if (oLeft instanceof cXSNOTATION) {
+		if (oRight instanceof cXSNOTATION)
+			sOperator = "NOTATION-equal";
+	}
 
 	// Call operator function
 	if (sOperator)
 		return hStaticContext_operators[sOperator].call(oContext, oLeft, oRight);
 
-	// skipped: xs:NOTATION
 	throw new cException("XPTY0004"
 //->Debug
 			, "Cannot compare values of given types"
@@ -521,7 +509,7 @@ hComparisonExpr_NodeComp_operators['<<']	= function(oLeft, oRight, oContext) {
 };
 
 // Operators
-var hComparisonExpr_operators	= {
+cComparisonExpr.operators	= {
 	// GeneralComp
 	'=':	fComparisonExpr_GeneralComp,
 	'!=':	fComparisonExpr_GeneralComp,
@@ -541,3 +529,6 @@ var hComparisonExpr_operators	= {
 	'>>':	fComparisonExpr_NodeComp,
 	'<<':	fComparisonExpr_NodeComp
 };
+
+//
+module.exports = cComparisonExpr;

@@ -7,6 +7,20 @@
  *
  */
 
+var cStaticContext = require('./../classes/StaticContext');
+var hTypes = require('./../types');
+
+//
+var fStaticContext_defineSystemFunction = cStaticContext.defineSystemFunction;
+//
+var cXSDuration = hTypes.XSDuration;
+var cXSDayTimeDuration = hTypes.XSDayTimeDuration;
+var cXSDateTime = hTypes.XSDateTime;
+var cXSDate = hTypes.XSDate;
+var cXSTime = hTypes.XSTime;
+var cXSDecimal = hTypes.XSDecimal;
+var cXSInteger = hTypes.XSInteger;
+
 /*
 	10.5 Component Extraction Functions on Durations, Dates and Times
 		years-from-duration

@@ -7,6 +7,8 @@
  *
  */
 
+ var cFunction = Function;
+
 function cStaticContext() {
 	this.dataTypes	= {};
 	this.documents	= {};
@@ -24,7 +26,7 @@ cStaticContext.prototype.functions	= null;
 cStaticContext.prototype.defaultFunctionNamespace	= null;
 //
 cStaticContext.prototype.collations	= null;
-cStaticContext.prototype.defaultCollationName		= sNS_XPF + "/collation/codepoint";
+cStaticContext.prototype.defaultCollationName		= "http://www.w3.org/2005/xpath-functions/collation/codepoint";
 //
 cStaticContext.prototype.collections	= null;
 //
@@ -114,7 +116,7 @@ cStaticContext.js2xs	= function(vItem) {
 		vItem	= new cXSBoolean(vItem);
 	else
 	if (typeof vItem == "number")
-		vItem	=(fIsNaN(vItem) ||!fIsFinite(vItem)) ? new cXSDouble(vItem) : fNumericLiteral_parseValue(cString(vItem));
+		vItem	=(fIsNaN(vItem) ||!fIsFinite(vItem)) ? new cXSDouble(vItem) : cNumericLiteral.parseValue(cString(vItem));
 	else
 		vItem	= new cXSString(cString(vItem));
 	//
@@ -137,17 +139,21 @@ cStaticContext.xs2js	= function(vItem) {
 // System functions with signatures, operators and types
 var hStaticContext_functions	= {},
 	hStaticContext_signatures	= {},
-	hStaticContext_dataTypes	= {},
-	hStaticContext_operators	= {};
+	hStaticContext_dataTypes	= {};
 
-function fStaticContext_defineSystemFunction(sName, aParameters, fFunction) {
+cStaticContext.operators	= {};
+
+cStaticContext.defineSystemFunction = function(sName, aParameters, fFunction) {
 	// Register function
 	hStaticContext_functions[sName]	= fFunction;
 	// Register signature
 	hStaticContext_signatures[sName]	= aParameters;
 };
 
-function fStaticContext_defineSystemDataType(sName, fFunction) {
+cStaticContext.defineSystemDataType =function(sName, fFunction) {
 	// Register dataType
 	hStaticContext_dataTypes[sName]	= fFunction;
 };
+
+//
+module.exports = cStaticContext;

@@ -42,3 +42,6 @@ cDOMAdapter.prototype.getElementById	= function(oNode, sId) {
 cDOMAdapter.prototype.getElementsByTagNameNS	= function(oNode, sNameSpaceURI, sLocalName) {
 	return oNode.getElementsByTagNameNS(sNameSpaceURI, sLocalName);
 };
+
+//
+module.exports = cDOMAdapter;

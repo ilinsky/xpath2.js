@@ -7,6 +7,10 @@
  *
  */
 
+var cStaticContext = require('./../../../../classes/StaticContext');
+var cXSConstants = require('./../../../../classes/XSConstants');
+var cXSLong = require('./XSLong');
+
 function cXSInt(nValue) {
 	this.value	= nValue;
 };
@@ -30,4 +34,7 @@ cXSInt.cast	= function(vValue) {
 };
 
 //
-fStaticContext_defineSystemDataType("int",	cXSInt);
+cStaticContext.defineSystemDataType("int",	cXSInt);
+
+//
+module.exports = cXSInt;

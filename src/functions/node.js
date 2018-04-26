@@ -7,6 +7,16 @@
  *
  */
 
+var cStaticContext = require('./../classes/StaticContext');
+var hTypes = require('./../types');
+
+//
+var fStaticContext_defineSystemFunction = cStaticContext.defineSystemFunction;
+//
+var cXTNode = hTypes.XTNode;
+var cXSBoolean = hTypes.XSBoolean;
+var cXSString = hTypes.XSString;
+
 /*
 	14 Functions and Operators on Nodes
 		name

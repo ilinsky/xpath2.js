@@ -7,6 +7,10 @@
  *
  */
 
+var cStaticContext = require('./../../../../classes/StaticContext');
+var cXSConstants = require('./../../../../classes/XSConstants');
+var cXSShort = require('./XSShort');
+
 function cXSByte(nValue) {
 	this.value	= nValue;
 };
@@ -30,4 +34,6 @@ cXSByte.cast	= function(vValue) {
 };
 
 //
-fStaticContext_defineSystemDataType("byte",	cXSByte);
+cStaticContext.defineSystemDataType("byte",	cXSByte);
+
+module.exports = cXSByte;

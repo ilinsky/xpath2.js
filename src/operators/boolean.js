@@ -7,6 +7,13 @@
  *
  */
 
+var cStaticContext = require('./../classes/StaticContext');
+var hTypes = require('./../types');
+
+//
+var hStaticContext_operators = cStaticContext.operators;
+var cXSBoolean = hTypes.XSBoolean;
+
 /*
 	9.2 Operators on Boolean Values
 		op:boolean-equal

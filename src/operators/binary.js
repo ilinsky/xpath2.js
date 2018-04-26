@@ -7,6 +7,13 @@
  *
  */
 
+var cStaticContext = require('./../classes/StaticContext');
+var hTypes = require('./../types');
+
+//
+var hStaticContext_operators = cStaticContext.operators;
+var cXSBoolean = hTypes.XSBoolean;
+
 /*
 	12.1 Comparisons of base64Binary and hexBinary Values
 		op:hexBinary-equal

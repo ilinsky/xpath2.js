@@ -7,6 +7,17 @@
  *
  */
 
+var cStaticContext = require('./../classes/StaticContext');
+var hTypes = require('./../types');
+
+//
+var fStaticContext_defineSystemFunction = cStaticContext.defineSystemFunction;
+//
+var cXSInteger = hTypes.XSInteger;
+var cXSDate = hTypes.XSDate;
+var cXSAnyURI = hTypes.XSAnyURI;
+var cXSString = hTypes.XSString;
+
 /*
 	16 Context Functions
 		position

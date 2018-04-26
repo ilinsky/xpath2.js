@@ -7,6 +7,10 @@
  *
  */
 
+var cStaticContext = require('./../../../../classes/StaticContext');
+var cXSConstants = require('./../../../../classes/XSConstants');
+var cXSInteger = require('./XSInteger');
+
 function cXSNonPositiveInteger(nValue) {
 	this.value	= nValue;
 };
@@ -30,4 +34,7 @@ cXSNonPositiveInteger.cast	= function(vValue) {
 };
 
 //
-fStaticContext_defineSystemDataType("nonPositiveInteger",	cXSNonPositiveInteger);
+cStaticContext.defineSystemDataType("nonPositiveInteger",	cXSNonPositiveInteger);
+
+//
+module.exports = cXSNonPositiveInteger;

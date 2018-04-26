@@ -7,6 +7,8 @@
  *
  */
 
+var cStringCollator = require('./../classes/StringCollator');
+
 var oCodepointStringCollator	= new cStringCollator;
 
 oCodepointStringCollator.equals	= function(sValue1, sValue2) {
@@ -16,3 +18,5 @@ oCodepointStringCollator.equals	= function(sValue1, sValue2) {
 oCodepointStringCollator.compare	= function(sValue1, sValue2) {
 	return sValue1 == sValue2 ? 0 : sValue1 > sValue2 ? 1 :-1;
 };
+
+module.export = oCodepointStringCollator;

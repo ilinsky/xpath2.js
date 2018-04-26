@@ -7,6 +7,10 @@
  *
  */
 
+var cStaticContext = require('./../../../../classes/StaticContext');
+var cXSConstants = require('./../../../../classes/XSConstants');
+var cXSNCName = require('./XSNCName');
+
 function cXSENTITY(sValue) {
 	this.value	= sValue;
 };
@@ -19,4 +23,7 @@ cXSENTITY.cast	= function(vValue) {
 };
 
 //
-fStaticContext_defineSystemDataType("ENTITY",	cXSENTITY);
+cStaticContext.defineSystemDataType("ENTITY",	cXSENTITY);
+
+//
+module.exports = cXSENTITY;

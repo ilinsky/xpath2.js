@@ -7,6 +7,13 @@
  *
  */
 
+var cException = require('./../../classes/Exception');
+
+var cStaticContext = require('./../../classes/StaticContext');
+
+//
+var hStaticContext_operators = cStaticContext.operators;
+
 function cAdditiveExpr(oExpr) {
 	this.left	= oExpr;
 	this.items	= [];
@@ -16,8 +23,8 @@ cAdditiveExpr.prototype.left	= null;
 cAdditiveExpr.prototype.items	= null;
 
 //
-var hAdditiveExpr_operators	= {};
-hAdditiveExpr_operators['+']	= function(oLeft, oRight, oContext) {
+cAdditiveExpr.operators	= {};
+cAdditiveExpr.operators['+']	= function(oLeft, oRight, oContext) {
 	var sOperator	= '',
 		bReverse	= false;
 
@@ -93,7 +100,7 @@ hAdditiveExpr_operators['+']	= function(oLeft, oRight, oContext) {
 //<-Debug
 	);	// Arithmetic operator is not defined for arguments of types ({type1}, {type2})
 };
-hAdditiveExpr_operators['-']	= function (oLeft, oRight, oContext) {
+cAdditiveExpr.operators['-']	= function (oLeft, oRight, oContext) {
 	var sOperator	= '';
 
 	if (fXSAnyAtomicType_isNumeric(oLeft)) {
@@ -153,30 +160,6 @@ hAdditiveExpr_operators['-']	= function (oLeft, oRight, oContext) {
 	);	// Arithmetic operator is not defined for arguments of types ({type1}, {type2})
 };
 
-// Static members
-function fAdditiveExpr_parse (oLexer, oStaticContext) {
-	var oExpr;
-	if (oLexer.eof() ||!(oExpr = fMultiplicativeExpr_parse(oLexer, oStaticContext)))
-		return;
-	if (!(oLexer.peek() in hAdditiveExpr_operators))
-		return oExpr;
-
-	// Additive expression
-	var oAdditiveExpr	= new cAdditiveExpr(oExpr),
-		sOperator;
-	while ((sOperator = oLexer.peek()) in hAdditiveExpr_operators) {
-		oLexer.next();
-		if (oLexer.eof() ||!(oExpr = fMultiplicativeExpr_parse(oLexer, oStaticContext)))
-			throw new cException("XPST0003"
-//->Debug
-					, "Expected second operand in additive expression"
-//<-Debug
-			);
-		oAdditiveExpr.items.push([sOperator, oExpr]);
-	}
-	return oAdditiveExpr;
-};
-
 // Public members
 cAdditiveExpr.prototype.evaluate	= function (oContext) {
 	var oLeft	= fFunction_sequence_atomize(this.left.evaluate(oContext), oContext);
@@ -210,7 +193,10 @@ cAdditiveExpr.prototype.evaluate	= function (oContext) {
 		if (vRight instanceof cXSUntypedAtomic)
 			vRight	= cXSDouble.cast(vRight);	// cast to xs:double
 
-		vLeft	= hAdditiveExpr_operators[this.items[nIndex][0]](vLeft, vRight, oContext);
+		vLeft	= cAdditiveExpr.operators[this.items[nIndex][0]](vLeft, vRight, oContext);
 	}
 	return [vLeft];
 };
+
+//
+module.exports = cAdditiveExpr;

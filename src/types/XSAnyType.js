@@ -7,8 +7,13 @@
  *
  */
 
+var cXSConstants = require('./../classes/XSConstants');
+
 function cXSAnyType() {
 
 };
 
 cXSAnyType.prototype.builtInKind	= cXSConstants.ANYTYPE_DT;
+
+//
+module.exports = cXSAnyType;

@@ -7,6 +7,11 @@
  *
  */
 
+var cStaticContext = require('./../../classes/StaticContext');
+
+//
+var hStaticContext_operators = cStaticContext.operators;
+
 function cUnaryExpr(sOperator, oExpr) {
 	this.operator	= sOperator;
 	this.expression	= oExpr;
@@ -16,8 +21,8 @@ cUnaryExpr.prototype.operator	= null;
 cUnaryExpr.prototype.expression	= null;
 
 //
-var hUnaryExpr_operators	= {};
-hUnaryExpr_operators['-']	= function(oRight, oContext) {
+cUnaryExpr.operators	= {};
+cUnaryExpr.operators['-']	= function(oRight, oContext) {
 	if (fXSAnyAtomicType_isNumeric(oRight))
 		return hStaticContext_operators["numeric-unary-minus"].call(oContext, oRight);
 	//
@@ -27,7 +32,7 @@ hUnaryExpr_operators['-']	= function(oRight, oContext) {
 //<-Debug
 	);	// Arithmetic operator is not defined for arguments of types ({type1}, {type2})
 };
-hUnaryExpr_operators['+']	= function(oRight, oContext) {
+cUnaryExpr.operators['+']	= function(oRight, oContext) {
 	if (fXSAnyAtomicType_isNumeric(oRight))
 		return hStaticContext_operators["numeric-unary-plus"].call(oContext, oRight);
 	//
@@ -36,31 +41,6 @@ hUnaryExpr_operators['+']	= function(oRight, oContext) {
 			, "Arithmetic operator is not defined for provided arguments"
 //<-Debug
 	);	// Arithmetic operator is not defined for arguments of types ({type1}, {type2})
-};
-
-// Static members
-// UnaryExpr	:= ("-" | "+")* ValueExpr
-function fUnaryExpr_parse (oLexer, oStaticContext) {
-	if (oLexer.eof())
-		return;
-	if (!(oLexer.peek() in hUnaryExpr_operators))
-		return fValueExpr_parse(oLexer, oStaticContext);
-
-	// Unary expression
-	var sOperator	= '+',
-		oExpr;
-	while (oLexer.peek() in hUnaryExpr_operators) {
-		if (oLexer.peek() == '-')
-			sOperator	= sOperator == '-' ? '+' : '-';
-		oLexer.next();
-	}
-	if (oLexer.eof() ||!(oExpr = fValueExpr_parse(oLexer, oStaticContext)))
-		throw new cException("XPST0003"
-//->Debug
-				, "Expected operand in unary expression"
-//<-Debug
-		);
-	return new cUnaryExpr(sOperator, oExpr);
 };
 
 cUnaryExpr.prototype.evaluate	= function (oContext) {
@@ -80,5 +60,8 @@ cUnaryExpr.prototype.evaluate	= function (oContext) {
 	if (vRight instanceof cXSUntypedAtomic)
 		vRight	= cXSDouble.cast(vRight);	// cast to xs:double
 
-	return [hUnaryExpr_operators[this.operator](vRight, oContext)];
+	return [cUnaryExpr.operators[this.operator](vRight, oContext)];
 };
+
+//
+module.exports = cUnaryExpr;

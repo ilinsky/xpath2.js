@@ -7,6 +7,11 @@
  *
  */
 
+var cStaticContext = require('./../../../classes/StaticContext');
+var cXSConstants = require('./../../../classes/XSConstants');
+var cXSAnySimpleType = require('./../../XSAnySimpleType');
+var cXSAnyAtomicType = require('./../XSAnyAtomicType');
+
 function cXSDecimal(nValue) {
 	this.value	= nValue;
 };
@@ -55,4 +60,7 @@ cXSDecimal.cast	= function(vValue) {
 };
 
 //
-fStaticContext_defineSystemDataType("decimal",	cXSDecimal);
+cStaticContext.defineSystemDataType("decimal",	cXSDecimal);
+
+//
+module.exports = cXSDecimal;

@@ -7,6 +7,11 @@
  *
  */
 
+var cStaticContext = require('./../../../classes/StaticContext');
+var cXSConstants = require('./../../../classes/XSConstants');
+var cXSAnySimpleType = require('./../../XSAnySimpleType');
+var cXSAnyAtomicType = require('./../XSAnyAtomicType');
+
 function cXSNOTATION() {
 
 };
@@ -24,4 +29,7 @@ cXSNOTATION.cast	= function(vValue) {
 };
 
 //
-fStaticContext_defineSystemDataType("NOTATION",	cXSNOTATION);
+cStaticContext.defineSystemDataType("NOTATION",	cXSNOTATION);
+
+//
+module.exports = cXSNOTATION;

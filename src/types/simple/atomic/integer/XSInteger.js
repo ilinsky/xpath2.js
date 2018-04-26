@@ -7,6 +7,10 @@
  *
  */
 
+var cStaticContext = require('./../../../../classes/StaticContext');
+var cXSConstants = require('./../../../../classes/XSConstants');
+var cXSDecimal = require('./../XSDecimal');
+
 function cXSInteger(nValue) {
 	this.value	= nValue;
 };
@@ -44,4 +48,7 @@ cXSInteger.cast	= function(vValue) {
 };
 
 //
-fStaticContext_defineSystemDataType("integer",	cXSInteger);
+cStaticContext.defineSystemDataType("integer",	cXSInteger);
+
+//
+module.exports = cXSInteger;

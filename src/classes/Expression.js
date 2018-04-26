@@ -7,9 +7,13 @@
  *
  */
 
+var cLexer = require('./Lexer');
+var cException = require('./Exception');
+var fParseExpr = require('./../expressions/ParseExpr');
+
 function cExpression(sExpression, oStaticContext) {
 	var oLexer	= new cLexer(sExpression),
-		oExpr	= fExpr_parse(oLexer, oStaticContext);
+		oExpr	= fParseExpr(oLexer, oStaticContext);
 	//
 	if (!oLexer.eof())
 		throw new cException("XPST0003"
@@ -33,3 +37,6 @@ cExpression.prototype.internalExpression	= null;
 cExpression.prototype.evaluate	= function(oContext) {
 	return this.internalExpression.evaluate(oContext);
 };
+
+//
+module.exports = cExpression;

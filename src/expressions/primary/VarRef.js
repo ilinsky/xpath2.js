@@ -18,7 +18,7 @@ cVarRef.prototype.localName		= null;
 cVarRef.prototype.namespaceURI	= null;
 
 // Static members
-function fVarRef_parse (oLexer, oStaticContext) {
+cVarRef.parse = function(oLexer, oStaticContext) {
 	if (oLexer.peek().substr(0, 1) == '$') {
 		var aMatch	= oLexer.peek().substr(1).match(rNameTest);
 		if (aMatch) {
@@ -48,3 +48,6 @@ cVarRef.prototype.evaluate	= function (oContext) {
 //<-Debug
 	);
 };
+
+//
+module.exports = cVarRef;

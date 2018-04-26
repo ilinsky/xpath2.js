@@ -7,6 +7,10 @@
  *
  */
 
+var cStaticContext = require('./../../../../classes/StaticContext');
+var cXSConstants = require('./../../../../classes/XSConstants');
+var cXSDuration = require('./../XSDuration');
+
 function cXSYearMonthDuration(nYear, nMonth, bNegative) {
 	cXSDuration.call(this, nYear, nMonth, 0, 0, 0, 0, bNegative);
 };
@@ -51,4 +55,7 @@ function fXSYearMonthDuration_normalize(oDuration) {
 };
 
 //
-fStaticContext_defineSystemDataType("yearMonthDuration",	cXSYearMonthDuration);
+cStaticContext.defineSystemDataType("yearMonthDuration",	cXSYearMonthDuration);
+
+//
+module.exports = cXSYearMonthDuration;

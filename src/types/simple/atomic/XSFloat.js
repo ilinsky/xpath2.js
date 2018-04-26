@@ -7,6 +7,11 @@
  *
  */
 
+var cStaticContext = require('./../../../classes/StaticContext');
+var cXSConstants = require('./../../../classes/XSConstants');
+var cXSAnySimpleType = require('./../../XSAnySimpleType');
+var cXSAnyAtomicType = require('./../XSAnyAtomicType');
+
 function cXSFloat(nValue) {
 	this.value	= nValue;
 };
@@ -48,4 +53,7 @@ cXSFloat.cast	= function(vValue) {
 };
 
 //
-fStaticContext_defineSystemDataType("float",	cXSFloat);
+cStaticContext.defineSystemDataType("float",	cXSFloat);
+
+//
+module.exports = cXSFloat;

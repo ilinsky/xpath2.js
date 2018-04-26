@@ -7,6 +7,14 @@
  *
  */
 
+var cStaticContext = require('./../classes/StaticContext');
+var hTypes = require('./../types');
+
+//
+var hStaticContext_operators = cStaticContext.operators;
+//
+var cXSBoolean = hTypes.XSBoolean;
+
 /*
 	11.2 Functions and Operators Related to QNames
 		op:QName-equal

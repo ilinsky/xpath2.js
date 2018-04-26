@@ -7,6 +7,11 @@
  *
  */
 
+var cStaticContext = require('./../../../classes/StaticContext');
+var cXSConstants = require('./../../../classes/XSConstants');
+var cXSAnySimpleType = require('./../../XSAnySimpleType');
+var cXSAnyAtomicType = require('./../XSAnyAtomicType');
+
 function cXSBase64Binary(sValue) {
 	this.value	= sValue;
 };
@@ -39,7 +44,7 @@ cXSBase64Binary.cast	= function(vValue) {
 		var aMatch	= vValue.valueOf().match(/.{2}/g),
 			aValue	= [];
 		for (var nIndex = 0, nLength = aMatch.length; nIndex < nLength; nIndex++)
-			aValue.push(cString.fromCharCode(fWindow_parseInt(aMatch[nIndex], 16)));
+			aValue.push(cString.fromCharCode(cWindow.parseInt(aMatch[nIndex], 16)));
 		return new cXSBase64Binary(fWindow_btoa(aValue.join('')));
 	}
 	//
@@ -51,4 +56,4 @@ cXSBase64Binary.cast	= function(vValue) {
 };
 
 //
-fStaticContext_defineSystemDataType("base64Binary",	cXSBase64Binary);
+cStaticContext.defineSystemDataType("base64Binary",	cXSBase64Binary);

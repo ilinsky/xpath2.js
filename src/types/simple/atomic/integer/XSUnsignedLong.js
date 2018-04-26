@@ -7,6 +7,10 @@
  *
  */
 
+var cStaticContext = require('./../../../../classes/StaticContext');
+var cXSConstants = require('./../../../../classes/XSConstants');
+var cXSNonNegativeInteger = require('./XSNonNegativeInteger');
+
 function cXSUnsignedLong(nValue) {
 	this.value	= nValue;
 };
@@ -30,4 +34,7 @@ cXSUnsignedLong.cast	= function(vValue) {
 };
 
 //
-fStaticContext_defineSystemDataType("unsignedLong",	cXSUnsignedLong);
+cStaticContext.defineSystemDataType("unsignedLong",	cXSUnsignedLong);
+
+//
+module.exports = cXSUnsignedLong;

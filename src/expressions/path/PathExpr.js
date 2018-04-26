@@ -13,62 +13,6 @@ function cPathExpr() {
 
 cPathExpr.prototype.items	= null;
 
-// Static members
-function fPathExpr_parse (oLexer, oStaticContext) {
-	if (oLexer.eof())
-		return;
-	var sSingleSlash	= '/',
-		sDoubleSlash	= '/' + '/';
-
-	var oPathExpr	= new cPathExpr(),
-		sSlash	= oLexer.peek(),
-		oExpr;
-	// Parse first step
-	if (sSlash == sDoubleSlash || sSlash == sSingleSlash) {
-		oLexer.next();
-		oPathExpr.items.push(new cFunctionCall(null, "root", sNS_XPF));
-		//
-		if (sSlash == sDoubleSlash)
-			oPathExpr.items.push(new cAxisStep("descendant-or-self", new cKindTest("node")));
-	}
-
-	//
-	if (oLexer.eof() ||!(oExpr = fStepExpr_parse(oLexer, oStaticContext))) {
-		if (sSlash == sSingleSlash)
-			return oPathExpr.items[0];	// '/' expression
-		if (sSlash == sDoubleSlash)
-			throw new cException("XPST0003"
-//->Debug
-					, "Expected path step expression"
-//<-Debug
-			);
-		return;
-	}
-	oPathExpr.items.push(oExpr);
-
-	// Parse other steps
-	while ((sSlash = oLexer.peek()) == sSingleSlash || sSlash == sDoubleSlash) {
-		if (sSlash == sDoubleSlash)
-			oPathExpr.items.push(new cAxisStep("descendant-or-self", new cKindTest("node")));
-		//
-		oLexer.next();
-		if (oLexer.eof() ||!(oExpr = fStepExpr_parse(oLexer, oStaticContext)))
-			throw new cException("XPST0003"
-//->Debug
-					, "Expected path step expression"
-//<-Debug
-			);
-		//
-		oPathExpr.items.push(oExpr);
-	}
-
-	if (oPathExpr.items.length == 1)
-		return oPathExpr.items[0];
-
-	//
-	return oPathExpr;
-};
-
 // Public members
 cPathExpr.prototype.evaluate	= function (oContext) {
 	var vContextItem	= oContext.item;
@@ -94,3 +38,6 @@ cPathExpr.prototype.evaluate	= function (oContext) {
 	//
 	return fFunction_sequence_order(oSequence, oContext);
 };
+
+//
+module.exports = cPathExpr;

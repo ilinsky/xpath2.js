@@ -13,7 +13,7 @@ function cItemType(oTest) {
 
 cItemType.prototype.test	= null;
 
-function fItemType_parse (oLexer, oStaticContext) {
+cItemType.parse = function(oLexer, oStaticContext) {
 	if (oLexer.eof())
 		return;
 
@@ -30,8 +30,11 @@ function fItemType_parse (oLexer, oStaticContext) {
 		return new cItemType;
 	}
 	// Note! Following step should have been before previous as per spec
-	if (oExpr = fKindTest_parse(oLexer, oStaticContext))
+	if (oExpr = cKindTest.parse(oLexer, oStaticContext))
 		return new cItemType(oExpr);
-	if (oExpr = fAtomicType_parse(oLexer, oStaticContext))
+	if (oExpr = cAtomicType.parse(oLexer, oStaticContext))
 		return new cItemType(oExpr);
 };
+
+//
+module.exports = cItemType;

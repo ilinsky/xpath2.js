@@ -7,6 +7,8 @@
  *
  */
 
+var cStepExpr = require('./StepExpr');
+
 function cAxisStep(sAxis, oTest) {
 	this.axis	= sAxis;
 	this.test	= oTest;
@@ -19,73 +21,22 @@ cAxisStep.prototype.axis		= null;
 cAxisStep.prototype.test		= null;
 
 //
-var hAxisStep_axises	= {};
+cAxisStep.axises	= {};
 // Forward axis
-hAxisStep_axises["attribute"]			= {};
-hAxisStep_axises["child"]				= {};
-hAxisStep_axises["descendant"]			= {};
-hAxisStep_axises["descendant-or-self"]	= {};
-hAxisStep_axises["following"]			= {};
-hAxisStep_axises["following-sibling"]	= {};
-hAxisStep_axises["self"]				= {};
-// hAxisStep_axises["namespace"]			= {};	// deprecated in 2.0
+cAxisStep.axises["attribute"]			= {};
+cAxisStep.axises["child"]				= {};
+cAxisStep.axises["descendant"]			= {};
+cAxisStep.axises["descendant-or-self"]	= {};
+cAxisStep.axises["following"]			= {};
+cAxisStep.axises["following-sibling"]	= {};
+cAxisStep.axises["self"]				= {};
+// cAxisStep.axises["namespace"]			= {};	// deprecated in 2.0
 // Reverse axis
-hAxisStep_axises["ancestor"]			= {};
-hAxisStep_axises["ancestor-or-self"]	= {};
-hAxisStep_axises["parent"]				= {};
-hAxisStep_axises["preceding"]			= {};
-hAxisStep_axises["preceding-sibling"]	= {};
-
-// Static members
-function fAxisStep_parse (oLexer, oStaticContext) {
-	var sAxis	= oLexer.peek(),
-		oExpr,
-		oStep;
-	if (oLexer.peek(1) == '::') {
-		if (!(sAxis in hAxisStep_axises))
-			throw new cException("XPST0003"
-//->Debug
-					, "Unknown axis name: " + sAxis
-//<-Debug
-			);
-
-		oLexer.next(2);
-		if (oLexer.eof() ||!(oExpr = fNodeTest_parse(oLexer, oStaticContext)))
-			throw new cException("XPST0003"
-//->Debug
-					, "Expected node test expression in axis step"
-//<-Debug
-			);
-		//
-		oStep	= new cAxisStep(sAxis, oExpr);
-	}
-	else
-	if (sAxis == '..') {
-		oLexer.next();
-		oStep	= new cAxisStep("parent", new cKindTest("node"));
-	}
-	else
-	if (sAxis == '@') {
-		oLexer.next();
-		if (oLexer.eof() ||!(oExpr = fNodeTest_parse(oLexer, oStaticContext)))
-			throw new cException("XPST0003"
-//->Debug
-					, "Expected node test expression in axis step"
-//<-Debug
-			);
-		//
-		oStep	= new cAxisStep("attribute", oExpr);
-	}
-	else {
-		if (oLexer.eof() ||!(oExpr = fNodeTest_parse(oLexer, oStaticContext)))
-			return;
-		oStep	= new cAxisStep(oExpr instanceof cKindTest && oExpr.name == "attribute" ? "attribute" : "child", oExpr);
-	}
-	//
-	fStepExpr_parsePredicates(oLexer, oStaticContext, oStep);
-
-	return oStep;
-};
+cAxisStep.axises["ancestor"]			= {};
+cAxisStep.axises["ancestor-or-self"]	= {};
+cAxisStep.axises["parent"]				= {};
+cAxisStep.axises["preceding"]			= {};
+cAxisStep.axises["preceding-sibling"]	= {};
 
 // Public members
 cAxisStep.prototype.evaluate	= function (oContext) {
@@ -205,3 +156,6 @@ function fAxisStep_getChildrenBackward(oNode, oSequence, fGetProperty) {
 		oSequence.push(oNode);
 	}
 };
+
+//
+module.exports = cAxisStep;

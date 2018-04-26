@@ -7,6 +7,8 @@
  *
  */
 
+var cException = require('./Exception');
+
 function cLexer(sValue) {
 	var aMatch	= sValue.match(/\$?(?:(?![0-9-])(?:\w[\w.-]*|\*):)?(?![0-9-])(?:\w[\w.-]*|\*)|\(:|:\)|\/\/|\.\.|::|\d+(?:\.\d*)?(?:[eE][+-]?\d+)?|\.\d+(?:[eE][+-]?\d+)?|"[^"]*(?:""[^"]*)*"|'[^']*(?:''[^']*)*'|<<|>>|[!<>]=|(?![0-9-])[\w-]+:\*|\s+|./g);
 	if (aMatch) {
@@ -51,3 +53,6 @@ cLexer.prototype.back	= function(nOffset) {
 cLexer.prototype.eof	= function() {
 	return this.index >= this.length;
 };
+
+//
+module.exports = cLexer;

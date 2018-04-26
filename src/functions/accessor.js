@@ -7,6 +7,15 @@
  *
  */
 
+var cStaticContext = require('./../classes/StaticContext');
+var hTypes = require('./../types');
+
+//
+var fStaticContext_defineSystemFunction = cStaticContext.defineSystemFunction;
+var cXSBoolean = hTypes.XSBoolean;
+var cXSAnyURI = hTypes.XSAnyURI;
+var cXSString = hTypes.XSString;
+
 /*
 	2 Accessors
 		node-name

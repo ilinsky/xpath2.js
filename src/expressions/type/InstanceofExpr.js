@@ -7,6 +7,9 @@
  *
  */
 
+var cTreatExpr = require('./TreatExpr');
+var cSequenceType = require('./types/SequenceType');
+
 function cInstanceofExpr(oExpr, oType) {
 	this.expression	= oExpr;
 	this.type		= oType;
@@ -15,17 +18,17 @@ function cInstanceofExpr(oExpr, oType) {
 cInstanceofExpr.prototype.expression	= null;
 cInstanceofExpr.prototype.type			= null;
 
-function fInstanceofExpr_parse (oLexer, oStaticContext) {
+cInstanceofExpr.parse = function(oLexer, oStaticContext) {
 	var oExpr,
 		oType;
-	if (oLexer.eof() ||!(oExpr = fTreatExpr_parse(oLexer, oStaticContext)))
+	if (oLexer.eof() ||!(oExpr = cTreatExpr.parse(oLexer, oStaticContext)))
 		return;
 
 	if (!(oLexer.peek() == "instance" && oLexer.peek(1) == "of"))
 		return oExpr;
 
 	oLexer.next(2);
-	if (oLexer.eof() ||!(oType = fSequenceType_parse(oLexer, oStaticContext)))
+	if (oLexer.eof() ||!(oType = cSequenceType.parse(oLexer, oStaticContext)))
 		throw new cException("XPST0003"
 //->Debug
 				, "Expected second operand in instance of expression"
@@ -59,3 +62,6 @@ cInstanceofExpr.prototype.evaluate	= function(oContext) {
 	//
 	return [new cXSBoolean(bValue)];
 };
+
+//
+module.exports = cInstanceofExpr;

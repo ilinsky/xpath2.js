@@ -7,6 +7,11 @@
  *
  */
 
+var cStaticContext = require('./../../../classes/StaticContext');
+var cXSConstants = require('./../../../classes/XSConstants');
+var cXSAnySimpleType = require('./../../XSAnySimpleType');
+var cXSAnyAtomicType = require('./../XSAnyAtomicType');
+
 function cXSGYearMonth(nYear, nMonth, nTimezone) {
 	this.year		= nYear;
 	this.month		= nMonth;
@@ -54,4 +59,7 @@ cXSGYearMonth.cast	= function(vValue) {
 };
 
 //
-fStaticContext_defineSystemDataType("gYearMonth",	cXSGYearMonth);
+cStaticContext.defineSystemDataType("gYearMonth",	cXSGYearMonth);
+
+//
+module.exports = cXSGYearMonth;

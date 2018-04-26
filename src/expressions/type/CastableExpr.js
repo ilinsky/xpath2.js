@@ -7,6 +7,10 @@
  *
  */
 
+var fParseCastExpr = require('./ParseCastExpr');
+
+var fParseSingleType = require('./types/ParseSingleType');
+
 function cCastableExpr(oExpr, oType) {
 	this.expression	= oExpr;
 	this.type		= oType;
@@ -15,17 +19,17 @@ function cCastableExpr(oExpr, oType) {
 cCastableExpr.prototype.expression	= null;
 cCastableExpr.prototype.type		= null;
 
-function fCastableExpr_parse (oLexer, oStaticContext) {
+cCastableExpr.parse = function(oLexer, oStaticContext) {
 	var oExpr,
 		oType;
-	if (oLexer.eof() ||!(oExpr = fCastExpr_parse(oLexer, oStaticContext)))
+	if (oLexer.eof() ||!(oExpr = fParseCastExpr(oLexer, oStaticContext)))
 		return;
 
 	if (!(oLexer.peek() == "castable" && oLexer.peek(1) == "as"))
 		return oExpr;
 
 	oLexer.next(2);
-	if (oLexer.eof() ||!(oType = fSingleType_parse(oLexer, oStaticContext)))
+	if (oLexer.eof() ||!(oType = fParseSingleType(oLexer, oStaticContext)))
 		throw new cException("XPST0003"
 //->Debug
 				, "Expected second operand in castable expression"
@@ -65,3 +69,6 @@ cCastableExpr.prototype.evaluate	= function(oContext) {
 
 	return [new cXSBoolean(true)];
 };
+
+//
+module.exports = cCastableExpr;

@@ -7,6 +7,12 @@
  *
  */
 
+var cException = require('./../../src/classes/Exception');
+var cExpression = require('./../../src/classes/Expression');
+var cDOMAdapter = require('./../../src/classes/DOMAdapter');
+var cStaticContext = require('./../../src/classes/StaticContext');
+var cDynamicContext = require('./../../src/classes/DynamicContext');
+
 function cEvaluator() {
 
 };
@@ -44,8 +50,12 @@ cEvaluator.prototype.evaluate	= function(sExpression, vItem, oStaticContext, oSc
 	// Evaluate and convert types from XPath 2.0 to JavaScript
 	var oSequence	= this.compile(sExpression, oStaticContext).evaluate(oContext),
 		aReturn		= [];
+
 	for (var nIndex = 0, nLength = oSequence.length, oItem; nIndex < nLength; nIndex++)
 		aReturn[aReturn.length]	= oDOMAdapter.isNode(oItem = oSequence[nIndex]) ? oItem : cStaticContext.xs2js(oItem);
 	//
 	return aReturn;
 };
+
+//
+module.exports = cEvaluator;

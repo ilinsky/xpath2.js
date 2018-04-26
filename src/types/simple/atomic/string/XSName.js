@@ -7,6 +7,10 @@
  *
  */
 
+var cStaticContext = require('./../../../../classes/StaticContext');
+var cXSConstants = require('./../../../../classes/XSConstants');
+var cXSToken = require('./XSToken');
+
 function cXSName(sValue) {
 	this.value	= sValue;
 };
@@ -19,4 +23,7 @@ cXSName.cast	= function(vValue) {
 };
 
 //
-fStaticContext_defineSystemDataType("Name",	cXSName);
+cStaticContext.defineSystemDataType("Name",	cXSName);
+
+//
+module.exports = cXSName;

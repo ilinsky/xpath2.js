@@ -7,6 +7,9 @@
  *
  */
 
+var cUnaryExpr = require('./../arithmetic/UnaryExpr');
+var cSingleType = require('./types/SingleType');
+
 function cCastExpr(oExpr, oType) {
 	this.expression	= oExpr;
 	this.type		= oType;
@@ -14,26 +17,6 @@ function cCastExpr(oExpr, oType) {
 
 cCastExpr.prototype.expression	= null;
 cCastExpr.prototype.type		= null;
-
-function fCastExpr_parse (oLexer, oStaticContext) {
-	var oExpr,
-		oType;
-	if (oLexer.eof() ||!(oExpr = fUnaryExpr_parse(oLexer, oStaticContext)))
-		return;
-
-	if (!(oLexer.peek() == "cast" && oLexer.peek(1) == "as"))
-		return oExpr;
-
-	oLexer.next(2);
-	if (oLexer.eof() ||!(oType = fSingleType_parse(oLexer, oStaticContext)))
-		throw new cException("XPST0003"
-//->Debug
-				, "Expected second operand in cast expression"
-//<-Debug
-		);
-
-	return new cCastExpr(oExpr, oType);
-};
 
 cCastExpr.prototype.evaluate	= function(oContext) {
 	var oSequence1	= this.expression.evaluate(oContext);
@@ -49,3 +32,6 @@ cCastExpr.prototype.evaluate	= function(oContext) {
 	//
 	return [this.type.itemType.cast(fFunction_sequence_atomize(oSequence1, oContext)[0], oContext)];
 };
+
+//
+module.exports = cCastExpr;

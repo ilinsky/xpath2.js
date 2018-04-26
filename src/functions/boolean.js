@@ -7,6 +7,14 @@
  *
  */
 
+var cStaticContext = require('./../classes/StaticContext');
+var hTypes = require('./../types');
+
+//
+var fStaticContext_defineSystemFunction = cStaticContext.defineSystemFunction;
+//
+var cXSBoolean = hTypes.XSBoolean;
+
 /*
 	9.1 Additional Boolean Constructor Functions
 		true

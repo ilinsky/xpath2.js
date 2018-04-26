@@ -7,6 +7,10 @@
  *
  */
 
+var cStaticContext = require('./../../../../classes/StaticContext');
+var cXSConstants = require('./../../../../classes/XSConstants');
+var cXSNCName = require('./XSNCName');
+
 function cXSIDREF(sValue) {
 	this.value	= sValue;
 };
@@ -19,4 +23,7 @@ cXSIDREF.cast	= function(vValue) {
 };
 
 //
-fStaticContext_defineSystemDataType("IDREF",	cXSIDREF);
+cStaticContext.defineSystemDataType("IDREF",	cXSIDREF);
+
+//
+module.exports = cXSIDREF;

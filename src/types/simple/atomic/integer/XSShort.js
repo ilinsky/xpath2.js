@@ -7,6 +7,10 @@
  *
  */
 
+var cStaticContext = require('./../../../../classes/StaticContext');
+var cXSConstants = require('./../../../../classes/XSConstants');
+var cXSInt = require('./XSInt');
+
 function cXSShort(nValue) {
 	this.value	= nValue;
 };
@@ -30,4 +34,7 @@ cXSShort.cast	= function(vValue) {
 };
 
 //
-fStaticContext_defineSystemDataType("short",	cXSShort);
+cStaticContext.defineSystemDataType("short",	cXSShort);
+
+//
+module.exports = cXSShort;

@@ -13,39 +13,6 @@ function cStepExpr() {
 
 cStepExpr.prototype.predicates	= null;
 
-// Static members
-function fStepExpr_parse (oLexer, oStaticContext) {
-	if (!oLexer.eof())
-		return fFilterExpr_parse(oLexer, oStaticContext)
-			|| fAxisStep_parse(oLexer, oStaticContext);
-};
-
-function fStepExpr_parsePredicates (oLexer, oStaticContext, oStep) {
-	var oExpr;
-	// Parse predicates
-	while (oLexer.peek() == '[') {
-		oLexer.next();
-
-		if (oLexer.eof() ||!(oExpr = fExpr_parse(oLexer, oStaticContext)))
-			throw new cException("XPST0003"
-//->Debug
-					, "Expected expression in predicate"
-//<-Debug
-			);
-
-		oStep.predicates.push(oExpr);
-
-		if (oLexer.peek() != ']')
-			throw new cException("XPST0003"
-//->Debug
-					, "Expected ']' token in predicate"
-//<-Debug
-			);
-
-		oLexer.next();
-	}
-};
-
 // Public members
 cStepExpr.prototype.applyPredicates	= function(oSequence, oContext) {
 	var vContextItem	= oContext.item,
@@ -79,3 +46,6 @@ cStepExpr.prototype.applyPredicates	= function(oSequence, oContext) {
 	//
 	return oSequence;
 };
+
+//
+module.exports = cStepExpr;

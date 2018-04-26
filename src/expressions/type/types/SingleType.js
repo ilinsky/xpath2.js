@@ -15,16 +15,5 @@ function cSingleType(oItemType, sOccurence) {
 cSingleType.prototype.itemType	= null;
 cSingleType.prototype.occurence	= null;
 
-function fSingleType_parse (oLexer, oStaticContext) {
-	var oExpr,
-		sOccurence;
-	if (!oLexer.eof() && (oExpr = fAtomicType_parse(oLexer, oStaticContext))) {
-		sOccurence	= oLexer.peek();
-		if (sOccurence == '?')
-			oLexer.next();
-		else
-			sOccurence	= null;
-
-		return new cSingleType(oExpr, sOccurence);
-	}
-};
+//
+module.exports = cSingleType;

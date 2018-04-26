@@ -7,6 +7,18 @@
  *
  */
 
+var cStaticContext = require('./../classes/StaticContext');
+var hTypes = require('./../types');
+
+//
+var fStaticContext_defineSystemFunction = cStaticContext.defineSystemFunction;
+//
+var cXSString = hTypes.XSString;
+var cXSQName = hTypes.XSQName;
+var cXSNCName = hTypes.XSNCName;
+var cXSAnyURI = hTypes.XSAnyURI;
+var cXTElement = hTypes.XTElement;
+
 /*
 	11.1 Additional Constructor Functions for QNames
 		resolve-QName

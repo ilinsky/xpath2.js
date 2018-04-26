@@ -7,6 +7,11 @@
  *
  */
 
+var cStaticContext = require('./../../../classes/StaticContext');
+var cXSConstants = require('./../../../classes/XSConstants');
+var cXSAnySimpleType = require('./../../XSAnySimpleType');
+var cXSAnyAtomicType = require('./../XSAnyAtomicType');
+
 function cXSAnyURI(sScheme, sAuthority, sPath, sQuery, sFragment) {
 	this.scheme		= sScheme;
 	this.authority	= sAuthority;
@@ -52,4 +57,7 @@ cXSAnyURI.cast	= function(vValue) {
 };
 
 //
-fStaticContext_defineSystemDataType("anyURI",	cXSAnyURI);
+cStaticContext.defineSystemDataType("anyURI",	cXSAnyURI);
+
+//
+module.exports = cXSAnyURI;

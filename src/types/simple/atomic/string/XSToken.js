@@ -7,6 +7,10 @@
  *
  */
 
+var cStaticContext = require('./../../../../classes/StaticContext');
+var cXSConstants = require('./../../../../classes/XSConstants');
+var cXSNormalizedString = require('./XSNormalizedString');
+
 function cXSToken(sValue) {
 	this.value	= sValue;
 };
@@ -19,4 +23,7 @@ cXSToken.cast	= function(vValue) {
 };
 
 //
-fStaticContext_defineSystemDataType("token",	cXSToken);
+cStaticContext.defineSystemDataType("token",	cXSToken);
+
+//
+module.exports = cXSToken;

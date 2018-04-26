@@ -7,6 +7,10 @@
  *
  */
 
+var cStaticContext = require('./../../../../classes/StaticContext');
+var cXSConstants = require('./../../../../classes/XSConstants');
+var cXSUnsignedShort = require('./XSUnsignedShort');
+
 function cXSUnsignedByte(nValue) {
 	this.value	= nValue;
 };
@@ -30,4 +34,7 @@ cXSUnsignedByte.cast	= function(vValue) {
 };
 
 //
-fStaticContext_defineSystemDataType("unsignedByte",	cXSUnsignedByte);
+cStaticContext.defineSystemDataType("unsignedByte",	cXSUnsignedByte);
+
+//
+module.exports = cXSUnsignedByte;

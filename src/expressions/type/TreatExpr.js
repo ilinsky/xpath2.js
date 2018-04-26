@@ -7,6 +7,9 @@
  *
  */
 
+var cCastableExpr = require('./CastableExpr');
+var cSequenceType = require('./types/SequenceType');
+
 function cTreatExpr(oExpr, oType) {
 	this.expression	= oExpr;
 	this.type		= oType;
@@ -15,17 +18,17 @@ function cTreatExpr(oExpr, oType) {
 cTreatExpr.prototype.expression	= null;
 cTreatExpr.prototype.type		= null;
 
-function fTreatExpr_parse (oLexer, oStaticContext) {
+cTreatExpr.parse = function(oLexer, oStaticContext) {
 	var oExpr,
 		oType;
-	if (oLexer.eof() ||!(oExpr = fCastableExpr_parse(oLexer, oStaticContext)))
+	if (oLexer.eof() ||!(oExpr = cCastableExpr.parse(oLexer, oStaticContext)))
 		return;
 
 	if (!(oLexer.peek() == "treat" && oLexer.peek(1) == "as"))
 		return oExpr;
 
 	oLexer.next(2);
-	if (oLexer.eof() ||!(oType = fSequenceType_parse(oLexer, oStaticContext)))
+	if (oLexer.eof() ||!(oType = cSequenceType.parse(oLexer, oStaticContext)))
 		throw new cException("XPST0003"
 //->Debug
 				, "Expected second operand in treat expression"
@@ -83,3 +86,6 @@ cTreatExpr.prototype.evaluate	= function(oContext) {
 	//
 	return oSequence1;
 };
+
+//
+module.exports = cTreatExpr;

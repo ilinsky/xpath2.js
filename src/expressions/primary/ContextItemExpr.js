@@ -12,7 +12,7 @@ function cContextItemExpr() {
 };
 
 // Static members
-function fContextItemExpr_parse (oLexer, oStaticContext) {
+cContextItemExpr.parse = function(oLexer, oStaticContext) {
 	if (oLexer.peek() == '.') {
 		oLexer.next();
 		return new cContextItemExpr;
@@ -30,3 +30,6 @@ cContextItemExpr.prototype.evaluate	= function (oContext) {
 	//
 	return [oContext.item];
 };
+
+//
+module.exports = cContextItemExpr;

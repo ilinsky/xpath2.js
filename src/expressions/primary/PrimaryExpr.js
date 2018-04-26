@@ -7,16 +7,25 @@
  *
  */
 
+var cContextItemExpr = require('./ContextItemExpr');
+var fParseParenthesizedExpr = require('./ParseParenthesizedExpr');
+var fParseFunctionCall = require('./ParseFunctionCall');
+var cVarRef = require('./VarRef');
+var fParseLiteral = require('./ParseLiteral');
+
 function cPrimaryExpr() {
 
 };
 
 // Static members
-function fPrimaryExpr_parse (oLexer, oStaticContext) {
+cPrimaryExpr.parse = function(oLexer, oStaticContext) {
 	if (!oLexer.eof())
-		return fContextItemExpr_parse(oLexer, oStaticContext)
-			|| fParenthesizedExpr_parse(oLexer, oStaticContext)
-			|| fFunctionCall_parse(oLexer, oStaticContext)
-			|| fVarRef_parse(oLexer, oStaticContext)
-			|| fLiteral_parse(oLexer, oStaticContext);
+		return cContextItemExpr.parse(oLexer, oStaticContext)
+			|| fParseParenthesizedExpr(oLexer, oStaticContext)
+			|| fParseFunctionCall(oLexer, oStaticContext)
+			|| cVarRef.parse(oLexer, oStaticContext)
+			|| fParseLiteral(oLexer, oStaticContext);
 };
+
+//
+module.exports = cPrimaryExpr;

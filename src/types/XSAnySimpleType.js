@@ -7,6 +7,9 @@
  *
  */
 
+var cXSAnyType = require('./XSAnyType');
+var cXSConstants = require('./../classes/XSConstants');
+
 function cXSAnySimpleType() {
 
 };
@@ -35,3 +38,6 @@ cXSAnySimpleType.PRIMITIVE_NOTATION		= "NOTATION";	// 20;
 cXSAnySimpleType.PRIMITIVE_QNAME		= "QName";		// 19;
 cXSAnySimpleType.PRIMITIVE_STRING		= "string";		// 2;
 cXSAnySimpleType.PRIMITIVE_TIME			= "time";		// 9;
+
+//
+module.exports = cXSAnySimpleType;

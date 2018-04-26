@@ -7,6 +7,19 @@
  *
  */
 
+var cStaticContext = require('./../classes/StaticContext');
+var hTypes = require('./../types');
+
+//
+var hStaticContext_operators = cStaticContext.operators;
+
+//
+var fStaticContext_defineSystemFunction = cStaticContext.defineSystemFunction;
+//
+var cXSDecimal = hTypes.XSDecimal;
+var cXSDouble = hTypes.XSDouble;
+var cXSInteger = hTypes.XSInteger;
+
 /*
 	6.4 Functions on Numeric Values
 		abs

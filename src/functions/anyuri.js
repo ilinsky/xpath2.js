@@ -7,6 +7,15 @@
  *
  */
 
+var cStaticContext = require('./../classes/StaticContext');
+var hTypes = require('./../types');
+
+//
+var fStaticContext_defineSystemFunction = cStaticContext.defineSystemFunction;
+//
+var cXSString = hTypes.XSString;
+var cXSAnyURI = hTypes.XSAnyURI;
+
 /*
 	8 Functions on anyURI
 		resolve-uri

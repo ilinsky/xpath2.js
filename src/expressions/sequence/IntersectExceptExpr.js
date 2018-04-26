@@ -7,6 +7,13 @@
  *
  */
 
+var cInstanceofExpr = require('./../type/InstanceofExpr');
+
+var cStaticContext = require('./../../classes/StaticContext');
+
+//
+var hStaticContext_operators = cStaticContext.operators;
+
 function cIntersectExceptExpr(oExpr) {
 	this.left	= oExpr;
 	this.items	= [];
@@ -16,10 +23,10 @@ cIntersectExceptExpr.prototype.left		= null;
 cIntersectExceptExpr.prototype.items	= null;
 
 // Static members
-function fIntersectExceptExpr_parse (oLexer, oStaticContext) {
+cIntersectExceptExpr.parse = function(oLexer, oStaticContext) {
 	var oExpr,
 		sOperator;
-	if (oLexer.eof() ||!(oExpr = fInstanceofExpr_parse(oLexer, oStaticContext)))
+	if (oLexer.eof() ||!(oExpr = cInstanceofExpr.parse(oLexer, oStaticContext)))
 		return;
 	if (!((sOperator = oLexer.peek()) == "intersect" || sOperator == "except"))
 		return oExpr;
@@ -28,7 +35,7 @@ function fIntersectExceptExpr_parse (oLexer, oStaticContext) {
 	var oIntersectExceptExpr	= new cIntersectExceptExpr(oExpr);
 	while ((sOperator = oLexer.peek()) == "intersect" || sOperator == "except") {
 		oLexer.next();
-		if (oLexer.eof() ||!(oExpr = fInstanceofExpr_parse(oLexer, oStaticContext)))
+		if (oLexer.eof() ||!(oExpr = cInstanceofExpr.parse(oLexer, oStaticContext)))
 			throw new cException("XPST0003"
 //->Debug
 					, "Expected second operand in " + sOperator + " expression"
@@ -46,3 +53,6 @@ cIntersectExceptExpr.prototype.evaluate	= function (oContext) {
 		oSequence	= hStaticContext_operators[(oItem = this.items[nIndex])[0]].call(oContext, oSequence, oItem[1].evaluate(oContext));
 	return oSequence;
 };
+
+//
+module.exports = cIntersectExceptExpr;

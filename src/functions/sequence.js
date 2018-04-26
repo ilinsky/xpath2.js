@@ -7,6 +7,20 @@
  *
  */
 
+var cStaticContext = require('./../classes/StaticContext');
+var hTypes = require('./../types');
+
+//
+var fStaticContext_defineSystemFunction = cStaticContext.defineSystemFunction;
+//
+var cXSString = hTypes.XSString;
+var cXSInteger = hTypes.XSInteger;
+var cXSAnyAtomicType = hTypes.XSAnyAtomicType;
+var cXSUntypedAtomic = hTypes.XSUntypedAtomic;
+//
+var cXTItem = hTypes.XTItem;
+var cXTNode = hTypes.XTNode;
+
 /*
 	15.1 General Functions and Operators on Sequences
 		boolean

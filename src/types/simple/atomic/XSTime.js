@@ -7,6 +7,11 @@
  *
  */
 
+var cStaticContext = require('./../../../classes/StaticContext');
+var cXSConstants = require('./../../../classes/XSConstants');
+var cXSAnySimpleType = require('./../../XSAnySimpleType');
+var cXSAnyAtomicType = require('./../XSAnyAtomicType');
+
 function cXSTime(nHours, nMinutes, nSeconds, nTimezone) {
 	this.hours	= nHours;
 	this.minutes	= nMinutes;
@@ -77,4 +82,7 @@ function fXSTime_normalize(oValue) {
 };
 
 //
-fStaticContext_defineSystemDataType("time",	cXSTime);
+cStaticContext.defineSystemDataType("time",	cXSTime);
+
+//
+module.exports = cXSTime;

@@ -7,6 +7,14 @@
  *
  */
 
+var cStaticContext = require('./../classes/StaticContext');
+var hTypes = require('./../types');
+
+//
+var hStaticContext_operators = cStaticContext.operators;
+//
+var cXSInteger = hTypes.XSInteger;
+
 /*
 	15.1 General Functions and Operators on Sequences
 		op:concatenate

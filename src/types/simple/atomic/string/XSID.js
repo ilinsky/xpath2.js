@@ -7,6 +7,10 @@
  *
  */
 
+var cStaticContext = require('./../../../../classes/StaticContext');
+var cXSConstants = require('./../../../../classes/XSConstants');
+var cXSNCName = require('./XSNCName');
+
 function cXSID(sValue) {
 	this.value	= sValue;
 };
@@ -19,4 +23,7 @@ cXSID.cast	= function(vValue) {
 };
 
 //
-fStaticContext_defineSystemDataType("ID",	cXSID);
+cStaticContext.defineSystemDataType("ID",	cXSID);
+
+//
+module.exports = cXSID;

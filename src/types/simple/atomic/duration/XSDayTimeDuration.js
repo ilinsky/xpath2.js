@@ -7,6 +7,10 @@
  *
  */
 
+var cStaticContext = require('./../../../../classes/StaticContext');
+var cXSConstants = require('./../../../../classes/XSConstants');
+var cXSDuration = require('./../XSDuration');
+
 function cXSDayTimeDuration(nDay, nHours, nMinutes, nSeconds, bNegative) {
 	cXSDuration.call(this, 0, 0, nDay, nHours, nMinutes, nSeconds, bNegative);
 };
@@ -59,4 +63,7 @@ function fXSDayTimeDuration_normalize(oDuration) {
 };
 
 //
-fStaticContext_defineSystemDataType("dayTimeDuration",	cXSDayTimeDuration);
+cStaticContext.defineSystemDataType("dayTimeDuration",	cXSDayTimeDuration);
+
+//
+module.exports = cXSDayTimeDuration;

@@ -7,6 +7,10 @@
  *
  */
 
+var cStaticContext = require('./../../../../classes/StaticContext');
+var cXSConstants = require('./../../../../classes/XSConstants');
+var cXSToken = require('./XSToken');
+
 function cXSNMTOKEN(sValue) {
 	this.value	= sValue;
 };
@@ -19,4 +23,7 @@ cXSNMTOKEN.cast	= function(vValue) {
 };
 
 //
-fStaticContext_defineSystemDataType("NMTOKEN",	cXSNMTOKEN);
+cStaticContext.defineSystemDataType("NMTOKEN",	cXSNMTOKEN);
+
+//
+module.exports = cXSNMTOKEN;
