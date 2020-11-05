@@ -1,6 +1,5 @@
 
 var fParseAxisStep = require('./../path/ParseAxisStep');
-
 var fParseExprSingle = require('./../ParseExprSingle');
 
 var cFunctionCall = require('./FunctionCall');
@@ -9,7 +8,7 @@ var cKindTest = require('./../path/tests/KindTest');
 // TODO: Copied over from cNameTest
 var rNameTest	= /^(?:(?![0-9-])(\w[\w.-]*|\*)\:)?(?![0-9-])(\w[\w.-]*|\*)$/;
 
-function fParse(oLexer, oStaticContext) {
+function fParseFunctionCall(oLexer, oStaticContext) {
 	var aMatch	= oLexer.peek().match(rNameTest);
 	if (aMatch && oLexer.peek(1) == '(') {
 		// Reserved "functions"
@@ -53,4 +52,4 @@ function fParse(oLexer, oStaticContext) {
 };
 
 //
-module.exports = fParse;
+module.exports = fParseFunctionCall;

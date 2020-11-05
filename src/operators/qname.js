@@ -7,11 +7,9 @@
  *
  */
 
-var cStaticContext = require('./../classes/StaticContext');
+var hStaticContext_operators = require('./../classes/StaticContext').operators;
 var hTypes = require('./../types');
 
-//
-var hStaticContext_operators = cStaticContext.operators;
 //
 var cXSBoolean = hTypes.XSBoolean;
 

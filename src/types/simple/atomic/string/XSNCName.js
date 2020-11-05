@@ -7,7 +7,8 @@
  *
  */
 
-var cStaticContext = require('./../../../../classes/StaticContext');
+var cString = String;
+
 var cXSConstants = require('./../../../../classes/XSConstants');
 var cXSName = require('./XSName');
 
@@ -21,9 +22,6 @@ cXSNCName.prototype.builtInKind	= cXSConstants.NCNAME_DT;
 cXSNCName.cast	= function(vValue) {
 	return new cXSNCName(cString(vValue));
 };
-
-//
-cStaticContext.defineSystemDataType("NCName",	cXSNCName);
 
 //
 module.exports = cXSNCName;

@@ -1,10 +1,10 @@
+var fParseExprSingle = require('./ParseExprSingle');
+
 var cExpr = require('./Expr');
 var cException = require('./../classes/Exception');
 
-var fParseExprSingle = require('./ParseExprSingle');
-
 // Static members
-function fParse(oLexer, oStaticContext) {
+function fParseExpr(oLexer, oStaticContext) {
 	var oItem;
 	if (oLexer.eof() ||!(oItem = fParseExprSingle(oLexer, oStaticContext)))
 		return;
@@ -26,4 +26,4 @@ function fParse(oLexer, oStaticContext) {
 };
 
 //
-module.exports = fParse;
+module.exports = fParseExpr;

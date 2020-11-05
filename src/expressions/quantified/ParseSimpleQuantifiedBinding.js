@@ -1,8 +1,10 @@
 var cSimpleQuantifiedBinding = require('./SimpleQuantifiedBinding');
 
+var rNameTest	= /^(?:(?![0-9-])(\w[\w.-]*|\*)\:)?(?![0-9-])(\w[\w.-]*|\*)$/;
+
 var fParseExprSingle = require('./../ParseExprSingle');
 
-function fParse(oLexer, oStaticContext) {
+function fParseSimpleQuantifiedBinding(oLexer, oStaticContext) {
 	var aMatch	= oLexer.peek().substr(1).match(rNameTest);
 	if (!aMatch)
 		throw new cException("XPST0003"
@@ -39,4 +41,4 @@ function fParse(oLexer, oStaticContext) {
 };
 
 //
-module.exports = fParse;
+module.exports = fParseSimpleQuantifiedBinding;

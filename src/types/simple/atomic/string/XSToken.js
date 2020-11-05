@@ -7,7 +7,8 @@
  *
  */
 
-var cStaticContext = require('./../../../../classes/StaticContext');
+var cString = String;
+
 var cXSConstants = require('./../../../../classes/XSConstants');
 var cXSNormalizedString = require('./XSNormalizedString');
 
@@ -21,9 +22,6 @@ cXSToken.prototype.builtInKind	= cXSConstants.TOKEN_DT;
 cXSToken.cast	= function(vValue) {
 	return new cXSToken(cString(vValue));
 };
-
-//
-cStaticContext.defineSystemDataType("token",	cXSToken);
 
 //
 module.exports = cXSToken;

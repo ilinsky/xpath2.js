@@ -3,7 +3,7 @@ var cOrExpr = require('./OrExpr');
 var fParseAndExpr = require('./ParseAndExpr');
 
 // Static members
-function fParse(oLexer, oStaticContext) {
+function fParseOrExpr(oLexer, oStaticContext) {
 	var oExpr;
 	if (oLexer.eof() ||!(oExpr = fParseAndExpr(oLexer, oStaticContext)))
 		return;
@@ -26,4 +26,4 @@ function fParse(oLexer, oStaticContext) {
 };
 
 //
-module.exports = fParse;
+module.exports = fParseOrExpr;

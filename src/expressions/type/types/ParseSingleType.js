@@ -2,7 +2,7 @@ var cSingleType = require('./SingleType');
 
 var fParseAtomicType = require('./ParseAtomicType');
 
-function fParse(oLexer, oStaticContext) {
+function fParseSingleType(oLexer, oStaticContext) {
 	var oExpr,
 		sOccurence;
 	if (!oLexer.eof() && (oExpr = fParseAtomicType(oLexer, oStaticContext))) {
@@ -17,4 +17,4 @@ function fParse(oLexer, oStaticContext) {
 };
 
 //
-module.exports = fParse;
+module.exports = fParseSingleType;

@@ -7,7 +7,8 @@
  *
  */
 
-var cStaticContext = require('./../../../../classes/StaticContext');
+var cString = String;
+
 var cXSConstants = require('./../../../../classes/XSConstants');
 var cXSNCName = require('./XSNCName');
 
@@ -21,9 +22,6 @@ cXSIDREF.prototype.builtInKind	= cXSConstants.IDREF_DT;
 cXSIDREF.cast	= function(vValue) {
 	return new cXSIDREF(cString(vValue));
 };
-
-//
-cStaticContext.defineSystemDataType("IDREF",	cXSIDREF);
 
 //
 module.exports = cXSIDREF;

@@ -7,6 +7,8 @@
  *
  */
 
+var cException = require('./../../classes/Exception');
+
 var cCastableExpr = require('./CastableExpr');
 var cSequenceType = require('./types/SequenceType');
 

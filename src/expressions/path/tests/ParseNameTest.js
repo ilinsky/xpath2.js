@@ -2,7 +2,7 @@ var cNameTest = require('./NameTest');
 
 var rNameTest	= /^(?:(?![0-9-])(\w[\w.-]*|\*)\:)?(?![0-9-])(\w[\w.-]*|\*)$/;
 
-function fParse(oLexer, oStaticContext) {
+function fParseNameTest(oLexer, oStaticContext) {
 	var aMatch	= oLexer.peek().match(rNameTest);
 	if (aMatch) {
 		if (aMatch[1] == '*' && aMatch[2] == '*')
@@ -17,4 +17,4 @@ function fParse(oLexer, oStaticContext) {
 };
 
 //
-module.exports = fParse;
+module.exports = fParseNameTest;

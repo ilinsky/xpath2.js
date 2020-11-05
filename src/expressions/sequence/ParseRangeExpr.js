@@ -3,7 +3,7 @@ var cRangeExpr = require('./RangeExpr');
 var fParseAdditiveExpr = require('./../arithmetic/ParseAdditiveExpr');
 
 // Static members
-function fParse(oLexer, oStaticContext) {
+function fParseRangeExpr(oLexer, oStaticContext) {
 	var oExpr,
 		oRight;
 	if (oLexer.eof() ||!(oExpr = fParseAdditiveExpr(oLexer, oStaticContext)))
@@ -23,4 +23,4 @@ function fParse(oLexer, oStaticContext) {
 };
 
 //
-module.exports = fParse;
+module.exports = fParseRangeExpr;

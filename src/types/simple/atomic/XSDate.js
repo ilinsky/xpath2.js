@@ -7,10 +7,12 @@
  *
  */
 
-var cStaticContext = require('./../../../classes/StaticContext');
 var cXSConstants = require('./../../../classes/XSConstants');
 var cXSAnySimpleType = require('./../../XSAnySimpleType');
 var cXSAnyAtomicType = require('./../XSAnyAtomicType');
+var cXSUntypedAtomic = require('./../atomic/XSUntypedAtomic');
+var cXSString = require('./../atomic/XSString');
+var cXSDateTime = require('./../atomic/XSDateTime');
 
 function cXSDate(nYear, nMonth, nDay, nTimezone, bNegative) {
 	this.year		= nYear;
@@ -127,9 +129,6 @@ function fXSDate_normalize(oValue, bDay) {
 
 	return oValue;
 };
-
-//
-cStaticContext.defineSystemDataType("date",	cXSDate);
 
 //
 module.exports = cXSDate;

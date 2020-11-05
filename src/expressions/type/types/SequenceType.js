@@ -7,6 +7,8 @@
  *
  */
 
+var cItemType = require('./ItemType');
+
 function cSequenceType(oItemType, sOccurence) {
 	this.itemType	= oItemType	|| null;
 	this.occurence	= sOccurence|| null;

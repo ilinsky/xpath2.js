@@ -7,6 +7,8 @@
  *
  */
 
+ var cException = require('./../../classes/Exception');
+
 function cContextItemExpr() {
 
 };

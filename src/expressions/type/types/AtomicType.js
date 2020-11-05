@@ -7,6 +7,10 @@
  *
  */
 
+var cStaticContext = require('./../../../classes/StaticContext');
+
+var sNS_XSD = require('./../../../namespaces').NS_XSD;
+
 function cAtomicType(sPrefix, sLocalName, sNameSpaceURI) {
 	this.prefix			= sPrefix;
 	this.localName		= sLocalName;
@@ -20,7 +24,7 @@ cAtomicType.prototype.namespaceURI	= null;
 cAtomicType.prototype.test	= function(vItem, oContext) {
 	// Test
 	var sUri	= (this.namespaceURI ? '{' + this.namespaceURI + '}' : '') + this.localName,
-		cType	= this.namespaceURI == sNS_XSD ? hStaticContext_dataTypes[this.localName] : oContext.staticContext.getDataType(sUri);
+		cType	= this.namespaceURI == sNS_XSD ? cStaticContext.dataTypes[this.localName] : oContext.staticContext.getDataType(sUri);
 	if (cType)
 		return vItem instanceof cType;
 	//
@@ -34,7 +38,7 @@ cAtomicType.prototype.test	= function(vItem, oContext) {
 cAtomicType.prototype.cast	= function(vItem, oContext) {
 	// Cast
 	var sUri	= (this.namespaceURI ? '{' + this.namespaceURI + '}' : '') + this.localName,
-		cType	= this.namespaceURI == sNS_XSD ? hStaticContext_dataTypes[this.localName] : oContext.staticContext.getDataType(sUri);
+		cType	= this.namespaceURI == sNS_XSD ? cStaticContext.dataTypes[this.localName] : oContext.staticContext.getDataType(sUri);
 	if (cType)
 		return cType.cast(vItem);
 	//

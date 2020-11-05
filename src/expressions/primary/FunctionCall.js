@@ -7,6 +7,14 @@
  *
  */
 
+var cException = require('./../../classes/Exception');
+var cStaticContext = require('./../../classes/StaticContext');
+
+var cArray = Array;
+
+var sNS_XPF = require('./../../namespaces').NS_XPF;
+var sNS_XSD = require('./../../namespaces').NS_XSD;
+
 function cFunctionCall(sPrefix, sLocalName, sNameSpaceURI) {
 	this.prefix			= sPrefix;
 	this.localName		= sLocalName;
@@ -32,10 +40,10 @@ cFunctionCall.prototype.evaluate	= function (oContext) {
 	var sUri	= (this.namespaceURI ? '{' + this.namespaceURI + '}' : '') + this.localName;
 	// Call function
 	if (this.namespaceURI == sNS_XPF) {
-		if (fFunction = hStaticContext_functions[this.localName]) {
+		if (fFunction = cStaticContext.functions[this.localName]) {
 			// Validate/Cast arguments
-			if (aParameters = hStaticContext_signatures[this.localName])
-				fFunctionCall_prepare(this.localName, aParameters, fFunction, aArguments, oContext);
+			if (aParameters = cStaticContext.signatures[this.localName])
+				fFunctionCall_prepare(this.localName, aParameters, aArguments, oContext);
 			//
 			var vResult	= fFunction.apply(oContext, aArguments);
 			//
@@ -49,9 +57,9 @@ cFunctionCall.prototype.evaluate	= function (oContext) {
 	}
 	else
 	if (this.namespaceURI == sNS_XSD) {
-		if ((fFunction = hStaticContext_dataTypes[this.localName]) && this.localName != "NOTATION" && this.localName != "anyAtomicType") {
+		if ((fFunction = cStaticContext.dataTypes[this.localName]) && this.localName != "NOTATION" && this.localName != "anyAtomicType") {
 			//
-			fFunctionCall_prepare(this.localName, [[cXSAnyAtomicType, '?']], fFunction, aArguments, oContext);
+			fFunctionCall_prepare(this.localName, [[cXSAnyAtomicType, '?']], aArguments, oContext);
 			//
 			return aArguments[0] === null ? [] : [fFunction.cast(aArguments[0])];
 		}
@@ -76,8 +84,10 @@ cFunctionCall.prototype.evaluate	= function (oContext) {
 	);
 };
 
+//->Debug
 var aFunctionCall_numbers	= ["first", "second", "third", "fourth", "fifth"];
-function fFunctionCall_prepare(sName, aParameters, fFunction, aArguments, oContext) {
+//<-Debug
+function fFunctionCall_prepare(sName, aParameters, aArguments, oContext) {
 	var oArgument,
 		nArgumentsLength	= aArguments.length,
 		oParameter,

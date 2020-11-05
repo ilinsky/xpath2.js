@@ -7,7 +7,6 @@
  *
  */
 
-var cStaticContext = require('./../../../../classes/StaticContext');
 var cXSConstants = require('./../../../../classes/XSConstants');
 var cXSDuration = require('./../XSDuration');
 
@@ -61,9 +60,6 @@ function fXSDayTimeDuration_normalize(oDuration) {
 	}
 	return oDuration;
 };
-
-//
-cStaticContext.defineSystemDataType("dayTimeDuration",	cXSDayTimeDuration);
 
 //
 module.exports = cXSDayTimeDuration;

@@ -1,6 +1,6 @@
 var fParseExpr = require('./../ParseExpr');
 
-function fParse(oLexer, oStaticContext, oStep) {
+function fParseStepExprPredicate(oLexer, oStaticContext, oStep) {
 	var oExpr;
 	// Parse predicates
 	while (oLexer.peek() == '[') {
@@ -27,4 +27,4 @@ function fParse(oLexer, oStaticContext, oStep) {
 };
 
 //
-module.exports = fParse;
+module.exports = fParseStepExprPredicate;

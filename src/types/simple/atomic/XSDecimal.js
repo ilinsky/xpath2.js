@@ -7,10 +7,16 @@
  *
  */
 
-var cStaticContext = require('./../../../classes/StaticContext');
+var cString = String;
+
 var cXSConstants = require('./../../../classes/XSConstants');
+var cXSUntypedAtomic = require('./../atomic/XSUntypedAtomic');
 var cXSAnySimpleType = require('./../../XSAnySimpleType');
 var cXSAnyAtomicType = require('./../XSAnyAtomicType');
+var cXSString = require('./../atomic/XSString');
+var cXSBoolean = require('./../atomic/XSBoolean');
+
+var fIsNaN = global.isNaN;
 
 function cXSDecimal(nValue) {
 	this.value	= nValue;
@@ -58,9 +64,6 @@ cXSDecimal.cast	= function(vValue) {
 //<-Debug
 	);
 };
-
-//
-cStaticContext.defineSystemDataType("decimal",	cXSDecimal);
 
 //
 module.exports = cXSDecimal;

@@ -1,10 +1,10 @@
-var cDOMAdapter = require('./DOMAdapter');
-var cDynamicContext = require('./DynamicContext');
-var cException = require('./Exception');
-var cLexer = require('./Lexer');
-var cStaticContext = require('./StaticContext');
-var cStringCollator = require('./StringCollator');
-var cXSConstants = require('./XSConstants');
+var cDOMAdapter = require('./classes/DOMAdapter');
+var cDynamicContext = require('./classes/DynamicContext');
+var cException = require('./classes/Exception');
+var cLexer = require('./classes/Lexer');
+var cStaticContext = require('./classes/StaticContext');
+var cStringCollator = require('./classes/StringCollator');
+var cXSConstants = require('./classes/XSConstants');
 
 //
 module.exports = {

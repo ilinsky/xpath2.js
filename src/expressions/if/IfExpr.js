@@ -7,6 +7,8 @@
  *
  */
 
+var fFunction_sequence_toEBV = require('../../functions/sequence').toEBV;
+
 function cIfExpr(oCondExpr, oThenExpr, oElseExpr) {
 	this.condExpr	= oCondExpr;
 	this.thenExpr		= oThenExpr;

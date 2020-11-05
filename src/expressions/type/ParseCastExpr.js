@@ -3,7 +3,7 @@ var cCastExpr = require('./CastExpr');
 var fParseUnaryExpr = require('./../arithmetic/ParseUnaryExpr');
 var fParseSingleType = require('./types/ParseSingleType');
 
-function fParse(oLexer, oStaticContext) {
+function fParseCastExpr(oLexer, oStaticContext) {
 	var oExpr,
 		oType;
 	if (oLexer.eof() ||!(oExpr = fParseUnaryExpr(oLexer, oStaticContext)))
@@ -24,4 +24,4 @@ function fParse(oLexer, oStaticContext) {
 };
 
 //
-module.exports = fParse;
+module.exports = fParseCastExpr;

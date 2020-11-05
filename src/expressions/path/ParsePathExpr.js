@@ -1,13 +1,16 @@
+var cException = require('./../../classes/Exception');
 
 var cPathExpr = require('./PathExpr');
-
 var cFunctionCall = require('./../primary/FunctionCall');
 var cAxisStep = require('./AxisStep');
-var fParseStepExpr = require('./ParseStepExpr');
 var cKindTest = require('./tests/KindTest');
 
+var sNS_XPF = require('./../../namespaces').NS_XPF;
+
+var fParseStepExpr = require('./ParseStepExpr');
+
 // Static members
-function fParse(oLexer, oStaticContext) {
+function fParsePathExpr(oLexer, oStaticContext) {
 	if (oLexer.eof())
 		return;
 	var sSingleSlash	= '/',
@@ -63,4 +66,4 @@ function fParse(oLexer, oStaticContext) {
 };
 
 //
-module.exports = fParse;
+module.exports = fParsePathExpr;

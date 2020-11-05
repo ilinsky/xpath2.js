@@ -7,6 +7,8 @@
  *
  */
 
+var fFunction_sequence_toEBV = require('../../functions/sequence').toEBV;
+
 function cStepExpr() {
 
 };

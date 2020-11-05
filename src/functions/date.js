@@ -7,11 +7,9 @@
  *
  */
 
-var cStaticContext = require('./../classes/StaticContext');
+var fStaticContext_defineSystemFunction = require('./../classes/StaticContext').defineSystemFunction;
 var hTypes = require('./../types');
 
-//
-var fStaticContext_defineSystemFunction = cStaticContext.defineSystemFunction;
 //
 var cXSDuration = hTypes.XSDuration;
 var cXSDayTimeDuration = hTypes.XSDayTimeDuration;

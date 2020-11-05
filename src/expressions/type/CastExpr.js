@@ -10,6 +10,8 @@
 var cUnaryExpr = require('./../arithmetic/UnaryExpr');
 var cSingleType = require('./types/SingleType');
 
+var fFunction_sequence_atomize = require('./../../functions/sequence').atomize;
+
 function cCastExpr(oExpr, oType) {
 	this.expression	= oExpr;
 	this.type		= oType;
@@ -21,11 +23,12 @@ cCastExpr.prototype.type		= null;
 cCastExpr.prototype.evaluate	= function(oContext) {
 	var oSequence1	= this.expression.evaluate(oContext);
 	// Validate cardinality
-	fFunctionCall_assertSequenceCardinality(oContext, oSequence1, this.type.occurence
-//->Debug
-			, "'cast as' expression operand"
-//<-Debug
-	);
+// FIXME: re-enable
+// 	fFunctionCall_assertSequenceCardinality(oContext, oSequence1, this.type.occurence
+// //->Debug
+// 			, "'cast as' expression operand"
+// //<-Debug
+// 	);
 	//
 	if (!oSequence1.length)
 		return [];

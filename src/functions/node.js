@@ -7,15 +7,17 @@
  *
  */
 
-var cStaticContext = require('./../classes/StaticContext');
-var hTypes = require('./../types');
+var cException = require('./../classes/Exception');
+var fStaticContext_defineSystemFunction = require('./../classes/StaticContext').defineSystemFunction;
 
+var cXSAnyAtomicType = require('./../types/simple/XSAnyAtomicType');
+var cXSBoolean = require('./../types/simple/atomic/XSBoolean');
+var cXSString = require('./../types/simple/atomic/XSString');
 //
-var fStaticContext_defineSystemFunction = cStaticContext.defineSystemFunction;
-//
-var cXTNode = hTypes.XTNode;
-var cXSBoolean = hTypes.XSBoolean;
-var cXSString = hTypes.XSString;
+var cXTItem = require('./../types/XTItem');
+var cXTNode = require('./../types/XTNode');
+
+var nNaN = global.NaN;
 
 /*
 	14 Functions and Operators on Nodes
@@ -45,7 +47,7 @@ fStaticContext_defineSystemFunction("name",	[[cXTNode, '?', true]],	function(oNo
 	if (oNode == null)
 		return new cXSString('');
 	//
-	var vValue	= hStaticContext_functions["node-name"].call(this, oNode);
+	var vValue	= cStaticContext.functions["node-name"].call(this, oNode);
 	return new cXSString(vValue == null ? '' : vValue.toString());
 });
 

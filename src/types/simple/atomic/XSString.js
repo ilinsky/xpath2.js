@@ -7,7 +7,8 @@
  *
  */
 
-var cStaticContext = require('./../../../classes/StaticContext');
+var cString = String;
+
 var cXSConstants = require('./../../../classes/XSConstants');
 var cXSAnySimpleType = require('./../../XSAnySimpleType');
 var cXSAnyAtomicType = require('./../XSAnyAtomicType');
@@ -39,9 +40,6 @@ cXSString.cast	= function(vValue) {
 //<-Debug
 	);
 };
-
-//
-cStaticContext.defineSystemDataType("string",	cXSString);
 
 //
 module.exports = cXSString;

@@ -25,7 +25,6 @@ var cFunctionCall = require('./FunctionCall');
 var cLiteral = require('./Literal');
 var cNumericLiteral = require('./NumericLiteral');
 var cParenthesizedExpr = require('./ParenthesizedExpr');
-var cPrimaryExpr = require('./PrimaryExpr');
 var cStringLiteral = require('./StringLiteral');
 var cVarRef = require('./VarRef');
 //
@@ -47,7 +46,7 @@ var cTreatExpr = require('./TreatExpr');
 //
 var cExpr = require('./expressions/Expr');
 //
-modle.exports = {
+module.exports = {
   AdditiveExpr: cAdditiveExpr,
   MultiplicativeExpr: cMultiplicativeExpr,
   UnaryExpr: cUnaryExpr,
@@ -74,7 +73,6 @@ modle.exports = {
   Literal: cLiteral,
   NumericLiteral: cNumericLiteral,
   ParenthesizedExpr: cParenthesizedExpr,
-  PrimaryExpr: cPrimaryExpr,
   StringLiteral: cStringLiteral,
   VarRef: cVarRef,
   //

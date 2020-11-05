@@ -6,6 +6,11 @@
  *
  *
  */
+var fXSAnyAtomicType_isNumeric = require('./../../types/simple/XSAnyAtomicType').isNumeric;
+
+var fFunction_sequence_atomize = require('./../../functions/sequence').atomize;
+
+var cXSUntypedAtomic = require('./../../types/simple/atomic/XSUntypedAtomic');
 
 var cStaticContext = require('./../../classes/StaticContext');
 
@@ -50,11 +55,12 @@ cUnaryExpr.prototype.evaluate	= function (oContext) {
 	if (!oRight.length)
 		return [];
 	// Assert cardinality
-	fFunctionCall_assertSequenceCardinality(oContext, oRight, '?'
-//->Debug
-			, "second operand of '" + this.operator + "'"
-//<-Debug
-	);
+// FIXME: re-enable
+// 	fFunctionCall_assertSequenceCardinality(oContext, oRight, '?'
+// //->Debug
+// 			, "second operand of '" + this.operator + "'"
+// //<-Debug
+// 	);
 
 	var vRight	= oRight[0];
 	if (vRight instanceof cXSUntypedAtomic)

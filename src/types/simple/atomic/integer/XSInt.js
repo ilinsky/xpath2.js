@@ -7,7 +7,6 @@
  *
  */
 
-var cStaticContext = require('./../../../../classes/StaticContext');
 var cXSConstants = require('./../../../../classes/XSConstants');
 var cXSLong = require('./XSLong');
 
@@ -32,9 +31,6 @@ cXSInt.cast	= function(vValue) {
 	//
 	throw new cException("FORG0001");
 };
-
-//
-cStaticContext.defineSystemDataType("int",	cXSInt);
 
 //
 module.exports = cXSInt;

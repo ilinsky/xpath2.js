@@ -7,19 +7,21 @@
  *
  */
 
-var cStaticContext = require('./../classes/StaticContext');
-var hTypes = require('./../types');
+var fIsNaN = global.isNaN;
 
+var cException = require('./../classes/Exception');
+
+var fStaticContext_defineSystemFunction = require('./../classes/StaticContext').defineSystemFunction;
+var fXSAnyAtomicType_isNumeric = require('./../types/simple/XSAnyAtomicType').isNumeric;
+
+var cXSAnyAtomicType = require('./../types/simple/XSAnyAtomicType');
+var cXSDouble = require('./../types/simple/atomic/XSDouble');
+var cXSInteger = require('./../types/simple/atomic/integer/XSInteger');
+var cXSBoolean = require('./../types/simple/atomic/XSBoolean');
+var cXSString = require('./../types/simple/atomic/XSString');
 //
-var fStaticContext_defineSystemFunction = cStaticContext.defineSystemFunction;
-//
-var cXSString = hTypes.XSString;
-var cXSInteger = hTypes.XSInteger;
-var cXSAnyAtomicType = hTypes.XSAnyAtomicType;
-var cXSUntypedAtomic = hTypes.XSUntypedAtomic;
-//
-var cXTItem = hTypes.XTItem;
-var cXTNode = hTypes.XTNode;
+var cXTItem = require('./../types/XTItem');
+var cXTNode = require('./../types/XTNode');
 
 /*
 	15.1 General Functions and Operators on Sequences
@@ -387,7 +389,7 @@ fStaticContext_defineSystemFunction("id",	[[cXSString, '*'], [cXTNode, '', true]
 	}
 
 	// Get root node and check if it is Document
-	var oDocument	= hStaticContext_functions["root"].call(this, oNode);
+	var oDocument	= cStaticContext.functions["root"].call(this, oNode);
 	if (this.DOMAdapter.getProperty(oDocument, "nodeType") != 9)
 		throw new cException("FODC0001");
 
@@ -512,4 +514,10 @@ function fFunction_sequence_order(oSequence1, oContext) {
 		var nPosition	= oContext.DOMAdapter.compareDocumentPosition(oNode, oNode2);
 		return nPosition & 2 ? 1 : nPosition & 4 ?-1 : 0;
 	});
+};
+
+module.exports = {
+    atomize: fFunction_sequence_atomize,
+    order: fFunction_sequence_order,
+    toEBV: fFunction_sequence_toEBV
 };

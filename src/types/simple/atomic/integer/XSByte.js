@@ -7,8 +7,8 @@
  *
  */
 
-var cStaticContext = require('./../../../../classes/StaticContext');
 var cXSConstants = require('./../../../../classes/XSConstants');
+var cXSInteger = require('./XSInteger');
 var cXSShort = require('./XSShort');
 
 function cXSByte(nValue) {
@@ -32,8 +32,5 @@ cXSByte.cast	= function(vValue) {
 	//
 	throw new cException("FORG0001");
 };
-
-//
-cStaticContext.defineSystemDataType("byte",	cXSByte);
 
 module.exports = cXSByte;

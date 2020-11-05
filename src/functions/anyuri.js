@@ -7,11 +7,10 @@
  *
  */
 
-var cStaticContext = require('./../classes/StaticContext');
+var cException = require('./../classes/Exception');
+var fStaticContext_defineSystemFunction = require('./../classes/StaticContext').defineSystemFunction;
 var hTypes = require('./../types');
 
-//
-var fStaticContext_defineSystemFunction = cStaticContext.defineSystemFunction;
 //
 var cXSString = hTypes.XSString;
 var cXSAnyURI = hTypes.XSAnyURI;

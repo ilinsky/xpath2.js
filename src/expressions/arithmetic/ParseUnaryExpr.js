@@ -3,7 +3,7 @@ var cUnaryExpr = require('./UnaryExpr');
 var fParseValueExpr = require('./ParseValueExpr');
 
 // UnaryExpr	:= ("-" | "+")* ValueExpr
-function fParse(oLexer, oStaticContext) {
+function fParseUnaryExpr(oLexer, oStaticContext) {
 	if (oLexer.eof())
 		return;
 	if (!(oLexer.peek() in cUnaryExpr.operators))
@@ -27,4 +27,4 @@ function fParse(oLexer, oStaticContext) {
 };
 
 //
-module.exports = fParse;
+module.exports = fParseUnaryExpr;

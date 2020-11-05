@@ -7,15 +7,17 @@
  *
  */
 
-var cStaticContext = require('./../classes/StaticContext');
+var cException = require('./../classes/Exception');
+var fStaticContext_defineSystemFunction = require('./../classes/StaticContext').defineSystemFunction;
 var hTypes = require('./../types');
 
 //
-var fStaticContext_defineSystemFunction = cStaticContext.defineSystemFunction;
-//
+var cXSBoolean = hTypes.XSBoolean;
 var cXSString = hTypes.XSString;
 var cXSInteger = hTypes.XSInteger;
 var cXSDouble = hTypes.XSDouble;
+
+var cRegExp = global.RegExp;
 
 /*
 	7.2 Functions to Assemble and Disassemble Strings

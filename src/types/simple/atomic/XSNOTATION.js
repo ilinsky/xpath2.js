@@ -7,7 +7,6 @@
  *
  */
 
-var cStaticContext = require('./../../../classes/StaticContext');
 var cXSConstants = require('./../../../classes/XSConstants');
 var cXSAnySimpleType = require('./../../XSAnySimpleType');
 var cXSAnyAtomicType = require('./../XSAnyAtomicType');
@@ -27,9 +26,6 @@ cXSNOTATION.cast	= function(vValue) {
 //<-Debug
 	);	//  {http://www.w3.org/2001/XMLSchema}NOTATION
 };
-
-//
-cStaticContext.defineSystemDataType("NOTATION",	cXSNOTATION);
 
 //
 module.exports = cXSNOTATION;

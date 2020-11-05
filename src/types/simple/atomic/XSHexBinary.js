@@ -7,10 +7,11 @@
  *
  */
 
-var cStaticContext = require('./../../../classes/StaticContext');
 var cXSConstants = require('./../../../classes/XSConstants');
 var cXSAnySimpleType = require('./../../XSAnySimpleType');
 var cXSAnyAtomicType = require('./../XSAnyAtomicType');
+
+var fWindow_atob = global.atob;
 
 function cXSHexBinary(sValue) {
 	this.value	= sValue;
@@ -56,9 +57,6 @@ cXSHexBinary.cast	= function(vValue) {
 //<-Debug
 	);
 };
-
-//
-cStaticContext.defineSystemDataType("hexBinary",	cXSHexBinary);
 
 //
 module.exports = cXSHexBinary;

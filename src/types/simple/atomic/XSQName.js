@@ -7,7 +7,6 @@
  *
  */
 
-var cStaticContext = require('./../../../classes/StaticContext');
 var cXSConstants = require('./../../../classes/XSConstants');
 var cXSAnySimpleType = require('./../../XSAnySimpleType');
 var cXSAnyAtomicType = require('./../XSAnyAtomicType');
@@ -47,9 +46,6 @@ cXSQName.cast	= function(vValue) {
 //<-Debug
 	);
 };
-
-//
-cStaticContext.defineSystemDataType("QName",	cXSQName);
 
 //
 module.exports = cXSQName;

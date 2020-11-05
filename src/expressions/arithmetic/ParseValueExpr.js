@@ -1,9 +1,9 @@
 var fParsePathExpr = require('./../path/ParsePathExpr');
 
 // Static members
-function fParse(oLexer, oStaticContext) {
+function fParseValueExpr(oLexer, oStaticContext) {
 	return fParsePathExpr(oLexer, oStaticContext);
 };
 
 //
-module.exports = fParse;
+module.exports = fParseValueExpr;

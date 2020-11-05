@@ -7,7 +7,8 @@
  *
  */
 
-var cStaticContext = require('./../../../../classes/StaticContext');
+var cString = String;
+
 var cXSConstants = require('./../../../../classes/XSConstants');
 var cXSNCName = require('./XSNCName');
 
@@ -21,9 +22,6 @@ cXSENTITY.prototype.builtInKind	= cXSConstants.ENTITY_DT;
 cXSENTITY.cast	= function(vValue) {
 	return new cXSENTITY(cString(vValue));
 };
-
-//
-cStaticContext.defineSystemDataType("ENTITY",	cXSENTITY);
 
 //
 module.exports = cXSENTITY;

@@ -2,7 +2,7 @@
 var cKindTest = require('./KindTest');
 
 // Static members
-function fParse(oLexer, oStaticContext) {
+function fParseKindTest(oLexer, oStaticContext) {
 	var sName	= oLexer.peek(),
 		oValue;
 	if (oLexer.peek(1) == '(') {
@@ -77,4 +77,4 @@ function fParse(oLexer, oStaticContext) {
 };
 
 //
-module.exports = fParse;
+module.exports = fParseKindTest;

@@ -7,10 +7,12 @@
  *
  */
 
-var cStaticContext = require('./../../../classes/StaticContext');
 var cXSConstants = require('./../../../classes/XSConstants');
 var cXSAnySimpleType = require('./../../XSAnySimpleType');
 var cXSAnyAtomicType = require('./../XSAnyAtomicType');
+var cXSUntypedAtomic = require('./XSUntypedAtomic');
+var cXSString = require('./XSString');
+var cXSDateTime = require('./XSDateTime');
 
 function cXSTime(nHours, nMinutes, nSeconds, nTimezone) {
 	this.hours	= nHours;
@@ -43,7 +45,7 @@ cXSTime.cast	= function(vValue) {
 			var bValue	= !!aMatch[6];
 			return new cXSTime(bValue ? 0 : +aMatch[2],
 								bValue ? 0 : +aMatch[3],
-								cNumber((bValue ? 0 : aMatch[4]) + '.' + (bValue ? 0 : aMatch[5] || 0)),
+								+((bValue ? 0 : aMatch[4]) + '.' + (bValue ? 0 : aMatch[5] || 0)),
 								aMatch[8] ? aMatch[8] == 'Z' ? 0 : (aMatch[9] == '-' ? -1 : 1) * (aMatch[10] * 60 + aMatch[11] * 1) : null
 			);
 		}
@@ -74,15 +76,12 @@ function fXSTime_normalize(oValue) {
 	//
 	if (oValue.hours >= 24 || oValue.hours < 0) {
 		if (oValue instanceof cXSDateTime)
-			oValue.day		+= ~~(oValue.hours / 24) - (oValue.hours < 0 && oValue.hours % 24 ? 1 : 0);
+			oValue.day	+= ~~(oValue.hours / 24) - (oValue.hours < 0 && oValue.hours % 24 ? 1 : 0);
 		oValue.hours	= oValue.hours % 24 + (oValue.hours < 0 && oValue.hours % 24 ? 24 : 0);
 	}
 	//
 	return oValue;
 };
-
-//
-cStaticContext.defineSystemDataType("time",	cXSTime);
 
 //
 module.exports = cXSTime;

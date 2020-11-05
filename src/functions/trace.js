@@ -7,11 +7,9 @@
  *
  */
 
-var cStaticContext = require('./../classes/StaticContext');
+var fStaticContext_defineSystemFunction = require('./../classes/StaticContext').defineSystemFunction;
 var hTypes = require('./../types');
 
-//
-var fStaticContext_defineSystemFunction = cStaticContext.defineSystemFunction;
 //
 var cXSString = hTypes.XSString;
 //
@@ -24,7 +22,7 @@ var cXTItem = hTypes.XTItem;
 
 // fn:trace($value as item()*, $label as xs:string) as item()*
 fStaticContext_defineSystemFunction("trace",		[[cXTItem, '*'], [cXSString]],	function(oSequence1, oLabel) {
-	var oConsole	= window.console;
+	var oConsole	= global.console;
 	if (oConsole && oConsole.log)
 		oConsole.log(oLabel.valueOf(), oSequence1);
 	return oSequence1;

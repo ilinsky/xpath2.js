@@ -13,12 +13,8 @@ var fParseFunctionCall = require('./ParseFunctionCall');
 var cVarRef = require('./VarRef');
 var fParseLiteral = require('./ParseLiteral');
 
-function cPrimaryExpr() {
-
-};
-
 // Static members
-cPrimaryExpr.parse = function(oLexer, oStaticContext) {
+function fParsePrimaryExpr(oLexer, oStaticContext) {
 	if (!oLexer.eof())
 		return cContextItemExpr.parse(oLexer, oStaticContext)
 			|| fParseParenthesizedExpr(oLexer, oStaticContext)
@@ -28,4 +24,4 @@ cPrimaryExpr.parse = function(oLexer, oStaticContext) {
 };
 
 //
-module.exports = cPrimaryExpr;
+module.exports = fParsePrimaryExpr;

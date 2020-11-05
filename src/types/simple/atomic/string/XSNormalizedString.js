@@ -7,7 +7,8 @@
  *
  */
 
-var cStaticContext = require('./../../../../classes/StaticContext');
+var cString = String;
+
 var cXSConstants = require('./../../../../classes/XSConstants');
 var cXSString = require('./../XSString');
 
@@ -21,9 +22,6 @@ cXSNormalizedString.prototype.builtInKind	= cXSConstants.NORMALIZEDSTRING_DT;
 cXSNormalizedString.cast	= function(vValue) {
 	return new cXSNormalizedString(cString(vValue));
 };
-
-//
-cStaticContext.defineSystemDataType("normalizedString",	cXSNormalizedString);
 
 //
 module.exports = cXSNormalizedString;

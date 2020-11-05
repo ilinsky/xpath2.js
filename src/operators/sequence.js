@@ -7,11 +7,13 @@
  *
  */
 
-var cStaticContext = require('./../classes/StaticContext');
+var cException = require('./../classes/Exception');
+var hStaticContext_operators = require('./../classes/StaticContext').operators;
+
+var fFunction_sequence_order = require('./../functions/sequence').order;
+
 var hTypes = require('./../types');
 
-//
-var hStaticContext_operators = cStaticContext.operators;
 //
 var cXSInteger = hTypes.XSInteger;
 

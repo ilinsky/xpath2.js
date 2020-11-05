@@ -7,8 +7,8 @@
  *
  */
 
-var cStaticContext = require('./../../../../classes/StaticContext');
 var cXSConstants = require('./../../../../classes/XSConstants');
+var cXSInteger = require('./XSInteger');
 var cXSNonPositiveInteger = require('./XSNonPositiveInteger');
 
 function cXSNegativeInteger(nValue) {
@@ -32,9 +32,6 @@ cXSNegativeInteger.cast	= function(vValue) {
 	//
 	throw new cException("FORG0001");
 };
-
-//
-cStaticContext.defineSystemDataType("negativeInteger",	cXSNegativeInteger);
 
 //
 module.exports = cXSNegativeInteger;

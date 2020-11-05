@@ -7,14 +7,16 @@
  *
  */
 
-var cStaticContext = require('./../classes/StaticContext');
-var hTypes = require('./../types');
+var cException = require('./../classes/Exception');
+var fStaticContext_defineSystemFunction = require('./../classes/StaticContext').defineSystemFunction;
 
-//
-var fStaticContext_defineSystemFunction = cStaticContext.defineSystemFunction;
-var cXSBoolean = hTypes.XSBoolean;
-var cXSAnyURI = hTypes.XSAnyURI;
-var cXSString = hTypes.XSString;
+var cXSBoolean = require('./../types/simple/atomic/XSBoolean');
+var cXSAnyURI = require('./../types/simple/atomic/XSAnyURI');
+var cXSString = require('./../types/simple/atomic/XSString');
+var cXSQName = require('./../types/simple/atomic/XSQName');
+
+var cXTItem = require('./../types/XTItem');
+var cXTNode = require('./../types/XTNode');
 
 /*
 	2 Accessors

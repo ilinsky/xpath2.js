@@ -1,6 +1,11 @@
 var cSimpleForBinding = require('./SimpleForBinding');
 
-function fParse(oLexer, oStaticContext) {
+var fParseExprSingle = require('./../ParseExprSingle');
+
+// FIXME: remove duplicate
+var rNameTest	= /^(?:(?![0-9-])(\w[\w.-]*|\*)\:)?(?![0-9-])(\w[\w.-]*|\*)$/;
+
+function fParseSimpleForBinding(oLexer, oStaticContext) {
 	var aMatch	= oLexer.peek().substr(1).match(rNameTest);
 	if (!aMatch)
 		throw new cException("XPST0003"
@@ -37,4 +42,4 @@ function fParse(oLexer, oStaticContext) {
 };
 
 //
-module.exports = fParse;
+module.exports = fParseSimpleForBinding;

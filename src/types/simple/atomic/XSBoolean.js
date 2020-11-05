@@ -7,10 +7,18 @@
  *
  */
 
-var cStaticContext = require('./../../../classes/StaticContext');
+var cString = global.String;
+var fString_trim = function (sValue) {
+	return cString(sValue).trim();
+};
+
 var cXSConstants = require('./../../../classes/XSConstants');
+var cException = require('./../../../classes/Exception');
+
 var cXSAnySimpleType = require('./../../XSAnySimpleType');
 var cXSAnyAtomicType = require('./../XSAnyAtomicType');
+var cXSUntypedAtomic = require('./XSUntypedAtomic');
+var cXSString = require('./../atomic/XSString');
 
 function cXSBoolean(bValue) {
 	this.value	= bValue;
@@ -49,9 +57,6 @@ cXSBoolean.cast	= function(vValue) {
 //<-Debug
 	);
 };
-
-//
-cStaticContext.defineSystemDataType("boolean",	cXSBoolean);
 
 //
 module.exports = cXSBoolean;

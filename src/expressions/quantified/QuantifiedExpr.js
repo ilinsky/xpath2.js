@@ -7,6 +7,8 @@
  *
  */
 
+var fFunction_sequence_toEBV = require('../../functions/sequence').toEBV;
+
 function cQuantifiedExpr(sQuantifier) {
 	this.quantifier		= sQuantifier;
 	this.bindings		= [];

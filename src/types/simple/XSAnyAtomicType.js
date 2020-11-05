@@ -8,8 +8,10 @@
  */
 
 var cXSConstants = require('./../../classes/XSConstants');
-var cStaticContext = require('./../../classes/StaticContext');
 var cXSAnySimpleType = require('./../XSAnySimpleType');
+// var cXSDecimal = require('./atomic/XSDecimal');
+// var cXSDouble = require('./atomic/XSDouble');
+// var cXSFloat = require('./atomic/XSFloat');
 
 function cXSAnyAtomicType() {
 
@@ -26,12 +28,11 @@ cXSAnyAtomicType.cast	= function(vValue) {
 	);	//  {http://www.w3.org/2001/XMLSchema}anyAtomicType
 };
 
-function fXSAnyAtomicType_isNumeric(vItem) {
-	return vItem instanceof cXSFloat || vItem instanceof cXSDouble || vItem instanceof cXSDecimal;
+cXSAnyAtomicType.isNumeric = function(vItem) {
+	return true;//return vItem instanceof cXSFloat || vItem instanceof cXSDouble || vItem instanceof cXSDecimal;
 };
 
-//
-cStaticContext.defineSystemDataType("anyAtomicType",	cXSAnyAtomicType);
+// FIXME: move
 
 //
 module.exports = cXSAnyAtomicType;

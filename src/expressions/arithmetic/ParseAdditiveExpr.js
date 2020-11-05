@@ -1,9 +1,8 @@
 var cAdditiveExpr = require('./AdditiveExpr');
-
 var cMultiplicativeExpr = require('./MultiplicativeExpr');
 
 // Static members
-function fParse(oLexer, oStaticContext) {
+function fParseAdditiveExpr(oLexer, oStaticContext) {
 	var oExpr;
 	if (oLexer.eof() ||!(oExpr = cMultiplicativeExpr.parse(oLexer, oStaticContext)))
 		return;
@@ -27,4 +26,4 @@ function fParse(oLexer, oStaticContext) {
 };
 
 //
-module.exports = fParse;
+module.exports = fParseAdditiveExpr;

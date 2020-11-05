@@ -11,6 +11,18 @@ var cException = require('./../../classes/Exception');
 
 var cStaticContext = require('./../../classes/StaticContext');
 
+var cXSDate = require('./../../types/simple/atomic/XSDate');
+var cXSTime = require('./../../types/simple/atomic/XSTime');
+var cXSDateTime = require('./../../types/simple/atomic/XSDateTime');
+var cXSYearMonthDuration = require('./../../types/simple/atomic/duration/XSYearMonthDuration');
+var cXSDayTimeDuration = require('./../../types/simple/atomic/duration/XSDayTimeDuration');
+
+var cXSUntypedAtomic = require('./../../types/simple/atomic/XSUntypedAtomic');
+
+var fXSAnyAtomicType_isNumeric = require('./../../types/simple/XSAnyAtomicType').isNumeric;
+
+var fFunction_sequence_atomize = require('./../../functions/sequence').atomize;
+
 //
 var hStaticContext_operators = cStaticContext.operators;
 
@@ -167,11 +179,12 @@ cAdditiveExpr.prototype.evaluate	= function (oContext) {
 	if (!oLeft.length)
 		return [];
 	// Assert cardinality
-	fFunctionCall_assertSequenceCardinality(oContext, oLeft, '?'
-//->Debug
-			, "first operand of '" + this.items[0][0] + "'"
-//<-Debug
-	);
+// FIXME: re-enable
+// 	fFunctionCall_assertSequenceCardinality(oContext, oLeft, '?'
+// //->Debug
+// 			, "first operand of '" + this.items[0][0] + "'"
+// //<-Debug
+// 	);
 
 	var vLeft	= oLeft[0];
 	if (vLeft instanceof cXSUntypedAtomic)
@@ -183,11 +196,12 @@ cAdditiveExpr.prototype.evaluate	= function (oContext) {
 		if (!oRight.length)
 			return [];
 		// Assert cardinality
-		fFunctionCall_assertSequenceCardinality(oContext, oRight, '?'
-//->Debug
-				, "first operand of '" + this.items[nIndex][0] + "'"
-//<-Debug
-		);
+// FIXME: re-enable
+// 		fFunctionCall_assertSequenceCardinality(oContext, oRight, '?'
+// //->Debug
+// 				, "first operand of '" + this.items[nIndex][0] + "'"
+// //<-Debug
+// 		);
 
 		vRight	= oRight[0];
 		if (vRight instanceof cXSUntypedAtomic)

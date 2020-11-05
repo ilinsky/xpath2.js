@@ -5,7 +5,7 @@ var fParseStepExprPredicates = require('./ParseStepExprPredicates');
 var fParseNodeTest = require('./tests/ParseNodeTest');
 
 // Static members
-function fParse(oLexer, oStaticContext) {
+function fParseAxisStep(oLexer, oStaticContext) {
 	var sAxis	= oLexer.peek(),
 		oExpr,
 		oStep;
@@ -56,4 +56,4 @@ function fParse(oLexer, oStaticContext) {
 };
 
 //
-module.exports = fParse;
+module.exports = fParseAxisStep;

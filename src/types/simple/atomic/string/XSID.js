@@ -7,7 +7,8 @@
  *
  */
 
-var cStaticContext = require('./../../../../classes/StaticContext');
+var cString = String;
+
 var cXSConstants = require('./../../../../classes/XSConstants');
 var cXSNCName = require('./XSNCName');
 
@@ -21,9 +22,6 @@ cXSID.prototype.builtInKind	= cXSConstants.ID_DT;
 cXSID.cast	= function(vValue) {
 	return new cXSID(cString(vValue));
 };
-
-//
-cStaticContext.defineSystemDataType("ID",	cXSID);
 
 //
 module.exports = cXSID;

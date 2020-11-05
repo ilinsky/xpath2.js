@@ -7,6 +7,8 @@
  *
  */
 
+var fFunction_sequence_order = require('./../../functions/sequence').order;
+
 function cPathExpr() {
 	this.items	= [];
 };

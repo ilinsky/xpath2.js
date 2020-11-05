@@ -7,7 +7,6 @@
  *
  */
 
-var cStaticContext = require('./../../../classes/StaticContext');
 var cXSConstants = require('./../../../classes/XSConstants');
 var cXSAnySimpleType = require('./../../XSAnySimpleType');
 var cXSAnyAtomicType = require('./../XSAnyAtomicType');
@@ -65,9 +64,6 @@ cXSGMonthDay.cast	= function(vValue) {
 //<-Debug
 	);
 };
-
-//
-cStaticContext.defineSystemDataType("gMonthDay",	cXSGMonthDay);
 
 //
 module.exports = cXSGMonthDay;

@@ -7,14 +7,12 @@
  *
  */
 
-var cStaticContext = require('./../classes/StaticContext');
+var fStaticContext_defineSystemFunction = require('./../classes/StaticContext').defineSystemFunction;
 var hTypes = require('./../types');
 
 //
-var hStaticContext_operators = cStaticContext.operators;
+var hStaticContext_operators = require('./../classes/StaticContext').operators;
 
-//
-var fStaticContext_defineSystemFunction = cStaticContext.defineSystemFunction;
 //
 var cXSDecimal = hTypes.XSDecimal;
 var cXSDouble = hTypes.XSDouble;

@@ -7,8 +7,8 @@
  *
  */
 
-var cStaticContext = require('./../../../../classes/StaticContext');
 var cXSConstants = require('./../../../../classes/XSConstants');
+var cXSInteger = require('./XSInteger');
 var cXSNonNegativeInteger = require('./XSNonNegativeInteger');
 
 function cXSUnsignedInt(nValue) {
@@ -32,9 +32,6 @@ cXSUnsignedInt.cast	= function(vValue) {
 	//
 	throw new cException("FORG0001");
 };
-
-//
-cStaticContext.defineSystemDataType("unsignedInt",	cXSUnsignedInt);
 
 //
 module.exports = cXSUnsignedInt;

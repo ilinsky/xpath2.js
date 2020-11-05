@@ -7,9 +7,9 @@
  *
  */
 
-var cStaticContext = require('./../../../../classes/StaticContext');
 var cXSConstants = require('./../../../../classes/XSConstants');
 var cXSInt = require('./XSInt');
+var cXSInteger = require('./XSInteger');
 
 function cXSShort(nValue) {
 	this.value	= nValue;
@@ -32,9 +32,6 @@ cXSShort.cast	= function(vValue) {
 	//
 	throw new cException("FORG0001");
 };
-
-//
-cStaticContext.defineSystemDataType("short",	cXSShort);
 
 //
 module.exports = cXSShort;

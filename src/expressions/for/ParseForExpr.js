@@ -1,8 +1,9 @@
 var cForExpr = require('./ForExpr');
+
 var fParseExprSingle = require('./../ParseExprSingle');
 var fParseSimpleForBinding = require('./ParseSimpleForBinding');
 
-function fParse(oLexer, oStaticContext) {
+function fParseForExpr(oLexer, oStaticContext) {
 	if (oLexer.peek() == "for" && oLexer.peek(1).substr(0, 1) == '$') {
 		oLexer.next();
 
@@ -35,4 +36,4 @@ function fParse(oLexer, oStaticContext) {
 };
 
 //
-module.exports = fParse;
+module.exports = fParseForExpr;

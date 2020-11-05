@@ -1,6 +1,8 @@
 var cAtomicType = require('./AtomicType');
 
-function fParse(oLexer, oStaticContext) {
+var rNameTest	= /^(?:(?![0-9-])(\w[\w.-]*|\*)\:)?(?![0-9-])(\w[\w.-]*|\*)$/;
+
+function fParseAtomicType(oLexer, oStaticContext) {
 	var aMatch	= oLexer.peek().match(rNameTest);
 	if (aMatch) {
 		if (aMatch[1] == '*' || aMatch[2] == '*')
@@ -15,4 +17,4 @@ function fParse(oLexer, oStaticContext) {
 };
 
 //
-module.exports = fParse;
+module.exports = fParseAtomicType;

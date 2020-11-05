@@ -2,6 +2,8 @@
 var cXSAnyType = require('./types/XSAnyType');
 var cXSAnySimpleType = require('./types/XSAnySimpleType');
 var cXSUntyped = require('./types/XSUntyped');
+var cXTItem = require('./types/XTItem');
+var cXTNode = require('./types/XTNode');
 //
 var cXTAttribute = require('./types/node/XTAttribute');
 var cXTComment = require('./types/node/XTComment');
@@ -63,11 +65,84 @@ var cXSNMTOKEN = require('./types/simple/atomic/string/XSNMTOKEN');
 var cXSNormalizedString = require('./types/simple/atomic/string/XSNormalizedString');
 var cXSToken = require('./types/simple/atomic/string/XSToken');
 
+//
+var cStaticContext = require('./classes/StaticContext');
+//
+cStaticContext.defineSystemDataType("anyAtomicType",	cXSAnyAtomicType);
+// atomic
+cStaticContext.defineSystemDataType("anyURI",	cXSAnyURI);
+cStaticContext.defineSystemDataType("base64Binary",	cXSBase64Binary);
+cStaticContext.defineSystemDataType("boolean",	cXSBoolean);
+cStaticContext.defineSystemDataType("date",	cXSDate);
+cStaticContext.defineSystemDataType("dateTime",	cXSDateTime);
+cStaticContext.defineSystemDataType("decimal",	cXSDecimal);
+cStaticContext.defineSystemDataType("double",	cXSDouble);
+cStaticContext.defineSystemDataType("duration",	cXSDuration);
+cStaticContext.defineSystemDataType("float",	cXSFloat);
+cStaticContext.defineSystemDataType("gDay",	cXSGDay);
+cStaticContext.defineSystemDataType("gMonth",	cXSGMonth);
+cStaticContext.defineSystemDataType("gMonthDay",	cXSGMonthDay);
+cStaticContext.defineSystemDataType("gYear",	cXSGYear);
+cStaticContext.defineSystemDataType("gYearMonth",	cXSGYearMonth);
+cStaticContext.defineSystemDataType("hexBinary",	cXSHexBinary);
+cStaticContext.defineSystemDataType("NOTATION",	cXSNOTATION);
+cStaticContext.defineSystemDataType("QName",	cXSQName);
+cStaticContext.defineSystemDataType("string",	cXSString);
+cStaticContext.defineSystemDataType("time",	cXSTime);
+cStaticContext.defineSystemDataType("untypedAtomic",	cXSUntypedAtomic);
+// duration
+cStaticContext.defineSystemDataType("yearMonthDuration",	cXSYearMonthDuration);
+cStaticContext.defineSystemDataType("dayTimeDuration",	cXSDayTimeDuration);
+// integer
+cStaticContext.defineSystemDataType("byte",	cXSByte);
+cStaticContext.defineSystemDataType("int",	cXSInt);
+cStaticContext.defineSystemDataType("integer",	cXSInteger);
+cStaticContext.defineSystemDataType("long",	cXSLong);
+cStaticContext.defineSystemDataType("negativeInteger",	cXSNegativeInteger);
+cStaticContext.defineSystemDataType("nonNegativeInteger",	cXSNonNegativeInteger);
+cStaticContext.defineSystemDataType("nonPositiveInteger",	cXSNonPositiveInteger);
+cStaticContext.defineSystemDataType("positiveInteger",	cXSPositiveInteger);
+cStaticContext.defineSystemDataType("short",	cXSShort);
+cStaticContext.defineSystemDataType("unsignedByte",	cXSUnsignedByte);
+cStaticContext.defineSystemDataType("unsignedInt",	cXSUnsignedInt);
+cStaticContext.defineSystemDataType("unsignedLong",	cXSUnsignedLong);
+cStaticContext.defineSystemDataType("unsignedShort",	cXSUnsignedShort);
+// string
+cStaticContext.defineSystemDataType("ENTITY",	cXSENTITY);
+cStaticContext.defineSystemDataType("ID",	cXSID);
+cStaticContext.defineSystemDataType("IDREF",	cXSIDREF);
+cStaticContext.defineSystemDataType("language",	cXSLanguage);
+cStaticContext.defineSystemDataType("Name",	cXSName);
+cStaticContext.defineSystemDataType("NCName",	cXSNCName);
+cStaticContext.defineSystemDataType("NMTOKEN",	cXSNMTOKEN);
+cStaticContext.defineSystemDataType("normalizedString",	cXSNormalizedString);
+cStaticContext.defineSystemDataType("token",	cXSToken);
+
+var rXSNumericLiteral	= /^[+\-]?(?:(?:(\d+)(?:\.(\d*))?)|(?:\.(\d+)))(?:[eE]([+-])?(\d+))?$/;
+function fParseXSNumeric(sValue) {
+	var aMatch	= sValue.match(rXSNumericLiteral);
+	if (aMatch) {
+		var cType	= cXSInteger;
+		if (aMatch[5])
+			cType	= cXSDouble;
+		else
+		if (aMatch[2] || aMatch[3])
+			cType	= cXSDecimal;
+		return new cType(+sValue);
+	}
+};
+
 module.exports = {
+  rXSNumericLiteral: rXSNumericLiteral,
+  parseXSNumeric: fParseXSNumeric,
+
+
   //
   XSAnyType: cXSAnyType,
   XSAnySimpleType: cXSAnySimpleType,
   XSUntyped: cXSUntyped,
+  XTItem: cXTItem,
+  XTNode: cXTNode,
   // node
   XTAttribute: cXTAttribute,
   XTComment: cXTComment,

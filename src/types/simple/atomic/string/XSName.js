@@ -7,7 +7,8 @@
  *
  */
 
-var cStaticContext = require('./../../../../classes/StaticContext');
+var cString = String;
+
 var cXSConstants = require('./../../../../classes/XSConstants');
 var cXSToken = require('./XSToken');
 
@@ -21,9 +22,6 @@ cXSName.prototype.builtInKind	= cXSConstants.NAME_DT;
 cXSName.cast	= function(vValue) {
 	return new cXSName(cString(vValue));
 };
-
-//
-cStaticContext.defineSystemDataType("Name",	cXSName);
 
 //
 module.exports = cXSName;

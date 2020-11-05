@@ -9,27 +9,10 @@
 
 //	Javascript objects
 var cString		= window.String,
-	cBoolean	= window.Boolean,
-	cNumber		= window.Number,
-	cObject		= window.Object,
 	cArray		= window.Array,
-	cRegExp		= window.RegExp,
-	cDate		= window.Date,
 	cFunction	= window.Function,
 	cMath		= window.Math,
-// Error Objects
-	cError		= window.Error,
-	cSyntaxError= window.SyntaxError,
-	cTypeError	= window.TypeError,
-//	misc
-	fIsNaN		= window.isNaN,
-	fIsFinite	= window.isFinite,
-	nNaN		= window.NaN,
-	nInfinity	= window.Infinity,
 	// Functions
-	fWindow_btoa	= window.btoa,
-	fWindow_atob	= window.atob,
-	cWindow.parseInt= window.parseInt,
 	fString_trim	=(function() {
 		return cString.prototype.trim ? function(sValue) {return cString(sValue).trim();} : function(sValue) {
 			return cString(sValue).replace(/^\s+|\s+$/g, '');
@@ -44,7 +27,4 @@ var cString		= window.String,
 		};
 	})();
 
-var sNS_XSD	= "http://www.w3.org/2001/XMLSchema",
-	sNS_XPF	= "http://www.w3.org/2005/xpath-functions",
-	sNS_XNS	= "http://www.w3.org/2000/xmlns/",
-	sNS_XML	= "http://www.w3.org/XML/1998/namespace";
+

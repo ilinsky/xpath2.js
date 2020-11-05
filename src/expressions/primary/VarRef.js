@@ -7,6 +7,9 @@
  *
  */
 
+ // FIXME: found in multiple places
+var rNameTest	= /^(?:(?![0-9-])(\w[\w.-]*|\*)\:)?(?![0-9-])(\w[\w.-]*|\*)$/;
+
 function cVarRef(sPrefix, sLocalName, sNameSpaceURI) {
 	this.prefix			= sPrefix;
 	this.localName		= sLocalName;

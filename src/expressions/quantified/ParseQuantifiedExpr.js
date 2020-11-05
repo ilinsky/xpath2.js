@@ -3,7 +3,7 @@ var cQuantifiedExpr = require('./QuantifiedExpr');
 var fParseExprSingle = require('./../ParseExprSingle');
 var fParseSimpleQuantifiedBinding = require('./ParseSimpleQuantifiedBinding');
 
-function fParse(oLexer, oStaticContext) {
+function fParseQuantifiedExpr(oLexer, oStaticContext) {
 	var sQuantifier	= oLexer.peek();
 	if ((sQuantifier == "some" || sQuantifier == "every") && oLexer.peek(1).substr(0, 1) == '$') {
 		oLexer.next();
@@ -37,4 +37,4 @@ function fParse(oLexer, oStaticContext) {
 };
 
 //
-module.exports = fParse;
+module.exports = fParseQuantifiedExpr;

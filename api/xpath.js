@@ -14,6 +14,10 @@ var cStaticContext = require('./../src/classes/StaticContext');
 var cDynamicContext = require('./../src/classes/DynamicContext');
 var cStringCollator = require('./../src/classes/StringCollator');
 
+// load operators
+require('./../src/operators');
+require('./../src/functions');
+
 var cEvaluator = require('./classes/Evaluator');
 
 var oXPathEvaluator	= new cEvaluator,

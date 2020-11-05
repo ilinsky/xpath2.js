@@ -7,6 +7,9 @@
  *
  */
 
+
+var cException = require('./../../classes/Exception');
+
 var cStepExpr = require('./StepExpr');
 
 function cAxisStep(sAxis, oTest) {

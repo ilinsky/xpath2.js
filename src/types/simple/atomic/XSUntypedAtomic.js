@@ -7,9 +7,10 @@
  *
  */
 
-var cStaticContext = require('./../../../classes/StaticContext');
+var cString = String;
+
+var cException = require('./../../../classes/Exception');
 var cXSConstants = require('./../../../classes/XSConstants');
-var cXSAnySimpleType = require('./../../XSAnySimpleType');
 var cXSAnyAtomicType = require('./../XSAnyAtomicType');
 
 function cXSUntypedAtomic(sValue) {
@@ -35,9 +36,6 @@ cXSUntypedAtomic.cast	= function(vValue) {
 //<-Debug
 	);
 };
-
-//
-cStaticContext.defineSystemDataType("untypedAtomic",	cXSUntypedAtomic);
 
 //
 module.exports = cXSUntypedAtomic;

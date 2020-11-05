@@ -31,7 +31,7 @@ function cLexer(sValue) {
 	}
 };
 
-cLexer.prototype.index		= 0;
+cLexer.prototype.index	= 0;
 cLexer.prototype.length	= 0;
 
 cLexer.prototype.reset	= function() {

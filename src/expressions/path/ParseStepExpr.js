@@ -1,13 +1,13 @@
 
-var cFilterExpr = require('./../primary/FilterExpr');
+var fParseFilterExpr = require('./../primary/ParseFilterExpr');
 var fParseAxisStep = require('./ParseAxisStep');
 
 // Static members
-function fParse(oLexer, oStaticContext) {
+function fParseStepExpr(oLexer, oStaticContext) {
 	if (!oLexer.eof())
-		return cFilterExpr.parse(oLexer, oStaticContext)
+		return fParseFilterExpr(oLexer, oStaticContext)
 			|| fParseAxisStep(oLexer, oStaticContext);
 };
 
 //
-module.exports = fParse;
+module.exports = fParseStepExpr;

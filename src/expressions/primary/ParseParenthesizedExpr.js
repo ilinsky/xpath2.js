@@ -2,7 +2,7 @@ var cParenthesizedExpr = require('./ParenthesizedExpr');
 
 var fParseExpr = require('./../ParseExpr');
 
-function fParse(oLexer, oStaticContext) {
+function fParseParenthesizedExpr(oLexer, oStaticContext) {
 	if (oLexer.peek() == '(') {
 		oLexer.next();
 		// Check if not empty (allowed)
@@ -26,4 +26,4 @@ function fParse(oLexer, oStaticContext) {
 };
 
 //
-module.exports = fParse;
+module.exports = fParseParenthesizedExpr;

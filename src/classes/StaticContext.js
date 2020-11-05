@@ -7,7 +7,14 @@
  *
  */
 
- var cFunction = Function;
+var cException = require('./../classes/Exception');
+
+var sNS_XPF = require('./../namespaces').NS_XPF;
+var sNS_XSD = require('./../namespaces').NS_XSD;
+var sNS_XML = require('./../namespaces').NS_XML;
+var sNS_XNS = require('./../namespaces').NS_XNS;
+
+var cFunction = Function;
 
 function cStaticContext() {
 	this.dataTypes	= {};
@@ -46,7 +53,7 @@ cStaticContext.prototype.setDataType		= function(sUri, fFunction) {
 cStaticContext.prototype.getDataType		= function(sUri) {
 	var aMatch	= sUri.match(rStaticContext_uri);
 	if (aMatch)
-		return aMatch[1] == sNS_XSD ? hStaticContext_dataTypes[aMatch[2]] : this.dataTypes[sUri];
+		return aMatch[1] == sNS_XSD ? cStaticContext.dataTypes[aMatch[2]] : this.dataTypes[sUri];
 };
 
 cStaticContext.prototype.setDocument		= function(sUri, fFunction) {
@@ -67,7 +74,7 @@ cStaticContext.prototype.setFunction		= function(sUri, fFunction) {
 cStaticContext.prototype.getFunction		= function(sUri) {
 	var aMatch	= sUri.match(rStaticContext_uri);
 	if (aMatch)
-		return aMatch[1] == sNS_XPF ? hStaticContext_functions[aMatch[2]] : this.functions[sUri];
+		return aMatch[1] == sNS_XPF ? cStaticContext.functions[aMatch[2]] : this.functions[sUri];
 };
 
 cStaticContext.prototype.setCollation		= function(sUri, fFunction) {
@@ -109,50 +116,23 @@ cStaticContext.prototype.getURIForPrefix	= function(sPrefix) {
 };
 
 // Static members
-//Converts non-null JavaScript object to XML Schema object
-cStaticContext.js2xs	= function(vItem) {
-	// Convert types from JavaScript to XPath 2.0
-	if (typeof vItem == "boolean")
-		vItem	= new cXSBoolean(vItem);
-	else
-	if (typeof vItem == "number")
-		vItem	=(fIsNaN(vItem) ||!fIsFinite(vItem)) ? new cXSDouble(vItem) : cNumericLiteral.parseValue(cString(vItem));
-	else
-		vItem	= new cXSString(cString(vItem));
-	//
-	return vItem;
-};
-
-// Converts non-null XML Schema object to JavaScript object
-cStaticContext.xs2js	= function(vItem) {
-	if (vItem instanceof cXSBoolean)
-		vItem	= vItem.valueOf();
-	else
-	if (fXSAnyAtomicType_isNumeric(vItem))
-		vItem	= vItem.valueOf();
-	else
-		vItem	= vItem.toString();
-	//
-	return vItem;
-};
 
 // System functions with signatures, operators and types
-var hStaticContext_functions	= {},
-	hStaticContext_signatures	= {},
-	hStaticContext_dataTypes	= {};
-
+cStaticContext.functions	= {};
+cStaticContext.signatures	= {};
+cStaticContext.dataTypes	= {};
 cStaticContext.operators	= {};
 
 cStaticContext.defineSystemFunction = function(sName, aParameters, fFunction) {
 	// Register function
-	hStaticContext_functions[sName]	= fFunction;
+	cStaticContext.functions[sName]	= fFunction;
 	// Register signature
-	hStaticContext_signatures[sName]	= aParameters;
+	cStaticContext.signatures[sName]	= aParameters;
 };
 
-cStaticContext.defineSystemDataType =function(sName, fFunction) {
+cStaticContext.defineSystemDataType = function(sName, fFunction) {
 	// Register dataType
-	hStaticContext_dataTypes[sName]	= fFunction;
+	cStaticContext.dataTypes[sName]	= fFunction;
 };
 
 //

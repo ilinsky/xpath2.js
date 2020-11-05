@@ -3,7 +3,7 @@ var cAndExpr = require('./AndExpr');
 var fParseComparisonExpr = require('./../comparison/ParseComparisonExpr');
 
 // Static members
-function fParse(oLexer, oStaticContext) {
+function fParseAndExpr(oLexer, oStaticContext) {
 	var oExpr;
 	if (oLexer.eof() ||!(oExpr = fParseComparisonExpr(oLexer, oStaticContext)))
 		return;
@@ -26,4 +26,4 @@ function fParse(oLexer, oStaticContext) {
 };
 
 //
-module.exports = fParse;
+module.exports = fParseAndExpr;

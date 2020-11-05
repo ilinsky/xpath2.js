@@ -1,10 +1,12 @@
 var cIfExpr = require('./IfExpr');
 
+var cException = require('./../../classes/Exception');
+
 var fParseExpr = require('./../ParseExpr');
 var fParseExprSingle = require('./../ParseExprSingle');
 
 // Static members
-function fParse(oLexer, oStaticContext) {
+function fParseIfExpr(oLexer, oStaticContext) {
 	var oCondExpr,
 		oThenExpr,
 		oElseExpr;
@@ -61,4 +63,4 @@ function fParse(oLexer, oStaticContext) {
 };
 
 //
-module.exports = fParse;
+module.exports = fParseIfExpr;

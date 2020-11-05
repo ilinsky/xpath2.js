@@ -2,7 +2,7 @@ var cStringLiteral = require('./StringLiteral');
 var cXSString = require('./../../types').XSString;
 
 var rStringLiteral	= /^'([^']*(?:''[^']*)*)'|"([^"]*(?:""[^"]*)*)"$/;
-function fParse(oLexer, oStaticContext) {
+function fParseStringLiteral(oLexer, oStaticContext) {
 	var aMatch	= oLexer.peek().match(rStringLiteral);
 	if (aMatch) {
 		oLexer.next();
@@ -11,4 +11,4 @@ function fParse(oLexer, oStaticContext) {
 };
 
 //
-module.exports = fParse;
+module.exports = fParseStringLiteral;

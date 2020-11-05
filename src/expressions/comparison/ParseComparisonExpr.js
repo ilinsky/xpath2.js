@@ -1,10 +1,9 @@
-
 var cComparisonExpr = require('./ComparisonExpr');
 
 var fParseRangeExpr = require('./../sequence/ParseRangeExpr');
 
 // Static members
-function fParse(oLexer, oStaticContext) {
+function fParseComparisonExpr(oLexer, oStaticContext) {
 	var oExpr,
 		oRight;
 	if (oLexer.eof() ||!(oExpr = fParseRangeExpr(oLexer, oStaticContext)))
@@ -25,4 +24,4 @@ function fParse(oLexer, oStaticContext) {
 };
 
 //
-module.exports = fParse;
+module.exports = fParseComparisonExpr;

@@ -7,11 +7,16 @@
  *
  */
 
-var cStaticContext = require('./../classes/StaticContext');
+var hStaticContext_operators = require('./../classes/StaticContext').operators;
 var hTypes = require('./../types');
 
-//
-var hStaticContext_operators = cStaticContext.operators;
+var rXSNumericLiteral = require('./../types').rXSNumericLiteral;
+
+var cMath = Math;
+var fIsNaN = isNaN;
+var fIsFinite = global.isFinite;
+var cString = String;
+
 //
 var cXSBoolean = hTypes.XSBoolean;
 var cXSInteger = hTypes.XSInteger;
@@ -110,10 +115,12 @@ hStaticContext_operators["numeric-greater-than"]	= function(oLeft, oRight) {
 };
 
 function fOperator_numeric_getPower(oLeft, oRight) {
-	if (fIsNaN(oLeft) || (cMath.abs(oLeft) == nInfinity) || fIsNaN(oRight) || (cMath.abs(oRight) == nInfinity))
+	// FIXME: remove 	if (fIsNaN(oLeft) || (cMath.abs(oLeft) == nInfinity) || fIsNaN(oRight) || (cMath.abs(oRight) == nInfinity))
+	// FIXME: implement if (!fIsRealNumber(oLeft) || !fIsRealNumber(oRight))
+	if (fIsNaN(oLeft) || !fIsFinite(cMath.abs(oLeft)) || fIsNaN(oRight) || !fIsFinite(cMath.abs(oRight)))
 		return 0;
-	var aLeft	= cString(oLeft).match(rNumericLiteral),
-		aRight	= cString(oRight).match(rNumericLiteral),
+	var aLeft	= cString(oLeft).match(rXSNumericLiteral),
+		aRight	= cString(oRight).match(rXSNumericLiteral),
 		nPower	= cMath.max(1, (aLeft[2] || aLeft[3] || '').length + (aLeft[5] || 0) * (aLeft[4] == '+' ?-1 : 1), (aRight[2] || aRight[3] || '').length + (aRight[5] || 0) * (aRight[4] == '+' ?-1 : 1));
 	return nPower + (nPower % 2 ? 0 : 1);
 };

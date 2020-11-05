@@ -7,6 +7,11 @@
  *
  */
 
+var cException = require('./../../../classes/Exception');
+
+var fParseKindTest = require('./../../path/tests/ParseKindTest');
+var fParseAtomicType = require('./../../type/types/ParseAtomicType');
+
 function cItemType(oTest) {
 	this.test	= oTest;
 };
@@ -30,9 +35,9 @@ cItemType.parse = function(oLexer, oStaticContext) {
 		return new cItemType;
 	}
 	// Note! Following step should have been before previous as per spec
-	if (oExpr = cKindTest.parse(oLexer, oStaticContext))
+	if (oExpr = fParseKindTest(oLexer, oStaticContext))
 		return new cItemType(oExpr);
-	if (oExpr = cAtomicType.parse(oLexer, oStaticContext))
+	if (oExpr = fParseAtomicType(oLexer, oStaticContext))
 		return new cItemType(oExpr);
 };
 
