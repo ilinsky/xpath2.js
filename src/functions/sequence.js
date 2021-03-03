@@ -17,6 +17,7 @@ var fStaticContext_defineSystemFunction = require('./../classes/StaticContext').
 var fXSAnyAtomicType_isNumeric = require('./../types/simple/XSAnyAtomicType').isNumeric;
 
 var cXSAnyAtomicType = require('./../types/simple/XSAnyAtomicType');
+var cXSUntypedAtomic = require('./../types/simple/atomic/XSUntypedAtomic');
 var cXSDouble = require('./../types/simple/atomic/XSDouble');
 var cXSInteger = require('./../types/simple/atomic/integer/XSInteger');
 var cXSBoolean = require('./../types/simple/atomic/XSBoolean');
@@ -518,7 +519,108 @@ function fFunction_sequence_order(oSequence1, oContext) {
 	});
 };
 
+function fFunction_sequence_assertSequenceItemType(oContext, oSequence, cItemType
+//->Debug
+		, sSource
+//<-Debug
+	) {
+	//
+	for (var nIndex = 0, nLength = oSequence.length, nNodeType, vItem; nIndex < nLength; nIndex++) {
+		vItem	= oSequence[nIndex];
+		// Node types
+		if (cItemType == cXTNode || cItemType.prototype instanceof cXTNode) {
+			// Check if is node
+			if (!oContext.DOMAdapter.isNode(vItem))
+				throw new cException("XPTY0004"
+//->Debug
+						, "Required item type of " + sSource + " is " + cItemType
+//<-Debug
+				);
+
+			// Check node type
+			if (cItemType != cXTNode) {
+				nNodeType	= oContext.DOMAdapter.getProperty(vItem, "nodeType");
+				if ([null, cXTElement, cXTAttribute, cXTText, cXTText, null, null, cXTProcessingInstruction, cXTComment, cXTDocument, null, null, null][nNodeType] != cItemType)
+					throw new cException("XPTY0004"
+//->Debug
+							, "Required item type of " + sSource + " is " + cItemType
+//<-Debug
+					);
+			}
+		}
+		else
+		// Atomic types
+		if (cItemType == cXSAnyAtomicType || cItemType.prototype instanceof cXSAnyAtomicType) {
+			// Atomize item
+			vItem	= fFunction_sequence_atomize([vItem], oContext)[0];
+			// Convert type if necessary
+			if (cItemType != cXSAnyAtomicType) {
+				// Cast item to expected type if it's type is xs:untypedAtomic
+				if (vItem instanceof cXSUntypedAtomic)
+					vItem	= cItemType.cast(vItem);
+				// Cast item to xs:string if it's type is xs:anyURI
+				else
+				if (cItemType == cXSString/* || cItemType.prototype instanceof cXSString*/) {
+					if (vItem instanceof cXSAnyURI)
+						vItem	= cXSString.cast(vItem);
+				}
+				else
+				if (cItemType == cXSDouble/* || cItemType.prototype instanceof cXSDouble*/) {
+					if (fXSAnyAtomicType_isNumeric(vItem))
+						vItem	= cItemType.cast(vItem);
+				}
+			}
+			// Check type
+			if (!(vItem instanceof cItemType))
+				throw new cException("XPTY0004"
+//->Debug
+						, "Required item type of " + sSource + " is " + cItemType
+//<-Debug
+				);
+			// Write value back to sequence
+			oSequence[nIndex]	= vItem;
+		}
+	}
+};
+
+function fFunction_sequence_assertSequenceCardinality(oContext, oSequence, sCardinality
+//->Debug
+		, sSource
+//<-Debug
+	) {
+	var nLength	= oSequence.length;
+	// Check cardinality
+	if (sCardinality == '?') {	// =0 or 1
+		if (nLength > 1)
+			throw new cException("XPTY0004"
+//->Debug
+					, "Required cardinality of " + sSource + " is one or zero"
+//<-Debug
+			);
+	}
+	else
+	if (sCardinality == '+') {	// =1+
+		if (nLength < 1)
+			throw new cException("XPTY0004"
+//->Debug
+					, "Required cardinality of " + sSource + " is one or more"
+//<-Debug
+			);
+	}
+	else
+	if (sCardinality != '*') {	// =1 ('*' =0+)
+		if (nLength != 1)
+			throw new cException("XPTY0004"
+//->Debug
+					, "Required cardinality of " + sSource + " is exactly one"
+//<-Debug
+			);
+	}
+};
+
 module.exports = {
+    assertSequenceCardinality: fFunction_sequence_assertSequenceCardinality,
+    assertSequenceItemType: fFunction_sequence_assertSequenceItemType,
     atomize: fFunction_sequence_atomize,
     order: fFunction_sequence_order,
     toEBV: fFunction_sequence_toEBV

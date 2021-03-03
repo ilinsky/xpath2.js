@@ -9,7 +9,12 @@
 
 var cAdditiveExpr = require('./../arithmetic/AdditiveExpr');
 
+var fFunction_sequence_assertSequenceCardinality = require('./../../functions/sequence').assertSequenceCardinality;
+var fFunction_sequence_assertSequenceItemType = require('./../../functions/sequence').assertSequenceItemType;
+
 var cStaticContext = require('./../../classes/StaticContext');
+
+var cXSInteger = require('./../../types').XSInteger;
 
 //
 var hStaticContext_operators = cStaticContext.operators;
@@ -33,17 +38,16 @@ cRangeExpr.prototype.evaluate	= function (oContext) {
 	var sSource	= "first operand of 'to'";
 //<-Debug
 
-// FIXME: re-enable
-// 	fFunctionCall_assertSequenceCardinality(oContext, oLeft, '?'
-// //->Debug
-// 			, sSource
-// //<-Debug
-// 	);
-// 	fFunctionCall_assertSequenceItemType(oContext, oLeft, cXSInteger
-// //->Debug
-// 			, sSource
-// //<-Debug
-// 	);
+ 	fFunction_sequence_assertSequenceCardinality(oContext, oLeft, '?'
+ //->Debug
+ 			, sSource
+ //<-Debug
+ 	);
+ 	fFunction_sequence_assertSequenceItemType(oContext, oLeft, cXSInteger
+ //->Debug
+ 			, sSource
+ //<-Debug
+ 	);
 
 	var oRight	= this.right.evaluate(oContext);
 	if (!oRight.length)
@@ -53,17 +57,17 @@ cRangeExpr.prototype.evaluate	= function (oContext) {
 	sSource	= "second operand of 'to'";
 //<-Debug
 
-// FIXME: re-enable
-// 	fFunctionCall_assertSequenceCardinality(oContext, oRight, '?'
-// //->Debug
-// 			, sSource
-// //<-Debug
-// 	);
-// 	fFunctionCall_assertSequenceItemType(oContext, oRight, cXSInteger
-// //->Debug
-// 			, sSource
-// //<-Debug
-// 	);
+
+ 	fFunction_sequence_assertSequenceCardinality(oContext, oRight, '?'
+//->Debug
+ 			, sSource
+//<-Debug
+ 	);
+ 	fFunction_sequence_assertSequenceItemType(oContext, oRight, cXSInteger
+//->Debug
+ 			, sSource
+//<-Debug
+ 	);
 
 	return hStaticContext_operators["to"].call(oContext, oLeft[0], oRight[0]);
 };

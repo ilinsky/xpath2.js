@@ -15,6 +15,13 @@ var cArray = Array;
 var sNS_XPF = require('./../../namespaces').NS_XPF;
 var sNS_XSD = require('./../../namespaces').NS_XSD;
 
+var hTypes = require('./../../types');
+var cXSAnyAtomicType = hTypes.XSAnyAtomicType;
+
+var fFunction_sequence_atomize = require('./../../functions/sequence').atomize;
+var fFunction_sequence_assertSequenceCardinality = require('./../../functions/sequence').assertSequenceCardinality;
+var fFunction_sequence_assertSequenceItemType = require('./../../functions/sequence').assertSequenceItemType;
+
 function cFunctionCall(sPrefix, sLocalName, sNameSpaceURI) {
 	this.prefix			= sPrefix;
 	this.localName		= sLocalName;
@@ -117,118 +124,19 @@ function fFunctionCall_prepare(sName, aParameters, aArguments, oContext) {
 		oParameter	= aParameters[nIndex];
 		oArgument	= aArguments[nIndex];
 		// Check sequence cardinality
-		fFunctionCall_assertSequenceCardinality(oContext, oArgument, oParameter[1]
+		fFunction_sequence_assertSequenceCardinality(oContext, oArgument, oParameter[1]
 //->Debug
 				, aFunctionCall_numbers[nIndex] + " argument of " + sName + '()'
 //<-Debug
 		);
 		// Check sequence items data types consistency
-		fFunctionCall_assertSequenceItemType(oContext, oArgument, oParameter[0]
+		fFunction_sequence_assertSequenceItemType(oContext, oArgument, oParameter[0]
 //->Debug
 				, aFunctionCall_numbers[nIndex] + " argument of " + sName + '()'
 //<-Debug
 		);
 		if (oParameter[1] != '+' && oParameter[1] != '*')
 			aArguments[nIndex]	= oArgument.length ? oArgument[0] : null;
-	}
-};
-
-function fFunctionCall_assertSequenceItemType(oContext, oSequence, cItemType
-//->Debug
-		, sSource
-//<-Debug
-	) {
-	//
-	for (var nIndex = 0, nLength = oSequence.length, nNodeType, vItem; nIndex < nLength; nIndex++) {
-		vItem	= oSequence[nIndex];
-		// Node types
-		if (cItemType == cXTNode || cItemType.prototype instanceof cXTNode) {
-			// Check if is node
-			if (!oContext.DOMAdapter.isNode(vItem))
-				throw new cException("XPTY0004"
-//->Debug
-						, "Required item type of " + sSource + " is " + cItemType
-//<-Debug
-				);
-
-			// Check node type
-			if (cItemType != cXTNode) {
-				nNodeType	= oContext.DOMAdapter.getProperty(vItem, "nodeType");
-				if ([null, cXTElement, cXTAttribute, cXTText, cXTText, null, null, cXTProcessingInstruction, cXTComment, cXTDocument, null, null, null][nNodeType] != cItemType)
-					throw new cException("XPTY0004"
-//->Debug
-							, "Required item type of " + sSource + " is " + cItemType
-//<-Debug
-					);
-			}
-		}
-		else
-		// Atomic types
-		if (cItemType == cXSAnyAtomicType || cItemType.prototype instanceof cXSAnyAtomicType) {
-			// Atomize item
-			vItem	= fFunction_sequence_atomize([vItem], oContext)[0];
-			// Convert type if necessary
-			if (cItemType != cXSAnyAtomicType) {
-				// Cast item to expected type if it's type is xs:untypedAtomic
-				if (vItem instanceof cXSUntypedAtomic)
-					vItem	= cItemType.cast(vItem);
-				// Cast item to xs:string if it's type is xs:anyURI
-				else
-				if (cItemType == cXSString/* || cItemType.prototype instanceof cXSString*/) {
-					if (vItem instanceof cXSAnyURI)
-						vItem	= cXSString.cast(vItem);
-				}
-				else
-				if (cItemType == cXSDouble/* || cItemType.prototype instanceof cXSDouble*/) {
-					if (fXSAnyAtomicType_isNumeric(vItem))
-						vItem	= cItemType.cast(vItem);
-				}
-			}
-			// Check type
-			if (!(vItem instanceof cItemType))
-				throw new cException("XPTY0004"
-//->Debug
-						, "Required item type of " + sSource + " is " + cItemType
-//<-Debug
-				);
-			// Write value back to sequence
-			oSequence[nIndex]	= vItem;
-		}
-	}
-};
-
-function fFunctionCall_assertSequenceCardinality(oContext, oSequence, sCardinality
-//->Debug
-		, sSource
-//<-Debug
-	) {
-	var nLength	= oSequence.length;
-	// Check cardinality
-	if (sCardinality == '?') {	// =0 or 1
-		if (nLength > 1)
-			throw new cException("XPTY0004"
-//->Debug
-					, "Required cardinality of " + sSource + " is one or zero"
-//<-Debug
-			);
-	}
-	else
-	if (sCardinality == '+') {	// =1+
-		if (nLength < 1)
-			throw new cException("XPTY0004"
-//->Debug
-					, "Required cardinality of " + sSource + " is one or more"
-//<-Debug
-			);
-	}
-	else
-	if (sCardinality != '*') {	// =1 ('*' =0+)
-		if (nLength != 1)
-			throw new cException("XPTY0004"
-//->Debug
-					, "Required cardinality of " + sSource + " is exactly one"
-//<-Debug
-			);
 	}
 };
 

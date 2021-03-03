@@ -19,6 +19,8 @@ var cXSUntypedAtomic = require('./../../types/simple/atomic/XSUntypedAtomic');
 var cXSDayTimeDuration = require('./../../types/simple/atomic/duration/XSDayTimeDuration');
 var cXSYearMonthDuration = require('./../../types/simple/atomic/duration/XSYearMonthDuration');
 
+var fFunction_sequence_assertSequenceCardinality = require('./../../functions/sequence').assertSequenceCardinality;
+var fFunction_sequence_assertSequenceItemType = require('./../../functions/sequence').assertSequenceItemType;
 
 //
 var hStaticContext_operators = cStaticContext.operators;
@@ -479,13 +481,13 @@ function fComparisonExpr_NodeComp(oExpr, oContext) {
 	if (!oLeft.length)
 		return null;
 	// Assert cardinality
-	fFunctionCall_assertSequenceCardinality(oContext, oLeft, '?'
+	fFunction_sequence_assertSequenceCardinality(oContext, oLeft, '?'
 //->Debug
 			, "first operand of '" + oExpr.operator + "'"
 //<-Debug
 	);
 	// Assert item type
-	fFunctionCall_assertSequenceItemType(oContext, oLeft, cXTNode
+	fFunction_sequence_assertSequenceItemType(oContext, oLeft, cXTNode
 //->Debug
 			, "first operand of '" + oExpr.operator + "'"
 //<-Debug
@@ -495,13 +497,13 @@ function fComparisonExpr_NodeComp(oExpr, oContext) {
 	if (!oRight.length)
 		return null;
 	// Assert cardinality
-	fFunctionCall_assertSequenceCardinality(oContext, oRight, '?'
+	fFunction_sequence_assertSequenceCardinality(oContext, oRight, '?'
 //->Debug
 			, "second operand of '" + oExpr.operator + "'"
 //<-Debug
 	);
 	// Assert item type
-	fFunctionCall_assertSequenceItemType(oContext, oRight, cXTNode
+	fFunction_sequence_assertSequenceItemType(oContext, oRight, cXTNode
 //->Debug
 			, "second operand of '" + oExpr.operator + "'"
 //<-Debug
