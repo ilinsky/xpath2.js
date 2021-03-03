@@ -124,13 +124,13 @@ function fFunctionCall_prepare(sName, aParameters, aArguments, oContext) {
 		oParameter	= aParameters[nIndex];
 		oArgument	= aArguments[nIndex];
 		// Check sequence cardinality
-		fFunction_sequence_assertSequenceCardinality(oContext, oArgument, oParameter[1]
+		fFunction_sequence_assertSequenceCardinality(oArgument, oContext, oParameter[1]
 //->Debug
 				, aFunctionCall_numbers[nIndex] + " argument of " + sName + '()'
 //<-Debug
 		);
 		// Check sequence items data types consistency
-		fFunction_sequence_assertSequenceItemType(oContext, oArgument, oParameter[0]
+		fFunction_sequence_assertSequenceItemType(oArgument, oContext, oParameter[0]
 //->Debug
 				, aFunctionCall_numbers[nIndex] + " argument of " + sName + '()'
 //<-Debug

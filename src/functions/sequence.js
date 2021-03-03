@@ -519,7 +519,7 @@ function fFunction_sequence_order(oSequence1, oContext) {
 	});
 };
 
-function fFunction_sequence_assertSequenceItemType(oContext, oSequence, cItemType
+function fFunction_sequence_assertSequenceItemType(oSequence, oContext, cItemType
 //->Debug
 		, sSource
 //<-Debug
@@ -583,7 +583,7 @@ function fFunction_sequence_assertSequenceItemType(oContext, oSequence, cItemTyp
 	}
 };
 
-function fFunction_sequence_assertSequenceCardinality(oContext, oSequence, sCardinality
+function fFunction_sequence_assertSequenceCardinality(oSequence, oContext, sCardinality
 //->Debug
 		, sSource
 //<-Debug

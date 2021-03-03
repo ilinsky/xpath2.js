@@ -38,12 +38,12 @@ cRangeExpr.prototype.evaluate	= function (oContext) {
 	var sSource	= "first operand of 'to'";
 //<-Debug
 
- 	fFunction_sequence_assertSequenceCardinality(oContext, oLeft, '?'
+ 	fFunction_sequence_assertSequenceCardinality(oLeft, oContext, '?'
  //->Debug
  			, sSource
  //<-Debug
  	);
- 	fFunction_sequence_assertSequenceItemType(oContext, oLeft, cXSInteger
+ 	fFunction_sequence_assertSequenceItemType(oLeft, oContext, cXSInteger
  //->Debug
  			, sSource
  //<-Debug
@@ -58,12 +58,12 @@ cRangeExpr.prototype.evaluate	= function (oContext) {
 //<-Debug
 
 
- 	fFunction_sequence_assertSequenceCardinality(oContext, oRight, '?'
+ 	fFunction_sequence_assertSequenceCardinality(oRight, oContext, '?'
 //->Debug
  			, sSource
 //<-Debug
  	);
- 	fFunction_sequence_assertSequenceItemType(oContext, oRight, cXSInteger
+ 	fFunction_sequence_assertSequenceItemType(oRight, oContext, cXSInteger
 //->Debug
  			, sSource
 //<-Debug

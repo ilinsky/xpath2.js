@@ -130,7 +130,7 @@ fStaticContext_defineSystemFunction("concat",	null,	function() {
 	for (var nIndex = 0, nLength = arguments.length, oSequence; nIndex < nLength; nIndex++) {
 		oSequence	= arguments[nIndex];
 		// Assert cardinality
-		fFunctionCall_assertSequenceCardinality(this, oSequence, '?'
+		fFunctionCall_assertSequenceCardinality(oSequence, this, '?'
 //->Debug
 				, "each argument of concat()"
 //<-Debug

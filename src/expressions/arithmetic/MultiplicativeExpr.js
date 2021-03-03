@@ -8,6 +8,7 @@
  */
 
 var fFunction_sequence_atomize = require('./../../functions/sequence').atomize;
+var fFunction_sequence_assertSequenceCardinality = require('./../../functions/sequence').assertSequenceCardinality;
 
 var cUnionExpr = require('./../sequence/UnionExpr');
 
@@ -137,12 +138,11 @@ cMultiplicativeExpr.prototype.evaluate	= function (oContext) {
 	if (!oLeft.length)
 		return [];
 	// Assert cardinality
-	// FIXME: re-enable
-// 	fFunctionCall_assertSequenceCardinality(oContext, oLeft, '?'
-// //->Debug
-// 			, "first operand of '" + this.items[0][0] + "'"
-// //<-Debug
-// 	);
+ 	fFunction_sequence_assertSequenceCardinality(oLeft, oContext, '?'
+//->Debug
+ 			, "first operand of '" + this.items[0][0] + "'"
+//<-Debug
+ 	);
 
 	var vLeft	= oLeft[0];
 	if (vLeft instanceof cXSUntypedAtomic)
@@ -154,12 +154,11 @@ cMultiplicativeExpr.prototype.evaluate	= function (oContext) {
 		if (!oRight.length)
 			return [];
 		// Assert cardinality
-		// FIXME: re-enable
-// 		fFunctionCall_assertSequenceCardinality(oContext, oRight, '?'
-// //->Debug
-// 				, "second operand of '" + this.items[nIndex][0] + "'"
-// //<-Debug
-// 		);
+ 		fFunction_sequence_assertSequenceCardinality(oRight, oContext, '?'
+//->Debug
+ 				, "second operand of '" + this.items[nIndex][0] + "'"
+//<-Debug
+ 		);
 
 		vRight	= oRight[0];
 		if (vRight instanceof cXSUntypedAtomic)

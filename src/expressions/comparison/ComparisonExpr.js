@@ -122,23 +122,21 @@ function fComparisonExpr_ValueComp(oExpr, oContext) {
 	if (!oLeft.length)
 		return null;
 	// Assert cardinality
-// FIXME: re-enable
-// 	fFunctionCall_assertSequenceCardinality(oContext, oLeft, '?'
-// //->Debug
-// 			, "first operand of '" + oExpr.operator + "'"
-// //<-Debug
-// 	);
+ 	fFunction_sequence_assertSequenceCardinality(oLeft, oContext, '?'
+//->Debug
+ 			, "first operand of '" + oExpr.operator + "'"
+//<-Debug
+ 	);
 
 	var oRight	= fFunction_sequence_atomize(oExpr.right.evaluate(oContext), oContext);
 	if (!oRight.length)
 		return null;
 	// Assert cardinality
-// FIXME: re-enable
-// 	fFunctionCall_assertSequenceCardinality(oContext, oRight, '?'
-// //->Debug
-// 			, "second operand of '" + oExpr.operator + "'"
-// //<-Debug
-// 	);
+ 	fFunction_sequence_assertSequenceCardinality(oRight, oContext, '?'
+//->Debug
+ 			, "second operand of '" + oExpr.operator + "'"
+//<-Debug
+ 	);
 
 	var vLeft	= oLeft[0],
 		vRight	= oRight[0];
@@ -481,13 +479,13 @@ function fComparisonExpr_NodeComp(oExpr, oContext) {
 	if (!oLeft.length)
 		return null;
 	// Assert cardinality
-	fFunction_sequence_assertSequenceCardinality(oContext, oLeft, '?'
+	fFunction_sequence_assertSequenceCardinality(oLeft, oContext, '?'
 //->Debug
 			, "first operand of '" + oExpr.operator + "'"
 //<-Debug
 	);
 	// Assert item type
-	fFunction_sequence_assertSequenceItemType(oContext, oLeft, cXTNode
+	fFunction_sequence_assertSequenceItemType(oLeft, oContext, cXTNode
 //->Debug
 			, "first operand of '" + oExpr.operator + "'"
 //<-Debug
@@ -497,13 +495,13 @@ function fComparisonExpr_NodeComp(oExpr, oContext) {
 	if (!oRight.length)
 		return null;
 	// Assert cardinality
-	fFunction_sequence_assertSequenceCardinality(oContext, oRight, '?'
+	fFunction_sequence_assertSequenceCardinality(oRight, oContext, '?'
 //->Debug
 			, "second operand of '" + oExpr.operator + "'"
 //<-Debug
 	);
 	// Assert item type
-	fFunction_sequence_assertSequenceItemType(oContext, oRight, cXTNode
+	fFunction_sequence_assertSequenceItemType(oRight, oContext, cXTNode
 //->Debug
 			, "second operand of '" + oExpr.operator + "'"
 //<-Debug
