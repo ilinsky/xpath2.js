@@ -12,6 +12,8 @@ var cException = require('./../../classes/Exception');
 
 var cStepExpr = require('./StepExpr');
 
+var cKindTest = require('./tests/KindTest');
+
 function cAxisStep(sAxis, oTest) {
 	this.axis	= sAxis;
 	this.test	= oTest;

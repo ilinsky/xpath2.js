@@ -9,6 +9,10 @@
 
 var fFunction_sequence_order = require('./../../functions/sequence').order;
 
+var fArray_indexOf = function(aValue, oSubject) {
+    return aValue.indexOf(oSubject);
+};
+
 function cPathExpr() {
 	this.items	= [];
 };

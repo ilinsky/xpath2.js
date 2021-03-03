@@ -7,6 +7,8 @@
  *
  */
 
+// TODO: move to /types
+
 function cXSConstants(){};
 
 // XML Schema 1.0 Datatypes

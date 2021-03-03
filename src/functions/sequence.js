@@ -11,6 +11,8 @@ var fIsNaN = global.isNaN;
 
 var cException = require('./../classes/Exception');
 
+//var cMultiplicativeExpr = require('./../expressions/arithmetic/MultiplicativeExpr');
+
 var fStaticContext_defineSystemFunction = require('./../classes/StaticContext').defineSystemFunction;
 var fXSAnyAtomicType_isNumeric = require('./../types/simple/XSAnyAtomicType').isNumeric;
 
@@ -260,7 +262,7 @@ fStaticContext_defineSystemFunction("avg",	[[cXSAnyAtomicType, '*']],	function(o
 				vRight	= cXSDouble.cast(vRight);
 			vValue	= hAdditiveExpr_operators['+'](vValue, vRight, this);
 		}
-		return hMultiplicativeExpr_operators['div'](vValue, new cXSInteger(nLength), this);
+		return cMultiplicativeExpr.operators['div'](vValue, new cXSInteger(nLength), this);
 	}
 	catch (e) {
 		// XPTY0004: Arithmetic operator is not defined for provided arguments

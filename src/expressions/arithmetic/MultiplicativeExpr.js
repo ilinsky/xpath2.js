@@ -32,8 +32,8 @@ cMultiplicativeExpr.prototype.left	= null;
 cMultiplicativeExpr.prototype.items	= null;
 
 //
-var hMultiplicativeExpr_operators	= {};
-hMultiplicativeExpr_operators['*']		= function (oLeft, oRight, oContext) {
+cMultiplicativeExpr.operators	= {};
+cMultiplicativeExpr.operators['*']		= function (oLeft, oRight, oContext) {
 	var sOperator	= '',
 		bReverse	= false;
 
@@ -74,7 +74,7 @@ hMultiplicativeExpr_operators['*']		= function (oLeft, oRight, oContext) {
 //<-Debug
 	);	// Arithmetic operator is not defined for arguments of types ({type1}, {type2})
 };
-hMultiplicativeExpr_operators['div']	= function (oLeft, oRight, oContext) {
+cMultiplicativeExpr.operators['div']	= function (oLeft, oRight, oContext) {
 	var sOperator	= '';
 
 	if (fXSAnyAtomicType_isNumeric(oLeft)) {
@@ -108,7 +108,7 @@ hMultiplicativeExpr_operators['div']	= function (oLeft, oRight, oContext) {
 //<-Debug
 	);	// Arithmetic operator is not defined for arguments of types ({type1}, {type2})
 };
-hMultiplicativeExpr_operators['idiv']	= function (oLeft, oRight, oContext) {
+cMultiplicativeExpr.operators['idiv']	= function (oLeft, oRight, oContext) {
 	if (fXSAnyAtomicType_isNumeric(oLeft) && fXSAnyAtomicType_isNumeric(oRight))
 		return hStaticContext_operators["numeric-integer-divide"].call(oContext, oLeft, oRight);
 	//
@@ -118,7 +118,7 @@ hMultiplicativeExpr_operators['idiv']	= function (oLeft, oRight, oContext) {
 //<-Debug
 	);	// Arithmetic operator is not defined for arguments of types ({type1}, {type2})
 };
-hMultiplicativeExpr_operators['mod']	= function (oLeft, oRight, oContext) {
+cMultiplicativeExpr.operators['mod']	= function (oLeft, oRight, oContext) {
 	if (fXSAnyAtomicType_isNumeric(oLeft) && fXSAnyAtomicType_isNumeric(oRight))
 		return hStaticContext_operators["numeric-mod"].call(oContext, oLeft, oRight);
 	//
@@ -127,30 +127,6 @@ hMultiplicativeExpr_operators['mod']	= function (oLeft, oRight, oContext) {
 			, "Arithmetic operator is not defined for provided arguments"
 //<-Debug
 	);	// Arithmetic operator is not defined for arguments of types ({type1}, {type2})
-};
-
-// Static members
-cMultiplicativeExpr.parse = function(oLexer, oStaticContext) {
-	var oExpr;
-	if (oLexer.eof() ||!(oExpr = cUnionExpr.parse(oLexer, oStaticContext)))
-		return;
-	if (!(oLexer.peek() in hMultiplicativeExpr_operators))
-		return oExpr;
-
-	// Additive expression
-	var oMultiplicativeExpr	= new cMultiplicativeExpr(oExpr),
-		sOperator;
-	while ((sOperator = oLexer.peek()) in hMultiplicativeExpr_operators) {
-		oLexer.next();
-		if (oLexer.eof() ||!(oExpr = cUnionExpr.parse(oLexer, oStaticContext)))
-			throw new cException("XPST0003"
-//->Debug
-					, "Expected second operand in multiplicative expression"
-//<-Debug
-			);
-		oMultiplicativeExpr.items.push([sOperator, oExpr]);
-	}
-	return oMultiplicativeExpr;
 };
 
 // Public members
@@ -189,7 +165,7 @@ cMultiplicativeExpr.prototype.evaluate	= function (oContext) {
 		if (vRight instanceof cXSUntypedAtomic)
 			vRight	= cXSDouble.cast(vRight);	// cast to xs:double
 
-		vLeft	= hMultiplicativeExpr_operators[this.items[nIndex][0]](vLeft, vRight, oContext);
+		vLeft	= cMultiplicativeExpr.operators[this.items[nIndex][0]](vLeft, vRight, oContext);
 	}
 	return [vLeft];
 };

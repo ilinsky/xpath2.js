@@ -20,26 +20,6 @@ function cInstanceofExpr(oExpr, oType) {
 cInstanceofExpr.prototype.expression	= null;
 cInstanceofExpr.prototype.type			= null;
 
-cInstanceofExpr.parse = function(oLexer, oStaticContext) {
-	var oExpr,
-		oType;
-	if (oLexer.eof() ||!(oExpr = cTreatExpr.parse(oLexer, oStaticContext)))
-		return;
-
-	if (!(oLexer.peek() == "instance" && oLexer.peek(1) == "of"))
-		return oExpr;
-
-	oLexer.next(2);
-	if (oLexer.eof() ||!(oType = cSequenceType.parse(oLexer, oStaticContext)))
-		throw new cException("XPST0003"
-//->Debug
-				, "Expected second operand in instance of expression"
-//<-Debug
-		);
-
-	return new cInstanceofExpr(oExpr, oType);
-};
-
 cInstanceofExpr.prototype.evaluate	= function(oContext) {
 	var oSequence1	= this.expression.evaluate(oContext),
 		oItemType	= this.type.itemType,

@@ -1,7 +1,9 @@
 var cAxisStep = require('./AxisStep');
 var cKindTest = require('./tests/KindTest');
 
-var fParseStepExprPredicates = require('./ParseStepExprPredicates');
+var cException = require('./../../classes/Exception');
+
+//var fParseStepExprPredicates = require('./ParseStepExprPredicates');
 var fParseNodeTest = require('./tests/ParseNodeTest');
 
 // Static members
@@ -53,6 +55,32 @@ function fParseAxisStep(oLexer, oStaticContext) {
 	fParseStepExprPredicates(oLexer, oStaticContext, oStep);
 
 	return oStep;
+};
+
+function fParseStepExprPredicates(oLexer, oStaticContext, oStep) {
+	var oExpr;
+	// Parse predicates
+	while (oLexer.peek() == '[') {
+		oLexer.next();
+
+		if (oLexer.eof() ||!(oExpr = fParseExpr(oLexer, oStaticContext)))
+			throw new cException("XPST0003"
+//->Debug
+					, "Expected expression in predicate"
+//<-Debug
+			);
+
+		oStep.predicates.push(oExpr);
+
+		if (oLexer.peek() != ']')
+			throw new cException("XPST0003"
+//->Debug
+					, "Expected ']' token in predicate"
+//<-Debug
+			);
+
+		oLexer.next();
+	}
 };
 
 //

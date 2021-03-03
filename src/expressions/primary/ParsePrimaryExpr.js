@@ -7,19 +7,19 @@
  *
  */
 
-var cContextItemExpr = require('./ContextItemExpr');
+var fParseContextItemExpr = require('./ParseContextItemExpr');
 var fParseParenthesizedExpr = require('./ParseParenthesizedExpr');
 var fParseFunctionCall = require('./ParseFunctionCall');
-var cVarRef = require('./VarRef');
+var fParseVarRef = require('./ParseVarRef');
 var fParseLiteral = require('./ParseLiteral');
 
 // Static members
 function fParsePrimaryExpr(oLexer, oStaticContext) {
 	if (!oLexer.eof())
-		return cContextItemExpr.parse(oLexer, oStaticContext)
+		return fParseContextItemExpr(oLexer, oStaticContext)
 			|| fParseParenthesizedExpr(oLexer, oStaticContext)
 			|| fParseFunctionCall(oLexer, oStaticContext)
-			|| cVarRef.parse(oLexer, oStaticContext)
+			|| fParseVarRef(oLexer, oStaticContext)
 			|| fParseLiteral(oLexer, oStaticContext);
 };
 

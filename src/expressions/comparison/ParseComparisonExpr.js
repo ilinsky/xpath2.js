@@ -1,5 +1,7 @@
 var cComparisonExpr = require('./ComparisonExpr');
 
+var cException = require('./../../classes/Exception');
+
 var fParseRangeExpr = require('./../sequence/ParseRangeExpr');
 
 // Static members

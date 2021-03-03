@@ -39,7 +39,7 @@ function fParseIfExpr(oLexer, oStaticContext) {
 		if (oLexer.eof() ||!(oThenExpr = fParseExprSingle(oLexer, oStaticContext)))
 			throw new cException("XPST0003"
 //->Debug
-					, "Expected then statement operand in condional expression"
+					, "Expected then statement operand in conditional expression"
 //<-Debug
 			);
 
@@ -54,7 +54,7 @@ function fParseIfExpr(oLexer, oStaticContext) {
 		if (oLexer.eof() ||!(oElseExpr = fParseExprSingle(oLexer, oStaticContext)))
 			throw new cException("XPST0003"
 //->Debug
-					, "Expected else statement operand in condional expression"
+					, "Expected else statement operand in conditional expression"
 //<-Debug
 			);
 		//

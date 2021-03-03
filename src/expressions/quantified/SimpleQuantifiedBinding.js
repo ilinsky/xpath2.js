@@ -10,3 +10,5 @@ cSimpleQuantifiedBinding.prototype.prefix		= null;
 cSimpleQuantifiedBinding.prototype.localName	= null;
 cSimpleQuantifiedBinding.prototype.namespaceURI	= null;
 cSimpleQuantifiedBinding.prototype.inExpr	= null;
+
+module.exports = cSimpleQuantifiedBinding;

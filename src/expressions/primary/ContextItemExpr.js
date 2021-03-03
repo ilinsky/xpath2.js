@@ -13,14 +13,6 @@ function cContextItemExpr() {
 
 };
 
-// Static members
-cContextItemExpr.parse = function(oLexer, oStaticContext) {
-	if (oLexer.peek() == '.') {
-		oLexer.next();
-		return new cContextItemExpr;
-	}
-};
-
 // Public members
 cContextItemExpr.prototype.evaluate	= function (oContext) {
 	if (oContext.item == null)

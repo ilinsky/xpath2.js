@@ -1,10 +1,12 @@
 var cAdditiveExpr = require('./AdditiveExpr');
 var cMultiplicativeExpr = require('./MultiplicativeExpr');
 
+var fParseMultiplicativeExpr = require('./ParseMultiplicativeExpr');
+
 // Static members
 function fParseAdditiveExpr(oLexer, oStaticContext) {
 	var oExpr;
-	if (oLexer.eof() ||!(oExpr = cMultiplicativeExpr.parse(oLexer, oStaticContext)))
+	if (oLexer.eof() ||!(oExpr = fParseMultiplicativeExpr(oLexer, oStaticContext)))
 		return;
 	if (!(oLexer.peek() in cAdditiveExpr.operators))
 		return oExpr;
@@ -14,7 +16,7 @@ function fParseAdditiveExpr(oLexer, oStaticContext) {
 		sOperator;
 	while ((sOperator = oLexer.peek()) in cAdditiveExpr.operators) {
 		oLexer.next();
-		if (oLexer.eof() ||!(oExpr = cMultiplicativeExpr.parse(oLexer, oStaticContext)))
+		if (oLexer.eof() ||!(oExpr = fParseMultiplicativeExpr(oLexer, oStaticContext)))
 			throw new cException("XPST0003"
 //->Debug
 					, "Expected second operand in additive expression"

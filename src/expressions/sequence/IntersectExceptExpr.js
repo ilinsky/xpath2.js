@@ -22,30 +22,6 @@ function cIntersectExceptExpr(oExpr) {
 cIntersectExceptExpr.prototype.left		= null;
 cIntersectExceptExpr.prototype.items	= null;
 
-// Static members
-cIntersectExceptExpr.parse = function(oLexer, oStaticContext) {
-	var oExpr,
-		sOperator;
-	if (oLexer.eof() ||!(oExpr = cInstanceofExpr.parse(oLexer, oStaticContext)))
-		return;
-	if (!((sOperator = oLexer.peek()) == "intersect" || sOperator == "except"))
-		return oExpr;
-
-	// IntersectExcept expression
-	var oIntersectExceptExpr	= new cIntersectExceptExpr(oExpr);
-	while ((sOperator = oLexer.peek()) == "intersect" || sOperator == "except") {
-		oLexer.next();
-		if (oLexer.eof() ||!(oExpr = cInstanceofExpr.parse(oLexer, oStaticContext)))
-			throw new cException("XPST0003"
-//->Debug
-					, "Expected second operand in " + sOperator + " expression"
-//<-Debug
-			);
-		oIntersectExceptExpr.items.push([sOperator, oExpr]);
-	}
-	return oIntersectExceptExpr;
-};
-
 // Public members
 cIntersectExceptExpr.prototype.evaluate	= function (oContext) {
 	var oSequence	= this.left.evaluate(oContext);
