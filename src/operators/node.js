@@ -7,7 +7,7 @@
  *
  */
 
-var hStaticContext_operators = require('./../classes/StaticContext').operators;
+var fStaticContext_defineSystemOperator = require('./../classes/StaticContext').defineSystemOperator;
 var hTypes = require('./../types');
 
 var cXSBoolean = hTypes.XSBoolean;
@@ -21,16 +21,16 @@ var cXSBoolean = hTypes.XSBoolean;
 
 // 14 Operators on Nodes
 // op:is-same-node($parameter1 as node(), $parameter2 as node()) as xs:boolean
-hStaticContext_operators["is-same-node"]	= function(oLeft, oRight) {
+fStaticContext_defineSystemOperator("is-same-node", function(oLeft, oRight) {
 	return new cXSBoolean(this.DOMAdapter.isSameNode(oLeft, oRight));
-};
+});
 
 // op:node-before($parameter1 as node(), $parameter2 as node()) as xs:boolean
-hStaticContext_operators["node-before"]	= function(oLeft, oRight) {
+fStaticContext_defineSystemOperator("node-before", function(oLeft, oRight) {
 	return new cXSBoolean(!!(this.DOMAdapter.compareDocumentPosition(oLeft, oRight) & 4));
-};
+});
 
 // op:node-after($parameter1 as node(), $parameter2 as node()) as xs:boolean
-hStaticContext_operators["node-after"]	= function(oLeft, oRight) {
+fStaticContext_defineSystemOperator("node-after", function(oLeft, oRight) {
 	return new cXSBoolean(!!(this.DOMAdapter.compareDocumentPosition(oLeft, oRight) & 2));
-};
+});

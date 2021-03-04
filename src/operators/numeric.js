@@ -7,7 +7,7 @@
  *
  */
 
-var hStaticContext_operators = require('./../classes/StaticContext').operators;
+var fStaticContext_defineSystemOperator = require('./../classes/StaticContext').defineSystemOperator;
 var hTypes = require('./../types');
 
 var rXSNumericLiteral = require('./../types').rXSNumericLiteral;
@@ -41,78 +41,78 @@ var cXSDecimal = hTypes.XSDecimal;
 
 // 6.2 Operators on Numeric Values
 // op:numeric-add($arg1 as numeric, $arg2 as numeric) as numeric
-hStaticContext_operators["numeric-add"]		= function(oLeft, oRight) {
+fStaticContext_defineSystemOperator("numeric-add", function(oLeft, oRight) {
 	var nLeft	= oLeft.valueOf(),
 		nRight	= oRight.valueOf(),
 		nPower	= cMath.pow(10, fOperator_numeric_getPower(nLeft, nRight));
 	return fOperator_numeric_getResultOfType(oLeft, oRight, ((nLeft * nPower) + (nRight * nPower))/nPower);
-};
+});
 
 // op:numeric-subtract($arg1 as numeric, $arg2 as numeric) as numeric
-hStaticContext_operators["numeric-subtract"]	= function(oLeft, oRight) {
+fStaticContext_defineSystemOperator("numeric-subtract", function(oLeft, oRight) {
 	var nLeft	= oLeft.valueOf(),
 		nRight	= oRight.valueOf(),
 		nPower	= cMath.pow(10, fOperator_numeric_getPower(nLeft, nRight));
 	return fOperator_numeric_getResultOfType(oLeft, oRight, ((nLeft * nPower) - (nRight * nPower))/nPower);
-};
+});
 
 // op:numeric-multiply($arg1 as numeric, $arg2 as numeric) as numeric
-hStaticContext_operators["numeric-multiply"]	= function(oLeft, oRight) {
+fStaticContext_defineSystemOperator("numeric-multiply", function(oLeft, oRight) {
 	var nLeft	= oLeft.valueOf(),
 		nRight	= oRight.valueOf(),
 		nPower	= cMath.pow(10, fOperator_numeric_getPower(nLeft, nRight));
 	return fOperator_numeric_getResultOfType(oLeft, oRight, ((nLeft * nPower) * (nRight * nPower))/(nPower * nPower));
-};
+});
 
 // op:numeric-divide($arg1 as numeric, $arg2 as numeric) as numeric
-hStaticContext_operators["numeric-divide"]	= function(oLeft, oRight) {
+fStaticContext_defineSystemOperator("numeric-divide", function(oLeft, oRight) {
 	var nLeft	= oLeft.valueOf(),
 		nRight	= oRight.valueOf(),
 		nPower	= cMath.pow(10, fOperator_numeric_getPower(nLeft, nRight));
 	return fOperator_numeric_getResultOfType(oLeft, oRight, (oLeft * nPower) / (oRight * nPower));
-};
+});
 
 // op:numeric-integer-divide($arg1 as numeric, $arg2 as numeric) as xs:integer
-hStaticContext_operators["numeric-integer-divide"]	= function(oLeft, oRight) {
+fStaticContext_defineSystemOperator("numeric-integer-divide", function(oLeft, oRight) {
 	var oValue = oLeft / oRight;
 	return new cXSInteger(cMath.floor(oValue) + (oValue < 0));
-};
+});
 
 // op:numeric-mod($arg1 as numeric, $arg2 as numeric) as numeric
-hStaticContext_operators["numeric-mod"]	= function(oLeft, oRight) {
+fStaticContext_defineSystemOperator("numeric-mod", function(oLeft, oRight) {
 	var nLeft	= oLeft.valueOf(),
 		nRight	= oRight.valueOf(),
 		nPower	= cMath.pow(10, fOperator_numeric_getPower(nLeft, nRight));
 	return fOperator_numeric_getResultOfType(oLeft, oRight, ((nLeft * nPower) % (nRight * nPower)) / nPower);
-};
+});
 
 // op:numeric-unary-plus($arg as numeric) as numeric
-hStaticContext_operators["numeric-unary-plus"]	= function(oRight) {
+fStaticContext_defineSystemOperator("numeric-unary-plus", function(oRight) {
 	return oRight;
-};
+});
 
 // op:numeric-unary-minus($arg as numeric) as numeric
-hStaticContext_operators["numeric-unary-minus"]	= function(oRight) {
+fStaticContext_defineSystemOperator("numeric-unary-minus", function(oRight) {
 	oRight.value	*=-1;
 	return oRight;
-};
+});
 
 
 // 6.3 Comparison Operators on Numeric Values
 // op:numeric-equal($arg1 as numeric, $arg2 as numeric) as xs:boolean
-hStaticContext_operators["numeric-equal"]	= function(oLeft, oRight) {
+fStaticContext_defineSystemOperator("numeric-equal", function(oLeft, oRight) {
 	return new cXSBoolean(oLeft.valueOf() == oRight.valueOf());
-};
+});
 
 // op:numeric-less-than($arg1 as numeric, $arg2 as numeric) as xs:boolean
-hStaticContext_operators["numeric-less-than"]	= function(oLeft, oRight) {
+fStaticContext_defineSystemOperator("numeric-less-than", function(oLeft, oRight) {
 	return new cXSBoolean(oLeft.valueOf() < oRight.valueOf());
-};
+});
 
 // op:numeric-greater-than($arg1 as numeric, $arg2 as numeric) as xs:boolean
-hStaticContext_operators["numeric-greater-than"]	= function(oLeft, oRight) {
+fStaticContext_defineSystemOperator("numeric-greater-than", function(oLeft, oRight) {
 	return new cXSBoolean(oLeft.valueOf() > oRight.valueOf());
-};
+});
 
 function fOperator_numeric_getPower(oLeft, oRight) {
 	// FIXME: remove 	if (fIsNaN(oLeft) || (cMath.abs(oLeft) == nInfinity) || fIsNaN(oRight) || (cMath.abs(oRight) == nInfinity))

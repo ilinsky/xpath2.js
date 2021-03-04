@@ -7,7 +7,7 @@
  *
  */
 
-var hStaticContext_operators = require('./../classes/StaticContext').operators;
+var fStaticContext_defineSystemOperator = require('./../classes/StaticContext').defineSystemOperator;
 var hTypes = require('./../types');
 
 //
@@ -21,6 +21,6 @@ var cXSBoolean = hTypes.XSBoolean;
 
 // 11.2 Operators Related to QNames
 // op:QName-equal($arg1 as xs:QName, $arg2 as xs:QName) as xs:boolean
-hStaticContext_operators["QName-equal"]	= function(oLeft, oRight) {
+fStaticContext_defineSystemOperator("QName-equal", function(oLeft, oRight) {
 	return new cXSBoolean(oLeft.localName == oRight.localName && oLeft.namespaceURI == oRight.namespaceURI);
-};
+});

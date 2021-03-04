@@ -135,5 +135,10 @@ cStaticContext.defineSystemDataType = function(sName, fFunction) {
 	cStaticContext.dataTypes[sName]	= fFunction;
 };
 
+cStaticContext.defineSystemOperator = function(sName, fFunction) {
+	// Register operator function
+	cStaticContext.operators[sName]	= fFunction;
+};
+
 //
 module.exports = cStaticContext;

@@ -7,7 +7,7 @@
  *
  */
 
-var hStaticContext_operators = require('./../classes/StaticContext').operators;
+var fStaticContext_defineSystemOperator = require('./../classes/StaticContext').defineSystemOperator;
 var hTypes = require('./../types');
 
 //
@@ -18,10 +18,10 @@ var cXSBoolean = hTypes.XSBoolean;
 		op:hexBinary-equal
 		op:base64Binary-equal
 */
-hStaticContext_operators["hexBinary-equal"]	= function(oLeft, oRight) {
+fStaticContext_defineSystemOperator("hexBinary-equal", function(oLeft, oRight) {
 	return new cXSBoolean(oLeft.valueOf() == oRight.valueOf());
-};
+});
 
-hStaticContext_operators["base64Binary-equal"]	= function(oLeft, oRight) {
+fStaticContext_defineSystemOperator("base64Binary-equal", function(oLeft, oRight) {
 	return new cXSBoolean(oLeft.valueOf() == oRight.valueOf());
-};
+});

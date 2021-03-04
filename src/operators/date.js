@@ -7,7 +7,7 @@
  *
  */
 
-var hStaticContext_operators = require('./../classes/StaticContext').operators;
+var fStaticContext_defineSystemOperator = require('./../classes/StaticContext').defineSystemOperator;
 var hTypes = require('./../types');
  
 var cXSBoolean = hTypes.XSBoolean;
@@ -74,248 +74,248 @@ var cDate = global.Date;
 
 // 10.4 Comparison Operators on Duration, Date and Time Values
 // op:yearMonthDuration-less-than($arg1 as xs:yearMonthDuration, $arg2 as xs:yearMonthDuration) as xs:boolean
-hStaticContext_operators["yearMonthDuration-less-than"]	= function(oLeft, oRight) {
+fStaticContext_defineSystemOperator("yearMonthDuration-less-than", function(oLeft, oRight) {
 	return new cXSBoolean(fOperator_yearMonthDuration_toMonths(oLeft) < fOperator_yearMonthDuration_toMonths(oRight));
-};
+});
 
 // op:yearMonthDuration-greater-than($arg1 as xs:yearMonthDuration, $arg2 as xs:yearMonthDuration) as xs:boolean
-hStaticContext_operators["yearMonthDuration-greater-than"]	= function(oLeft, oRight) {
+fStaticContext_defineSystemOperator("yearMonthDuration-greater-than", function(oLeft, oRight) {
 	return new cXSBoolean(fOperator_yearMonthDuration_toMonths(oLeft) > fOperator_yearMonthDuration_toMonths(oRight));
-};
+});
 
 // op:dayTimeDuration-less-than($arg1 as dayTimeDuration, $arg2 as dayTimeDuration) as xs:boolean
-hStaticContext_operators["dayTimeDuration-less-than"]	= function(oLeft, oRight) {
+fStaticContext_defineSystemOperator("dayTimeDuration-less-than", function(oLeft, oRight) {
 	return new cXSBoolean(fOperator_dayTimeDuration_toSeconds(oLeft) < fOperator_dayTimeDuration_toSeconds(oRight));
-};
+});
 
 // op:dayTimeDuration-greater-than($arg1 as dayTimeDuration, $arg2 as dayTimeDuration) as xs:boolean
-hStaticContext_operators["dayTimeDuration-greater-than"]	= function(oLeft, oRight) {
+fStaticContext_defineSystemOperator("dayTimeDuration-greater-than", function(oLeft, oRight) {
 	return new cXSBoolean(fOperator_dayTimeDuration_toSeconds(oLeft) > fOperator_dayTimeDuration_toSeconds(oRight));
-};
+});
 
 // op:duration-equal($arg1 as xs:duration, $arg2 as xs:duration) as xs:boolean
-hStaticContext_operators["duration-equal"]	= function(oLeft, oRight) {
+fStaticContext_defineSystemOperator("duration-equal", function(oLeft, oRight) {
 	return new cXSBoolean(oLeft.negative == oRight.negative
 			&& fOperator_yearMonthDuration_toMonths(oLeft) == fOperator_yearMonthDuration_toMonths(oRight)
 			&& fOperator_dayTimeDuration_toSeconds(oLeft) == fOperator_dayTimeDuration_toSeconds(oRight));
-};
+});
 
 // op:dateTime-equal($arg1 as xs:dateTime, $arg2 as xs:dateTime) as xs:boolean
-hStaticContext_operators["dateTime-equal"]	= function(oLeft, oRight) {
+fStaticContext_defineSystemOperator("dateTime-equal", function(oLeft, oRight) {
 	return fOperator_compareDateTimes(oLeft, oRight, 'eq');
-};
+});
 
 // op:dateTime-less-than($arg1 as xs:dateTime, $arg2 as xs:dateTime) as xs:boolean
-hStaticContext_operators["dateTime-less-than"]	= function(oLeft, oRight) {
+fStaticContext_defineSystemOperator("dateTime-less-than", function(oLeft, oRight) {
 	return fOperator_compareDateTimes(oLeft, oRight, 'lt');
-};
+});
 
 //op:dateTime-greater-than($arg1 as xs:dateTime, $arg2 as xs:dateTime) as xs:boolean
-hStaticContext_operators["dateTime-greater-than"]	= function(oLeft, oRight) {
+fStaticContext_defineSystemOperator("dateTime-greater-than", function(oLeft, oRight) {
 	return fOperator_compareDateTimes(oLeft, oRight, 'gt');
-};
+});
 
 // op:date-equal($arg1 as xs:date, $arg2 as xs:date) as xs:boolean
-hStaticContext_operators["date-equal"]	= function(oLeft, oRight) {
+fStaticContext_defineSystemOperator("date-equal", function(oLeft, oRight) {
 	return fOperator_compareDates(oLeft, oRight, 'eq');
-};
+});
 
 // op:date-less-than($arg1 as xs:date, $arg2 as xs:date) as xs:boolean
-hStaticContext_operators["date-less-than"]	= function(oLeft, oRight) {
+fStaticContext_defineSystemOperator("date-less-than", function(oLeft, oRight) {
 	return fOperator_compareDates(oLeft, oRight, 'lt');
-};
+});
 
 // op:date-greater-than($arg1 as xs:date, $arg2 as xs:date) as xs:boolean
-hStaticContext_operators["date-greater-than"]	= function(oLeft, oRight) {
+fStaticContext_defineSystemOperator("date-greater-than", function(oLeft, oRight) {
 	return fOperator_compareDates(oLeft, oRight, 'gt');
-};
+});
 
 // op:time-equal($arg1 as xs:time, $arg2 as xs:time) as xs:boolean
-hStaticContext_operators["time-equal"]	= function(oLeft, oRight) {
+fStaticContext_defineSystemOperator("time-equal", function(oLeft, oRight) {
 	return fOperator_compareTimes(oLeft, oRight, 'eq');
-};
+});
 
 // op:time-less-than($arg1 as xs:time, $arg2 as xs:time) as xs:boolean
-hStaticContext_operators["time-less-than"]	= function(oLeft, oRight) {
+fStaticContext_defineSystemOperator("time-less-than", function(oLeft, oRight) {
 	return fOperator_compareTimes(oLeft, oRight, 'lt');
-};
+});
 
 // op:time-greater-than($arg1 as xs:time, $arg2 as xs:time) as xs:boolean
-hStaticContext_operators["time-greater-than"]	= function(oLeft, oRight) {
+fStaticContext_defineSystemOperator("time-greater-than", function(oLeft, oRight) {
 	return fOperator_compareTimes(oLeft, oRight, 'gt');
-};
+});
 
 // op:gYearMonth-equal($arg1 as xs:gYearMonth, $arg2 as xs:gYearMonth) as xs:boolean
-hStaticContext_operators["gYearMonth-equal"]	= function(oLeft, oRight) {
+fStaticContext_defineSystemOperator("gYearMonth-equal", function(oLeft, oRight) {
 	return fOperator_compareDateTimes(
 			new cXSDateTime(oLeft.year, oLeft.month, fXSDate_getDaysForYearMonth(oLeft.year, oLeft.month), 0, 0, 0, oLeft.timezone == null ? this.timezone : oLeft.timezone),
 			new cXSDateTime(oRight.year, oRight.month, fXSDate_getDaysForYearMonth(oRight.year, oRight.month), 0, 0, 0, oRight.timezone == null ? this.timezone : oRight.timezone),
 			'eq'
 	);
-};
+});
 
 // op:gYear-equal($arg1 as xs:gYear, $arg2 as xs:gYear) as xs:boolean
-hStaticContext_operators["gYear-equal"]	= function(oLeft, oRight) {
+fStaticContext_defineSystemOperator("gYear-equal", function(oLeft, oRight) {
 	return fOperator_compareDateTimes(
 			new cXSDateTime(oLeft.year, 1, 1, 0, 0, 0, oLeft.timezone == null ? this.timezone : oLeft.timezone),
 			new cXSDateTime(oRight.year, 1, 1, 0, 0, 0, oRight.timezone == null ? this.timezone : oRight.timezone),
 			'eq'
 	);
-};
+});
 
 // op:gMonthDay-equal($arg1 as xs:gMonthDay, $arg2 as xs:gMonthDay) as xs:boolean
-hStaticContext_operators["gMonthDay-equal"]	= function(oLeft, oRight) {
+fStaticContext_defineSystemOperator("gMonthDay-equal", function(oLeft, oRight) {
 	return fOperator_compareDateTimes(
 			new cXSDateTime(1972, oLeft.month, oLeft.day, 0, 0, 0, oLeft.timezone == null ? this.timezone : oLeft.timezone),
 			new cXSDateTime(1972, oRight.month, oRight.day, 0, 0, 0, oRight.timezone == null ? this.timezone : oRight.timezone),
 			'eq'
 	);
-};
+});
 
 // op:gMonth-equal($arg1 as xs:gMonth, $arg2 as xs:gMonth) as xs:boolean
-hStaticContext_operators["gMonth-equal"]	= function(oLeft, oRight) {
+fStaticContext_defineSystemOperator("gMonth-equal", function(oLeft, oRight) {
 	return fOperator_compareDateTimes(
 			new cXSDateTime(1972, oLeft.month, fXSDate_getDaysForYearMonth(1972, oRight.month), 0, 0, 0, oLeft.timezone == null ? this.timezone : oLeft.timezone),
 			new cXSDateTime(1972, oRight.month, fXSDate_getDaysForYearMonth(1972, oRight.month), 0, 0, 0, oRight.timezone == null ? this.timezone : oRight.timezone),
 			'eq'
 	);
-};
+});
 
 // op:gDay-equal($arg1 as xs:gDay, $arg2 as xs:gDay) as xs:boolean
-hStaticContext_operators["gDay-equal"]	= function(oLeft, oRight) {
+fStaticContext_defineSystemOperator("gDay-equal", function(oLeft, oRight) {
 	return fOperator_compareDateTimes(
 			new cXSDateTime(1972, 12, oLeft.day, 0, 0, 0, oLeft.timezone == null ? this.timezone : oLeft.timezone),
 			new cXSDateTime(1972, 12, oRight.day, 0, 0, 0, oRight.timezone == null ? this.timezone : oRight.timezone),
 			'eq'
 	);
-};
+});
 
 // 10.6 Arithmetic Operators on Durations
 // op:add-yearMonthDurations($arg1 as xs:yearMonthDuration, $arg2 as xs:yearMonthDuration) as xs:yearMonthDuration
-hStaticContext_operators["add-yearMonthDurations"]	= function(oLeft, oRight) {
+fStaticContext_defineSystemOperator("add-yearMonthDurations", function(oLeft, oRight) {
 	return fOperator_yearMonthDuration_fromMonths(fOperator_yearMonthDuration_toMonths(oLeft) + fOperator_yearMonthDuration_toMonths(oRight));
-};
+});
 
 // op:subtract-yearMonthDurations($arg1 as xs:yearMonthDuration, $arg2 as xs:yearMonthDuration) as xs:yearMonthDuration
-hStaticContext_operators["subtract-yearMonthDurations"]	= function(oLeft, oRight) {
+fStaticContext_defineSystemOperator("subtract-yearMonthDurations", function(oLeft, oRight) {
 	return fOperator_yearMonthDuration_fromMonths(fOperator_yearMonthDuration_toMonths(oLeft) - fOperator_yearMonthDuration_toMonths(oRight));
-};
+});
 
 // op:multiply-yearMonthDuration($arg1 as xs:yearMonthDuration, $arg2 as xs:double) as xs:yearMonthDuration
-hStaticContext_operators["multiply-yearMonthDuration"]	= function(oLeft, oRight) {
+fStaticContext_defineSystemOperator("multiply-yearMonthDuration", function(oLeft, oRight) {
 	return fOperator_yearMonthDuration_fromMonths(fOperator_yearMonthDuration_toMonths(oLeft) * oRight);
-};
+});
 
 // op:divide-yearMonthDuration($arg1 as xs:yearMonthDuration, $arg2 as xs:double) as xs:yearMonthDuration
-hStaticContext_operators["divide-yearMonthDuration"]	= function(oLeft, oRight) {
+fStaticContext_defineSystemOperator("divide-yearMonthDuration", function(oLeft, oRight) {
 	return fOperator_yearMonthDuration_fromMonths(fOperator_yearMonthDuration_toMonths(oLeft) / oRight);
-};
+});
 
 // op:divide-yearMonthDuration-by-yearMonthDuration($arg1 as xs:yearMonthDuration, $arg2 as xs:yearMonthDuration) as xs:decimal
-hStaticContext_operators["divide-yearMonthDuration-by-yearMonthDuration"]	= function(oLeft, oRight) {
+fStaticContext_defineSystemOperator("divide-yearMonthDuration-by-yearMonthDuration", function(oLeft, oRight) {
 	return new cXSDecimal(fOperator_yearMonthDuration_toMonths(oLeft) / fOperator_yearMonthDuration_toMonths(oRight));
-};
+});
 
 // op:add-dayTimeDurations($arg1 as xs:dayTimeDuration, $arg2 as xs:dayTimeDuration) as xs:dayTimeDuration
-hStaticContext_operators["add-dayTimeDurations"]	= function(oLeft, oRight) {
+fStaticContext_defineSystemOperator("add-dayTimeDurations", function(oLeft, oRight) {
 	return fOperator_dayTimeDuration_fromSeconds(fOperator_dayTimeDuration_toSeconds(oLeft) + fOperator_dayTimeDuration_toSeconds(oRight));
-};
+});
 
 // op:subtract-dayTimeDurations($arg1 as xs:dayTimeDuration, $arg2 as xs:dayTimeDuration) as xs:dayTimeDuration
-hStaticContext_operators["subtract-dayTimeDurations"]	= function(oLeft, oRight) {
+fStaticContext_defineSystemOperator("subtract-dayTimeDurations", function(oLeft, oRight) {
 	return fOperator_dayTimeDuration_fromSeconds(fOperator_dayTimeDuration_toSeconds(oLeft) - fOperator_dayTimeDuration_toSeconds(oRight));
-};
+});
 
 // op:multiply-dayTimeDurations($arg1 as xs:dayTimeDuration, $arg2 as xs:double) as xs:dayTimeDuration
-hStaticContext_operators["multiply-dayTimeDuration"]	= function(oLeft, oRight) {
+fStaticContext_defineSystemOperator("multiply-dayTimeDuration", function(oLeft, oRight) {
 	return fOperator_dayTimeDuration_fromSeconds(fOperator_dayTimeDuration_toSeconds(oLeft) * oRight);
-};
+});
 
 // op:divide-dayTimeDurations($arg1 as xs:dayTimeDuration, $arg2 as xs:double) as xs:dayTimeDuration
-hStaticContext_operators["divide-dayTimeDuration"]	= function(oLeft, oRight) {
+fStaticContext_defineSystemOperator("divide-dayTimeDuration", function(oLeft, oRight) {
 	return fOperator_dayTimeDuration_fromSeconds(fOperator_dayTimeDuration_toSeconds(oLeft) / oRight);
-};
+});
 
 // op:divide-dayTimeDuration-by-dayTimeDuration($arg1 as xs:dayTimeDuration, $arg2 as xs:dayTimeDuration) as xs:decimal
-hStaticContext_operators["divide-dayTimeDuration-by-dayTimeDuration"]	= function(oLeft, oRight) {
+fStaticContext_defineSystemOperator("divide-dayTimeDuration-by-dayTimeDuration", function(oLeft, oRight) {
 	return new cXSDecimal(fOperator_dayTimeDuration_toSeconds(oLeft) / fOperator_dayTimeDuration_toSeconds(oRight));
-};
+});
 
 // 10.8 Arithmetic Operators on Durations, Dates and Times
 // op:subtract-dateTimes($arg1 as xs:dateTime, $arg2 as xs:dateTime) as xs:dayTimeDuration
-hStaticContext_operators["subtract-dateTimes"]	= function(oLeft, oRight) {
+fStaticContext_defineSystemOperator("subtract-dateTimes", function(oLeft, oRight) {
 	return fOperator_dayTimeDuration_fromSeconds(fOperator_dateTime_toSeconds(oLeft) - fOperator_dateTime_toSeconds(oRight));
-};
+});
 
 // op:subtract-dates($arg1 as xs:date, $arg2 as xs:date) as xs:dayTimeDuration
-hStaticContext_operators["subtract-dates"]	= function(oLeft, oRight) {
+fStaticContext_defineSystemOperator("subtract-dates", function(oLeft, oRight) {
 	return fOperator_dayTimeDuration_fromSeconds(fOperator_dateTime_toSeconds(oLeft) - fOperator_dateTime_toSeconds(oRight));
-};
+});
 
 // op:subtract-times($arg1 as xs:time, $arg2 as xs:time) as xs:dayTimeDuration
-hStaticContext_operators["subtract-times"]	= function(oLeft, oRight) {
+fStaticContext_defineSystemOperator("subtract-times", function(oLeft, oRight) {
 	return fOperator_dayTimeDuration_fromSeconds(fOperator_time_toSeconds(oLeft) - fOperator_time_toSeconds(oRight));
-};
+});
 
 // op:add-yearMonthDuration-to-dateTime($arg1 as xs:dateTime, $arg2 as xs:yearMonthDuration) as xs:dateTime
-hStaticContext_operators["add-yearMonthDuration-to-dateTime"]	= function(oLeft, oRight) {
+fStaticContext_defineSystemOperator("add-yearMonthDuration-to-dateTime", function(oLeft, oRight) {
 	return fOperator_addYearMonthDuration2DateTime(oLeft, oRight, '+');
-};
+});
 
 // op:add-dayTimeDuration-to-dateTime($arg1 as xs:dateTime, $arg2 as xs:dayTimeDuration) as xs:dateTime
-hStaticContext_operators["add-dayTimeDuration-to-dateTime"]	= function(oLeft, oRight) {
+fStaticContext_defineSystemOperator("add-dayTimeDuration-to-dateTime", function(oLeft, oRight) {
 	return fOperator_addDayTimeDuration2DateTime(oLeft, oRight, '+');
-};
+});
 
 // op:subtract-yearMonthDuration-from-dateTime($arg1 as xs:dateTime, $arg2 as xs:yearMonthDuration) as xs:dateTime
-hStaticContext_operators["subtract-yearMonthDuration-from-dateTime"]	= function(oLeft, oRight) {
+fStaticContext_defineSystemOperator("subtract-yearMonthDuration-from-dateTime", function(oLeft, oRight) {
 	return fOperator_addYearMonthDuration2DateTime(oLeft, oRight, '-');
-};
+});
 
 // op:subtract-dayTimeDuration-from-dateTime($arg1 as xs:dateTime, $arg2 as xs:dayTimeDuration) as xs:dateTime
-hStaticContext_operators["subtract-dayTimeDuration-from-dateTime"]	= function(oLeft, oRight) {
+fStaticContext_defineSystemOperator("subtract-dayTimeDuration-from-dateTime", function(oLeft, oRight) {
 	return fOperator_addDayTimeDuration2DateTime(oLeft, oRight, '-');
-};
+});
 
 // op:add-yearMonthDuration-to-date($arg1 as xs:date, $arg2 as xs:yearMonthDuration) as xs:date
-hStaticContext_operators["add-yearMonthDuration-to-date"]	= function(oLeft, oRight) {
+fStaticContext_defineSystemOperator("add-yearMonthDuration-to-date", function(oLeft, oRight) {
 	return fOperator_addYearMonthDuration2DateTime(oLeft, oRight, '+');
-};
+});
 
 // op:add-dayTimeDuration-to-date($arg1 as xs:date, $arg2 as xs:dayTimeDuration) as xs:date
-hStaticContext_operators["add-dayTimeDuration-to-date"]	= function(oLeft, oRight) {
+fStaticContext_defineSystemOperator("add-dayTimeDuration-to-date", function(oLeft, oRight) {
 	return fOperator_addDayTimeDuration2DateTime(oLeft, oRight, '+');
-};
+});
 
 // op:subtract-yearMonthDuration-from-date($arg1 as xs:date, $arg2  as xs:yearMonthDuration) as xs:date
-hStaticContext_operators["subtract-yearMonthDuration-from-date"]	= function(oLeft, oRight) {
+fStaticContext_defineSystemOperator("subtract-yearMonthDuration-from-date", function(oLeft, oRight) {
 	return fOperator_addYearMonthDuration2DateTime(oLeft, oRight, '-');
-};
+});
 
 // op:subtract-dayTimeDuration-from-date($arg1 as xs:date, $arg2  as xs:dayTimeDuration) as xs:date
-hStaticContext_operators["subtract-dayTimeDuration-from-date"]	= function(oLeft, oRight) {
+fStaticContext_defineSystemOperator("subtract-dayTimeDuration-from-date", function(oLeft, oRight) {
 	return fOperator_addDayTimeDuration2DateTime(oLeft, oRight, '-');
-};
+});
 
 // op:add-dayTimeDuration-to-time($arg1 as xs:time, $arg2  as xs:dayTimeDuration) as xs:time
-hStaticContext_operators["add-dayTimeDuration-to-time"]	= function(oLeft, oRight) {
+fStaticContext_defineSystemOperator("add-dayTimeDuration-to-time", function(oLeft, oRight) {
 	var oValue	= new cXSTime(oLeft.hours, oLeft.minutes, oLeft.seconds, oLeft.timezone);
 	oValue.hours	+= oRight.hours;
 	oValue.minutes	+= oRight.minutes;
 	oValue.seconds	+= oRight.seconds;
 	//
 	return fXSTime_normalize(oValue);
-};
+});
 
 // op:subtract-dayTimeDuration-from-time($arg1 as xs:time, $arg2  as xs:dayTimeDuration) as xs:time
-hStaticContext_operators["subtract-dayTimeDuration-from-time"]	= function(oLeft, oRight) {
+fStaticContext_defineSystemOperator("subtract-dayTimeDuration-from-time", function(oLeft, oRight) {
 	var oValue	= new cXSTime(oLeft.hours, oLeft.minutes, oLeft.seconds, oLeft.timezone);
 	oValue.hours	-= oRight.hours;
 	oValue.minutes	-= oRight.minutes;
 	oValue.seconds	-= oRight.seconds;
 	//
 	return fXSTime_normalize(oValue);
-};
+});
 
 function fOperator_compareTimes(oLeft, oRight, sComparator) {
 	var nLeft	= fOperator_time_toSeconds(oLeft),
