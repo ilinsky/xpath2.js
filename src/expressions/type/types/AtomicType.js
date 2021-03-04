@@ -8,6 +8,7 @@
  */
 
 var cStaticContext = require('./../../../classes/StaticContext');
+var cException = require('./../../../classes/Exception');
 
 var sNS_XSD = require('./../../../namespaces').NS_XSD;
 

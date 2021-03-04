@@ -8,6 +8,8 @@
  */
 
 var cXSConstants = require('./../../../../classes/XSConstants');
+var cException = require('./../../../../classes/Exception');
+
 var cXSInt = require('./XSInt');
 var cXSInteger = require('./XSInteger');
 

@@ -8,6 +8,7 @@
  */
 
 var cXSConstants = require('./../../../../classes/XSConstants');
+var cXSInteger = require('./XSInteger');
 var cXSLong = require('./XSLong');
 
 function cXSInt(nValue) {
