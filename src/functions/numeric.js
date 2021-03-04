@@ -18,6 +18,8 @@ var cXSDecimal = hTypes.XSDecimal;
 var cXSDouble = hTypes.XSDouble;
 var cXSInteger = hTypes.XSInteger;
 
+var cMath = global.Math;
+
 /*
 	6.4 Functions on Numeric Values
 		abs

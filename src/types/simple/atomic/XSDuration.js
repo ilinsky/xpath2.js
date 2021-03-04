@@ -35,7 +35,7 @@ cXSDuration.prototype.negative	= null;
 
 cXSDuration.prototype.toString	= function() {
 	return (this.negative ? '-' : '') + 'P'
-			+ ((fXSDuration_getYearMonthComponent(this) + fXSDuration_getDayTimeComponent(this)) || 'T0S');
+			+ ((cXSDuration.getYearMonthComponent(this) + cXSDuration.getDayTimeComponent(this)) || 'T0S');
 };
 
 var rXSDuration		= /^(-)?P(?:([0-9]+)Y)?(?:([0-9]+)M)?(?:([0-9]+)D)?(?:T(?:([0-9]+)H)?(?:([0-9]+)M)?(?:((?:(?:[0-9]+(?:.[0-9]*)?)|(?:.[0-9]+)))S)?)?$/;
@@ -61,12 +61,12 @@ cXSDuration.cast	= function(vValue) {
 };
 
 // Utilities
-function fXSDuration_getYearMonthComponent(oDuration) {
+cXSDuration.getYearMonthComponent = function(oDuration) {
 	return (oDuration.year ? oDuration.year + 'Y' : '')
 			+ (oDuration.month ? oDuration.month + 'M' : '');
 };
 
-function fXSDuration_getDayTimeComponent(oDuration) {
+cXSDuration.getDayTimeComponent = function(oDuration) {
 	return (oDuration.day ? oDuration.day + 'D' : '')
 			+ (oDuration.hours || oDuration.minutes || oDuration.seconds
 				? 'T'

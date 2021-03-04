@@ -19,6 +19,8 @@ var cXSTime = hTypes.XSTime;
 var cXSDecimal = hTypes.XSDecimal;
 var cXSInteger = hTypes.XSInteger;
 
+var cMath = global.Math;
+
 /*
 	10.5 Component Extraction Functions on Durations, Dates and Times
 		years-from-duration

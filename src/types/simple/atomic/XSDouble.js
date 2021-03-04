@@ -10,6 +10,11 @@
 var cXSConstants = require('./../../../classes/XSConstants');
 var cXSAnySimpleType = require('./../../XSAnySimpleType');
 var cXSAnyAtomicType = require('./../XSAnyAtomicType');
+var cXSUntypedAtomic = require('./XSUntypedAtomic');
+var cXSBoolean = require('./XSBoolean');
+var cXSString = require('./XSString');
+
+var fXSAnyAtomicType_isNumeric = require('./../XSAnyAtomicType').isNumeric;
 
 function cXSDouble(nValue) {
 	this.value	= nValue;

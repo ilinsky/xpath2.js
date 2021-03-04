@@ -18,6 +18,8 @@ var cXSNCName = hTypes.XSNCName;
 var cXSAnyURI = hTypes.XSAnyURI;
 var cXTElement = hTypes.XTElement;
 
+var rXSQName	= /^(?:(?![0-9-])(\w[\w.-]*)\:)?(?![0-9-])(\w[\w.-]*)$/;
+
 /*
 	11.1 Additional Constructor Functions for QNames
 		resolve-QName

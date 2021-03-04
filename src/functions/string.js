@@ -19,6 +19,9 @@ var cXSDouble = hTypes.XSDouble;
 
 var cRegExp = global.RegExp;
 
+var fFunction_sequence_assertSequenceCardinality = require('./sequence').assertSequenceCardinality;
+var fFunction_sequence_atomize = require('./sequence').atomize;
+
 /*
 	7.2 Functions to Assemble and Disassemble Strings
 		codepoints-to-string
@@ -130,7 +133,7 @@ fStaticContext_defineSystemFunction("concat",	null,	function() {
 	for (var nIndex = 0, nLength = arguments.length, oSequence; nIndex < nLength; nIndex++) {
 		oSequence	= arguments[nIndex];
 		// Assert cardinality
-		fFunctionCall_assertSequenceCardinality(oSequence, this, '?'
+		fFunction_sequence_assertSequenceCardinality(oSequence, this, '?'
 //->Debug
 				, "each argument of concat()"
 //<-Debug

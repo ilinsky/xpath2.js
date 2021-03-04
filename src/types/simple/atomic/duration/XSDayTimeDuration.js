@@ -7,8 +7,17 @@
  *
  */
 
+var cException = require('./../../../../classes/Exception');
+
 var cXSConstants = require('./../../../../classes/XSConstants');
 var cXSDuration = require('./../XSDuration');
+var cXSString = require('./../XSString');
+
+var cString = String;
+
+var fString_trim = function (sValue) {
+	return cString(sValue).trim();
+};
 
 function cXSDayTimeDuration(nDay, nHours, nMinutes, nSeconds, bNegative) {
 	cXSDuration.call(this, 0, 0, nDay, nHours, nMinutes, nSeconds, bNegative);
@@ -19,7 +28,7 @@ cXSDayTimeDuration.prototype.builtInKind	= cXSConstants.DAYTIMEDURATION_DT;
 
 cXSDayTimeDuration.prototype.toString	= function() {
 	return (this.negative ? '-' : '') + 'P'
-			+ (fXSDuration_getDayTimeComponent(this) || 'T0S');
+			+ (cXSDuration.getDayTimeComponent(this) || 'T0S');
 };
 
 var rXSDayTimeDuration	= /^(-)?P(?:([0-9]+)D)?(?:T(?:([0-9]+)H)?(?:([0-9]+)M)?(?:((?:(?:[0-9]+(?:.[0-9]*)?)|(?:.[0-9]+)))S)?)?$/;

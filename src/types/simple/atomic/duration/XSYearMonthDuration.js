@@ -19,7 +19,7 @@ cXSYearMonthDuration.prototype.builtInKind	= cXSConstants.XT_YEARMONTHDURATION_D
 
 cXSYearMonthDuration.prototype.toString	= function() {
 	return (this.negative ? '-' : '') + 'P'
-			+ (fXSDuration_getYearMonthComponent(this) || '0M');
+			+ (cXSDuration.getYearMonthComponent(this) || '0M');
 };
 
 var rXSYearMonthDuration	= /^(-)?P(?:([0-9]+)Y)?(?:([0-9]+)M)?$/;

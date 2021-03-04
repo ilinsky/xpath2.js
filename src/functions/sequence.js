@@ -22,6 +22,7 @@ var cXSDouble = require('./../types/simple/atomic/XSDouble');
 var cXSInteger = require('./../types/simple/atomic/integer/XSInteger');
 var cXSBoolean = require('./../types/simple/atomic/XSBoolean');
 var cXSString = require('./../types/simple/atomic/XSString');
+var cXSAnyURI = require('./../types/simple/atomic/XSAnyURI');
 //
 var cXTItem = require('./../types/XTItem');
 var cXTNode = require('./../types/XTNode');

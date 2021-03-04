@@ -18,6 +18,8 @@ var cXSQName = require('./../types/simple/atomic/XSQName');
 var cXTItem = require('./../types/XTItem');
 var cXTNode = require('./../types/XTNode');
 
+var fFunction_sequence_atomize = require('./sequence').atomize;
+
 /*
 	2 Accessors
 		node-name
