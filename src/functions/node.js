@@ -10,12 +10,12 @@
 var cException = require('./../classes/Exception');
 var fStaticContext_defineSystemFunction = require('./../classes/StaticContext').defineSystemFunction;
 
-var cXSAnyAtomicType = require('./../types/simple/XSAnyAtomicType');
-var cXSBoolean = require('./../types/simple/atomic/XSBoolean');
-var cXSString = require('./../types/simple/atomic/XSString');
+var cXSAnyAtomicType = require('./../types/schema/simple/XSAnyAtomicType');
+var cXSBoolean = require('./../types/schema/simple/atomic/XSBoolean');
+var cXSString = require('./../types/schema/simple/atomic/XSString');
 //
-var cXTItem = require('./../types/XTItem');
-var cXTNode = require('./../types/XTNode');
+var cXTItem = require('./../types/xpath/XTItem');
+var cXTNode = require('./../types/xpath/XTNode');
 
 var nNaN = global.NaN;
 

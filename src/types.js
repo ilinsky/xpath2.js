@@ -1,69 +1,70 @@
 //
-var cXSAnyType = require('./types/XSAnyType');
-var cXSAnySimpleType = require('./types/XSAnySimpleType');
-var cXSUntyped = require('./types/XSUntyped');
-var cXTItem = require('./types/XTItem');
-var cXTNode = require('./types/XTNode');
+var cXTItem = require('./types/xpath/XTItem');
+var cXTNode = require('./types/xpath/XTNode');
 //
-var cXTAttribute = require('./types/node/XTAttribute');
-var cXTComment = require('./types/node/XTComment');
-var cXTDocument = require('./types/node/XTDocument');
-var cXTElement = require('./types/node/XTElement');
-var cXTProcessingInstruction = require('./types/node/XTProcessingInstruction');
-var cXTText = require('./types/node/XTText');
+var cXTAttribute = require('./types/xpath/node/XTAttribute');
+var cXTComment = require('./types/xpath/node/XTComment');
+var cXTDocument = require('./types/xpath/node/XTDocument');
+var cXTElement = require('./types/xpath/node/XTElement');
+var cXTProcessingInstruction = require('./types/xpath/node/XTProcessingInstruction');
+var cXTText = require('./types/xpath/node/XTText');
 //
-var cXSAnyAtomicType = require('./types/simple/XSAnyAtomicType');
-var cXSENTITIES = require('./types/simple/XSENTITIES');
-var cXSIDREFS = require('./types/simple/XSIDREFS');
-var cXSNMTOKENS = require('./types/simple/XSNMTOKENS');
+var cXSAnyType = require('./types/schema/XSAnyType');
+var cXSAnySimpleType = require('./types/schema/XSAnySimpleType');
+var cXSUntyped = require('./types/schema/XSUntyped');
 //
-var cXSAnyURI = require('./types/simple/atomic/XSAnyURI');
-var cXSBase64Binary = require('./types/simple/atomic/XSBase64Binary');
-var cXSBoolean = require('./types/simple/atomic/XSBoolean');
-var cXSDate = require('./types/simple/atomic/XSDate');
-var cXSDateTime = require('./types/simple/atomic/XSDateTime');
-var cXSDecimal = require('./types/simple/atomic/XSDecimal');
-var cXSDouble = require('./types/simple/atomic/XSDouble');
-var cXSDuration = require('./types/simple/atomic/XSDuration');
-var cXSFloat = require('./types/simple/atomic/XSFloat');
-var cXSGDay = require('./types/simple/atomic/XSGDay');
-var cXSGMonth = require('./types/simple/atomic/XSGMonth');
-var cXSGMonthDay = require('./types/simple/atomic/XSGMonthDay');
-var cXSGYear = require('./types/simple/atomic/XSGYear');
-var cXSGYearMonth = require('./types/simple/atomic/XSGYearMonth');
-var cXSHexBinary = require('./types/simple/atomic/XSHexBinary');
-var cXSNOTATION = require('./types/simple/atomic/XSNOTATION');
-var cXSQName = require('./types/simple/atomic/XSQName');
-var cXSString = require('./types/simple/atomic/XSString');
-var cXSTime = require('./types/simple/atomic/XSTime');
-var cXSUntypedAtomic = require('./types/simple/atomic/XSUntypedAtomic');
+var cXSAnyAtomicType = require('./types/schema/simple/XSAnyAtomicType');
+var cXSENTITIES = require('./types/schema/simple/XSENTITIES');
+var cXSIDREFS = require('./types/schema/simple/XSIDREFS');
+var cXSNMTOKENS = require('./types/schema/simple/XSNMTOKENS');
 //
-var cXSDayTimeDuration = require('./types/simple/atomic/duration/XSDayTimeDuration');
-var cXSYearMonthDuration = require('./types/simple/atomic/duration/XSYearMonthDuration');
+var cXSAnyURI = require('./types/schema/simple/atomic/XSAnyURI');
+var cXSBase64Binary = require('./types/schema/simple/atomic/XSBase64Binary');
+var cXSBoolean = require('./types/schema/simple/atomic/XSBoolean');
+var cXSDate = require('./types/schema/simple/atomic/XSDate');
+var cXSDateTime = require('./types/schema/simple/atomic/XSDateTime');
+var cXSDecimal = require('./types/schema/simple/atomic/XSDecimal');
+var cXSDouble = require('./types/schema/simple/atomic/XSDouble');
+var cXSDuration = require('./types/schema/simple/atomic/XSDuration');
+var cXSFloat = require('./types/schema/simple/atomic/XSFloat');
+var cXSGDay = require('./types/schema/simple/atomic/XSGDay');
+var cXSGMonth = require('./types/schema/simple/atomic/XSGMonth');
+var cXSGMonthDay = require('./types/schema/simple/atomic/XSGMonthDay');
+var cXSGYear = require('./types/schema/simple/atomic/XSGYear');
+var cXSGYearMonth = require('./types/schema/simple/atomic/XSGYearMonth');
+var cXSHexBinary = require('./types/schema/simple/atomic/XSHexBinary');
+var cXSNOTATION = require('./types/schema/simple/atomic/XSNOTATION');
+var cXSQName = require('./types/schema/simple/atomic/XSQName');
+var cXSString = require('./types/schema/simple/atomic/XSString');
+var cXSTime = require('./types/schema/simple/atomic/XSTime');
+var cXSUntypedAtomic = require('./types/schema/simple/atomic/XSUntypedAtomic');
 //
-var cXSByte = require('./types/simple/atomic/integer/XSByte');
-var cXSInt = require('./types/simple/atomic/integer/XSInt');
-var cXSInteger = require('./types/simple/atomic/integer/XSInteger');
-var cXSLong = require('./types/simple/atomic/integer/XSLong');
-var cXSNegativeInteger = require('./types/simple/atomic/integer/XSNegativeInteger');
-var cXSNonNegativeInteger = require('./types/simple/atomic/integer/XSNonNegativeInteger');
-var cXSNonPositiveInteger = require('./types/simple/atomic/integer/XSNonPositiveInteger');
-var cXSPositiveInteger = require('./types/simple/atomic/integer/XSPositiveInteger');
-var cXSShort = require('./types/simple/atomic/integer/XSShort');
-var cXSUnsignedByte = require('./types/simple/atomic/integer/XSUnsignedByte');
-var cXSUnsignedInt = require('./types/simple/atomic/integer/XSUnsignedInt');
-var cXSUnsignedLong = require('./types/simple/atomic/integer/XSUnsignedLong');
-var cXSUnsignedShort = require('./types/simple/atomic/integer/XSUnsignedShort');
+var cXSDayTimeDuration = require('./types/schema/simple/atomic/duration/XSDayTimeDuration');
+var cXSYearMonthDuration = require('./types/schema/simple/atomic/duration/XSYearMonthDuration');
 //
-var cXSENTITY = require('./types/simple/atomic/string/XSENTITY');
-var cXSID = require('./types/simple/atomic/string/XSID');
-var cXSIDREF = require('./types/simple/atomic/string/XSIDREF');
-var cXSLanguage = require('./types/simple/atomic/string/XSLanguage');
-var cXSName = require('./types/simple/atomic/string/XSName');
-var cXSNCName = require('./types/simple/atomic/string/XSNCName');
-var cXSNMTOKEN = require('./types/simple/atomic/string/XSNMTOKEN');
-var cXSNormalizedString = require('./types/simple/atomic/string/XSNormalizedString');
-var cXSToken = require('./types/simple/atomic/string/XSToken');
+var cXSByte = require('./types/schema/simple/atomic/integer/XSByte');
+var cXSInt = require('./types/schema/simple/atomic/integer/XSInt');
+var cXSInteger = require('./types/schema/simple/atomic/integer/XSInteger');
+var cXSLong = require('./types/schema/simple/atomic/integer/XSLong');
+var cXSNegativeInteger = require('./types/schema/simple/atomic/integer/XSNegativeInteger');
+var cXSNonNegativeInteger = require('./types/schema/simple/atomic/integer/XSNonNegativeInteger');
+var cXSNonPositiveInteger = require('./types/schema/simple/atomic/integer/XSNonPositiveInteger');
+var cXSPositiveInteger = require('./types/schema/simple/atomic/integer/XSPositiveInteger');
+var cXSShort = require('./types/schema/simple/atomic/integer/XSShort');
+var cXSUnsignedByte = require('./types/schema/simple/atomic/integer/XSUnsignedByte');
+var cXSUnsignedInt = require('./types/schema/simple/atomic/integer/XSUnsignedInt');
+var cXSUnsignedLong = require('./types/schema/simple/atomic/integer/XSUnsignedLong');
+var cXSUnsignedShort = require('./types/schema/simple/atomic/integer/XSUnsignedShort');
+//
+var cXSENTITY = require('./types/schema/simple/atomic/string/XSENTITY');
+var cXSID = require('./types/schema/simple/atomic/string/XSID');
+var cXSIDREF = require('./types/schema/simple/atomic/string/XSIDREF');
+var cXSLanguage = require('./types/schema/simple/atomic/string/XSLanguage');
+var cXSName = require('./types/schema/simple/atomic/string/XSName');
+var cXSNCName = require('./types/schema/simple/atomic/string/XSNCName');
+var cXSNMTOKEN = require('./types/schema/simple/atomic/string/XSNMTOKEN');
+var cXSNormalizedString = require('./types/schema/simple/atomic/string/XSNormalizedString');
+var cXSToken = require('./types/schema/simple/atomic/string/XSToken');
 
 //
 var cStaticContext = require('./classes/StaticContext');
@@ -136,11 +137,7 @@ module.exports = {
   rXSNumericLiteral: rXSNumericLiteral,
   parseXSNumeric: fParseXSNumeric,
 
-
   //
-  XSAnyType: cXSAnyType,
-  XSAnySimpleType: cXSAnySimpleType,
-  XSUntyped: cXSUntyped,
   XTItem: cXTItem,
   XTNode: cXTNode,
   // node
@@ -150,6 +147,10 @@ module.exports = {
   XTElement: cXTElement,
   XTProcessingInstruction: cXTProcessingInstruction,
   XTText: cXTText,
+  //
+  XSAnyType: cXSAnyType,
+  XSAnySimpleType: cXSAnySimpleType,
+  XSUntyped: cXSUntyped,
   // simple
   XSAnyAtomicType: cXSAnyAtomicType,
   XSENTITIES: cXSENTITIES,

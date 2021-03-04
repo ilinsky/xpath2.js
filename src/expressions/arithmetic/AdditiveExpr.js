@@ -11,15 +11,15 @@ var cException = require('./../../classes/Exception');
 
 var cStaticContext = require('./../../classes/StaticContext');
 
-var cXSDate = require('./../../types/simple/atomic/XSDate');
-var cXSTime = require('./../../types/simple/atomic/XSTime');
-var cXSDateTime = require('./../../types/simple/atomic/XSDateTime');
-var cXSYearMonthDuration = require('./../../types/simple/atomic/duration/XSYearMonthDuration');
-var cXSDayTimeDuration = require('./../../types/simple/atomic/duration/XSDayTimeDuration');
+var cXSDate = require('./../../types/schema/simple/atomic/XSDate');
+var cXSTime = require('./../../types/schema/simple/atomic/XSTime');
+var cXSDateTime = require('./../../types/schema/simple/atomic/XSDateTime');
+var cXSYearMonthDuration = require('./../../types/schema/simple/atomic/duration/XSYearMonthDuration');
+var cXSDayTimeDuration = require('./../../types/schema/simple/atomic/duration/XSDayTimeDuration');
 
-var cXSUntypedAtomic = require('./../../types/simple/atomic/XSUntypedAtomic');
+var cXSUntypedAtomic = require('./../../types/schema/simple/atomic/XSUntypedAtomic');
 
-var fXSAnyAtomicType_isNumeric = require('./../../types/simple/XSAnyAtomicType').isNumeric;
+var fXSAnyAtomicType_isNumeric = require('./../../types/schema/simple/XSAnyAtomicType').isNumeric;
 
 var fFunction_sequence_atomize = require('./../../functions/sequence').atomize;
 var fFunction_sequence_assertSequenceCardinality = require('./../../functions/sequence').assertSequenceCardinality;

@@ -11,7 +11,7 @@ var fFunction_sequence_toEBV = require('./../../functions/sequence').toEBV;
 
 var cAndExpr = require('./AndExpr');
 
-var cXSBoolean = require('./../../types/simple/atomic/XSBoolean');
+var cXSBoolean = require('./../../types/schema/simple/atomic/XSBoolean');
 
 function cOrExpr(oExpr) {
 	this.left	= oExpr;

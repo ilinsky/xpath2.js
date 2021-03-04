@@ -7,7 +7,7 @@
  *
  */
 
-var cXSBoolean = require('./../../types/simple/atomic/XSBoolean');
+var cXSBoolean = require('./../../types/schema/simple/atomic/XSBoolean');
 
 var fFunction_sequence_atomize = require('./../../functions/sequence').atomize;
 

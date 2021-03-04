@@ -9,15 +9,15 @@
 
 var cStaticContext = require('./../../classes/StaticContext');
 
-var fXSAnyAtomicType_isNumeric = require('./../../types/simple/XSAnyAtomicType').isNumeric;
+var fXSAnyAtomicType_isNumeric = require('./../../types/schema/simple/XSAnyAtomicType').isNumeric;
 var fFunction_sequence_atomize = require('../../functions/sequence').atomize;
 
-var cXSBoolean = require('./../../types/simple/atomic/XSBoolean');
-var cXSString = require('./../../types/simple/atomic/XSString');
-var cXSAnyURI = require('./../../types/simple/atomic/XSAnyURI');
-var cXSUntypedAtomic = require('./../../types/simple/atomic/XSUntypedAtomic');
-var cXSDayTimeDuration = require('./../../types/simple/atomic/duration/XSDayTimeDuration');
-var cXSYearMonthDuration = require('./../../types/simple/atomic/duration/XSYearMonthDuration');
+var cXSBoolean = require('./../../types/schema/simple/atomic/XSBoolean');
+var cXSString = require('./../../types/schema/simple/atomic/XSString');
+var cXSAnyURI = require('./../../types/schema/simple/atomic/XSAnyURI');
+var cXSUntypedAtomic = require('./../../types/schema/simple/atomic/XSUntypedAtomic');
+var cXSDayTimeDuration = require('./../../types/schema/simple/atomic/duration/XSDayTimeDuration');
+var cXSYearMonthDuration = require('./../../types/schema/simple/atomic/duration/XSYearMonthDuration');
 
 var fFunction_sequence_assertSequenceCardinality = require('./../../functions/sequence').assertSequenceCardinality;
 var fFunction_sequence_assertSequenceItemType = require('./../../functions/sequence').assertSequenceItemType;

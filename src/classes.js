@@ -4,7 +4,6 @@ var cException = require('./classes/Exception');
 var cLexer = require('./classes/Lexer');
 var cStaticContext = require('./classes/StaticContext');
 var cStringCollator = require('./classes/StringCollator');
-var cXSConstants = require('./classes/XSConstants');
 
 //
 module.exports = {
@@ -13,6 +12,5 @@ module.exports = {
   Exception: cException,
   Lexer: cLexer,
   StaticContext: cStaticContext,
-  StringCollator: cStringCollator,
-  XSConstants: cXSConstants
+  StringCollator: cStringCollator
 }

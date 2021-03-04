@@ -10,7 +10,7 @@
 var cTreatExpr = require('./TreatExpr');
 var cSequenceType = require('./types/SequenceType');
 
-var cXSBoolean = require('./../../types/simple/atomic/XSBoolean');
+var cXSBoolean = require('./../../types/schema/simple/atomic/XSBoolean');
 
 function cInstanceofExpr(oExpr, oType) {
 	this.expression	= oExpr;

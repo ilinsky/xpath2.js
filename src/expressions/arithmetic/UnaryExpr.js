@@ -6,12 +6,12 @@
  *
  *
  */
-var fXSAnyAtomicType_isNumeric = require('./../../types/simple/XSAnyAtomicType').isNumeric;
+var fXSAnyAtomicType_isNumeric = require('./../../types/schema/simple/XSAnyAtomicType').isNumeric;
 
 var fFunction_sequence_atomize = require('./../../functions/sequence').atomize;
 var fFunction_sequence_assertSequenceCardinality = require('./../../functions/sequence').assertSequenceCardinality;
 
-var cXSUntypedAtomic = require('./../../types/simple/atomic/XSUntypedAtomic');
+var cXSUntypedAtomic = require('./../../types/schema/simple/atomic/XSUntypedAtomic');
 
 var cStaticContext = require('./../../classes/StaticContext');
 

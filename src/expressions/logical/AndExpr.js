@@ -11,7 +11,7 @@ var fFunction_sequence_toEBV = require('./../../functions/sequence').toEBV;
 
 var cComparisonExpr = require('./../comparison/ComparisonExpr');
 
-var cXSBoolean = require('./../../types/simple/atomic/XSBoolean');
+var cXSBoolean = require('./../../types/schema/simple/atomic/XSBoolean');
 
 function cAndExpr(oExpr) {
 	this.left	= oExpr;

@@ -9,7 +9,7 @@
 
 var fFunction_sequence_toEBV = require('../../functions/sequence').toEBV;
 
-var cXSBoolean = require('./../../types/simple/atomic/XSBoolean');
+var cXSBoolean = require('./../../types/schema/simple/atomic/XSBoolean');
 
 function cQuantifiedExpr(sQuantifier) {
 	this.quantifier		= sQuantifier;

@@ -13,11 +13,11 @@ var cStaticContext = require('./../../src/classes/StaticContext');
 var cDynamicContext = require('./../../src/classes/DynamicContext');
 
 var fParseXSNumeric = require('./../../src/types').parseXSNumeric;
-var cXSString = require('./../../src/types/simple/atomic/XSString');
-var cXSDouble = require('./../../src/types/simple/atomic/XSDouble');
-var cXSBoolean = require('./../../src/types/simple/atomic/XSBoolean');
+var cXSString = require('./../../src/types/schema/simple/atomic/XSString');
+var cXSDouble = require('./../../src/types/schema/simple/atomic/XSDouble');
+var cXSBoolean = require('./../../src/types/schema/simple/atomic/XSBoolean');
 
-var fXSAnyAtomicType_isNumeric = require('./../../src/types/simple/XSAnyAtomicType').isNumeric;
+var fXSAnyAtomicType_isNumeric = require('./../../src/types/schema/simple/XSAnyAtomicType').isNumeric;
 
 var cString = global.String;
 var fIsNaN = global.isNaN;

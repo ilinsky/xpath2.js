@@ -16,10 +16,10 @@ var cException = require('./../../classes/Exception');
 
 var cStaticContext = require('./../../classes/StaticContext');
 
-var cXSUntypedAtomic = require('./../../types/simple/atomic/XSUntypedAtomic');
-var cXSYearMonthDuration = require('./../../types/simple/atomic/duration/XSYearMonthDuration');
-var cXSDayTimeDuration = require('./../../types/simple/atomic/duration/XSDayTimeDuration');
-var fXSAnyAtomicType_isNumeric = require('./../../types/simple/XSAnyAtomicType').isNumeric;
+var cXSUntypedAtomic = require('./../../types/schema/simple/atomic/XSUntypedAtomic');
+var cXSYearMonthDuration = require('./../../types/schema/simple/atomic/duration/XSYearMonthDuration');
+var cXSDayTimeDuration = require('./../../types/schema/simple/atomic/duration/XSDayTimeDuration');
+var fXSAnyAtomicType_isNumeric = require('./../../types/schema/simple/XSAnyAtomicType').isNumeric;
 
 //
 var hStaticContext_operators = cStaticContext.operators;

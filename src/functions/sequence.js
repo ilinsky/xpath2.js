@@ -14,18 +14,18 @@ var cException = require('./../classes/Exception');
 //var cMultiplicativeExpr = require('./../expressions/arithmetic/MultiplicativeExpr');
 
 var fStaticContext_defineSystemFunction = require('./../classes/StaticContext').defineSystemFunction;
-var fXSAnyAtomicType_isNumeric = require('./../types/simple/XSAnyAtomicType').isNumeric;
+var fXSAnyAtomicType_isNumeric = require('./../types/schema/simple/XSAnyAtomicType').isNumeric;
 
-var cXSAnyAtomicType = require('./../types/simple/XSAnyAtomicType');
-var cXSUntypedAtomic = require('./../types/simple/atomic/XSUntypedAtomic');
-var cXSDouble = require('./../types/simple/atomic/XSDouble');
-var cXSInteger = require('./../types/simple/atomic/integer/XSInteger');
-var cXSBoolean = require('./../types/simple/atomic/XSBoolean');
-var cXSString = require('./../types/simple/atomic/XSString');
-var cXSAnyURI = require('./../types/simple/atomic/XSAnyURI');
+var cXSAnyAtomicType = require('./../types/schema/simple/XSAnyAtomicType');
+var cXSUntypedAtomic = require('./../types/schema/simple/atomic/XSUntypedAtomic');
+var cXSDouble = require('./../types/schema/simple/atomic/XSDouble');
+var cXSInteger = require('./../types/schema/simple/atomic/integer/XSInteger');
+var cXSBoolean = require('./../types/schema/simple/atomic/XSBoolean');
+var cXSString = require('./../types/schema/simple/atomic/XSString');
+var cXSAnyURI = require('./../types/schema/simple/atomic/XSAnyURI');
 //
-var cXTItem = require('./../types/XTItem');
-var cXTNode = require('./../types/XTNode');
+var cXTItem = require('./../types/xpath/XTItem');
+var cXTNode = require('./../types/xpath/XTNode');
 
 /*
 	15.1 General Functions and Operators on Sequences

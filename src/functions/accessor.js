@@ -10,13 +10,13 @@
 var cException = require('./../classes/Exception');
 var fStaticContext_defineSystemFunction = require('./../classes/StaticContext').defineSystemFunction;
 
-var cXSBoolean = require('./../types/simple/atomic/XSBoolean');
-var cXSAnyURI = require('./../types/simple/atomic/XSAnyURI');
-var cXSString = require('./../types/simple/atomic/XSString');
-var cXSQName = require('./../types/simple/atomic/XSQName');
+var cXSBoolean = require('./../types/schema/simple/atomic/XSBoolean');
+var cXSAnyURI = require('./../types/schema/simple/atomic/XSAnyURI');
+var cXSString = require('./../types/schema/simple/atomic/XSString');
+var cXSQName = require('./../types/schema/simple/atomic/XSQName');
 
-var cXTItem = require('./../types/XTItem');
-var cXTNode = require('./../types/XTNode');
+var cXTItem = require('./../types/xpath/XTItem');
+var cXTNode = require('./../types/xpath/XTNode');
 
 var fFunction_sequence_atomize = require('./sequence').atomize;
 
