@@ -1,6 +1,0 @@
-# XPath engine
-../src/.files
-# API implementation
-classes/Evaluator.js
-#
-xpath.js
