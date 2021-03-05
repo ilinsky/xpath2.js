@@ -41,7 +41,7 @@ cXSFloat.cast	= function(vValue) {
 	}
 	if (vValue instanceof cXSBoolean)
 		return new cXSFloat(vValue * 1);
-	if (fXSAnyAtomicType_isNumeric(vValue))
+	if (vValue.primitiveKind == cXSAnySimpleType.PRIMITIVE_DECIMAL || vValue.primitiveKind == cXSAnySimpleType.PRIMITIVE_DOUBLE)
 		return new cXSFloat(vValue.value);
 	//
 	throw new cException("XPTY0004"

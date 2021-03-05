@@ -233,7 +233,7 @@ function fFunction_dateTime_adjustTimezone(oDateTime, oTimezone) {
 	if (oTimezone == null)
 		oValue.timezone	= null;
 	else {
-		var nTimezone	= fOperator_dayTimeDuration_toSeconds(oTimezone) / 60;
+		var nTimezone	= cXSDayTimeDuration.toSeconds(oTimezone) / 60;
 		if (oDateTime.timezone != null) {
 			var nDiff	= nTimezone - oDateTime.timezone;
 			if (oDateTime instanceof cXSDate) {
@@ -245,9 +245,13 @@ function fFunction_dateTime_adjustTimezone(oDateTime, oTimezone) {
 				oValue.hours	+= ~~(nDiff / 60);
 			}
 			//
-			fXSDateTime_normalize(oValue);
+			cXSDateTime.normalize(oValue);
 		}
 		oValue.timezone	= nTimezone;
 	}
 	return oValue;
+};
+
+module.exports = {
+    dateTime_adjustTimezone: fFunction_dateTime_adjustTimezone,
 };

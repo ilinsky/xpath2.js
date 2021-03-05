@@ -28,7 +28,7 @@ cXSGYearMonth.prototype.timezone= null;
 cXSGYearMonth.prototype.toString	= function() {
 	return fXSDateTime_pad(this.year)
 			+ '-' + fXSDateTime_pad(this.month)
-			+ fXSDateTime_getTZComponent(this);
+			+ cXSDateTime.getTZComponent(this);
 };
 
 var rXSGYearMonth	= /^-?([1-9]\d\d\d+|0\d\d\d)-(0[1-9]|1[0-2])(Z|([+\-])(0\d|1[0-4]):([0-5]\d))?$/;

@@ -19,7 +19,7 @@ var cXSDayTimeDuration = require('./../../types/schema/simple/atomic/duration/XS
 
 var cXSUntypedAtomic = require('./../../types/schema/simple/atomic/XSUntypedAtomic');
 
-var fXSAnyAtomicType_isNumeric = require('./../../types/schema/simple/XSAnyAtomicType').isNumeric;
+var fXSAnyAtomicType_isNumeric = require('./../../types/schema/isNumeric');
 
 var fFunction_sequence_atomize = require('./../../functions/sequence').atomize;
 var fFunction_sequence_assertSequenceCardinality = require('./../../functions/sequence').assertSequenceCardinality;

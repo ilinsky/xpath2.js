@@ -13,7 +13,8 @@ var cXSConstants = require('./../../../XSConstants');
 var cXSDuration = require('./../XSDuration');
 var cXSString = require('./../XSString');
 
-var cString = String;
+var cString = global.String;
+var cMath = global.Math;
 
 var fString_trim = function (sValue) {
 	return cString(sValue).trim();
@@ -68,6 +69,20 @@ function fXSDayTimeDuration_normalize(oDuration) {
 		oDuration.hours		%= 24;
 	}
 	return oDuration;
+};
+
+// xs:dayTimeDuration to/from seconds
+cXSDayTimeDuration.toSeconds = function(oDuration) {
+	return (((oDuration.day * 24 + oDuration.hours) * 60 + oDuration.minutes) * 60 + oDuration.seconds) * (oDuration.negative ? -1 : 1);
+};
+
+cXSDayTimeDuration.fromSeconds = function(nValue) {
+	var bNegative	=(nValue = cMath.round(nValue)) < 0,
+		nDays	= ~~((nValue = cMath.abs(nValue)) / 86400),
+		nHours	= ~~((nValue -= nDays * 3600 * 24) / 3600),
+		nMinutes= ~~((nValue -= nHours * 3600) / 60),
+		nSeconds	= nValue -= nMinutes * 60;
+	return new cXSDayTimeDuration(nDays, nHours, nMinutes, nSeconds, bNegative);
 };
 
 //

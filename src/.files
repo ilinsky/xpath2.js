@@ -143,5 +143,4 @@ functions/qname.js
 functions/sequence.js
 functions/string.js
 functions/trace.js
-# Collators
-collators/CodepointStringCollator.js
+

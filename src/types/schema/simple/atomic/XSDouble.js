@@ -14,7 +14,6 @@ var cXSUntypedAtomic = require('./XSUntypedAtomic');
 var cXSBoolean = require('./XSBoolean');
 var cXSString = require('./XSString');
 
-var fXSAnyAtomicType_isNumeric = require('./../XSAnyAtomicType').isNumeric;
 
 function cXSDouble(nValue) {
 	this.value	= nValue;
@@ -46,7 +45,7 @@ cXSDouble.cast	= function(vValue) {
 	}
 	if (vValue instanceof cXSBoolean)
 		return new cXSDouble(vValue * 1);
-	if (fXSAnyAtomicType_isNumeric(vValue))
+	if (vValue.primitiveKind == cXSAnySimpleType.PRIMITIVE_DECIMAL || vValue.primitiveKind == cXSAnySimpleType.PRIMITIVE_FLOAT)
 		return new cXSDouble(vValue.value);
 	//
 	throw new cException("XPTY0004"

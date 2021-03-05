@@ -9,6 +9,12 @@
 
 var cXSConstants = require('./../../../XSConstants');
 var cXSDuration = require('./../XSDuration');
+var cXSString = require('./../XSString');
+
+var cString = String;
+var fString_trim = function (sValue) {
+	return cString(sValue).trim();
+};
 
 function cXSYearMonthDuration(nYear, nMonth, bNegative) {
 	cXSDuration.call(this, nYear, nMonth, 0, 0, 0, 0, bNegative);

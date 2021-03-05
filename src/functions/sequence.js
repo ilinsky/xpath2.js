@@ -14,7 +14,7 @@ var cException = require('./../classes/Exception');
 //var cMultiplicativeExpr = require('./../expressions/arithmetic/MultiplicativeExpr');
 
 var fStaticContext_defineSystemFunction = require('./../classes/StaticContext').defineSystemFunction;
-var fXSAnyAtomicType_isNumeric = require('./../types/schema/simple/XSAnyAtomicType').isNumeric;
+var fXSAnyAtomicType_isNumeric = require('./../types/schema/isNumeric');
 
 var cXSAnyAtomicType = require('./../types/schema/simple/XSAnyAtomicType');
 var cXSUntypedAtomic = require('./../types/schema/simple/atomic/XSUntypedAtomic');

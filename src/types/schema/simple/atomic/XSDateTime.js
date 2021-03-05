@@ -7,9 +7,16 @@
  *
  */
 
+var cException = require('./../../../../classes/Exception');
 var cXSConstants = require('./../../XSConstants');
 var cXSAnySimpleType = require('./../../XSAnySimpleType');
 var cXSAnyAtomicType = require('./../XSAnyAtomicType');
+var cXSUntypedAtomic = require('./XSUntypedAtomic');
+var cXSString = require('./XSString');
+
+var cString = global.String;
+var cArray = global.Array;
+var cMath = global.Math;
 
 function cXSDateTime(nYear, nMonth, nDay, nHours, nMinutes, nSeconds, nTimezone, bNegative) {
 	this.year	= nYear;
@@ -36,10 +43,10 @@ cXSDateTime.prototype.timezone	= null;
 cXSDateTime.prototype.negative	= null;
 
 cXSDateTime.prototype.toString	= function() {
-	return fXSDateTime_getDateComponent(this)
+	return cXSDateTime.getDateComponent(this)
 			+ 'T'
-			+ fXSDateTime_getTimeComponent(this)
-			+ fXSDateTime_getTZComponent(this);
+			+ cXSDateTime.getTimeComponent(this)
+			+ cXSDateTime.getTZComponent(this);
 };
 
 var rXSDateTime		= /^(-?)([1-9]\d\d\d+|0\d\d\d)-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])T(([01]\d|2[0-3]):([0-5]\d):([0-5]\d)(?:\.(\d+))?|(24:00:00)(?:\.(0+))?)(Z|([+\-])(0\d|1[0-4]):([0-5]\d))?$/;
@@ -54,7 +61,7 @@ cXSDateTime.cast	= function(vValue) {
 				nDay	= +aMatch[4],
 				bValue	= !!aMatch[10];
 			if (nDay - 1 < fXSDate_getDaysForYearMonth(nYear, nMonth))
-				return fXSDateTime_normalize(new cXSDateTime( nYear,
+				return cXSDateTime.normalize(new cXSDateTime( nYear,
 										nMonth,
 										nDay,
 										bValue ? 24 : +aMatch[6],
@@ -90,7 +97,7 @@ function fXSDateTime_pad(vValue, nLength) {
 	return (sValue.length < nLength + 1 ? new cArray(nLength + 1 - sValue.length).join('0') : '') + sValue;
 };
 
-function fXSDateTime_getTZComponent(oDateTime) {
+cXSDateTime.getTZComponent = function(oDateTime) {
 	var nTimezone	= oDateTime.timezone;
 	return nTimezone == null
 			? ''
@@ -102,14 +109,14 @@ function fXSDateTime_getTZComponent(oDateTime) {
 				: 'Z';
 };
 
-function fXSDateTime_getDateComponent(oDateTime) {
+cXSDateTime.getDateComponent = function(oDateTime) {
 	return (oDateTime.negative ? '-' : '')
 			+ fXSDateTime_pad(oDateTime.year, 4)
 			+ '-' + fXSDateTime_pad(oDateTime.month)
 			+ '-' + fXSDateTime_pad(oDateTime.day);
 };
 
-function fXSDateTime_getTimeComponent(oDateTime) {
+cXSDateTime.getTimeComponent = function(oDateTime) {
 	var aValue	= cString(oDateTime.seconds).split('.');
 	return fXSDateTime_pad(oDateTime.hours)
 			+ ':' + fXSDateTime_pad(oDateTime.minutes)
@@ -117,7 +124,7 @@ function fXSDateTime_getTimeComponent(oDateTime) {
 			+ (aValue.length > 1 ? '.' + aValue[1] : '');
 };
 
-function fXSDateTime_normalize(oValue) {
+cXSDateTime.normalize = function(oValue) {
 	return fXSDate_normalize(fXSTime_normalize(oValue));
 };
 

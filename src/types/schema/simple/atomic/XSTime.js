@@ -7,12 +7,18 @@
  *
  */
 
+var cException = require('./../../../../classes/Exception');
 var cXSConstants = require('./../../XSConstants');
 var cXSAnySimpleType = require('./../../XSAnySimpleType');
 var cXSAnyAtomicType = require('./../XSAnyAtomicType');
 var cXSUntypedAtomic = require('./XSUntypedAtomic');
 var cXSString = require('./XSString');
 var cXSDateTime = require('./XSDateTime');
+
+var cString = global.String;
+var fString_trim = function (sValue) {
+	return cString(sValue).trim();
+};
 
 function cXSTime(nHours, nMinutes, nSeconds, nTimezone) {
 	this.hours	= nHours;
@@ -31,8 +37,8 @@ cXSTime.prototype.seconds	= null;
 cXSTime.prototype.timezone		= null;
 
 cXSTime.prototype.toString	= function() {
-	return fXSDateTime_getTimeComponent(this)
-			+ fXSDateTime_getTZComponent(this);
+	return cXSDateTime.getTimeComponent(this)
+			+ cXSDateTime.getTZComponent(this);
 };
 
 var rXSTime		= /^(([01]\d|2[0-3]):([0-5]\d):([0-5]\d)(?:\.(\d+))?|(24:00:00)(?:\.(0+))?)(Z|([+\-])(0\d|1[0-4]):([0-5]\d))?$/;

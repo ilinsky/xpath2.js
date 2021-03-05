@@ -19,4 +19,4 @@ oCodepointStringCollator.compare	= function(sValue1, sValue2) {
 	return sValue1 == sValue2 ? 0 : sValue1 > sValue2 ? 1 :-1;
 };
 
-module.export = oCodepointStringCollator;
+module.exports = oCodepointStringCollator;

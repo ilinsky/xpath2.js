@@ -8,7 +8,7 @@
  */
 
 var fFunction_sequence_toEBV = require('../../functions/sequence').toEBV;
-var fXSAnyAtomicType_isNumeric = require('./../../types/schema/simple/XSAnyAtomicType').isNumeric;
+var fXSAnyAtomicType_isNumeric = require('./../../types/schema/isNumeric');
 
 function cStepExpr() {
 

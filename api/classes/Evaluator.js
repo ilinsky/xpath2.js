@@ -17,7 +17,7 @@ var cXSString = require('./../../src/types/schema/simple/atomic/XSString');
 var cXSDouble = require('./../../src/types/schema/simple/atomic/XSDouble');
 var cXSBoolean = require('./../../src/types/schema/simple/atomic/XSBoolean');
 
-var fXSAnyAtomicType_isNumeric = require('./../../src/types/schema/simple/XSAnyAtomicType').isNumeric;
+var fXSAnyAtomicType_isNumeric = require('./../../src/types/schema/isNumeric');
 
 var cString = global.String;
 var fIsNaN = global.isNaN;

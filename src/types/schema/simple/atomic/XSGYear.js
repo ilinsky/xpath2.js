@@ -25,7 +25,7 @@ cXSGYear.prototype.timezone	= null;
 
 cXSGYear.prototype.toString	= function() {
 	return fXSDateTime_pad(this.year)
-			+ fXSDateTime_getTZComponent(this);
+			+ cXSDateTime.getTZComponent(this);
 };
 
 var rXSGYear		= /^-?([1-9]\d\d\d+|0\d\d\d)(Z|([+\-])(0\d|1[0-4]):([0-5]\d))?$/;

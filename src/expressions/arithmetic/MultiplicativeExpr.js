@@ -19,7 +19,7 @@ var cStaticContext = require('./../../classes/StaticContext');
 var cXSUntypedAtomic = require('./../../types/schema/simple/atomic/XSUntypedAtomic');
 var cXSYearMonthDuration = require('./../../types/schema/simple/atomic/duration/XSYearMonthDuration');
 var cXSDayTimeDuration = require('./../../types/schema/simple/atomic/duration/XSDayTimeDuration');
-var fXSAnyAtomicType_isNumeric = require('./../../types/schema/simple/XSAnyAtomicType').isNumeric;
+var fXSAnyAtomicType_isNumeric = require('./../../types/schema/isNumeric');
 
 //
 var hStaticContext_operators = cStaticContext.operators;

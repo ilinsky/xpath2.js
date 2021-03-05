@@ -27,7 +27,7 @@ cXSGDay.prototype.toString	= function() {
 	return '-'
 			+ '-'
 			+ '-' + fXSDateTime_pad(this.day)
-			+ fXSDateTime_getTZComponent(this);
+			+ cXSDateTime.getTZComponent(this);
 };
 
 var rXSGDay		= /^---(0[1-9]|[12]\d|3[01])(Z|([+\-])(0\d|1[0-4]):([0-5]\d))?$/;

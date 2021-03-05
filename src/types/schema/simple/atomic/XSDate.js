@@ -7,12 +7,18 @@
  *
  */
 
+var cException = require('./../../../../classes/Exception');
 var cXSConstants = require('./../../XSConstants');
 var cXSAnySimpleType = require('./../../XSAnySimpleType');
 var cXSAnyAtomicType = require('./../XSAnyAtomicType');
 var cXSUntypedAtomic = require('./../atomic/XSUntypedAtomic');
 var cXSString = require('./../atomic/XSString');
 var cXSDateTime = require('./../atomic/XSDateTime');
+
+var cString = global.String;
+var fString_trim = function (sValue) {
+	return cString(sValue).trim();
+};
 
 function cXSDate(nYear, nMonth, nDay, nTimezone, bNegative) {
 	this.year		= nYear;
@@ -33,8 +39,8 @@ cXSDate.prototype.timezone	= null;
 cXSDate.prototype.negative	= null;
 
 cXSDate.prototype.toString	= function() {
-	return fXSDateTime_getDateComponent(this)
-			+ fXSDateTime_getTZComponent(this);
+	return cXSDateTime.getDateComponent(this)
+			+ cXSDateTime.getTZComponent(this);
 };
 
 var rXSDate		= /^(-?)([1-9]\d\d\d+|0\d\d\d)-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])(Z|([+\-])(0\d|1[0-4]):([0-5]\d))?$/;
@@ -43,6 +49,7 @@ cXSDate.cast	= function(vValue) {
 		return vValue;
 	if (vValue instanceof cXSString || vValue instanceof cXSUntypedAtomic) {
 		var aMatch	= fString_trim(vValue).match(rXSDate);
+		console.log(fString_trim(vValue));
 		if (aMatch) {
 			var nYear	= +aMatch[2],
 				nMonth	= +aMatch[3],

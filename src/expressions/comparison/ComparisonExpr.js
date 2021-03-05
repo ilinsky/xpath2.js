@@ -9,12 +9,16 @@
 
 var cStaticContext = require('./../../classes/StaticContext');
 
-var fXSAnyAtomicType_isNumeric = require('./../../types/schema/simple/XSAnyAtomicType').isNumeric;
+var fXSAnyAtomicType_isNumeric = require('./../../types/schema/isNumeric');
 var fFunction_sequence_atomize = require('../../functions/sequence').atomize;
 
 var cXSBoolean = require('./../../types/schema/simple/atomic/XSBoolean');
+var cXSInteger = require('./../../types/schema/simple/atomic/integer/XSInteger');
 var cXSString = require('./../../types/schema/simple/atomic/XSString');
 var cXSAnyURI = require('./../../types/schema/simple/atomic/XSAnyURI');
+var cXSDateTime = require('./../../types/schema/simple/atomic/XSDateTime');
+var cXSDate = require('./../../types/schema/simple/atomic/XSDate');
+var cXSTime = require('./../../types/schema/simple/atomic/XSTime');
 var cXSUntypedAtomic = require('./../../types/schema/simple/atomic/XSUntypedAtomic');
 var cXSDayTimeDuration = require('./../../types/schema/simple/atomic/duration/XSDayTimeDuration');
 var cXSYearMonthDuration = require('./../../types/schema/simple/atomic/duration/XSYearMonthDuration');

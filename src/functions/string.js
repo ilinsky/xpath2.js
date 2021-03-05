@@ -11,6 +11,10 @@ var cException = require('./../classes/Exception');
 var fStaticContext_defineSystemFunction = require('./../classes/StaticContext').defineSystemFunction;
 var hTypes = require('./../types');
 
+var sNS_XPF = require('./../namespaces').NS_XPF;
+
+var oCodepointStringCollator = require('./../collators/CodepointStringCollator');
+
 //
 var cXSBoolean = hTypes.XSBoolean;
 var cXSString = hTypes.XSString;

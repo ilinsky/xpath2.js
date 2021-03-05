@@ -13,10 +13,9 @@ var cXSConstants = require('./../../XSConstants');
 var cXSUntypedAtomic = require('./../atomic/XSUntypedAtomic');
 var cXSAnySimpleType = require('./../../XSAnySimpleType');
 var cXSAnyAtomicType = require('./../XSAnyAtomicType');
-var cXSString = require('./../atomic/XSString');
-var cXSBoolean = require('./../atomic/XSBoolean');
 
 var fIsNaN = global.isNaN;
+var fIsFinite = global.isFinite;
 
 function cXSDecimal(nValue) {
 	this.value	= nValue;
@@ -48,7 +47,7 @@ cXSDecimal.cast	= function(vValue) {
 	}
 	if (vValue instanceof cXSBoolean)
 		return new cXSDecimal(vValue * 1);
-	if (fXSAnyAtomicType_isNumeric(vValue)) {
+	if (vValue.primitiveKind == cXSAnySimpleType.PRIMITIVE_FLOAT || vValue.primitiveKind == cXSAnySimpleType.PRIMITIVE_DOUBLE) {
 		if (!fIsNaN(vValue) && fIsFinite(vValue))
 			return new cXSDecimal(+vValue);
 		throw new cException("FOCA0002"

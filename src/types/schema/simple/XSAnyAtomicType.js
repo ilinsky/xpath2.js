@@ -9,9 +9,6 @@
 
 var cXSConstants = require('./../XSConstants');
 var cXSAnySimpleType = require('./../XSAnySimpleType');
-// var cXSDecimal = require('./atomic/XSDecimal');
-// var cXSDouble = require('./atomic/XSDouble');
-// var cXSFloat = require('./atomic/XSFloat');
 
 function cXSAnyAtomicType() {
 
@@ -27,12 +24,6 @@ cXSAnyAtomicType.cast	= function(vValue) {
 //<-Debug
 	);	//  {http://www.w3.org/2001/XMLSchema}anyAtomicType
 };
-
-cXSAnyAtomicType.isNumeric = function(vItem) {
-	return true;//return vItem instanceof cXSFloat || vItem instanceof cXSDouble || vItem instanceof cXSDecimal;
-};
-
-// FIXME: move
 
 //
 module.exports = cXSAnyAtomicType;

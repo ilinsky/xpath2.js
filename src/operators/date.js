@@ -7,6 +7,8 @@
  *
  */
 
+var fFunction_dateTime_adjustTimezone = require('./../functions/date').dateTime_adjustTimezone;
+
 var fStaticContext_defineSystemOperator = require('./../classes/StaticContext').defineSystemOperator;
 var hTypes = require('./../types');
  
@@ -19,6 +21,7 @@ var cXSDayTimeDuration = hTypes.XSDayTimeDuration;
 var cXSYearMonthDuration = hTypes.XSYearMonthDuration;
 
 var cDate = global.Date;
+var cMath = global.Math;
 
 /*
 	10.4 Comparison Operators on Duration, Date and Time Values
@@ -85,19 +88,19 @@ fStaticContext_defineSystemOperator("yearMonthDuration-greater-than", function(o
 
 // op:dayTimeDuration-less-than($arg1 as dayTimeDuration, $arg2 as dayTimeDuration) as xs:boolean
 fStaticContext_defineSystemOperator("dayTimeDuration-less-than", function(oLeft, oRight) {
-	return new cXSBoolean(fOperator_dayTimeDuration_toSeconds(oLeft) < fOperator_dayTimeDuration_toSeconds(oRight));
+	return new cXSBoolean(cXSDayTimeDuration.toSeconds(oLeft) < cXSDayTimeDuration.toSeconds(oRight));
 });
 
 // op:dayTimeDuration-greater-than($arg1 as dayTimeDuration, $arg2 as dayTimeDuration) as xs:boolean
 fStaticContext_defineSystemOperator("dayTimeDuration-greater-than", function(oLeft, oRight) {
-	return new cXSBoolean(fOperator_dayTimeDuration_toSeconds(oLeft) > fOperator_dayTimeDuration_toSeconds(oRight));
+	return new cXSBoolean(cXSDayTimeDuration.toSeconds(oLeft) > cXSDayTimeDuration.toSeconds(oRight));
 });
 
 // op:duration-equal($arg1 as xs:duration, $arg2 as xs:duration) as xs:boolean
 fStaticContext_defineSystemOperator("duration-equal", function(oLeft, oRight) {
 	return new cXSBoolean(oLeft.negative == oRight.negative
 			&& fOperator_yearMonthDuration_toMonths(oLeft) == fOperator_yearMonthDuration_toMonths(oRight)
-			&& fOperator_dayTimeDuration_toSeconds(oLeft) == fOperator_dayTimeDuration_toSeconds(oRight));
+			&& cXSDayTimeDuration.toSeconds(oLeft) == cXSDayTimeDuration.toSeconds(oRight));
 });
 
 // op:dateTime-equal($arg1 as xs:dateTime, $arg2 as xs:dateTime) as xs:boolean
@@ -218,43 +221,43 @@ fStaticContext_defineSystemOperator("divide-yearMonthDuration-by-yearMonthDurati
 
 // op:add-dayTimeDurations($arg1 as xs:dayTimeDuration, $arg2 as xs:dayTimeDuration) as xs:dayTimeDuration
 fStaticContext_defineSystemOperator("add-dayTimeDurations", function(oLeft, oRight) {
-	return fOperator_dayTimeDuration_fromSeconds(fOperator_dayTimeDuration_toSeconds(oLeft) + fOperator_dayTimeDuration_toSeconds(oRight));
+	return cXSDayTimeDuration.fromSeconds(cXSDayTimeDuration.toSeconds(oLeft) + cXSDayTimeDuration.toSeconds(oRight));
 });
 
 // op:subtract-dayTimeDurations($arg1 as xs:dayTimeDuration, $arg2 as xs:dayTimeDuration) as xs:dayTimeDuration
 fStaticContext_defineSystemOperator("subtract-dayTimeDurations", function(oLeft, oRight) {
-	return fOperator_dayTimeDuration_fromSeconds(fOperator_dayTimeDuration_toSeconds(oLeft) - fOperator_dayTimeDuration_toSeconds(oRight));
+	return cXSDayTimeDuration.fromSeconds(cXSDayTimeDuration.toSeconds(oLeft) - cXSDayTimeDuration.toSeconds(oRight));
 });
 
 // op:multiply-dayTimeDurations($arg1 as xs:dayTimeDuration, $arg2 as xs:double) as xs:dayTimeDuration
 fStaticContext_defineSystemOperator("multiply-dayTimeDuration", function(oLeft, oRight) {
-	return fOperator_dayTimeDuration_fromSeconds(fOperator_dayTimeDuration_toSeconds(oLeft) * oRight);
+	return cXSDayTimeDuration.fromSeconds(cXSDayTimeDuration.toSeconds(oLeft) * oRight);
 });
 
 // op:divide-dayTimeDurations($arg1 as xs:dayTimeDuration, $arg2 as xs:double) as xs:dayTimeDuration
 fStaticContext_defineSystemOperator("divide-dayTimeDuration", function(oLeft, oRight) {
-	return fOperator_dayTimeDuration_fromSeconds(fOperator_dayTimeDuration_toSeconds(oLeft) / oRight);
+	return cXSDayTimeDuration.fromSeconds(cXSDayTimeDuration.toSeconds(oLeft) / oRight);
 });
 
 // op:divide-dayTimeDuration-by-dayTimeDuration($arg1 as xs:dayTimeDuration, $arg2 as xs:dayTimeDuration) as xs:decimal
 fStaticContext_defineSystemOperator("divide-dayTimeDuration-by-dayTimeDuration", function(oLeft, oRight) {
-	return new cXSDecimal(fOperator_dayTimeDuration_toSeconds(oLeft) / fOperator_dayTimeDuration_toSeconds(oRight));
+	return new cXSDecimal(cXSDayTimeDuration.toSeconds(oLeft) / cXSDayTimeDuration.toSeconds(oRight));
 });
 
 // 10.8 Arithmetic Operators on Durations, Dates and Times
 // op:subtract-dateTimes($arg1 as xs:dateTime, $arg2 as xs:dateTime) as xs:dayTimeDuration
 fStaticContext_defineSystemOperator("subtract-dateTimes", function(oLeft, oRight) {
-	return fOperator_dayTimeDuration_fromSeconds(fOperator_dateTime_toSeconds(oLeft) - fOperator_dateTime_toSeconds(oRight));
+	return cXSDayTimeDuration.fromSeconds(fOperator_dateTime_toSeconds(oLeft) - fOperator_dateTime_toSeconds(oRight));
 });
 
 // op:subtract-dates($arg1 as xs:date, $arg2 as xs:date) as xs:dayTimeDuration
 fStaticContext_defineSystemOperator("subtract-dates", function(oLeft, oRight) {
-	return fOperator_dayTimeDuration_fromSeconds(fOperator_dateTime_toSeconds(oLeft) - fOperator_dateTime_toSeconds(oRight));
+	return cXSDayTimeDuration.fromSeconds(fOperator_dateTime_toSeconds(oLeft) - fOperator_dateTime_toSeconds(oRight));
 });
 
 // op:subtract-times($arg1 as xs:time, $arg2 as xs:time) as xs:dayTimeDuration
 fStaticContext_defineSystemOperator("subtract-times", function(oLeft, oRight) {
-	return fOperator_dayTimeDuration_fromSeconds(fOperator_time_toSeconds(oLeft) - fOperator_time_toSeconds(oRight));
+	return cXSDayTimeDuration.fromSeconds(fOperator_time_toSeconds(oLeft) - fOperator_time_toSeconds(oRight));
 });
 
 // op:add-yearMonthDuration-to-dateTime($arg1 as xs:dateTime, $arg2 as xs:yearMonthDuration) as xs:dateTime
@@ -372,23 +375,9 @@ function fOperator_addDayTimeDuration2DateTime(oLeft, oRight, sOperator) {
 		oValue.hours	= oValue.hours + oRight.hours * (sOperator == '-' ?-1 : 1);
 		oValue.day		= oValue.day + oRight.day * (sOperator == '-' ?-1 : 1);
 		//
-		fXSDateTime_normalize(oValue);
+		cXSDateTime.normalize(oValue);
 	}
 	return oValue;
-};
-
-// xs:dayTimeDuration to/from seconds
-function fOperator_dayTimeDuration_toSeconds(oDuration) {
-	return (((oDuration.day * 24 + oDuration.hours) * 60 + oDuration.minutes) * 60 + oDuration.seconds) * (oDuration.negative ? -1 : 1);
-};
-
-function fOperator_dayTimeDuration_fromSeconds(nValue) {
-	var bNegative	=(nValue = cMath.round(nValue)) < 0,
-		nDays	= ~~((nValue = cMath.abs(nValue)) / 86400),
-		nHours	= ~~((nValue -= nDays * 3600 * 24) / 3600),
-		nMinutes= ~~((nValue -= nHours * 3600) / 60),
-		nSeconds	= nValue -= nMinutes * 60;
-	return new cXSDayTimeDuration(nDays, nHours, nMinutes, nSeconds, bNegative);
 };
 
 // xs:yearMonthDuration to/from months
