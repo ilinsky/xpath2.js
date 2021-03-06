@@ -68,26 +68,4 @@ cXSTime.cast	= function(vValue) {
 };
 
 //
-function fXSTime_normalize(oValue) {
-	//
-	if (oValue.seconds >= 60 || oValue.seconds < 0) {
-		oValue.minutes	+= ~~(oValue.seconds / 60) - (oValue.seconds < 0 && oValue.seconds % 60 ? 1 : 0);
-		oValue.seconds	= oValue.seconds % 60 + (oValue.seconds < 0 && oValue.seconds % 60 ? 60 : 0);
-	}
-	//
-	if (oValue.minutes >= 60 || oValue.minutes < 0) {
-		oValue.hours	+= ~~(oValue.minutes / 60) - (oValue.minutes < 0 && oValue.minutes % 60 ? 1 : 0);
-		oValue.minutes	= oValue.minutes % 60 + (oValue.minutes < 0 && oValue.minutes % 60 ? 60 : 0);
-	}
-	//
-	if (oValue.hours >= 24 || oValue.hours < 0) {
-		if (oValue instanceof cXSDateTime)
-			oValue.day	+= ~~(oValue.hours / 24) - (oValue.hours < 0 && oValue.hours % 24 ? 1 : 0);
-		oValue.hours	= oValue.hours % 24 + (oValue.hours < 0 && oValue.hours % 24 ? 24 : 0);
-	}
-	//
-	return oValue;
-};
-
-//
 module.exports = cXSTime;

@@ -25,7 +25,7 @@ cXSGMonth.prototype.timezone	= null;
 
 cXSGMonth.prototype.toString	= function() {
 	return '-'
-			+ '-' + fXSDateTime_pad(this.month)
+			+ '-' + cXSDateTime.pad(this.month)
 			+ cXSDateTime.getTZComponent(this);
 };
 

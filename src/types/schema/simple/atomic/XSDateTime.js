@@ -60,7 +60,7 @@ cXSDateTime.cast	= function(vValue) {
 				nMonth	= +aMatch[3],
 				nDay	= +aMatch[4],
 				bValue	= !!aMatch[10];
-			if (nDay - 1 < fXSDate_getDaysForYearMonth(nYear, nMonth))
+			if (nDay - 1 < cXSDateTime.getDaysForYearMonth(nYear, nMonth))
 				return cXSDateTime.normalize(new cXSDateTime( nYear,
 										nMonth,
 										nDay,
@@ -79,7 +79,7 @@ cXSDateTime.cast	= function(vValue) {
 		}
 		throw new cException("FORG0001");
 	}
-	if (vValue instanceof cXSDate)
+	if (vValue.primitiveKind == cXSAnySimpleType.PRIMITIVE_DATE)
 		return new cXSDateTime(vValue.year, vValue.month, vValue.day, 0, 0, 0, vValue.timezone, vValue.negative);
 	//
 	throw new cException("XPTY0004"
@@ -90,11 +90,17 @@ cXSDateTime.cast	= function(vValue) {
 };
 
 // Utilities
-function fXSDateTime_pad(vValue, nLength) {
+cXSDateTime.pad = function(vValue, nLength) {
 	var sValue	= cString(vValue);
 	if (arguments.length < 2)
 		nLength	= 2;
 	return (sValue.length < nLength + 1 ? new cArray(nLength + 1 - sValue.length).join('0') : '') + sValue;
+};
+
+// Utilities
+var aXSDate_days	= [31,28,31,30,31,30,31,31,30,31,30,31];
+cXSDateTime.getDaysForYearMonth = function(nYear, nMonth) {
+	return nMonth == 2 && (nYear % 400 == 0 || nYear % 100 != 0 && nYear % 4 == 0) ? 29 : aXSDate_days[nMonth - 1];
 };
 
 cXSDateTime.getTZComponent = function(oDateTime) {
@@ -103,29 +109,102 @@ cXSDateTime.getTZComponent = function(oDateTime) {
 			? ''
 			: nTimezone
 				? (nTimezone > 0 ? '+' : '-')
-					+ fXSDateTime_pad(cMath.abs(~~(nTimezone / 60)))
+					+ cXSDateTime.pad(cMath.abs(~~(nTimezone / 60)))
 					+ ':'
-					+ fXSDateTime_pad(cMath.abs(nTimezone % 60))
+					+ cXSDateTime.pad(cMath.abs(nTimezone % 60))
 				: 'Z';
 };
 
 cXSDateTime.getDateComponent = function(oDateTime) {
 	return (oDateTime.negative ? '-' : '')
-			+ fXSDateTime_pad(oDateTime.year, 4)
-			+ '-' + fXSDateTime_pad(oDateTime.month)
-			+ '-' + fXSDateTime_pad(oDateTime.day);
+			+ cXSDateTime.pad(oDateTime.year, 4)
+			+ '-' + cXSDateTime.pad(oDateTime.month)
+			+ '-' + cXSDateTime.pad(oDateTime.day);
 };
 
 cXSDateTime.getTimeComponent = function(oDateTime) {
 	var aValue	= cString(oDateTime.seconds).split('.');
-	return fXSDateTime_pad(oDateTime.hours)
-			+ ':' + fXSDateTime_pad(oDateTime.minutes)
-			+ ':' + fXSDateTime_pad(aValue[0])
+	return cXSDateTime.pad(oDateTime.hours)
+			+ ':' + cXSDateTime.pad(oDateTime.minutes)
+			+ ':' + cXSDateTime.pad(aValue[0])
 			+ (aValue.length > 1 ? '.' + aValue[1] : '');
 };
 
+cXSDateTime.normalizeDate = function(oValue, bDay) {
+	// Adjust day for month/year
+	if (!bDay) {
+		var nDay	= cXSDateTime.getDaysForYearMonth(oValue.year, oValue.month);
+		if (oValue.day > nDay) {
+			while (oValue.day > nDay) {
+				oValue.month	+= 1;
+				if (oValue.month > 12) {
+					oValue.year		+= 1;
+					if (oValue.year == 0)
+						oValue.year	= 1;
+					oValue.month	= 1;
+				}
+				oValue.day	-= nDay;
+				nDay = cXSDateTime.getDaysForYearMonth(oValue.year, oValue.month);
+			}
+		}
+		else
+		if (oValue.day < 1) {
+			while (oValue.day < 1) {
+				oValue.month	-= 1;
+				if (oValue.month < 1) {
+					oValue.year		-= 1;
+					if (oValue.year == 0)
+						oValue.year	=-1;
+					oValue.month	= 12;
+				}
+				nDay = cXSDateTime.getDaysForYearMonth(oValue.year, oValue.month);
+				oValue.day	+= nDay;
+			}
+		}
+	}
+//?	else
+	// Adjust month
+	if (oValue.month > 12) {
+		oValue.year		+= ~~(oValue.month / 12);
+		if (oValue.year == 0)
+			oValue.year	= 1;
+		oValue.month	= oValue.month % 12;
+	}
+	else
+	if (oValue.month < 1) {
+		oValue.year		+= ~~(oValue.month / 12) - 1;
+		if (oValue.year == 0)
+			oValue.year	=-1;
+		oValue.month	= oValue.month % 12 + 12;
+	}
+
+	return oValue;
+};
+
+//
+cXSDateTime.normalizeTime = function(oValue) {
+	//
+	if (oValue.seconds >= 60 || oValue.seconds < 0) {
+		oValue.minutes	+= ~~(oValue.seconds / 60) - (oValue.seconds < 0 && oValue.seconds % 60 ? 1 : 0);
+		oValue.seconds	= oValue.seconds % 60 + (oValue.seconds < 0 && oValue.seconds % 60 ? 60 : 0);
+	}
+	//
+	if (oValue.minutes >= 60 || oValue.minutes < 0) {
+		oValue.hours	+= ~~(oValue.minutes / 60) - (oValue.minutes < 0 && oValue.minutes % 60 ? 1 : 0);
+		oValue.minutes	= oValue.minutes % 60 + (oValue.minutes < 0 && oValue.minutes % 60 ? 60 : 0);
+	}
+	//
+	if (oValue.hours >= 24 || oValue.hours < 0) {
+		if (oValue instanceof cXSDateTime)
+			oValue.day	+= ~~(oValue.hours / 24) - (oValue.hours < 0 && oValue.hours % 24 ? 1 : 0);
+		oValue.hours	= oValue.hours % 24 + (oValue.hours < 0 && oValue.hours % 24 ? 24 : 0);
+	}
+	//
+	return oValue;
+};
+
 cXSDateTime.normalize = function(oValue) {
-	return fXSDate_normalize(fXSTime_normalize(oValue));
+	return cXSDateTime.normalizeDate(cXSDateTime.normalizeTime(oValue));
 };
 
 //

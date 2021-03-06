@@ -27,8 +27,8 @@ cXSGMonthDay.prototype.timezone	= null;
 
 cXSGMonthDay.prototype.toString	= function() {
 	return '-'
-			+ '-' + fXSDateTime_pad(this.month)
-			+ '-' + fXSDateTime_pad(this.day)
+			+ '-' + cXSDateTime.pad(this.month)
+			+ '-' + cXSDateTime.pad(this.day)
 			+ cXSDateTime.getTZComponent(this);
 };
 
@@ -41,7 +41,7 @@ cXSGMonthDay.cast	= function(vValue) {
 		if (aMatch) {
 			var nMonth	= +aMatch[1],
 				nDay	= +aMatch[2];
-			if (nDay - 1 < fXSDate_getDaysForYearMonth(1976, nMonth))
+			if (nDay - 1 < cXSDateTime.getDaysForYearMonth(1976, nMonth))
 				return new cXSGMonthDay(	nMonth,
 											nDay,
 											aMatch[3] ? aMatch[3] == 'Z' ? 0 : (aMatch[4] == '-' ? -1 : 1) * (aMatch[5] * 60 + aMatch[6] * 1) : null

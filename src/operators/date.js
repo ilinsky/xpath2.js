@@ -151,8 +151,8 @@ fStaticContext_defineSystemOperator("time-greater-than", function(oLeft, oRight)
 // op:gYearMonth-equal($arg1 as xs:gYearMonth, $arg2 as xs:gYearMonth) as xs:boolean
 fStaticContext_defineSystemOperator("gYearMonth-equal", function(oLeft, oRight) {
 	return fOperator_compareDateTimes(
-			new cXSDateTime(oLeft.year, oLeft.month, fXSDate_getDaysForYearMonth(oLeft.year, oLeft.month), 0, 0, 0, oLeft.timezone == null ? this.timezone : oLeft.timezone),
-			new cXSDateTime(oRight.year, oRight.month, fXSDate_getDaysForYearMonth(oRight.year, oRight.month), 0, 0, 0, oRight.timezone == null ? this.timezone : oRight.timezone),
+			new cXSDateTime(oLeft.year, oLeft.month, cXSDateTime.getDaysForYearMonth(oLeft.year, oLeft.month), 0, 0, 0, oLeft.timezone == null ? this.timezone : oLeft.timezone),
+			new cXSDateTime(oRight.year, oRight.month, cXSDateTime.getDaysForYearMonth(oRight.year, oRight.month), 0, 0, 0, oRight.timezone == null ? this.timezone : oRight.timezone),
 			'eq'
 	);
 });
@@ -178,8 +178,8 @@ fStaticContext_defineSystemOperator("gMonthDay-equal", function(oLeft, oRight) {
 // op:gMonth-equal($arg1 as xs:gMonth, $arg2 as xs:gMonth) as xs:boolean
 fStaticContext_defineSystemOperator("gMonth-equal", function(oLeft, oRight) {
 	return fOperator_compareDateTimes(
-			new cXSDateTime(1972, oLeft.month, fXSDate_getDaysForYearMonth(1972, oRight.month), 0, 0, 0, oLeft.timezone == null ? this.timezone : oLeft.timezone),
-			new cXSDateTime(1972, oRight.month, fXSDate_getDaysForYearMonth(1972, oRight.month), 0, 0, 0, oRight.timezone == null ? this.timezone : oRight.timezone),
+			new cXSDateTime(1972, oLeft.month, cXSDateTime.getDaysForYearMonth(1972, oRight.month), 0, 0, 0, oLeft.timezone == null ? this.timezone : oLeft.timezone),
+			new cXSDateTime(1972, oRight.month, cXSDateTime.getDaysForYearMonth(1972, oRight.month), 0, 0, 0, oRight.timezone == null ? this.timezone : oRight.timezone),
 			'eq'
 	);
 });
@@ -307,7 +307,7 @@ fStaticContext_defineSystemOperator("add-dayTimeDuration-to-time", function(oLef
 	oValue.minutes	+= oRight.minutes;
 	oValue.seconds	+= oRight.seconds;
 	//
-	return fXSTime_normalize(oValue);
+	return cXSDateTime.normalizeTime(oValue);
 });
 
 // op:subtract-dayTimeDuration-from-time($arg1 as xs:time, $arg2  as xs:dayTimeDuration) as xs:time
@@ -317,7 +317,7 @@ fStaticContext_defineSystemOperator("subtract-dayTimeDuration-from-time", functi
 	oValue.minutes	-= oRight.minutes;
 	oValue.seconds	-= oRight.seconds;
 	//
-	return fXSTime_normalize(oValue);
+	return cXSDateTime.normalizeTime(oValue);
 });
 
 function fOperator_compareTimes(oLeft, oRight, sComparator) {
@@ -349,9 +349,9 @@ function fOperator_addYearMonthDuration2DateTime(oLeft, oRight, sOperator) {
 	oValue.year		= oValue.year + oRight.year * (sOperator == '-' ?-1 : 1);
 	oValue.month	= oValue.month + oRight.month * (sOperator == '-' ?-1 : 1);
 	//
-	fXSDate_normalize(oValue, true);
+	cXSDateTime.normalizeDate(oValue, true);
 	// Correct day if out of month range
-	var nDay	= fXSDate_getDaysForYearMonth(oValue.year, oValue.month);
+	var nDay	= cXSDateTime.getDaysForYearMonth(oValue.year, oValue.month);
 	if (oValue.day > nDay)
 		oValue.day	= nDay;
 	//
@@ -365,7 +365,7 @@ function fOperator_addDayTimeDuration2DateTime(oLeft, oRight, sOperator) {
 		oValue	= new cXSDate(oLeft.year, oLeft.month, oLeft.day, oLeft.timezone, oLeft.negative);
 		oValue.day	= oValue.day + oRight.day * (sOperator == '-' ?-1 : 1) - 1 * (nValue && sOperator == '-');
 		//
-		fXSDate_normalize(oValue);
+		cXSDateTime.normalizeDate(oValue);
 	}
 	else
 	if (oLeft instanceof cXSDateTime) {

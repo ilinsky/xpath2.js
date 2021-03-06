@@ -24,7 +24,7 @@ cXSGYear.prototype.year		= null;
 cXSGYear.prototype.timezone	= null;
 
 cXSGYear.prototype.toString	= function() {
-	return fXSDateTime_pad(this.year)
+	return cXSDateTime.pad(this.year)
 			+ cXSDateTime.getTZComponent(this);
 };
 

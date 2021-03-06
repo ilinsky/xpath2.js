@@ -26,7 +26,7 @@ cXSGDay.prototype.timezone	= null;
 cXSGDay.prototype.toString	= function() {
 	return '-'
 			+ '-'
-			+ '-' + fXSDateTime_pad(this.day)
+			+ '-' + cXSDateTime.pad(this.day)
 			+ cXSDateTime.getTZComponent(this);
 };
 

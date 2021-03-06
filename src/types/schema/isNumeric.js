@@ -1,9 +1,7 @@
-var cXSDecimal = require('./simple/atomic/XSDecimal');
-var cXSDouble = require('./simple/atomic/XSDouble');
-var cXSFloat = require('./simple/atomic/XSFloat');
+var cXSAnySimpleType = require('./XSAnySimpleType');
 
 function isNumeric(vItem) {
-	return vItem instanceof cXSFloat || vItem instanceof cXSDouble || vItem instanceof cXSDecimal;
+	return vItem.primitiveKind == cXSAnySimpleType.PRIMITIVE_FLOAT || vItem.primitiveKind == cXSAnySimpleType.PRIMITIVE_DOUBLE || vItem.primitiveKind == cXSAnySimpleType.PRIMITIVE_DECIMAL;
 };
 
 module.exports = isNumeric;
