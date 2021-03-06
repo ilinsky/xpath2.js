@@ -8,7 +8,7 @@
  */
 
 var fFunction_sequence_toEBV = require('../../functions/sequence').toEBV;
-var fXSAnyAtomicType_isNumeric = require('./../../types/schema/isNumeric');
+var cXSAnyAtomicType = require('./../../types/schema/simple/XSAnyAtomicType');
 
 function cStepExpr() {
 
@@ -33,7 +33,7 @@ cStepExpr.prototype.applyPredicates	= function(oSequence, oContext) {
 			//
 			oSequence2	= this.predicates[nPredicateIndex].evaluate(oContext);
 			//
-			if (oSequence2.length == 1 && fXSAnyAtomicType_isNumeric(oSequence2[0])) {
+			if (oSequence2.length == 1 && cXSAnyAtomicType.isNumeric(oSequence2[0])) {
 				if (oSequence2[0].valueOf() == nIndex + 1)
 					oSequence.push(oSequence1[nIndex]);
 			}

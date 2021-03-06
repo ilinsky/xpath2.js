@@ -19,7 +19,7 @@ var cXSDayTimeDuration = require('./../../types/schema/simple/atomic/duration/XS
 
 var cXSUntypedAtomic = require('./../../types/schema/simple/atomic/XSUntypedAtomic');
 
-var fXSAnyAtomicType_isNumeric = require('./../../types/schema/isNumeric');
+var cXSAnyAtomicType = require('./../../types/schema/simple/XSAnyAtomicType');
 
 var fFunction_sequence_atomize = require('./../../functions/sequence').atomize;
 var fFunction_sequence_assertSequenceCardinality = require('./../../functions/sequence').assertSequenceCardinality;
@@ -41,8 +41,8 @@ cAdditiveExpr.operators['+']	= function(oLeft, oRight, oContext) {
 	var sOperator	= '',
 		bReverse	= false;
 
-	if (fXSAnyAtomicType_isNumeric(oLeft)) {
-		if (fXSAnyAtomicType_isNumeric(oRight))
+	if (cXSAnyAtomicType.isNumeric(oLeft)) {
+		if (cXSAnyAtomicType.isNumeric(oRight))
 			sOperator	= "numeric-add";
 	}
 	else
@@ -116,8 +116,8 @@ cAdditiveExpr.operators['+']	= function(oLeft, oRight, oContext) {
 cAdditiveExpr.operators['-']	= function (oLeft, oRight, oContext) {
 	var sOperator	= '';
 
-	if (fXSAnyAtomicType_isNumeric(oLeft)) {
-		if (fXSAnyAtomicType_isNumeric(oRight))
+	if (cXSAnyAtomicType.isNumeric(oLeft)) {
+		if (cXSAnyAtomicType.isNumeric(oRight))
 			sOperator	= "numeric-subtract";
 	}
 	else

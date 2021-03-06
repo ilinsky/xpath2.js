@@ -9,7 +9,7 @@
 
 var cStaticContext = require('./../../classes/StaticContext');
 
-var fXSAnyAtomicType_isNumeric = require('./../../types/schema/isNumeric');
+var cXSAnyAtomicType = require('./../../types/schema/simple/XSAnyAtomicType');
 var fFunction_sequence_atomize = require('../../functions/sequence').atomize;
 
 var cXSBoolean = require('./../../types/schema/simple/atomic/XSBoolean');
@@ -166,8 +166,8 @@ var hComparisonExpr_ValueComp_operators	= {};
 hComparisonExpr_ValueComp_operators['eq']	= function(oLeft, oRight, oContext) {
 	var sOperator	= '';
 
-	if (fXSAnyAtomicType_isNumeric(oLeft)) {
-		if (fXSAnyAtomicType_isNumeric(oRight))
+	if (cXSAnyAtomicType.isNumeric(oLeft)) {
+		if (cXSAnyAtomicType.isNumeric(oRight))
 			sOperator	= "numeric-equal";
 	}
 	else
@@ -263,8 +263,8 @@ hComparisonExpr_ValueComp_operators['ne']	= function(oLeft, oRight, oContext) {
 hComparisonExpr_ValueComp_operators['gt']	= function(oLeft, oRight, oContext) {
 	var sOperator	= '';
 
-	if (fXSAnyAtomicType_isNumeric(oLeft)) {
-		if (fXSAnyAtomicType_isNumeric(oRight))
+	if (cXSAnyAtomicType.isNumeric(oLeft)) {
+		if (cXSAnyAtomicType.isNumeric(oRight))
 			sOperator	= "numeric-greater-than";
 	}
 	else
@@ -317,8 +317,8 @@ hComparisonExpr_ValueComp_operators['gt']	= function(oLeft, oRight, oContext) {
 hComparisonExpr_ValueComp_operators['lt']	= function(oLeft, oRight, oContext) {
 	var sOperator	= '';
 
-	if (fXSAnyAtomicType_isNumeric(oLeft)) {
-		if (fXSAnyAtomicType_isNumeric(oRight))
+	if (cXSAnyAtomicType.isNumeric(oLeft)) {
+		if (cXSAnyAtomicType.isNumeric(oRight))
 			sOperator	= "numeric-less-than";
 	}
 	else
@@ -371,8 +371,8 @@ hComparisonExpr_ValueComp_operators['lt']	= function(oLeft, oRight, oContext) {
 hComparisonExpr_ValueComp_operators['ge']	= function(oLeft, oRight, oContext) {
 	var sOperator	= '';
 
-	if (fXSAnyAtomicType_isNumeric(oLeft)) {
-		if (fXSAnyAtomicType_isNumeric(oRight))
+	if (cXSAnyAtomicType.isNumeric(oLeft)) {
+		if (cXSAnyAtomicType.isNumeric(oRight))
 			sOperator	= "numeric-less-than";
 	}
 	else
@@ -425,8 +425,8 @@ hComparisonExpr_ValueComp_operators['ge']	= function(oLeft, oRight, oContext) {
 hComparisonExpr_ValueComp_operators['le']	= function(oLeft, oRight, oContext) {
 	var sOperator	= '';
 
-	if (fXSAnyAtomicType_isNumeric(oLeft)) {
-		if (fXSAnyAtomicType_isNumeric(oRight))
+	if (cXSAnyAtomicType.isNumeric(oLeft)) {
+		if (cXSAnyAtomicType.isNumeric(oRight))
 			sOperator	= "numeric-greater-than";
 	}
 	else

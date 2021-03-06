@@ -31,7 +31,7 @@ cXSInteger.cast	= function(vValue) {
 	}
 	if (vValue instanceof cXSBoolean)
 		return new cXSInteger(vValue * 1);
-	if (fXSAnyAtomicType_isNumeric(vValue)) {
+	if (cXSAnyAtomicType.isNumeric(vValue)) {
 		if (!fIsNaN(vValue) && fIsFinite(vValue))
 			return new cXSInteger(+vValue);
 		throw new cException("FOCA0002"

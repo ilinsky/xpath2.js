@@ -14,7 +14,6 @@ var cException = require('./../classes/Exception');
 //var cMultiplicativeExpr = require('./../expressions/arithmetic/MultiplicativeExpr');
 
 var fStaticContext_defineSystemFunction = require('./../classes/StaticContext').defineSystemFunction;
-var fXSAnyAtomicType_isNumeric = require('./../types/schema/isNumeric');
 
 var cXSAnyAtomicType = require('./../types/schema/simple/XSAnyAtomicType');
 var cXSUntypedAtomic = require('./../types/schema/simple/atomic/XSUntypedAtomic');
@@ -449,7 +448,7 @@ function fFunction_sequence_toEBV(oSequence1, oContext) {
 			return oItem.value.valueOf();
 		if (oItem instanceof cXSString)
 			return !!oItem.valueOf().length;
-		if (fXSAnyAtomicType_isNumeric(oItem))
+		if (cXSAnyAtomicType.isNumeric(oItem))
 			return !(fIsNaN(oItem.valueOf()) || oItem.valueOf() == 0);
 
 		throw new cException("FORG0006"
@@ -567,7 +566,7 @@ function fFunction_sequence_assertSequenceItemType(oSequence, oContext, cItemTyp
 				}
 				else
 				if (cItemType == cXSDouble/* || cItemType.prototype instanceof cXSDouble*/) {
-					if (fXSAnyAtomicType_isNumeric(vItem))
+					if (cXSAnyAtomicType.isNumeric(vItem))
 						vItem	= cItemType.cast(vItem);
 				}
 			}

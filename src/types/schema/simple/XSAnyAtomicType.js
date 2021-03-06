@@ -25,5 +25,9 @@ cXSAnyAtomicType.cast	= function(vValue) {
 	);	//  {http://www.w3.org/2001/XMLSchema}anyAtomicType
 };
 
+cXSAnyAtomicType.isNumeric = function(vItem) {
+	return vItem.primitiveKind == cXSAnySimpleType.PRIMITIVE_FLOAT || vItem.primitiveKind == cXSAnySimpleType.PRIMITIVE_DOUBLE || vItem.primitiveKind == cXSAnySimpleType.PRIMITIVE_DECIMAL;
+};
+
 //
 module.exports = cXSAnyAtomicType;

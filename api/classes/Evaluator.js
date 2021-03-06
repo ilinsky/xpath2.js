@@ -17,7 +17,7 @@ var cXSString = require('./../../src/types/schema/simple/atomic/XSString');
 var cXSDouble = require('./../../src/types/schema/simple/atomic/XSDouble');
 var cXSBoolean = require('./../../src/types/schema/simple/atomic/XSBoolean');
 
-var fXSAnyAtomicType_isNumeric = require('./../../src/types/schema/isNumeric');
+var cXSAnyAtomicType = require('./../../src/types/schema/simple/XSAnyAtomicType');
 
 var cString = global.String;
 var fIsNaN = global.isNaN;
@@ -86,7 +86,7 @@ function fEvaluator_xs2js(vItem) {
 	if (vItem instanceof cXSBoolean)
 		vItem	= vItem.valueOf();
 	else
-	if (fXSAnyAtomicType_isNumeric(vItem))
+	if (cXSAnyAtomicType.isNumeric(vItem))
 		vItem	= vItem.valueOf();
 	else
 		vItem	= vItem.toString();

@@ -19,7 +19,7 @@ var cStaticContext = require('./../../classes/StaticContext');
 var cXSUntypedAtomic = require('./../../types/schema/simple/atomic/XSUntypedAtomic');
 var cXSYearMonthDuration = require('./../../types/schema/simple/atomic/duration/XSYearMonthDuration');
 var cXSDayTimeDuration = require('./../../types/schema/simple/atomic/duration/XSDayTimeDuration');
-var fXSAnyAtomicType_isNumeric = require('./../../types/schema/isNumeric');
+var cXSAnyAtomicType = require('./../../types/schema/simple/XSAnyAtomicType');
 
 //
 var hStaticContext_operators = cStaticContext.operators;
@@ -38,8 +38,8 @@ cMultiplicativeExpr.operators['*']		= function (oLeft, oRight, oContext) {
 	var sOperator	= '',
 		bReverse	= false;
 
-	if (fXSAnyAtomicType_isNumeric(oLeft)) {
-		if (fXSAnyAtomicType_isNumeric(oRight))
+	if (cXSAnyAtomicType.isNumeric(oLeft)) {
+		if (cXSAnyAtomicType.isNumeric(oRight))
 			sOperator	= "numeric-multiply";
 		else
 		if (oRight instanceof cXSYearMonthDuration) {
@@ -54,12 +54,12 @@ cMultiplicativeExpr.operators['*']		= function (oLeft, oRight, oContext) {
 	}
 	else {
 		if (oLeft instanceof cXSYearMonthDuration) {
-			if (fXSAnyAtomicType_isNumeric(oRight))
+			if (cXSAnyAtomicType.isNumeric(oRight))
 				sOperator	= "multiply-yearMonthDuration";
 		}
 		else
 		if (oLeft instanceof cXSDayTimeDuration) {
-			if (fXSAnyAtomicType_isNumeric(oRight))
+			if (cXSAnyAtomicType.isNumeric(oRight))
 				sOperator	= "multiply-dayTimeDuration";
 		}
 	}
@@ -78,13 +78,13 @@ cMultiplicativeExpr.operators['*']		= function (oLeft, oRight, oContext) {
 cMultiplicativeExpr.operators['div']	= function (oLeft, oRight, oContext) {
 	var sOperator	= '';
 
-	if (fXSAnyAtomicType_isNumeric(oLeft)) {
-		if (fXSAnyAtomicType_isNumeric(oRight))
+	if (cXSAnyAtomicType.isNumeric(oLeft)) {
+		if (cXSAnyAtomicType.isNumeric(oRight))
 			sOperator	= "numeric-divide";
 	}
 	else
 	if (oLeft instanceof cXSYearMonthDuration) {
-		if (fXSAnyAtomicType_isNumeric(oRight))
+		if (cXSAnyAtomicType.isNumeric(oRight))
 			sOperator	= "divide-yearMonthDuration";
 		else
 		if (oRight instanceof cXSYearMonthDuration)
@@ -92,7 +92,7 @@ cMultiplicativeExpr.operators['div']	= function (oLeft, oRight, oContext) {
 	}
 	else
 	if (oLeft instanceof cXSDayTimeDuration) {
-		if (fXSAnyAtomicType_isNumeric(oRight))
+		if (cXSAnyAtomicType.isNumeric(oRight))
 			sOperator	= "divide-dayTimeDuration";
 		else
 		if (oRight instanceof cXSDayTimeDuration)
@@ -110,7 +110,7 @@ cMultiplicativeExpr.operators['div']	= function (oLeft, oRight, oContext) {
 	);	// Arithmetic operator is not defined for arguments of types ({type1}, {type2})
 };
 cMultiplicativeExpr.operators['idiv']	= function (oLeft, oRight, oContext) {
-	if (fXSAnyAtomicType_isNumeric(oLeft) && fXSAnyAtomicType_isNumeric(oRight))
+	if (cXSAnyAtomicType.isNumeric(oLeft) && cXSAnyAtomicType.isNumeric(oRight))
 		return hStaticContext_operators["numeric-integer-divide"].call(oContext, oLeft, oRight);
 	//
 	throw new cException("XPTY0004"
@@ -120,7 +120,7 @@ cMultiplicativeExpr.operators['idiv']	= function (oLeft, oRight, oContext) {
 	);	// Arithmetic operator is not defined for arguments of types ({type1}, {type2})
 };
 cMultiplicativeExpr.operators['mod']	= function (oLeft, oRight, oContext) {
-	if (fXSAnyAtomicType_isNumeric(oLeft) && fXSAnyAtomicType_isNumeric(oRight))
+	if (cXSAnyAtomicType.isNumeric(oLeft) && cXSAnyAtomicType.isNumeric(oRight))
 		return hStaticContext_operators["numeric-mod"].call(oContext, oLeft, oRight);
 	//
 	throw new cException("XPTY0004"
