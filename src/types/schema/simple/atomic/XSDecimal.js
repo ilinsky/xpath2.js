@@ -7,15 +7,22 @@
  *
  */
 
-var cString = String;
+var cException = require('./../../../../classes/Exception');
 
 var cXSConstants = require('./../../XSConstants');
 var cXSUntypedAtomic = require('./../atomic/XSUntypedAtomic');
+var cXSString = require('./../atomic/XSString');
+var cXSBoolean = require('./../atomic/XSBoolean');
 var cXSAnySimpleType = require('./../../XSAnySimpleType');
 var cXSAnyAtomicType = require('./../XSAnyAtomicType');
 
 var fIsNaN = global.isNaN;
 var fIsFinite = global.isFinite;
+
+var cString = global.String;
+var fString_trim = function (sValue) {
+	return cString(sValue).trim();
+};
 
 function cXSDecimal(nValue) {
 	this.value	= nValue;

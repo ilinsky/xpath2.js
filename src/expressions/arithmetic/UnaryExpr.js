@@ -15,9 +15,6 @@ var cXSUntypedAtomic = require('./../../types/schema/simple/atomic/XSUntypedAtom
 
 var cStaticContext = require('./../../classes/StaticContext');
 
-//
-var hStaticContext_operators = cStaticContext.operators;
-
 function cUnaryExpr(sOperator, oExpr) {
 	this.operator	= sOperator;
 	this.expression	= oExpr;
@@ -30,7 +27,7 @@ cUnaryExpr.prototype.expression	= null;
 cUnaryExpr.operators	= {};
 cUnaryExpr.operators['-']	= function(oRight, oContext) {
 	if (cXSAnyAtomicType.isNumeric(oRight))
-		return hStaticContext_operators["numeric-unary-minus"].call(oContext, oRight);
+		return cStaticContext.operators["numeric-unary-minus"].call(oContext, oRight);
 	//
 	throw new cException("XPTY0004"
 //->Debug
@@ -40,7 +37,7 @@ cUnaryExpr.operators['-']	= function(oRight, oContext) {
 };
 cUnaryExpr.operators['+']	= function(oRight, oContext) {
 	if (cXSAnyAtomicType.isNumeric(oRight))
-		return hStaticContext_operators["numeric-unary-plus"].call(oContext, oRight);
+		return cStaticContext.operators["numeric-unary-plus"].call(oContext, oRight);
 	//
 	throw new cException("XPTY0004"
 //->Debug

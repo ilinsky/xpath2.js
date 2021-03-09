@@ -2,16 +2,17 @@
     "name": "xpath.js",
     "title": "XPath2 for NodeJS",
     "description": "Open source XPath 2.0 implementation in JavaScript (DOM agnostic)",
-    "main": "xpath.js_loader.js",
+    "main": "api/xpath.js",
     "keywords": [
         "xpath",
         "xpath2"
     ],
     "scripts": {
-      "test": "NODE_ENV=test mocha --recursive test"
+        "test": "NODE_ENV=test mocha --recursive test"
     },
     "devDependencies": {
-      "mocha": "~2.1.0"
+        "chai": "^4.3.3",
+        "mocha": "~2.1.0"
     },
     "version": "0.1.1",
     "author": {
@@ -26,11 +27,11 @@
         }
     ],
     "contributors": [
-      {
-        "name": "Rui Azevedo",
-        "email": "ruihfazevedo@gmail.com",
-        "url": "http://www.r-site.net/"
-      }
+        {
+            "name": "Rui Azevedo",
+            "email": "ruihfazevedo@gmail.com",
+            "url": "http://www.r-site.net/"
+        }
     ],
     "bugs": "https://github.com/ilinsky/xpath.js/issues",
     "homepage": "https://github.com/ilinsky/xpath.js",

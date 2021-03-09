@@ -6,10 +6,17 @@
  *
  *
  */
+var cException = require('./../../../../classes/Exception');
 
 var cXSConstants = require('./../../XSConstants');
 var cXSAnySimpleType = require('./../../XSAnySimpleType');
 var cXSAnyAtomicType = require('./../XSAnyAtomicType');
+var cXSString = require('./../atomic/XSString');
+
+var cString = global.String;
+var fString_trim = function (sValue) {
+	return cString(sValue).trim();
+};
 
 function cXSAnyURI(sScheme, sAuthority, sPath, sQuery, sFragment) {
 	this.scheme		= sScheme;

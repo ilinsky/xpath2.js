@@ -7,6 +7,8 @@
  *
  */
 
+var cException = require('./../../../../../classes/Exception');
+
 var cXSConstants = require('./../../../XSConstants');
 var cXSDuration = require('./../XSDuration');
 var cXSString = require('./../XSString');
@@ -35,10 +37,10 @@ cXSYearMonthDuration.cast	= function(vValue) {
 	if (vValue instanceof cXSString || vValue instanceof cXSUntypedAtomic) {
 		var aMatch	= fString_trim(vValue).match(rXSYearMonthDuration);
 		if (aMatch)
-			return fXSYearMonthDuration_normalize(new cXSYearMonthDuration(+aMatch[2] || 0, +aMatch[3] || 0, aMatch[1] == '-'));
+			return cXSDuration.normalizeYearMonthDuration(new cXSYearMonthDuration(+aMatch[2] || 0, +aMatch[3] || 0, aMatch[1] == '-'));
 		throw new cException("FORG0001");
 	}
-	if (vValue instanceof cXSDayTimeDuration)
+	if (vValue.builtInKind == cXSConstants.XT_DAYTIMEDURATION_DT)
 		return new cXSYearMonthDuration(0, 0);
 	if (vValue instanceof cXSDuration)
 		return new cXSYearMonthDuration(vValue.year, vValue.month, vValue.negative);
@@ -48,15 +50,6 @@ cXSYearMonthDuration.cast	= function(vValue) {
 			, "Casting value '" + vValue + "' to xs:yearMonthDuration can never succeed"
 //<-Debug
 	);
-};
-
-//
-function fXSYearMonthDuration_normalize(oDuration) {
-	if (oDuration.month >= 12) {
-		oDuration.year	+= ~~(oDuration.month / 12);
-		oDuration.month	%= 12;
-	}
-	return oDuration;
 };
 
 //

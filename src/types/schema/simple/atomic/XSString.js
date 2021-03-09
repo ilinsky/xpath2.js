@@ -7,6 +7,8 @@
  *
  */
 
+var cException = require('./../../../../classes/Exception');
+
 var cString = String;
 
 var cXSConstants = require('./../../XSConstants');

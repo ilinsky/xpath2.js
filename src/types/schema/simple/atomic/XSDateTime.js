@@ -14,9 +14,13 @@ var cXSAnyAtomicType = require('./../XSAnyAtomicType');
 var cXSUntypedAtomic = require('./XSUntypedAtomic');
 var cXSString = require('./XSString');
 
-var cString = global.String;
 var cArray = global.Array;
 var cMath = global.Math;
+
+var cString = global.String;
+var fString_trim = function (sValue) {
+	return cString(sValue).trim();
+};
 
 function cXSDateTime(nYear, nMonth, nDay, nHours, nMinutes, nSeconds, nTimezone, bNegative) {
 	this.year	= nYear;

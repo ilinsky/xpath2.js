@@ -7,6 +7,8 @@
  *
  */
 
+var cException = require('./../../classes/Exception');
+
 var cXSBoolean = require('./../../types/schema/simple/atomic/XSBoolean');
 
 var fFunction_sequence_atomize = require('./../../functions/sequence').atomize;

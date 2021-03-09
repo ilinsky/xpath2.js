@@ -7,10 +7,18 @@
  *
  */
 
+var cException = require('./../../../../../classes/Exception');
+
 var cXSConstants = require('./../../../XSConstants');
 var cXSDecimal = require('./../XSDecimal');
+var cXSString = require('./../XSString');
 
 var fIsNaN = global.isNaN;
+
+var cString = global.String;
+var fString_trim = function (sValue) {
+	return cString(sValue).trim();
+};
 
 function cXSInteger(nValue) {
 	this.value	= nValue;

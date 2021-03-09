@@ -21,7 +21,17 @@ var cXSString = hTypes.XSString;
 var cXSInteger = hTypes.XSInteger;
 var cXSDouble = hTypes.XSDouble;
 
+var fEncodeURIComponent = global.encodeURIComponent;
+var fEncodeURI = global.encodeURI;
+var fDecodeURI = global.decodeURI;
+
 var cRegExp = global.RegExp;
+var cMath = global.Math;
+
+var cString = global.String;
+var fString_trim = function (sValue) {
+	return cString(sValue).trim();
+};
 
 var fFunction_sequence_assertSequenceCardinality = require('./sequence').assertSequenceCardinality;
 var fFunction_sequence_atomize = require('./sequence').atomize;
@@ -226,12 +236,12 @@ fStaticContext_defineSystemFunction("translate",	[[cXSString, '?'], [cXSString],
 
 // fn:encode-for-uri($uri-part as xs:string?) as xs:string
 fStaticContext_defineSystemFunction("encode-for-uri",	[[cXSString, '?']],	function(oValue) {
-	return new cXSString(oValue == null ? '' : window.encodeURIComponent(oValue));
+	return new cXSString(oValue == null ? '' : fEncodeURIComponent(oValue));
 });
 
 // fn:iri-to-uri($iri as xs:string?) as xs:string
 fStaticContext_defineSystemFunction("iri-to-uri",		[[cXSString, '?']],	function(oValue) {
-	return new cXSString(oValue == null ? '' : window.encodeURI(window.decodeURI(oValue)));
+	return new cXSString(oValue == null ? '' : fEncodeURI(fDecodeURI(oValue)));
 });
 
 // fn:escape-html-uri($uri as xs:string?) as xs:string
@@ -242,7 +252,7 @@ fStaticContext_defineSystemFunction("escape-html-uri",	[[cXSString, '?']],	funct
 	var aValue	= oValue.valueOf().split('');
 	for (var nIndex = 0, nLength = aValue.length, nCode; nIndex < nLength; nIndex++)
 		if ((nCode = aValue[nIndex].charCodeAt(0)) < 32 || nCode > 126)
-			aValue[nIndex]	= window.encodeURIComponent(aValue[nIndex]);
+			aValue[nIndex]	= fEncodeURIComponent(aValue[nIndex]);
 	return new cXSString(aValue.join(''));
 });
 

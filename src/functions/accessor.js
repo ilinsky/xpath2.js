@@ -44,7 +44,7 @@ fStaticContext_defineSystemFunction("node-name",		[[cXTNode, '?']],	function(oNo
 			case 6:		// ENTITY_NODE
 				throw "Not implemented";
 			case 7:		// PROCESSING_INSTRUCTION_NODE
-				return new cXSQName(null, fGetProperty(oNode, "target"), null);
+				return new cXSQName(null, fGetProperty(oNode, "nodeName"), null); // same as "target"
 			case 10:	// DOCUMENT_TYPE_NODE
 				return new cXSQName(null, fGetProperty(oNode, "name"), null);
 		}

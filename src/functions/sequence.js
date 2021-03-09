@@ -8,10 +8,22 @@
  */
 
 var fIsNaN = global.isNaN;
+var cMath = global.Math;
+
+var cString = global.String;
+var fString_trim = function (sValue) {
+	return cString(sValue).trim();
+};
+var fArray_indexOf = function(aValue, oSubject) {
+    return aValue.indexOf(oSubject);
+};
 
 var cException = require('./../classes/Exception');
+var cStaticContext = require('./../classes/StaticContext');
 
+// TODO: solve circular ref
 //var cMultiplicativeExpr = require('./../expressions/arithmetic/MultiplicativeExpr');
+//var cAdditiveExpr = require('./../expressions/arithmetic/AdditiveExpr');
 
 var fStaticContext_defineSystemFunction = require('./../classes/StaticContext').defineSystemFunction;
 
@@ -25,6 +37,12 @@ var cXSAnyURI = require('./../types/schema/simple/atomic/XSAnyURI');
 //
 var cXTItem = require('./../types/xpath/XTItem');
 var cXTNode = require('./../types/xpath/XTNode');
+var cXTElement = require('./../types/xpath/node/XTElement');
+var cXTAttribute = require('./../types/xpath/node/XTAttribute');
+var cXTText = require('./../types/xpath/node/XTText');
+var cXTProcessingInstruction = require('./../types/xpath/node/XTProcessingInstruction');
+var cXTComment = require('./../types/xpath/node/XTComment');
+var cXTDocument = require('./../types/xpath/node/XTDocument');
 
 /*
 	15.1 General Functions and Operators on Sequences
@@ -261,7 +279,7 @@ fStaticContext_defineSystemFunction("avg",	[[cXSAnyAtomicType, '*']],	function(o
 			vRight	= oSequence1[nIndex];
 			if (vRight instanceof cXSUntypedAtomic)
 				vRight	= cXSDouble.cast(vRight);
-			vValue	= hAdditiveExpr_operators['+'](vValue, vRight, this);
+			vValue	= cAdditiveExpr.operators['+'](vValue, vRight, this);
 		}
 		return cMultiplicativeExpr.operators['div'](vValue, new cXSInteger(nLength), this);
 	}
@@ -362,7 +380,7 @@ fStaticContext_defineSystemFunction("sum",	[[cXSAnyAtomicType, '*'], [cXSAnyAtom
 			vRight	= oSequence1[nIndex];
 			if (vRight instanceof cXSUntypedAtomic)
 				vRight	= cXSDouble.cast(vRight);
-			vValue	= hAdditiveExpr_operators['+'](vValue, vRight, this);
+			vValue	= cAdditiveExpr.operators['+'](vValue, vRight, this);
 		}
 		return vValue;
 	}
@@ -482,7 +500,7 @@ function fFunction_sequence_atomize(oSequence1, oContext) {
 					vItem	= new cXSUntypedAtomic(fGetProperty(oItem, "textContent"));
 					break;
 				case 2:	// ATTRIBUTE_NODE
-					vItem	= new cXSUntypedAtomic(fGetProperty(oItem, "value"));
+					vItem	= new cXSUntypedAtomic(fGetProperty(oItem, "nodeValue"));   // was "value"
 					break;
 				case 3:	// TEXT_NODE
 				case 4:	// CDATA_SECTION_NODE

@@ -394,7 +394,7 @@ function fParseKindTest(oLexer, oStaticContext) {
 			}
 			else
 			if (sName == "processing-instruction") {
-				oValue = fStringLiteralParse(oLexer, oStaticContext);
+				oValue = fParseStringLiteral(oLexer, oStaticContext);
 				if (!oValue) {
 					oValue = new cStringLiteral(new cXSString(oLexer.peek()));
 					oLexer.next();

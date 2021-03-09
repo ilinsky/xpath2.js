@@ -24,9 +24,6 @@ var cXSAnyAtomicType = require('./../../types/schema/simple/XSAnyAtomicType');
 var fFunction_sequence_atomize = require('./../../functions/sequence').atomize;
 var fFunction_sequence_assertSequenceCardinality = require('./../../functions/sequence').assertSequenceCardinality;
 
-//
-var hStaticContext_operators = cStaticContext.operators;
-
 function cAdditiveExpr(oExpr) {
 	this.left	= oExpr;
 	this.items	= [];
@@ -104,7 +101,7 @@ cAdditiveExpr.operators['+']	= function(oLeft, oRight, oContext) {
 
 	// Call operator function
 	if (sOperator)
-		return hStaticContext_operators[sOperator].call(oContext, bReverse ? oRight : oLeft, bReverse ? oLeft : oRight);
+		return cStaticContext.operators[sOperator].call(oContext, bReverse ? oRight : oLeft, bReverse ? oLeft : oRight);
 
 	//
 	throw new cException("XPTY0004"
@@ -163,7 +160,7 @@ cAdditiveExpr.operators['-']	= function (oLeft, oRight, oContext) {
 
 	// Call operator function
 	if (sOperator)
-		return hStaticContext_operators[sOperator].call(oContext, oLeft, oRight);
+		return cStaticContext.operators[sOperator].call(oContext, oLeft, oRight);
 
 	//
 	throw new cException("XPTY0004"

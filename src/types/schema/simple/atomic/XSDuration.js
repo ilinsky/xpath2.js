@@ -7,9 +7,17 @@
  *
  */
 
+var cException = require('./../../../../classes/Exception');
+
 var cXSConstants = require('./../../XSConstants');
 var cXSAnySimpleType = require('./../../XSAnySimpleType');
 var cXSAnyAtomicType = require('./../XSAnyAtomicType');
+var cXSString = require('./XSString');
+
+var cString = global.String;
+var fString_trim = function (sValue) {
+	return cString(sValue).trim();
+};
 
 function cXSDuration(nYear, nMonth, nDay, nHours, nMinutes, nSeconds, bNegative) {
 	this.year	= nYear;
@@ -42,9 +50,9 @@ var rXSDuration		= /^(-)?P(?:([0-9]+)Y)?(?:([0-9]+)M)?(?:([0-9]+)D)?(?:T(?:([0-9
 cXSDuration.cast	= function(vValue) {
 	if (vValue instanceof cXSDuration)
 		return vValue;
-	if (vValue instanceof cXSYearMonthDuration)
+	if (vValue.builtInKind == cXSConstants.XT_YEARMONTHDURATION_DT)
 		return new cXSDuration(vValue.year, vValue.month, 0, 0, 0, 0, vValue.negative);
-	if (vValue instanceof cXSDayTimeDuration)
+	if (vValue.builtInKind == cXSConstants.XT_DAYTIMEDURATION_DT)
 		return new cXSDuration(0, 0, vValue.day, vValue.hours, vValue.minutes, vValue.seconds, vValue.negative);
 	if (vValue instanceof cXSString || vValue instanceof cXSUntypedAtomic) {
 		var aMatch	= fString_trim(vValue).match(rXSDuration);
@@ -77,7 +85,31 @@ cXSDuration.getDayTimeComponent = function(oDuration) {
 };
 
 function fXSDuration_normalize(oDuration) {
-	return fXSYearMonthDuration_normalize(fXSDayTimeDuration_normalize(oDuration));
+	return cXSDuration.normalizeYearMonthDuration(cXSDuration.normalizeDayTimeDuration(oDuration));
+};
+
+cXSDuration.normalizeDayTimeDuration = function(oDuration) {
+	if (oDuration.seconds >= 60) {
+		oDuration.minutes	+= ~~(oDuration.seconds / 60);
+		oDuration.seconds	%= 60;
+	}
+	if (oDuration.minutes >= 60) {
+		oDuration.hours		+= ~~(oDuration.minutes / 60);
+		oDuration.minutes	%= 60;
+	}
+	if (oDuration.hours >= 24) {
+		oDuration.day		+= ~~(oDuration.hours / 24);
+		oDuration.hours		%= 24;
+	}
+	return oDuration;
+};
+
+cXSDuration.normalizeYearMonthDuration = function(oDuration) {
+	if (oDuration.month >= 12) {
+		oDuration.year	+= ~~(oDuration.month / 12);
+		oDuration.month	%= 12;
+	}
+	return oDuration;
 };
 
 //

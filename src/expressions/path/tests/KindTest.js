@@ -56,7 +56,7 @@ cKindTest.prototype.test	= function (oNode, oContext) {
 	if (nType == 2)
 		return fGetProperty(oNode, "prefix") != "xmlns" && fGetProperty(oNode, "localName") != "xmlns";
 	if (nType == 7) {
-		sTarget = fGetProperty(oNode, "target");
+		sTarget = fGetProperty(oNode, "nodeName"); // same as "target"
 		return this.args.length ? sTarget == this.args[0].value : sTarget != "xml";
 	}
 

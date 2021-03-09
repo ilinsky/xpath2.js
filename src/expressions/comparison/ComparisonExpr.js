@@ -7,6 +7,7 @@
  *
  */
 
+var cException = require('./../../classes/Exception');
 var cStaticContext = require('./../../classes/StaticContext');
 
 var cXSAnyAtomicType = require('./../../types/schema/simple/XSAnyAtomicType');
@@ -19,15 +20,24 @@ var cXSAnyURI = require('./../../types/schema/simple/atomic/XSAnyURI');
 var cXSDateTime = require('./../../types/schema/simple/atomic/XSDateTime');
 var cXSDate = require('./../../types/schema/simple/atomic/XSDate');
 var cXSTime = require('./../../types/schema/simple/atomic/XSTime');
+var cXSQName = require('./../../types/schema/simple/atomic/XSQName');
+var cXSHexBinary = require('./../../types/schema/simple/atomic/XSHexBinary');
+var cXSBase64Binary = require('./../../types/schema/simple/atomic/XSBase64Binary');
+var cXSNOTATION = require('./../../types/schema/simple/atomic/XSNOTATION');
 var cXSUntypedAtomic = require('./../../types/schema/simple/atomic/XSUntypedAtomic');
+var cXSDuration = require('./../../types/schema/simple/atomic/XSDuration');
 var cXSDayTimeDuration = require('./../../types/schema/simple/atomic/duration/XSDayTimeDuration');
 var cXSYearMonthDuration = require('./../../types/schema/simple/atomic/duration/XSYearMonthDuration');
+var cXSGYearMonth = require('./../../types/schema/simple/atomic/XSGYearMonth');
+var cXSGYear = require('./../../types/schema/simple/atomic/XSGYear');
+var cXSGMonth = require('./../../types/schema/simple/atomic/XSGMonth');
+var cXSGMonthDay = require('./../../types/schema/simple/atomic/XSGMonthDay');
+var cXSGDay = require('./../../types/schema/simple/atomic/XSGDay');
+
+var cXTNode = require('./../../types/xpath/XTNode');
 
 var fFunction_sequence_assertSequenceCardinality = require('./../../functions/sequence').assertSequenceCardinality;
 var fFunction_sequence_assertSequenceItemType = require('./../../functions/sequence').assertSequenceItemType;
-
-//
-var hStaticContext_operators = cStaticContext.operators;
 
 function cComparisonExpr(oLeft, oRight, sOperator) {
 	this.left	= oLeft;
@@ -178,7 +188,7 @@ hComparisonExpr_ValueComp_operators['eq']	= function(oLeft, oRight, oContext) {
 	else
 	if (oLeft instanceof cXSString) {
 		if (oRight instanceof cXSString)
-			return hStaticContext_operators["numeric-equal"].call(oContext, cStaticContext.functions["compare"].call(oContext, oLeft, oRight), new cXSInteger(0));
+			return cStaticContext.operators["numeric-equal"].call(oContext, cStaticContext.functions["compare"].call(oContext, oLeft, oRight), new cXSInteger(0));
 	}
 	else
 	if (oLeft instanceof cXSDate) {
@@ -249,7 +259,7 @@ hComparisonExpr_ValueComp_operators['eq']	= function(oLeft, oRight, oContext) {
 
 	// Call operator function
 	if (sOperator)
-		return hStaticContext_operators[sOperator].call(oContext, oLeft, oRight);
+		return cStaticContext.operators[sOperator].call(oContext, oLeft, oRight);
 
 	throw new cException("XPTY0004"
 //->Debug
@@ -275,7 +285,7 @@ hComparisonExpr_ValueComp_operators['gt']	= function(oLeft, oRight, oContext) {
 	else
 	if (oLeft instanceof cXSString) {
 		if (oRight instanceof cXSString)
-			return hStaticContext_operators["numeric-greater-than"].call(oContext, cStaticContext.functions["compare"].call(oContext, oLeft, oRight), new cXSInteger(0));
+			return cStaticContext.operators["numeric-greater-than"].call(oContext, cStaticContext.functions["compare"].call(oContext, oLeft, oRight), new cXSInteger(0));
 	}
 	else
 	if (oLeft instanceof cXSDate) {
@@ -305,7 +315,7 @@ hComparisonExpr_ValueComp_operators['gt']	= function(oLeft, oRight, oContext) {
 
 	// Call operator function
 	if (sOperator)
-		return hStaticContext_operators[sOperator].call(oContext, oLeft, oRight);
+		return cStaticContext.operators[sOperator].call(oContext, oLeft, oRight);
 
 	// skipped: xs:anyURI (covered by xs:string)
 	throw new cException("XPTY0004"
@@ -329,7 +339,7 @@ hComparisonExpr_ValueComp_operators['lt']	= function(oLeft, oRight, oContext) {
 	else
 	if (oLeft instanceof cXSString) {
 		if (oRight instanceof cXSString)
-			return hStaticContext_operators["numeric-less-than"].call(oContext, cStaticContext.functions["compare"].call(oContext, oLeft, oRight), new cXSInteger(0));
+			return cStaticContext.operators["numeric-less-than"].call(oContext, cStaticContext.functions["compare"].call(oContext, oLeft, oRight), new cXSInteger(0));
 	}
 	else
 	if (oLeft instanceof cXSDate) {
@@ -359,7 +369,7 @@ hComparisonExpr_ValueComp_operators['lt']	= function(oLeft, oRight, oContext) {
 
 	// Call operator function
 	if (sOperator)
-		return hStaticContext_operators[sOperator].call(oContext, oLeft, oRight);
+		return cStaticContext.operators[sOperator].call(oContext, oLeft, oRight);
 
 	// skipped: xs:anyURI (covered by xs:string)
 	throw new cException("XPTY0004"
@@ -383,7 +393,7 @@ hComparisonExpr_ValueComp_operators['ge']	= function(oLeft, oRight, oContext) {
 	else
 	if (oLeft instanceof cXSString) {
 		if (oRight instanceof cXSString)
-			return hStaticContext_operators["numeric-greater-than"].call(oContext, cStaticContext.functions["compare"].call(oContext, oLeft, oRight), new cXSInteger(-1));
+			return cStaticContext.operators["numeric-greater-than"].call(oContext, cStaticContext.functions["compare"].call(oContext, oLeft, oRight), new cXSInteger(-1));
 	}
 	else
 	if (oLeft instanceof cXSDate) {
@@ -413,7 +423,7 @@ hComparisonExpr_ValueComp_operators['ge']	= function(oLeft, oRight, oContext) {
 
 	// Call operator function
 	if (sOperator)
-		return new cXSBoolean(!hStaticContext_operators[sOperator].call(oContext, oLeft, oRight).valueOf());
+		return new cXSBoolean(!cStaticContext.operators[sOperator].call(oContext, oLeft, oRight).valueOf());
 
 	// skipped: xs:anyURI (covered by xs:string)
 	throw new cException("XPTY0004"
@@ -437,7 +447,7 @@ hComparisonExpr_ValueComp_operators['le']	= function(oLeft, oRight, oContext) {
 	else
 	if (oLeft instanceof cXSString) {
 		if (oRight instanceof cXSString)
-			return hStaticContext_operators["numeric-less-than"].call(oContext, cStaticContext.functions["compare"].call(oContext, oLeft, oRight), new cXSInteger(1));
+			return cStaticContext.operators["numeric-less-than"].call(oContext, cStaticContext.functions["compare"].call(oContext, oLeft, oRight), new cXSInteger(1));
 	}
 	else
 	if (oLeft instanceof cXSDate) {
@@ -467,7 +477,7 @@ hComparisonExpr_ValueComp_operators['le']	= function(oLeft, oRight, oContext) {
 
 	// Call operator function
 	if (sOperator)
-		return new cXSBoolean(!hStaticContext_operators[sOperator].call(oContext, oLeft, oRight).valueOf());
+		return new cXSBoolean(!cStaticContext.operators[sOperator].call(oContext, oLeft, oRight).valueOf());
 
 	// skipped: xs:anyURI (covered by xs:string)
 	throw new cException("XPTY0004"
@@ -516,13 +526,13 @@ function fComparisonExpr_NodeComp(oExpr, oContext) {
 
 var hComparisonExpr_NodeComp_operators	= {};
 hComparisonExpr_NodeComp_operators['is']	= function(oLeft, oRight, oContext) {
-	return hStaticContext_operators["is-same-node"].call(oContext, oLeft, oRight);
+	return cStaticContext.operators["is-same-node"].call(oContext, oLeft, oRight);
 };
 hComparisonExpr_NodeComp_operators['>>']	= function(oLeft, oRight, oContext) {
-	return hStaticContext_operators["node-after"].call(oContext, oLeft, oRight);
+	return cStaticContext.operators["node-after"].call(oContext, oLeft, oRight);
 };
 hComparisonExpr_NodeComp_operators['<<']	= function(oLeft, oRight, oContext) {
-	return hStaticContext_operators["node-before"].call(oContext, oLeft, oRight);
+	return cStaticContext.operators["node-before"].call(oContext, oLeft, oRight);
 };
 
 // Operators

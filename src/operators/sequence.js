@@ -12,6 +12,10 @@ var fStaticContext_defineSystemOperator = require('./../classes/StaticContext').
 
 var fFunction_sequence_order = require('./../functions/sequence').order;
 
+var fArray_indexOf = function(aValue, oSubject) {
+    return aValue.indexOf(oSubject);
+};
+
 var hTypes = require('./../types');
 
 //

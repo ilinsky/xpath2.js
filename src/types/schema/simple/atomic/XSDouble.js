@@ -6,6 +6,7 @@
  *
  *
  */
+var cException = require('./../../../../classes/Exception');
 
 var cXSConstants = require('./../../XSConstants');
 var cXSAnySimpleType = require('./../../XSAnySimpleType');

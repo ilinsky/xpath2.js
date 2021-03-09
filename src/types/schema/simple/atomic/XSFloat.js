@@ -7,9 +7,19 @@
  *
  */
 
+var cException = require('./../../../../classes/Exception');
+
 var cXSConstants = require('./../../XSConstants');
 var cXSAnySimpleType = require('./../../XSAnySimpleType');
 var cXSAnyAtomicType = require('./../XSAnyAtomicType');
+var cXSUntypedAtomic = require('./XSUntypedAtomic');
+var cXSString = require('./XSString');
+var cXSBoolean = require('./XSBoolean');
+
+var cString = global.String;
+var fString_trim = function (sValue) {
+	return cString(sValue).trim();
+};
 
 function cXSFloat(nValue) {
 	this.value	= nValue;

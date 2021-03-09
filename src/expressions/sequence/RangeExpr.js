@@ -12,12 +12,10 @@ var cAdditiveExpr = require('./../arithmetic/AdditiveExpr');
 var fFunction_sequence_assertSequenceCardinality = require('./../../functions/sequence').assertSequenceCardinality;
 var fFunction_sequence_assertSequenceItemType = require('./../../functions/sequence').assertSequenceItemType;
 
+var cException = require('./../../classes/Exception');
 var cStaticContext = require('./../../classes/StaticContext');
 
 var cXSInteger = require('./../../types').XSInteger;
-
-//
-var hStaticContext_operators = cStaticContext.operators;
 
 function cRangeExpr(oLeft, oRight) {
 	this.left	= oLeft;
@@ -69,7 +67,7 @@ cRangeExpr.prototype.evaluate	= function (oContext) {
 //<-Debug
  	);
 
-	return hStaticContext_operators["to"].call(oContext, oLeft[0], oRight[0]);
+	return cStaticContext.operators["to"].call(oContext, oLeft[0], oRight[0]);
 };
 
 //

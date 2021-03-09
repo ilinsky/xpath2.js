@@ -21,9 +21,6 @@ var cXSYearMonthDuration = require('./../../types/schema/simple/atomic/duration/
 var cXSDayTimeDuration = require('./../../types/schema/simple/atomic/duration/XSDayTimeDuration');
 var cXSAnyAtomicType = require('./../../types/schema/simple/XSAnyAtomicType');
 
-//
-var hStaticContext_operators = cStaticContext.operators;
-
 function cMultiplicativeExpr(oExpr) {
 	this.left	= oExpr;
 	this.items	= [];
@@ -66,7 +63,7 @@ cMultiplicativeExpr.operators['*']		= function (oLeft, oRight, oContext) {
 
 	// Call operator function
 	if (sOperator)
-		return hStaticContext_operators[sOperator].call(oContext, bReverse ? oRight : oLeft, bReverse ? oLeft : oRight);
+		return cStaticContext.operators[sOperator].call(oContext, bReverse ? oRight : oLeft, bReverse ? oLeft : oRight);
 
 	//
 	throw new cException("XPTY0004"
@@ -100,7 +97,7 @@ cMultiplicativeExpr.operators['div']	= function (oLeft, oRight, oContext) {
 	}
 	// Call operator function
 	if (sOperator)
-		return hStaticContext_operators[sOperator].call(oContext, oLeft, oRight);
+		return cStaticContext.operators[sOperator].call(oContext, oLeft, oRight);
 
 	//
 	throw new cException("XPTY0004"
@@ -111,7 +108,7 @@ cMultiplicativeExpr.operators['div']	= function (oLeft, oRight, oContext) {
 };
 cMultiplicativeExpr.operators['idiv']	= function (oLeft, oRight, oContext) {
 	if (cXSAnyAtomicType.isNumeric(oLeft) && cXSAnyAtomicType.isNumeric(oRight))
-		return hStaticContext_operators["numeric-integer-divide"].call(oContext, oLeft, oRight);
+		return cStaticContext.operators["numeric-integer-divide"].call(oContext, oLeft, oRight);
 	//
 	throw new cException("XPTY0004"
 //->Debug
@@ -121,7 +118,7 @@ cMultiplicativeExpr.operators['idiv']	= function (oLeft, oRight, oContext) {
 };
 cMultiplicativeExpr.operators['mod']	= function (oLeft, oRight, oContext) {
 	if (cXSAnyAtomicType.isNumeric(oLeft) && cXSAnyAtomicType.isNumeric(oRight))
-		return hStaticContext_operators["numeric-mod"].call(oContext, oLeft, oRight);
+		return cStaticContext.operators["numeric-mod"].call(oContext, oLeft, oRight);
 	//
 	throw new cException("XPTY0004"
 //->Debug

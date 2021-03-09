@@ -8,11 +8,14 @@
  */
 
 var cException = require('./../classes/Exception');
+var cStaticContext = require('./../classes/StaticContext');
 var fStaticContext_defineSystemFunction = require('./../classes/StaticContext').defineSystemFunction;
 
 var cXSAnyAtomicType = require('./../types/schema/simple/XSAnyAtomicType');
 var cXSBoolean = require('./../types/schema/simple/atomic/XSBoolean');
 var cXSString = require('./../types/schema/simple/atomic/XSString');
+var cXSDouble = require('./../types/schema/simple/atomic/XSDouble');
+var cXSAnyURI = require('./../types/schema/simple/atomic/XSAnyURI');
 //
 var cXTItem = require('./../types/xpath/XTItem');
 var cXTNode = require('./../types/xpath/XTNode');
@@ -133,7 +136,7 @@ fStaticContext_defineSystemFunction("lang",	[[cXSString, '?'], [cXTNode, '', tru
 		if (aAttributes = fGetProperty(oNode, "attributes"))
 			for (var nIndex = 0, nLength = aAttributes.length; nIndex < nLength; nIndex++)
 				if (fGetProperty(aAttributes[nIndex], "nodeName") == "xml:lang")
-					return new cXSBoolean(fGetProperty(aAttributes[nIndex], "value").replace(/-.+/, '').toLowerCase() == sLang.valueOf().replace(/-.+/, '').toLowerCase());
+					return new cXSBoolean(fGetProperty(aAttributes[nIndex], "nodeValue").replace(/-.+/, '').toLowerCase() == sLang.valueOf().replace(/-.+/, '').toLowerCase());
 	//
 	return new cXSBoolean(false);
 });

@@ -7,12 +7,20 @@
  *
  */
 
+var cException = require('./../../../../classes/Exception');
+
 var cXSConstants = require('./../../XSConstants');
 var cXSAnySimpleType = require('./../../XSAnySimpleType');
 var cXSAnyAtomicType = require('./../XSAnyAtomicType');
+var cXSString = require('./XSString');
 
 var fWindow_btoa = global.btoa;
 var fWindow_parseInt = global.parseInt;
+
+var cString = global.String;
+var fString_trim = function (sValue) {
+	return cString(sValue).trim();
+};
 
 function cXSBase64Binary(sValue) {
 	this.value	= sValue;
