@@ -8,8 +8,10 @@
  */
 
 var cXSAnyAtomicType = require('./../../types/schema/simple/XSAnyAtomicType');
+//
+var cXTSequence = require('./../../types/xpath/XTSequence');
 
-var fFunction_sequence_toEBV = require('../../functions/sequence').toEBV;
+var fFunction_sequence_toEBV = cXTSequence.toEBV;
 
 function cStepExpr() {
 

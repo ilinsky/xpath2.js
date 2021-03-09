@@ -7,8 +7,10 @@
  *
  */
 
-var fFunction_sequence_atomize = require('./../../functions/sequence').atomize;
-var fFunction_sequence_assertSequenceCardinality = require('./../../functions/sequence').assertSequenceCardinality;
+var cXTSequence = require('./../../types/xpath/XTSequence');
+
+var fFunction_sequence_atomize = cXTSequence.atomize;
+var fFunction_sequence_assertSequenceCardinality = cXTSequence.assertSequenceCardinality;
 
 function cCastExpr(oExpr, oType) {
 	this.expression	= oExpr;

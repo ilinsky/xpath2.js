@@ -9,7 +9,9 @@
 
 var cException = require('./../../classes/Exception');
 
-var fFunction_sequence_order = require('./../../functions/sequence').order;
+var cXTSequence = require('./../../types/xpath/XTSequence');
+
+var fFunction_sequence_order = cXTSequence.order;
 
 var fArray_indexOf = function(aValue, oSubject) {
     return aValue.indexOf(oSubject);

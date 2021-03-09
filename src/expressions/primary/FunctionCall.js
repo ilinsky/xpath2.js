@@ -18,9 +18,11 @@ var sNS_XSD = require('./../../namespaces').NS_XSD;
 var hTypes = require('./../../types');
 var cXSAnyAtomicType = hTypes.XSAnyAtomicType;
 
-var fFunction_sequence_atomize = require('./../../functions/sequence').atomize;
-var fFunction_sequence_assertSequenceCardinality = require('./../../functions/sequence').assertSequenceCardinality;
-var fFunction_sequence_assertSequenceItemType = require('./../../functions/sequence').assertSequenceItemType;
+var cXTSequence = require('./../../types/xpath/XTSequence');
+
+var fFunction_sequence_atomize = cXTSequence.atomize;
+var fFunction_sequence_assertSequenceCardinality = cXTSequence.assertSequenceCardinality;
+var fFunction_sequence_assertSequenceItemType = cXTSequence.assertSequenceItemType;
 
 function cFunctionCall(sPrefix, sLocalName, sNameSpaceURI) {
 	this.prefix			= sPrefix;

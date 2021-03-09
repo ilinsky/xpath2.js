@@ -7,7 +7,9 @@
  *
  */
 
-var fFunction_sequence_toEBV = require('../../functions/sequence').toEBV;
+var cXTSequence = require('./../../types/xpath/XTSequence');
+
+var fFunction_sequence_toEBV = cXTSequence.toEBV;
 
 function cIfExpr(oCondExpr, oThenExpr, oElseExpr) {
 	this.condExpr	= oCondExpr;

@@ -33,10 +33,11 @@ var cXSGMonthDay = require('./../../types/schema/simple/atomic/XSGMonthDay');
 var cXSGDay = require('./../../types/schema/simple/atomic/XSGDay');
 
 var cXTNode = require('./../../types/xpath/XTNode');
+var cXTSequence = require('./../../types/xpath/XTSequence');
 
-var fFunction_sequence_atomize = require('../../functions/sequence').atomize;
-var fFunction_sequence_assertSequenceCardinality = require('./../../functions/sequence').assertSequenceCardinality;
-var fFunction_sequence_assertSequenceItemType = require('./../../functions/sequence').assertSequenceItemType;
+var fFunction_sequence_atomize = cXTSequence.atomize;
+var fFunction_sequence_assertSequenceCardinality = cXTSequence.assertSequenceCardinality;
+var fFunction_sequence_assertSequenceItemType = cXTSequence.assertSequenceItemType;
 
 function cComparisonExpr(oLeft, oRight, sOperator) {
 	this.left	= oLeft;
@@ -555,6 +556,8 @@ cComparisonExpr.operators	= {
 	'>>':	fComparisonExpr_NodeComp,
 	'<<':	fComparisonExpr_NodeComp
 };
+
+cComparisonExpr.vcOperators = hComparisonExpr_ValueComp_operators;
 
 //
 module.exports = cComparisonExpr;

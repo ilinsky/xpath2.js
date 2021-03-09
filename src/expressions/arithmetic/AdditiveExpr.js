@@ -17,9 +17,11 @@ var cXSYearMonthDuration = require('./../../types/schema/simple/atomic/duration/
 var cXSDayTimeDuration = require('./../../types/schema/simple/atomic/duration/XSDayTimeDuration');
 var cXSUntypedAtomic = require('./../../types/schema/simple/atomic/XSUntypedAtomic');
 var cXSAnyAtomicType = require('./../../types/schema/simple/XSAnyAtomicType');
+//
+var cXTSequence = require('./../../types/xpath/XTSequence');
 
-var fFunction_sequence_atomize = require('./../../functions/sequence').atomize;
-var fFunction_sequence_assertSequenceCardinality = require('./../../functions/sequence').assertSequenceCardinality;
+var fFunction_sequence_atomize = cXTSequence.atomize;
+var fFunction_sequence_assertSequenceCardinality = cXTSequence.assertSequenceCardinality;
 
 function cAdditiveExpr(oExpr) {
 	this.left	= oExpr;

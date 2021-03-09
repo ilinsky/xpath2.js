@@ -10,8 +10,10 @@
 var cException = require('./../../classes/Exception');
 
 var cXSBoolean = require('./../../types/schema/simple/atomic/XSBoolean');
+//
+var cXTSequence = require('./../../types/xpath/XTSequence');
 
-var fFunction_sequence_atomize = require('./../../functions/sequence').atomize;
+var fFunction_sequence_atomize = cXTSequence.atomize;
 
 function cCastableExpr(oExpr, oType) {
 	this.expression	= oExpr;

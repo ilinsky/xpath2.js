@@ -19,11 +19,13 @@ var cXSBoolean = hTypes.XSBoolean;
 var cXSString = hTypes.XSString;
 var cXSInteger = hTypes.XSInteger;
 var cXSDouble = hTypes.XSDouble;
+//
+var cXTSequence = require('./../types/xpath/XTSequence');
 
 var fStaticContext_defineSystemFunction = require('./../classes/StaticContext').defineSystemFunction;
 
-var fFunction_sequence_assertSequenceCardinality = require('./sequence').assertSequenceCardinality;
-var fFunction_sequence_atomize = require('./sequence').atomize;
+var fFunction_sequence_assertSequenceCardinality = cXTSequence.assertSequenceCardinality;
+var fFunction_sequence_atomize = cXTSequence.atomize;
 
 var fEncodeURIComponent = global.encodeURIComponent;
 var fEncodeURI = global.encodeURI;

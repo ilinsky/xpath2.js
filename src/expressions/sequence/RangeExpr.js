@@ -11,9 +11,11 @@ var cException = require('./../../classes/Exception');
 var cStaticContext = require('./../../classes/StaticContext');
 
 var cXSInteger = require('./../../types').XSInteger;
+//
+var cXTSequence = require('./../../types/xpath/XTSequence');
 
-var fFunction_sequence_assertSequenceCardinality = require('./../../functions/sequence').assertSequenceCardinality;
-var fFunction_sequence_assertSequenceItemType = require('./../../functions/sequence').assertSequenceItemType;
+var fFunction_sequence_assertSequenceCardinality = cXTSequence.assertSequenceCardinality;
+var fFunction_sequence_assertSequenceItemType = cXTSequence.assertSequenceItemType;
 
 function cRangeExpr(oLeft, oRight) {
 	this.left	= oLeft;

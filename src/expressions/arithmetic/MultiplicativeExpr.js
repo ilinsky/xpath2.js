@@ -14,9 +14,11 @@ var cXSUntypedAtomic = require('./../../types/schema/simple/atomic/XSUntypedAtom
 var cXSYearMonthDuration = require('./../../types/schema/simple/atomic/duration/XSYearMonthDuration');
 var cXSDayTimeDuration = require('./../../types/schema/simple/atomic/duration/XSDayTimeDuration');
 var cXSAnyAtomicType = require('./../../types/schema/simple/XSAnyAtomicType');
+//
+var cXTSequence = require('./../../types/xpath/XTSequence');
 
-var fFunction_sequence_atomize = require('./../../functions/sequence').atomize;
-var fFunction_sequence_assertSequenceCardinality = require('./../../functions/sequence').assertSequenceCardinality;
+var fFunction_sequence_atomize = cXTSequence.atomize;
+var fFunction_sequence_assertSequenceCardinality = cXTSequence.assertSequenceCardinality;
 
 function cMultiplicativeExpr(oExpr) {
 	this.left	= oExpr;

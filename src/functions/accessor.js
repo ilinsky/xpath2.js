@@ -16,8 +16,9 @@ var cXSQName = require('./../types/schema/simple/atomic/XSQName');
 
 var cXTItem = require('./../types/xpath/XTItem');
 var cXTNode = require('./../types/xpath/XTNode');
+var cXTSequence = require('./../types/xpath/XTSequence');
 
-var fFunction_sequence_atomize = require('./sequence').atomize;
+var fFunction_sequence_atomize = cXTSequence.atomize;
 var fStaticContext_defineSystemFunction = require('./../classes/StaticContext').defineSystemFunction;
 
 /*

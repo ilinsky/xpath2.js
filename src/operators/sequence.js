@@ -12,10 +12,12 @@ var cException = require('./../classes/Exception');
 var hTypes = require('./../types');
 //
 var cXSInteger = hTypes.XSInteger;
+//
+var cXTSequence = require('./../types/xpath/XTSequence');
 
 var fStaticContext_defineSystemOperator = require('./../classes/StaticContext').defineSystemOperator;
 
-var fFunction_sequence_order = require('./../functions/sequence').order;
+var fFunction_sequence_order = cXTSequence.order;
 
 var fArray_indexOf = function(aValue, oSubject) {
     return aValue.indexOf(oSubject);

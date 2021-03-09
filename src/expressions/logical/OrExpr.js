@@ -8,8 +8,10 @@
  */
 
 var cXSBoolean = require('./../../types/schema/simple/atomic/XSBoolean');
+//
+var cXTSequence = require('./../../types/xpath/XTSequence');
 
-var fFunction_sequence_toEBV = require('./../../functions/sequence').toEBV;
+var fFunction_sequence_toEBV = cXTSequence.toEBV;
 
 function cOrExpr(oExpr) {
 	this.left	= oExpr;
