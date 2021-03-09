@@ -7,7 +7,10 @@
  *
  */
 
+var cException = require('./../../../../../classes/Exception');
+
 var cXSConstants = require('./../../../XSConstants');
+
 var cXSInteger = require('./XSInteger');
 var cXSUnsignedShort = require('./XSUnsignedShort');
 

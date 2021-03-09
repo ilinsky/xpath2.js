@@ -8,6 +8,11 @@
  */
 
 var cException = require('./../classes/Exception');
+
+var hTypes = require('./../types');
+//
+var cXSInteger = hTypes.XSInteger;
+
 var fStaticContext_defineSystemOperator = require('./../classes/StaticContext').defineSystemOperator;
 
 var fFunction_sequence_order = require('./../functions/sequence').order;
@@ -15,11 +20,6 @@ var fFunction_sequence_order = require('./../functions/sequence').order;
 var fArray_indexOf = function(aValue, oSubject) {
     return aValue.indexOf(oSubject);
 };
-
-var hTypes = require('./../types');
-
-//
-var cXSInteger = hTypes.XSInteger;
 
 /*
 	15.1 General Functions and Operators on Sequences

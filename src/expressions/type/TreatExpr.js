@@ -9,9 +9,6 @@
 
 var cException = require('./../../classes/Exception');
 
-var cCastableExpr = require('./CastableExpr');
-var cSequenceType = require('./types/SequenceType');
-
 function cTreatExpr(oExpr, oType) {
 	this.expression	= oExpr;
 	this.type		= oType;

@@ -8,7 +8,6 @@
  */
 
 var cException = require('./../classes/Exception');
-var fStaticContext_defineSystemFunction = require('./../classes/StaticContext').defineSystemFunction;
 
 var cXSBoolean = require('./../types/schema/simple/atomic/XSBoolean');
 var cXSAnyURI = require('./../types/schema/simple/atomic/XSAnyURI');
@@ -19,6 +18,7 @@ var cXTItem = require('./../types/xpath/XTItem');
 var cXTNode = require('./../types/xpath/XTNode');
 
 var fFunction_sequence_atomize = require('./sequence').atomize;
+var fStaticContext_defineSystemFunction = require('./../classes/StaticContext').defineSystemFunction;
 
 /*
 	2 Accessors

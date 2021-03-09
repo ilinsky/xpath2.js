@@ -8,7 +8,9 @@
  */
 
 var cException = require('./../../../../classes/Exception');
+
 var cXSConstants = require('./../../XSConstants');
+
 var cXSAnySimpleType = require('./../../XSAnySimpleType');
 var cXSAnyAtomicType = require('./../XSAnyAtomicType');
 var cXSUntypedAtomic = require('./../atomic/XSUntypedAtomic');

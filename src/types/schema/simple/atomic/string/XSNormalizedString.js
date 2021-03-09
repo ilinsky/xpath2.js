@@ -7,10 +7,11 @@
  *
  */
 
-var cString = String;
-
 var cXSConstants = require('./../../../XSConstants');
+
 var cXSString = require('./../XSString');
+
+var cString = global.String;
 
 function cXSNormalizedString(sValue) {
 	this.value	= sValue;

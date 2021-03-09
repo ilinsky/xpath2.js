@@ -7,10 +7,11 @@
  *
  */
 
-var cString = String;
-
 var cXSConstants = require('./../../../XSConstants');
+
 var cXSNCName = require('./XSNCName');
+
+var cString = global.String;
 
 function cXSIDREF(sValue) {
 	this.value	= sValue;

@@ -8,7 +8,6 @@
  */
 
 var cException = require('./../../classes/Exception');
-
 var cStaticContext = require('./../../classes/StaticContext');
 
 var cXSDate = require('./../../types/schema/simple/atomic/XSDate');
@@ -16,9 +15,7 @@ var cXSTime = require('./../../types/schema/simple/atomic/XSTime');
 var cXSDateTime = require('./../../types/schema/simple/atomic/XSDateTime');
 var cXSYearMonthDuration = require('./../../types/schema/simple/atomic/duration/XSYearMonthDuration');
 var cXSDayTimeDuration = require('./../../types/schema/simple/atomic/duration/XSDayTimeDuration');
-
 var cXSUntypedAtomic = require('./../../types/schema/simple/atomic/XSUntypedAtomic');
-
 var cXSAnyAtomicType = require('./../../types/schema/simple/XSAnyAtomicType');
 
 var fFunction_sequence_atomize = require('./../../functions/sequence').atomize;

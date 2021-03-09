@@ -7,11 +7,8 @@
  *
  */
 
-var fFunction_dateTime_adjustTimezone = require('./../functions/date').dateTime_adjustTimezone;
-
-var fStaticContext_defineSystemOperator = require('./../classes/StaticContext').defineSystemOperator;
 var hTypes = require('./../types');
- 
+//
 var cXSBoolean = hTypes.XSBoolean;
 var cXSDateTime = hTypes.XSDateTime;
 var cXSDate = hTypes.XSDate;
@@ -19,6 +16,10 @@ var cXSTime = hTypes.XSTime;
 var cXSDecimal = hTypes.XSDecimal;
 var cXSDayTimeDuration = hTypes.XSDayTimeDuration;
 var cXSYearMonthDuration = hTypes.XSYearMonthDuration;
+
+var fFunction_dateTime_adjustTimezone = require('./../functions/date').dateTime_adjustTimezone;
+
+var fStaticContext_defineSystemOperator = require('./../classes/StaticContext').defineSystemOperator;
 
 var cDate = global.Date;
 var cMath = global.Math;

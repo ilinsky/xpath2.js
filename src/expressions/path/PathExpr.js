@@ -7,6 +7,8 @@
  *
  */
 
+var cException = require('./../../classes/Exception');
+
 var fFunction_sequence_order = require('./../../functions/sequence').order;
 
 var fArray_indexOf = function(aValue, oSubject) {

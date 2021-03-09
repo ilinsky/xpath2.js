@@ -10,6 +10,7 @@
 var cException = require('./../../../../classes/Exception');
 
 var cXSConstants = require('./../../XSConstants');
+
 var cXSUntypedAtomic = require('./../atomic/XSUntypedAtomic');
 var cXSString = require('./../atomic/XSString');
 var cXSBoolean = require('./../atomic/XSBoolean');

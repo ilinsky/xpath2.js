@@ -7,7 +7,10 @@
  *
  */
 
+var cException = require('./../../../../../classes/Exception');
+
 var cXSConstants = require('./../../../XSConstants');
+
 var cException = require('./../../../../../classes/Exception');
 
 var cXSInt = require('./XSInt');

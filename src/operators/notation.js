@@ -7,11 +7,12 @@
  *
  */
 
-var fStaticContext_defineSystemOperator = require('./../classes/StaticContext').defineSystemOperator;
 var hTypes = require('./../types');
 
 var cXSBoolean = hTypes.XSBoolean;
 var cXSNOTATION = hTypes.XSNOTATION;
+
+var fStaticContext_defineSystemOperator = require('./../classes/StaticContext').defineSystemOperator;
 
 /*
 	13.1 Operators on NOTATION

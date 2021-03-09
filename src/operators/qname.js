@@ -7,11 +7,11 @@
  *
  */
 
-var fStaticContext_defineSystemOperator = require('./../classes/StaticContext').defineSystemOperator;
 var hTypes = require('./../types');
-
 //
 var cXSBoolean = hTypes.XSBoolean;
+
+var fStaticContext_defineSystemOperator = require('./../classes/StaticContext').defineSystemOperator;
 
 /*
 	11.2 Functions and Operators Related to QNames

@@ -7,17 +7,6 @@
  *
  */
 
-var fIsNaN = global.isNaN;
-var cMath = global.Math;
-
-var cString = global.String;
-var fString_trim = function (sValue) {
-	return cString(sValue).trim();
-};
-var fArray_indexOf = function(aValue, oSubject) {
-    return aValue.indexOf(oSubject);
-};
-
 var cException = require('./../classes/Exception');
 var cStaticContext = require('./../classes/StaticContext');
 
@@ -43,6 +32,17 @@ var cXTText = require('./../types/xpath/node/XTText');
 var cXTProcessingInstruction = require('./../types/xpath/node/XTProcessingInstruction');
 var cXTComment = require('./../types/xpath/node/XTComment');
 var cXTDocument = require('./../types/xpath/node/XTDocument');
+
+var fIsNaN = global.isNaN;
+var cMath = global.Math;
+
+var cString = global.String;
+var fString_trim = function (sValue) {
+	return cString(sValue).trim();
+};
+var fArray_indexOf = function(aValue, oSubject) {
+    return aValue.indexOf(oSubject);
+};
 
 /*
 	15.1 General Functions and Operators on Sequences

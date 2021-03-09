@@ -6,15 +6,16 @@
  *
  *
  */
+
 var cException = require('./../../../../classes/Exception');
 
 var cXSConstants = require('./../../XSConstants');
+
 var cXSAnySimpleType = require('./../../XSAnySimpleType');
 var cXSAnyAtomicType = require('./../XSAnyAtomicType');
 var cXSUntypedAtomic = require('./XSUntypedAtomic');
 var cXSBoolean = require('./XSBoolean');
 var cXSString = require('./XSString');
-
 
 function cXSDouble(nValue) {
 	this.value	= nValue;

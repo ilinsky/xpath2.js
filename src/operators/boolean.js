@@ -7,10 +7,11 @@
  *
  */
 
-var fStaticContext_defineSystemOperator = require('./../classes/StaticContext').defineSystemOperator;
 var hTypes = require('./../types');
-
+//
 var cXSBoolean = hTypes.XSBoolean;
+
+var fStaticContext_defineSystemOperator = require('./../classes/StaticContext').defineSystemOperator;
 
 /*
 	9.2 Operators on Boolean Values

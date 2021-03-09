@@ -11,8 +11,6 @@ var cException = require('./../../classes/Exception');
 var cStaticContext = require('./../../classes/StaticContext');
 
 var cXSAnyAtomicType = require('./../../types/schema/simple/XSAnyAtomicType');
-var fFunction_sequence_atomize = require('../../functions/sequence').atomize;
-
 var cXSBoolean = require('./../../types/schema/simple/atomic/XSBoolean');
 var cXSInteger = require('./../../types/schema/simple/atomic/integer/XSInteger');
 var cXSString = require('./../../types/schema/simple/atomic/XSString');
@@ -36,6 +34,7 @@ var cXSGDay = require('./../../types/schema/simple/atomic/XSGDay');
 
 var cXTNode = require('./../../types/xpath/XTNode');
 
+var fFunction_sequence_atomize = require('../../functions/sequence').atomize;
 var fFunction_sequence_assertSequenceCardinality = require('./../../functions/sequence').assertSequenceCardinality;
 var fFunction_sequence_assertSequenceItemType = require('./../../functions/sequence').assertSequenceItemType;
 

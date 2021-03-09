@@ -7,8 +7,13 @@
  *
  */
 
-var fStaticContext_defineSystemOperator = require('./../classes/StaticContext').defineSystemOperator;
 var hTypes = require('./../types');
+//
+var cXSBoolean = hTypes.XSBoolean;
+var cXSInteger = hTypes.XSInteger;
+var cXSDecimal = hTypes.XSDecimal;
+
+var fStaticContext_defineSystemOperator = require('./../classes/StaticContext').defineSystemOperator;
 
 var rXSNumericLiteral = require('./../types').rXSNumericLiteral;
 
@@ -16,11 +21,6 @@ var cMath = Math;
 var fIsNaN = isNaN;
 var fIsFinite = global.isFinite;
 var cString = String;
-
-//
-var cXSBoolean = hTypes.XSBoolean;
-var cXSInteger = hTypes.XSInteger;
-var cXSDecimal = hTypes.XSDecimal;
 
 /*
 	6.2 Operators on Numeric Values

@@ -7,19 +7,16 @@
  *
  */
 
-var fFunction_sequence_atomize = require('./../../functions/sequence').atomize;
-var fFunction_sequence_assertSequenceCardinality = require('./../../functions/sequence').assertSequenceCardinality;
-
-var cUnionExpr = require('./../sequence/UnionExpr');
-
 var cException = require('./../../classes/Exception');
-
 var cStaticContext = require('./../../classes/StaticContext');
 
 var cXSUntypedAtomic = require('./../../types/schema/simple/atomic/XSUntypedAtomic');
 var cXSYearMonthDuration = require('./../../types/schema/simple/atomic/duration/XSYearMonthDuration');
 var cXSDayTimeDuration = require('./../../types/schema/simple/atomic/duration/XSDayTimeDuration');
 var cXSAnyAtomicType = require('./../../types/schema/simple/XSAnyAtomicType');
+
+var fFunction_sequence_atomize = require('./../../functions/sequence').atomize;
+var fFunction_sequence_assertSequenceCardinality = require('./../../functions/sequence').assertSequenceCardinality;
 
 function cMultiplicativeExpr(oExpr) {
 	this.left	= oExpr;

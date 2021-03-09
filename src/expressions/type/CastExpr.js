@@ -7,9 +7,6 @@
  *
  */
 
-var cUnaryExpr = require('./../arithmetic/UnaryExpr');
-var cSingleType = require('./types/SingleType');
-
 var fFunction_sequence_atomize = require('./../../functions/sequence').atomize;
 var fFunction_sequence_assertSequenceCardinality = require('./../../functions/sequence').assertSequenceCardinality;
 

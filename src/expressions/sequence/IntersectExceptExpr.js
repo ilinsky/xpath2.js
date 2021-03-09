@@ -7,8 +7,6 @@
  *
  */
 
-var cInstanceofExpr = require('./../type/InstanceofExpr');
-
 var cStaticContext = require('./../../classes/StaticContext');
 
 function cIntersectExceptExpr(oExpr) {

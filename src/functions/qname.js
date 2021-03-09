@@ -8,15 +8,16 @@
  */
 
 var cException = require('./../classes/Exception');
-var fStaticContext_defineSystemFunction = require('./../classes/StaticContext').defineSystemFunction;
-var hTypes = require('./../types');
 
+var hTypes = require('./../types');
 //
 var cXSString = hTypes.XSString;
 var cXSQName = hTypes.XSQName;
 var cXSNCName = hTypes.XSNCName;
 var cXSAnyURI = hTypes.XSAnyURI;
 var cXTElement = hTypes.XTElement;
+
+var fStaticContext_defineSystemFunction = require('./../classes/StaticContext').defineSystemFunction;
 
 var rXSQName	= /^(?:(?![0-9-])(\w[\w.-]*)\:)?(?![0-9-])(\w[\w.-]*)$/;
 

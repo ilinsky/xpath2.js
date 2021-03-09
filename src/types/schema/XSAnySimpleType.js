@@ -7,8 +7,9 @@
  *
  */
 
-var cXSAnyType = require('./XSAnyType');
 var cXSConstants = require('./XSConstants');
+
+var cXSAnyType = require('./XSAnyType');
 
 function cXSAnySimpleType() {
 

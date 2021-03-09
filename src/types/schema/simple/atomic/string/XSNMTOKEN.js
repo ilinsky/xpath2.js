@@ -7,10 +7,11 @@
  *
  */
 
-var cString = String;
-
 var cXSConstants = require('./../../../XSConstants');
+
 var cXSToken = require('./XSToken');
+
+var cString = global.String;
 
 function cXSNMTOKEN(sValue) {
 	this.value	= sValue;

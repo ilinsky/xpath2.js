@@ -9,7 +9,6 @@
 
 var cException = require('./../classes/Exception');
 var cStaticContext = require('./../classes/StaticContext');
-var fStaticContext_defineSystemFunction = require('./../classes/StaticContext').defineSystemFunction;
 
 var cXSAnyAtomicType = require('./../types/schema/simple/XSAnyAtomicType');
 var cXSBoolean = require('./../types/schema/simple/atomic/XSBoolean');
@@ -19,6 +18,8 @@ var cXSAnyURI = require('./../types/schema/simple/atomic/XSAnyURI');
 //
 var cXTItem = require('./../types/xpath/XTItem');
 var cXTNode = require('./../types/xpath/XTNode');
+
+var fStaticContext_defineSystemFunction = require('./../classes/StaticContext').defineSystemFunction;
 
 var nNaN = global.NaN;
 

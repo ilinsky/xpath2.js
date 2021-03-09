@@ -7,7 +7,6 @@
  *
  */
 
-var fStaticContext_defineSystemFunction = require('./../classes/StaticContext').defineSystemFunction;
 var hTypes = require('./../types');
 
 //
@@ -16,6 +15,8 @@ var cXSDate = hTypes.XSDate;
 var cXSTime = hTypes.XSTime;
 var cXSAnyURI = hTypes.XSAnyURI;
 var cXSString = hTypes.XSString;
+
+var fStaticContext_defineSystemFunction = require('./../classes/StaticContext').defineSystemFunction;
 
 /*
 	16 Context Functions

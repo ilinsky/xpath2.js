@@ -7,11 +7,9 @@
  *
  */
 
-var fFunction_sequence_toEBV = require('./../../functions/sequence').toEBV;
-
-var cComparisonExpr = require('./../comparison/ComparisonExpr');
-
 var cXSBoolean = require('./../../types/schema/simple/atomic/XSBoolean');
+
+var fFunction_sequence_toEBV = require('./../../functions/sequence').toEBV;
 
 function cAndExpr(oExpr) {
 	this.left	= oExpr;

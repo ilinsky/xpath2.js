@@ -7,18 +7,19 @@
  *
  */
 
-var cString = global.String;
-var fString_trim = function (sValue) {
-	return cString(sValue).trim();
-};
+var cException = require('./../../../../classes/Exception');
 
 var cXSConstants = require('./../../XSConstants');
-var cException = require('./../../../../classes/Exception');
 
 var cXSAnySimpleType = require('./../../XSAnySimpleType');
 var cXSAnyAtomicType = require('./../XSAnyAtomicType');
 var cXSUntypedAtomic = require('./XSUntypedAtomic');
 var cXSString = require('./../atomic/XSString');
+
+var cString = global.String;
+var fString_trim = function (sValue) {
+	return cString(sValue).trim();
+};
 
 function cXSBoolean(bValue) {
 	this.value	= bValue;

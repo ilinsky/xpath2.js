@@ -7,8 +7,6 @@
  *
  */
 
-var cStringLiteral = require('./../../primary/StringLiteral');
-
 function cKindTest(sName) {
 	this.name	= sName;
 	this.args	= [];

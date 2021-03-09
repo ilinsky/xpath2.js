@@ -7,14 +7,14 @@
  *
  */
 
-var fStaticContext_defineSystemFunction = require('./../classes/StaticContext').defineSystemFunction;
-
-var fFunction_sequence_toEBV = require('././../functions/sequence').toEBV;
-
 var cXSBoolean = require('./../types/schema/simple/atomic/XSBoolean');
 //
 var cXTItem = require('./../types/xpath/XTItem');
 var cXTNode = require('./../types/xpath/XTNode');
+
+var fStaticContext_defineSystemFunction = require('./../classes/StaticContext').defineSystemFunction;
+
+var fFunction_sequence_toEBV = require('././../functions/sequence').toEBV;
 
 /*
 	9.1 Additional Boolean Constructor Functions

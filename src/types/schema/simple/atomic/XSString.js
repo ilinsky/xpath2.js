@@ -9,11 +9,12 @@
 
 var cException = require('./../../../../classes/Exception');
 
-var cString = String;
-
 var cXSConstants = require('./../../XSConstants');
+
 var cXSAnySimpleType = require('./../../XSAnySimpleType');
 var cXSAnyAtomicType = require('./../XSAnyAtomicType');
+
+var cString = String;
 
 function cXSString(sValue) {
 	this.value	= sValue;

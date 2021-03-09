@@ -6,14 +6,15 @@
  *
  *
  */
+
+var cException = require('./../../classes/Exception');
+var cStaticContext = require('./../../classes/StaticContext');
+
 var cXSAnyAtomicType = require('./../../types/schema/simple/XSAnyAtomicType');
+var cXSUntypedAtomic = require('./../../types/schema/simple/atomic/XSUntypedAtomic');
 
 var fFunction_sequence_atomize = require('./../../functions/sequence').atomize;
 var fFunction_sequence_assertSequenceCardinality = require('./../../functions/sequence').assertSequenceCardinality;
-
-var cXSUntypedAtomic = require('./../../types/schema/simple/atomic/XSUntypedAtomic');
-
-var cStaticContext = require('./../../classes/StaticContext');
 
 function cUnaryExpr(sOperator, oExpr) {
 	this.operator	= sOperator;

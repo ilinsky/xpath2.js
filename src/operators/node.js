@@ -7,10 +7,11 @@
  *
  */
 
-var fStaticContext_defineSystemOperator = require('./../classes/StaticContext').defineSystemOperator;
 var hTypes = require('./../types');
 
 var cXSBoolean = hTypes.XSBoolean;
+
+var fStaticContext_defineSystemOperator = require('./../classes/StaticContext').defineSystemOperator;
 
 /*
 	14 Functions and Operators on Nodes

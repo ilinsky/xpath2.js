@@ -8,12 +8,14 @@
  */
 
 var cException = require('./../classes/Exception');
-var fStaticContext_defineSystemFunction = require('./../classes/StaticContext').defineSystemFunction;
+
 var hTypes = require('./../types');
 
 //
 var cXSString = hTypes.XSString;
 var cXSAnyURI = hTypes.XSAnyURI;
+
+var fStaticContext_defineSystemFunction = require('./../classes/StaticContext').defineSystemFunction;
 
 /*
 	8 Functions on anyURI

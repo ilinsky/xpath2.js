@@ -8,18 +8,22 @@
  */
 
 var cException = require('./../classes/Exception');
-var fStaticContext_defineSystemFunction = require('./../classes/StaticContext').defineSystemFunction;
-var hTypes = require('./../types');
 
 var sNS_XPF = require('./../namespaces').NS_XPF;
 
 var oCodepointStringCollator = require('./../collators/CodepointStringCollator');
 
+var hTypes = require('./../types');
 //
 var cXSBoolean = hTypes.XSBoolean;
 var cXSString = hTypes.XSString;
 var cXSInteger = hTypes.XSInteger;
 var cXSDouble = hTypes.XSDouble;
+
+var fStaticContext_defineSystemFunction = require('./../classes/StaticContext').defineSystemFunction;
+
+var fFunction_sequence_assertSequenceCardinality = require('./sequence').assertSequenceCardinality;
+var fFunction_sequence_atomize = require('./sequence').atomize;
 
 var fEncodeURIComponent = global.encodeURIComponent;
 var fEncodeURI = global.encodeURI;
@@ -32,9 +36,6 @@ var cString = global.String;
 var fString_trim = function (sValue) {
 	return cString(sValue).trim();
 };
-
-var fFunction_sequence_assertSequenceCardinality = require('./sequence').assertSequenceCardinality;
-var fFunction_sequence_atomize = require('./sequence').atomize;
 
 /*
 	7.2 Functions to Assemble and Disassemble Strings

@@ -7,11 +7,13 @@
  *
  */
 
-var cString = String;
-
 var cException = require('./../../../../classes/Exception');
+
 var cXSConstants = require('./../../XSConstants');
+
 var cXSAnyAtomicType = require('./../XSAnyAtomicType');
+
+var cString = String;
 
 function cXSUntypedAtomic(sValue) {
 	this.value	= sValue;
