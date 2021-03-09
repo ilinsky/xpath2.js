@@ -340,10 +340,10 @@ describe("sequence", function() {
     });
 
     // TODO: Implement mock and check test
-    xdescribe("id()", function() {
+    describe("id()", function() {
         // Not W3C tests
         it('', function() {
-            expect(xpath.evaluate('fn:id("id") instance of element() element()', mockDocument))
+            expect(xpath.evaluate('fn:id("id") instance of element()', mockDocument))
                 .to.have.ordered.members([false]);
         });
         it('', function() {

@@ -17,6 +17,8 @@ var cXSUntypedAtomic = require('./XSUntypedAtomic');
 var cXSBoolean = require('./XSBoolean');
 var cXSString = require('./XSString');
 
+var cString = global.String;
+
 function cXSDouble(nValue) {
 	this.value	= nValue;
 };

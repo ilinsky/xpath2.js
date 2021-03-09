@@ -85,14 +85,13 @@ describe("sequence", function() {
             expect(xpath.evaluate('() to 5'))
                 .to.have.ordered.members([]);
         });
-        // TODO: Check exception text
-        xit('', function() {
+        it('', function() {
             expect(function(){xpath.evaluate('1 to 5.5')})
-                .to.throw(xpath.classes.Exception, '');
+                .to.throw(xpath.classes.Exception, 'Required item type of second operand');
         });
-        xit('', function() {
+        it('', function() {
             expect(function(){xpath.evaluate('1.5 to 5')})
-                to.throw(xpath.classes.Exception, '');
+                .to.throw(xpath.classes.Exception, 'Required item type of first operand');
         });
     });
 });

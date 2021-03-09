@@ -61,14 +61,13 @@ describe("node", function() {
             expect(xpath.evaluate('fn:number(fn:true())'))
                 .to.have.ordered.members([1]);
         });
-        // FIXME: check how to verify NaN return
-        xit('', function() {
-            expect(xpath.evaluate('fn:number(())'))
-                .to.have.ordered.members([NaN]);
+        it('', function() {
+            expect(xpath.evaluate('fn:string(fn:number(()))'))
+                .to.have.ordered.members(["NaN"]);
         });
-        xit('', function() {
-            expect(xpath.evaluate('fn:number("")'))
-                .to.have.ordered.members([NaN]);
+        it('', function() {
+            expect(xpath.evaluate('fn:string(fn:number(""))'))
+                .to.have.ordered.members(["NaN"]);
         });
     });
 
