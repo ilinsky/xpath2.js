@@ -1,4 +1,4 @@
-var xpath = require('./../../../api/xpath.js');
+var xpath = require('./../../../api/xpath');
 var expect = require('chai').expect;
 
 var mockDocument = require('./../../mockDocument');
