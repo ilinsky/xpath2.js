@@ -1,8 +1,12 @@
 function createDocument() {
     return {
         nodeType: 9,
-        localName: '#document',
+        nodeName: '#document',
         childNodes: [],
+        all: {},
+        getElementById: function(id) {
+            return this.all.hasOwnProperty(id) ? this.all[id] : null;
+        }
     };
 }
 
@@ -49,12 +53,17 @@ function createAttribute(name, value) {
         nodeName: name,
         localName: name,
         nodeValue: value
-    }
+    };
 }
 
 function addAttribute(element, attribute) {
     element.attributes.push(attribute);
     attribute.ownerElement = element;
+
+    //
+    if (element.ownerDocument && attribute.nodeName == "id") {
+        element.ownerDocument.all[attribute.nodeValue] = element;
+    }
 }
 
 function addChild(parent, node) {
@@ -70,6 +79,10 @@ function addChild(parent, node) {
 
     node.ownerDocument = parent.nodeType == 9 ? parent: parent.ownerDocument;
 
+    if (parent.nodeType == 9) {
+        parent.documentElement = node;
+    }
+
 	parent.childNodes.push(node);
 }
 
@@ -82,4 +95,4 @@ module.exports = {
     createProcessingInstruction: createProcessingInstruction,
     addAttribute: addAttribute,
     addChild: addChild
-}
+};
