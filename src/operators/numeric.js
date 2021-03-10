@@ -15,8 +15,6 @@ var cXSDecimal = hTypes.XSDecimal;
 
 var fStaticContext_defineSystemOperator = require('./../classes/StaticContext').defineSystemOperator;
 
-var rXSNumericLiteral = require('./../types').rXSNumericLiteral;
-
 var cMath = Math;
 var fIsNaN = isNaN;
 var fIsFinite = global.isFinite;
@@ -114,13 +112,14 @@ fStaticContext_defineSystemOperator("numeric-greater-than", function(oLeft, oRig
 	return new cXSBoolean(oLeft.valueOf() > oRight.valueOf());
 });
 
+var fOperator_numeric_literal	= /^[+-]?(?:(?:(\d+)(?:\.(\d*))?)|(?:\.(\d+)))(?:[eE]([+-])?(\d+))?$/;
 function fOperator_numeric_getPower(oLeft, oRight) {
 	// FIXME: remove 	if (fIsNaN(oLeft) || (cMath.abs(oLeft) == nInfinity) || fIsNaN(oRight) || (cMath.abs(oRight) == nInfinity))
 	// FIXME: implement if (!fIsRealNumber(oLeft) || !fIsRealNumber(oRight))
 	if (fIsNaN(oLeft) || !fIsFinite(cMath.abs(oLeft)) || fIsNaN(oRight) || !fIsFinite(cMath.abs(oRight)))
 		return 0;
-	var aLeft	= cString(oLeft).match(rXSNumericLiteral),
-		aRight	= cString(oRight).match(rXSNumericLiteral),
+	var aLeft	= cString(oLeft).match(fOperator_numeric_literal),
+		aRight	= cString(oRight).match(fOperator_numeric_literal),
 		nPower	= cMath.max(1, (aLeft[2] || aLeft[3] || '').length + (aLeft[5] || 0) * (aLeft[4] == '+' ?-1 : 1), (aRight[2] || aRight[3] || '').length + (aRight[5] || 0) * (aRight[4] == '+' ?-1 : 1));
 	return nPower + (nPower % 2 ? 0 : 1);
 };

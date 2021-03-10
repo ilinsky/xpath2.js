@@ -12,10 +12,11 @@ var cDOMAdapter = require('./../../src/classes/DOMAdapter');
 var cStaticContext = require('./../../src/classes/StaticContext');
 var cDynamicContext = require('./../../src/classes/DynamicContext');
 
-var fParseXSNumeric = require('./../../src/types').parseXSNumeric;
 var cXSString = require('./../../src/types/schema/simple/atomic/XSString');
 var cXSDouble = require('./../../src/types/schema/simple/atomic/XSDouble');
+var cXSDecimal = require('./../../src/types/schema/simple/atomic/XSDecimal');
 var cXSBoolean = require('./../../src/types/schema/simple/atomic/XSBoolean');
+var cXSInteger = require('./../../src/types/schema/simple/atomic/integer/XSInteger');
 
 var cXSAnyAtomicType = require('./../../src/types/schema/simple/XSAnyAtomicType');
 
@@ -70,15 +71,21 @@ cEvaluator.prototype.evaluate	= function(sExpression, vItem, oStaticContext, oSc
 // Converts non-null JavaScript object to XML Schema object
 function fEvaluator_js2xs(vItem) {
 	// Convert types from JavaScript to XPath 2.0
+    var cType;
 	if (typeof vItem == "boolean")
-		vItem	= new cXSBoolean(vItem);
+		cType = cXSBoolean;
 	else
-	if (typeof vItem == "number")
-		vItem	=(!fIsNaN(vItem) && fIsFinite(vItem)) ? fParseXSNumeric(cString(vItem)) : new cXSDouble(vItem);
-	else
-		vItem	= new cXSString(cString(vItem));
+	if (typeof vItem == "number") {
+	    if (fIsNaN(vItem) || !fIsFinite(vItem) || /e/i.test(vItem))
+	        cType = cXSDouble;
+	    else
+	    if (vItem % 1)
+	        cType = cXSDecimal;
+	    else
+	        cType = cXSInteger;
+    }
 	//
-	return vItem;
+	return cType ? new cType(vItem) : new cXSString(vItem.toString());
 };
 
 // Converts non-null XML Schema object to JavaScript object

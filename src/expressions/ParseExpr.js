@@ -2,8 +2,10 @@ var cException = require('./../classes/Exception');
 
 var sNS_XPF = require('./../namespaces').NS_XPF;
 
-var fParseXSNumeric = require('./../types').parseXSNumeric;
-var cXSString = require('./../types').XSString;
+var cXSString = require('./../types/schema/simple/atomic/XSString');
+var cXSDouble = require('./../types/schema/simple/atomic/XSDouble');
+var cXSDecimal = require('./../types/schema/simple/atomic/XSDecimal');
+var cXSInteger = require('./../types/schema/simple/atomic/integer/XSInteger');
 
 var cExpr = require('./Expr');
 
@@ -64,9 +66,7 @@ var cCastExpr = require('./type/CastExpr');
 var cInstanceofExpr = require('./type/InstanceofExpr');
 var cTreatExpr = require('./type/TreatExpr');
 
-
-var rNameTest	= /^(?:(?![0-9-])(\w[\w.-]*|\*)\:)?(?![0-9-])(\w[\w.-]*|\*)$/;
-var rStringLiteral	= /^'([^']*(?:''[^']*)*)'|"([^"]*(?:""[^"]*)*)"$/;
+var rNameTest = /^(?:(?![0-9-])(\w[\w.-]*|\*)\:)?(?![0-9-])(\w[\w.-]*|\*)$/;
 
 function fParseExpr(oLexer, oStaticContext) {
 	var oItem;
@@ -670,13 +670,20 @@ function fParseLiteral(oLexer, oStaticContext) {
 };
 
 // Integer | Decimal | Double
+var rNumericLiteral	= /^[+-]?(?:(?:(\d+)(?:\.(\d*))?)|(?:\.(\d+)))(?:[eE]([+-])?(\d+))?$/;
 function fParseNumericLiteral(oLexer, oStaticContext) {
-	var sValue	= oLexer.peek(),
-		vValue	= fParseXSNumeric(sValue);
-	if (vValue) {
+    var sValue = oLexer.peek(),
+        aMatch = sValue.match(rNumericLiteral);
+    if (aMatch) {
+        var cType	= cXSInteger;
+        if (aMatch[5])
+            cType	= cXSDouble;
+        else
+        if (aMatch[2] || aMatch[3])
+            cType	= cXSDecimal;
 		oLexer.next();
-		return new cNumericLiteral(vValue);
-	}
+        return new cNumericLiteral(new cType(+sValue));
+    }
 };
 
 function fParseParenthesizedExpr(oLexer, oStaticContext) {
@@ -711,6 +718,7 @@ function fParsePrimaryExpr(oLexer, oStaticContext) {
 			|| fParseLiteral(oLexer, oStaticContext);
 };
 
+var rStringLiteral	= /^'([^']*(?:''[^']*)*)'|"([^"]*(?:""[^"]*)*)"$/;
 function fParseStringLiteral(oLexer, oStaticContext) {
 	var aMatch	= oLexer.peek().match(rStringLiteral);
 	if (aMatch) {
