@@ -20,32 +20,31 @@ var cXSBoolean = require('./types/schema/simple/atomic/XSBoolean');
 var cXSInteger = require('./types/schema/simple/atomic/integer/XSInteger');
 
 // "load" functions
-var accessors = require('./functions/accessor');
-var anyuri = require('./functions/anyuri');
-var boolean = require('./functions/boolean');
-var context = require('./functions/context');
-var date = require('./functions/date');
-var node = require('./functions/node');
-var numeric = require('./functions/numeric');
-var qname = require('./functions/qname');
-var sequence = require('./functions/sequence');
-var string = require('./functions/string');
-var trace = require('./functions/trace');
+require('./functions/accessor');
+require('./functions/anyuri');
+require('./functions/boolean');
+require('./functions/context');
+require('./functions/date');
+require('./functions/node');
+require('./functions/numeric');
+require('./functions/qname');
+require('./functions/sequence');
+require('./functions/trace');
 
 // "load" operators
-var binary = require('./operators/binary');
-var boolean = require('./operators/boolean');
-var date = require('./operators/date');
-var node = require('./operators/node');
-var notation = require('./operators/notation');
-var numeric = require('./operators/numeric');
-var qname = require('./operators/qname');
-var sequence = require('./operators/sequence');
+require('./operators/binary');
+require('./operators/boolean');
+require('./operators/date');
+require('./operators/node');
+require('./operators/notation');
+require('./operators/numeric');
+require('./operators/qname');
+require('./operators/sequence');
 
 // "load" datatypes
-var types = require('./types');
+require('./types');
 
-var cString = global.String;
+var cObject = global.Object;
 var fIsNaN = global.isNaN;
 var fIsFinite = global.isFinite;
 
@@ -72,7 +71,7 @@ function fEvaluate(sExpression, vItem, oStaticContext, oScope, oDOMAdapter) {
 	if (typeof oScope == "object")
 		for (var sKey in oScope) {
 			oValue	= oScope[sKey];
-			if (oScope.hasOwnProperty(sKey) && oValue != null)
+			if (cObject.hasOwnProperty.call(oScope, sKey) && oValue != null)
 				oXSScope[sKey]	= oDOMAdapter.isNode(oValue) ? oValue : fEvaluator_js2xs(oValue);
 		}
 
@@ -92,18 +91,18 @@ function fEvaluate(sExpression, vItem, oStaticContext, oScope, oDOMAdapter) {
 // Converts non-null JavaScript object to XML Schema object
 function fEvaluator_js2xs(vItem) {
 	// Convert types from JavaScript to XPath 2.0
-    var cType;
+	var cType;
 	if (typeof vItem == "boolean")
 		cType = cXSBoolean;
 	else
 	if (typeof vItem == "number") {
-	    if (fIsNaN(vItem) || !fIsFinite(vItem) || /e/i.test(vItem))
-	        cType = cXSDouble;
-	    else
-	    if (vItem % 1)
-	        cType = cXSDecimal;
-	    else
-	        cType = cXSInteger;
+		if (fIsNaN(vItem) || !fIsFinite(vItem) || /e/i.test(vItem))
+			cType = cXSDouble;
+		else
+		if (vItem % 1)
+			cType = cXSDecimal;
+		else
+			cType = cXSInteger;
     }
 	//
 	return cType ? new cType(vItem) : new cXSString(vItem.toString());
@@ -124,8 +123,8 @@ function fEvaluator_xs2js(vItem) {
 
 //
 module.exports = {
-    compile: fCompile,
-    evaluate: fEvaluate,
-    defaultDOMAdapter: oDefaultDOMAdapter,
-    defaultStaticContext: oDefaultStaticContext
-}
+	compile: fCompile,
+	evaluate: fEvaluate,
+	defaultDOMAdapter: oDefaultDOMAdapter,
+	defaultStaticContext: oDefaultStaticContext
+};

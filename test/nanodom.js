@@ -5,7 +5,7 @@ function createDocument() {
         childNodes: [],
         all: {},
         getElementById: function(id) {
-            return this.all.hasOwnProperty(id) ? this.all[id] : null;
+            return Object.hasOwnProperty.call(this.all, id) ? this.all[id] : null;
         }
     };
 }
