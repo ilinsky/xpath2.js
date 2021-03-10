@@ -29,6 +29,7 @@ require('./functions/node');
 require('./functions/numeric');
 require('./functions/qname');
 require('./functions/sequence');
+require('./functions/string');
 require('./functions/trace');
 
 // "load" operators
