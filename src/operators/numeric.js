@@ -13,10 +13,10 @@ var cXSInteger = require('./../types/schema/simple/atomic/integer/XSInteger');
 
 var fStaticContext_defineSystemOperator = require('./../classes/StaticContext').defineSystemOperator;
 
-var cMath = Math;
-var fIsNaN = isNaN;
+var cMath = global.Math;
+var fIsNaN = global.isNaN;
 var fIsFinite = global.isFinite;
-var cString = String;
+var cString = global.String;
 
 /*
 	6.2 Operators on Numeric Values

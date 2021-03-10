@@ -10,8 +10,6 @@
 var cException = require('./../../classes/Exception');
 var cStaticContext = require('./../../classes/StaticContext');
 
-var cArray = Array;
-
 var sNS_XPF = require('./../../namespaces').NS_XPF;
 var sNS_XSD = require('./../../namespaces').NS_XSD;
 
@@ -22,6 +20,8 @@ var cXTSequence = require('./../../types/xpath/XTSequence');
 var fFunction_sequence_atomize = cXTSequence.atomize;
 var fFunction_sequence_assertSequenceCardinality = cXTSequence.assertSequenceCardinality;
 var fFunction_sequence_assertSequenceItemType = cXTSequence.assertSequenceItemType;
+
+var cArray = global.Array;
 
 function cFunctionCall(sPrefix, sLocalName, sNameSpaceURI) {
 	this.prefix			= sPrefix;

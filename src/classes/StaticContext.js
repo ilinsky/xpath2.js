@@ -14,7 +14,7 @@ var sNS_XSD = require('./../namespaces').NS_XSD;
 var sNS_XML = require('./../namespaces').NS_XML;
 var sNS_XNS = require('./../namespaces').NS_XNS;
 
-var cFunction = Function;
+var cFunction = global.Function;
 
 function cStaticContext() {
 	this.dataTypes	= {};
