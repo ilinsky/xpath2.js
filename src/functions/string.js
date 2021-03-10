@@ -8,10 +8,9 @@
  */
 
 var cException = require('./../classes/Exception');
+var cStringCollator = require('./../classes/StringCollator');
 
 var sNS_XPF = require('./../namespaces').NS_XPF;
-
-var oCodepointStringCollator = require('./../collators/CodepointStringCollator');
 
 var hTypes = require('./../types');
 //
@@ -37,6 +36,15 @@ var cMath = global.Math;
 var cString = global.String;
 var fString_trim = function (sValue) {
 	return cString(sValue).trim();
+};
+
+var oCodepointStringCollator	= new cStringCollator;
+oCodepointStringCollator.equals	= function(sValue1, sValue2) {
+	return sValue1 == sValue2;
+};
+
+oCodepointStringCollator.compare	= function(sValue1, sValue2) {
+	return sValue1 == sValue2 ? 0 : sValue1 > sValue2 ? 1 :-1;
 };
 
 /*
