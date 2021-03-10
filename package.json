@@ -20,7 +20,7 @@
     },
     "scripts": {
         "lint": "node ./node_modules/eslint/bin/eslint.js **/*.js",
-        "test": "NODE_ENV=test mocha --recursive test"
+        "test": "mocha test/**/*Spec.js"
     },
     "devDependencies": {
         "chai": "^4.3.3",
