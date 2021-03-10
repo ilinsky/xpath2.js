@@ -56,17 +56,42 @@ function fCompile(sExpression, oStaticContext) {
 	return new cExpression(sExpression, oStaticContext);
 };
 
-function fEvaluate(sExpression, vItem, oStaticContext, oScope, oDOMAdapter) {
+function fEvaluate(sExpression, vItem, vStaticContext, oScope, oDOMAdapter) {
+    var oStaticContext = typeof vStaticContext == "function" ? new cStaticContext(vStaticContext) : vStaticContext;
+    return fExecute(sExpression, fCreateDynamicContext(oStaticContext, vItem, oScope, oDOMAdapter));
+}
+
+function fExecute(sExpression, oDynamicContext) {
+    if (!(typeof sExpression == "string")) {
+        throw "Missing or inappropriate type of the expression parameter";
+    }
+    if (!(oDynamicContext instanceof cDynamicContext)) {
+        throw "Missing or inappropriate type of the dynamic context parameter";
+    }
+
+	var oSequence	= fCompile(sExpression, oDynamicContext.staticContext).evaluate(oDynamicContext),
+		aReturn		= [];
+
+	// Convert types from XML Schema to JavaScript
+	for (var nIndex = 0, nLength = oSequence.length, oItem; nIndex < nLength; nIndex++)
+		aReturn[aReturn.length]	= oDynamicContext.DOMAdapter.isNode(oItem = oSequence[nIndex]) ? oItem : fEvaluator_xs2js(oItem);
+	//
+	return aReturn;
+};
+
+function fCreateStaticContext(vResolver, sBaseURI) {
+    return new cStaticContext(vResolver, sBaseURI);
+};
+
+function fCreateDynamicContext(oStaticContext, vItem, oScope, oDOMAdapter) {
 	//
 	if (!oStaticContext)
 		oStaticContext	= oDefaultStaticContext;
-	//
-	if (!oDOMAdapter)
-		oDOMAdapter		= oDefaultDOMAdapter;
 
 	if (typeof vItem == "undefined")
 		vItem	= null;
 
+    // Convert types from JavaScript to XML Schema
 	var oXSScope	= {},
 		oValue;
 	if (typeof oScope == "object")
@@ -76,17 +101,12 @@ function fEvaluate(sExpression, vItem, oStaticContext, oScope, oDOMAdapter) {
 				oXSScope[sKey]	= oDOMAdapter.isNode(oValue) ? oValue : fEvaluator_js2xs(oValue);
 		}
 
-	// Create dynamic context
-	var oContext	= new cDynamicContext(oStaticContext, vItem == null || oDOMAdapter.isNode(vItem) ? vItem : fEvaluator_js2xs(vItem), oXSScope, oDOMAdapter);
-
-	// Evaluate and convert types from XPath 2.0 to JavaScript
-	var oSequence	= fCompile(sExpression, oStaticContext).evaluate(oContext),
-		aReturn		= [];
-
-	for (var nIndex = 0, nLength = oSequence.length, oItem; nIndex < nLength; nIndex++)
-		aReturn[aReturn.length]	= oDOMAdapter.isNode(oItem = oSequence[nIndex]) ? oItem : fEvaluator_xs2js(oItem);
 	//
-	return aReturn;
+	if (!oDOMAdapter)
+		oDOMAdapter		= oDefaultDOMAdapter;
+
+	// Create dynamic context
+	return new cDynamicContext(oStaticContext, vItem == null || oDOMAdapter.isNode(vItem) ? vItem : fEvaluator_js2xs(vItem), oXSScope, oDOMAdapter);
 };
 
 // Converts non-null JavaScript object to XML Schema object
@@ -124,8 +144,10 @@ function fEvaluator_xs2js(vItem) {
 
 //
 module.exports = {
-	compile: fCompile,
+    execute: fExecute,
 	evaluate: fEvaluate,
+	createStaticContext: fCreateStaticContext,
+	createDynamicContext: fCreateDynamicContext,
 	defaultDOMAdapter: oDefaultDOMAdapter,
 	defaultStaticContext: oDefaultStaticContext
 };

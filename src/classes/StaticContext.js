@@ -16,7 +16,10 @@ var sNS_XNS = require('./../namespaces').NS_XNS;
 
 var cFunction = global.Function;
 
-function cStaticContext() {
+function cStaticContext(vNamespaceResolver, sBaseUri) {
+    this.namespaceResolver = vNamespaceResolver || null;
+    this.baseURI = sBaseUri || null;
+    //
 	this.dataTypes	= {};
 	this.documents	= {};
 	this.functions	= {};
