@@ -1,7 +1,7 @@
 var xpath = require('./../../api/xpath');
 var expect = require('chai').expect;
 
-var mockDocument = require('./../nanoMockDocument');
+var mockDocument = require('./../mockNanoDocument');
 
 describe("accessor", function() {
     describe("node-name()", function() {

@@ -2,7 +2,7 @@ var xpath = require('./../../api/xpath');
 var Exception = require('./../../src/classes/Exception');
 var expect = require('chai').expect;
 
-var mockDocument = require('./../miniMockDocument');
+var mockDocument = require('./../mockMiniDocument');
 
 describe("sequence", function() {
     describe("concatenate items", function() {

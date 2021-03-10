@@ -1,7 +1,7 @@
 var xpath = require('./../../api/xpath');
 var expect = require('chai').expect;
 
-var mockDocument = require('./../fullMockDocument');
+var mockDocument = require('./../mockFullDocument');
 
 describe("path", function() {
     describe("kind test", function() {

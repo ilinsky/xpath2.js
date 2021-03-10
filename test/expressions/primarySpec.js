@@ -2,7 +2,7 @@ var xpath = require('./../../api/xpath');
 var Exception = require('./../../src/classes/Exception');
 var expect = require('chai').expect;
 
-var mockDocument = require('./../nanoMockDocument');
+var mockDocument = require('./../mockNanoDocument');
 
 describe("primary", function() {
     describe("context item", function() {
