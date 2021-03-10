@@ -1,4 +1,5 @@
 var xpath = require('./../../api/xpath');
+var Exception = require('./../../src/classes/Exception');
 var expect = require('chai').expect;
 
 var mockDocument = require('./../miniMockDocument');
@@ -35,7 +36,7 @@ describe("sequence", function() {
     describe("union (mixed)", function() {
         it('', function() {
             expect(function(){xpath.evaluate('descendant-or-self::*[@id="test_1"] | 2 | descendant-or-self::*[@id="test_3"]', mockDocument)})
-                .to.throw(xpath.classes.Exception, 'Required item type of second operand of \'union\' is node()');
+                .to.throw(Exception, 'Required item type of second operand of \'union\' is node()');
         });
     });
 
@@ -87,11 +88,11 @@ describe("sequence", function() {
         });
         it('', function() {
             expect(function(){xpath.evaluate('1 to 5.5')})
-                .to.throw(xpath.classes.Exception, 'Required item type of second operand');
+                .to.throw(Exception, 'Required item type of second operand');
         });
         it('', function() {
             expect(function(){xpath.evaluate('1.5 to 5')})
-                .to.throw(xpath.classes.Exception, 'Required item type of first operand');
+                .to.throw(Exception, 'Required item type of first operand');
         });
     });
 });

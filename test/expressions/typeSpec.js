@@ -1,4 +1,5 @@
 var xpath = require('./../../api/xpath');
+var Exception = require('./../../src/classes/Exception');
 var expect = require('chai').expect;
 
 var mockDocument = require('./../nanoMockDocument');
@@ -42,15 +43,15 @@ describe("type", function() {
 
         it('XPST0051', function() {
             expect(function(){xpath.evaluate('1 castable as xs:integers')})
-                .to.throw(xpath.classes.Exception, 'Unknown atomic type xs:integers');
+                .to.throw(Exception, 'Unknown atomic type xs:integers');
         });
         it('XPST0080', function() {
             expect(function(){xpath.evaluate('1 castable as xs:anyAtomicType')})
-                .to.throw(xpath.classes.Exception, 'No value is castable to xs:anyAtomicType');
+                .to.throw(Exception, 'No value is castable to xs:anyAtomicType');
         });
         it('XPST0080', function() {
             expect(function(){xpath.evaluate('1 castable as xs:NOTATION')})
-                .to.throw(xpath.classes.Exception, 'No value is castable to xs:NOTATION');
+                .to.throw(Exception, 'No value is castable to xs:NOTATION');
         });
     });
 

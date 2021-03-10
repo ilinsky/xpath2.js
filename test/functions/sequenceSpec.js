@@ -1,4 +1,5 @@
 var xpath = require('./../../api/xpath');
+var Exception = require('./../../src/classes/Exception');
 var expect = require('chai').expect;
 
 var mockDocument = require('./../nanoMockDocument');
@@ -7,7 +8,7 @@ describe("sequence", function() {
     describe("boolean()", function() {
         it('', function() {
             expect(function(){xpath.evaluate('fn:boolean(("a", "b", "c"))')})
-                .to.throw(xpath.classes.Exception, 'Effective boolean value is not defined for a sequence of two or more items');
+                .to.throw(Exception, 'Effective boolean value is not defined for a sequence of two or more items');
         });
         it('', function() {
             expect(xpath.evaluate('fn:boolean(("a", "b", "c")[1])'))
@@ -166,7 +167,7 @@ describe("sequence", function() {
         });
         it('', function() {
             expect(function(){xpath.evaluate('fn:zero-or-one((1, 2))')})
-                .to.throw(xpath.classes.Exception, 'fn:zero-or-one called with a sequence containing more than one item.');
+                .to.throw(Exception, 'fn:zero-or-one called with a sequence containing more than one item.');
         });
     });
 
@@ -181,7 +182,7 @@ describe("sequence", function() {
         });
         it('', function() {
             expect(function(){xpath.evaluate('fn:one-or-more(())')})
-                .to.throw(xpath.classes.Exception, 'fn:one-or-more called with a sequence containing no items.');
+                .to.throw(Exception, 'fn:one-or-more called with a sequence containing no items.');
         });
     });
 
@@ -192,11 +193,11 @@ describe("sequence", function() {
         });
         it('', function() {
             expect(function(){xpath.evaluate('fn:exactly-one((1, 2))')})
-                .to.throw(xpath.classes.Exception, 'fn:exactly-one called with a sequence containing zero or more than one item.');
+                .to.throw(Exception, 'fn:exactly-one called with a sequence containing zero or more than one item.');
         });
         it('', function() {
             expect(function(){xpath.evaluate('fn:exactly-one(())')})
-                .to.throw(xpath.classes.Exception, 'fn:exactly-one called with a sequence containing zero or more than one item.');
+                .to.throw(Exception, 'fn:exactly-one called with a sequence containing zero or more than one item.');
         });
     });
 
@@ -266,7 +267,7 @@ describe("sequence", function() {
         });
         it('', function() {
             expect(function(){xpath.evaluate('fn:avg((xs:yearMonthDuration("P20Y"), (3, 4, 5)))')})
-                .to.throw(xpath.classes.Exception, '');
+                .to.throw(Exception, '');
         });
     });
 
@@ -285,7 +286,7 @@ describe("sequence", function() {
         });
         it('', function() {
             expect(function(){xpath.evaluate('fn:max((3,4,"Zero"))')})
-                .to.throw(xpath.classes.Exception, '');
+                .to.throw(Exception, '');
         });
     });
 
@@ -308,7 +309,7 @@ describe("sequence", function() {
         });
         it('', function() {
             expect(function(){xpath.evaluate('fn:min((3,4,"Zero"))')})
-                .to.throw(xpath.classes.Exception, '');
+                .to.throw(Exception, '');
         });
     });
 
@@ -335,7 +336,7 @@ describe("sequence", function() {
         });
         it('', function() {
             expect(function(){xpath.evaluate('fn:sum((xs:yearMonthDuration("P20Y"), 9E1))')})
-                .to.throw(xpath.classes.Exception, '');
+                .to.throw(Exception, '');
         });
     });
 

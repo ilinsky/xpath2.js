@@ -1,11 +1,12 @@
 var xpath = require('./../../api/xpath');
+var Exception = require('./../../src/classes/Exception');
 var expect = require('chai').expect;
 
 describe("schema", function() {
     describe("xs:anyAtomicType", function() {
         it('', function() {
             expect(function(){xpath.evaluate('xs:anyAtomicType("try")')})
-                .to.throw(xpath.classes.Exception, 'Unknown type constructor function: {http://www.w3.org/2001/XMLSchema}anyAtomicType()');
+                .to.throw(Exception, 'Unknown type constructor function: {http://www.w3.org/2001/XMLSchema}anyAtomicType()');
         });
     });
 
@@ -39,15 +40,15 @@ describe("schema", function() {
         });
         it('', function() {
             expect(function(){xpath.evaluate('xs:boolean("")')})
-                .to.throw(xpath.classes.Exception, 'Invalid value for cast/constructor.');
+                .to.throw(Exception, 'Invalid value for cast/constructor.');
         });
         it('', function() {
             expect(function(){xpath.evaluate('xs:boolean("2")')})
-                .to.throw(xpath.classes.Exception, 'Invalid value for cast/constructor.');
+                .to.throw(Exception, 'Invalid value for cast/constructor.');
         });
         it('', function() {
             expect(function(){xpath.evaluate('xs:boolean("maybe")')})
-                .to.throw(xpath.classes.Exception, 'Invalid value for cast/constructor.');
+                .to.throw(Exception, 'Invalid value for cast/constructor.');
         });
     });
 
@@ -66,27 +67,27 @@ describe("schema", function() {
         });
         it('', function() {
             expect(function(){xpath.evaluate('xs:decimal("1.2e5")')})
-                .to.throw(xpath.classes.Exception, 'Invalid value for cast/constructor.');
+                .to.throw(Exception, 'Invalid value for cast/constructor.');
         });
         it('', function() {
             expect(function(){xpath.evaluate('xs:decimal("NaN")')})
-                .to.throw(xpath.classes.Exception, 'Invalid value for cast/constructor.');
+                .to.throw(Exception, 'Invalid value for cast/constructor.');
         });
         it('', function() {
             expect(function(){xpath.evaluate('xs:decimal("INF")')})
-                .to.throw(xpath.classes.Exception, 'Invalid value for cast/constructor.');
+                .to.throw(Exception, 'Invalid value for cast/constructor.');
         });
         it('', function() {
             expect(function(){xpath.evaluate('xs:decimal("-INF")')})
-                .to.throw(xpath.classes.Exception, 'Invalid value for cast/constructor.');
+                .to.throw(Exception, 'Invalid value for cast/constructor.');
         });
         it('', function() {
             expect(function(){xpath.evaluate('xs:decimal("")')})
-                .to.throw(xpath.classes.Exception, 'Invalid value for cast/constructor.');
+                .to.throw(Exception, 'Invalid value for cast/constructor.');
         });
         it('', function() {
             expect(function(){xpath.evaluate('xs:decimal("1f5")')})
-                .to.throw(xpath.classes.Exception, 'Invalid value for cast/constructor.');
+                .to.throw(Exception, 'Invalid value for cast/constructor.');
         });
     });
 
@@ -105,35 +106,35 @@ describe("schema", function() {
         });
         it('', function() {
             expect(function(){xpath.evaluate('xs:integer("1.2")')})
-                .to.throw(xpath.classes.Exception, 'Invalid value for cast/constructor.');
+                .to.throw(Exception, 'Invalid value for cast/constructor.');
         });
         it('', function() {
             expect(function(){xpath.evaluate('xs:integer("NaN")')})
-                .to.throw(xpath.classes.Exception, 'Invalid value for cast/constructor.');
+                .to.throw(Exception, 'Invalid value for cast/constructor.');
         });
         it('', function() {
             expect(function(){xpath.evaluate('xs:integer("INF")')})
-                .to.throw(xpath.classes.Exception, 'Invalid value for cast/constructor.');
+                .to.throw(Exception, 'Invalid value for cast/constructor.');
         });
         it('', function() {
             expect(function(){xpath.evaluate('xs:integer("-INF")')})
-                .to.throw(xpath.classes.Exception, 'Invalid value for cast/constructor.');
+                .to.throw(Exception, 'Invalid value for cast/constructor.');
         });
         it('', function() {
             expect(function(){xpath.evaluate('xs:integer("")')})
-                .to.throw(xpath.classes.Exception, 'Invalid value for cast/constructor.');
+                .to.throw(Exception, 'Invalid value for cast/constructor.');
         });
         it('', function() {
             expect(function(){xpath.evaluate('xs:integer("1f5")')})
-                .to.throw(xpath.classes.Exception, 'Invalid value for cast/constructor.');
+                .to.throw(Exception, 'Invalid value for cast/constructor.');
         });
         it('', function() {
             expect(function(){xpath.evaluate('xs:integer("f15")')})
-                .to.throw(xpath.classes.Exception, 'Invalid value for cast/constructor.');
+                .to.throw(Exception, 'Invalid value for cast/constructor.');
         });
         it('', function() {
             expect(function(){xpath.evaluate('xs:integer("15f")')})
-                .to.throw(xpath.classes.Exception, 'Invalid value for cast/constructor.');
+                .to.throw(Exception, 'Invalid value for cast/constructor.');
         });
     });
 
@@ -172,11 +173,11 @@ describe("schema", function() {
         });
         it('', function() {
             expect(function(){xpath.evaluate('xs:float("")')})
-                .to.throw(xpath.classes.Exception, 'Invalid value for cast/constructor.');
+                .to.throw(Exception, 'Invalid value for cast/constructor.');
         });
         it('', function() {
             expect(function(){xpath.evaluate('xs:float("1f5")')})
-                .to.throw(xpath.classes.Exception, 'Invalid value for cast/constructor.');
+                .to.throw(Exception, 'Invalid value for cast/constructor.');
         });
     });
 
@@ -211,11 +212,11 @@ describe("schema", function() {
         });
         it('', function() {
             expect(function(){xpath.evaluate('xs:date("")')})
-                .to.throw(xpath.classes.Exception, 'Invalid value for cast/constructor.');
+                .to.throw(Exception, 'Invalid value for cast/constructor.');
         });
         it('', function() {
             expect(function(){xpath.evaluate('xs:date("DATE")')})
-                .to.throw(xpath.classes.Exception, 'Invalid value for cast/constructor.');
+                .to.throw(Exception, 'Invalid value for cast/constructor.');
         });
     });
 
@@ -262,15 +263,15 @@ describe("schema", function() {
         });
         it('', function() {
             expect(function(){xpath.evaluate('xs:time("")')})
-                .to.throw(xpath.classes.Exception, 'Invalid value for cast/constructor.');
+                .to.throw(Exception, 'Invalid value for cast/constructor.');
         });
         it('', function() {
             expect(function(){xpath.evaluate('xs:time("TIME")')})
-                .to.throw(xpath.classes.Exception, 'Invalid value for cast/constructor.');
+                .to.throw(Exception, 'Invalid value for cast/constructor.');
         });
         it('', function() {
             expect(function(){xpath.evaluate('xs:time("-09:17:23")')})
-                .to.throw(xpath.classes.Exception, 'Invalid value for cast/constructor.');
+                .to.throw(Exception, 'Invalid value for cast/constructor.');
         });
     });
 
@@ -321,27 +322,27 @@ describe("schema", function() {
         });
         it('', function() {
             expect(function(){xpath.evaluate('xs:dateTime("")')})
-                .to.throw(xpath.classes.Exception, 'Invalid value for cast/constructor.');
+                .to.throw(Exception, 'Invalid value for cast/constructor.');
         });
         it('', function() {
             expect(function(){xpath.evaluate('xs:dateTime("NOW")')})
-                .to.throw(xpath.classes.Exception, 'Invalid value for cast/constructor.');
+                .to.throw(Exception, 'Invalid value for cast/constructor.');
         });
         it('', function() {
             expect(function(){xpath.evaluate('xs:dateTime("2012-10-30")')})
-                .to.throw(xpath.classes.Exception, 'Invalid value for cast/constructor.');
+                .to.throw(Exception, 'Invalid value for cast/constructor.');
         });
         it('', function() {
             expect(function(){xpath.evaluate('xs:dateTime("2012-10-30T")')})
-                .to.throw(xpath.classes.Exception, 'Invalid value for cast/constructor.');
+                .to.throw(Exception, 'Invalid value for cast/constructor.');
         });
         it('', function() {
             expect(function(){xpath.evaluate('xs:dateTime("09:17:23")')})
-                .to.throw(xpath.classes.Exception, 'Invalid value for cast/constructor.');
+                .to.throw(Exception, 'Invalid value for cast/constructor.');
         });
         it('', function() {
             expect(function(){xpath.evaluate('xs:dateTime("T09:17:23")')})
-                .to.throw(xpath.classes.Exception, 'Invalid value for cast/constructor.');
+                .to.throw(Exception, 'Invalid value for cast/constructor.');
         });
     });
 
@@ -447,23 +448,23 @@ describe("schema", function() {
         });
         it('', function() {
             expect(function(){xpath.evaluate('xs:yearMonthDuration("")')})
-                .to.throw(xpath.classes.Exception, 'Invalid value for cast/constructor.');
+                .to.throw(Exception, 'Invalid value for cast/constructor.');
         });
         it('', function() {
             expect(function(){xpath.evaluate('xs:yearMonthDuration("DECADE")')})
-                .to.throw(xpath.classes.Exception, 'Invalid value for cast/constructor.');
+                .to.throw(Exception, 'Invalid value for cast/constructor.');
         });
         it('', function() {
             expect(function(){xpath.evaluate('xs:yearMonthDuration("1Y2M")')})
-                .to.throw(xpath.classes.Exception, 'Invalid value for cast/constructor.');
+                .to.throw(Exception, 'Invalid value for cast/constructor.');
         });
         it('', function() {
             expect(function(){xpath.evaluate('xs:yearMonthDuration("--P1Y2M")')})
-                .to.throw(xpath.classes.Exception, 'Invalid value for cast/constructor.');
+                .to.throw(Exception, 'Invalid value for cast/constructor.');
         });
         it('', function() {
             expect(function(){xpath.evaluate('xs:yearMonthDuration("P1Y2.5M")')})
-                .to.throw(xpath.classes.Exception, 'Invalid value for cast/constructor.');
+                .to.throw(Exception, 'Invalid value for cast/constructor.');
         });
     });
 
@@ -502,27 +503,27 @@ describe("schema", function() {
         });
         it('', function() {
             expect(function(){xpath.evaluate('xs:dayTimeDuration("")')})
-                .to.throw(xpath.classes.Exception, 'Invalid value for cast/constructor.');
+                .to.throw(Exception, 'Invalid value for cast/constructor.');
         });
         it('', function() {
             expect(function(){xpath.evaluate('xs:dayTimeDuration("DAY")')})
-                .to.throw(xpath.classes.Exception, 'Invalid value for cast/constructor.');
+                .to.throw(Exception, 'Invalid value for cast/constructor.');
         });
         it('', function() {
             expect(function(){xpath.evaluate('xs:dayTimeDuration("1D")')})
-                .to.throw(xpath.classes.Exception, 'Invalid value for cast/constructor.');
+                .to.throw(Exception, 'Invalid value for cast/constructor.');
         });
         it('', function() {
             expect(function(){xpath.evaluate('xs:dayTimeDuration("--P1D")')})
-                .to.throw(xpath.classes.Exception, 'Invalid value for cast/constructor.');
+                .to.throw(Exception, 'Invalid value for cast/constructor.');
         });
         it('', function() {
             expect(function(){xpath.evaluate('xs:dayTimeDuration("P1.5D")')})
-                .to.throw(xpath.classes.Exception, 'Invalid value for cast/constructor.');
+                .to.throw(Exception, 'Invalid value for cast/constructor.');
         });
         it('', function() {
             expect(function(){xpath.evaluate('xs:dayTimeDuration("P1D5H")')})
-                .to.throw(xpath.classes.Exception, 'Invalid value for cast/constructor.');
+                .to.throw(Exception, 'Invalid value for cast/constructor.');
         });
     });
 
@@ -600,43 +601,43 @@ describe("schema", function() {
         });
         it('', function() {
             expect(function(){xpath.evaluate('xs:duration("")')})
-                .to.throw(xpath.classes.Exception, 'Invalid value for cast/constructor.');
+                .to.throw(Exception, 'Invalid value for cast/constructor.');
         });
         it('', function() {
             expect(function(){xpath.evaluate('xs:duration("YEAR")')})
-                .to.throw(xpath.classes.Exception, 'Invalid value for cast/constructor.');
+                .to.throw(Exception, 'Invalid value for cast/constructor.');
         });
         it('', function() {
             expect(function(){xpath.evaluate('xs:duration("1D")')})
-                .to.throw(xpath.classes.Exception, 'Invalid value for cast/constructor.');
+                .to.throw(Exception, 'Invalid value for cast/constructor.');
         });
         it('', function() {
             expect(function(){xpath.evaluate('xs:duration("--P1D")')})
-                .to.throw(xpath.classes.Exception, 'Invalid value for cast/constructor.');
+                .to.throw(Exception, 'Invalid value for cast/constructor.');
         });
         it('', function() {
             expect(function(){xpath.evaluate('xs:duration("P1.5D")')})
-                .to.throw(xpath.classes.Exception, 'Invalid value for cast/constructor.');
+                .to.throw(Exception, 'Invalid value for cast/constructor.');
         });
         it('', function() {
             expect(function(){xpath.evaluate('xs:duration("P1D5H")')})
-                .to.throw(xpath.classes.Exception, 'Invalid value for cast/constructor.');
+                .to.throw(Exception, 'Invalid value for cast/constructor.');
         });
         it('', function() {
             expect(function(){xpath.evaluate('xs:duration("DECADE")')})
-                .to.throw(xpath.classes.Exception, 'Invalid value for cast/constructor.');
+                .to.throw(Exception, 'Invalid value for cast/constructor.');
         });
         it('', function() {
             expect(function(){xpath.evaluate('xs:duration("1Y2M")')})
-                .to.throw(xpath.classes.Exception, 'Invalid value for cast/constructor.');
+                .to.throw(Exception, 'Invalid value for cast/constructor.');
         });
         it('', function() {
             expect(function(){xpath.evaluate('xs:duration("--P1Y2M")')})
-                .to.throw(xpath.classes.Exception, 'Invalid value for cast/constructor.');
+                .to.throw(Exception, 'Invalid value for cast/constructor.');
         });
         it('', function() {
             expect(function(){xpath.evaluate('xs:duration("P1Y2.5M")')})
-                .to.throw(xpath.classes.Exception, 'Invalid value for cast/constructor.');
+                .to.throw(Exception, 'Invalid value for cast/constructor.');
         });
     });
 
@@ -651,23 +652,23 @@ describe("schema", function() {
         });
         it('', function() {
             expect(function(){xpath.evaluate('fn:string(xs:QName(""))')})
-                .to.throw(xpath.classes.Exception, 'Invalid value for cast/constructor.');
+                .to.throw(Exception, 'Invalid value for cast/constructor.');
         });
         it('', function() {
             expect(function(){xpath.evaluate('fn:string(xs:QName("pref/name"))')})
-                .to.throw(xpath.classes.Exception, 'Invalid value for cast/constructor.');
+                .to.throw(Exception, 'Invalid value for cast/constructor.');
         });
         it('', function() {
             expect(function(){xpath.evaluate('fn:string(xs:QName("*:name"))')})
-                .to.throw(xpath.classes.Exception, 'Invalid value for cast/constructor.');
+                .to.throw(Exception, 'Invalid value for cast/constructor.');
         });
         it('', function() {
             expect(function(){xpath.evaluate('fn:string(xs:QName("pref:*"))')})
-                .to.throw(xpath.classes.Exception, 'Invalid value for cast/constructor.');
+                .to.throw(Exception, 'Invalid value for cast/constructor.');
         });
         it('', function() {
             expect(function(){xpath.evaluate('fn:string(xs:QName("*:*"))')})
-                .to.throw(xpath.classes.Exception, 'Invalid value for cast/constructor.');
+                .to.throw(Exception, 'Invalid value for cast/constructor.');
         });
     });
 
@@ -682,11 +683,11 @@ describe("schema", function() {
         });
         it('', function() {
             expect(function(){xpath.evaluate('fn:string(xs:hexBinary("a"))')})
-                .to.throw(xpath.classes.Exception, 'Invalid value for cast/constructor.');
+                .to.throw(Exception, 'Invalid value for cast/constructor.');
         });
         it('', function() {
             expect(function(){xpath.evaluate('fn:string(xs:hexBinary("w"))')})
-                .to.throw(xpath.classes.Exception, 'Invalid value for cast/constructor.');
+                .to.throw(Exception, 'Invalid value for cast/constructor.');
         });
     });
 
@@ -701,11 +702,11 @@ describe("schema", function() {
         });
         it('', function() {
             expect(function(){xpath.evaluate('fn:string(xs:hexBinary("qg=="))')})
-                .to.throw(xpath.classes.Exception, 'Invalid value for cast/constructor.');
+                .to.throw(Exception, 'Invalid value for cast/constructor.');
         });
         it('', function() {
             expect(function(){xpath.evaluate('fn:string(xs:hexBinary("qg=0"))')})
-                .to.throw(xpath.classes.Exception, 'Invalid value for cast/constructor.');
+                .to.throw(Exception, 'Invalid value for cast/constructor.');
         });
     });
 

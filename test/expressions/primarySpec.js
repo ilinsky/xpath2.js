@@ -1,4 +1,5 @@
 var xpath = require('./../../api/xpath');
+var Exception = require('./../../src/classes/Exception');
 var expect = require('chai').expect;
 
 var mockDocument = require('./../nanoMockDocument');
@@ -50,15 +51,15 @@ describe("primary", function() {
         // no context
         it('', function() {
             expect(function(){xpath.evaluate('.', null)})
-                .to.throw(xpath.classes.Exception, 'Dynamic context does not have context item initialized');
+                .to.throw(Exception, 'Dynamic context does not have context item initialized');
         });
         it('', function() {
             expect(function(){xpath.evaluate('.', undefined)})
-                .to.throw(xpath.classes.Exception, 'Dynamic context does not have context item initialized');
+                .to.throw(Exception, 'Dynamic context does not have context item initialized');
         });
         it('', function() {
             expect(function(){xpath.evaluate('.')})
-                .to.throw(xpath.classes.Exception, 'Dynamic context does not have context item initialized');
+                .to.throw(Exception, 'Dynamic context does not have context item initialized');
         });
     });
 

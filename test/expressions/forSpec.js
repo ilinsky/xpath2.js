@@ -1,4 +1,5 @@
 var xpath = require('./../../api/xpath');
+var Exception = require('./../../src/classes/Exception');
 var expect = require('chai').expect;
 
 describe("for", function() {
@@ -24,6 +25,6 @@ describe("for", function() {
     });
     it('', function() {
         expect(function(){xpath.evaluate("for $a in (1, 2, $b), $b in (3, 4) return $a * $b")})
-            .to.throw(xpath.classes.Exception, "Variable $b has not been declared");
+            .to.throw(Exception, "Variable $b has not been declared");
     });
 });
