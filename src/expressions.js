@@ -41,7 +41,7 @@ var cSingleType = require('./SingleType');
 //
 var cCastableExpr = require('./CastableExpr');
 var cCastExpr = require('./CastExpr');
-var cInstanceofExprv = require('./InstanceofExprv');
+var cInstanceofExpr = require('./InstanceofExpr');
 var cTreatExpr = require('./TreatExpr');
 //
 var cExpr = require('./expressions/Expr');
@@ -93,4 +93,4 @@ module.exports = {
   TreatExpr: cTreatExpr,
   //
   Expr: cExpr
-}
+};

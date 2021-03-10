@@ -13,4 +13,4 @@ module.exports = {
   Lexer: cLexer,
   StaticContext: cStaticContext,
   StringCollator: cStringCollator
-}
+};

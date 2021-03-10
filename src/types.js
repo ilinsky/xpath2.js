@@ -119,7 +119,7 @@ cStaticContext.defineSystemDataType("NMTOKEN",	cXSNMTOKEN);
 cStaticContext.defineSystemDataType("normalizedString",	cXSNormalizedString);
 cStaticContext.defineSystemDataType("token",	cXSToken);
 
-var rXSNumericLiteral	= /^[+\-]?(?:(?:(\d+)(?:\.(\d*))?)|(?:\.(\d+)))(?:[eE]([+-])?(\d+))?$/;
+var rXSNumericLiteral	= /^[+-]?(?:(?:(\d+)(?:\.(\d*))?)|(?:\.(\d+)))(?:[eE]([+-])?(\d+))?$/;
 function fParseXSNumeric(sValue) {
 	var aMatch	= sValue.match(rXSNumericLiteral);
 	if (aMatch) {
@@ -203,4 +203,4 @@ module.exports = {
   XSNMTOKEN: cXSNMTOKEN,
   XSNormalizedString: cXSNormalizedString,
   XSToken: cXSToken
-}
+};
