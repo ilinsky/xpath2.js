@@ -7,11 +7,9 @@
  *
  */
 
-var hTypes = require('./../types');
+var cXSString = require('./../types/schema/simple/atomic/XSString');
 //
-var cXSString = hTypes.XSString;
-//
-var cXTItem = hTypes.XTItem;
+var cXTItem = require('./../types/xpath/XTItem');
 
 var fStaticContext_defineSystemFunction = require('./../classes/StaticContext').defineSystemFunction;
 

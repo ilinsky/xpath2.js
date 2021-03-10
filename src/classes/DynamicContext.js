@@ -8,8 +8,9 @@
  */
 
 var cDOMAdapter = require('./DOMAdapter');
-var cXSDateTime = require('./../types').XSDateTime;
-var cXSDayTimeDuration = require('./../types').XSDayTimeDuration;
+
+var cXSDateTime = require('./../types/schema/simple/atomic/XSDateTime');
+var cXSDayTimeDuration = require('./../types/schema/simple/atomic/duration/XSDayTimeDuration');
 
 function cDynamicContext(oStaticContext, vItem, oScope, oDOMAdapter) {
 	//

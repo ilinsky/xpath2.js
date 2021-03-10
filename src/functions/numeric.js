@@ -9,11 +9,9 @@
 
 var cStaticContext = require('./../classes/StaticContext');
 
-var hTypes = require('./../types');
-//
-var cXSDecimal = hTypes.XSDecimal;
-var cXSDouble = hTypes.XSDouble;
-var cXSInteger = hTypes.XSInteger;
+var cXSDecimal = require('./../types/schema/simple/atomic/XSDecimal');
+var cXSDouble = require('./../types/schema/simple/atomic/XSDouble');
+var cXSInteger = require('./../types/schema/simple/atomic/integer/XSInteger');
 
 var fStaticContext_defineSystemFunction = require('./../classes/StaticContext').defineSystemFunction;
 

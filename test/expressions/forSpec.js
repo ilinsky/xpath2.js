@@ -1,4 +1,4 @@
-var xpath = require('./../../api/xpath');
+var xpath = require('./../../src');
 var Exception = require('./../../src/classes/Exception');
 var expect = require('chai').expect;
 

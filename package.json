@@ -3,7 +3,7 @@
     "version": "0.2.0-alpha-1",
     "license": "(GPL-2.0+ OR MIT)",
     "description": "Open source XPath 2.0 implementation in JavaScript (DOM agnostic)",
-    "main": "api/xpath.js",
+    "main": "src/index.js",
     "keywords": [
         "xpath",
         "xpath2"

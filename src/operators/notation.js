@@ -7,10 +7,8 @@
  *
  */
 
-var hTypes = require('./../types');
-
-var cXSBoolean = hTypes.XSBoolean;
-var cXSNOTATION = hTypes.XSNOTATION;
+var cXSBoolean = require('./../types/schema/simple/atomic/XSBoolean');
+var cXSNOTATION = require('./../types/schema/simple/atomic/XSNOTATION');
 
 var fStaticContext_defineSystemOperator = require('./../classes/StaticContext').defineSystemOperator;
 

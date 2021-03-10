@@ -7,16 +7,15 @@
  *
  */
 
-var hTypes = require('./../types');
-
 //
-var cXSDuration = hTypes.XSDuration;
-var cXSDayTimeDuration = hTypes.XSDayTimeDuration;
-var cXSDateTime = hTypes.XSDateTime;
-var cXSDate = hTypes.XSDate;
-var cXSTime = hTypes.XSTime;
-var cXSDecimal = hTypes.XSDecimal;
-var cXSInteger = hTypes.XSInteger;
+var cXSDate = require('./../types/schema/simple/atomic/XSDate');
+var cXSTime = require('./../types/schema/simple/atomic/XSTime');
+var cXSDecimal = require('./../types/schema/simple/atomic/XSDecimal');
+var cXSDateTime = require('./../types/schema/simple/atomic/XSDateTime');
+var cXSDuration = require('./../types/schema/simple/atomic/XSDuration');
+var cXSDayTimeDuration = require('./../types/schema/simple/atomic/duration/XSDayTimeDuration');
+var cXSDate = require('./../types/schema/simple/atomic/XSDate');
+var cXSInteger = require('./../types/schema/simple/atomic/integer/XSInteger');
 
 var fStaticContext_defineSystemFunction = require('./../classes/StaticContext').defineSystemFunction;
 

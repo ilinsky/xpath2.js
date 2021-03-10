@@ -15,9 +15,8 @@ var cArray = Array;
 var sNS_XPF = require('./../../namespaces').NS_XPF;
 var sNS_XSD = require('./../../namespaces').NS_XSD;
 
-var hTypes = require('./../../types');
-var cXSAnyAtomicType = hTypes.XSAnyAtomicType;
-
+var cXSAnyAtomicType = require('./../../types/schema/simple/XSAnyAtomicType');
+//
 var cXTSequence = require('./../../types/xpath/XTSequence');
 
 var fFunction_sequence_atomize = cXTSequence.atomize;

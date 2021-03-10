@@ -10,7 +10,7 @@
 var cException = require('./../../classes/Exception');
 var cStaticContext = require('./../../classes/StaticContext');
 
-var cXSInteger = require('./../../types').XSInteger;
+var cXSInteger = require('./../../types/schema/simple/atomic/integer/XSInteger');
 //
 var cXTSequence = require('./../../types/xpath/XTSequence');
 

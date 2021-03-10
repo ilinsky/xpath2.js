@@ -7,11 +7,9 @@
  *
  */
 
-var hTypes = require('./../types');
-//
-var cXSBoolean = hTypes.XSBoolean;
-var cXSInteger = hTypes.XSInteger;
-var cXSDecimal = hTypes.XSDecimal;
+var cXSBoolean = require('./../types/schema/simple/atomic/XSBoolean');
+var cXSDecimal = require('./../types/schema/simple/atomic/XSDecimal');
+var cXSInteger = require('./../types/schema/simple/atomic/integer/XSInteger');
 
 var fStaticContext_defineSystemOperator = require('./../classes/StaticContext').defineSystemOperator;
 

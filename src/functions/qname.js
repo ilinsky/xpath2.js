@@ -9,13 +9,13 @@
 
 var cException = require('./../classes/Exception');
 
-var hTypes = require('./../types');
 //
-var cXSString = hTypes.XSString;
-var cXSQName = hTypes.XSQName;
-var cXSNCName = hTypes.XSNCName;
-var cXSAnyURI = hTypes.XSAnyURI;
-var cXTElement = hTypes.XTElement;
+var cXSString = require('./../types/schema/simple/atomic/XSString');
+var cXSQName = require('./../types/schema/simple/atomic/XSQName');
+var cXSAnyURI = require('./../types/schema/simple/atomic/XSAnyURI');
+var cXSNCName = require('./../types/schema/simple/atomic/string/XSNCName');
+//
+var cXTElement = require('./../types/xpath/node/XTElement');
 
 var fStaticContext_defineSystemFunction = require('./../classes/StaticContext').defineSystemFunction;
 

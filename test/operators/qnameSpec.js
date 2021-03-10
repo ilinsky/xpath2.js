@@ -1,4 +1,4 @@
-var xpath = require('./../../api/xpath');
+var xpath = require('./../../src');
 var expect = require('chai').expect;
 
 describe("qname", function() {

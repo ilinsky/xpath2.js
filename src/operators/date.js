@@ -7,15 +7,14 @@
  *
  */
 
-var hTypes = require('./../types');
-//
-var cXSBoolean = hTypes.XSBoolean;
-var cXSDateTime = hTypes.XSDateTime;
-var cXSDate = hTypes.XSDate;
-var cXSTime = hTypes.XSTime;
-var cXSDecimal = hTypes.XSDecimal;
-var cXSDayTimeDuration = hTypes.XSDayTimeDuration;
-var cXSYearMonthDuration = hTypes.XSYearMonthDuration;
+var cXSBoolean = require('./../types/schema/simple/atomic/XSBoolean');
+var cXSDecimal = require('./../types/schema/simple/atomic/XSDecimal');
+var cXSDateTime = require('./../types/schema/simple/atomic/XSDateTime');
+var cXSDate = require('./../types/schema/simple/atomic/XSDate');
+var cXSTime = require('./../types/schema/simple/atomic/XSTime');
+
+var cXSDayTimeDuration = require('./../types/schema/simple/atomic/duration/XSDayTimeDuration');
+var cXSYearMonthDuration = require('./../types/schema/simple/atomic/duration/XSYearMonthDuration');
 
 var fFunction_dateTime_adjustTimezone = require('./../functions/date').dateTime_adjustTimezone;
 

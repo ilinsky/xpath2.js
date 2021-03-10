@@ -12,12 +12,10 @@ var cStringCollator = require('./../classes/StringCollator');
 
 var sNS_XPF = require('./../namespaces').NS_XPF;
 
-var hTypes = require('./../types');
-//
-var cXSBoolean = hTypes.XSBoolean;
-var cXSString = hTypes.XSString;
-var cXSInteger = hTypes.XSInteger;
-var cXSDouble = hTypes.XSDouble;
+var cXSBoolean = require('./../types/schema/simple/atomic/XSBoolean');
+var cXSInteger = require('./../types/schema/simple/atomic/integer/XSInteger');
+var cXSDouble = require('./../types/schema/simple/atomic/XSDouble');
+var cXSString = require('./../types/schema/simple/atomic/XSString');
 //
 var cXTSequence = require('./../types/xpath/XTSequence');
 

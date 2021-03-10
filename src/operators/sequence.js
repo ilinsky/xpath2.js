@@ -9,9 +9,7 @@
 
 var cException = require('./../classes/Exception');
 
-var hTypes = require('./../types');
-//
-var cXSInteger = hTypes.XSInteger;
+var cXSInteger = require('./../types/schema/simple/atomic/integer/XSInteger');
 //
 var cXTSequence = require('./../types/xpath/XTSequence');
 
