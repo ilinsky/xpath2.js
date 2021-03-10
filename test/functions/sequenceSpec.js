@@ -1,7 +1,7 @@
 var xpath = require('./../../api/xpath');
 var expect = require('chai').expect;
 
-var mockDocument = require('./../mockDocument');
+var mockDocument = require('./../nanoMockDocument');
 
 describe("sequence", function() {
     describe("boolean()", function() {

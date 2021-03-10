@@ -1,7 +1,7 @@
 var xpath = require('./../../api/xpath');
 var expect = require('chai').expect;
 
-var mockDocument = require('./../nodeTestDocument');
+var mockDocument = require('./../miniMockDocument');
 
 describe("sequence", function() {
     describe("concatenate items", function() {
