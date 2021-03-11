@@ -9,11 +9,6 @@
 
 var cException = require('./../classes/Exception');
 
-var sNS_XPF = require('./../namespaces').NS_XPF;
-var sNS_XSD = require('./../namespaces').NS_XSD;
-var sNS_XML = require('./../namespaces').NS_XML;
-var sNS_XNS = require('./../namespaces').NS_XNS;
-
 var cFunction = global.Function;
 
 function cStaticContext(vNamespaceResolver, sBaseUri) {
@@ -44,20 +39,25 @@ cStaticContext.prototype.defaultCollection	= null;
 cStaticContext.prototype.namespaceResolver	= null;
 cStaticContext.prototype.defaultElementNamespace	= null;
 
+cStaticContext.NS_XSD	= "http://www.w3.org/2001/XMLSchema";
+cStaticContext.NS_XPF	= "http://www.w3.org/2005/xpath-functions";
+cStaticContext.NS_XNS	= "http://www.w3.org/2000/xmlns/";
+cStaticContext.NS_XML	= "http://www.w3.org/XML/1998/namespace";
+
 //
 var rStaticContext_uri	= /^(?:\{([^\}]+)\})?(.+)$/;
 //
 cStaticContext.prototype.setDataType		= function(sUri, fFunction) {
 	var aMatch	= sUri.match(rStaticContext_uri);
 	if (aMatch)
-		if (aMatch[1] != sNS_XSD)
+		if (aMatch[1] != cStaticContext.NS_XSD)
 			this.dataTypes[sUri]	= fFunction;
 };
 
 cStaticContext.prototype.getDataType		= function(sUri) {
 	var aMatch	= sUri.match(rStaticContext_uri);
 	if (aMatch)
-		return aMatch[1] == sNS_XSD ? cStaticContext.dataTypes[aMatch[2]] : this.dataTypes[sUri];
+		return aMatch[1] == cStaticContext.NS_XSD ? cStaticContext.dataTypes[aMatch[2]] : this.dataTypes[sUri];
 };
 
 cStaticContext.prototype.setDocument		= function(sUri, fFunction) {
@@ -71,14 +71,14 @@ cStaticContext.prototype.getDocument		= function(sUri) {
 cStaticContext.prototype.setFunction		= function(sUri, fFunction) {
 	var aMatch	= sUri.match(rStaticContext_uri);
 	if (aMatch)
-		if (aMatch[1] != sNS_XPF)
+		if (aMatch[1] != cStaticContext.NS_XPF)
 			this.functions[sUri]	= fFunction;
 };
 
 cStaticContext.prototype.getFunction		= function(sUri) {
 	var aMatch	= sUri.match(rStaticContext_uri);
 	if (aMatch)
-		return aMatch[1] == sNS_XPF ? cStaticContext.functions[aMatch[2]] : this.functions[sUri];
+		return aMatch[1] == cStaticContext.NS_XPF ? cStaticContext.functions[aMatch[2]] : this.functions[sUri];
 };
 
 cStaticContext.prototype.setCollation		= function(sUri, fFunction) {
@@ -104,13 +104,13 @@ cStaticContext.prototype.getURIForPrefix	= function(sPrefix) {
 	if (fResolver instanceof cFunction && (sNameSpaceURI = fResolver.call(oResolver, sPrefix)))
 		return sNameSpaceURI;
 	if (sPrefix == 'fn')
-		return sNS_XPF;
+		return cStaticContext.NS_XPF;
 	if (sPrefix == 'xs')
-		return sNS_XSD;
+		return cStaticContext.NS_XSD;
 	if (sPrefix == "xml")
-		return sNS_XML;
+		return cStaticContext.NS_XML;
 	if (sPrefix == "xmlns")
-		return sNS_XNS;
+		return cStaticContext.NS_XNS;
 	//
 	throw new cException("XPST0081"
 //->Debug

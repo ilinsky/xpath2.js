@@ -8,9 +8,8 @@
  */
 
 var cException = require('./../classes/Exception');
+var cStaticContext = require('./../classes/StaticContext');
 var cStringCollator = require('./../classes/StringCollator');
-
-var sNS_XPF = require('./../namespaces').NS_XPF;
 
 var cXSBoolean = require('./../types/schema/simple/atomic/XSBoolean');
 var cXSInteger = require('./../types/schema/simple/atomic/integer/XSInteger');
@@ -119,7 +118,7 @@ fStaticContext_defineSystemFunction("compare",	[[cXSString, '?'], [cXSString, '?
 	if (arguments.length > 2)
 		sCollation	= oCollation.valueOf();
 
-	vCollation	= sCollation == sNS_XPF + "/collation/codepoint" ? oCodepointStringCollator : this.staticContext.getCollation(sCollation);
+	vCollation	= sCollation == cStaticContext.NS_XPF + "/collation/codepoint" ? oCodepointStringCollator : this.staticContext.getCollation(sCollation);
 	if (!vCollation)
 		throw new cException("FOCH0002"
 //->Debug

@@ -10,9 +10,6 @@
 var cException = require('./../../classes/Exception');
 var cStaticContext = require('./../../classes/StaticContext');
 
-var sNS_XPF = require('./../../namespaces').NS_XPF;
-var sNS_XSD = require('./../../namespaces').NS_XSD;
-
 var cXSAnyAtomicType = require('./../../types/schema/simple/XSAnyAtomicType');
 //
 var cXTSequence = require('./../../types/xpath/XTSequence');
@@ -47,7 +44,7 @@ cFunctionCall.prototype.evaluate	= function (oContext) {
 
 	var sUri	= (this.namespaceURI ? '{' + this.namespaceURI + '}' : '') + this.localName;
 	// Call function
-	if (this.namespaceURI == sNS_XPF) {
+	if (this.namespaceURI == cStaticContext.NS_XPF) {
 		if (fFunction = cStaticContext.functions[this.localName]) {
 			// Validate/Cast arguments
 			if (aParameters = cStaticContext.signatures[this.localName])
@@ -64,7 +61,7 @@ cFunctionCall.prototype.evaluate	= function (oContext) {
 		);
 	}
 	else
-	if (this.namespaceURI == sNS_XSD) {
+	if (this.namespaceURI == cStaticContext.NS_XSD) {
 		if ((fFunction = cStaticContext.dataTypes[this.localName]) && this.localName != "NOTATION" && this.localName != "anyAtomicType") {
 			//
 			fFunctionCall_prepare(this.localName, [[cXSAnyAtomicType, '?']], aArguments, oContext);

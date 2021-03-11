@@ -1,6 +1,6 @@
 var cException = require('./../classes/Exception');
 
-var sNS_XPF = require('./../namespaces').NS_XPF;
+var cStaticContext = require('./../classes/StaticContext');
 
 var cXSString = require('./../types/schema/simple/atomic/XSString');
 var cXSDouble = require('./../types/schema/simple/atomic/XSDouble');
@@ -521,7 +521,7 @@ function fParsePathExpr(oLexer, oStaticContext) {
 	// Parse first step
 	if (sSlash == sDoubleSlash || sSlash == sSingleSlash) {
 		oLexer.next();
-		oPathExpr.items.push(new cFunctionCall(null, "root", sNS_XPF));
+		oPathExpr.items.push(new cFunctionCall(null, "root", cStaticContext.NS_XPF));
 		//
 		if (sSlash == sDoubleSlash)
 			oPathExpr.items.push(new cAxisStep("descendant-or-self", new cKindTest("node")));
