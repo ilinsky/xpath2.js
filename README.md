@@ -15,7 +15,7 @@ Execution engine operates using XML Schema 1.1 data types as prescribed by speci
 ## Installation
 
 ```bash
-npm install xpath.js
+npm install xpath2.js
 ```
 
 ## Usage
@@ -41,14 +41,14 @@ xpath.evaluate(expression, evaluationContext, staticContext, initialScope, DOMAd
 
 #### Query without a context
 ```js
-const xpath = require("xpath.js");
+const xpath = require("xpath2.js");
 const result = xpath.evaluate("1 to 5");
 console.log(result); // prints [ 1, 2, 3, 4, 5 ]
 ```
 
 #### Query a document not specifying namespaces
 ```js
-const xpath = require("xpath.js");
+const xpath = require("xpath2.js");
 const xmldom = require("xmldom"); // You are free to use any DOM implementation
 const document = new xmldom.DOMParser().parseFromString('<test>content</test>');
 
@@ -65,7 +65,7 @@ thus making use of prefixes in expressions scoped to the query, and not to the d
 
 Exception `XPST0081` will be thrown, should any of the prefixes used in expression are left unresolved.
 ```js
-const xpath = require("xpath.js");
+const xpath = require("xpath2.js");
 const xmldom = require("xmldom");
 const document = new xmldom.DOMParser().parseFromString('<foo><a:bar xmlns:a="http://a">content</a:bar></foo>');
 const namespaceResolver = function(prefix) {
@@ -80,7 +80,7 @@ console.log(result); // prints [ 'content' ]
 
 #### Passing a JavaScript variable to the evaluation context
 ```js
-const xpath = require("xpath.js");
+const xpath = require("xpath2.js");
 
 const result = xpath.evaluate("$a + 0.2", null, null, {a: 0.1});
 console.log(result); // prints [ 0.3 ]
@@ -90,7 +90,7 @@ console.log(result); // prints [ 0.3 ]
 
 #### Using *execute* function and managing contexts
 ```js
-const xpath = require("xpath.js");
+const xpath = require("xpath2.js");
 const xmldom = require("xmldom");
 const document = new xmldom.DOMParser().parseFromString('<foo><a:bar xmlns:a="http://a">content</a:bar></foo>');
 const namespaceResolver = function(prefix) {
