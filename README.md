@@ -2,14 +2,12 @@ xpath.js - Pure JavaScript implementation of XPath 2.0 parser and evaluator
 ---
 
 ## About
-
 xpath.js is a DOM-agnostic open-source [XPath 2.0](https://www.w3.org/TR/xpath20/) implementation in JavaScript.
 Execution engine operates using XML Schema 1.1 data types as prescribed by specification.
 
 ## Features
 - Full [XPath 2.0](https://www.w3.org/TR/xpath20/) language support
 - Arbitrary tree structure querying with XPath 2.0 language via custom DOMAdapter
-- Custom namespace resolver support (using [StaticContext](./src/classes/StaticContext.js))
 - Custom collation support (using [StaticContext](./src/classes/StaticContext.js))
 - Custom function support (using [StaticContext](./src/classes/StaticContext.js))
 - Variable injection (using [DynamicContext](./src/classes/DynamicContext.js))
@@ -83,4 +81,4 @@ const result = xpath.execute("fn:string(//b:test/text())", dynamic);
 console.log(result); // prints [ 'content' ]
 ```
 
-> Note! Dynamic context carries date/time at creation
+> Note! Dynamic context carries date/time obtained at creation
