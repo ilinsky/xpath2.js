@@ -371,12 +371,11 @@ describe("sequence", function() {
         });
     });
 
-    // TODO: Implement doc-available() function and check test
-    xdescribe("doc-available()", function() {
+    describe("doc-available()", function() {
         // Not W3C tests
         it('', function() {
             expect(xpath.evaluate('fn:doc-available("doc-available.xml")'))
-                .to.have.ordered.members([true]);
+                .to.have.ordered.members([false]);
         });
     });
 

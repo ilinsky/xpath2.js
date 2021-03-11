@@ -426,12 +426,12 @@ fStaticContext_defineSystemFunction("idref",	[[cXSString, '*'], [cXTNode, '', tr
 
 // fn:doc($uri as xs:string?) as document-node()?
 fStaticContext_defineSystemFunction("doc",			[[cXSString, '?', true]],	function(oUri) {
-	throw "Function '" + "doc" + "' not implemented";
+	return oUri && this.staticContext.documents[oUri.valueOf()] || null;
 });
 
 // fn:doc-available($uri as xs:string?) as xs:boolean
 fStaticContext_defineSystemFunction("doc-available",	[[cXSString, '?', true]],	function(oUri) {
-	throw "Function '" + "doc-available" + "' not implemented";
+	return new cXSBoolean(oUri && oUri.valueOf() in this.staticContext.documents);
 });
 
 // fn:collection() as node()*
