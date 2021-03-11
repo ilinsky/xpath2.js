@@ -14,10 +14,7 @@
     },
     "homepage": "https://github.com/ilinsky/xpath.js",
     "bugs": "https://github.com/ilinsky/xpath.js/issues",
-    "author": {
-        "name": "Sergey Ilinsky",
-        "url": "http://www.ilinsky.com"
-    },
+    "author": "Sergey Ilinsky <sergey@ilinsky.com> (http://www.ilinsky.com)",
     "scripts": {
         "lint": "node ./node_modules/eslint/bin/eslint.js **/*.js",
         "test": "mocha test/**/*Spec.js"
