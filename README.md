@@ -58,10 +58,12 @@ console.log(result); // prints [ 'content' ]
 
 #### Query a document with namespace resolver
 Evaluating expressions over documents that specify namespaces requires *namespace resolver* to be provided with the query. 
+Take a note that namespace resolver is there to resolve prefixes found in XPath expressions, 
+thus making use of prefixes in expressions scoped to the query, and not to the document.
 
 > A namespace resolver is a function that takes single argument String *prefix* and returns a namespace uri for it. 
 
-Exception `XPST0081` will any of the prefixes used in expression are left unresolved.
+Exception `XPST0081` will be thrown, should any of the prefixes used in expression are left unresolved.
 ```js
 const xpath = require("xpath.js");
 const xmldom = require("xmldom");
