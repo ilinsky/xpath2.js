@@ -1,11 +1,19 @@
 /*
  * XPath.js - Pure JavaScript implementation of XPath 2.0 parser and evaluator
  *
- * Copyright (c) 2012 Sergey Ilinsky
+ * Copyright (c) 2016 Sergey Ilinsky
  * Dual licensed under the MIT and GPL licenses.
  *
  *
  */
+
+var cException = require('./../../classes/Exception');
+
+var cXSBoolean = require('./../../types/schema/simple/atomic/XSBoolean');
+//
+var cXTSequence = require('./../../types/xpath/XTSequence');
+
+var fFunction_sequence_atomize = cXTSequence.atomize;
 
 function cCastableExpr(oExpr, oType) {
 	this.expression	= oExpr;
@@ -14,26 +22,6 @@ function cCastableExpr(oExpr, oType) {
 
 cCastableExpr.prototype.expression	= null;
 cCastableExpr.prototype.type		= null;
-
-function fCastableExpr_parse (oLexer, oStaticContext) {
-	var oExpr,
-		oType;
-	if (oLexer.eof() ||!(oExpr = fCastExpr_parse(oLexer, oStaticContext)))
-		return;
-
-	if (!(oLexer.peek() == "castable" && oLexer.peek(1) == "as"))
-		return oExpr;
-
-	oLexer.next(2);
-	if (oLexer.eof() ||!(oType = fSingleType_parse(oLexer, oStaticContext)))
-		throw new cException("XPST0003"
-//->Debug
-				, "Expected second operand in castable expression"
-//<-Debug
-		);
-
-	return new cCastableExpr(oExpr, oType);
-};
 
 cCastableExpr.prototype.evaluate	= function(oContext) {
 	var oSequence1	= this.expression.evaluate(oContext),
@@ -51,6 +39,9 @@ cCastableExpr.prototype.evaluate	= function(oContext) {
 		oItemType.cast(fFunction_sequence_atomize(oSequence1, oContext)[0]);
 	}
 	catch (e) {
+		// js error
+		if (!e.code)
+			throw e;
 		if (e.code == "XPST0051")
 			throw e;
 		if (e.code == "XPST0017")
@@ -65,3 +56,6 @@ cCastableExpr.prototype.evaluate	= function(oContext) {
 
 	return [new cXSBoolean(true)];
 };
+
+//
+module.exports = cCastableExpr;

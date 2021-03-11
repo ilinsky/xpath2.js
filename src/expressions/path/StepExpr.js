@@ -1,50 +1,23 @@
 /*
  * XPath.js - Pure JavaScript implementation of XPath 2.0 parser and evaluator
  *
- * Copyright (c) 2012 Sergey Ilinsky
+ * Copyright (c) 2016 Sergey Ilinsky
  * Dual licensed under the MIT and GPL licenses.
  *
  *
  */
+
+var cXSAnyAtomicType = require('./../../types/schema/simple/XSAnyAtomicType');
+//
+var cXTSequence = require('./../../types/xpath/XTSequence');
+
+var fFunction_sequence_toEBV = cXTSequence.toEBV;
 
 function cStepExpr() {
 
 };
 
 cStepExpr.prototype.predicates	= null;
-
-// Static members
-function fStepExpr_parse (oLexer, oStaticContext) {
-	if (!oLexer.eof())
-		return fFilterExpr_parse(oLexer, oStaticContext)
-			|| fAxisStep_parse(oLexer, oStaticContext);
-};
-
-function fStepExpr_parsePredicates (oLexer, oStaticContext, oStep) {
-	var oExpr;
-	// Parse predicates
-	while (oLexer.peek() == '[') {
-		oLexer.next();
-
-		if (oLexer.eof() ||!(oExpr = fExpr_parse(oLexer, oStaticContext)))
-			throw new cException("XPST0003"
-//->Debug
-					, "Expected expression in predicate"
-//<-Debug
-			);
-
-		oStep.predicates.push(oExpr);
-
-		if (oLexer.peek() != ']')
-			throw new cException("XPST0003"
-//->Debug
-					, "Expected ']' token in predicate"
-//<-Debug
-			);
-
-		oLexer.next();
-	}
-};
 
 // Public members
 cStepExpr.prototype.applyPredicates	= function(oSequence, oContext) {
@@ -63,7 +36,7 @@ cStepExpr.prototype.applyPredicates	= function(oSequence, oContext) {
 			//
 			oSequence2	= this.predicates[nPredicateIndex].evaluate(oContext);
 			//
-			if (oSequence2.length == 1 && fXSAnyAtomicType_isNumeric(oSequence2[0])) {
+			if (oSequence2.length == 1 && cXSAnyAtomicType.isNumeric(oSequence2[0])) {
 				if (oSequence2[0].valueOf() == nIndex + 1)
 					oSequence.push(oSequence1[nIndex]);
 			}
@@ -79,3 +52,6 @@ cStepExpr.prototype.applyPredicates	= function(oSequence, oContext) {
 	//
 	return oSequence;
 };
+
+//
+module.exports = cStepExpr;

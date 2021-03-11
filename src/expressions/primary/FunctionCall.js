@@ -1,11 +1,24 @@
 /*
  * XPath.js - Pure JavaScript implementation of XPath 2.0 parser and evaluator
  *
- * Copyright (c) 2012 Sergey Ilinsky
+ * Copyright (c) 2016 Sergey Ilinsky
  * Dual licensed under the MIT and GPL licenses.
  *
  *
  */
+
+var cException = require('./../../classes/Exception');
+var cStaticContext = require('./../../classes/StaticContext');
+
+var cXSAnyAtomicType = require('./../../types/schema/simple/XSAnyAtomicType');
+//
+var cXTSequence = require('./../../types/xpath/XTSequence');
+
+var fFunction_sequence_atomize = cXTSequence.atomize;
+var fFunction_sequence_assertSequenceCardinality = cXTSequence.assertSequenceCardinality;
+var fFunction_sequence_assertSequenceItemType = cXTSequence.assertSequenceItemType;
+
+var cArray = global.Array;
 
 function cFunctionCall(sPrefix, sLocalName, sNameSpaceURI) {
 	this.prefix			= sPrefix;
@@ -19,49 +32,6 @@ cFunctionCall.prototype.localName		= null;
 cFunctionCall.prototype.namespaceURI	= null;
 cFunctionCall.prototype.args	= null;
 
-// Static members
-function fFunctionCall_parse (oLexer, oStaticContext) {
-	var aMatch	= oLexer.peek().match(rNameTest);
-	if (aMatch && oLexer.peek(1) == '(') {
-		// Reserved "functions"
-		if (!aMatch[1] && (aMatch[2] in hKindTest_names))
-			return fAxisStep_parse(oLexer, oStaticContext);
-		// Other functions
-		if (aMatch[1] == '*' || aMatch[2] == '*')
-			throw new cException("XPST0003"
-//->Debug
-					, "Illegal use of wildcard in function name"
-//<-Debug
-			);
-		var oFunctionCallExpr	= new cFunctionCall(aMatch[1] || null, aMatch[2], aMatch[1] ? oStaticContext.getURIForPrefix(aMatch[1]) || null : oStaticContext.defaultFunctionNamespace),
-			oExpr;
-		oLexer.next(2);
-		//
-		if (oLexer.peek() != ')') {
-			do {
-				if (oLexer.eof() ||!(oExpr = fExprSingle_parse(oLexer, oStaticContext)))
-					throw new cException("XPST0003"
-//->Debug
-							, "Expected function call argument"
-//<-Debug
-					);
-				//
-				oFunctionCallExpr.args.push(oExpr);
-			}
-			while (oLexer.peek() == ',' && oLexer.next());
-			//
-			if (oLexer.peek() != ')')
-				throw new cException("XPST0003"
-//->Debug
-						, "Expected ')' token in function call"
-//<-Debug
-				);
-		}
-		oLexer.next();
-		return oFunctionCallExpr;
-	}
-};
-
 // Public members
 cFunctionCall.prototype.evaluate	= function (oContext) {
 	var aArguments	= [],
@@ -74,11 +44,11 @@ cFunctionCall.prototype.evaluate	= function (oContext) {
 
 	var sUri	= (this.namespaceURI ? '{' + this.namespaceURI + '}' : '') + this.localName;
 	// Call function
-	if (this.namespaceURI == sNS_XPF) {
-		if (fFunction = hStaticContext_functions[this.localName]) {
+	if (this.namespaceURI == cStaticContext.NS_XPF) {
+		if (fFunction = cStaticContext.functions[this.localName]) {
 			// Validate/Cast arguments
-			if (aParameters = hStaticContext_signatures[this.localName])
-				fFunctionCall_prepare(this.localName, aParameters, fFunction, aArguments, oContext);
+			if (aParameters = cStaticContext.signatures[this.localName])
+				fFunctionCall_prepare(this.localName, aParameters, aArguments, oContext);
 			//
 			var vResult	= fFunction.apply(oContext, aArguments);
 			//
@@ -91,10 +61,10 @@ cFunctionCall.prototype.evaluate	= function (oContext) {
 		);
 	}
 	else
-	if (this.namespaceURI == sNS_XSD) {
-		if ((fFunction = hStaticContext_dataTypes[this.localName]) && this.localName != "NOTATION" && this.localName != "anyAtomicType") {
+	if (this.namespaceURI == cStaticContext.NS_XSD) {
+		if ((fFunction = cStaticContext.dataTypes[this.localName]) && this.localName != "NOTATION" && this.localName != "anyAtomicType") {
 			//
-			fFunctionCall_prepare(this.localName, [[cXSAnyAtomicType, '?']], fFunction, aArguments, oContext);
+			fFunctionCall_prepare(this.localName, [[cXSAnyAtomicType, '?']], aArguments, oContext);
 			//
 			return aArguments[0] === null ? [] : [fFunction.cast(aArguments[0])];
 		}
@@ -119,8 +89,10 @@ cFunctionCall.prototype.evaluate	= function (oContext) {
 	);
 };
 
+//->Debug
 var aFunctionCall_numbers	= ["first", "second", "third", "fourth", "fifth"];
-function fFunctionCall_prepare(sName, aParameters, fFunction, aArguments, oContext) {
+//<-Debug
+function fFunctionCall_prepare(sName, aParameters, aArguments, oContext) {
 	var oArgument,
 		nArgumentsLength	= aArguments.length,
 		oParameter,
@@ -150,13 +122,13 @@ function fFunctionCall_prepare(sName, aParameters, fFunction, aArguments, oConte
 		oParameter	= aParameters[nIndex];
 		oArgument	= aArguments[nIndex];
 		// Check sequence cardinality
-		fFunctionCall_assertSequenceCardinality(oContext, oArgument, oParameter[1]
+		fFunction_sequence_assertSequenceCardinality(oArgument, oContext, oParameter[1]
 //->Debug
 				, aFunctionCall_numbers[nIndex] + " argument of " + sName + '()'
 //<-Debug
 		);
 		// Check sequence items data types consistency
-		fFunctionCall_assertSequenceItemType(oContext, oArgument, oParameter[0]
+		fFunction_sequence_assertSequenceItemType(oArgument, oContext, oParameter[0]
 //->Debug
 				, aFunctionCall_numbers[nIndex] + " argument of " + sName + '()'
 //<-Debug
@@ -166,101 +138,5 @@ function fFunctionCall_prepare(sName, aParameters, fFunction, aArguments, oConte
 	}
 };
 
-function fFunctionCall_assertSequenceItemType(oContext, oSequence, cItemType
-//->Debug
-		, sSource
-//<-Debug
-	) {
-	//
-	for (var nIndex = 0, nLength = oSequence.length, nNodeType, vItem; nIndex < nLength; nIndex++) {
-		vItem	= oSequence[nIndex];
-		// Node types
-		if (cItemType == cXTNode || cItemType.prototype instanceof cXTNode) {
-			// Check if is node
-			if (!oContext.DOMAdapter.isNode(vItem))
-				throw new cException("XPTY0004"
-//->Debug
-						, "Required item type of " + sSource + " is " + cItemType
-//<-Debug
-				);
-
-			// Check node type
-			if (cItemType != cXTNode) {
-				nNodeType	= oContext.DOMAdapter.getProperty(vItem, "nodeType");
-				if ([null, cXTElement, cXTAttribute, cXTText, cXTText, null, null, cXTProcessingInstruction, cXTComment, cXTDocument, null, null, null][nNodeType] != cItemType)
-					throw new cException("XPTY0004"
-//->Debug
-							, "Required item type of " + sSource + " is " + cItemType
-//<-Debug
-					);
-			}
-		}
-		else
-		// Atomic types
-		if (cItemType == cXSAnyAtomicType || cItemType.prototype instanceof cXSAnyAtomicType) {
-			// Atomize item
-			vItem	= fFunction_sequence_atomize([vItem], oContext)[0];
-			// Convert type if necessary
-			if (cItemType != cXSAnyAtomicType) {
-				// Cast item to expected type if it's type is xs:untypedAtomic
-				if (vItem instanceof cXSUntypedAtomic)
-					vItem	= cItemType.cast(vItem);
-				// Cast item to xs:string if it's type is xs:anyURI
-				else
-				if (cItemType == cXSString/* || cItemType.prototype instanceof cXSString*/) {
-					if (vItem instanceof cXSAnyURI)
-						vItem	= cXSString.cast(vItem);
-				}
-				else
-				if (cItemType == cXSDouble/* || cItemType.prototype instanceof cXSDouble*/) {
-					if (fXSAnyAtomicType_isNumeric(vItem))
-						vItem	= cItemType.cast(vItem);
-				}
-			}
-			// Check type
-			if (!(vItem instanceof cItemType))
-				throw new cException("XPTY0004"
-//->Debug
-						, "Required item type of " + sSource + " is " + cItemType
-//<-Debug
-				);
-			// Write value back to sequence
-			oSequence[nIndex]	= vItem;
-		}
-	}
-};
-
-function fFunctionCall_assertSequenceCardinality(oContext, oSequence, sCardinality
-//->Debug
-		, sSource
-//<-Debug
-	) {
-	var nLength	= oSequence.length;
-	// Check cardinality
-	if (sCardinality == '?') {	// =0 or 1
-		if (nLength > 1)
-			throw new cException("XPTY0004"
-//->Debug
-					, "Required cardinality of " + sSource + " is one or zero"
-//<-Debug
-			);
-	}
-	else
-	if (sCardinality == '+') {	// =1+
-		if (nLength < 1)
-			throw new cException("XPTY0004"
-//->Debug
-					, "Required cardinality of " + sSource + " is one or more"
-//<-Debug
-			);
-	}
-	else
-	if (sCardinality != '*') {	// =1 ('*' =0+)
-		if (nLength != 1)
-			throw new cException("XPTY0004"
-//->Debug
-					, "Required cardinality of " + sSource + " is exactly one"
-//<-Debug
-			);
-	}
-};
+//
+module.exports = cFunctionCall;

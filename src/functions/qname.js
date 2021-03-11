@@ -1,11 +1,25 @@
 /*
  * XPath.js - Pure JavaScript implementation of XPath 2.0 parser and evaluator
  *
- * Copyright (c) 2012 Sergey Ilinsky
+ * Copyright (c) 2016 Sergey Ilinsky
  * Dual licensed under the MIT and GPL licenses.
  *
  *
  */
+
+var cException = require('./../classes/Exception');
+
+//
+var cXSString = require('./../types/schema/simple/atomic/XSString');
+var cXSQName = require('./../types/schema/simple/atomic/XSQName');
+var cXSAnyURI = require('./../types/schema/simple/atomic/XSAnyURI');
+var cXSNCName = require('./../types/schema/simple/atomic/string/XSNCName');
+//
+var cXTElement = require('./../types/xpath/node/XTElement');
+
+var fStaticContext_defineSystemFunction = require('./../classes/StaticContext').defineSystemFunction;
+
+var rXSQName	= /^(?:(?![0-9-])(\w[\w.-]*)\:)?(?![0-9-])(\w[\w.-]*)$/;
 
 /*
 	11.1 Additional Constructor Functions for QNames

@@ -1,11 +1,13 @@
 /*
  * XPath.js - Pure JavaScript implementation of XPath 2.0 parser and evaluator
  *
- * Copyright (c) 2012 Sergey Ilinsky
+ * Copyright (c) 2016 Sergey Ilinsky
  * Dual licensed under the MIT and GPL licenses.
  *
  *
  */
+
+var cException = require('./Exception');
 
 function cLexer(sValue) {
 	var aMatch	= sValue.match(/\$?(?:(?![0-9-])(?:\w[\w.-]*|\*):)?(?![0-9-])(?:\w[\w.-]*|\*)|\(:|:\)|\/\/|\.\.|::|\d+(?:\.\d*)?(?:[eE][+-]?\d+)?|\.\d+(?:[eE][+-]?\d+)?|"[^"]*(?:""[^"]*)*"|'[^']*(?:''[^']*)*'|<<|>>|[!<>]=|(?![0-9-])[\w-]+:\*|\s+|./g);
@@ -29,7 +31,7 @@ function cLexer(sValue) {
 	}
 };
 
-cLexer.prototype.index		= 0;
+cLexer.prototype.index	= 0;
 cLexer.prototype.length	= 0;
 
 cLexer.prototype.reset	= function() {
@@ -51,3 +53,6 @@ cLexer.prototype.back	= function(nOffset) {
 cLexer.prototype.eof	= function() {
 	return this.index >= this.length;
 };
+
+//
+module.exports = cLexer;

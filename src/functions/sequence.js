@@ -1,11 +1,42 @@
 /*
  * XPath.js - Pure JavaScript implementation of XPath 2.0 parser and evaluator
  *
- * Copyright (c) 2012 Sergey Ilinsky
+ * Copyright (c) 2016 Sergey Ilinsky
  * Dual licensed under the MIT and GPL licenses.
  *
  *
  */
+
+var cException = require('./../classes/Exception');
+var cStaticContext = require('./../classes/StaticContext');
+
+var cComparisonExpr = require('./../expressions/comparison/ComparisonExpr');
+var cMultiplicativeExpr = require('./../expressions/arithmetic/MultiplicativeExpr');
+var cAdditiveExpr = require('./../expressions/arithmetic/AdditiveExpr');
+
+var fStaticContext_defineSystemFunction = require('./../classes/StaticContext').defineSystemFunction;
+
+var cXSAnyAtomicType = require('./../types/schema/simple/XSAnyAtomicType');
+var cXSUntypedAtomic = require('./../types/schema/simple/atomic/XSUntypedAtomic');
+var cXSDouble = require('./../types/schema/simple/atomic/XSDouble');
+var cXSInteger = require('./../types/schema/simple/atomic/integer/XSInteger');
+var cXSBoolean = require('./../types/schema/simple/atomic/XSBoolean');
+var cXSString = require('./../types/schema/simple/atomic/XSString');
+var cXSAnyURI = require('./../types/schema/simple/atomic/XSAnyURI');
+//
+var cXTItem = require('./../types/xpath/XTItem');
+var cXTNode = require('./../types/xpath/XTNode');
+var cXTSequence = require('./../types/xpath/XTSequence');
+
+var cMath = global.Math;
+
+var cString = global.String;
+var fString_trim = function (sValue) {
+	return cString(sValue).trim();
+};
+var fArray_indexOf = function(aValue, oSubject) {
+    return aValue.indexOf(oSubject);
+};
 
 /*
 	15.1 General Functions and Operators on Sequences
@@ -48,7 +79,7 @@
 // 15.1 General Functions and Operators on Sequences
 // fn:boolean($arg as item()*) as xs:boolean
 fStaticContext_defineSystemFunction("boolean",	[[cXTItem, '*']],	function(oSequence1) {
-	return new cXSBoolean(fFunction_sequence_toEBV(oSequence1, this));
+	return new cXSBoolean(cXTSequence.toEBV(oSequence1, this));
 });
 
 // fn:index-of($seqParam as xs:anyAtomicType*, $srchParam as xs:anyAtomicType) as xs:integer*
@@ -242,9 +273,9 @@ fStaticContext_defineSystemFunction("avg",	[[cXSAnyAtomicType, '*']],	function(o
 			vRight	= oSequence1[nIndex];
 			if (vRight instanceof cXSUntypedAtomic)
 				vRight	= cXSDouble.cast(vRight);
-			vValue	= hAdditiveExpr_operators['+'](vValue, vRight, this);
+			vValue	= cAdditiveExpr.operators['+'](vValue, vRight, this);
 		}
-		return hMultiplicativeExpr_operators['div'](vValue, new cXSInteger(nLength), this);
+		return cMultiplicativeExpr.operators['div'](vValue, new cXSInteger(nLength), this);
 	}
 	catch (e) {
 		// XPTY0004: Arithmetic operator is not defined for provided arguments
@@ -273,7 +304,7 @@ fStaticContext_defineSystemFunction("max",	[[cXSAnyAtomicType, '*'], [cXSString,
 			vRight	= oSequence1[nIndex];
 			if (vRight instanceof cXSUntypedAtomic)
 				vRight	= cXSDouble.cast(vRight);
-			if (hComparisonExpr_ValueComp_operators['ge'](vRight, vValue, this).valueOf())
+			if (cComparisonExpr.vcOperators['ge'](vRight, vValue, this).valueOf())
 				vValue	= vRight;
 		}
 		return vValue;
@@ -305,7 +336,7 @@ fStaticContext_defineSystemFunction("min",	[[cXSAnyAtomicType, '*'], [cXSString,
 			vRight	= oSequence1[nIndex];
 			if (vRight instanceof cXSUntypedAtomic)
 				vRight	= cXSDouble.cast(vRight);
-			if (hComparisonExpr_ValueComp_operators['le'](vRight, vValue, this).valueOf())
+			if (cComparisonExpr.vcOperators['le'](vRight, vValue, this).valueOf())
 				vValue	= vRight;
 			}
 		return vValue;
@@ -343,7 +374,7 @@ fStaticContext_defineSystemFunction("sum",	[[cXSAnyAtomicType, '*'], [cXSAnyAtom
 			vRight	= oSequence1[nIndex];
 			if (vRight instanceof cXSUntypedAtomic)
 				vRight	= cXSDouble.cast(vRight);
-			vValue	= hAdditiveExpr_operators['+'](vValue, vRight, this);
+			vValue	= cAdditiveExpr.operators['+'](vValue, vRight, this);
 		}
 		return vValue;
 	}
@@ -373,7 +404,7 @@ fStaticContext_defineSystemFunction("id",	[[cXSString, '*'], [cXTNode, '', true]
 	}
 
 	// Get root node and check if it is Document
-	var oDocument	= hStaticContext_functions["root"].call(this, oNode);
+	var oDocument	= cStaticContext.functions["root"].call(this, oNode);
 	if (this.DOMAdapter.getProperty(oDocument, "nodeType") != 9)
 		throw new cException("FODC0001");
 
@@ -384,7 +415,7 @@ fStaticContext_defineSystemFunction("id",	[[cXSString, '*'], [cXTNode, '', true]
 			if ((oNode = this.DOMAdapter.getElementById(oDocument, aValue[nRightIndex])) && fArray_indexOf(oSequence, oNode) ==-1)
 				oSequence.push(oNode);
 	//
-	return fFunction_sequence_order(oSequence, this);
+	return cXTSequence.order(oSequence, this);
 });
 
 // fn:idref($arg as xs:string*) as node()*
@@ -395,18 +426,25 @@ fStaticContext_defineSystemFunction("idref",	[[cXSString, '*'], [cXTNode, '', tr
 
 // fn:doc($uri as xs:string?) as document-node()?
 fStaticContext_defineSystemFunction("doc",			[[cXSString, '?', true]],	function(oUri) {
-	throw "Function '" + "doc" + "' not implemented";
+    if (arguments.length < 1)
+        return null;
+    // TODO: Check if uri is relative and resolve to base
+	return this.staticContext.documents[oUri.valueOf()] || null;
 });
 
 // fn:doc-available($uri as xs:string?) as xs:boolean
 fStaticContext_defineSystemFunction("doc-available",	[[cXSString, '?', true]],	function(oUri) {
-	throw "Function '" + "doc-available" + "' not implemented";
+    // TODO: Check if uri is relative and resolve to base
+	return new cXSBoolean(arguments.length > 0 && (oUri.valueOf() in this.staticContext.documents));
 });
 
 // fn:collection() as node()*
 // fn:collection($arg as xs:string?) as node()*
 fStaticContext_defineSystemFunction("collection",	[[cXSString, '?', true]],	function(oUri) {
-	throw "Function '" + "collection" + "' not implemented";
+    if (arguments.length < 1)
+        return this.staticContext.defaultCollection;
+    // TODO: Check if uri is relative and resolve to base
+	return this.staticContext.collections[oUri.valueOf()] || null;
 });
 
 // fn:element-with-id($arg as xs:string*) as element()*
@@ -414,88 +452,3 @@ fStaticContext_defineSystemFunction("collection",	[[cXSString, '?', true]],	func
 fStaticContext_defineSystemFunction("element-with-id",	[[cXSString, '*'], [cXTNode, '', true]],	function(oSequence1, oNode) {
 	throw "Function '" + "element-with-id" + "' not implemented";
 });
-
-// EBV calculation
-function fFunction_sequence_toEBV(oSequence1, oContext) {
-	if (!oSequence1.length)
-		return false;
-
-	var oItem	= oSequence1[0];
-	if (oContext.DOMAdapter.isNode(oItem))
-		return true;
-
-	if (oSequence1.length == 1) {
-		if (oItem instanceof cXSBoolean)
-			return oItem.value.valueOf();
-		if (oItem instanceof cXSString)
-			return !!oItem.valueOf().length;
-		if (fXSAnyAtomicType_isNumeric(oItem))
-			return !(fIsNaN(oItem.valueOf()) || oItem.valueOf() == 0);
-
-		throw new cException("FORG0006"
-//->Debug
-				, "Effective boolean value is defined only for sequences containing booleans, strings, numbers, URIs, or nodes"
-//<-Debug
-		);
-	}
-
-	throw new cException("FORG0006"
-//->Debug
-			, "Effective boolean value is not defined for a sequence of two or more items"
-//<-Debug
-	);
-};
-
-function fFunction_sequence_atomize(oSequence1, oContext) {
-	var oSequence	= [];
-	for (var nIndex = 0, nLength = oSequence1.length, oItem, vItem; nIndex < nLength; nIndex++) {
-		oItem	= oSequence1[nIndex];
-		vItem	= null;
-		// Untyped
-		if (oItem == null)
-			vItem	= null;
-		// Node type
-		else
-		if (oContext.DOMAdapter.isNode(oItem)) {
-			var fGetProperty	= oContext.DOMAdapter.getProperty;
-			switch (fGetProperty(oItem, "nodeType")) {
-				case 1:	// ELEMENT_NODE
-					vItem	= new cXSUntypedAtomic(fGetProperty(oItem, "textContent"));
-					break;
-				case 2:	// ATTRIBUTE_NODE
-					vItem	= new cXSUntypedAtomic(fGetProperty(oItem, "value"));
-					break;
-				case 3:	// TEXT_NODE
-				case 4:	// CDATA_SECTION_NODE
-				case 8:	// COMMENT_NODE
-					vItem	= new cXSUntypedAtomic(fGetProperty(oItem, "data"));
-					break;
-				case 7:	// PROCESSING_INSTRUCTION_NODE
-					vItem	= new cXSUntypedAtomic(fGetProperty(oItem, "data"));
-					break;
-				case 9:	// DOCUMENT_NODE
-					var oNode	= fGetProperty(oItem, "documentElement");
-					vItem	= new cXSUntypedAtomic(oNode ? fGetProperty(oNode, "textContent") : '');
-					break;
-			}
-		}
-		// Base types
-		else
-		if (oItem instanceof cXSAnyAtomicType)
-			vItem	= oItem;
-
-		//
-		if (vItem != null)
-			oSequence.push(vItem);
-	}
-
-	return oSequence;
-};
-
-// Orders items in sequence in document order
-function fFunction_sequence_order(oSequence1, oContext) {
-	return oSequence1.sort(function(oNode, oNode2) {
-		var nPosition	= oContext.DOMAdapter.compareDocumentPosition(oNode, oNode2);
-		return nPosition & 2 ? 1 : nPosition & 4 ?-1 : 0;
-	});
-};

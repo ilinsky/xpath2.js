@@ -1,22 +1,16 @@
 /*
  * XPath.js - Pure JavaScript implementation of XPath 2.0 parser and evaluator
  *
- * Copyright (c) 2012 Sergey Ilinsky
+ * Copyright (c) 2016 Sergey Ilinsky
  * Dual licensed under the MIT and GPL licenses.
  *
  *
  */
 
+var cException = require('./../../classes/Exception');
+
 function cContextItemExpr() {
 
-};
-
-// Static members
-function fContextItemExpr_parse (oLexer, oStaticContext) {
-	if (oLexer.peek() == '.') {
-		oLexer.next();
-		return new cContextItemExpr;
-	}
 };
 
 // Public members
@@ -30,3 +24,6 @@ cContextItemExpr.prototype.evaluate	= function (oContext) {
 	//
 	return [oContext.item];
 };
+
+//
+module.exports = cContextItemExpr;

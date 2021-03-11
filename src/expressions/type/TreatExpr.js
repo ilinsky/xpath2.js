@@ -1,11 +1,13 @@
 /*
  * XPath.js - Pure JavaScript implementation of XPath 2.0 parser and evaluator
  *
- * Copyright (c) 2012 Sergey Ilinsky
+ * Copyright (c) 2016 Sergey Ilinsky
  * Dual licensed under the MIT and GPL licenses.
  *
  *
  */
+
+var cException = require('./../../classes/Exception');
 
 function cTreatExpr(oExpr, oType) {
 	this.expression	= oExpr;
@@ -14,26 +16,6 @@ function cTreatExpr(oExpr, oType) {
 
 cTreatExpr.prototype.expression	= null;
 cTreatExpr.prototype.type		= null;
-
-function fTreatExpr_parse (oLexer, oStaticContext) {
-	var oExpr,
-		oType;
-	if (oLexer.eof() ||!(oExpr = fCastableExpr_parse(oLexer, oStaticContext)))
-		return;
-
-	if (!(oLexer.peek() == "treat" && oLexer.peek(1) == "as"))
-		return oExpr;
-
-	oLexer.next(2);
-	if (oLexer.eof() ||!(oType = fSequenceType_parse(oLexer, oStaticContext)))
-		throw new cException("XPST0003"
-//->Debug
-				, "Expected second operand in treat expression"
-//<-Debug
-		);
-
-	return new cTreatExpr(oExpr, oType);
-};
 
 cTreatExpr.prototype.evaluate	= function(oContext) {
 	var oSequence1	= this.expression.evaluate(oContext),
@@ -83,3 +65,6 @@ cTreatExpr.prototype.evaluate	= function(oContext) {
 	//
 	return oSequence1;
 };
+
+//
+module.exports = cTreatExpr;

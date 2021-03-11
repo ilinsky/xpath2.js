@@ -1,11 +1,18 @@
 /*
  * XPath.js - Pure JavaScript implementation of XPath 2.0 parser and evaluator
  *
- * Copyright (c) 2012 Sergey Ilinsky
+ * Copyright (c) 2016 Sergey Ilinsky
  * Dual licensed under the MIT and GPL licenses.
  *
  *
  */
+
+var cException = require('./../classes/Exception');
+
+var cXSString = require('./../types/schema/simple/atomic/XSString');
+var cXSAnyURI = require('./../types/schema/simple/atomic/XSAnyURI');
+
+var fStaticContext_defineSystemFunction = require('./../classes/StaticContext').defineSystemFunction;
 
 /*
 	8 Functions on anyURI

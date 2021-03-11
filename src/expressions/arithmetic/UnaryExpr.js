@@ -1,11 +1,22 @@
 /*
  * XPath.js - Pure JavaScript implementation of XPath 2.0 parser and evaluator
  *
- * Copyright (c) 2012 Sergey Ilinsky
+ * Copyright (c) 2016 Sergey Ilinsky
  * Dual licensed under the MIT and GPL licenses.
  *
  *
  */
+
+var cException = require('./../../classes/Exception');
+var cStaticContext = require('./../../classes/StaticContext');
+
+var cXSAnyAtomicType = require('./../../types/schema/simple/XSAnyAtomicType');
+var cXSUntypedAtomic = require('./../../types/schema/simple/atomic/XSUntypedAtomic');
+//
+var cXTSequence = require('./../../types/xpath/XTSequence');
+
+var fFunction_sequence_atomize = cXTSequence.atomize;
+var fFunction_sequence_assertSequenceCardinality = cXTSequence.assertSequenceCardinality;
 
 function cUnaryExpr(sOperator, oExpr) {
 	this.operator	= sOperator;
@@ -16,10 +27,10 @@ cUnaryExpr.prototype.operator	= null;
 cUnaryExpr.prototype.expression	= null;
 
 //
-var hUnaryExpr_operators	= {};
-hUnaryExpr_operators['-']	= function(oRight, oContext) {
-	if (fXSAnyAtomicType_isNumeric(oRight))
-		return hStaticContext_operators["numeric-unary-minus"].call(oContext, oRight);
+cUnaryExpr.operators	= {};
+cUnaryExpr.operators['-']	= function(oRight, oContext) {
+	if (cXSAnyAtomicType.isNumeric(oRight))
+		return cStaticContext.operators["numeric-unary-minus"].call(oContext, oRight);
 	//
 	throw new cException("XPTY0004"
 //->Debug
@@ -27,40 +38,15 @@ hUnaryExpr_operators['-']	= function(oRight, oContext) {
 //<-Debug
 	);	// Arithmetic operator is not defined for arguments of types ({type1}, {type2})
 };
-hUnaryExpr_operators['+']	= function(oRight, oContext) {
-	if (fXSAnyAtomicType_isNumeric(oRight))
-		return hStaticContext_operators["numeric-unary-plus"].call(oContext, oRight);
+cUnaryExpr.operators['+']	= function(oRight, oContext) {
+	if (cXSAnyAtomicType.isNumeric(oRight))
+		return cStaticContext.operators["numeric-unary-plus"].call(oContext, oRight);
 	//
 	throw new cException("XPTY0004"
 //->Debug
 			, "Arithmetic operator is not defined for provided arguments"
 //<-Debug
 	);	// Arithmetic operator is not defined for arguments of types ({type1}, {type2})
-};
-
-// Static members
-// UnaryExpr	:= ("-" | "+")* ValueExpr
-function fUnaryExpr_parse (oLexer, oStaticContext) {
-	if (oLexer.eof())
-		return;
-	if (!(oLexer.peek() in hUnaryExpr_operators))
-		return fValueExpr_parse(oLexer, oStaticContext);
-
-	// Unary expression
-	var sOperator	= '+',
-		oExpr;
-	while (oLexer.peek() in hUnaryExpr_operators) {
-		if (oLexer.peek() == '-')
-			sOperator	= sOperator == '-' ? '+' : '-';
-		oLexer.next();
-	}
-	if (oLexer.eof() ||!(oExpr = fValueExpr_parse(oLexer, oStaticContext)))
-		throw new cException("XPST0003"
-//->Debug
-				, "Expected operand in unary expression"
-//<-Debug
-		);
-	return new cUnaryExpr(sOperator, oExpr);
 };
 
 cUnaryExpr.prototype.evaluate	= function (oContext) {
@@ -70,15 +56,18 @@ cUnaryExpr.prototype.evaluate	= function (oContext) {
 	if (!oRight.length)
 		return [];
 	// Assert cardinality
-	fFunctionCall_assertSequenceCardinality(oContext, oRight, '?'
+ 	fFunction_sequence_assertSequenceCardinality(oRight, oContext, '?'
 //->Debug
-			, "second operand of '" + this.operator + "'"
+ 			, "second operand of '" + this.operator + "'"
 //<-Debug
-	);
+ 	);
 
 	var vRight	= oRight[0];
 	if (vRight instanceof cXSUntypedAtomic)
 		vRight	= cXSDouble.cast(vRight);	// cast to xs:double
 
-	return [hUnaryExpr_operators[this.operator](vRight, oContext)];
+	return [cUnaryExpr.operators[this.operator](vRight, oContext)];
 };
+
+//
+module.exports = cUnaryExpr;

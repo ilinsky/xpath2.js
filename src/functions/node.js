@@ -1,11 +1,27 @@
 /*
  * XPath.js - Pure JavaScript implementation of XPath 2.0 parser and evaluator
  *
- * Copyright (c) 2012 Sergey Ilinsky
+ * Copyright (c) 2016 Sergey Ilinsky
  * Dual licensed under the MIT and GPL licenses.
  *
  *
  */
+
+var cException = require('./../classes/Exception');
+var cStaticContext = require('./../classes/StaticContext');
+
+var cXSAnyAtomicType = require('./../types/schema/simple/XSAnyAtomicType');
+var cXSBoolean = require('./../types/schema/simple/atomic/XSBoolean');
+var cXSString = require('./../types/schema/simple/atomic/XSString');
+var cXSDouble = require('./../types/schema/simple/atomic/XSDouble');
+var cXSAnyURI = require('./../types/schema/simple/atomic/XSAnyURI');
+//
+var cXTItem = require('./../types/xpath/XTItem');
+var cXTNode = require('./../types/xpath/XTNode');
+
+var fStaticContext_defineSystemFunction = require('./../classes/StaticContext').defineSystemFunction;
+
+var nNaN = global.NaN;
 
 /*
 	14 Functions and Operators on Nodes
@@ -35,7 +51,7 @@ fStaticContext_defineSystemFunction("name",	[[cXTNode, '?', true]],	function(oNo
 	if (oNode == null)
 		return new cXSString('');
 	//
-	var vValue	= hStaticContext_functions["node-name"].call(this, oNode);
+	var vValue	= cStaticContext.functions["node-name"].call(this, oNode);
 	return new cXSString(vValue == null ? '' : vValue.toString());
 });
 
@@ -121,7 +137,7 @@ fStaticContext_defineSystemFunction("lang",	[[cXSString, '?'], [cXTNode, '', tru
 		if (aAttributes = fGetProperty(oNode, "attributes"))
 			for (var nIndex = 0, nLength = aAttributes.length; nIndex < nLength; nIndex++)
 				if (fGetProperty(aAttributes[nIndex], "nodeName") == "xml:lang")
-					return new cXSBoolean(fGetProperty(aAttributes[nIndex], "value").replace(/-.+/, '').toLowerCase() == sLang.valueOf().replace(/-.+/, '').toLowerCase());
+					return new cXSBoolean(fGetProperty(aAttributes[nIndex], "nodeValue").replace(/-.+/, '').toLowerCase() == sLang.valueOf().replace(/-.+/, '').toLowerCase());
 	//
 	return new cXSBoolean(false);
 });

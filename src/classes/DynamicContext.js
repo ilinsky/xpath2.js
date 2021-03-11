@@ -1,11 +1,16 @@
 /*
  * XPath.js - Pure JavaScript implementation of XPath 2.0 parser and evaluator
  *
- * Copyright (c) 2012 Sergey Ilinsky
+ * Copyright (c) 2016 Sergey Ilinsky
  * Dual licensed under the MIT and GPL licenses.
  *
  *
  */
+
+var cDOMAdapter = require('./DOMAdapter');
+
+var cXSDateTime = require('./../types/schema/simple/atomic/XSDateTime');
+var cXSDayTimeDuration = require('./../types/schema/simple/atomic/duration/XSDayTimeDuration');
 
 function cDynamicContext(oStaticContext, vItem, oScope, oDOMAdapter) {
 	//
@@ -18,10 +23,10 @@ function cDynamicContext(oStaticContext, vItem, oScope, oDOMAdapter) {
 	//
 	this.DOMAdapter	= oDOMAdapter || new cDOMAdapter;
 	//
-	var oDate	= new cDate,
+	var oDate	= new global.Date,
 		nOffset	= oDate.getTimezoneOffset();
 	this.dateTime	= new cXSDateTime(oDate.getFullYear(), oDate.getMonth() + 1, oDate.getDate(), oDate.getHours(), oDate.getMinutes(), oDate.getSeconds() + oDate.getMilliseconds() / 1000, -nOffset);
-	this.timezone	= new cXSDayTimeDuration(0, cMath.abs(~~(nOffset / 60)), cMath.abs(nOffset % 60), 0, nOffset > 0);
+	this.timezone	= new cXSDayTimeDuration(0, global.Math.abs(~~(nOffset / 60)), global.Math.abs(nOffset % 60), 0, nOffset > 0);
 };
 
 cDynamicContext.prototype.item		= null;
@@ -54,3 +59,6 @@ cDynamicContext.prototype.popVariable	= function(sName) {
 		}
 	}
 };
+
+//
+module.exports = cDynamicContext;

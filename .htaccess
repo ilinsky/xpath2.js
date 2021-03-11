@@ -1,5 +1,0 @@
-## Rewrite engine
-RewriteEngine on
-
-##
-RewriteRule xpath.js res/assemble.php?path=../api/

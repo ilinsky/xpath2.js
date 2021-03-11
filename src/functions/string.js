@@ -1,11 +1,48 @@
 /*
  * XPath.js - Pure JavaScript implementation of XPath 2.0 parser and evaluator
  *
- * Copyright (c) 2012 Sergey Ilinsky
+ * Copyright (c) 2016 Sergey Ilinsky
  * Dual licensed under the MIT and GPL licenses.
  *
  *
  */
+
+var cException = require('./../classes/Exception');
+var cStaticContext = require('./../classes/StaticContext');
+var cStringCollator = require('./../classes/StringCollator');
+
+var cXSBoolean = require('./../types/schema/simple/atomic/XSBoolean');
+var cXSInteger = require('./../types/schema/simple/atomic/integer/XSInteger');
+var cXSDouble = require('./../types/schema/simple/atomic/XSDouble');
+var cXSString = require('./../types/schema/simple/atomic/XSString');
+//
+var cXTSequence = require('./../types/xpath/XTSequence');
+
+var fStaticContext_defineSystemFunction = require('./../classes/StaticContext').defineSystemFunction;
+
+var fFunction_sequence_assertSequenceCardinality = cXTSequence.assertSequenceCardinality;
+var fFunction_sequence_atomize = cXTSequence.atomize;
+
+var fEncodeURIComponent = global.encodeURIComponent;
+var fEncodeURI = global.encodeURI;
+var fDecodeURI = global.decodeURI;
+
+var cRegExp = global.RegExp;
+var cMath = global.Math;
+
+var cString = global.String;
+var fString_trim = function (sValue) {
+	return cString(sValue).trim();
+};
+
+var oCodepointStringCollator	= new cStringCollator;
+oCodepointStringCollator.equals	= function(sValue1, sValue2) {
+	return sValue1 == sValue2;
+};
+
+oCodepointStringCollator.compare	= function(sValue1, sValue2) {
+	return sValue1 == sValue2 ? 0 : sValue1 > sValue2 ? 1 :-1;
+};
 
 /*
 	7.2 Functions to Assemble and Disassemble Strings
@@ -81,7 +118,7 @@ fStaticContext_defineSystemFunction("compare",	[[cXSString, '?'], [cXSString, '?
 	if (arguments.length > 2)
 		sCollation	= oCollation.valueOf();
 
-	vCollation	= sCollation == sNS_XPF + "/collation/codepoint" ? oCodepointStringCollator : this.staticContext.getCollation(sCollation);
+	vCollation	= sCollation == cStaticContext.NS_XPF + "/collation/codepoint" ? oCodepointStringCollator : this.staticContext.getCollation(sCollation);
 	if (!vCollation)
 		throw new cException("FOCH0002"
 //->Debug
@@ -118,7 +155,7 @@ fStaticContext_defineSystemFunction("concat",	null,	function() {
 	for (var nIndex = 0, nLength = arguments.length, oSequence; nIndex < nLength; nIndex++) {
 		oSequence	= arguments[nIndex];
 		// Assert cardinality
-		fFunctionCall_assertSequenceCardinality(this, oSequence, '?'
+		fFunction_sequence_assertSequenceCardinality(oSequence, this, '?'
 //->Debug
 				, "each argument of concat()"
 //<-Debug
@@ -207,12 +244,12 @@ fStaticContext_defineSystemFunction("translate",	[[cXSString, '?'], [cXSString],
 
 // fn:encode-for-uri($uri-part as xs:string?) as xs:string
 fStaticContext_defineSystemFunction("encode-for-uri",	[[cXSString, '?']],	function(oValue) {
-	return new cXSString(oValue == null ? '' : window.encodeURIComponent(oValue));
+	return new cXSString(oValue == null ? '' : fEncodeURIComponent(oValue));
 });
 
 // fn:iri-to-uri($iri as xs:string?) as xs:string
 fStaticContext_defineSystemFunction("iri-to-uri",		[[cXSString, '?']],	function(oValue) {
-	return new cXSString(oValue == null ? '' : window.encodeURI(window.decodeURI(oValue)));
+	return new cXSString(oValue == null ? '' : fEncodeURI(fDecodeURI(oValue)));
 });
 
 // fn:escape-html-uri($uri as xs:string?) as xs:string
@@ -223,7 +260,7 @@ fStaticContext_defineSystemFunction("escape-html-uri",	[[cXSString, '?']],	funct
 	var aValue	= oValue.valueOf().split('');
 	for (var nIndex = 0, nLength = aValue.length, nCode; nIndex < nLength; nIndex++)
 		if ((nCode = aValue[nIndex].charCodeAt(0)) < 32 || nCode > 126)
-			aValue[nIndex]	= window.encodeURIComponent(aValue[nIndex]);
+			aValue[nIndex]	= fEncodeURIComponent(aValue[nIndex]);
 	return new cXSString(aValue.join(''));
 });
 

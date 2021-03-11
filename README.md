@@ -1,64 +1,110 @@
-    ------------------------------------
-    XPath.js - Pure JavaScript implementation of XPath 2.0 parser and evaluator
-    ------------------------------------
-    Copyright (c) 2012 Sergey Ilinsky
-    Dual licensed under the MIT and GPL
-    ------------------------------------
+xpath.js - Pure JavaScript implementation of XPath 2.0 parser and evaluator
+---
 
+## About
+xpath.js is a DOM-agnostic open-source [XPath 2.0](https://www.w3.org/TR/xpath20/) implementation in JavaScript.
+Execution engine operates using XML Schema 1.1 data types as prescribed by specification.
 
-### About:
+## Features
+- Full [XPath 2.0](https://www.w3.org/TR/xpath20/) language support
+- Arbitrary tree structure querying with XPath 2.0 language via custom DOMAdapter
+- Custom collation support (using [StaticContext](./src/classes/StaticContext.js))
+- Custom function support (using [StaticContext](./src/classes/StaticContext.js))
+- Variable injection (using [DynamicContext](./src/classes/DynamicContext.js))
 
-  - XPath.js is a DOM-agnostic open-source XPath 2.0 implementation in JavaScript
-  - Library can be used to query any DOM structure via custom DOMAdapter
-  - Internally engine operates on XML Schema 1.1 data types
+## Installation
 
-### Structure:
-
-  - api/ - Sample API sources
-  - src/ - XPath 2.0 engine sources
-  - test/unit/ - unit.js tests (requires [unit.js](https://github.com/ilinsky/unit.js))
-
-### Usage:
-
-  - Running on sources: include xpath.js API file from the root folder.
-  - When no Apache/.htaccess/PHP configured, source files will be loaded by JS.
-
-### NodeJS (temporary solution):
-  using xpath.js on NodeJS:
-  ```js
-  //using xmldom as target document (https://github.com/jindw/xmldom)
-  var xpath=require("xpath2")(xmldom.domClasses.Document.prototype);
-
-  var test=xpath.evaluate("2 to 5");
-  ```
-
-  a more sofisticated example
-  ```js
-  var xmldom=require("xmldom");
-var fs=require("fs");
-var DOMParser = xmldom.DOMParser;
-var xpath=require("xpath.js")(xmldom.domClasses.Document.prototype);
-
-function nodeName(e) {return e.nodeName;}
-function nodeValue(e) {return e.nodeValue;}
-
-var xml = new DOMParser().parseFromString(fs.readFileSync("data.xml").toString());
-var xsl = new DOMParser().parseFromString(fs.readFileSync("content.xslt").toString());
-
-xmldom.domClasses.Node.prototype.select=function(e) {
-  var oStaticContext=new xpath.classes.StaticContext();
-  oStaticContext.namespaceResolver=this.documentElement||this.ownerDocument.documentElement;
-  return xpath.evaluate(e,this,oStaticContext);
-};
-
-var repl = require("repl");
-var r = repl.start("xpath2> ");
-
-r.context.nodeName=nodeName;
-r.context.nodeValue=nodeValue;
-r.context.xmldom=xmldom;
-r.context.xml=xml;
-r.context.xsl=xsl;
-r.context.xpath=xpath;
+```bash
+npm install xpath.js
 ```
 
+## Usage
+
+The simple API implementation `src/index.js` provided for reference. 
+Its primary purpose is to demonstrate implementation classes wiring and a simple usable solution.
+
+### Basic scenarious with *evaluate* function
+
+```js
+xpath.evaluate(expression, evaluationContext, staticContext, initialScope, DOMAdapter)
+```
+
+#### Parameters list
+
+| Name | Type | Required | Description |
+| --- | --- | --- | --- |
+| `expression` | String | *Required* | xpath expression |
+| `evaluationContext` | Variant | Optional | evaluation context (document, for example) |
+| `staticContext`| [StaticContext](./src/classes/StaticContext.js) or Function | Optional | compilation context or namespace resolver |
+| `initialScope` | Object | Optional | JavaScript variable values map |
+| `DOMAdapter` | [DOMAdapter](./src/classes/DOMAdapter.js) | Optional | document object model adapter |
+
+#### Query without a context
+```js
+const xpath = require("xpath.js");
+const result = xpath.evaluate("1 to 5");
+console.log(result); // prints [ 1, 2, 3, 4, 5 ]
+```
+
+#### Query a document not specifying namespaces
+```js
+const xpath = require("xpath.js");
+const xmldom = require("xmldom"); // You are free to use any DOM implementation
+const document = new xmldom.DOMParser().parseFromString('<test>content</test>');
+
+const result = xpath.evaluate("fn:string(/test/text())", document);
+console.log(result); // prints [ 'content' ]
+```
+
+#### Query a document with namespace resolver
+Evaluating expressions over documents that specify namespaces requires *namespace resolver* to be provided with the query. 
+Take a note that namespace resolver is there to resolve prefixes found in XPath expressions, 
+thus making use of prefixes in expressions scoped to the query, and not to the document.
+
+> A namespace resolver is a function that takes single argument String *prefix* and returns a namespace uri for it. 
+
+Exception `XPST0081` will be thrown, should any of the prefixes used in expression are left unresolved.
+```js
+const xpath = require("xpath.js");
+const xmldom = require("xmldom");
+const document = new xmldom.DOMParser().parseFromString('<foo><a:bar xmlns:a="http://a">content</a:bar></foo>');
+const namespaceResolver = function(prefix) {
+    if (prefix == "b")
+        return "http://a";
+    return null;
+};
+
+const result = xpath.evaluate("fn:string(//b:bar/text())", document, namespaceResolver);
+console.log(result); // prints [ 'content' ]
+```
+
+#### Passing a JavaScript variable to the evaluation context
+```js
+const xpath = require("xpath.js");
+
+const result = xpath.evaluate("$a + 0.2", null, null, {a: 0.1});
+console.log(result); // prints [ 0.3 ]
+```
+
+### More challenging scenarious
+
+#### Using *execute* function and managing contexts
+```js
+const xpath = require("xpath.js");
+const xmldom = require("xmldom");
+const document = new xmldom.DOMParser().parseFromString('<foo><a:bar xmlns:a="http://a">content</a:bar></foo>');
+const namespaceResolver = function(prefix) {
+    if (prefix == "b")
+        return "http://a";
+    return null;
+};
+const staticContext = xpath.createStaticContext(namespaceResolver);
+// Set default function namespace to the one of XPath functions, so "fn" prefix can be dropped in queries
+static.defaultFunctionNamespace = "http://www.w3.org/2005/xpath-functions";
+const dynamicContext = xpath.createDynamicContext(staticContext, document);
+
+const result = xpath.execute("string(//b:bar/text())", dynamicContext);
+console.log(result); // prints [ 'content' ]
+```
+
+> Note! Dynamic context carries date/time obtained during its creation

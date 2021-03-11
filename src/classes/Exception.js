@@ -1,7 +1,7 @@
 /*
  * XPath.js - Pure JavaScript implementation of XPath 2.0 parser and evaluator
  *
- * Copyright (c) 2012 Sergey Ilinsky
+ * Copyright (c) 2016 Sergey Ilinsky
  * Dual licensed under the MIT and GPL licenses.
  *
  *
@@ -21,7 +21,7 @@ function cException(sCode
 					  oException_messages[sCode];
 };
 
-cException.prototype	= new cError;
+cException.prototype	= new global.Error;
 
 // "http://www.w3.org/2005/xqt-errors"
 
@@ -53,3 +53,6 @@ oException_messages["FOCA0002"]	= "Invalid lexical value.";
 oException_messages["FOCH0002"]	= "Unsupported collation.";
 
 oException_messages["FONS0004"]	= "No namespace found for prefix.";
+
+//
+module.exports = cException;

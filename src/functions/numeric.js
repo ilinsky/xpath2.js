@@ -1,11 +1,21 @@
 /*
  * XPath.js - Pure JavaScript implementation of XPath 2.0 parser and evaluator
  *
- * Copyright (c) 2012 Sergey Ilinsky
+ * Copyright (c) 2016 Sergey Ilinsky
  * Dual licensed under the MIT and GPL licenses.
  *
  *
  */
+
+var cStaticContext = require('./../classes/StaticContext');
+
+var cXSDecimal = require('./../types/schema/simple/atomic/XSDecimal');
+var cXSDouble = require('./../types/schema/simple/atomic/XSDouble');
+var cXSInteger = require('./../types/schema/simple/atomic/integer/XSInteger');
+
+var fStaticContext_defineSystemFunction = require('./../classes/StaticContext').defineSystemFunction;
+
+var cMath = global.Math;
 
 /*
 	6.4 Functions on Numeric Values
@@ -45,16 +55,16 @@ fStaticContext_defineSystemFunction("round-half-to-even",	[[cXSDouble, '?'], [cX
 	//
 	if (nPrecision < 0) {
 		var oPower	= new cXSInteger(cMath.pow(10,-nPrecision)),
-			nRounded= cMath.round(hStaticContext_operators["numeric-divide"].call(this, oValue, oPower)),
+			nRounded= cMath.round(cStaticContext.operators["numeric-divide"].call(this, oValue, oPower)),
 			oRounded= new cXSInteger(nRounded);
-			nDecimal= cMath.abs(hStaticContext_operators["numeric-subtract"].call(this, oRounded, hStaticContext_operators["numeric-divide"].call(this, oValue, oPower)));
-		return hStaticContext_operators["numeric-multiply"].call(this, hStaticContext_operators["numeric-add"].call(this, oRounded, new cXSDecimal(nDecimal == 0.5 && nRounded % 2 ?-1 : 0)), oPower);
+			nDecimal= cMath.abs(cStaticContext.operators["numeric-subtract"].call(this, oRounded, cStaticContext.operators["numeric-divide"].call(this, oValue, oPower)));
+		return cStaticContext.operators["numeric-multiply"].call(this, cStaticContext.operators["numeric-add"].call(this, oRounded, new cXSDecimal(nDecimal == 0.5 && nRounded % 2 ?-1 : 0)), oPower);
 	}
 	else {
 		var oPower	= new cXSInteger(cMath.pow(10, nPrecision)),
-			nRounded= cMath.round(hStaticContext_operators["numeric-multiply"].call(this, oValue, oPower)),
+			nRounded= cMath.round(cStaticContext.operators["numeric-multiply"].call(this, oValue, oPower)),
 			oRounded= new cXSInteger(nRounded);
-			nDecimal= cMath.abs(hStaticContext_operators["numeric-subtract"].call(this, oRounded, hStaticContext_operators["numeric-multiply"].call(this, oValue, oPower)));
-		return hStaticContext_operators["numeric-divide"].call(this, hStaticContext_operators["numeric-add"].call(this, oRounded, new cXSDecimal(nDecimal == 0.5 && nRounded % 2 ?-1 : 0)), oPower);
+			nDecimal= cMath.abs(cStaticContext.operators["numeric-subtract"].call(this, oRounded, cStaticContext.operators["numeric-multiply"].call(this, oValue, oPower)));
+		return cStaticContext.operators["numeric-divide"].call(this, cStaticContext.operators["numeric-add"].call(this, oRounded, new cXSDecimal(nDecimal == 0.5 && nRounded % 2 ?-1 : 0)), oPower);
 	}
 });

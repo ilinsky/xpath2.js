@@ -1,11 +1,25 @@
 /*
  * XPath.js - Pure JavaScript implementation of XPath 2.0 parser and evaluator
  *
- * Copyright (c) 2012 Sergey Ilinsky
+ * Copyright (c) 2016 Sergey Ilinsky
  * Dual licensed under the MIT and GPL licenses.
  *
  *
  */
+
+//
+var cXSDate = require('./../types/schema/simple/atomic/XSDate');
+var cXSTime = require('./../types/schema/simple/atomic/XSTime');
+var cXSDecimal = require('./../types/schema/simple/atomic/XSDecimal');
+var cXSDateTime = require('./../types/schema/simple/atomic/XSDateTime');
+var cXSDuration = require('./../types/schema/simple/atomic/XSDuration');
+var cXSDayTimeDuration = require('./../types/schema/simple/atomic/duration/XSDayTimeDuration');
+var cXSDate = require('./../types/schema/simple/atomic/XSDate');
+var cXSInteger = require('./../types/schema/simple/atomic/integer/XSInteger');
+
+var fStaticContext_defineSystemFunction = require('./../classes/StaticContext').defineSystemFunction;
+
+var cMath = global.Math;
 
 /*
 	10.5 Component Extraction Functions on Durations, Dates and Times
@@ -219,7 +233,7 @@ function fFunction_dateTime_adjustTimezone(oDateTime, oTimezone) {
 	if (oTimezone == null)
 		oValue.timezone	= null;
 	else {
-		var nTimezone	= fOperator_dayTimeDuration_toSeconds(oTimezone) / 60;
+		var nTimezone	= cXSDayTimeDuration.toSeconds(oTimezone) / 60;
 		if (oDateTime.timezone != null) {
 			var nDiff	= nTimezone - oDateTime.timezone;
 			if (oDateTime instanceof cXSDate) {
@@ -231,9 +245,13 @@ function fFunction_dateTime_adjustTimezone(oDateTime, oTimezone) {
 				oValue.hours	+= ~~(nDiff / 60);
 			}
 			//
-			fXSDateTime_normalize(oValue);
+			cXSDateTime.normalize(oValue);
 		}
 		oValue.timezone	= nTimezone;
 	}
 	return oValue;
+};
+
+module.exports = {
+    dateTime_adjustTimezone: fFunction_dateTime_adjustTimezone,
 };

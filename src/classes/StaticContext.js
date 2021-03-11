@@ -1,13 +1,20 @@
 /*
  * XPath.js - Pure JavaScript implementation of XPath 2.0 parser and evaluator
  *
- * Copyright (c) 2012 Sergey Ilinsky
+ * Copyright (c) 2016 Sergey Ilinsky
  * Dual licensed under the MIT and GPL licenses.
  *
  *
  */
 
-function cStaticContext() {
+var cException = require('./../classes/Exception');
+
+var cFunction = global.Function;
+
+function cStaticContext(vNamespaceResolver, sBaseUri) {
+    this.namespaceResolver = vNamespaceResolver || null;
+    this.baseURI = sBaseUri || null;
+    //
 	this.dataTypes	= {};
 	this.documents	= {};
 	this.functions	= {};
@@ -24,12 +31,18 @@ cStaticContext.prototype.functions	= null;
 cStaticContext.prototype.defaultFunctionNamespace	= null;
 //
 cStaticContext.prototype.collations	= null;
-cStaticContext.prototype.defaultCollationName		= sNS_XPF + "/collation/codepoint";
+cStaticContext.prototype.defaultCollationName		= "http://www.w3.org/2005/xpath-functions/collation/codepoint";
 //
 cStaticContext.prototype.collections	= null;
+cStaticContext.prototype.defaultCollection	= null;
 //
 cStaticContext.prototype.namespaceResolver	= null;
 cStaticContext.prototype.defaultElementNamespace	= null;
+
+cStaticContext.NS_XSD	= "http://www.w3.org/2001/XMLSchema";
+cStaticContext.NS_XPF	= "http://www.w3.org/2005/xpath-functions";
+cStaticContext.NS_XNS	= "http://www.w3.org/2000/xmlns/";
+cStaticContext.NS_XML	= "http://www.w3.org/XML/1998/namespace";
 
 //
 var rStaticContext_uri	= /^(?:\{([^\}]+)\})?(.+)$/;
@@ -37,14 +50,14 @@ var rStaticContext_uri	= /^(?:\{([^\}]+)\})?(.+)$/;
 cStaticContext.prototype.setDataType		= function(sUri, fFunction) {
 	var aMatch	= sUri.match(rStaticContext_uri);
 	if (aMatch)
-		if (aMatch[1] != sNS_XSD)
+		if (aMatch[1] != cStaticContext.NS_XSD)
 			this.dataTypes[sUri]	= fFunction;
 };
 
 cStaticContext.prototype.getDataType		= function(sUri) {
 	var aMatch	= sUri.match(rStaticContext_uri);
 	if (aMatch)
-		return aMatch[1] == sNS_XSD ? hStaticContext_dataTypes[aMatch[2]] : this.dataTypes[sUri];
+		return aMatch[1] == cStaticContext.NS_XSD ? cStaticContext.dataTypes[aMatch[2]] : this.dataTypes[sUri];
 };
 
 cStaticContext.prototype.setDocument		= function(sUri, fFunction) {
@@ -58,14 +71,14 @@ cStaticContext.prototype.getDocument		= function(sUri) {
 cStaticContext.prototype.setFunction		= function(sUri, fFunction) {
 	var aMatch	= sUri.match(rStaticContext_uri);
 	if (aMatch)
-		if (aMatch[1] != sNS_XPF)
+		if (aMatch[1] != cStaticContext.NS_XPF)
 			this.functions[sUri]	= fFunction;
 };
 
 cStaticContext.prototype.getFunction		= function(sUri) {
 	var aMatch	= sUri.match(rStaticContext_uri);
 	if (aMatch)
-		return aMatch[1] == sNS_XPF ? hStaticContext_functions[aMatch[2]] : this.functions[sUri];
+		return aMatch[1] == cStaticContext.NS_XPF ? cStaticContext.functions[aMatch[2]] : this.functions[sUri];
 };
 
 cStaticContext.prototype.setCollation		= function(sUri, fFunction) {
@@ -91,13 +104,13 @@ cStaticContext.prototype.getURIForPrefix	= function(sPrefix) {
 	if (fResolver instanceof cFunction && (sNameSpaceURI = fResolver.call(oResolver, sPrefix)))
 		return sNameSpaceURI;
 	if (sPrefix == 'fn')
-		return sNS_XPF;
+		return cStaticContext.NS_XPF;
 	if (sPrefix == 'xs')
-		return sNS_XSD;
+		return cStaticContext.NS_XSD;
 	if (sPrefix == "xml")
-		return sNS_XML;
+		return cStaticContext.NS_XML;
 	if (sPrefix == "xmlns")
-		return sNS_XNS;
+		return cStaticContext.NS_XNS;
 	//
 	throw new cException("XPST0081"
 //->Debug
@@ -107,47 +120,29 @@ cStaticContext.prototype.getURIForPrefix	= function(sPrefix) {
 };
 
 // Static members
-//Converts non-null JavaScript object to XML Schema object
-cStaticContext.js2xs	= function(vItem) {
-	// Convert types from JavaScript to XPath 2.0
-	if (typeof vItem == "boolean")
-		vItem	= new cXSBoolean(vItem);
-	else
-	if (typeof vItem == "number")
-		vItem	=(fIsNaN(vItem) ||!fIsFinite(vItem)) ? new cXSDouble(vItem) : fNumericLiteral_parseValue(cString(vItem));
-	else
-		vItem	= new cXSString(cString(vItem));
-	//
-	return vItem;
-};
-
-// Converts non-null XML Schema object to JavaScript object
-cStaticContext.xs2js	= function(vItem) {
-	if (vItem instanceof cXSBoolean)
-		vItem	= vItem.valueOf();
-	else
-	if (fXSAnyAtomicType_isNumeric(vItem))
-		vItem	= vItem.valueOf();
-	else
-		vItem	= vItem.toString();
-	//
-	return vItem;
-};
 
 // System functions with signatures, operators and types
-var hStaticContext_functions	= {},
-	hStaticContext_signatures	= {},
-	hStaticContext_dataTypes	= {},
-	hStaticContext_operators	= {};
+cStaticContext.functions	= {};
+cStaticContext.signatures	= {};
+cStaticContext.dataTypes	= {};
+cStaticContext.operators	= {};
 
-function fStaticContext_defineSystemFunction(sName, aParameters, fFunction) {
+cStaticContext.defineSystemFunction = function(sName, aParameters, fFunction) {
 	// Register function
-	hStaticContext_functions[sName]	= fFunction;
+	cStaticContext.functions[sName]	= fFunction;
 	// Register signature
-	hStaticContext_signatures[sName]	= aParameters;
+	cStaticContext.signatures[sName]	= aParameters;
 };
 
-function fStaticContext_defineSystemDataType(sName, fFunction) {
+cStaticContext.defineSystemDataType = function(sName, fFunction) {
 	// Register dataType
-	hStaticContext_dataTypes[sName]	= fFunction;
+	cStaticContext.dataTypes[sName]	= fFunction;
 };
+
+cStaticContext.defineSystemOperator = function(sName, fFunction) {
+	// Register operator function
+	cStaticContext.operators[sName]	= fFunction;
+};
+
+//
+module.exports = cStaticContext;

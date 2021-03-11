@@ -1,11 +1,13 @@
 /*
  * XPath.js - Pure JavaScript implementation of XPath 2.0 parser and evaluator
  *
- * Copyright (c) 2012 Sergey Ilinsky
+ * Copyright (c) 2016 Sergey Ilinsky
  * Dual licensed under the MIT and GPL licenses.
  *
  *
  */
+
+var cXSBoolean = require('./../../types/schema/simple/atomic/XSBoolean');
 
 function cInstanceofExpr(oExpr, oType) {
 	this.expression	= oExpr;
@@ -14,26 +16,6 @@ function cInstanceofExpr(oExpr, oType) {
 
 cInstanceofExpr.prototype.expression	= null;
 cInstanceofExpr.prototype.type			= null;
-
-function fInstanceofExpr_parse (oLexer, oStaticContext) {
-	var oExpr,
-		oType;
-	if (oLexer.eof() ||!(oExpr = fTreatExpr_parse(oLexer, oStaticContext)))
-		return;
-
-	if (!(oLexer.peek() == "instance" && oLexer.peek(1) == "of"))
-		return oExpr;
-
-	oLexer.next(2);
-	if (oLexer.eof() ||!(oType = fSequenceType_parse(oLexer, oStaticContext)))
-		throw new cException("XPST0003"
-//->Debug
-				, "Expected second operand in instance of expression"
-//<-Debug
-		);
-
-	return new cInstanceofExpr(oExpr, oType);
-};
 
 cInstanceofExpr.prototype.evaluate	= function(oContext) {
 	var oSequence1	= this.expression.evaluate(oContext),
@@ -59,3 +41,6 @@ cInstanceofExpr.prototype.evaluate	= function(oContext) {
 	//
 	return [new cXSBoolean(bValue)];
 };
+
+//
+module.exports = cInstanceofExpr;

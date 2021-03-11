@@ -1,11 +1,25 @@
 /*
  * XPath.js - Pure JavaScript implementation of XPath 2.0 parser and evaluator
  *
- * Copyright (c) 2012 Sergey Ilinsky
+ * Copyright (c) 2016 Sergey Ilinsky
  * Dual licensed under the MIT and GPL licenses.
  *
  *
  */
+
+var cException = require('./../classes/Exception');
+
+var cXSBoolean = require('./../types/schema/simple/atomic/XSBoolean');
+var cXSAnyURI = require('./../types/schema/simple/atomic/XSAnyURI');
+var cXSString = require('./../types/schema/simple/atomic/XSString');
+var cXSQName = require('./../types/schema/simple/atomic/XSQName');
+
+var cXTItem = require('./../types/xpath/XTItem');
+var cXTNode = require('./../types/xpath/XTNode');
+var cXTSequence = require('./../types/xpath/XTSequence');
+
+var fFunction_sequence_atomize = cXTSequence.atomize;
+var fStaticContext_defineSystemFunction = require('./../classes/StaticContext').defineSystemFunction;
 
 /*
 	2 Accessors
@@ -31,7 +45,7 @@ fStaticContext_defineSystemFunction("node-name",		[[cXTNode, '?']],	function(oNo
 			case 6:		// ENTITY_NODE
 				throw "Not implemented";
 			case 7:		// PROCESSING_INSTRUCTION_NODE
-				return new cXSQName(null, fGetProperty(oNode, "target"), null);
+				return new cXSQName(null, fGetProperty(oNode, "nodeName"), null); // same as "target"
 			case 10:	// DOCUMENT_TYPE_NODE
 				return new cXSQName(null, fGetProperty(oNode, "name"), null);
 		}

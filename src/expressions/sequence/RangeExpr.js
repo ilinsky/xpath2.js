@@ -1,11 +1,21 @@
 /*
  * XPath.js - Pure JavaScript implementation of XPath 2.0 parser and evaluator
  *
- * Copyright (c) 2012 Sergey Ilinsky
+ * Copyright (c) 2016 Sergey Ilinsky
  * Dual licensed under the MIT and GPL licenses.
  *
  *
  */
+
+var cException = require('./../../classes/Exception');
+var cStaticContext = require('./../../classes/StaticContext');
+
+var cXSInteger = require('./../../types/schema/simple/atomic/integer/XSInteger');
+//
+var cXTSequence = require('./../../types/xpath/XTSequence');
+
+var fFunction_sequence_assertSequenceCardinality = cXTSequence.assertSequenceCardinality;
+var fFunction_sequence_assertSequenceItemType = cXTSequence.assertSequenceItemType;
 
 function cRangeExpr(oLeft, oRight) {
 	this.left	= oLeft;
@@ -14,26 +24,6 @@ function cRangeExpr(oLeft, oRight) {
 
 cRangeExpr.prototype.left	= null;
 cRangeExpr.prototype.right	= null;
-
-// Static members
-function fRangeExpr_parse (oLexer, oStaticContext) {
-	var oExpr,
-		oRight;
-	if (oLexer.eof() ||!(oExpr = fAdditiveExpr_parse(oLexer, oStaticContext)))
-		return;
-	if (oLexer.peek() != "to")
-		return oExpr;
-
-	// Range expression
-	oLexer.next();
-	if (oLexer.eof() ||!(oRight = fAdditiveExpr_parse(oLexer, oStaticContext)))
-		throw new cException("XPST0003"
-//->Debug
-				, "Expected second operand in range expression"
-//<-Debug
-		);
-	return new cRangeExpr(oExpr, oRight);
-};
 
 // Public members
 cRangeExpr.prototype.evaluate	= function (oContext) {
@@ -46,16 +36,16 @@ cRangeExpr.prototype.evaluate	= function (oContext) {
 	var sSource	= "first operand of 'to'";
 //<-Debug
 
-	fFunctionCall_assertSequenceCardinality(oContext, oLeft, '?'
-//->Debug
-			, sSource
-//<-Debug
-	);
-	fFunctionCall_assertSequenceItemType(oContext, oLeft, cXSInteger
-//->Debug
-			, sSource
-//<-Debug
-	);
+ 	fFunction_sequence_assertSequenceCardinality(oLeft, oContext, '?'
+ //->Debug
+ 			, sSource
+ //<-Debug
+ 	);
+ 	fFunction_sequence_assertSequenceItemType(oLeft, oContext, cXSInteger
+ //->Debug
+ 			, sSource
+ //<-Debug
+ 	);
 
 	var oRight	= this.right.evaluate(oContext);
 	if (!oRight.length)
@@ -65,16 +55,20 @@ cRangeExpr.prototype.evaluate	= function (oContext) {
 	sSource	= "second operand of 'to'";
 //<-Debug
 
-	fFunctionCall_assertSequenceCardinality(oContext, oRight, '?'
-//->Debug
-			, sSource
-//<-Debug
-	);
-	fFunctionCall_assertSequenceItemType(oContext, oRight, cXSInteger
-//->Debug
-			, sSource
-//<-Debug
-	);
 
-	return hStaticContext_operators["to"].call(oContext, oLeft[0], oRight[0]);
+ 	fFunction_sequence_assertSequenceCardinality(oRight, oContext, '?'
+//->Debug
+ 			, sSource
+//<-Debug
+ 	);
+ 	fFunction_sequence_assertSequenceItemType(oRight, oContext, cXSInteger
+//->Debug
+ 			, sSource
+//<-Debug
+ 	);
+
+	return cStaticContext.operators["to"].call(oContext, oLeft[0], oRight[0]);
 };
+
+//
+module.exports = cRangeExpr;

@@ -1,11 +1,13 @@
 /*
  * XPath.js - Pure JavaScript implementation of XPath 2.0 parser and evaluator
  *
- * Copyright (c) 2012 Sergey Ilinsky
+ * Copyright (c) 2016 Sergey Ilinsky
  * Dual licensed under the MIT and GPL licenses.
  *
  *
  */
+
+var cStepExpr = require('./../path/StepExpr');
 
 function cFilterExpr(oPrimary) {
 	this.expression	= oPrimary;
@@ -13,25 +15,7 @@ function cFilterExpr(oPrimary) {
 };
 
 cFilterExpr.prototype	= new cStepExpr;
-
 cFilterExpr.prototype.expression	= null;
-
-// Static members
-function fFilterExpr_parse (oLexer, oStaticContext) {
-	var oExpr;
-	if (oLexer.eof() ||!(oExpr = fPrimaryExpr_parse(oLexer, oStaticContext)))
-		return;
-
-	var oFilterExpr	= new cFilterExpr(oExpr);
-	// Parse predicates
-	fStepExpr_parsePredicates(oLexer, oStaticContext, oFilterExpr);
-
-	// If no predicates found
-	if (oFilterExpr.predicates.length == 0)
-		return oFilterExpr.expression;
-
-	return oFilterExpr;
-};
 
 // Public members
 cFilterExpr.prototype.evaluate	= function (oContext) {
@@ -40,3 +24,6 @@ cFilterExpr.prototype.evaluate	= function (oContext) {
 		oSequence	= this.applyPredicates(oSequence, oContext);
 	return oSequence;
 };
+
+//
+module.exports = cFilterExpr;

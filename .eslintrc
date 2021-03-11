@@ -1,0 +1,25 @@
+{
+    "rules": {
+        "no-undef": [0],
+        // Code style & decoration
+        // "indent": [2, 2, {"SwitchCase": 1}],
+        // "quotes": [2, "single"],
+        // "quote-props": [2, "consistent"],
+        "semi": [2, "always"],
+        "no-extra-semi": [0],
+        // "linebreak-style": [2, "unix"],
+        "brace-style": [2, "stroustrup", { "allowSingleLine": true }],
+        // "no-irregular-whitespace": [2],
+        // "no-multi-spaces": [2],
+        // "no-trailing-spaces": [2],
+        // "no-multiple-empty-lines": [2, {"max": 1}],
+        // "max-len": [1, 80, 4, {"ignoreComments": true, "ignoreUrls": true}],
+        // code conventions
+        "no-unused-vars": [1],
+        "no-param-reassign": [1, {"props": false}],
+        "no-undefined": [2],
+        "no-with": [2],
+        "radix": [2]
+    },
+    "extends": "eslint:recommended"
+}

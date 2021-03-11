@@ -1,11 +1,14 @@
 /*
  * XPath.js - Pure JavaScript implementation of XPath 2.0 parser and evaluator
  *
- * Copyright (c) 2012 Sergey Ilinsky
+ * Copyright (c) 2016 Sergey Ilinsky
  * Dual licensed under the MIT and GPL licenses.
  *
  *
  */
+
+var cStaticContext = require('./../../../classes/StaticContext');
+var cException = require('./../../../classes/Exception');
 
 function cAtomicType(sPrefix, sLocalName, sNameSpaceURI) {
 	this.prefix			= sPrefix;
@@ -17,24 +20,10 @@ cAtomicType.prototype.prefix		= null;
 cAtomicType.prototype.localName		= null;
 cAtomicType.prototype.namespaceURI	= null;
 
-function fAtomicType_parse (oLexer, oStaticContext) {
-	var aMatch	= oLexer.peek().match(rNameTest);
-	if (aMatch) {
-		if (aMatch[1] == '*' || aMatch[2] == '*')
-			throw new cException("XPST0003"
-//->Debug
-					, "Illegal use of wildcard in type name"
-//<-Debug
-			);
-		oLexer.next();
-		return new cAtomicType(aMatch[1] || null, aMatch[2], aMatch[1] ? oStaticContext.getURIForPrefix(aMatch[1]) : null);
-	}
-};
-
 cAtomicType.prototype.test	= function(vItem, oContext) {
 	// Test
 	var sUri	= (this.namespaceURI ? '{' + this.namespaceURI + '}' : '') + this.localName,
-		cType	= this.namespaceURI == sNS_XSD ? hStaticContext_dataTypes[this.localName] : oContext.staticContext.getDataType(sUri);
+		cType	= this.namespaceURI == cStaticContext.NS_XSD ? cStaticContext.dataTypes[this.localName] : oContext.staticContext.getDataType(sUri);
 	if (cType)
 		return vItem instanceof cType;
 	//
@@ -48,7 +37,7 @@ cAtomicType.prototype.test	= function(vItem, oContext) {
 cAtomicType.prototype.cast	= function(vItem, oContext) {
 	// Cast
 	var sUri	= (this.namespaceURI ? '{' + this.namespaceURI + '}' : '') + this.localName,
-		cType	= this.namespaceURI == sNS_XSD ? hStaticContext_dataTypes[this.localName] : oContext.staticContext.getDataType(sUri);
+		cType	= this.namespaceURI == cStaticContext.NS_XSD ? cStaticContext.dataTypes[this.localName] : oContext.staticContext.getDataType(sUri);
 	if (cType)
 		return cType.cast(vItem);
 	//
@@ -58,3 +47,6 @@ cAtomicType.prototype.cast	= function(vItem, oContext) {
 //<-Debug
 	);
 };
+
+//
+module.exports = cAtomicType;
