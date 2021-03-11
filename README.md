@@ -1,8 +1,8 @@
-xpath.js - Pure JavaScript implementation of XPath 2.0 parser and evaluator
+xpath2.js - Pure JavaScript implementation of XPath 2.0 parser and evaluator
 ---
 
 ## About
-xpath.js is a DOM-agnostic open-source [XPath 2.0](https://www.w3.org/TR/xpath20/) implementation in JavaScript.
+xpath2.js is a DOM-agnostic open-source [XPath 2.0](https://www.w3.org/TR/xpath20/) implementation in JavaScript.
 Execution engine operates using XML Schema 1.1 data types as prescribed by specification.
 
 ## Features

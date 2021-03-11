@@ -1,6 +1,6 @@
 {
     "name": "xpath2.js",
-    "version": "0.5.0-alpha-2",
+    "version": "1.0.0-alpha-1",
     "license": "(GPL-2.0+ OR MIT)",
     "description": "Open source XPath 2.0 implementation in JavaScript (DOM agnostic)",
     "main": "src/index.js",
@@ -10,10 +10,10 @@
     ],
     "repository": {
         "type": "git",
-        "url": "https://github.com/ilinsky/xpath.js.git"
+        "url": "https://github.com/ilinsky/xpath2.js.git"
     },
-    "homepage": "https://github.com/ilinsky/xpath.js",
-    "bugs": "https://github.com/ilinsky/xpath.js/issues",
+    "homepage": "https://github.com/ilinsky/xpath2.js",
+    "bugs": "https://github.com/ilinsky/xpath2.js/issues",
     "author": "Sergey Ilinsky <sergey@ilinsky.com> (http://www.ilinsky.com)",
     "scripts": {
         "lint": "node ./node_modules/eslint/bin/eslint.js **/*.js",
