@@ -426,18 +426,25 @@ fStaticContext_defineSystemFunction("idref",	[[cXSString, '*'], [cXTNode, '', tr
 
 // fn:doc($uri as xs:string?) as document-node()?
 fStaticContext_defineSystemFunction("doc",			[[cXSString, '?', true]],	function(oUri) {
-	return oUri && this.staticContext.documents[oUri.valueOf()] || null;
+    if (arguments.length < 1)
+        return null;
+    // TODO: Check if uri is relative and resolve to base
+	return this.staticContext.documents[oUri.valueOf()] || null;
 });
 
 // fn:doc-available($uri as xs:string?) as xs:boolean
 fStaticContext_defineSystemFunction("doc-available",	[[cXSString, '?', true]],	function(oUri) {
-	return new cXSBoolean(oUri && oUri.valueOf() in this.staticContext.documents);
+    // TODO: Check if uri is relative and resolve to base
+	return new cXSBoolean(arguments.length > 0 && (oUri.valueOf() in this.staticContext.documents));
 });
 
 // fn:collection() as node()*
 // fn:collection($arg as xs:string?) as node()*
 fStaticContext_defineSystemFunction("collection",	[[cXSString, '?', true]],	function(oUri) {
-	throw "Function '" + "collection" + "' not implemented";
+    if (arguments.length < 1)
+        return this.staticContext.defaultCollection;
+    // TODO: Check if uri is relative and resolve to base
+	return this.staticContext.collections[oUri.valueOf()] || null;
 });
 
 // fn:element-with-id($arg as xs:string*) as element()*

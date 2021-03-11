@@ -39,6 +39,7 @@ cStaticContext.prototype.collations	= null;
 cStaticContext.prototype.defaultCollationName		= "http://www.w3.org/2005/xpath-functions/collation/codepoint";
 //
 cStaticContext.prototype.collections	= null;
+cStaticContext.prototype.defaultCollection	= null;
 //
 cStaticContext.prototype.namespaceResolver	= null;
 cStaticContext.prototype.defaultElementNamespace	= null;

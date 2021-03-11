@@ -362,11 +362,16 @@ describe("sequence", function() {
         });
     });
 
-    // TODO: Implement doc() function and check test
-    xdescribe("doc()", function() {
+    describe("doc()", function() {
         // Not W3C tests
         it('', function() {
-            expect(xpath.evaluate('fn:doc("doc.xml") instance of document()'))
+            expect(xpath.evaluate('fn:empty(fn:doc("doc.xml"))'))
+                .to.have.ordered.members([true]);
+        });
+        it('', function() {
+            var staticContext = xpath.createStaticContext();
+            staticContext.setDocument("http://localhost/doc.xml", mockDocument);
+            expect(xpath.evaluate('fn:doc("http://localhost/doc.xml") instance of document-node()', null, staticContext))
                 .to.have.ordered.members([true]);
         });
     });
@@ -376,6 +381,12 @@ describe("sequence", function() {
         it('', function() {
             expect(xpath.evaluate('fn:doc-available("doc-available.xml")'))
                 .to.have.ordered.members([false]);
+        });
+        it('', function() {
+            var staticContext = xpath.createStaticContext();
+            staticContext.setDocument("http://localhost/doc.xml", mockDocument);
+            expect(xpath.evaluate('fn:doc-available("http://localhost/doc.xml")', null, staticContext))
+                .to.have.ordered.members([true]);
         });
     });
 
