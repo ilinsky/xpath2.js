@@ -20,13 +20,13 @@ npm install xpath.js
 
 ## Usage
 
-The simple api implementation `src/index.js` provided for reference. 
-You are free to rewire implementation to your needs.
+The simple API implementation `src/index.js` provided for reference. 
+Its primary purpose is to demonstrate implementation classes wiring and a simple usable solution.
 
 ### Basic scenarious with *evaluate* function
 
 ```js
-xpath.evaluate(expression, context, staticContext, initialScope, DOMAdapter)
+xpath.evaluate(expression, evaluationContext, staticContext, initialScope, DOMAdapter)
 ```
 
 #### Parameters list
@@ -34,10 +34,10 @@ xpath.evaluate(expression, context, staticContext, initialScope, DOMAdapter)
 | Name | Type | Required | Description |
 | --- | --- | --- | --- |
 | `expression` | String | *Required* | xpath expression |
-| `context` | Variant | Optional | evaluation context |
+| `evaluationContext` | Variant | Optional | evaluation context (document, for example) |
 | `staticContext`| [StaticContext](./src/classes/StaticContext.js) or Function | Optional | compilation context or namespace resolver |
-| `initialScope` | Object | Optional | variable values map |
-| `DOMAdapter` | [DOMAdapter](./src/classes/DOMAdapter.js) | Optional | object model adapter |
+| `initialScope` | Object | Optional | JavaScript variable values map |
+| `DOMAdapter` | [DOMAdapter](./src/classes/DOMAdapter.js) | Optional | document object model adapter |
 
 #### Query without a context
 ```js
@@ -46,18 +46,40 @@ const result = xpath.evaluate("1 to 5");
 console.log(result); // prints [ 1, 2, 3, 4, 5 ]
 ```
 
-#### Query with a context
+#### Query a document not specifying namespaces
 ```js
 const xpath = require("xpath.js");
 const xmldom = require("xmldom"); // You are free to use any DOM implementation
 const document = new xmldom.DOMParser().parseFromString('<test>content</test>');
+
 const result = xpath.evaluate("fn:string(/test/text())", document);
 console.log(result); // prints [ 'content' ]
 ```
 
-#### Passing a variable to the evaluation context
+#### Query a document with namespace resolver
+Evaluating expressions over documents that specify namespaces requires *namespace resolver* to be provided with the query. 
+
+> A namespace resolver is a function that takes single argument String *prefix* and returns a namespace uri for it. 
+
+Exception `XPST0081` will any of the prefixes used in expression are left unresolved.
 ```js
 const xpath = require("xpath.js");
+const xmldom = require("xmldom");
+const document = new xmldom.DOMParser().parseFromString('<foo><a:bar xmlns:a="http://a">content</a:bar></foo>');
+const namespaceResolver = function(prefix) {
+    if (prefix == "b")
+        return "http://a";
+    return null;
+};
+
+const result = xpath.evaluate("fn:string(//b:bar/text())", document, namespaceResolver);
+console.log(result); // prints [ 'content' ]
+```
+
+#### Passing a JavaScript variable to the evaluation context
+```js
+const xpath = require("xpath.js");
+
 const result = xpath.evaluate("$a + 0.2", null, null, {a: 0.1});
 console.log(result); // prints [ 0.3 ]
 ```
@@ -65,20 +87,22 @@ console.log(result); // prints [ 0.3 ]
 ### More challenging scenarious
 
 #### Using *execute* function and managing contexts
-
 ```js
 const xpath = require("xpath.js");
 const xmldom = require("xmldom");
-const document = new xmldom.DOMParser().parseFromString('<heh><a:test xmlns:a="http://asd">content</a:test></heh>');
-const resolver = function(prefix) {
+const document = new xmldom.DOMParser().parseFromString('<foo><a:bar xmlns:a="http://a">content</a:bar></foo>');
+const namespaceResolver = function(prefix) {
     if (prefix == "b")
-        return "http://asd";
+        return "http://a";
     return null;
 };
-const static = xpath.createStaticContext(resolver);
-const dynamic = xpath.createDynamicContext(static, document);
-const result = xpath.execute("fn:string(//b:test/text())", dynamic);
+const staticContext = xpath.createStaticContext(namespaceResolver);
+// Set default function namespace to the one of XPath functions, so "fn" prefix can be dropped in queries
+static.defaultFunctionNamespace = "http://www.w3.org/2005/xpath-functions";
+const dynamicContext = xpath.createDynamicContext(staticContext, document);
+
+const result = xpath.execute("string(//b:bar/text())", dynamicContext);
 console.log(result); // prints [ 'content' ]
 ```
 
-> Note! Dynamic context carries date/time obtained at creation
+> Note! Dynamic context carries date/time obtained during its creation
