@@ -643,31 +643,31 @@ describe("schema", function() {
 
     describe("xs:QName", function() {
         it('', function() {
-            expect(xpath.evaluate('fn:string(xs:QName("pref:name"))'))
+            expect(xpath.evaluate('xs:QName("pref:name")'))
                 .to.have.ordered.members(["pref:name"]);
         });
         it('', function() {
-            expect(xpath.evaluate('fn:string(xs:QName("name"))'))
+            expect(xpath.evaluate('xs:QName("name")'))
                 .to.have.ordered.members(["name"]);
         });
         it('', function() {
-            expect(function(){xpath.evaluate('fn:string(xs:QName(""))')})
+            expect(function(){xpath.evaluate('xs:QName("")')})
                 .to.throw(Exception, 'Invalid value for cast/constructor.');
         });
         it('', function() {
-            expect(function(){xpath.evaluate('fn:string(xs:QName("pref/name"))')})
+            expect(function(){xpath.evaluate('xs:QName("pref/name")')})
                 .to.throw(Exception, 'Invalid value for cast/constructor.');
         });
         it('', function() {
-            expect(function(){xpath.evaluate('fn:string(xs:QName("*:name"))')})
+            expect(function(){xpath.evaluate('xs:QName("*:name")')})
                 .to.throw(Exception, 'Invalid value for cast/constructor.');
         });
         it('', function() {
-            expect(function(){xpath.evaluate('fn:string(xs:QName("pref:*"))')})
+            expect(function(){xpath.evaluate('xs:QName("pref:*")')})
                 .to.throw(Exception, 'Invalid value for cast/constructor.');
         });
         it('', function() {
-            expect(function(){xpath.evaluate('fn:string(xs:QName("*:*"))')})
+            expect(function(){xpath.evaluate('xs:QName("*:*")')})
                 .to.throw(Exception, 'Invalid value for cast/constructor.');
         });
     });
