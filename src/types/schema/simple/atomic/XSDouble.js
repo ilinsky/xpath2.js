@@ -18,6 +18,9 @@ var cXSBoolean = require('./XSBoolean');
 var cXSString = require('./XSString');
 
 var cString = global.String;
+var fString_trim = function (sValue) {
+	return cString(sValue).trim();
+};
 
 function cXSDouble(nValue) {
 	this.value	= nValue;

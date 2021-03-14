@@ -52,8 +52,7 @@ describe("node", function() {
     });
 
     describe("number()", function() {
-        // FIXME: Check test if correct
-        xit('', function() {
+        it('', function() {
             expect(xpath.evaluate('fn:number("12.12")'))
                 .to.have.ordered.members([12.12]);
         });
