@@ -78,7 +78,7 @@ cSequence.atomize = function(oSequence1, oContext) {
 					vItem	= new cXSUntypedAtomic(fGetProperty(oItem, "textContent"));
 					break;
 				case 2:	// ATTRIBUTE_NODE
-					vItem	= new cXSUntypedAtomic(fGetProperty(oItem, "nodeValue"));   // was "value"
+					vItem	= new cXSUntypedAtomic(fGetProperty(oItem, "value"));
 					break;
 				case 3:	// TEXT_NODE
 				case 4:	// CDATA_SECTION_NODE

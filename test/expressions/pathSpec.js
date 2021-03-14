@@ -42,6 +42,8 @@ describe("path", function() {
             it('', function() {
                 expect(xpath.evaluate('processing-instruction("pi-target")', mockDocument))
                     .to.have.ordered.members([mockDocument.firstChild]);
+                expect(xpath.evaluate('fn:string(processing-instruction("pi-target"))', mockDocument))
+                    .to.have.ordered.members(["pi-value"]);
             });
         });
 
@@ -50,6 +52,8 @@ describe("path", function() {
                 var context = mockDocument.getElementById("_ele221");
                 expect(xpath.evaluate('comment()', context))
                     .to.have.ordered.members([context.firstChild]);
+                expect(xpath.evaluate('fn:string(comment())', context))
+                    .to.have.ordered.members(["Comment"]);
             });
         });
 
@@ -58,6 +62,8 @@ describe("path", function() {
                 var context = mockDocument.getElementById("_ele221");
                 expect(xpath.evaluate('text()', context))
                     .to.have.ordered.members([context.lastChild]);
+                expect(xpath.evaluate('fn:string(text())', context))
+                    .to.have.ordered.members(["Text"]);
             });
         });
 

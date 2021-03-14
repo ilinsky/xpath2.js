@@ -24,8 +24,8 @@ function createComment(value) {
     return {
         nodeType: 8,
         nodeName: '#comment',
-        nodeValue: value
-//        textContent: value
+        nodeValue: value,
+        data: value
     };
 }
 
@@ -33,7 +33,17 @@ function createText(value) {
     return {
         nodeType: 3,
         nodeName: '#text',
-        nodeValue: value
+        nodeValue: value,
+        data: value
+    };
+}
+
+function createCDATASection(value) {
+    return {
+        nodeType: 4,
+        nodeName: '#cdata-section',
+        nodeValue: value,
+        data: value
     };
 }
 
@@ -41,9 +51,8 @@ function createProcessingInstruction(target, value) {
     return {
         nodeType: 7,
         nodeName: target,
-        nodeValue: value
-//        target: target,
-//        textContent: value
+        nodeValue: value,
+        data: value
     };
 }
 
@@ -52,7 +61,7 @@ function createAttribute(name, value) {
         nodeType: 2,
         nodeName: name,
         localName: name,
-        nodeValue: value
+        value: value
     };
 }
 
@@ -62,7 +71,7 @@ function addAttribute(element, attribute) {
 
     //
     if (element.ownerDocument && attribute.nodeName == "id") {
-        element.ownerDocument.all[attribute.nodeValue] = element;
+        element.ownerDocument.all[attribute.value] = element;
     }
 }
 

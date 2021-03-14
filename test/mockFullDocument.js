@@ -4,6 +4,7 @@ var createDocument = nanodom.createDocument;
 var createElement = nanodom.createElement;
 var createComment = nanodom.createComment;
 var createText = nanodom.createText;
+var createCDATASection = nanodom.createCDATASection;
 var createAttribute = nanodom.createAttribute;
 var createProcessingInstruction = nanodom.createProcessingInstruction;
 var addAttribute = nanodom.addAttribute;

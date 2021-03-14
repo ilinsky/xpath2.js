@@ -138,7 +138,7 @@ fStaticContext_defineSystemFunction("lang",	[[cXSString, '?'], [cXTNode, '', tru
 		if (aAttributes = fGetProperty(oNode, "attributes"))
 			for (var nIndex = 0, nLength = aAttributes.length; nIndex < nLength; nIndex++)
 				if (fGetProperty(aAttributes[nIndex], "nodeName") == "xml:lang")
-					return new cXSBoolean(fGetProperty(aAttributes[nIndex], "nodeValue").replace(/-.+/, '').toLowerCase() == sLang.valueOf().replace(/-.+/, '').toLowerCase());
+					return new cXSBoolean(fGetProperty(aAttributes[nIndex], "value").replace(/-.+/, '').toLowerCase() == sLang.valueOf().replace(/-.+/, '').toLowerCase());
 	//
 	return new cXSBoolean(false);
 });
