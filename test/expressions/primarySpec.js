@@ -107,6 +107,14 @@ describe("primary", function() {
             expect(xpath.evaluate('fn:not(fn:true())'))
                 .to.have.ordered.members([false]);
         });
+        it('', function() {
+            expect(function(){xpath.evaluate('fn:unknown()')})
+                .to.throw(Exception, 'Unknown system function: {http://www.w3.org/2005/xpath-functions}unknown()');
+        });
+        it('', function() {
+            expect(function(){xpath.evaluate('my:unknown()', null, function() { return 'http://test' })})
+                .to.throw(Exception, 'Unknown user function: {http://test}unknown()');
+        });
     });
 
     describe("numeric literal", function() {
@@ -167,8 +175,50 @@ describe("primary", function() {
         });
     });
 
-    // TODO: VarRef
-//    describe("var ref", function() {
-//
-//    });
+    describe("var ref", function() {
+        it('', function() {
+            expect(xpath.evaluate('$string', null, null, {string: "value"}))
+                .to.have.ordered.members(['value']);
+        });
+
+        it('', function() {
+            expect(xpath.evaluate('$boolean', null, null, {boolean: true}))
+                .to.have.ordered.members([true]);
+        });
+
+        it('', function() {
+            expect(xpath.evaluate('$integer', null, null, {integer: 10}))
+                .to.have.ordered.members([10]);
+        });
+
+        it('', function() {
+            expect(xpath.evaluate('$decimal', null, null, {decimal: 10.5}))
+                .to.have.ordered.members([10.5]);
+        });
+
+        it('', function() {
+            expect(xpath.evaluate('fn:string($double)', null, null, {double: NaN}))
+                .to.have.ordered.members(['NaN']);
+        });
+
+        it('', function() {
+            expect(xpath.evaluate('$double', null, null, {double: Infinity}))
+                .to.have.ordered.members([Infinity]);
+        });
+
+        it('', function() {
+            expect(xpath.evaluate('$double', null, null, {double: 1e+100}))
+                .to.have.ordered.members([1e+100]);
+        });
+
+        it('', function() {
+            expect(function(){xpath.evaluate('$undefined', null, null, {})})
+                .to.throw(Exception, 'Variable $undefined has not been declared');
+        });
+
+        it('', function() {
+            expect(function(){xpath.evaluate('$undefined')})
+                .to.throw(Exception, 'Variable $undefined has not been declared');
+        });
+    });
 });

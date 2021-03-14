@@ -1,6 +1,6 @@
 {
     "name": "xpath2.js",
-    "version": "1.0.0-alpha-3",
+    "version": "1.0.0-alpha-4",
     "license": "(GPL-2.0+ OR MIT)",
     "description": "Open source XPath 2.0 implementation in JavaScript (DOM agnostic)",
     "main": "src/index.js",

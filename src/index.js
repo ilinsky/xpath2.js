@@ -91,6 +91,10 @@ function fCreateDynamicContext(oStaticContext, vItem, oScope, oDOMAdapter) {
 	if (typeof vItem == "undefined")
 		vItem	= null;
 
+	//
+	if (!oDOMAdapter)
+		oDOMAdapter		= oDefaultDOMAdapter;
+
     // Convert types from JavaScript to XML Schema
 	var oXSScope	= {},
 		oValue;
@@ -100,10 +104,6 @@ function fCreateDynamicContext(oStaticContext, vItem, oScope, oDOMAdapter) {
 			if (cObject.hasOwnProperty.call(oScope, sKey) && oValue != null)
 				oXSScope[sKey]	= oDOMAdapter.isNode(oValue) ? oValue : fEvaluator_js2xs(oValue);
 		}
-
-	//
-	if (!oDOMAdapter)
-		oDOMAdapter		= oDefaultDOMAdapter;
 
 	// Create dynamic context
 	return new cDynamicContext(oStaticContext, vItem == null || oDOMAdapter.isNode(vItem) ? vItem : fEvaluator_js2xs(vItem), oXSScope, oDOMAdapter);
@@ -148,6 +148,8 @@ module.exports = {
 	evaluate: fEvaluate,
 	createStaticContext: fCreateStaticContext,
 	createDynamicContext: fCreateDynamicContext,
+	js2xs: fEvaluator_js2xs,
+	xs2js: fEvaluator_xs2js,
 	defaultDOMAdapter: oDefaultDOMAdapter,
 	defaultStaticContext: oDefaultStaticContext
 };
