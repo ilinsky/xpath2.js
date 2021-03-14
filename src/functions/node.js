@@ -8,6 +8,7 @@
  */
 
 var cException = require('./../classes/Exception');
+var cSequence = require('./../classes/Sequence');
 var cStaticContext = require('./../classes/StaticContext');
 
 var cXSAnyAtomicType = require('./../types/schema/simple/XSAnyAtomicType');
@@ -99,7 +100,7 @@ fStaticContext_defineSystemFunction("number",	[[cXSAnyAtomicType, '?', true]],	f
 	if (!arguments.length) {
 		if (!this.item)
 			throw new cException("XPDY0002");
-		oItem	= fFunction_sequence_atomize([this.item], this)[0];
+		oItem	= cSequence.atomize([this.item], this)[0];
 	}
 
 	// If input item cannot be cast to xs:decimal, a NaN should be returned

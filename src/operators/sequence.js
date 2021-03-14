@@ -8,14 +8,11 @@
  */
 
 var cException = require('./../classes/Exception');
+var cSequence = require('./../classes/Sequence');
 
 var cXSInteger = require('./../types/schema/simple/atomic/integer/XSInteger');
-//
-var cXTSequence = require('./../types/xpath/XTSequence');
 
 var fStaticContext_defineSystemOperator = require('./../classes/StaticContext').defineSystemOperator;
-
-var fFunction_sequence_order = cXTSequence.order;
 
 var fArray_indexOf = function(aValue, oSubject) {
     return aValue.indexOf(oSubject);
@@ -69,7 +66,7 @@ fStaticContext_defineSystemOperator("union", function(oSequence1, oSequence2) {
 		if (fArray_indexOf(oSequence, oItem) ==-1)
 			oSequence.push(oItem);
 	}
-	return fFunction_sequence_order(oSequence, this);
+	return cSequence.order(oSequence, this);
 });
 
 // op:intersect($parameter1 as node()*, $parameter2 as node()*) as node()*
@@ -97,7 +94,7 @@ fStaticContext_defineSystemOperator("intersect", function(oSequence1, oSequence2
 		if (bFound && fArray_indexOf(oSequence, oItem) ==-1)
 			oSequence.push(oItem);
 	}
-	return fFunction_sequence_order(oSequence, this);
+	return cSequence.order(oSequence, this);
 });
 
 // op:except($parameter1 as node()*, $parameter2 as node()*) as node()*
@@ -125,7 +122,7 @@ fStaticContext_defineSystemOperator("except", function(oSequence1, oSequence2) {
 		if (!bFound && fArray_indexOf(oSequence, oItem) ==-1)
 			oSequence.push(oItem);
 	}
-	return fFunction_sequence_order(oSequence, this);
+	return cSequence.order(oSequence, this);
 });
 
 // 15.5 Functions and Operators that Generate Sequences

@@ -8,10 +8,7 @@
  */
 
 var cException = require('./../../classes/Exception');
-
-var cXTSequence = require('./../../types/xpath/XTSequence');
-
-var fFunction_sequence_order = cXTSequence.order;
+var cSequence = require('./../../classes/Sequence');
 
 var fArray_indexOf = function(aValue, oSubject) {
     return aValue.indexOf(oSubject);
@@ -46,7 +43,7 @@ cPathExpr.prototype.evaluate	= function (oContext) {
 	// Restore context item
 	oContext.item	= vContextItem;
 	//
-	return fFunction_sequence_order(oSequence, oContext);
+	return cSequence.order(oSequence, oContext);
 };
 
 //

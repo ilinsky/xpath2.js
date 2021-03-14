@@ -8,15 +8,10 @@
  */
 
 var cException = require('./../../classes/Exception');
+var cSequence = require('./../../classes/Sequence');
 var cStaticContext = require('./../../classes/StaticContext');
 
 var cXSAnyAtomicType = require('./../../types/schema/simple/XSAnyAtomicType');
-//
-var cXTSequence = require('./../../types/xpath/XTSequence');
-
-var fFunction_sequence_atomize = cXTSequence.atomize;
-var fFunction_sequence_assertSequenceCardinality = cXTSequence.assertSequenceCardinality;
-var fFunction_sequence_assertSequenceItemType = cXTSequence.assertSequenceItemType;
 
 var cArray = global.Array;
 
@@ -122,13 +117,13 @@ function fFunctionCall_prepare(sName, aParameters, aArguments, oContext) {
 		oParameter	= aParameters[nIndex];
 		oArgument	= aArguments[nIndex];
 		// Check sequence cardinality
-		fFunction_sequence_assertSequenceCardinality(oArgument, oContext, oParameter[1]
+		cSequence.assertSequenceCardinality(oArgument, oContext, oParameter[1]
 //->Debug
 				, aFunctionCall_numbers[nIndex] + " argument of " + sName + '()'
 //<-Debug
 		);
 		// Check sequence items data types consistency
-		fFunction_sequence_assertSequenceItemType(oArgument, oContext, oParameter[0]
+		cSequence.assertSequenceItemType(oArgument, oContext, oParameter[0]
 //->Debug
 				, aFunctionCall_numbers[nIndex] + " argument of " + sName + '()'
 //<-Debug

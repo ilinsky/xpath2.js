@@ -8,15 +8,11 @@
  */
 
 var cException = require('./../../classes/Exception');
+var cSequence = require('./../../classes/Sequence');
 var cStaticContext = require('./../../classes/StaticContext');
 
 var cXSAnyAtomicType = require('./../../types/schema/simple/XSAnyAtomicType');
 var cXSUntypedAtomic = require('./../../types/schema/simple/atomic/XSUntypedAtomic');
-//
-var cXTSequence = require('./../../types/xpath/XTSequence');
-
-var fFunction_sequence_atomize = cXTSequence.atomize;
-var fFunction_sequence_assertSequenceCardinality = cXTSequence.assertSequenceCardinality;
 
 function cUnaryExpr(sOperator, oExpr) {
 	this.operator	= sOperator;
@@ -50,13 +46,13 @@ cUnaryExpr.operators['+']	= function(oRight, oContext) {
 };
 
 cUnaryExpr.prototype.evaluate	= function (oContext) {
-	var oRight	= fFunction_sequence_atomize(this.expression.evaluate(oContext), oContext);
+	var oRight	= cSequence.atomize(this.expression.evaluate(oContext), oContext);
 
 	//
 	if (!oRight.length)
 		return [];
 	// Assert cardinality
- 	fFunction_sequence_assertSequenceCardinality(oRight, oContext, '?'
+ 	cSequence.assertSequenceCardinality(oRight, oContext, '?'
 //->Debug
  			, "second operand of '" + this.operator + "'"
 //<-Debug

@@ -8,6 +8,7 @@
  */
 
 var cException = require('./../classes/Exception');
+var cSequence = require('./../classes/Sequence');
 var cStringCollator = require('./../classes/StringCollator');
 
 var cXSBoolean = require('./../types/schema/simple/atomic/XSBoolean');
@@ -15,12 +16,7 @@ var cXSInteger = require('./../types/schema/simple/atomic/integer/XSInteger');
 var cXSDouble = require('./../types/schema/simple/atomic/XSDouble');
 var cXSString = require('./../types/schema/simple/atomic/XSString');
 //
-var cXTSequence = require('./../types/xpath/XTSequence');
-
 var fStaticContext_defineSystemFunction = require('./../classes/StaticContext').defineSystemFunction;
-
-var fFunction_sequence_assertSequenceCardinality = cXTSequence.assertSequenceCardinality;
-var fFunction_sequence_atomize = cXTSequence.atomize;
 
 var fEncodeURIComponent = global.encodeURIComponent;
 var fEncodeURI = global.encodeURI;
@@ -154,14 +150,14 @@ fStaticContext_defineSystemFunction("concat",	null,	function() {
 	for (var nIndex = 0, nLength = arguments.length, oSequence; nIndex < nLength; nIndex++) {
 		oSequence	= arguments[nIndex];
 		// Assert cardinality
-		fFunction_sequence_assertSequenceCardinality(oSequence, this, '?'
+		cSequence.assertSequenceCardinality(oSequence, this, '?'
 //->Debug
 				, "each argument of concat()"
 //<-Debug
 		);
 		//
 		if (oSequence.length)
-			aValue[aValue.length]	= cXSString.cast(fFunction_sequence_atomize(oSequence, this)[0]).valueOf();
+			aValue[aValue.length]	= cXSString.cast(cSequence.atomize(oSequence, this)[0]).valueOf();
 	}
 
 	return new cXSString(aValue.join(''));
@@ -189,7 +185,7 @@ fStaticContext_defineSystemFunction("string-length",	[[cXSString, '?', true]],	f
 	if (!arguments.length) {
 		if (!this.item)
 			throw new cException("XPDY0002");
-		oValue	= cXSString.cast(fFunction_sequence_atomize([this.item], this)[0]);
+		oValue	= cXSString.cast(cSequence.atomize([this.item], this)[0]);
 	}
 	return new cXSInteger(oValue == null ? 0 : oValue.valueOf().length);
 });
@@ -200,7 +196,7 @@ fStaticContext_defineSystemFunction("normalize-space",	[[cXSString, '?', true]],
 	if (!arguments.length) {
 		if (!this.item)
 			throw new cException("XPDY0002");
-		oValue	= cXSString.cast(fFunction_sequence_atomize([this.item], this)[0]);
+		oValue	= cXSString.cast(cSequence.atomize([this.item], this)[0]);
 	}
 	return new cXSString(oValue == null ? '' : fString_trim(oValue).replace(/\s\s+/g, ' '));
 });

@@ -8,6 +8,7 @@
  */
 
 var cException = require('./../classes/Exception');
+var cSequence = require('./../classes/Sequence');
 
 var cXSBoolean = require('./../types/schema/simple/atomic/XSBoolean');
 var cXSAnyURI = require('./../types/schema/simple/atomic/XSAnyURI');
@@ -16,9 +17,7 @@ var cXSQName = require('./../types/schema/simple/atomic/XSQName');
 
 var cXTItem = require('./../types/xpath/XTItem');
 var cXTNode = require('./../types/xpath/XTNode');
-var cXTSequence = require('./../types/xpath/XTSequence');
 
-var fFunction_sequence_atomize = cXTSequence.atomize;
 var fStaticContext_defineSystemFunction = require('./../classes/StaticContext').defineSystemFunction;
 
 /*
@@ -72,12 +71,12 @@ fStaticContext_defineSystemFunction("string",	[[cXTItem, '?', true]],	function(/
 			throw new cException("XPDY0002");
 		oItem	= this.item;
 	}
-	return oItem == null ? new cXSString('') : cXSString.cast(fFunction_sequence_atomize([oItem], this)[0]);
+	return oItem == null ? new cXSString('') : cXSString.cast(cSequence.atomize([oItem], this)[0]);
 });
 
 // fn:data($arg as item()*) as xs:anyAtomicType*
 fStaticContext_defineSystemFunction("data",	[[cXTItem, '*']],		function(oSequence1) {
-	return fFunction_sequence_atomize(oSequence1, this);
+	return cSequence.atomize(oSequence1, this);
 });
 
 // fn:base-uri() as xs:anyURI?

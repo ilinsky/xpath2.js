@@ -8,6 +8,7 @@
  */
 
 var cException = require('./../../classes/Exception');
+var cSequence = require('./../../classes/Sequence');
 var cStaticContext = require('./../../classes/StaticContext');
 
 var cXSAnyAtomicType = require('./../../types/schema/simple/XSAnyAtomicType');
@@ -31,13 +32,8 @@ var cXSGYear = require('./../../types/schema/simple/atomic/XSGYear');
 var cXSGMonth = require('./../../types/schema/simple/atomic/XSGMonth');
 var cXSGMonthDay = require('./../../types/schema/simple/atomic/XSGMonthDay');
 var cXSGDay = require('./../../types/schema/simple/atomic/XSGDay');
-
+//
 var cXTNode = require('./../../types/xpath/XTNode');
-var cXTSequence = require('./../../types/xpath/XTSequence');
-
-var fFunction_sequence_atomize = cXTSequence.atomize;
-var fFunction_sequence_assertSequenceCardinality = cXTSequence.assertSequenceCardinality;
-var fFunction_sequence_assertSequenceItemType = cXTSequence.assertSequenceItemType;
 
 function cComparisonExpr(oLeft, oRight, sOperator) {
 	this.left	= oLeft;
@@ -57,11 +53,11 @@ cComparisonExpr.prototype.evaluate	= function (oContext) {
 
 // General comparison
 function fComparisonExpr_GeneralComp(oExpr, oContext) {
-	var oLeft	= fFunction_sequence_atomize(oExpr.left.evaluate(oContext), oContext);
+	var oLeft	= cSequence.atomize(oExpr.left.evaluate(oContext), oContext);
 	if (!oLeft.length)
 		return new cXSBoolean(false);
 
-	var oRight	= fFunction_sequence_atomize(oExpr.right.evaluate(oContext), oContext);
+	var oRight	= cSequence.atomize(oExpr.right.evaluate(oContext), oContext);
 	if (!oRight.length)
 		return new cXSBoolean(false);
 
@@ -132,21 +128,21 @@ var hComparisonExpr_GeneralComp_map	= {
 
 // Value comparison
 function fComparisonExpr_ValueComp(oExpr, oContext) {
-	var oLeft	= fFunction_sequence_atomize(oExpr.left.evaluate(oContext), oContext);
+	var oLeft	= cSequence.atomize(oExpr.left.evaluate(oContext), oContext);
 	if (!oLeft.length)
 		return null;
 	// Assert cardinality
- 	fFunction_sequence_assertSequenceCardinality(oLeft, oContext, '?'
+ 	cSequence.assertSequenceCardinality(oLeft, oContext, '?'
 //->Debug
  			, "first operand of '" + oExpr.operator + "'"
 //<-Debug
  	);
 
-	var oRight	= fFunction_sequence_atomize(oExpr.right.evaluate(oContext), oContext);
+	var oRight	= cSequence.atomize(oExpr.right.evaluate(oContext), oContext);
 	if (!oRight.length)
 		return null;
 	// Assert cardinality
- 	fFunction_sequence_assertSequenceCardinality(oRight, oContext, '?'
+ 	cSequence.assertSequenceCardinality(oRight, oContext, '?'
 //->Debug
  			, "second operand of '" + oExpr.operator + "'"
 //<-Debug
@@ -493,13 +489,13 @@ function fComparisonExpr_NodeComp(oExpr, oContext) {
 	if (!oLeft.length)
 		return null;
 	// Assert cardinality
-	fFunction_sequence_assertSequenceCardinality(oLeft, oContext, '?'
+	cSequence.assertSequenceCardinality(oLeft, oContext, '?'
 //->Debug
 			, "first operand of '" + oExpr.operator + "'"
 //<-Debug
 	);
 	// Assert item type
-	fFunction_sequence_assertSequenceItemType(oLeft, oContext, cXTNode
+	cSequence.assertSequenceItemType(oLeft, oContext, cXTNode
 //->Debug
 			, "first operand of '" + oExpr.operator + "'"
 //<-Debug
@@ -509,13 +505,13 @@ function fComparisonExpr_NodeComp(oExpr, oContext) {
 	if (!oRight.length)
 		return null;
 	// Assert cardinality
-	fFunction_sequence_assertSequenceCardinality(oRight, oContext, '?'
+	cSequence.assertSequenceCardinality(oRight, oContext, '?'
 //->Debug
 			, "second operand of '" + oExpr.operator + "'"
 //<-Debug
 	);
 	// Assert item type
-	fFunction_sequence_assertSequenceItemType(oRight, oContext, cXTNode
+	cSequence.assertSequenceItemType(oRight, oContext, cXTNode
 //->Debug
 			, "second operand of '" + oExpr.operator + "'"
 //<-Debug

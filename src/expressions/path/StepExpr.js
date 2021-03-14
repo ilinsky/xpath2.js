@@ -7,11 +7,9 @@
  *
  */
 
-var cXSAnyAtomicType = require('./../../types/schema/simple/XSAnyAtomicType');
-//
-var cXTSequence = require('./../../types/xpath/XTSequence');
+var cSequence = require('./../../classes/Sequence');
 
-var fFunction_sequence_toEBV = cXTSequence.toEBV;
+var cXSAnyAtomicType = require('./../../types/schema/simple/XSAnyAtomicType');
 
 function cStepExpr() {
 
@@ -41,7 +39,7 @@ cStepExpr.prototype.applyPredicates	= function(oSequence, oContext) {
 					oSequence.push(oSequence1[nIndex]);
 			}
 			else
-			if (fFunction_sequence_toEBV(oSequence2, oContext))
+			if (cSequence.toEBV(oSequence2, oContext))
 				oSequence.push(oSequence1[nIndex]);
 		}
 	}

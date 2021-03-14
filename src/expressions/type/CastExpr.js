@@ -7,10 +7,7 @@
  *
  */
 
-var cXTSequence = require('./../../types/xpath/XTSequence');
-
-var fFunction_sequence_atomize = cXTSequence.atomize;
-var fFunction_sequence_assertSequenceCardinality = cXTSequence.assertSequenceCardinality;
+var cSequence = require('./../../classes/Sequence');
 
 function cCastExpr(oExpr, oType) {
 	this.expression	= oExpr;
@@ -23,7 +20,7 @@ cCastExpr.prototype.type		= null;
 cCastExpr.prototype.evaluate	= function(oContext) {
 	var oSequence1	= this.expression.evaluate(oContext);
 	// Validate cardinality
- 	fFunction_sequence_assertSequenceCardinality(oSequence1, oContext, this.type.occurence
+ 	cSequence.assertSequenceCardinality(oSequence1, oContext, this.type.occurence
 //->Debug
  			, "'cast as' expression operand"
 //<-Debug
@@ -32,7 +29,7 @@ cCastExpr.prototype.evaluate	= function(oContext) {
 	if (!oSequence1.length)
 		return [];
 	//
-	return [this.type.itemType.cast(fFunction_sequence_atomize(oSequence1, oContext)[0], oContext)];
+	return [this.type.itemType.cast(cSequence.atomize(oSequence1, oContext)[0], oContext)];
 };
 
 //

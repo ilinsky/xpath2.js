@@ -7,31 +7,31 @@
  *
  */
 
-var cException = require('./../../classes/Exception');
+var cException = require('./Exception');
 
-var cXSAnyAtomicType = require('./../schema/simple/XSAnyAtomicType');
-var cXSUntypedAtomic = require('./../schema/simple/atomic/XSUntypedAtomic');
-var cXSBoolean = require('./../schema/simple/atomic/XSBoolean');
-var cXSDouble = require('./../schema/simple/atomic/XSDouble');
-var cXSString = require('./../schema/simple/atomic/XSString');
-var cXSAnyURI = require('./../schema/simple/atomic/XSAnyURI');
+var cXSAnyAtomicType = require('./../types/schema/simple/XSAnyAtomicType');
+var cXSUntypedAtomic = require('./../types/schema/simple/atomic/XSUntypedAtomic');
+var cXSBoolean = require('./../types/schema/simple/atomic/XSBoolean');
+var cXSDouble = require('./../types/schema/simple/atomic/XSDouble');
+var cXSString = require('./../types/schema/simple/atomic/XSString');
+var cXSAnyURI = require('./../types/schema/simple/atomic/XSAnyURI');
 
-var cXTNode = require('./XTNode');
-var cXTElement = require('./node/XTElement');
-var cXTAttribute = require('./node/XTAttribute');
-var cXTText = require('./node/XTText');
-var cXTProcessingInstruction = require('./node/XTProcessingInstruction');
-var cXTComment = require('./node/XTComment');
-var cXTDocument = require('./node/XTDocument');
+var cXTNode = require('./../types/xpath/XTNode');
+var cXTElement = require('./../types/xpath/node/XTElement');
+var cXTAttribute = require('./../types/xpath/node/XTAttribute');
+var cXTText = require('./../types/xpath/node/XTText');
+var cXTProcessingInstruction = require('./../types/xpath/node/XTProcessingInstruction');
+var cXTComment = require('./../types/xpath/node/XTComment');
+var cXTDocument = require('./../types/xpath/node/XTDocument');
 
 var fIsNaN = global.isNaN;
 
-function cXTSequence() {
+function cSequence() {
 
 };
 
 // EBV calculation
-cXTSequence.toEBV = function(oSequence1, oContext) {
+cSequence.toEBV = function(oSequence1, oContext) {
 	if (!oSequence1.length)
 		return false;
 
@@ -61,7 +61,7 @@ cXTSequence.toEBV = function(oSequence1, oContext) {
 	);
 };
 
-cXTSequence.atomize = function(oSequence1, oContext) {
+cSequence.atomize = function(oSequence1, oContext) {
 	var oSequence	= [];
 	for (var nIndex = 0, nLength = oSequence1.length, oItem, vItem; nIndex < nLength; nIndex++) {
 		oItem	= oSequence1[nIndex];
@@ -108,14 +108,14 @@ cXTSequence.atomize = function(oSequence1, oContext) {
 };
 
 // Orders items in sequence in document order
-cXTSequence.order = function(oSequence1, oContext) {
+cSequence.order = function(oSequence1, oContext) {
 	return oSequence1.sort(function(oNode, oNode2) {
 		var nPosition	= oContext.DOMAdapter.compareDocumentPosition(oNode, oNode2);
 		return nPosition & 2 ? 1 : nPosition & 4 ?-1 : 0;
 	});
 };
 
-cXTSequence.assertSequenceItemType = function(oSequence, oContext, cItemType
+cSequence.assertSequenceItemType = function(oSequence, oContext, cItemType
 //->Debug
 		, sSource
 //<-Debug
@@ -148,7 +148,7 @@ cXTSequence.assertSequenceItemType = function(oSequence, oContext, cItemType
 		// Atomic types
 		if (cItemType == cXSAnyAtomicType || cItemType.prototype instanceof cXSAnyAtomicType) {
 			// Atomize item
-			vItem	= cXTSequence.atomize([vItem], oContext)[0];
+			vItem	= cSequence.atomize([vItem], oContext)[0];
 			// Convert type if necessary
 			if (cItemType != cXSAnyAtomicType) {
 				// Cast item to expected type if it's type is xs:untypedAtomic
@@ -179,7 +179,7 @@ cXTSequence.assertSequenceItemType = function(oSequence, oContext, cItemType
 	}
 };
 
-cXTSequence.assertSequenceCardinality = function(oSequence, oContext, sCardinality
+cSequence.assertSequenceCardinality = function(oSequence, oContext, sCardinality
 //->Debug
 		, sSource
 //<-Debug
@@ -215,4 +215,4 @@ cXTSequence.assertSequenceCardinality = function(oSequence, oContext, sCardinali
 };
 
 //
-module.exports = cXTSequence;
+module.exports = cSequence;

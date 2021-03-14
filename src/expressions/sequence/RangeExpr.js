@@ -8,14 +8,11 @@
  */
 
 var cException = require('./../../classes/Exception');
+var cSequence = require('./../../classes/Sequence');
 var cStaticContext = require('./../../classes/StaticContext');
 
 var cXSInteger = require('./../../types/schema/simple/atomic/integer/XSInteger');
 //
-var cXTSequence = require('./../../types/xpath/XTSequence');
-
-var fFunction_sequence_assertSequenceCardinality = cXTSequence.assertSequenceCardinality;
-var fFunction_sequence_assertSequenceItemType = cXTSequence.assertSequenceItemType;
 
 function cRangeExpr(oLeft, oRight) {
 	this.left	= oLeft;
@@ -36,12 +33,12 @@ cRangeExpr.prototype.evaluate	= function (oContext) {
 	var sSource	= "first operand of 'to'";
 //<-Debug
 
- 	fFunction_sequence_assertSequenceCardinality(oLeft, oContext, '?'
+ 	cSequence.assertSequenceCardinality(oLeft, oContext, '?'
  //->Debug
  			, sSource
  //<-Debug
  	);
- 	fFunction_sequence_assertSequenceItemType(oLeft, oContext, cXSInteger
+ 	cSequence.assertSequenceItemType(oLeft, oContext, cXSInteger
  //->Debug
  			, sSource
  //<-Debug
@@ -56,12 +53,12 @@ cRangeExpr.prototype.evaluate	= function (oContext) {
 //<-Debug
 
 
- 	fFunction_sequence_assertSequenceCardinality(oRight, oContext, '?'
+ 	cSequence.assertSequenceCardinality(oRight, oContext, '?'
 //->Debug
  			, sSource
 //<-Debug
  	);
- 	fFunction_sequence_assertSequenceItemType(oRight, oContext, cXSInteger
+ 	cSequence.assertSequenceItemType(oRight, oContext, cXSInteger
 //->Debug
  			, sSource
 //<-Debug

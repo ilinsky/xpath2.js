@@ -7,9 +7,7 @@
  *
  */
 
-var cXTSequence = require('./../../types/xpath/XTSequence');
-
-var fFunction_sequence_toEBV = cXTSequence.toEBV;
+var cSequence = require('./../../classes/Sequence');
 
 function cIfExpr(oCondExpr, oThenExpr, oElseExpr) {
 	this.condExpr	= oCondExpr;
@@ -23,7 +21,7 @@ cIfExpr.prototype.elseExpr	= null;
 
 // Public members
 cIfExpr.prototype.evaluate	= function (oContext) {
-	return this[fFunction_sequence_toEBV(this.condExpr.evaluate(oContext), oContext) ? "thenExpr" : "elseExpr"].evaluate(oContext);
+	return this[cSequence.toEBV(this.condExpr.evaluate(oContext), oContext) ? "thenExpr" : "elseExpr"].evaluate(oContext);
 };
 
 //

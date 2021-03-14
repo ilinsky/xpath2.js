@@ -8,17 +8,13 @@
  */
 
 var cException = require('./../../classes/Exception');
+var cSequence = require('./../../classes/Sequence');
 var cStaticContext = require('./../../classes/StaticContext');
 
 var cXSUntypedAtomic = require('./../../types/schema/simple/atomic/XSUntypedAtomic');
 var cXSYearMonthDuration = require('./../../types/schema/simple/atomic/duration/XSYearMonthDuration');
 var cXSDayTimeDuration = require('./../../types/schema/simple/atomic/duration/XSDayTimeDuration');
 var cXSAnyAtomicType = require('./../../types/schema/simple/XSAnyAtomicType');
-//
-var cXTSequence = require('./../../types/xpath/XTSequence');
-
-var fFunction_sequence_atomize = cXTSequence.atomize;
-var fFunction_sequence_assertSequenceCardinality = cXTSequence.assertSequenceCardinality;
 
 function cMultiplicativeExpr(oExpr) {
 	this.left	= oExpr;
@@ -128,13 +124,13 @@ cMultiplicativeExpr.operators['mod']	= function (oLeft, oRight, oContext) {
 
 // Public members
 cMultiplicativeExpr.prototype.evaluate	= function (oContext) {
-	var oLeft	= fFunction_sequence_atomize(this.left.evaluate(oContext), oContext);
+	var oLeft	= cSequence.atomize(this.left.evaluate(oContext), oContext);
 
 	//
 	if (!oLeft.length)
 		return [];
 	// Assert cardinality
- 	fFunction_sequence_assertSequenceCardinality(oLeft, oContext, '?'
+ 	cSequence.assertSequenceCardinality(oLeft, oContext, '?'
 //->Debug
  			, "first operand of '" + this.items[0][0] + "'"
 //<-Debug
@@ -145,12 +141,12 @@ cMultiplicativeExpr.prototype.evaluate	= function (oContext) {
 		vLeft	= cXSDouble.cast(vLeft);	// cast to xs:double
 
 	for (var nIndex = 0, nLength = this.items.length, oRight, vRight; nIndex < nLength; nIndex++) {
-		oRight	= fFunction_sequence_atomize(this.items[nIndex][1].evaluate(oContext), oContext);
+		oRight	= cSequence.atomize(this.items[nIndex][1].evaluate(oContext), oContext);
 
 		if (!oRight.length)
 			return [];
 		// Assert cardinality
- 		fFunction_sequence_assertSequenceCardinality(oRight, oContext, '?'
+ 		cSequence.assertSequenceCardinality(oRight, oContext, '?'
 //->Debug
  				, "second operand of '" + this.items[nIndex][0] + "'"
 //<-Debug

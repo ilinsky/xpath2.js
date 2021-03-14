@@ -8,12 +8,10 @@
  */
 
 var cException = require('./../../classes/Exception');
+var cSequence = require('./../../classes/Sequence');
 
 var cXSBoolean = require('./../../types/schema/simple/atomic/XSBoolean');
 //
-var cXTSequence = require('./../../types/xpath/XTSequence');
-
-var fFunction_sequence_atomize = cXTSequence.atomize;
 
 function cCastableExpr(oExpr, oType) {
 	this.expression	= oExpr;
@@ -36,7 +34,7 @@ cCastableExpr.prototype.evaluate	= function(oContext) {
 
 	// Try casting
 	try {
-		oItemType.cast(fFunction_sequence_atomize(oSequence1, oContext)[0]);
+		oItemType.cast(cSequence.atomize(oSequence1, oContext)[0]);
 	}
 	catch (e) {
 		// js error

@@ -7,15 +7,14 @@
  *
  */
 
+var cSequence = require('./../classes/Sequence');
+
 var cXSBoolean = require('./../types/schema/simple/atomic/XSBoolean');
 //
 var cXTItem = require('./../types/xpath/XTItem');
 var cXTNode = require('./../types/xpath/XTNode');
-var cXTSequence = require('./../types/xpath/XTSequence');
 
 var fStaticContext_defineSystemFunction = require('./../classes/StaticContext').defineSystemFunction;
-
-var fFunction_sequence_toEBV = cXTSequence.toEBV;
 
 /*
 	9.1 Additional Boolean Constructor Functions
@@ -40,5 +39,5 @@ fStaticContext_defineSystemFunction("false",	[],	function() {
 // 9.3 Functions on Boolean Values
 // fn:not($arg as item()*) as xs:boolean
 fStaticContext_defineSystemFunction("not",	[[cXTItem, '*']],	function(oSequence1) {
-	return new cXSBoolean(!fFunction_sequence_toEBV(oSequence1, this));
+	return new cXSBoolean(!cSequence.toEBV(oSequence1, this));
 });

@@ -9,9 +9,7 @@
 
 var cXSBoolean = require('./../../types/schema/simple/atomic/XSBoolean');
 //
-var cXTSequence = require('./../../types/xpath/XTSequence');
-
-var fFunction_sequence_toEBV = cXTSequence.toEBV;
+var cSequence = require('./../../classes/Sequence');
 
 function cQuantifiedExpr(sQuantifier) {
 	this.quantifier		= sQuantifier;
@@ -37,7 +35,7 @@ cQuantifiedExpr.prototype.evaluate	= function (oContext) {
 			if (nBinding < oSelf.bindings.length)
 				arguments.callee(oSelf, nBinding);
 			else
-				bResult	= fFunction_sequence_toEBV(oSelf.satisfiesExpr.evaluate(oContext), oContext);
+				bResult	= cSequence.toEBV(oSelf.satisfiesExpr.evaluate(oContext), oContext);
 			oContext.popVariable(sUri);
 		}
 	})(this, 0);

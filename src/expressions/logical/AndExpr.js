@@ -7,11 +7,9 @@
  *
  */
 
-var cXSBoolean = require('./../../types/schema/simple/atomic/XSBoolean');
-//
-var cXTSequence = require('./../../types/xpath/XTSequence');
+var cSequence = require('./../../classes/Sequence');
 
-var fFunction_sequence_toEBV = cXTSequence.toEBV;
+var cXSBoolean = require('./../../types/schema/simple/atomic/XSBoolean');
 
 function cAndExpr(oExpr) {
 	this.left	= oExpr;
@@ -23,9 +21,9 @@ cAndExpr.prototype.items	= null;
 
 // Public members
 cAndExpr.prototype.evaluate	= function (oContext) {
-	var bValue	= fFunction_sequence_toEBV(this.left.evaluate(oContext), oContext);
+	var bValue	= cSequence.toEBV(this.left.evaluate(oContext), oContext);
 	for (var nIndex = 0, nLength = this.items.length; (nIndex < nLength) && bValue; nIndex++)
-		bValue	= fFunction_sequence_toEBV(this.items[nIndex].evaluate(oContext), oContext);
+		bValue	= cSequence.toEBV(this.items[nIndex].evaluate(oContext), oContext);
 	return [new cXSBoolean(bValue)];
 };
 

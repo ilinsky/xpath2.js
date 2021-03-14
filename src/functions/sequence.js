@@ -9,6 +9,7 @@
 
 var cException = require('./../classes/Exception');
 var cStaticContext = require('./../classes/StaticContext');
+var cSequence = require('./../classes/Sequence');
 
 var cComparisonExpr = require('./../expressions/comparison/ComparisonExpr');
 var cMultiplicativeExpr = require('./../expressions/arithmetic/MultiplicativeExpr');
@@ -26,7 +27,6 @@ var cXSAnyURI = require('./../types/schema/simple/atomic/XSAnyURI');
 //
 var cXTItem = require('./../types/xpath/XTItem');
 var cXTNode = require('./../types/xpath/XTNode');
-var cXTSequence = require('./../types/xpath/XTSequence');
 
 var cMath = global.Math;
 
@@ -79,7 +79,7 @@ var fArray_indexOf = function(aValue, oSubject) {
 // 15.1 General Functions and Operators on Sequences
 // fn:boolean($arg as item()*) as xs:boolean
 fStaticContext_defineSystemFunction("boolean",	[[cXTItem, '*']],	function(oSequence1) {
-	return new cXSBoolean(cXTSequence.toEBV(oSequence1, this));
+	return new cXSBoolean(cSequence.toEBV(oSequence1, this));
 });
 
 // fn:index-of($seqParam as xs:anyAtomicType*, $srchParam as xs:anyAtomicType) as xs:integer*
@@ -415,7 +415,7 @@ fStaticContext_defineSystemFunction("id",	[[cXSString, '*'], [cXTNode, '', true]
 			if ((oNode = this.DOMAdapter.getElementById(oDocument, aValue[nRightIndex])) && fArray_indexOf(oSequence, oNode) ==-1)
 				oSequence.push(oNode);
 	//
-	return cXTSequence.order(oSequence, this);
+	return cSequence.order(oSequence, this);
 });
 
 // fn:idref($arg as xs:string*) as node()*
