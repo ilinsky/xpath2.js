@@ -14,7 +14,7 @@ var cXSConstants = require('./../../XSConstants');
 var cXSAnySimpleType = require('./../../XSAnySimpleType');
 var cXSAnyAtomicType = require('./../XSAnyAtomicType');
 
-var cString = String;
+var cString = global.String;
 
 function cXSString(sValue) {
 	this.value	= sValue;

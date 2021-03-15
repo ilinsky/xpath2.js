@@ -13,7 +13,7 @@ var cXSConstants = require('./../../../XSConstants');
 var cXSDuration = require('./../XSDuration');
 var cXSString = require('./../XSString');
 
-var cString = String;
+var cString = global.String;
 var fString_trim = function (sValue) {
 	return cString(sValue).trim();
 };

@@ -7,6 +7,8 @@
  *
  */
 
+var cError = global.Error;
+
 function cException(sCode
 //->Debug
 		, sMessage
@@ -21,7 +23,7 @@ function cException(sCode
 					  oException_messages[sCode];
 };
 
-cException.prototype	= new global.Error;
+cException.prototype	= new cError;
 
 // "http://www.w3.org/2005/xqt-errors"
 

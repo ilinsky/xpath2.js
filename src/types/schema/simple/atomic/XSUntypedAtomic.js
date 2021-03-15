@@ -13,7 +13,7 @@ var cXSConstants = require('./../../XSConstants');
 
 var cXSAnyAtomicType = require('./../XSAnyAtomicType');
 
-var cString = String;
+var cString = global.String;
 
 function cXSUntypedAtomic(sValue) {
 	this.value	= sValue;
