@@ -1,14 +1,4 @@
 //
-var cXTItem = require('./xpath/XTItem');
-var cXTNode = require('./xpath/XTNode');
-//
-var cXTAttribute = require('./xpath/node/XTAttribute');
-var cXTComment = require('./xpath/node/XTComment');
-var cXTDocument = require('./xpath/node/XTDocument');
-var cXTElement = require('./xpath/node/XTElement');
-var cXTProcessingInstruction = require('./xpath/node/XTProcessingInstruction');
-var cXTText = require('./xpath/node/XTText');
-//
 var cXSAnyType = require('./schema/XSAnyType');
 var cXSAnySimpleType = require('./schema/XSAnySimpleType');
 var cXSUntyped = require('./schema/XSUntyped');
