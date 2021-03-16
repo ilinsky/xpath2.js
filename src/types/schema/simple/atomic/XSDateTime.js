@@ -15,6 +15,7 @@ var cXSAnySimpleType = require('./../../XSAnySimpleType');
 var cXSAnyAtomicType = require('./../XSAnyAtomicType');
 var cXSUntypedAtomic = require('./XSUntypedAtomic');
 var cXSString = require('./XSString');
+var cXSDayTimeDuration = require('./duration/XSDayTimeDuration');
 
 var cArray = global.Array;
 var cMath = global.Math;
@@ -211,6 +212,33 @@ cXSDateTime.normalizeTime = function(oValue) {
 
 cXSDateTime.normalize = function(oValue) {
 	return cXSDateTime.normalizeDate(cXSDateTime.normalizeTime(oValue));
+};
+
+cXSDateTime.adjustTimezone = function(oValue, oTimezone) {
+	if (oValue == null)
+		return null;
+
+	//
+	if (oTimezone == null)
+		oValue.timezone	= null;
+	else {
+		var nTimezone	= cXSDayTimeDuration.toSeconds(oTimezone) / 60;
+		if (oValue.timezone != null) {
+			var nDiff	= nTimezone - oValue.timezone;
+			if (oValue.primitiveKind == cXSAnySimpleType.PRIMITIVE_DATE) {
+				if (nDiff < 0)
+					oValue.day--;
+			}
+			else {
+				oValue.minutes	+= nDiff % 60;
+				oValue.hours	+= ~~(nDiff / 60);
+			}
+			//
+			cXSDateTime.normalize(oValue);
+		}
+		oValue.timezone	= nTimezone;
+	}
+	return oValue;
 };
 
 //

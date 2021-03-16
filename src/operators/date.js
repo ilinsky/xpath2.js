@@ -15,8 +15,6 @@ var cXSTime = require('./../types/schema/simple/atomic/XSTime');
 var cXSDayTimeDuration = require('./../types/schema/simple/atomic/duration/XSDayTimeDuration');
 var cXSYearMonthDuration = require('./../types/schema/simple/atomic/duration/XSYearMonthDuration');
 
-var fFunction_dateTime_adjustTimezone = require('./../functions/date').dateTime_adjustTimezone;
-
 var cDate = global.Date;
 var cMath = global.Math;
 
@@ -331,8 +329,8 @@ function fOperator_compareDates(oLeft, oRight, sComparator) {
 function fOperator_compareDateTimes(oLeft, oRight, sComparator) {
 	// Adjust object time zone to Z and compare as strings
 	var oTimezone	= new cXSDayTimeDuration(0, 0, 0, 0),
-		sLeft	= fFunction_dateTime_adjustTimezone(oLeft, oTimezone).toString(),
-		sRight	= fFunction_dateTime_adjustTimezone(oRight, oTimezone).toString();
+		sLeft	= cXSDateTime.adjustTimezone(new cXSDateTime(oLeft.year, oLeft.month, oLeft.day, oLeft.hours, oLeft.minutes, oLeft.seconds, oLeft.timezone, oLeft.negative), oTimezone).toString(),
+		sRight	= cXSDateTime.adjustTimezone(new cXSDateTime(oRight.year, oRight.month, oRight.day, oRight.hours, oRight.minutes, oRight.seconds, oRight.timezone, oRight.negative), oTimezone).toString();
 	return new cXSBoolean(sComparator == 'lt' ? sLeft < sRight : sComparator == 'gt' ? sLeft > sRight : sLeft == sRight);
 };
 

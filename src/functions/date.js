@@ -164,19 +164,19 @@ function fTimezoneFromTime(oTime) {
 // fn:adjust-dateTime-to-timezone($arg as xs:dateTime?) as xs:dateTime?
 // fn:adjust-dateTime-to-timezone($arg as xs:dateTime?, $timezone as xs:dayTimeDuration?) as xs:dateTime?
 function fAdjustDateTimeToTimezone(oDateTime, oDayTimeDuration) {
-	return fFunction_dateTime_adjustTimezone(oDateTime, arguments.length > 1 && oDayTimeDuration != null ? arguments.length > 1 ? oDayTimeDuration : this.timezone : null);
+	return cXSDateTime.adjustTimezone(oDateTime, arguments.length > 1 && oDayTimeDuration != null ? arguments.length > 1 ? oDayTimeDuration : this.timezone : null);
 };
 
 // fn:adjust-date-to-timezone($arg as xs:date?) as xs:date?
 // fn:adjust-date-to-timezone($arg as xs:date?, $timezone as xs:dayTimeDuration?) as xs:date?
 function fAdjustDateToTimezone(oDate, oDayTimeDuration) {
-	return fFunction_dateTime_adjustTimezone(oDate, arguments.length > 1 && oDayTimeDuration != null ? arguments.length > 1 ? oDayTimeDuration : this.timezone : null);
+	return cXSDateTime.adjustTimezone(oDate, arguments.length > 1 && oDayTimeDuration != null ? arguments.length > 1 ? oDayTimeDuration : this.timezone : null);
 };
 
 // fn:adjust-time-to-timezone($arg as xs:time?) as xs:time?
 // fn:adjust-time-to-timezone($arg as xs:time?, $timezone as xs:dayTimeDuration?) as xs:time?
 function fAdjustTimeToTimezone(oTime, oDayTimeDuration) {
-	return fFunction_dateTime_adjustTimezone(oTime, arguments.length > 1 && oDayTimeDuration != null ? arguments.length > 1 ? oDayTimeDuration : this.timezone : null);
+	return cXSDateTime.adjustTimezone(oTime, arguments.length > 1 && oDayTimeDuration != null ? arguments.length > 1 ? oDayTimeDuration : this.timezone : null);
 };
 
 //
@@ -212,46 +212,7 @@ function fFunction_dateTime_getComponent(oDateTime, sName) {
 	}
 };
 
-//
-function fFunction_dateTime_adjustTimezone(oDateTime, oTimezone) {
-	if (oDateTime == null)
-		return null;
-
-	// Create a copy
-	var oValue;
-	if (oDateTime instanceof cXSDate)
-		oValue	= new cXSDate(oDateTime.year, oDateTime.month, oDateTime.day, oDateTime.timezone, oDateTime.negative);
-	else
-	if (oDateTime instanceof cXSTime)
-		oValue	= new cXSTime(oDateTime.hours, oDateTime.minutes, oDateTime.seconds, oDateTime.timezone, oDateTime.negative);
-	else
-		oValue	= new cXSDateTime(oDateTime.year, oDateTime.month, oDateTime.day, oDateTime.hours, oDateTime.minutes, oDateTime.seconds, oDateTime.timezone, oDateTime.negative);
-
-	//
-	if (oTimezone == null)
-		oValue.timezone	= null;
-	else {
-		var nTimezone	= cXSDayTimeDuration.toSeconds(oTimezone) / 60;
-		if (oDateTime.timezone != null) {
-			var nDiff	= nTimezone - oDateTime.timezone;
-			if (oDateTime instanceof cXSDate) {
-				if (nDiff < 0)
-					oValue.day--;
-			}
-			else {
-				oValue.minutes	+= nDiff % 60;
-				oValue.hours	+= ~~(nDiff / 60);
-			}
-			//
-			cXSDateTime.normalize(oValue);
-		}
-		oValue.timezone	= nTimezone;
-	}
-	return oValue;
-};
-
 module.exports = {
-    dateTime_adjustTimezone: fFunction_dateTime_adjustTimezone,
     fYearsFromDuration: fYearsFromDuration,
     fMonthsFromDuration: fMonthsFromDuration,
     fDaysFromDuration: fDaysFromDuration,
