@@ -12,8 +12,6 @@ var cSequence = require('./../classes/Sequence');
 
 var cXSInteger = require('./../types/schema/simple/atomic/integer/XSInteger');
 
-var fStaticContext_defineSystemOperator = require('./../classes/StaticContext').defineSystemOperator;
-
 var fArray_indexOf = function(aValue, oSubject) {
     return aValue.indexOf(oSubject);
 };
@@ -34,13 +32,13 @@ var fArray_indexOf = function(aValue, oSubject) {
 
 // 15.1 General Functions and Operators on Sequences
 // op:concatenate($seq1 as item()*, $seq2 as item()*) as item()*
-fStaticContext_defineSystemOperator("concatenate", function(oSequence1, oSequence2) {
+function fConcatenate(oSequence1, oSequence2) {
 	return oSequence1.concat(oSequence2);
-});
+};
 
 // 15.3 Equals, Union, Intersection and Except
 // op:union($parameter1 as node()*, $parameter2 as node()*) as node()*
-fStaticContext_defineSystemOperator("union", function(oSequence1, oSequence2) {
+function fUnion(oSequence1, oSequence2) {
 	var oSequence	= [];
 	// Process first collection
 	for (var nIndex = 0, nLength = oSequence1.length, oItem; nIndex < nLength; nIndex++) {
@@ -67,10 +65,10 @@ fStaticContext_defineSystemOperator("union", function(oSequence1, oSequence2) {
 			oSequence.push(oItem);
 	}
 	return cSequence.order(oSequence, this);
-});
+};
 
 // op:intersect($parameter1 as node()*, $parameter2 as node()*) as node()*
-fStaticContext_defineSystemOperator("intersect", function(oSequence1, oSequence2) {
+function fIntersect(oSequence1, oSequence2) {
 	var oSequence	= [];
 	for (var nIndex = 0, nLength = oSequence1.length, oItem, bFound; nIndex < nLength; nIndex++) {
 		if (!this.DOMAdapter.isNode(oItem = oSequence1[nIndex]))
@@ -95,10 +93,10 @@ fStaticContext_defineSystemOperator("intersect", function(oSequence1, oSequence2
 			oSequence.push(oItem);
 	}
 	return cSequence.order(oSequence, this);
-});
+};
 
 // op:except($parameter1 as node()*, $parameter2 as node()*) as node()*
-fStaticContext_defineSystemOperator("except", function(oSequence1, oSequence2) {
+function fExcept(oSequence1, oSequence2) {
 	var oSequence	= [];
 	for (var nIndex = 0, nLength = oSequence1.length, oItem, bFound; nIndex < nLength; nIndex++) {
 		if (!this.DOMAdapter.isNode(oItem = oSequence1[nIndex]))
@@ -123,14 +121,22 @@ fStaticContext_defineSystemOperator("except", function(oSequence1, oSequence2) {
 			oSequence.push(oItem);
 	}
 	return cSequence.order(oSequence, this);
-});
+};
 
 // 15.5 Functions and Operators that Generate Sequences
 // op:to($firstval as xs:integer, $lastval as xs:integer) as xs:integer*
-fStaticContext_defineSystemOperator("to", function(oLeft, oRight) {
+function fTo(oLeft, oRight) {
 	var oSequence	= [];
 	for (var nIndex = oLeft.valueOf(), nLength = oRight.valueOf(); nIndex <= nLength; nIndex++)
 		oSequence.push(new cXSInteger(nIndex));
 	//
 	return oSequence;
-});
+};
+
+module.exports = {
+    fConcatenate: fConcatenate,
+    fUnion: fUnion,
+    fIntersect: fIntersect,
+    fExcept: fExcept,
+    fTo: fTo
+};

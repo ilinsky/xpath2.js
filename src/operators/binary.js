@@ -9,17 +9,20 @@
 
 var cXSBoolean = require('./../types/schema/simple/atomic/XSBoolean');
 
-var fStaticContext_defineSystemOperator = require('./../classes/StaticContext').defineSystemOperator;
-
 /*
 	12.1 Comparisons of base64Binary and hexBinary Values
 		op:hexBinary-equal
 		op:base64Binary-equal
 */
-fStaticContext_defineSystemOperator("hexBinary-equal", function(oLeft, oRight) {
+function fHexBinaryEqual(oLeft, oRight) {
 	return new cXSBoolean(oLeft.valueOf() == oRight.valueOf());
-});
+};
 
-fStaticContext_defineSystemOperator("base64Binary-equal", function(oLeft, oRight) {
+function fBase64BinaryEqual(oLeft, oRight) {
 	return new cXSBoolean(oLeft.valueOf() == oRight.valueOf());
-});
+};
+
+module.exports = {
+    fHexBinaryEqual: fHexBinaryEqual,
+    fBase64BinaryEqual: fBase64BinaryEqual
+};

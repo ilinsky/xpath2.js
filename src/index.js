@@ -20,28 +20,9 @@ var cXSBoolean = require('./types/schema/simple/atomic/XSBoolean');
 var cXSInteger = require('./types/schema/simple/atomic/integer/XSInteger');
 
 // "load" functions
-require('./functions/accessor');
-require('./functions/anyuri');
-require('./functions/boolean');
-require('./functions/context');
-require('./functions/date');
-require('./functions/node');
-require('./functions/numeric');
-require('./functions/qname');
-require('./functions/sequence');
-require('./functions/string');
-require('./functions/trace');
-
+require('./functions');
 // "load" operators
-require('./operators/binary');
-require('./operators/boolean');
-require('./operators/date');
-require('./operators/node');
-require('./operators/notation');
-require('./operators/numeric');
-require('./operators/qname');
-require('./operators/sequence');
-
+require('./operators');
 // "load" datatypes
 require('./types');
 

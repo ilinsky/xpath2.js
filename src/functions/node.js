@@ -11,16 +11,10 @@ var cException = require('./../classes/Exception');
 var cSequence = require('./../classes/Sequence');
 var cStaticContext = require('./../classes/StaticContext');
 
-var cXSAnyAtomicType = require('./../types/schema/simple/XSAnyAtomicType');
 var cXSBoolean = require('./../types/schema/simple/atomic/XSBoolean');
 var cXSString = require('./../types/schema/simple/atomic/XSString');
 var cXSDouble = require('./../types/schema/simple/atomic/XSDouble');
 var cXSAnyURI = require('./../types/schema/simple/atomic/XSAnyURI');
-//
-var cXTItem = require('./../types/xpath/XTItem');
-var cXTNode = require('./../types/xpath/XTNode');
-
-var fStaticContext_defineSystemFunction = require('./../classes/StaticContext').defineSystemFunction;
 
 var nNaN = global.NaN;
 
@@ -38,7 +32,7 @@ var nNaN = global.NaN;
 // 14 Functions on Nodes
 // fn:name() as xs:string
 // fn:name($arg as node()?) as xs:string
-fStaticContext_defineSystemFunction("name",	[[cXTNode, '?', true]],	function(oNode) {
+function fName(oNode) {
 	if (!arguments.length) {
 		if (!this.DOMAdapter.isNode(this.item))
 			throw new cException("XPTY0004"
@@ -54,11 +48,11 @@ fStaticContext_defineSystemFunction("name",	[[cXTNode, '?', true]],	function(oNo
 	//
 	var vValue	= cStaticContext.functions["node-name"].call(this, oNode);
 	return new cXSString(vValue == null ? '' : vValue.toString());
-});
+};
 
 // fn:local-name() as xs:string
 // fn:local-name($arg as node()?) as xs:string
-fStaticContext_defineSystemFunction("local-name",	[[cXTNode, '?', true]],	function(oNode) {
+function fLocalName(oNode) {
 	if (!arguments.length) {
 		if (!this.DOMAdapter.isNode(this.item))
 			throw new cException("XPTY0004"
@@ -73,11 +67,11 @@ fStaticContext_defineSystemFunction("local-name",	[[cXTNode, '?', true]],	functi
 		return new cXSString('');
 	//
 	return new cXSString(this.DOMAdapter.getProperty(oNode, "localName") || '');
-});
+};
 
 // fn:namespace-uri() as xs:anyURI
 // fn:namespace-uri($arg as node()?) as xs:anyURI
-fStaticContext_defineSystemFunction("namespace-uri",	[[cXTNode, '?', true]],	function(oNode) {
+function fNamespaceUri(oNode) {
 	if (!arguments.length) {
 		if (!this.DOMAdapter.isNode(this.item))
 			throw new cException("XPTY0004"
@@ -92,11 +86,11 @@ fStaticContext_defineSystemFunction("namespace-uri",	[[cXTNode, '?', true]],	fun
 		return cXSAnyURI.cast(new cXSString(''));
 	//
 	return cXSAnyURI.cast(new cXSString(this.DOMAdapter.getProperty(oNode, "namespaceURI") || ''));
-});
+};
 
 // fn:number() as xs:double
 // fn:number($arg as xs:anyAtomicType?) as xs:double
-fStaticContext_defineSystemFunction("number",	[[cXSAnyAtomicType, '?', true]],	function(/*[*/oItem/*]*/) {
+function fNumber(/*[*/oItem/*]*/) {
 	if (!arguments.length) {
 		if (!this.item)
 			throw new cException("XPDY0002");
@@ -114,11 +108,11 @@ fStaticContext_defineSystemFunction("number",	[[cXSAnyAtomicType, '?', true]],	f
 		}
 	}
 	return vValue;
-});
+};
 
 // fn:lang($testlang as xs:string?) as xs:boolean
 // fn:lang($testlang as xs:string?, $node as node()) as xs:boolean
-fStaticContext_defineSystemFunction("lang",	[[cXSString, '?'], [cXTNode, '', true]],	function(sLang, oNode) {
+function fLang(sLang, oNode) {
 	if (arguments.length < 2) {
 		if (!this.DOMAdapter.isNode(this.item))
 			throw new cException("XPTY0004"
@@ -141,11 +135,11 @@ fStaticContext_defineSystemFunction("lang",	[[cXSString, '?'], [cXTNode, '', tru
 					return new cXSBoolean(fGetProperty(aAttributes[nIndex], "value").replace(/-.+/, '').toLowerCase() == sLang.valueOf().replace(/-.+/, '').toLowerCase());
 	//
 	return new cXSBoolean(false);
-});
+};
 
 // fn:root() as node()
 // fn:root($arg as node()?) as node()?
-fStaticContext_defineSystemFunction("root",	[[cXTNode, '?', true]],	function(oNode) {
+function fRoot(oNode) {
 	if (!arguments.length) {
 		if (!this.DOMAdapter.isNode(this.item))
 			throw new cException("XPTY0004"
@@ -169,4 +163,13 @@ fStaticContext_defineSystemFunction("root",	[[cXTNode, '?', true]],	function(oNo
 		oNode	= oParent;
 
 	return oNode;
-});
+};
+
+module.exports = {
+    fName: fName,
+    fLocalName: fLocalName,
+    fNamespaceUri: fNamespaceUri,
+    fNumber: fNumber,
+    fLang: fLang,
+    fRoot: fRoot
+};

@@ -17,8 +17,6 @@ var cXSDayTimeDuration = require('./../types/schema/simple/atomic/duration/XSDay
 var cXSDate = require('./../types/schema/simple/atomic/XSDate');
 var cXSInteger = require('./../types/schema/simple/atomic/integer/XSInteger');
 
-var fStaticContext_defineSystemFunction = require('./../classes/StaticContext').defineSystemFunction;
-
 var cMath = global.Math;
 
 /*
@@ -54,132 +52,132 @@ var cMath = global.Math;
 // 10.5 Component Extraction Functions on Durations, Dates and Times
 // functions on duration
 // fn:years-from-duration($arg as xs:duration?) as xs:integer?
-fStaticContext_defineSystemFunction("years-from-duration",	[[cXSDuration, '?']],	function(oDuration) {
+function fYearsFromDuration(oDuration) {
 	return fFunction_duration_getComponent(oDuration, "year");
-});
+};
 
 // fn:months-from-duration($arg as xs:duration?) as xs:integer?
-fStaticContext_defineSystemFunction("months-from-duration",	[[cXSDuration, '?']],	function(oDuration) {
+function fMonthsFromDuration(oDuration) {
 	return fFunction_duration_getComponent(oDuration, "month");
-});
+};
 
 // fn:days-from-duration($arg as xs:duration?) as xs:integer?
-fStaticContext_defineSystemFunction("days-from-duration",	[[cXSDuration, '?']],	function(oDuration) {
+function fDaysFromDuration(oDuration) {
 	return fFunction_duration_getComponent(oDuration, "day");
-});
+};
 
 // fn:hours-from-duration($arg as xs:duration?) as xs:integer?
-fStaticContext_defineSystemFunction("hours-from-duration",	[[cXSDuration, '?']],	function(oDuration) {
+function fHoursFromDuration(oDuration) {
 	return fFunction_duration_getComponent(oDuration, "hours");
-});
+};
 
 // fn:minutes-from-duration($arg as xs:duration?) as xs:integer?
-fStaticContext_defineSystemFunction("minutes-from-duration",	[[cXSDuration, '?']],	function(oDuration) {
+function fMinutesFromDuration(oDuration) {
 	return fFunction_duration_getComponent(oDuration, "minutes");
-});
+};
 
 // fn:seconds-from-duration($arg as xs:duration?) as xs:decimal?
-fStaticContext_defineSystemFunction("seconds-from-duration",	[[cXSDuration, '?']],	function(oDuration) {
+function fSecondsFromDuration(oDuration) {
 	return fFunction_duration_getComponent(oDuration, "seconds");
-});
+};
 
 // functions on dateTime
 // fn:year-from-dateTime($arg as xs:dateTime?) as xs:integer?
-fStaticContext_defineSystemFunction("year-from-dateTime",		[[cXSDateTime, '?']],	function(oDateTime) {
+function fYearFromDateTime(oDateTime) {
 	return fFunction_dateTime_getComponent(oDateTime,	"year");
-});
+};
 
 // fn:month-from-dateTime($arg as xs:dateTime?) as xs:integer?
-fStaticContext_defineSystemFunction("month-from-dateTime",		[[cXSDateTime, '?']],	function(oDateTime) {
+function fMonthFromDateTime(oDateTime) {
 	return fFunction_dateTime_getComponent(oDateTime, "month");
-});
+};
 
 // fn:day-from-dateTime($arg as xs:dateTime?) as xs:integer?
-fStaticContext_defineSystemFunction("day-from-dateTime",			[[cXSDateTime, '?']],	function(oDateTime) {
+function fDayFromDateTime(oDateTime) {
 	return fFunction_dateTime_getComponent(oDateTime, "day");
-});
+};
 
 // fn:hours-from-dateTime($arg as xs:dateTime?) as xs:integer?
-fStaticContext_defineSystemFunction("hours-from-dateTime",		[[cXSDateTime, '?']],	function(oDateTime) {
+function fHoursFromDateTime(oDateTime) {
 	return fFunction_dateTime_getComponent(oDateTime, "hours");
-});
+};
 
 // fn:minutes-from-dateTime($arg as xs:dateTime?) as xs:integer?
-fStaticContext_defineSystemFunction("minutes-from-dateTime",		[[cXSDateTime, '?']],	function(oDateTime) {
+function fMinutesFromDateTime(oDateTime) {
 	return fFunction_dateTime_getComponent(oDateTime, "minutes");
-});
+};
 
 // fn:seconds-from-dateTime($arg as xs:dateTime?) as xs:decimal?
-fStaticContext_defineSystemFunction("seconds-from-dateTime",		[[cXSDateTime, '?']],	function(oDateTime) {
+function fSecondsFromDateTime(oDateTime) {
 	return fFunction_dateTime_getComponent(oDateTime, "seconds");
-});
+};
 
 // fn:timezone-from-dateTime($arg as xs:dateTime?) as xs:dayTimeDuration?
-fStaticContext_defineSystemFunction("timezone-from-dateTime",	[[cXSDateTime, '?']],	function(oDateTime) {
+function fTimezoneFromDateTime(oDateTime) {
 	return fFunction_dateTime_getComponent(oDateTime, "timezone");
-});
+};
 
 // functions on date
 // fn:year-from-date($arg as xs:date?) as xs:integer?
-fStaticContext_defineSystemFunction("year-from-date",	[[cXSDate, '?']],	function(oDate) {
+function fYearFromDate(oDate) {
 	return fFunction_dateTime_getComponent(oDate, "year");
-});
+};
 
 // fn:month-from-date($arg as xs:date?) as xs:integer?
-fStaticContext_defineSystemFunction("month-from-date",	[[cXSDate, '?']],	function(oDate) {
+function fMonthFromDate(oDate) {
 	return fFunction_dateTime_getComponent(oDate, "month");
-});
+};
 
 // fn:day-from-date($arg as xs:date?) as xs:integer?
-fStaticContext_defineSystemFunction("day-from-date",		[[cXSDate, '?']],	function(oDate) {
+function fDayFromDate(oDate) {
 	return fFunction_dateTime_getComponent(oDate, "day");
-});
+};
 
 // fn:timezone-from-date($arg as xs:date?) as xs:dayTimeDuration?
-fStaticContext_defineSystemFunction("timezone-from-date",	[[cXSDate, '?']],	function(oDate) {
+function fTimezoneFromDate(oDate) {
 	return fFunction_dateTime_getComponent(oDate, "timezone");
-});
+};
 
 // functions on time
 // fn:hours-from-time($arg as xs:time?) as xs:integer?
-fStaticContext_defineSystemFunction("hours-from-time",		[[cXSTime, '?']],	function(oTime) {
+function fHoursFromTime(oTime) {
 	return fFunction_dateTime_getComponent(oTime, "hours");
-});
+};
 
 // fn:minutes-from-time($arg as xs:time?) as xs:integer?
-fStaticContext_defineSystemFunction("minutes-from-time",		[[cXSTime, '?']],	function(oTime) {
+function fMinutesFromTime(oTime) {
 	return fFunction_dateTime_getComponent(oTime, "minutes");
-});
+};
 
 // fn:seconds-from-time($arg as xs:time?) as xs:decimal?
-fStaticContext_defineSystemFunction("seconds-from-time",		[[cXSTime, '?']],	function(oTime) {
+function fSecondsFromTime(oTime) {
 	return fFunction_dateTime_getComponent(oTime, "seconds");
-});
+};
 
 // fn:timezone-from-time($arg as xs:time?) as xs:dayTimeDuration?
-fStaticContext_defineSystemFunction("timezone-from-time",	[[cXSTime, '?']],	function(oTime) {
+function fTimezoneFromTime(oTime) {
 	return fFunction_dateTime_getComponent(oTime, "timezone");
-});
+};
 
 
 // 10.7 Timezone Adjustment Functions on Dates and Time Values
 // fn:adjust-dateTime-to-timezone($arg as xs:dateTime?) as xs:dateTime?
 // fn:adjust-dateTime-to-timezone($arg as xs:dateTime?, $timezone as xs:dayTimeDuration?) as xs:dateTime?
-fStaticContext_defineSystemFunction("adjust-dateTime-to-timezone",	[[cXSDateTime, '?'], [cXSDayTimeDuration, '?', true]],	function(oDateTime, oDayTimeDuration) {
+function fAdjustDateTimeToTimezone(oDateTime, oDayTimeDuration) {
 	return fFunction_dateTime_adjustTimezone(oDateTime, arguments.length > 1 && oDayTimeDuration != null ? arguments.length > 1 ? oDayTimeDuration : this.timezone : null);
-});
+};
 
 // fn:adjust-date-to-timezone($arg as xs:date?) as xs:date?
 // fn:adjust-date-to-timezone($arg as xs:date?, $timezone as xs:dayTimeDuration?) as xs:date?
-fStaticContext_defineSystemFunction("adjust-date-to-timezone",		[[cXSDate, '?'], [cXSDayTimeDuration, '?', true]],	function(oDate, oDayTimeDuration) {
+function fAdjustDateToTimezone(oDate, oDayTimeDuration) {
 	return fFunction_dateTime_adjustTimezone(oDate, arguments.length > 1 && oDayTimeDuration != null ? arguments.length > 1 ? oDayTimeDuration : this.timezone : null);
-});
+};
 
 // fn:adjust-time-to-timezone($arg as xs:time?) as xs:time?
 // fn:adjust-time-to-timezone($arg as xs:time?, $timezone as xs:dayTimeDuration?) as xs:time?
-fStaticContext_defineSystemFunction("adjust-time-to-timezone",		[[cXSTime, '?'], [cXSDayTimeDuration, '?', true]],	function(oTime, oDayTimeDuration) {
+function fAdjustTimeToTimezone(oTime, oDayTimeDuration) {
 	return fFunction_dateTime_adjustTimezone(oTime, arguments.length > 1 && oDayTimeDuration != null ? arguments.length > 1 ? oDayTimeDuration : this.timezone : null);
-});
+};
 
 //
 function fFunction_duration_getComponent(oDuration, sName) {
@@ -254,4 +252,28 @@ function fFunction_dateTime_adjustTimezone(oDateTime, oTimezone) {
 
 module.exports = {
     dateTime_adjustTimezone: fFunction_dateTime_adjustTimezone,
+    fYearsFromDuration: fYearsFromDuration,
+    fMonthsFromDuration: fMonthsFromDuration,
+    fDaysFromDuration: fDaysFromDuration,
+    fHoursFromDuration: fHoursFromDuration,
+    fMinutesFromDuration: fMinutesFromDuration,
+    fSecondsFromDuration: fSecondsFromDuration,
+    fYearFromDateTime: fYearFromDateTime,
+    fMonthFromDateTime: fMonthFromDateTime,
+    fDayFromDateTime: fDayFromDateTime,
+    fHoursFromDateTime: fHoursFromDateTime,
+    fMinutesFromDateTime: fMinutesFromDateTime,
+    fSecondsFromDateTime: fSecondsFromDateTime,
+    fTimezoneFromDateTime: fTimezoneFromDateTime,
+    fYearFromDate: fYearFromDate,
+    fMonthFromDate: fMonthFromDate,
+    fDayFromDate: fDayFromDate,
+    fTimezoneFromDate: fTimezoneFromDate,
+    fHoursFromTime: fHoursFromTime,
+    fMinutesFromTime: fMinutesFromTime,
+    fSecondsFromTime: fSecondsFromTime,
+    fTimezoneFromTime: fTimezoneFromTime,
+    fAdjustDateTimeToTimezone: fAdjustDateTimeToTimezone,
+    fAdjustDateToTimezone: fAdjustDateToTimezone,
+    fAdjustTimeToTimezone: fAdjustTimeToTimezone
 };

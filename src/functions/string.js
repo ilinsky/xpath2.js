@@ -13,10 +13,7 @@ var cStringCollator = require('./../classes/StringCollator');
 
 var cXSBoolean = require('./../types/schema/simple/atomic/XSBoolean');
 var cXSInteger = require('./../types/schema/simple/atomic/integer/XSInteger');
-var cXSDouble = require('./../types/schema/simple/atomic/XSDouble');
 var cXSString = require('./../types/schema/simple/atomic/XSString');
-//
-var fStaticContext_defineSystemFunction = require('./../classes/StaticContext').defineSystemFunction;
 
 var fEncodeURIComponent = global.encodeURIComponent;
 var fEncodeURI = global.encodeURI;
@@ -77,16 +74,16 @@ oCodepointStringCollator.compare	= function(sValue1, sValue2) {
 
 // 7.2 Functions to Assemble and Disassemble Strings
 // fn:codepoints-to-string($arg as xs:integer*) as xs:string
-fStaticContext_defineSystemFunction("codepoints-to-string",	[[cXSInteger, '*']],	function(oSequence1) {
+function fCodepointsToString(oSequence1) {
 	var aValue	= [];
 	for (var nIndex = 0, nLength = oSequence1.length; nIndex < nLength; nIndex++)
 		aValue.push(cString.fromCharCode(oSequence1[nIndex]));
 
 	return new cXSString(aValue.join(''));
-});
+};
 
 // fn:string-to-codepoints($arg as xs:string?) as xs:integer*
-fStaticContext_defineSystemFunction("string-to-codepoints",	[[cXSString, '?']],	function(oValue) {
+function fStringToCodepoints(oValue) {
 	if (oValue == null)
 		return null;
 
@@ -99,12 +96,12 @@ fStaticContext_defineSystemFunction("string-to-codepoints",	[[cXSString, '?']],	
 		oSequence.push(new cXSInteger(sValue.charCodeAt(nIndex)));
 
 	return oSequence;
-});
+};
 
 // 7.3 Equality and Comparison of Strings
 // fn:compare($comparand1 as xs:string?, $comparand2 as xs:string?) as xs:integer?
 // fn:compare($comparand1 as xs:string?, $comparand2 as xs:string?, $collation as xs:string) as xs:integer?
-fStaticContext_defineSystemFunction("compare",	[[cXSString, '?'], [cXSString, '?'], [cXSString, '', true]],	function(oValue1, oValue2, oCollation) {
+function fCompare(oValue1, oValue2, oCollation) {
 	if (oValue1 == null || oValue2 == null)
 		return null;
 
@@ -122,22 +119,22 @@ fStaticContext_defineSystemFunction("compare",	[[cXSString, '?'], [cXSString, '?
 		);
 
 	return new cXSInteger(vCollation.compare(oValue1.valueOf(), oValue2.valueOf()));
-});
+};
 
 // fn:codepoint-equal($comparand1 as xs:string?, $comparand2  as xs:string?) as xs:boolean?
-fStaticContext_defineSystemFunction("codepoint-equal",	[[cXSString, '?'], [cXSString, '?']],	function(oValue1, oValue2) {
+function fCodepointEqual(oValue1, oValue2) {
 	if (oValue1 == null || oValue2 == null)
 		return null;
 
 	// TODO: Check if JS uses 'Unicode code point collation' here
 
 	return new cXSBoolean(oValue1.valueOf() == oValue2.valueOf());
-});
+};
 
 
 // 7.4 Functions on String Values
 // fn:concat($arg1 as xs:anyAtomicType?, $arg2 as xs:anyAtomicType?, ...) as xs:string
-fStaticContext_defineSystemFunction("concat",	null,	function() {
+function fConcat(/*...arguments*/) {
 	// check arguments length
 	if (arguments.length < 2)
 		throw new cException("XPST0017"
@@ -161,64 +158,64 @@ fStaticContext_defineSystemFunction("concat",	null,	function() {
 	}
 
 	return new cXSString(aValue.join(''));
-});
+};
 
 // fn:string-join($arg1 as xs:string*, $arg2 as xs:string) as xs:string
-fStaticContext_defineSystemFunction("string-join",	[[cXSString, '*'], [cXSString]],	function(oSequence1, oValue) {
+function fStringJoin(oSequence1, oValue) {
 	return new cXSString(oSequence1.join(oValue));
-});
+};
 
 // fn:substring($sourceString as xs:string?, $startingLoc as xs:double) as xs:string
 // fn:substring($sourceString as xs:string?, $startingLoc as xs:double, $length as xs:double) as xs:string
-fStaticContext_defineSystemFunction("substring",	[[cXSString, '?'], [cXSDouble], [cXSDouble, '', true]],	function(oValue, oStart, oLength) {
+function fSubstring(oValue, oStart, oLength) {
 	var sValue	= oValue == null ? '' : oValue.valueOf(),
 		nStart	= cMath.round(oStart) - 1,
 		nEnd	= arguments.length > 2 ? nStart + cMath.round(oLength) : sValue.length;
 
 	// TODO: start can be negative
 	return new cXSString(nEnd > nStart ? sValue.substring(nStart, nEnd) : '');
-});
+};
 
 // fn:string-length() as xs:integer
 // fn:string-length($arg as xs:string?) as xs:integer
-fStaticContext_defineSystemFunction("string-length",	[[cXSString, '?', true]],	function(oValue) {
+function fStringLength(oValue) {
 	if (!arguments.length) {
 		if (!this.item)
 			throw new cException("XPDY0002");
 		oValue	= cXSString.cast(cSequence.atomize([this.item], this)[0]);
 	}
 	return new cXSInteger(oValue == null ? 0 : oValue.valueOf().length);
-});
+};
 
 // fn:normalize-space() as xs:string
 // fn:normalize-space($arg as xs:string?) as xs:string
-fStaticContext_defineSystemFunction("normalize-space",	[[cXSString, '?', true]],	function(oValue) {
+function fNormalizeSpace(oValue) {
 	if (!arguments.length) {
 		if (!this.item)
 			throw new cException("XPDY0002");
 		oValue	= cXSString.cast(cSequence.atomize([this.item], this)[0]);
 	}
 	return new cXSString(oValue == null ? '' : fString_trim(oValue).replace(/\s\s+/g, ' '));
-});
+};
 
 // fn:normalize-unicode($arg as xs:string?) as xs:string
 // fn:normalize-unicode($arg as xs:string?, $normalizationForm as xs:string) as xs:string
-fStaticContext_defineSystemFunction("normalize-unicode",	[[cXSString, '?'], [cXSString, '', true]],	function(oValue, oNormalization) {
+function fNormalizeUnicode(oValue, oNormalization) {
 	throw "Function '" + "normalize-unicode" + "' not implemented";
-});
+};
 
 // fn:upper-case($arg as xs:string?) as xs:string
-fStaticContext_defineSystemFunction("upper-case",	[[cXSString, '?']],	function(oValue) {
+function fUpperCase(oValue) {
 	return new cXSString(oValue == null ? '' : oValue.valueOf().toUpperCase());
-});
+};
 
 // fn:lower-case($arg as xs:string?) as xs:string
-fStaticContext_defineSystemFunction("lower-case",	[[cXSString, '?']],	function(oValue) {
+function fLowerCase(oValue) {
 	return new cXSString(oValue == null ? '' : oValue.valueOf().toLowerCase());
-});
+};
 
 // fn:translate($arg as xs:string?, $mapString as xs:string, $transString as xs:string) as xs:string
-fStaticContext_defineSystemFunction("translate",	[[cXSString, '?'], [cXSString], [cXSString]],	function(oValue, oMap, oTranslate) {
+function fTranslate(oValue, oMap, oTranslate) {
 	if (oValue == null)
 		return new cXSString('');
 
@@ -235,20 +232,20 @@ fStaticContext_defineSystemFunction("translate",	[[cXSString, '?'], [cXSString],
 			aReturn[aReturn.length]	= aTranslate[nPosition];
 
 	return new cXSString(aReturn.join(''));
-});
+};
 
 // fn:encode-for-uri($uri-part as xs:string?) as xs:string
-fStaticContext_defineSystemFunction("encode-for-uri",	[[cXSString, '?']],	function(oValue) {
+function fEncodeForUri(oValue) {
 	return new cXSString(oValue == null ? '' : fEncodeURIComponent(oValue));
-});
+};
 
 // fn:iri-to-uri($iri as xs:string?) as xs:string
-fStaticContext_defineSystemFunction("iri-to-uri",		[[cXSString, '?']],	function(oValue) {
+function fIriToUri(oValue) {
 	return new cXSString(oValue == null ? '' : fEncodeURI(fDecodeURI(oValue)));
-});
+};
 
 // fn:escape-html-uri($uri as xs:string?) as xs:string
-fStaticContext_defineSystemFunction("escape-html-uri",	[[cXSString, '?']],	function(oValue) {
+function fEscapeHtmlUri(oValue) {
 	if (oValue == null || oValue.valueOf() == '')
 		return new cXSString('');
 	// Encode
@@ -257,62 +254,62 @@ fStaticContext_defineSystemFunction("escape-html-uri",	[[cXSString, '?']],	funct
 		if ((nCode = aValue[nIndex].charCodeAt(0)) < 32 || nCode > 126)
 			aValue[nIndex]	= fEncodeURIComponent(aValue[nIndex]);
 	return new cXSString(aValue.join(''));
-});
+};
 
 
 // 7.5 Functions Based on Substring Matching
 // fn:contains($arg1 as xs:string?, $arg2 as xs:string?) as xs:boolean
 // fn:contains($arg1 as xs:string?, $arg2 as xs:string?, $collation as xs:string) as xs:boolean
-fStaticContext_defineSystemFunction("contains",	[[cXSString, '?'], [cXSString, '?'], [cXSString, '', true]],	function(oValue, oSearch, oCollation) {
+function fContains(oValue, oSearch, oCollation) {
 	if (arguments.length > 2)
 		throw "Collation parameter in function '" + "contains" + "' is not implemented";
 	return new cXSBoolean((oValue == null ? '' : oValue.valueOf()).indexOf(oSearch == null ? '' : oSearch.valueOf()) >= 0);
-});
+};
 
 // fn:starts-with($arg1 as xs:string?, $arg2 as xs:string?) as xs:boolean
 // fn:starts-with($arg1 as xs:string?, $arg2 as xs:string?, $collation as xs:string) as xs:boolean
-fStaticContext_defineSystemFunction("starts-with",	[[cXSString, '?'], [cXSString, '?'], [cXSString, '', true]],	function(oValue, oSearch, oCollation) {
+function fStartsWith(oValue, oSearch, oCollation) {
 	if (arguments.length > 2)
 		throw "Collation parameter in function '" + "starts-with" + "' is not implemented";
 	return new cXSBoolean((oValue == null ? '' : oValue.valueOf()).indexOf(oSearch == null ? '' : oSearch.valueOf()) == 0);
-});
+};
 
 // fn:ends-with($arg1 as xs:string?, $arg2 as xs:string?) as xs:boolean
 // fn:ends-with($arg1 as xs:string?, $arg2 as xs:string?, $collation as xs:string) as xs:boolean
-fStaticContext_defineSystemFunction("ends-with",	[[cXSString, '?'], [cXSString, '?'], [cXSString, '', true]],	function(oValue, oSearch, oCollation) {
+function fEndsWith(oValue, oSearch, oCollation) {
 	if (arguments.length > 2)
 		throw "Collation parameter in function '" + "ends-with" + "' is not implemented";
 	var sValue	= oValue == null ? '' : oValue.valueOf(),
 		sSearch	= oSearch == null ? '' : oSearch.valueOf();
 
 	return new cXSBoolean(sValue.indexOf(sSearch) == sValue.length - sSearch.length);
-});
+};
 
 // fn:substring-before($arg1 as xs:string?, $arg2 as xs:string?) as xs:string
 // fn:substring-before($arg1 as xs:string?, $arg2 as xs:string?, $collation as xs:string) as xs:string
-fStaticContext_defineSystemFunction("substring-before",	[[cXSString, '?'], [cXSString, '?'], [cXSString, '', true]],	function(oValue, oSearch, oCollation) {
+function fSubstringBefore(oValue, oSearch, oCollation) {
 	if (arguments.length > 2)
 		throw "Collation parameter in function '" + "substring-before" + "' is not implemented";
 
 	var sValue	= oValue == null ? '' : oValue.valueOf(),
 		sSearch	= oSearch == null ? '' : oSearch.valueOf(),
-		nPosition;
+		nPosition = sValue.indexOf(sSearch);
 
-	return new cXSString((nPosition = sValue.indexOf(sSearch)) >= 0 ? sValue.substring(0, nPosition) : '');
-});
+	return new cXSString(nPosition < 0 ? '' : sValue.substring(0, nPosition));
+};
 
 // fn:substring-after($arg1 as xs:string?, $arg2 as xs:string?) as xs:string
 // fn:substring-after($arg1 as xs:string?, $arg2 as xs:string?, $collation as xs:string) as xs:string
-fStaticContext_defineSystemFunction("substring-after",	[[cXSString, '?'], [cXSString, '?'], [cXSString, '', true]],	function(oValue, oSearch, oCollation) {
+function fSubstringAfter(oValue, oSearch, oCollation) {
 	if (arguments.length > 2)
 		throw "Collation parameter in function '" + "substring-after" + "' is not implemented";
 
 	var sValue	= oValue == null ? '' : oValue.valueOf(),
 		sSearch	= oSearch == null ? '' : oSearch.valueOf(),
-		nPosition;
+		nPosition = sValue.indexOf(sSearch);
 
-	return new cXSString((nPosition = sValue.indexOf(sSearch)) >= 0 ? sValue.substring(nPosition + sSearch.length) : '');
-});
+	return new cXSString(nPosition < 0 ? '' : sValue.substring(nPosition + sSearch.length));
+};
 
 
 // 7.6 String Functions that Use Pattern Matching
@@ -369,25 +366,25 @@ function fFunction_string_createRegExp(sValue, sFlags) {
 
 // fn:matches($input as xs:string?, $pattern as xs:string) as xs:boolean
 // fn:matches($input as xs:string?, $pattern as xs:string, $flags as xs:string) as xs:boolean
-fStaticContext_defineSystemFunction("matches",	[[cXSString, '?'], [cXSString], [cXSString, '', true]],	function(oValue, oPattern, oFlags) {
+function fMatches(oValue, oPattern, oFlags) {
 	var sValue	= oValue == null ? '' : oValue.valueOf(),
 		rRegExp	= fFunction_string_createRegExp(oPattern.valueOf(), arguments.length > 2 ? oFlags.valueOf() : '');
 
 	return new cXSBoolean(rRegExp.test(sValue));
-});
+};
 
 // fn:replace($input as xs:string?, $pattern as xs:string, $replacement as xs:string) as xs:string
 // fn:replace($input as xs:string?, $pattern as xs:string, $replacement as xs:string, $flags as xs:string) as xs:string
-fStaticContext_defineSystemFunction("replace",	[[cXSString, '?'], [cXSString],  [cXSString], [cXSString, '', true]],	function(oValue, oPattern, oReplacement, oFlags) {
+function fReplace(oValue, oPattern, oReplacement, oFlags) {
 	var sValue	= oValue == null ? '' : oValue.valueOf(),
 		rRegExp	= fFunction_string_createRegExp(oPattern.valueOf(), arguments.length > 3 ? oFlags.valueOf() : '');
 
 	return new cXSString(sValue.replace(rRegExp, oReplacement.valueOf()));
-});
+};
 
 // fn:tokenize($input as xs:string?, $pattern as xs:string) as xs:string*
 // fn:tokenize($input as xs:string?, $pattern as xs:string, $flags as xs:string) as xs:string*
-fStaticContext_defineSystemFunction("tokenize",	[[cXSString, '?'], [cXSString], [cXSString, '', true]],	function(oValue, oPattern, oFlags) {
+function fTokenize(oValue, oPattern, oFlags) {
 	var sValue	= oValue == null ? '' : oValue.valueOf(),
 		rRegExp	= fFunction_string_createRegExp(oPattern.valueOf(), arguments.length > 2 ? oFlags.valueOf() : '');
 
@@ -396,4 +393,31 @@ fStaticContext_defineSystemFunction("tokenize",	[[cXSString, '?'], [cXSString], 
 		oSequence.push(new cXSString(aValue[nIndex]));
 
 	return oSequence;
-});
+};
+
+module.exports = {
+    fCodepointsToString: fCodepointsToString,
+    fStringToCodepoints: fStringToCodepoints,
+    fCompare: fCompare,
+    fCodepointEqual: fCodepointEqual,
+    fConcat: fConcat,
+    fStringJoin: fStringJoin,
+    fSubstring: fSubstring,
+    fStringLength: fStringLength,
+    fNormalizeSpace: fNormalizeSpace,
+    fNormalizeUnicode: fNormalizeUnicode,
+    fUpperCase: fUpperCase,
+    fLowerCase: fLowerCase,
+    fTranslate: fTranslate,
+    fEncodeForUri: fEncodeForUri,
+    fIriToUri: fIriToUri,
+    fEscapeHtmlUri: fEscapeHtmlUri,
+    fContains: fContains,
+    fStartsWith: fStartsWith,
+    fEndsWith: fEndsWith,
+    fSubstringBefore: fSubstringBefore,
+    fSubstringAfter: fSubstringAfter,
+    fMatches: fMatches,
+    fReplace: fReplace,
+    fTokenize: fTokenize
+};

@@ -12,8 +12,6 @@ var cException = require('./../classes/Exception');
 var cXSString = require('./../types/schema/simple/atomic/XSString');
 var cXSAnyURI = require('./../types/schema/simple/atomic/XSAnyURI');
 
-var fStaticContext_defineSystemFunction = require('./../classes/StaticContext').defineSystemFunction;
-
 /*
 	8 Functions on anyURI
 		resolve-uri
@@ -21,7 +19,7 @@ var fStaticContext_defineSystemFunction = require('./../classes/StaticContext').
 
 // fn:resolve-uri($relative as xs:string?) as xs:anyURI?
 // fn:resolve-uri($relative as xs:string?, $base as xs:string) as xs:anyURI?
-fStaticContext_defineSystemFunction("resolve-uri",	[[cXSString, '?'], [cXSString, '', true]],	function(sUri, sBaseUri) {
+function fResolveUri(sUri, sBaseUri) {
 	if (arguments.length < 2) {
 		if (!this.DOMAdapter.isNode(this.item))
 			throw new cException("XPTY0004"
@@ -78,4 +76,8 @@ fStaticContext_defineSystemFunction("resolve-uri",	[[cXSString, '?'], [cXSString
 	}
 
 	return oUri;
-});
+};
+
+module.exports = {
+    fResolveUri: fResolveUri
+};

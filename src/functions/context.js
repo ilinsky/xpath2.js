@@ -13,8 +13,6 @@ var cXSInteger = require('./../types/schema/simple/atomic/integer/XSInteger');
 var cXSAnyURI = require('./../types/schema/simple/atomic/XSAnyURI');
 var cXSString = require('./../types/schema/simple/atomic/XSString');
 
-var fStaticContext_defineSystemFunction = require('./../classes/StaticContext').defineSystemFunction;
-
 /*
 	16 Context Functions
 		position
@@ -28,41 +26,52 @@ var fStaticContext_defineSystemFunction = require('./../classes/StaticContext').
 
 */
 // fn:position() as xs:integer
-fStaticContext_defineSystemFunction("position",	[],	function() {
+function fPosition() {
 	return new cXSInteger(this.position);
-});
+};
 
 // fn:last() as xs:integer
-fStaticContext_defineSystemFunction("last",	[],	function() {
+function fLast() {
 	return new cXSInteger(this.size);
-});
+};
 
 // fn:current-dateTime() as xs:dateTime (2004-05-12T18:17:15.125Z)
-fStaticContext_defineSystemFunction("current-dateTime",	[],	 function() {
+function fCurrentDateTime() {
 	return this.dateTime;
-});
+};
 
 // fn:current-date() as xs:date (2004-05-12+01:00)
-fStaticContext_defineSystemFunction("current-date",	[],	function() {
+function fCurrentDate() {
 	return cXSDate.cast(this.dateTime);
-});
+};
 
 // fn:current-time() as xs:time (23:17:00.000-05:00)
-fStaticContext_defineSystemFunction("current-time",	[],	function() {
+function fCurrentTime() {
 	return cXSTime.cast(this.dateTime);
-});
+};
 
 // fn:implicit-timezone() as xs:dayTimeDuration
-fStaticContext_defineSystemFunction("implicit-timezone",	[],	function() {
+function fImplicitTimezone() {
 	return this.timezone;
-});
+};
 
 // fn:default-collation() as xs:string
-fStaticContext_defineSystemFunction("default-collation",	[],	 function() {
+function fDefaultCollation() {
 	return new cXSString(this.staticContext.defaultCollationName);
-});
+};
 
 // fn:static-base-uri() as xs:anyURI?
-fStaticContext_defineSystemFunction("static-base-uri",	[],	function() {
+function fStaticBaseUri() {
 	return cXSAnyURI.cast(new cXSString(this.staticContext.baseURI || ''));
-});
+};
+
+module.exports = {
+    fPosition: fPosition,
+    fLast: fLast,
+    fCurrentDateTime: fCurrentDateTime,
+    fCurrentDate: fCurrentDate,
+    fCurrentTime: fCurrentTime,
+    fImplicitTimezone: fImplicitTimezone,
+    fDefaultCollation: fDefaultCollation,
+    fStaticBaseUri: fStaticBaseUri
+};

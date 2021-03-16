@@ -10,10 +10,7 @@
 var cStaticContext = require('./../classes/StaticContext');
 
 var cXSDecimal = require('./../types/schema/simple/atomic/XSDecimal');
-var cXSDouble = require('./../types/schema/simple/atomic/XSDouble');
 var cXSInteger = require('./../types/schema/simple/atomic/integer/XSInteger');
-
-var fStaticContext_defineSystemFunction = require('./../classes/StaticContext').defineSystemFunction;
 
 var cMath = global.Math;
 
@@ -28,28 +25,28 @@ var cMath = global.Math;
 
 // 6.4 Functions on Numeric Values
 // fn:abs($arg as numeric?) as numeric?
-fStaticContext_defineSystemFunction("abs",		[[cXSDouble, '?']],	function(oValue) {
+function fAbs(oValue) {
 	return new cXSDecimal(cMath.abs(oValue));
-});
+};
 
 // fn:ceiling($arg as numeric?) as numeric?
-fStaticContext_defineSystemFunction("ceiling",	[[cXSDouble, '?']],	function(oValue) {
+function fCeiling(oValue) {
 	return new cXSDecimal(cMath.ceil(oValue));
-});
+};
 
 // fn:floor($arg as numeric?) as numeric?
-fStaticContext_defineSystemFunction("floor",		[[cXSDouble, '?']],	function(oValue) {
+function fFloor(oValue) {
 	return new cXSDecimal(cMath.floor(oValue));
-});
+};
 
 // fn:round($arg as numeric?) as numeric?
-fStaticContext_defineSystemFunction("round",		[[cXSDouble, '?']],	function(oValue) {
+function fRound(oValue) {
 	return new cXSDecimal(cMath.round(oValue));
-});
+};
 
 // fn:round-half-to-even($arg as numeric?) as numeric?
 // fn:round-half-to-even($arg as numeric?, $precision as xs:integer) as numeric?
-fStaticContext_defineSystemFunction("round-half-to-even",	[[cXSDouble, '?'], [cXSInteger, '', true]],	function(oValue, oPrecision) {
+function fRoundHalfToEven(oValue, oPrecision) {
 	var nPrecision	= arguments.length > 1 ? oPrecision.valueOf() : 0;
 
 	//
@@ -67,4 +64,12 @@ fStaticContext_defineSystemFunction("round-half-to-even",	[[cXSDouble, '?'], [cX
 			nDecimal= cMath.abs(cStaticContext.operators["numeric-subtract"].call(this, oRounded, cStaticContext.operators["numeric-multiply"].call(this, oValue, oPower)));
 		return cStaticContext.operators["numeric-divide"].call(this, cStaticContext.operators["numeric-add"].call(this, oRounded, new cXSDecimal(nDecimal == 0.5 && nRounded % 2 ?-1 : 0)), oPower);
 	}
-});
+};
+
+module.exports = {
+    fAbs: fAbs,
+    fCeiling: fCeiling,
+    fFloor: fFloor,
+    fRound: fRound,
+    fRoundHalfToEven: fRoundHalfToEven
+};
