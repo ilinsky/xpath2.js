@@ -1,3 +1,4 @@
+var cStaticContext = require('./classes/StaticContext');
 //
 var cXSAnyType = require('./types/schema/XSAnyType');
 var cXSAnySimpleType = require('./types/schema/XSAnySimpleType');
@@ -56,8 +57,6 @@ var cXSNMTOKEN = require('./types/schema/simple/atomic/string/XSNMTOKEN');
 var cXSNormalizedString = require('./types/schema/simple/atomic/string/XSNormalizedString');
 var cXSToken = require('./types/schema/simple/atomic/string/XSToken');
 
-//
-var cStaticContext = require('./types/../classes/StaticContext');
 //
 cStaticContext.defineSystemDataType("anyAtomicType",	cXSAnyAtomicType);
 // atomic
