@@ -352,8 +352,6 @@ function fSum(oSequence1, oZero) {
 			return oZero;
 		else
 			return new cXSDouble(0);
-
-		return null;
 	}
 
 	// TODO: Implement collation

@@ -15,8 +15,10 @@
         // "no-multiple-empty-lines": [2, {"max": 1}],
         // "max-len": [1, 80, 4, {"ignoreComments": true, "ignoreUrls": true}],
         // code conventions
+        "no-cond-assign": [1],
         "no-unused-vars": [1],
         "no-param-reassign": [1, {"props": false}],
+        "no-redeclare": [1],
         "no-undefined": [2],
         "no-with": [2],
         "radix": [2]

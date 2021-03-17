@@ -100,12 +100,14 @@ function fNumber(/*[*/oItem/*]*/) {
 	// If input item cannot be cast to xs:decimal, a NaN should be returned
 	var vValue	= new cXSDouble(nNaN);
 	if (oItem != null) {
+/* eslint-disable no-empty */
 		try {
 			vValue	= cXSDouble.cast(oItem);
 		}
 		catch (e) {
 
 		}
+/* eslint-enable no-empty */
 	}
 	return vValue;
 };

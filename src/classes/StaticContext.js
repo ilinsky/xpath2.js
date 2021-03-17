@@ -45,7 +45,7 @@ cStaticContext.NS_XNS	= "http://www.w3.org/2000/xmlns/";
 cStaticContext.NS_XML	= "http://www.w3.org/XML/1998/namespace";
 
 //
-var rStaticContext_uri	= /^(?:\{([^\}]+)\})?(.+)$/;
+var rStaticContext_uri	= /^(?:\{([^}]+)\})?(.+)$/;
 //
 cStaticContext.prototype.setDataType		= function(sUri, fFunction) {
 	var aMatch	= sUri.match(rStaticContext_uri);

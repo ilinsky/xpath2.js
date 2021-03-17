@@ -15,7 +15,7 @@ var cXSQName = require('./../types/schema/simple/atomic/XSQName');
 var cXSAnyURI = require('./../types/schema/simple/atomic/XSAnyURI');
 var cXSNCName = require('./../types/schema/simple/atomic/string/XSNCName');
 
-var rXSQName	= /^(?:(?![0-9-])(\w[\w.-]*)\:)?(?![0-9-])(\w[\w.-]*)$/;
+var rXSQName	= /^(?:(?![0-9-])(\w[\w.-]*):)?(?![0-9-])(\w[\w.-]*)$/;
 
 /*
 	11.1 Additional Constructor Functions for QNames

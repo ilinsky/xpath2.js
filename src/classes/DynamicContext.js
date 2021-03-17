@@ -14,6 +14,7 @@ var cXSDayTimeDuration = require('./../types/schema/simple/atomic/duration/XSDay
 
 var cDate = global.Date;
 var cMath = global.Math;
+var cObject = global.Object;
 
 function cDynamicContext(oStaticContext, vItem, oScope, oDOMAdapter) {
 	//
@@ -46,14 +47,14 @@ cDynamicContext.prototype.staticContext	= null;
 
 // Stack management
 cDynamicContext.prototype.pushVariable	= function(sName, vValue) {
-	if (!this.stack.hasOwnProperty(sName))
+	if (!cObject.hasOwnProperty.call(this.stack, sName))
 		this.stack[sName]	= [];
 	this.stack[sName].push(this.scope[sName]);
 	this.scope[sName] = vValue;
 };
 
 cDynamicContext.prototype.popVariable	= function(sName) {
-	if (this.stack.hasOwnProperty(sName)) {
+	if (cObject.hasOwnProperty.call(this.stack, sName)) {
 		this.scope[sName] = this.stack[sName].pop();
 		if (!this.stack[sName].length) {
 			delete this.stack[sName];

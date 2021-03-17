@@ -66,7 +66,7 @@ var cCastExpr = require('./type/CastExpr');
 var cInstanceofExpr = require('./type/InstanceofExpr');
 var cTreatExpr = require('./type/TreatExpr');
 
-var rNameTest = /^(?:(?![0-9-])(\w[\w.-]*|\*)\:)?(?![0-9-])(\w[\w.-]*|\*)$/;
+var rNameTest = /^(?:(?![0-9-])(\w[\w.-]*|\*):)?(?![0-9-])(\w[\w.-]*|\*)$/;
 
 function fParseExpr(oLexer, oStaticContext) {
 	var oItem;

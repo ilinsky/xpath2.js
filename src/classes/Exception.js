@@ -18,9 +18,9 @@ function cException(sCode
 	this.code		= sCode;
 	this.message	=
 //->Debug
-					  sMessage ||
+						sMessage ||
 //<-Debug
-					  oException_messages[sCode];
+						oException_messages[sCode];
 };
 
 cException.prototype	= new cError;

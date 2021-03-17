@@ -12,9 +12,7 @@ var cXSDate = require('./../types/schema/simple/atomic/XSDate');
 var cXSTime = require('./../types/schema/simple/atomic/XSTime');
 var cXSDecimal = require('./../types/schema/simple/atomic/XSDecimal');
 var cXSDateTime = require('./../types/schema/simple/atomic/XSDateTime');
-var cXSDuration = require('./../types/schema/simple/atomic/XSDuration');
 var cXSDayTimeDuration = require('./../types/schema/simple/atomic/duration/XSDayTimeDuration');
-var cXSDate = require('./../types/schema/simple/atomic/XSDate');
 var cXSInteger = require('./../types/schema/simple/atomic/integer/XSInteger');
 
 var cMath = global.Math;
