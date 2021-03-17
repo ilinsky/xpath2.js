@@ -1,12 +1,3 @@
-/*
- * XPath.js - Pure JavaScript implementation of XPath 2.0 parser and evaluator
- *
- * Copyright (c) 2016 Sergey Ilinsky
- * Dual licensed under the MIT and GPL licenses.
- *
- *
- */
-
 var cXSDate = require('./../types/schema/simple/atomic/XSDate');
 var cXSTime = require('./../types/schema/simple/atomic/XSTime');
 var cXSInteger = require('./../types/schema/simple/atomic/integer/XSInteger');

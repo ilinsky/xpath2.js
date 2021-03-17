@@ -1,4 +1,3 @@
-//
 function cSimpleForBinding(sPrefix, sLocalName, sNameSpaceURI, oInExpr) {
 	this.prefix = sPrefix;
 	this.localName = sLocalName;
