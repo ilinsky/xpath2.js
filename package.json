@@ -3,7 +3,7 @@
     "version": "1.0.0-alpha-4",
     "license": "(GPL-2.0+ OR MIT)",
     "description": "Open source XPath 2.0 implementation in JavaScript (DOM agnostic)",
-    "main": "src/index.js",
+    "main": "lib/index.js",
     "keywords": [
         "xpath",
         "xpath2",
@@ -24,13 +24,16 @@
     "bugs": "https://github.com/ilinsky/xpath2.js/issues",
     "author": "Sergey Ilinsky <sergey@ilinsky.com> (http://www.ilinsky.com)",
     "scripts": {
-        "lint": "node ./node_modules/eslint/bin/eslint.js **/*.js",
-        "test": "mocha test/**/*Spec.js"
+        "build": "node ./node_modules/webpack/bin/webpack",
+        "lint": "node ./node_modules/eslint/bin/eslint src/**/*.js",
+        "test": "node ./node_modules/mocha/bin/mocha test/**/*Spec.js"
     },
     "devDependencies": {
         "chai": "^4.3.3",
         "eslint": "^6.8.0",
         "mocha": "~2.1.0",
+        "webpack": "^4.46.0",
+        "webpack-cli": "^4.5.0",
         "xmldom": "^0.5.0"
     },
     "maintainers": [
