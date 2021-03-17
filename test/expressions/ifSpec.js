@@ -1,4 +1,4 @@
-var xpath = require('./../../src');
+var xpath = require('./../../lib');
 var expect = require('chai').expect;
 
 describe("if", function() {

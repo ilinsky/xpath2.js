@@ -8,9 +8,9 @@ Execution engine operates using XML Schema 1.1 data types as prescribed by speci
 ## Features
 - Full [XPath 2.0](https://www.w3.org/TR/xpath20/) language support
 - Arbitrary tree structure querying with XPath 2.0 language via custom DOMAdapter
-- Custom collation support (using [StaticContext](./src/classes/StaticContext.js))
-- Custom function support (using [StaticContext](./src/classes/StaticContext.js))
-- Variable injection (using [DynamicContext](./src/classes/DynamicContext.js))
+- Custom collation support (using [StaticContext](lib/classes/StaticContext.js))
+- Custom function support (using [StaticContext](lib/classes/StaticContext.js))
+- Variable injection (using [DynamicContext](lib/classes/DynamicContext.js))
 
 ## Installation
 
@@ -20,7 +20,7 @@ npm install xpath2.js
 
 ## Usage
 
-The simple API implementation `src/index.js` provided for reference. 
+The simple API implementation `lib/index.js` provided for reference. 
 Its primary purpose is to demonstrate implementation classes wiring and a simple usable solution.
 
 ### Basic scenarious with *evaluate* function
@@ -35,9 +35,9 @@ xpath.evaluate(expression, evaluationContext, staticContext, initialScope, DOMAd
 | --- | --- | --- | --- |
 | `expression` | String | *Required* | xpath expression |
 | `evaluationContext` | Variant | Optional | evaluation context (document, for example) |
-| `staticContext`| [StaticContext](./src/classes/StaticContext.js) or Function | Optional | compilation context or namespace resolver |
+| `staticContext`| [StaticContext](lib/classes/StaticContext.js) or Function | Optional | compilation context or namespace resolver |
 | `initialScope` | Object | Optional | JavaScript variable values map |
-| `DOMAdapter` | [DOMAdapter](./src/classes/DOMAdapter.js) | Optional | document object model adapter |
+| `DOMAdapter` | [DOMAdapter](lib/classes/DOMAdapter.js) | Optional | document object model adapter |
 
 #### Query without a context
 ```js

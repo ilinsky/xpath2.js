@@ -1,5 +1,5 @@
-var xpath = require('./../../src');
-var Exception = require('./../../src/classes/Exception');
+var xpath = require('./../../lib');
+var Exception = require('./../../lib/classes/Exception');
 var expect = require('chai').expect;
 
 describe("schema", function() {
