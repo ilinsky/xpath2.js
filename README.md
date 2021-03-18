@@ -1,4 +1,4 @@
-xpath2.js - Pure JavaScript implementation of XPath 2.0 parser and evaluator
+xpath2.js - DOM-agnostic implementation of XPath 2.0 language parser and evaluator in JavaScript
 ---
 
 ## About
@@ -100,10 +100,11 @@ const namespaceResolver = function(prefix) {
 };
 const staticContext = xpath.createStaticContext(namespaceResolver);
 // Set default function namespace to the one of XPath functions, so "fn" prefix can be dropped in queries
-static.defaultFunctionNamespace = "http://www.w3.org/2005/xpath-functions";
+staticContext.defaultFunctionNamespace = "http://www.w3.org/2005/xpath-functions";
 const dynamicContext = xpath.createDynamicContext(staticContext, document);
+const expression = xpath.compile("string(//b:bar/text())", staticContext);
 
-const result = xpath.execute("string(//b:bar/text())", dynamicContext);
+const result = xpath.execute(expression, dynamicContext);
 console.log(result); // prints [ 'content' ]
 ```
 
