@@ -2,7 +2,7 @@ function createDocument() {
     return {
         nodeType: 9,
         nodeName: '#document',
-        childNodes: [],
+//        childNodes: [],
         all: {},
         getElementById: function(id) {
             return Object.hasOwnProperty.call(this.all, id) ? this.all[id] : null;
@@ -15,7 +15,7 @@ function createElement(name) {
         nodeType: 1,
         nodeName: name,
         localName: name,
-        childNodes: [],
+//        childNodes: [],
         attributes: []
     };
 }
@@ -93,7 +93,7 @@ function addChild(parent, node) {
         parent.documentElement = node;
     }
 
-	parent.childNodes.push(node);
+//	parent.childNodes.push(node);
 }
 
 module.exports = {

@@ -8,7 +8,7 @@ describe("path", function() {
         describe("node()", function() {
             it('', function() {
                 expect(xpath.evaluate('node()', mockDocument))
-                    .to.have.ordered.members([mockDocument.childNodes[0], mockDocument.childNodes[1], mockDocument.childNodes[2]]);
+                    .to.have.ordered.members([mockDocument.firstChild, mockDocument.firstChild.nextSibling, mockDocument.firstChild.nextSibling.nextSibling]);
             });
         });
 
