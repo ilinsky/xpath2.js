@@ -1,4 +1,4 @@
-xpath2.js - DOM-agnostic implementation of XPath 2.0 language parser and evaluator in JavaScript
+xpath2.js - DOM-agnostic implementation of XPath 2 parser and evaluator in JavaScript
 ---
 
 ## About
