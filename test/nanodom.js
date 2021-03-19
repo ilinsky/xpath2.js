@@ -101,6 +101,7 @@ module.exports = {
     createElement: createElement,
     createComment: createComment,
     createText: createText,
+    createCDATASection: createCDATASection,
     createAttribute: createAttribute,
     createProcessingInstruction: createProcessingInstruction,
     addAttribute: addAttribute,
