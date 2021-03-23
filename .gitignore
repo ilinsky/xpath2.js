@@ -1,0 +1,8 @@
+node_modules
+# System files and editor configs
+.DS_Store
+.idea
+.settings
+.project
+*.iml
+package-lock.json
