@@ -1,7 +1,7 @@
 {
     "name": "xpath2.js",
-    "version": "1.0.0-alpha-5",
-    "license": "(MIT OR GPL-2.0+)",
+    "version": "1.0.0-alpha-6",
+    "license": "MIT",
     "description": "DOM-agnostic implementation of XPath 2 parser and evaluator in JavaScript",
     "main": "lib/index.js",
     "keywords": [
