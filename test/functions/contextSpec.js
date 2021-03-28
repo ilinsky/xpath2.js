@@ -29,8 +29,8 @@ describe("context", function() {
     });
 
     describe("implicit-timezone()", function() {
-        var offset	= new Date().getTimezoneOffset(),
-            sign	= offset < 0,
+        var offset	= 0,
+            sign	= offset <= 0,
             hours	= ~~(Math.abs(offset) / 60),
             minutes	= Math.abs(offset) % 60;
 
