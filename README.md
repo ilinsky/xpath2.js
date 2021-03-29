@@ -1,9 +1,12 @@
-xpath2.js - DOM-agnostic implementation of XPath 2 parser and evaluator in JavaScript
+xpath2.js - Pure JavaScript implementation of XPath 2 query language
 ---
 
-## About
+![NodeJS workflow](https://github.com/ilinsky/xpath2.js/actions/workflows/node.js.yml/badge.svg?branch=master)
+
+## About 
 xpath2.js is a DOM-agnostic open-source [XPath 2.0](https://www.w3.org/TR/xpath20/) implementation in JavaScript.
 Execution engine operates using XML Schema 1.1 data types as prescribed by specification.
+
 
 ## Features
 - Full [XPath 2.0](https://www.w3.org/TR/xpath20/) language support
